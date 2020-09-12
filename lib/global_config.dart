@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluwx/fluwx.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +28,7 @@ class GlobalConfig {
   static Color searchBackgroundColor = Colors.white10;
   static Color cardBackgroundColor = new Color(0xFF222222);
   static Color checkedColor = Colors.red;
-  static Color colorPrimary =taskHeadColor;
+  static Color colorPrimary = taskHeadColor;
   static Color fontColor = Colors.white30;
   static Gradient primaryGradient =
       const LinearGradient(colors: [Color(0xFFF93736), Color(0xFFFE725C)]);
@@ -80,6 +81,7 @@ class GlobalConfig {
     if (!isRelease) {
 //      GlobalConfig.prefs.setString("uid", "123");
     }
+    _initFluwx();
     HttpManage.init();
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
@@ -104,5 +106,15 @@ class GlobalConfig {
         prefs.containsKey("hasLogin").toString());*/
     return prefs.containsKey("hasLogin") ? prefs.getBool("hasLogin") : false;
 //    return prefs.containsKey("uid") ? prefs.getString("uid") : false;
+  }
+
+  static _initFluwx() async {
+    await registerWxApi(
+        appId: "wxd930ea5d5a258f4f",
+        doOnAndroid: true,
+        doOnIOS: true,
+        universalLink: "https://your.univerallink.com/link/");
+    var result = await isWeChatInstalled;
+    print("is installed $result");
   }
 }

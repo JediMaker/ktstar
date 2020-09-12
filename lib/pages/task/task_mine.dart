@@ -52,12 +52,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
             Column(
               children: <Widget>[
                 buildTopLayout(),
-                Stack(
-                  children: <Widget>[
-                    buildCardInfo(),
-                    buildBanner(context),
-                  ],
-                ),
+                buildCardInfo(),
+                isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
               ],
             ),
             Card(
@@ -65,7 +61,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                 side: BorderSide.none,
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
               ),
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -113,48 +109,64 @@ class _TaskMinePageState extends State<TaskMinePage> {
                     child: ListView.separated(
                       separatorBuilder: (BuildContext context, int index) =>
                           const Divider(
+                        height: 1,
                         color: Color(0xFFEFEFEF),
                       ),
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Flexible(
-                                flex: 1,
-                                fit: FlexFit.tight,
-                                child: Text(
-                                  "2020-01-32",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color(0xFF222222), fontSize: 12),
-                                ),
+                        return Stack(
+                          alignment: Alignment.topRight,
+                          children: <Widget>[
+                            Image.asset(
+                              "static/images/task_uncompleted.png",
+                              fit: BoxFit.cover,
+                              width: 40,
+                              height: 40,
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              alignment: Alignment.center,
+                              height: 48,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Flexible(
+                                    flex: 1,
+                                    fit: FlexFit.tight,
+                                    child: Text(
+                                      "2020-01-32",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Color(0xFF222222),
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 1,
+                                    fit: FlexFit.tight,
+                                    child: Text(
+                                      "1元",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Color(0xFF222222),
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 1,
+                                    fit: FlexFit.tight,
+                                    child: Text(
+                                      "每天任务完成",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Color(0xFF222222),
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Flexible(
-                                flex: 1,
-                                fit: FlexFit.tight,
-                                child: Text(
-                                  "1元",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color(0xFF222222), fontSize: 12),
-                                ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                fit: FlexFit.tight,
-                                child: Text(
-                                  "每天任务完成",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color(0xFF222222), fontSize: 12),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         );
                       },
                       itemCount: 10,
@@ -185,6 +197,57 @@ class _TaskMinePageState extends State<TaskMinePage> {
           child: Image.asset(
             "static/images/task_vip_banner.png",
             fit: BoxFit.fill,
+          ),
+        ),
+      ),
+    );
+  }
+
+  int memberNum = 0;
+
+  GestureDetector buildProxyBanner(BuildContext context) {
+    //
+    return GestureDetector(
+      onTap: () {
+        showMyDialog(showNickName: false);
+      },
+      child: Visibility(
+        visible: !isDiamonVip,
+        child: Container(
+          width: double.maxFinite,
+          margin: EdgeInsets.only(top: 10, left: 16, right: 16),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              Image.asset(
+                "static/images/task_proxy_banner.png",
+                fit: BoxFit.fill,
+                height: 103,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Text(
+                  "开通VIP会员",
+                  style: TextStyle(color: Color(0xFFFCF1D6), fontSize: 21),
+                ),
+              ),
+              Container(
+                  height: 22,
+                  margin: EdgeInsets.only(top: 55),
+                  constraints: BoxConstraints(maxWidth: 126),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(22)),
+                    gradient: LinearGradient(colors: [
+                      Color(0xffFBF5E1),
+                      Color(0xffF0CF99),
+                    ]),
+                  ),
+                  child: Text(
+                    "现名下已有$memberNum人",
+                    style: TextStyle(color: Color(0xFF3C2C1A), fontSize: 12),
+                  )),
+            ],
           ),
         ),
       ),
@@ -289,7 +352,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text("${widget.title}",
                       style: TextStyle(
-                          color: Colors.white, fontSize: 20, letterSpacing: 1))),
+                          color: Colors.white,
+                          fontSize: 20,
+                          letterSpacing: 1))),
             ),
             buildHeadLayout(),
           ],
@@ -299,144 +364,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   Widget buildHeadLayout() {
     return GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return SimpleDialog(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                    height: 46,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFEFEFEF),
-                        borderRadius: BorderRadius.all(Radius.circular(46))),
-                    child: TextField(
-                        textAlignVertical: TextAlignVertical.center,
-                        style: TextStyle(fontSize: 14),
-                        textInputAction: TextInputAction.send,
-                        decoration: new InputDecoration(
-                          hintText: '昵称：',
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 3.0, horizontal: 15.0),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(46)),
-                              // 边框默认色
-                              borderSide:
-                                  const BorderSide(color: Colors.transparent)),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(46)),
-                              borderSide:
-                                  const BorderSide(color: Colors.transparent)
-                              // 聚焦之后的边框色
-                              ),
-                        ),
-                        onChanged: (value) {
-                          dialogNickName = value;
-                        }),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    height: 46,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFEFEFEF),
-                        borderRadius: BorderRadius.all(Radius.circular(46))),
-                    child: TextField(
-                        textAlignVertical: TextAlignVertical.center,
-                        style: TextStyle(fontSize: 14),
-                        textInputAction: TextInputAction.send,
-                        keyboardType: TextInputType.number,
-                        decoration: new InputDecoration(
-                          hintText: '手机号：',
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 3.0, horizontal: 15.0),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(46)),
-                              // 边框默认色
-                              borderSide:
-                                  const BorderSide(color: Colors.transparent)),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(46)),
-                              borderSide:
-                                  const BorderSide(color: Colors.transparent)
-                              // 聚焦之后的边框色
-                              ),
-                        ),
-                        onChanged: (value) {
-                          dialogPhoneNumber = value;
-                        }),
-                  ),
-                  Container(
-                    height: 1,
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEFEFEF),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Container(
-                              child: Text(
-                                "取消",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Color(0xFF222222)),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 1,
-                          color: Color(0xFFEFEFEF),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: GestureDetector(
-                            onTap: () {
-                              //todo 修改昵称以及手机号
-                              if (CommonUtils.isEmpty(dialogNickName) ||
-                                  CommonUtils.isEmpty(dialogPhoneNumber)) {
-                                Fluttertoast.showToast(
-                                    msg: "请检查填写的信息是否完整！",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
-                                return;
-                              }
-                              if (!CommonUtils.isPhoneLegal(phoneNumber)) {
-                                CommonUtils.showSimplePromptDialog(
-                                    context, "温馨提示", "请输入正确的手机号");
-                                return;
-                              }
-                              Navigator.of(context).pop();
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "确定",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Color(0xFF3668F2)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            });
+        showMyDialog(showNickName: true);
       },
       child: ListTile(
         leading: headUrl == null
@@ -484,5 +412,145 @@ class _TaskMinePageState extends State<TaskMinePage> {
         ),
       ),
     );
+  }
+
+  void showMyDialog({bool showNickName}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            children: <Widget>[
+              Visibility(
+                visible: showNickName,
+                child: Container(
+                  margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                  height: 46,
+                  decoration: BoxDecoration(
+                      color: Color(0xFFEFEFEF),
+                      borderRadius: BorderRadius.all(Radius.circular(46))),
+                  child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      style: TextStyle(fontSize: 14),
+                      textInputAction: TextInputAction.send,
+                      decoration: new InputDecoration(
+                        hintText: '昵称：',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 15.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(46)),
+                            // 边框默认色
+                            borderSide:
+                                const BorderSide(color: Colors.transparent)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(46)),
+                            borderSide:
+                                const BorderSide(color: Colors.transparent)
+                            // 聚焦之后的边框色
+                            ),
+                      ),
+                      onChanged: (value) {
+                        dialogNickName = value;
+                      }),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                height: 46,
+                decoration: BoxDecoration(
+                    color: Color(0xFFEFEFEF),
+                    borderRadius: BorderRadius.all(Radius.circular(46))),
+                child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    style: TextStyle(fontSize: 14),
+                    textInputAction: TextInputAction.send,
+                    keyboardType: TextInputType.number,
+                    decoration: new InputDecoration(
+                      hintText: '手机号：',
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 3.0, horizontal: 15.0),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(46)),
+                          // 边框默认色
+                          borderSide:
+                              const BorderSide(color: Colors.transparent)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(46)),
+                          borderSide:
+                              const BorderSide(color: Colors.transparent)
+                          // 聚焦之后的边框色
+                          ),
+                    ),
+                    onChanged: (value) {
+                      dialogPhoneNumber = value;
+                    }),
+              ),
+              Container(
+                height: 1,
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Color(0xFFEFEFEF),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          child: Text(
+                            "取消",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Color(0xFF222222)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 1,
+                      color: Color(0xFFEFEFEF),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: GestureDetector(
+                        onTap: () {
+                          //todo 修改昵称以及手机号
+                          if (CommonUtils.isEmpty(dialogNickName) ||
+                              CommonUtils.isEmpty(dialogPhoneNumber)) {
+                            Fluttertoast.showToast(
+                                msg: "请检查填写的信息是否完整！",
+                                textColor: Colors.white,
+                                backgroundColor: Colors.grey);
+                            return;
+                          }
+                          if (!CommonUtils.isPhoneLegal(phoneNumber)) {
+                            CommonUtils.showSimplePromptDialog(
+                                context, "温馨提示", "请输入正确的手机号");
+                            return;
+                          }
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "确定",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Color(0xFF3668F2)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

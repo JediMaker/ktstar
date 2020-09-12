@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/services.dart';
+import 'package:fluwx/fluwx.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/pages/task/task_gallery.dart';
 import 'package:star/pages/task/task_submission.dart';
@@ -30,9 +31,18 @@ void main() {
 class _TaskDetailPageState extends State<TaskDetailPage> {
   Permission _permission = Permission.storage;
 
+  String _response = "";
+  WeChatImage source;
+
   @override
   void initState() {
-    // TODO: implement initState
+    weChatResponseEventHandler.listen((res) {
+      if (res is WeChatShareResponse) {
+        setState(() {
+          _response = "state :${res.isSuccessful}";
+        });
+      }
+    });
     super.initState();
   }
 
@@ -70,6 +80,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           children: <Widget>[
             Container(
               color: Colors.white,
+              margin: EdgeInsets.only(bottom: 120),
               child: CustomScrollView(
                 slivers: <Widget>[
                   buildTopLayout(),
@@ -366,6 +377,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     print("当前$index下载结果" + result);
   }
 
+  void _shareImage(scene) {
+    shareToWeChat(WeChatShareImageModel(source, scene: scene));
+  }
+
   Widget row() {
     return Container(
       alignment: Alignment.bottomCenter,
@@ -433,7 +448,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                         new Container(
                           child: new Text(
                             "下载图片",
-                            style: new TextStyle(fontSize: 14.0),
+                            style: new TextStyle(fontSize: 12.0),
                           ),
                         )
                       ],
@@ -469,7 +484,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                         ),
                         new Container(
                           child: new Text("复制文案",
-                              style: new TextStyle(fontSize: 14.0)),
+                              style: new TextStyle(fontSize: 12.0)),
                         )
                       ],
                     ),
@@ -478,7 +493,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    source = WeChatImage.network(images[0]);
+                    _shareImage(WeChatScene.SESSION);
+                  },
                   child: new Container(
                     child: new Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -497,7 +515,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                         ),
                         new Container(
                           child: new Text("微信",
-                              style: new TextStyle(fontSize: 14.0)),
+                              style: new TextStyle(fontSize: 12.0)),
                         )
                       ],
                     ),
@@ -506,7 +524,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    source = WeChatImage.network(images[0]);
+                    _shareImage(WeChatScene.TIMELINE);
+                  },
                   child: new Container(
                     child: new Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -525,7 +546,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                         ),
                         new Container(
                           child: new Text("朋友圈",
-                              style: new TextStyle(fontSize: 14.0)),
+                              style: new TextStyle(fontSize: 12.0)),
                         )
                       ],
                     ),
@@ -779,65 +800,68 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 
   Widget buildCopyButton() {
     return SliverToBoxAdapter(
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            flex: 1,
-            child: GestureDetector(
-              onTap: () {
-                Clipboard.setData(ClipboardData(text: des));
-                Fluttertoast.showToast(
-                    msg: "已复制文案",
-                    backgroundColor: Colors.white,
-                    textColor: Colors.black,
-                    gravity: ToastGravity.BOTTOM);
-              },
-              child: Container(
-                height: 46,
-                width: 216,
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    /*color: _imageFile == null
-                      ? GlobalConfig.taskHeadDisableColor
-                      : GlobalConfig.taskHeadColor,*/
-                    /*gradient: LinearGradient(
-                      colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                    border: Border.all(color: GlobalConfig.taskHeadColor),
-                    borderRadius: BorderRadius.circular(48)),
-                child: Text(
-                  '复制文案',
-                  style: TextStyle(color: GlobalConfig.taskHeadColor),
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return TaskSubmissionPage();
-                }));
-              },
-              child: Container(
-                height: 48,
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: GlobalConfig.taskHeadColor,
-                    /*gradient: LinearGradient(
+      child: Container(
+        padding: EdgeInsets.only(bottom: 40),
+        child: Row(
+          children: <Widget>[
+            Flexible(
+              flex: 1,
+              child: GestureDetector(
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: des));
+                  Fluttertoast.showToast(
+                      msg: "已复制文案",
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
+                      gravity: ToastGravity.BOTTOM);
+                },
+                child: Container(
+                  height: 46,
+                  width: 216,
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      /*color: _imageFile == null
+                        ? GlobalConfig.taskHeadDisableColor
+                        : GlobalConfig.taskHeadColor,*/
+                      /*gradient: LinearGradient(
                         colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                    borderRadius: BorderRadius.circular(48)),
-                child: Text(
-                  '去提交',
-                  style: TextStyle(color: Colors.white),
+                      border: Border.all(color: GlobalConfig.taskHeadColor),
+                      borderRadius: BorderRadius.circular(48)),
+                  child: Text(
+                    '复制文案',
+                    style: TextStyle(color: GlobalConfig.taskHeadColor),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            Flexible(
+              flex: 1,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TaskSubmissionPage();
+                  }));
+                },
+                child: Container(
+                  height: 48,
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: GlobalConfig.taskHeadColor,
+                      /*gradient: LinearGradient(
+                          colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
+                      borderRadius: BorderRadius.circular(48)),
+                  child: Text(
+                    '去提交',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
