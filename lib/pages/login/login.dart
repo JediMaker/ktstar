@@ -31,6 +31,18 @@ class _LoginPageState extends State<LoginPage> {
   String checkCode;
   String password;
   int pageType = 0; //页面展示类型 0-登录  1-注册  2-快速登录
+  ScrollController scrollController = ScrollController();
+  FocusNode _phoneFocusNode = FocusNode();
+  FocusNode _passwordFocusNode = FocusNode();
+  FocusNode _checkCodeFocusNode = FocusNode();
+
+  void _scrollToEnd() {
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+  }
+
+  void _scrollToTop() {
+    scrollController.jumpTo(scrollController.position.minScrollExtent);
+  }
 
   @override
   void initState() {
@@ -42,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     _phoneController.dispose();
     _passwordController.dispose();
     _checkCodeController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -55,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: GlobalConfig.taskHeadColor,
         ),
         body: SingleChildScrollView(
+          controller: scrollController,
           child: Container(
             color: Colors.white,
             child: Column(
@@ -65,8 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                     Container(
                       width: double.maxFinite,
                       color: GlobalConfig.taskHeadColor,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                       child: Text(
                         _description,
                         style: TextStyle(
@@ -205,6 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (mounted) {
                   setState(() {
                     resetInputValues();
+                    _scrollToTop();
                     switch (pageType) {
                       case 0:
                         pageType = 2;
@@ -252,6 +267,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     } else {
                       resetInputValues();
+                      _scrollToTop();
                       pageType = 1;
                       _pwdInputShow = true;
                       _checkCodeInputShow = true;
@@ -295,6 +311,9 @@ class _LoginPageState extends State<LoginPage> {
     _phoneController.text = "";
     _passwordController.text = "";
     _checkCodeController.text = "";
+    _phoneFocusNode.unfocus();
+    _passwordFocusNode.unfocus();
+    _checkCodeFocusNode.unfocus();
   }
 
   /// 登录/注册按钮操作
@@ -386,6 +405,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: TextField(
           controller: _passwordController,
+          focusNode: _passwordFocusNode,
           obscureText: !_pwdShow,
           onChanged: (value) {
             password = value.trim();
@@ -449,6 +469,7 @@ class _LoginPageState extends State<LoginPage> {
             Expanded(
               child: TextField(
                 controller: _checkCodeController,
+                focusNode: _checkCodeFocusNode,
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   checkCode = value.trim();
@@ -515,6 +536,7 @@ class _LoginPageState extends State<LoginPage> {
         textAlignVertical: TextAlignVertical.center,
         textAlign: TextAlign.left,
         controller: _phoneController,
+        focusNode: _phoneFocusNode,
         keyboardType: TextInputType.number,
         maxLengthEnforced: false,
         onChanged: (value) {
