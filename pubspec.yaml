@@ -49,8 +49,6 @@ dependencies:
   flutter_image_compress: ^0.7.0
   #  webview加载
   webview_flutter: ^0.3.22+1
-  #支付宝支付
-  flutter_alipay: "^1.0.0"
   #保存图片到相册
   image_gallery_saver: '^1.5.0'
   #图片预览
