@@ -56,123 +56,125 @@ class _TaskMinePageState extends State<TaskMinePage> {
                 isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
               ],
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                side: BorderSide.none,
-                borderRadius: BorderRadius.all(Radius.circular(16.0)),
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: Text(
-                            "时间",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Color(0xFF999999), fontSize: 12),
+            Flexible(
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                ),
+                margin: EdgeInsets.only(left: 16, right: 16, top: 10,bottom: 10),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: Text(
+                              "时间",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Color(0xFF999999), fontSize: 12),
+                            ),
                           ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: Text(
-                            "金额",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Color(0xFF999999), fontSize: 12),
+                          Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: Text(
+                              "金额",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Color(0xFF999999), fontSize: 12),
+                            ),
                           ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: Text(
-                            "说明",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Color(0xFF999999), fontSize: 12),
+                          Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: Text(
+                              "说明",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Color(0xFF999999), fontSize: 12),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 200,
-                    child: ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(
-                        height: 1,
-                        color: Color(0xFFEFEFEF),
+                        ],
                       ),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Stack(
-                          alignment: Alignment.topRight,
-                          children: <Widget>[
-                            Image.asset(
-                              "static/images/task_uncompleted.png",
-                              fit: BoxFit.cover,
-                              width: 40,
-                              height: 40,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              alignment: Alignment.center,
-                              height: 48,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Flexible(
-                                    flex: 1,
-                                    fit: FlexFit.tight,
-                                    child: Text(
-                                      "2020-01-32",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Color(0xFF222222),
-                                          fontSize: 12),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    fit: FlexFit.tight,
-                                    child: Text(
-                                      "1元",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Color(0xFF222222),
-                                          fontSize: 12),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    fit: FlexFit.tight,
-                                    child: Text(
-                                      "每天任务完成",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Color(0xFF222222),
-                                          fontSize: 12),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      itemCount: 10,
                     ),
-                  )
-                ],
+                    Flexible(
+                      flex: 1,
+                      child: ListView.separated(
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(
+                          height: 1,
+                          color: Color(0xFFEFEFEF),
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Stack(
+                            alignment: Alignment.topRight,
+                            children: <Widget>[
+                              Image.asset(
+                                "static/images/task_uncompleted.png",
+                                fit: BoxFit.cover,
+                                width: 40,
+                                height: 40,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                alignment: Alignment.center,
+                                height: 48,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.tight,
+                                      child: Text(
+                                        "2020-01-32",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF222222),
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.tight,
+                                      child: Text(
+                                        "1元",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF222222),
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.tight,
+                                      child: Text(
+                                        "每天任务完成",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF222222),
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        itemCount: 10,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ],
