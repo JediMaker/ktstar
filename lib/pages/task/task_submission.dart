@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,7 +23,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
   final ImagePicker _picker = ImagePicker();
   String _retrieveDataError;
 
-  void _onButtonPressed(ImageSource source, {BuildContext context}) async {
+  _onButtonPressed(ImageSource source, {BuildContext context}) async {
     try {
       final pickedFile = await _picker.getImage(
         source: source,
@@ -162,9 +163,11 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                   child: Visibility(
                       visible: _imageFile == null,
                       child: GestureDetector(
-                          onTap: () {
-                            _onButtonPressed(ImageSource.gallery,
-                                context: context);
+                          onTap: () async {
+                            CommonUtils.requestPermission(
+                                Permission.photos,
+                                _onButtonPressed(ImageSource.gallery,
+                                    context: context));
                           },
                           child: Image.asset(
                             "static/images/task_img_pick.png",

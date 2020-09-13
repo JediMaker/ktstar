@@ -61,6 +61,8 @@ dependencies:
   gradient_app_bar: ^0.1.3
   #  接入微信sdk
   fluwx: ^2.1.0
+  #  网络监听
+  connectivity: ^0.4.9+2
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

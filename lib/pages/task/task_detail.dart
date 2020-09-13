@@ -372,9 +372,19 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name:
-            "kt_${CommonUtils.getDateStr(DateTime.now()) + index.toString()}");
+        name: "kt_${CommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result);
+  }
+
+  _saveImages() {
+    for (var i = 0; i < images.length; i++) {
+      _save(i);
+    }
+    Fluttertoast.showToast(
+        msg: "图片已下载",
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        gravity: ToastGravity.BOTTOM);
   }
 
   void _shareImage(scene) {
@@ -395,39 +405,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
                   onPressed: () async {
-                    var status =
-                        await CommonUtils.requestPermission(_permission);
-
-                    switch (status) {
-                      case PermissionStatus.denied:
-                        print("denied");
-                        Fluttertoast.showToast(
-                            msg: "请打开设置允许应用文件读写权限",
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
-                            gravity: ToastGravity.BOTTOM);
-                        break;
-                      case PermissionStatus.granted:
-                        print("granted");
-                        for (var i = 0; i < images.length; i++) {
-                          _save(i);
-                        }
-                        Fluttertoast.showToast(
-                            msg: "图片已下载",
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
-                            gravity: ToastGravity.BOTTOM);
-                        break;
-                      case PermissionStatus.restricted:
-                        print("restricted");
-                        break;
-                      case PermissionStatus.undetermined:
-                        print("undetermined");
-                        break;
-                      case PermissionStatus.permanentlyDenied:
-                        print("permanentlyDenied");
-                        break;
-                    }
+                    CommonUtils.requestPermission(_permission, _saveImages());
                   },
                   child: new Container(
                     child: new Column(

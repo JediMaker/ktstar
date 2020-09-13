@@ -50,9 +50,11 @@ class GlobalConfig {
   // 是否为release版
   static bool isRelease = false;
 
-  // 是否为首次进入app
+  /// 是否为首次进入app
   static bool get isFirst =>
       prefs.containsKey("isFirst") ? prefs.getBool("isFirst") : true;
+  /// taskWallAddress
+  static const TASKWALL_ADDRESS = 'https://sheng.bainianmao.com/app/index.php?i=550&c=entry&do=plus_task&m=bsht_tbk&mobile=#mobile#&fm=xcx&to=nbapp|web|任务墙|h5|#d72825|#d72825|0|0|0||0|0|0||nb_login2';
 
   /// 代理的 ip 地址
   static const localProxyIPAddress = '192.168.0.6';

@@ -7,6 +7,8 @@ import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_submission.dart';
+import 'package:star/pages/widget/my_webview.dart';
+import 'package:star/utils/navigator_utils.dart';
 
 class TaskListPage extends StatefulWidget {
   TaskListPage({Key key}) : super(key: key);
@@ -118,7 +120,14 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget buildTaskWall() {
     return SliverToBoxAdapter(
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          NavigatorUtils.navigatorRouter(
+              context,
+              WebViewPage(
+                initialUrl: GlobalConfig.TASKWALL_ADDRESS,
+                showActions: true,
+              ));
+        },
         child: Container(
           height: 180,
           margin: EdgeInsets.symmetric(horizontal: 16),

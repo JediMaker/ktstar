@@ -81,27 +81,29 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: '可淘星选',
-      home: WillPopScope(
-          onWillPop: () async {
-            if (_lastQuitTime == null ||
-                DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
-              /*Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              Fluttertoast.showToast(
-                  msg: "再按一次返回键退出应用",
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  gravity: ToastGravity.BOTTOM);
-              _lastQuitTime = DateTime.now();
-              return false;
-            } else {
-              // 退出app
-              await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      home: Scaffold(
+        body: WillPopScope(
+            onWillPop: () async {
+              if (_lastQuitTime == null ||
+                  DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
+                /*Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+                Fluttertoast.showToast(
+                    msg: "再按一次返回键退出应用",
+                    backgroundColor: Colors.grey,
+                    textColor: Colors.white,
+                    gravity: ToastGravity.BOTTOM);
+                _lastQuitTime = DateTime.now();
+                return false;
+              } else {
+                // 退出app
+                await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 //              Navigator.of(context).pop(true);
-              return true;
-            }
-          },
-          child: buildHomeWidget()),
+                return true;
+              }
+            },
+            child: buildHomeWidget()),
+      ),
     );
   }
 

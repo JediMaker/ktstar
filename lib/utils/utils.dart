@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:connectivity/connectivity.dart';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/api.dart';
 import 'package:star/utils/common_utils.dart';
 
@@ -25,6 +29,69 @@ class Utils {
 */ /*
     }*/
     return double.parse(num.toStringAsFixed(3));
+  }
+
+
+  ///
+  /// 当有界面使用的时候
+  //
+  //@override //初始化 void initState() {
+  // super.initState();
+  //  initConnectivity(); //网络监听（开始）
+  //  connectivityInitState(); //网络监听（进行）  /**  * @Wait 版本更新写在这  */
+  //}
+  //界面结束时记得关闭监听
+  //
+  //@override //结束
+  // void dispose() {
+  //　　　　super.dispose();
+  //  　　connectivityDispose(); //网络监听（结束）
+  // }
+  ///
+  ///
+  ///
+
+  //定义变量（网络状态）
+  String _connectionStatus = 'Unknown';
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  //网络初始状态
+  connectivityInitState() {
+    _connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      print(result.toString());
+      if (result.toString() == 'ConnectivityResult.none') {
+        Fluttertoast.showToast(
+            msg: '网络连接错误!',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0);
+      }
+    });
+  }
+
+  //网络结束监听
+  connectivityDispose() {
+    _connectivitySubscription.cancel();
+  }
+
+  //网络进行监听
+  Future<Null> initConnectivity() async {
+    String connectionStatus;
+    //平台消息可能会失败，因此我们使用Try/Catch PlatformException。
+    try {
+      connectionStatus = (await Connectivity().checkConnectivity()).toString();
+
+      if (connectionStatus == ConnectivityResult.mobile) {
+        // I am connected to a mobile network.
+      } else if (connectionStatus == ConnectivityResult.wifi) {
+        // I am connected to a wifi network.
+      }
+    } on PlatformException catch (e) {
+      print(e.toString());
+      connectionStatus = 'Failed to get connectivity.';
+    }
   }
 
   static String getSign(Map parameter) {
