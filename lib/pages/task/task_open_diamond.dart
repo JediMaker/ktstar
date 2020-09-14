@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'dart:io' as H;
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class TaskOpenDiamondPage extends StatefulWidget {
   TaskOpenDiamondPage({Key key}) : super(key: key);
@@ -11,9 +15,18 @@ class TaskOpenDiamondPage extends StatefulWidget {
 }
 
 class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
+  String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
+
+  String _result = "无";
   @override
   void initState() {
-    // TODO: implement initState
+    fluwx.weChatResponseEventHandler.listen((res) {
+      if (res is fluwx.WeChatPaymentResponse) {
+        setState(() {
+          _result = "pay :${res.isSuccessful}";
+        });
+      }
+    });
     super.initState();
   }
 
@@ -125,8 +138,30 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                     ],
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       //todo 调用接口去开通钻石会员 ，调用微信支付
+                      var h = H.HttpClient();
+                      h.badCertificateCallback = (cert, String host, int port) {
+                        return true;
+                      };
+                      var request = await h.getUrl(Uri.parse(_url));
+                      var response = await request.close();
+                      var data = await Utf8Decoder().bind(response).join();
+                      Map<String, dynamic> result = json.decode(data);
+                      print(result['appid']);
+                      print(result["timestamp"]);
+                      fluwx.payWithWeChat(
+                        appId: result['appid'].toString(),
+                        partnerId: result['partnerid'].toString(),
+                        prepayId: result['prepayid'].toString(),
+                        packageValue: result['package'].toString(),
+                        nonceStr: result['noncestr'].toString(),
+                        timeStamp: result['timestamp'],
+                        sign: result['sign'].toString(),
+                      )
+                          .then((data) {
+                        print("---》$data");
+                      });
                     },
                     child: Container(
                       height: 46,

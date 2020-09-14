@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:star/global_config.dart';
+import 'package:star/http/http.dart';
+import 'package:star/http/http_manage.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
@@ -124,9 +126,11 @@ class _TaskListPageState extends State<TaskListPage> {
           NavigatorUtils.navigatorRouter(
               context,
               WebViewPage(
-                initialUrl: GlobalConfig.TASKWALL_ADDRESS,
+                initialUrl:
+                    HttpManage.getTheMissionWallEntranceUrl("13122336666"),
                 showActions: true,
               ));
+//          HttpManage.getTheMissionWallEntrance("13122336666");
         },
         child: Container(
           height: 180,

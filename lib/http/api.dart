@@ -1,5 +1,5 @@
 class APi {
-  static const String BASE_URL = "https:///task.ktkj.shop/";
+  static const String BASE_URL = "https://task.ktkj.shop/";
   static const int CONNECT_TIMEOUT = 5000;
   static const int RECEIVE_TIMEOUT = 3000;
 
@@ -19,7 +19,7 @@ class APi {
 
   ///修改密码
   static const String RESET_PASSWORD =
-      "/api/index.php?route=api/user/reset_password";
+      "/api/setpwd";
 
   ///获取用户信息
   static const String USER_INFO = "/api/userinfo";
@@ -32,6 +32,8 @@ class APi {
 
   ///修改头像
   static const String USER_REFACE = "/api/index.php?route=api/user/eface";
+  ///创建二维码
+  static const String CREATE_QRCODE = "/api/create-qrcode";
 
 /*------------------地址相关START-------------------*/
   ///收货地址

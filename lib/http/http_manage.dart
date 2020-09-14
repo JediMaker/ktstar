@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
@@ -69,6 +70,19 @@ class HttpManage {
       };
     }
 //    /api/index.php?route=oauth/oauth2/authorize
+  }
+
+  /// 获取任务墙入口
+  static String getTheMissionWallEntranceUrl(String phone) {
+    // 请求参数也可以通过对象传递：
+    var signature = Utils.generateMd5(phone.toString() +
+        GlobalConfig.MISSION_WALL_CHANNEL +
+        GlobalConfig.MISSION_WALL_KEY);
+    var paramStr = "?phone=$phone&" +
+        "channel=${GlobalConfig.MISSION_WALL_CHANNEL}&" +
+        "time=${CommonUtils.currentTimeMillis()}&" +
+        "signature=$signature";
+    return GlobalConfig.TASKWALL_ADDRESS + paramStr;
   }
 
   ///
@@ -174,6 +188,60 @@ class HttpManage {
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.FAST_LOGIN,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    if (entity.status) {
+      GlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
+    }
+    GlobalConfig.saveLoginStatus(entity.status);
+    return entity;
+  }
+
+  ///
+  ///[password]密码
+  ///
+  ///
+  /// 快速登陆密码修改
+  ///
+  static Future<ResultBeanEntity> changePassword(String password) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["password"] = "$password";
+    paramsMap["uid"] = "${GlobalConfig.prefs.getString("uid")}";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.RESET_PASSWORD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    if (entity.status) {
+      GlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
+    }
+    GlobalConfig.saveLoginStatus(entity.status);
+    return entity;
+  }
+
+  ///
+  ///
+  ///
+  /// 产生二维码
+  ///
+  static Future<ResultBeanEntity> generateQRCode(String password) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["id"] = "${GlobalConfig.prefs.getString("uid")}";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CREATE_QRCODE,
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;

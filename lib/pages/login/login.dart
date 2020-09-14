@@ -67,74 +67,79 @@ class _LoginPageState extends State<LoginPage> {
           elevation: 0,
           backgroundColor: GlobalConfig.taskHeadColor,
         ),
-        body: SingleChildScrollView(
-          controller: scrollController,
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Container(
-                    child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: double.maxFinite,
-                      color: GlobalConfig.taskHeadColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                      child: Text(
-                        _description,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          letterSpacing: 1,
-                          color: Colors.white,
+        body: Container(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          color: Colors.white,
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.maxFinite,
+                        color: GlobalConfig.taskHeadColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                        child: Text(
+                          _description,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            letterSpacing: 1,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    // 裁切的控件
-                    Stack(
-                      children: <Widget>[
-                        ClipPath(
-                          // 只裁切底部的方法
-                          clipper: BottonClipper(),
-                          child: Container(
-                            color: GlobalConfig.taskHeadColor,
-                            height: 145,
+                      // 裁切的控件
+                      Stack(
+                        children: <Widget>[
+                          ClipPath(
+                            // 只裁切底部的方法
+                            clipper: BottonClipper(),
+                            child: Container(
+                              color: GlobalConfig.taskHeadColor,
+                              height: 145,
+                            ),
                           ),
-                        ),
-                        Container(
-                          constraints: BoxConstraints(minHeight: 120),
-                          width: double.maxFinite,
-                          margin: EdgeInsets.symmetric(horizontal: 16),
-                          padding: EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16))),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              buildPhoneContainer(),
-                              buildCheckCodeLayout(),
-                              buildPasswordLayout(),
-                              SizedBox(
-                                height: 60,
-                              ),
-                              buildBtnLayout(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildBtnsRow(),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                )),
-                buildWechatLoginContainer(),
-              ],
+                          Container(
+                            constraints: BoxConstraints(minHeight: 120),
+                            width: double.maxFinite,
+                            margin: EdgeInsets.symmetric(horizontal: 16),
+                            padding: EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                buildPhoneContainer(),
+                                buildCheckCodeLayout(),
+                                buildPasswordLayout(),
+                                SizedBox(
+                                  height: 60,
+                                ),
+                                buildBtnLayout(),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                buildBtnsRow(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  )),
+                  buildWechatLoginContainer(),
+                ],
+              ),
             ),
           ),
         ) // This trailing comma makes auto-formatting nicer for build methods.

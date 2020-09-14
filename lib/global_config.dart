@@ -36,6 +36,12 @@ class GlobalConfig {
 
   static SharedPreferences _prefs;
 
+  ///任务墙渠道别名
+  static const String MISSION_WALL_CHANNEL = "ktxx001128";
+
+  /// 任务墙入口秘钥
+  static const String MISSION_WALL_KEY = "xJmIYddp";
+
   static SharedPreferences get prefs => _prefs; // 可选的主题列表
 
   static List<MaterialColor> get themes => _themes;
@@ -48,13 +54,15 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   // 是否为release版
-  static bool isRelease = false;
+  static bool isRelease = true;
 
   /// 是否为首次进入app
   static bool get isFirst =>
       prefs.containsKey("isFirst") ? prefs.getBool("isFirst") : true;
+
   /// taskWallAddress
-  static const TASKWALL_ADDRESS = 'https://sheng.bainianmao.com/app/index.php?i=550&c=entry&do=plus_task&m=bsht_tbk&mobile=#mobile#&fm=xcx&to=nbapp|web|任务墙|h5|#d72825|#d72825|0|0|0||0|0|0||nb_login2';
+  static const TASKWALL_ADDRESS =
+      'https://c.buuyee.com/api/external';
 
   /// 代理的 ip 地址
   static const localProxyIPAddress = '192.168.0.6';
