@@ -54,7 +54,7 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   // 是否为release版
-  static bool isRelease = true;
+  static bool isRelease = false;
 
   /// 是否为首次进入app
   static bool get isFirst =>
@@ -124,7 +124,7 @@ class GlobalConfig {
         appId: WECHAT_APPID,
         doOnAndroid: true,
         doOnIOS: true,
-        universalLink: "https://your.univerallink.com/link/");
+        universalLink: "https://www.ktkj.shop/");
     var result = await isWeChatInstalled;
     print("is installed $result");
   }
