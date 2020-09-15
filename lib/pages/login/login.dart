@@ -9,6 +9,7 @@ import 'package:star/pages/widget/time_widget.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -36,6 +37,8 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode _passwordFocusNode = FocusNode();
   FocusNode _checkCodeFocusNode = FocusNode();
 
+  String _result = "无";
+
   void _scrollToEnd() {
     scrollController.jumpTo(scrollController.position.maxScrollExtent);
   }
@@ -46,6 +49,14 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((res) {
+      if (res is fluwx.WeChatAuthResponse) {
+        setState(() {
+          _result = "state :${res.state} \n code:${res.code}";
+          print("微信授权结果：" + _result);
+        });
+      }
+    });
     super.initState();
   }
 
@@ -188,6 +199,13 @@ class _LoginPageState extends State<LoginPage> {
             child: new FlatButton(
                 onPressed: () {
                   //TODO 接入微信登陆
+                  fluwx
+                      .sendWeChatAuth(
+                          scope: "snsapi_userinfo",
+                          state: "wechat_sdk_demo_test")
+                      .then((data) {
+                    print(data.toString());
+                  });
                 },
                 child: new Container(
                   child: new Column(
