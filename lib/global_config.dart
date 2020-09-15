@@ -66,7 +66,8 @@ class GlobalConfig {
 
   /// 代理的 ip 地址
   static const localProxyIPAddress = '192.168.0.6';
-
+  /// 微信appid
+  static const String WECHAT_APPID = 'wx824cc9f48da9315c';
   /// 代理端口
   static const localProxyPort = 8888;
 
@@ -120,7 +121,7 @@ class GlobalConfig {
 
   static _initFluwx() async {
     await registerWxApi(
-        appId: "wxd930ea5d5a258f4f",
+        appId: WECHAT_APPID,
         doOnAndroid: true,
         doOnIOS: true,
         universalLink: "https://your.univerallink.com/link/");

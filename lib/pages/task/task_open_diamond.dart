@@ -21,6 +21,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
   String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
 
   String _result = "无";
+  int _payway = 0;
 
   @override
   void initState() {
@@ -169,8 +170,6 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
         );
   }
 
-  int _payway = 1;
-
   _showSelectPayWayBottomSheet(context) {
     showModalBottomSheet(
         context: context,
@@ -178,122 +177,123 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         builder: (context) {
-          return Container(
-            height: 300,
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                    "钻石会员开通",
-                    style: TextStyle(color: Color(0xFF222222), fontSize: 18),
-                  ),
-                  trailing: Text.rich(TextSpan(children: <TextSpan>[
-                    TextSpan(
-                        text: "¥",
-                        style: TextStyle(
-                            color: GlobalConfig.taskHeadColor, fontSize: 12)),
-                    TextSpan(
-                        text: " 199",
-                        style: TextStyle(
-                            color: GlobalConfig.taskHeadColor, fontSize: 18)),
-                    TextSpan(
-                        text: ".00",
-                        style: TextStyle(
-                            color: GlobalConfig.taskHeadColor, fontSize: 12)),
-                  ])),
-                ),
-                ListTile(
-                  onTap: () {
-                    if (mounted) {
-                      setState(() {
-                        _payway = 1;
-                      });
-                    }
-                  },
-                  leading: Image.asset(
-                    "static/images/payway_wx.png",
-                    width: 30,
-                    height: 30,
-                  ),
-                  title: Text(
-                    "微信",
-                    style: TextStyle(color: Color(0xFF222222), fontSize: 16),
-                  ),
-                  trailing: _payway == 1
-                      ? Image.asset(
-                          "static/images/payway_checked.png",
-                          width: 20,
-                          height: 20,
-                        )
-                      : Image.asset(
-                          "static/images/payway_unchecked.png",
+          return StatefulBuilder(
+            builder: (context, state) {
+              return Container(
+                height: 300,
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(
+                        "钻石会员开通",
+                        style:
+                            TextStyle(color: Color(0xFF222222), fontSize: 18),
+                      ),
+                      trailing: Text.rich(TextSpan(children: <TextSpan>[
+                        TextSpan(
+                            text: "¥",
+                            style: TextStyle(
+                                color: GlobalConfig.taskHeadColor,
+                                fontSize: 12)),
+                        TextSpan(
+                            text: " 199",
+                            style: TextStyle(
+                                color: GlobalConfig.taskHeadColor,
+                                fontSize: 18)),
+                        TextSpan(
+                            text: ".00",
+                            style: TextStyle(
+                                color: GlobalConfig.taskHeadColor,
+                                fontSize: 12)),
+                      ])),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        state(() {
+                          _changeSelectedPayWay(1);
+                        });
+                      },
+                      leading: Image.asset(
+                        "static/images/payway_wx.png",
+                        width: 30,
+                        height: 30,
+                      ),
+                      title: Text(
+                        "微信",
+                        style:
+                            TextStyle(color: Color(0xFF222222), fontSize: 16),
+                      ),
+                      trailing: Image.asset(
+                        _payway == 1
+                            ? "static/images/payway_checked.png"
+                            : "static/images/payway_unchecked.png",
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        state(() {
+                          _changeSelectedPayWay(2);
+                        });
+                      },
+                      leading: Image.asset(
+                        "static/images/payway_zfb.png",
+                        width: 30,
+                        height: 30,
+                      ),
+                      title: Text(
+                        "支付宝",
+                        style:
+                            TextStyle(color: Color(0xFF222222), fontSize: 16),
+                      ),
+                      trailing: Container(
+                        child: Image.asset(
+                          _payway == 2
+                              ? "static/images/payway_checked.png"
+                              : "static/images/payway_unchecked.png",
                           width: 20,
                           height: 20,
                         ),
-                ),
-                ListTile(
-                  onTap: () {
-                    if (mounted) {
-                      setState(() {
-                        _payway = 2;
-                      });
-                    }
-                  },
-                  leading: Image.asset(
-                    "static/images/payway_zfb.png",
-                    width: 30,
-                    height: 30,
-                  ),
-                  title: Text(
-                    "支付宝",
-                    style: TextStyle(color: Color(0xFF222222), fontSize: 16),
-                  ),
-                  trailing: _payway == 2
-                      ? Image.asset(
-                          "static/images/payway_checked.png",
-                          width: 20,
-                          height: 20,
-                        )
-                      : Image.asset(
-                          "static/images/payway_unchecked.png",
-                          width: 20,
-                          height: 20,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        if (_payway == 1) {
+                          //todo 调用接口去开通钻石会员 ，调用微信支付
+                          callWxPay();
+                        } else if (_payway == 2) {
+                          //todo 调用接口去开通钻石会员 ，调用支付宝支付
+                          callAlipay();
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "请选择支付方式！",
+                              textColor: Colors.white,
+                              backgroundColor: Colors.grey);
+                        }
+                      },
+                      child: Container(
+                        height: 46,
+                        alignment: Alignment.center,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(46)),
+                          gradient: LinearGradient(colors: [
+                            Color(0xFF73D9C4),
+                            Color(0xFF50C8AD),
+                          ]),
                         ),
+                        child: Text(
+                          "支付",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    if (_payway == 1) {
-                      //todo 调用接口去开通钻石会员 ，调用微信支付
-                      callWxPay();
-                    } else if (_payway == 2) {
-                      //todo 调用接口去开通钻石会员 ，调用支付宝支付
-                      callAlipay();
-                    } else {
-                      Fluttertoast.showToast(
-                          msg: "请选择支付方式！",
-                          textColor: Colors.white,
-                          backgroundColor: Colors.grey);
-                    }
-                  },
-                  child: Container(
-                    height: 46,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(46)),
-                      gradient: LinearGradient(colors: [
-                        Color(0xFF73D9C4),
-                        Color(0xFF50C8AD),
-                      ]),
-                    ),
-                    child: Text(
-                      "支付",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
-            ),
+              );
+            },
           );
         });
   }
@@ -346,5 +346,9 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
           msg: _payResult == null ? "" : _payResult.toString(),
           textColor: Colors.black);
     });
+  }
+
+  _changeSelectedPayWay(int i) {
+    _payway = i;
   }
 }
