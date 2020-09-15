@@ -129,6 +129,8 @@ class _TaskListPageState extends State<TaskListPage> {
                 initialUrl:
                     HttpManage.getTheMissionWallEntranceUrl("13122336666"),
                 showActions: true,
+                title: "任务墙",
+
               ));
 //          HttpManage.getTheMissionWallEntrance("13122336666");
         },
