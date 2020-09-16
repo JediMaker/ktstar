@@ -7,6 +7,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../global_config.dart';
@@ -35,10 +36,11 @@ The navigation delegate is set to block navigation to the youtube website.
 class WebViewPage extends StatefulWidget {
   var initialUrl;
   var title;
+  Color appBarBackgroundColor;
   bool showActions;
 
   WebViewPage(
-      {@required this.initialUrl, this.title, this.showActions = false});
+      {@required this.initialUrl, this.title, this.showActions = false,this.appBarBackgroundColor=GlobalConfig.taskHeadColor});
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
@@ -53,9 +55,13 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: GlobalConfig.colorPrimary,
-        title: Text(widget.title == null ? '' : widget.title),
+        backgroundColor: widget.appBarBackgroundColor,
+        title: Text(
+          widget.title == null ? '' : widget.title,
+          style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+        ),
         centerTitle: true,
+        elevation: 0,
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
           Visibility(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
-import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,6 +33,40 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   void initState() {
     super.initState();
     _currentIndex = widget.currentIndex;
+  }
+
+  DateTime _lastQuitTime;
+
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        width: 1125, height: 2436, allowFontScaling: false);
+    return Scaffold(
+      body: WillPopScope(
+          onWillPop: () async {
+            if (_lastQuitTime == null ||
+                DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
+              /*Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+              Fluttertoast.showToast(
+                  msg: "再按一次返回键退出应用",
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  gravity: ToastGravity.BOTTOM);
+              _lastQuitTime = DateTime.now();
+              return false;
+            } else {
+              // 退出app
+              await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+//              Navigator.of(context).pop(true);
+              return true;
+            }
+          },
+          child: buildHomeWidget()),
+    );
+  }
+
+  Scaffold buildHomeWidget() {
     _navigationViews = <NavigationIconView>[
       new NavigationIconView(
           icon: Image.asset(
@@ -45,7 +79,10 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             width: 29,
             height: 25,
           ),
-          title: new Text('任务大厅'),
+          title: new Text(
+            '任务大厅',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
           vsync: this),
       new NavigationIconView(
           icon: Image.asset(
@@ -58,7 +95,10 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             width: 20,
             height: 25,
           ),
-          title: new Text('我的'),
+          title: new Text(
+            '我的',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
           vsync: this)
     ];
     for (NavigationIconView view in _navigationViews) {
@@ -73,41 +113,6 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new MyPage()*/
     ];
     _currentPage = _pageList[_currentIndex];
-  }
-
-  DateTime _lastQuitTime;
-
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: '可淘星选',
-      home: Scaffold(
-        body: WillPopScope(
-            onWillPop: () async {
-              if (_lastQuitTime == null ||
-                  DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
-                /*Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-                Fluttertoast.showToast(
-                    msg: "再按一次返回键退出应用",
-                    backgroundColor: Colors.grey,
-                    textColor: Colors.white,
-                    gravity: ToastGravity.BOTTOM);
-                _lastQuitTime = DateTime.now();
-                return false;
-              } else {
-                // 退出app
-                await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-//              Navigator.of(context).pop(true);
-                return true;
-              }
-            },
-            child: buildHomeWidget()),
-      ),
-    );
-  }
-
-  Scaffold buildHomeWidget() {
     return new Scaffold(
         body: new Center(child: _currentPage),
         bottomNavigationBar: Builder(

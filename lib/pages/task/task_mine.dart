@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/pages/login/login.dart';
@@ -24,6 +25,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   var taskReward;
   var withDrawn;
   bool isDiamonVip = false;
+  int vipType = 0; //0 普通用户 1钻石用户 2代理
 
   @override
   void initState() {
@@ -39,11 +41,13 @@ class _TaskMinePageState extends State<TaskMinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GradientAppBar(
-          gradient: LinearGradient(colors: [
-            Color(0xFFFC767E),
-            Color(0xFFFD9245),
-          ]),
-          title: Text("我的"),
+          gradient: buildBackgroundLinearGradient(),
+          title: Text(
+            "我的",
+            style: TextStyle(
+                color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                fontSize: ScreenUtil().setSp(54)),
+          ),
           centerTitle: true,
           elevation: 0,
         ),
@@ -53,7 +57,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
               children: <Widget>[
                 buildTopLayout(),
                 buildCardInfo(),
-                isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
+                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
               ],
             ),
             Flexible(
@@ -62,7 +66,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   side: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 ),
-                margin: EdgeInsets.only(left: 16, right: 16, top: 10,bottom: 10),
+                margin:
+                    EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -79,7 +84,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                               "时间",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Color(0xFF999999), fontSize: 12),
+                                  color: Color(0xFF999999),
+                                  fontSize: ScreenUtil().setSp(36)),
                             ),
                           ),
                           Flexible(
@@ -89,7 +95,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                               "金额",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Color(0xFF999999), fontSize: 12),
+                                  color: Color(0xFF999999),
+                                  fontSize: ScreenUtil().setSp(36)),
                             ),
                           ),
                           Flexible(
@@ -99,7 +106,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                               "说明",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Color(0xFF999999), fontSize: 12),
+                                  color: Color(0xFF999999),
+                                  fontSize: ScreenUtil().setSp(36)),
                             ),
                           ),
                         ],
@@ -139,7 +147,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Color(0xFF222222),
-                                            fontSize: 12),
+                                            fontSize: ScreenUtil().setSp(36)),
                                       ),
                                     ),
                                     Flexible(
@@ -150,7 +158,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Color(0xFF222222),
-                                            fontSize: 12),
+                                            fontSize: ScreenUtil().setSp(36)),
                                       ),
                                     ),
                                     Flexible(
@@ -161,7 +169,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Color(0xFF222222),
-                                            fontSize: 12),
+                                            fontSize: ScreenUtil().setSp(36)),
                                       ),
                                     ),
                                   ],
@@ -182,6 +190,23 @@ class _TaskMinePageState extends State<TaskMinePage> {
         );
   }
 
+  LinearGradient buildBackgroundLinearGradient() {
+    return vipType == 1
+        ? LinearGradient(colors: [
+            Color(0xFFFC767E),
+            Color(0xFFFD9245),
+          ])
+        : vipType == 2
+            ? LinearGradient(colors: [
+                Color(0xFF363636),
+                Color(0xFF363636),
+              ])
+            : LinearGradient(colors: [
+                Color(0xFFD8C2A4),
+                Color(0xFFCC9976),
+              ]);
+  }
+
   GestureDetector buildBanner(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -193,11 +218,10 @@ class _TaskMinePageState extends State<TaskMinePage> {
         visible: !isDiamonVip,
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.only(
-            top: 70,
-          ),
           child: Image.asset(
             "static/images/task_vip_banner.png",
+            width: ScreenUtil().setWidth(1194),
+            height: ScreenUtil().setHeight(425),
             fit: BoxFit.fill,
           ),
         ),
@@ -230,7 +254,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
                 margin: EdgeInsets.only(top: 20),
                 child: Text(
                   "开通VIP会员",
-                  style: TextStyle(color: Color(0xFFFCF1D6), fontSize: 21),
+                  style: TextStyle(
+                      color: Color(0xFFFCF1D6),
+                      fontSize: ScreenUtil().setSp(64)),
                 ),
               ),
               Container(
@@ -247,7 +273,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   ),
                   child: Text(
                     "现名下已有$memberNum人",
-                    style: TextStyle(color: Color(0xFF3C2C1A), fontSize: 12),
+                    style: TextStyle(
+                        color: Color(0xFF3C2C1A),
+                        fontSize: ScreenUtil().setSp(36)),
                   )),
             ],
           ),
@@ -261,17 +289,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
       child: Stack(
         children: <Widget>[
           Container(
-            height: 46,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Color(0xFFFC767E),
-              Color(0xFFFD9245),
-            ])),
+            height: ScreenUtil().setHeight(140),
+            decoration:
+                BoxDecoration(gradient: buildBackgroundLinearGradient()),
           ),
           Card(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Container(
-              height: 82,
+              height: ScreenUtil().setHeight(257),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -284,17 +309,18 @@ class _TaskMinePageState extends State<TaskMinePage> {
                       children: <Widget>[
                         Text(
                           "任务奖励金",
-                          style:
-                              TextStyle(color: Color(0xFF222222), fontSize: 14),
+                          style: TextStyle(
+                              color: Color(0xFF222222),
+                              fontSize: ScreenUtil().setSp(42)),
                         ),
                         SizedBox(
-                          height: 13,
+                          height: ScreenUtil().setHeight(16),
                         ),
                         Text(
                           "${taskReward == null ? '¥ 0' : '¥ $taskReward'}",
                           style: TextStyle(
                               color: Color(0xFF222222),
-                              fontSize: 18,
+                              fontSize: ScreenUtil().setSp(56),
                               fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -308,17 +334,18 @@ class _TaskMinePageState extends State<TaskMinePage> {
                       children: <Widget>[
                         Text(
                           "已提现",
-                          style:
-                              TextStyle(color: Color(0xFF222222), fontSize: 14),
+                          style: TextStyle(
+                              color: Color(0xFF222222),
+                              fontSize: ScreenUtil().setSp(42)),
                         ),
                         SizedBox(
-                          height: 13,
+                          height: ScreenUtil().setHeight(16),
                         ),
                         Text(
                           "${withDrawn == null ? '¥ 0' : '¥ $withDrawn'}",
                           style: TextStyle(
                               color: Color(0xFF222222),
-                              fontSize: 18,
+                              fontSize: ScreenUtil().setSp(56),
                               fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -339,11 +366,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   Widget buildTopLayout() {
     return Container(
         height: 100,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color(0xFFFC767E),
-          Color(0xFFFD9245),
-        ])),
+        decoration: BoxDecoration(gradient: buildBackgroundLinearGradient()),
         child: Column(
           children: <Widget>[
             Visibility(
@@ -378,19 +401,31 @@ class _TaskMinePageState extends State<TaskMinePage> {
             : ClipOval(
                 child: CachedNetworkImage(
                   imageUrl: headUrl,
-                  width: 60,
-                  height: 60,
+                  width: ScreenUtil().setWidth(120),
+                  height: ScreenUtil().setWidth(120),
                   fit: BoxFit.cover,
                 ),
               ),
-        title: Text(
-          "${nickName == null ? '昵称' : nickName}",
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+        title: Row(
+          children: <Widget>[
+            Text(
+              "${nickName == null ? '昵称' : nickName}",
+              style: TextStyle(
+                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: ScreenUtil().setSp(42)),
+            ),
+            SizedBox(
+              width: ScreenUtil().setWidth(26),
+            ),
+//            Image.asset("", width:)
+          ],
         ),
         subtitle: Text(
           "${phoneNumber == null ? '请绑定您的手机号' : phoneNumber}",
-          style: TextStyle(color: Colors.white, fontSize: 14),
+          style: TextStyle(
+              color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+              fontSize: ScreenUtil().setSp(42)),
         ),
         trailing: GestureDetector(
           onTap: () {
@@ -405,10 +440,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(24)),
-                border: Border.all(color: Colors.white, width: 0.5)),
+                border: Border.all(
+                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                    width: 0.5)),
             child: Text(
               "去提现",
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              style: TextStyle(
+                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                  fontSize: ScreenUtil().setSp(38)),
             ),
           ),
         ),

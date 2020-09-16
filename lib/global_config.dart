@@ -46,7 +46,7 @@ class GlobalConfig {
 
   static List<MaterialColor> get themes => _themes;
 
-  static Color taskHeadColor = Color(0xFFFD8B4E);
+  static const Color taskHeadColor = Color(0xFFFD8B4E);
   static Color taskHeadDisableColor = Color(0xFFFFBB97);
   static Color taskBtnBgColor = Color(0xFFFFECDE);
   static Color taskBtnBgGreyColor = Color(0xFFEFEFEF);
@@ -129,3 +129,6 @@ class GlobalConfig {
     print("is installed $result");
   }
 }
+
+
+

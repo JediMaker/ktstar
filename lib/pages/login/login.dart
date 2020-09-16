@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
+import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/result_bean_entity.dart';
+import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/pages/widget/time_widget.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -73,7 +76,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(
+            widget.title,
+            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+          ),
           centerTitle: true,
           elevation: 0,
           backgroundColor: GlobalConfig.taskHeadColor,
@@ -100,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           _description,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                            fontSize: ScreenUtil().setSp(72),
                             letterSpacing: 1,
                             color: Colors.white,
                           ),
@@ -114,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                             clipper: BottonClipper(),
                             child: Container(
                               color: GlobalConfig.taskHeadColor,
-                              height: 145,
+                              height: ScreenUtil().setHeight(500),
                             ),
                           ),
                           Container(
@@ -134,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                                 buildCheckCodeLayout(),
                                 buildPasswordLayout(),
                                 SizedBox(
-                                  height: 60,
+                                  height: ScreenUtil().setHeight(156),
                                 ),
                                 buildBtnLayout(),
                                 SizedBox(
@@ -180,8 +186,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   "第三方登录",
                   style: TextStyle(
-                    color: Color(0xFFAFAFAF),
-                  ),
+                      color: Color(0xFFAFAFAF),
+                      fontSize: ScreenUtil().setSp(42)),
                 ),
               ),
               Flexible(
@@ -218,8 +224,8 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: Colors.transparent,
                           child: new Image.asset(
                             "static/images/task_wechat.png",
-                            width: 48,
-                            height: 48,
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
                           ),
                         ),
                       ),
@@ -268,6 +274,7 @@ class _LoginPageState extends State<LoginPage> {
 //                                            Text('忘记密码? '),
                   Text(
                     '${pageType == 1 ? "登录" : pageType == 2 ? "密码登录" : "快速登录"}',
+                    style: TextStyle(fontSize: ScreenUtil().setSp(42)),
                   ),
 //                                            Text('  或  '),
 //                                            Text(
@@ -287,7 +294,13 @@ class _LoginPageState extends State<LoginPage> {
                   setState(() {
                     if (pageType == 1) {
                       //todo 跳转注册协议页面
-
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          WebViewPage(
+                            initialUrl: APi.AGREEMENT_REGISTRATION_URL,
+                            showActions: false,
+                            title: "注册协议",
+                          ));
                     } else {
                       resetInputValues();
                       _scrollToTop();
@@ -308,19 +321,22 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             "注册即代表同意",
                             style: TextStyle(
-                              color: Color(0xFFAFAFAF),
-                            ),
+                                color: Color(0xFFAFAFAF),
+                                fontSize: ScreenUtil().setSp(42)),
                           ),
                           Text(
                             "《注册协议》",
                             style: TextStyle(
-                              color: GlobalConfig.taskHeadColor,
-                            ),
+                                color: GlobalConfig.taskHeadColor,
+                                fontSize: ScreenUtil().setSp(42)),
                           ),
                         ],
                       ),
                     )
-                  : Text('注册')),
+                  : Text(
+                      '注册',
+                      style: TextStyle(fontSize: ScreenUtil().setSp(42)),
+                    )),
         ],
       ),
     );
@@ -403,13 +419,14 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 30),
               padding: EdgeInsets.symmetric(horizontal: 10),
-              height: 50,
+              height: ScreenUtil().setHeight(145),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(36.0),
                   color: GlobalConfig.taskHeadColor),
               child: Text(
                 "${pageType == 0 ? "登录" : pageType == 2 ? "快速登录" : "注册"}",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: Colors.white, fontSize: ScreenUtil().setSp(42)),
               ))),
     );
   }
@@ -418,7 +435,7 @@ class _LoginPageState extends State<LoginPage> {
     return Visibility(
       visible: _pwdInputShow,
       child: Container(
-        height: 48,
+        height: ScreenUtil().setHeight(160),
         alignment: Alignment.center,
         margin: EdgeInsets.only(left: 24, right: 24, top: 20),
         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -434,42 +451,44 @@ class _LoginPageState extends State<LoginPage> {
             password = value.trim();
           },
           decoration: InputDecoration(
-            /*  labelText: widget.address.addressDetail == null
+              /*  labelText: widget.address.addressDetail == null
                                   ? ''
                                   : widget.address.addressDetail,*/
-            border: InputBorder.none,
-            prefixIcon: Container(
-              alignment: Alignment.center,
-              width: 50,
-              child: Text(
-                "密码\t\t\t>",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFFAFAFAF),
-                  fontSize: 12,
+              border: InputBorder.none,
+              prefixIcon: Container(
+                alignment: Alignment.center,
+                width: 50,
+                child: Text(
+                  "密码\t\t\t>",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFFAFAFAF),
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            suffixIcon: IconButton(
-              icon: _pwdShow
-                  ? Image.asset(
-                      "static/images/eye_open.png",
-                      width: 20,
-                      height: 20,
-                    )
-                  : Image.asset(
-                      "static/images/eye_close.png",
-                      width: 20,
-                      height: 20,
-                    ),
-              onPressed: () {
-                setState(() {
-                  _pwdShow = !_pwdShow;
-                });
-              },
-            ),
-            hintText: '请输入密码',
-          ),
+              suffixIcon: IconButton(
+                icon: _pwdShow
+                    ? Image.asset(
+                        "static/images/eye_open.png",
+                        width: 20,
+                        height: 20,
+                      )
+                    : Image.asset(
+                        "static/images/eye_close.png",
+                        width: 20,
+                        height: 20,
+                      ),
+                onPressed: () {
+                  setState(() {
+                    _pwdShow = !_pwdShow;
+                  });
+                },
+              ),
+              hintText: '请输入密码',
+              hintStyle: TextStyle(
+                fontSize: ScreenUtil().setSp(42),
+              )),
         ),
       ),
     );
@@ -479,7 +498,7 @@ class _LoginPageState extends State<LoginPage> {
     return Visibility(
       visible: _checkCodeInputShow,
       child: Container(
-        height: 48,
+        height: ScreenUtil().setHeight(160),
         alignment: Alignment.center,
         margin: EdgeInsets.only(left: 24, right: 24, top: 20),
         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -504,24 +523,26 @@ class _LoginPageState extends State<LoginPage> {
 //                    LengthLimitingTextInputFormatter(8),                      //限制输入长度不超过8位
                 ],
                 decoration: InputDecoration(
-                  /*  labelText: widget.address.iphone == null
+                    /*  labelText: widget.address.iphone == null
                                           ? ''
                                           : widget.address.iphone,*/
-                  border: InputBorder.none,
-                  prefixIcon: Container(
-                    alignment: Alignment.center,
-                    width: 50,
-                    child: Text(
-                      "验证码\t>",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFFAFAFAF),
-                        fontSize: 12,
+                    border: InputBorder.none,
+                    prefixIcon: Container(
+                      alignment: Alignment.center,
+                      width: 50,
+                      child: Text(
+                        "验证码\t>",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFFAFAFAF),
+                          fontSize: 12,
+                        ),
                       ),
                     ),
-                  ),
-                  hintText: '请输入验证码',
-                ),
+                    hintText: '请输入验证码',
+                    hintStyle: TextStyle(
+                      fontSize: ScreenUtil().setSp(42),
+                    )),
               ),
             ),
             SizedBox(width: 15, child: Text('|')),
@@ -547,7 +568,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildPhoneContainer() {
     return Container(
-      height: 48,
+      height: ScreenUtil().setHeight(160),
       alignment: Alignment.center,
       margin: EdgeInsets.only(left: 24, right: 24, top: 20),
       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -568,36 +589,38 @@ class _LoginPageState extends State<LoginPage> {
           });
         },
         decoration: InputDecoration(
-          /* labelText: widget.address.name == null
+            /* labelText: widget.address.name == null
                                   ? ''
                                   : widget.address.name,*/
-          border: InputBorder.none,
-          prefixIcon: Container(
-            alignment: Alignment.center,
-            width: 50,
-            child: Text(
-              "+86\t\t\t\t>",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xFFAFAFAF),
-                fontSize: 12,
+            border: InputBorder.none,
+            prefixIcon: Container(
+              alignment: Alignment.center,
+              width: 50,
+              child: Text(
+                "+86\t\t\t\t>",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFFAFAFAF),
+                  fontSize: 12,
+                ),
               ),
             ),
-          ),
-          suffixIcon: IconButton(
-            icon: Image.asset(
-              "static/images/close.png",
-              width: 30,
-              height: 30,
+            suffixIcon: IconButton(
+              icon: Image.asset(
+                "static/images/close.png",
+                width: 30,
+                height: 30,
+              ),
+              onPressed: () {
+                setState(() {
+                  _phoneController.text = "";
+                });
+              },
             ),
-            onPressed: () {
-              setState(() {
-                _phoneController.text = "";
-              });
-            },
-          ),
-          hintText: '请输入手机号',
-        ),
+            hintText: '请输入手机号',
+            hintStyle: TextStyle(
+              fontSize: ScreenUtil().setSp(42),
+            )),
       ),
     );
   }

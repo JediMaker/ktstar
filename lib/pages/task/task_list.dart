@@ -2,15 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
+import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 
 class TaskListPage extends StatefulWidget {
   TaskListPage({Key key}) : super(key: key);
@@ -53,22 +56,51 @@ class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
+        appBar: GradientAppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+          ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: GlobalConfig.taskHeadColor,
+          gradient: LinearGradient(colors: [
+            Color(0xFF7E090F),
+            Color(0xFF810A0C),
+            Color(0xFF7D0A0F),
+          ]),
         ),
         body: Builder(
           builder: (context) => CustomScrollView(
             slivers: <Widget>[
-              buildBannerLayout(),
-              taskCard(context),
+//              buildBannerLayout(),
+//              buildBannerLayout2(),
+              SliverToBoxAdapter(
+                child: Stack(
+                  children: <Widget>[
+                    buildBannerLayout2(),
+                    taskCard(context),
+                  ],
+                ),
+              ),
               buildTaskWall(),
             ],
           ),
         ) // This trailing comma makes auto-formatting nicer for build methods.
         );
+  }
+
+  Widget buildBannerLayout2() {
+    return GestureDetector(
+      onTap: () {
+        NavigatorUtils.navigatorRouter(context, TaskOpenDiamondPage());
+      },
+      child: Image.asset(
+        "static/images/home_banner.png",
+        height: ScreenUtil().setHeight(623),
+        width: ScreenUtil().setWidth(1125),
+        fit: BoxFit.fill,
+      ),
+    );
   }
 
   Widget buildBannerLayout() {
@@ -77,7 +109,7 @@ class _TaskListPageState extends State<TaskListPage> {
         children: <Widget>[
           Container(
             color: GlobalConfig.taskHeadColor,
-            height: 108,
+            height: ScreenUtil().setHeight(315),
           ),
           Card(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -85,7 +117,7 @@ class _TaskListPageState extends State<TaskListPage> {
               borderRadius: BorderRadius.all(Radius.circular(16.0)),
             ),
             child: Container(
-              height: 170,
+              height: ScreenUtil().setHeight(529),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
               ),
@@ -105,8 +137,8 @@ class _TaskListPageState extends State<TaskListPage> {
                   itemBuilder: (context, index) {
                     return CachedNetworkImage(
                       imageUrl: images[index],
-                      width: 1920,
-                      height: 170,
+                      width: ScreenUtil().setWidth(1061),
+                      height: ScreenUtil().setHeight(529),
                       fit: BoxFit.fill,
                     );
                   },
@@ -130,16 +162,19 @@ class _TaskListPageState extends State<TaskListPage> {
                     HttpManage.getTheMissionWallEntranceUrl("13122336666"),
                 showActions: true,
                 title: "任务墙",
-
+                appBarBackgroundColor: Color(0xFFD72825),
               ));
 //          HttpManage.getTheMissionWallEntrance("13122336666");
         },
         child: Container(
-          height: 180,
-          margin: EdgeInsets.symmetric(horizontal: 16),
+          height: ScreenUtil().setHeight(360),
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           alignment: Alignment.center,
           child: Image.asset(
             'static/images/task_wall.png',
+            width: ScreenUtil().setWidth(1061),
+            height: ScreenUtil().setHeight(360),
+            fit: BoxFit.fill,
           ),
         ),
       ),
@@ -229,8 +264,8 @@ class _TaskListPageState extends State<TaskListPage> {
         child: Image.asset(
           iconUri,
           fit: BoxFit.fill,
-          width: 55,
-          height: 55,
+          width: ScreenUtil().setWidth(110),
+          height: ScreenUtil().setWidth(110),
         ),
       ),
 
@@ -240,21 +275,26 @@ class _TaskListPageState extends State<TaskListPage> {
         imageUrl:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
-      title: Text('转发朋友圈'),
+      title: Text(
+        '转发朋友圈',
+        style: TextStyle(fontSize: ScreenUtil().setSp(42)),
+      ),
       subtitle: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-                width: 24,
-                height: 24,
+                width: ScreenUtil().setWidth(48),
+                height: ScreenUtil().setHeight(48),
                 alignment: Alignment.centerLeft,
                 child: Image.asset(
                   "static/images/task_img_star.png",
-                  width: 16,
-                  height: 16,
+                  width: ScreenUtil().setWidth(36),
+                  height: ScreenUtil().setWidth(36),
+                  fit: BoxFit.fill,
                 )),
-            Text('+10元现金奖励'),
+            Text('+10元现金奖励',
+                style: TextStyle(fontSize: ScreenUtil().setSp(36))),
           ],
         ),
       ),
@@ -267,74 +307,78 @@ class _TaskListPageState extends State<TaskListPage> {
                 width: 0.5, color: bgColor, style: BorderStyle.solid)),
         child: Text(
           "$statusTxt",
-          style: TextStyle(color: txtColor),
+          style: TextStyle(color: txtColor, fontSize: ScreenUtil().setSp(36)),
         ),
       ),
     );
   }
 
   Widget taskCard(context) {
-    return SliverToBoxAdapter(
-      child: Card(
+    return Card(
 //      elevation: 2.0,
-        margin: EdgeInsets.symmetric(horizontal: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: 20,
+      margin: EdgeInsets.only(
+          left: 16, right: 16, top: ScreenUtil().setHeight(556)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  "每日任务",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: ScreenUtil().setSp(48)),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "$taskCompletedNum/$taskTotalNum",
+                  style: TextStyle(
+                      color: GlobalConfig.taskBtnTxtGreyColor,
+                      fontSize: ScreenUtil().setSp(36)),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    "每日任务",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    "$taskCompletedNum/$taskTotalNum",
-                    style: TextStyle(color: GlobalConfig.taskBtnTxtGreyColor),
-                  ),
-                ],
-              ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "完成每日任务可领取更多奖励",
+              style: TextStyle(
+                  color: GlobalConfig.taskBtnTxtGreyColor,
+                  fontSize: ScreenUtil().setSp(36)),
             ),
-            SizedBox(
-              height: 8,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "完成每日任务可领取更多奖励",
-                style: TextStyle(color: GlobalConfig.taskBtnTxtGreyColor),
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                taskStatus = index;
-                return buildTaskItemLayout(context, iconsUrls[index], index);
-              },
-              itemCount: iconsUrls.length,
-            ),
-            SizedBox(
-              height: 20,
-            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              taskStatus = index;
+              return buildTaskItemLayout(context, iconsUrls[index], index);
+            },
+            itemCount: iconsUrls.length,
+          ),
+          SizedBox(
+            height: 20,
+          ),
 //        Container(height: 400,width: 400,color: Colors.red, child: _buildPhotosWidget(post),),
 
 //          post.messageImage != null
@@ -349,8 +393,7 @@ class _TaskListPageState extends State<TaskListPage> {
 //                  color: Colors.grey.shade300,
 //                  height: 8.0,
 //                ),
-          ],
-        ),
+        ],
       ),
     );
   }

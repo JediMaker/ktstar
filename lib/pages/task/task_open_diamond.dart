@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io' as H;
 import 'package:fluwx/fluwx.dart' as fluwx;
@@ -27,9 +28,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
   void initState() {
     fluwx.weChatResponseEventHandler.listen((res) {
       if (res is fluwx.WeChatPaymentResponse) {
-        setState(() {
-          _result = "pay :${res.isSuccessful}";
-        });
+        print("_result = " + "pay :${res.isSuccessful}");
       }
     });
     super.initState();
@@ -37,7 +36,6 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose   star
     super.dispose();
   }
 
@@ -47,7 +45,8 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
         appBar: AppBar(
           title: Text(
             widget.title,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+                color: Colors.white, fontSize: ScreenUtil().setSp(54)),
           ),
           centerTitle: true,
           elevation: 0,
@@ -61,91 +60,109 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
             child: Center(
               child: Column(
                 children: <Widget>[
+                  Visibility(
+                    visible: false,
+                    child: Container(
+                        margin: EdgeInsets.only(top: 20, bottom: 20),
+                        width: double.maxFinite,
+                        child: Image.asset(
+                          "static/images/task_diamond_top_img.png",
+                          fit: BoxFit.fill,
+                          height: 200,
+                        )),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20),
+                      margin: EdgeInsets.only(top: 20, bottom: 40),
                       width: double.maxFinite,
                       child: Image.asset(
-                        "static/images/task_diamond_top_img.png",
-                        fit: BoxFit.fill,
-                        height: 200,
+                        "static/images/task_diamond_top_img_bg.png",
+                        fit: BoxFit.fitWidth,
+                        width: ScreenUtil().setWidth(1125),
                       )),
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: <Widget>[
-                      Container(
-                        width: 21,
-                        height: 21,
-                        transform: Matrix4.rotationZ(0.8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Color(0xFFBC9B87)),
-                      ),
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        height: 216,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            shape: BoxShape.rectangle,
-                            color: Color(0xFFBC9B87)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            ListTile(
-                              leading: Image.asset(
-                                "static/images/task_diamon_icon_1.png",
-                                width: 63,
-                                height: 63,
-                              ),
-                              title: Text(
-                                "任务数量",
-                                style: TextStyle(
-                                    color: Color(0xFF222222),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(
-                                "钻石会员可领取所有任务",
-                                style: TextStyle(
-                                    color: Color(0xFF222222), fontSize: 14),
-                              ),
-                            ),
-                            ListTile(
-                              leading: Image.asset(
-                                "static/images/task_diamon_icon_2.png",
-                                width: 63,
-                                height: 63,
-                              ),
-                              title: Text(
-                                "奖励金额",
-                                style: TextStyle(
-                                    color: Color(0xFF222222),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Wrap(
-                                children: <Widget>[
-                                  Text(
-                                    "VIP会员每条任务1元，钻石会员每条2元。",
-                                    style: TextStyle(
-                                        color: Color(0xFF222222), fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                  Visibility(
+                    visible: false,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: <Widget>[
+                        Container(
+                          width: 21,
+                          height: 21,
+                          transform: Matrix4.rotationZ(0.8),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Color(0xFFBC9B87)),
                         ),
-                      ),
-                    ],
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 15),
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          height: 216,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
+                              shape: BoxShape.rectangle,
+                              color: Color(0xFFBC9B87)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Image.asset(
+                                  "static/images/task_diamon_icon_1.png",
+                                  width: 63,
+                                  height: 63,
+                                ),
+                                title: Text(
+                                  "任务数量",
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  "钻石会员可领取所有任务",
+                                  style: TextStyle(
+                                      color: Color(0xFF222222), fontSize: 14),
+                                ),
+                              ),
+                              ListTile(
+                                leading: Image.asset(
+                                  "static/images/task_diamon_icon_2.png",
+                                  width: 63,
+                                  height: 63,
+                                ),
+                                title: Text(
+                                  "奖励金额",
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Wrap(
+                                  children: <Widget>[
+                                    Text(
+                                      "VIP会员每条任务1元，钻石会员每条2元。",
+                                      style: TextStyle(
+                                          color: Color(0xFF222222),
+                                          fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   GestureDetector(
                     onTap: () async {
+                      //标语
                       _showSelectPayWayBottomSheet(context);
                     },
                     child: Container(
-                      height: 46,
+                      //diamond
+                      height: ScreenUtil().setHeight(140),
                       alignment: Alignment.center,
                       margin:
                           EdgeInsets.symmetric(vertical: 65, horizontal: 16),
@@ -158,7 +175,9 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                       ),
                       child: Text(
                         "199元/年 立即开通",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: ScreenUtil().setSp(42)),
                       ),
                     ),
                   )

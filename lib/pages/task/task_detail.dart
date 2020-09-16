@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
@@ -72,7 +73,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(
+            widget.title,
+            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+          ),
           centerTitle: true,
           backgroundColor: GlobalConfig.taskHeadColor,
         ),
@@ -96,6 +100,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                               Text(
                                 des,
                                 textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(36),
+                                    color: Color(0xFF222222)),
                               )
                             ],
                           ),
@@ -217,8 +224,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 //        width: MediaQuery.of(context).size.width / 2.5,
           child: new CachedNetworkImage(
             imageUrl: url,
-            width: 100,
-            height: 100,
+            width: ScreenUtil().setWidth(274),
+            height: ScreenUtil().setWidth(274),
             fit: BoxFit.fill,
           )),
     );
@@ -418,15 +425,16 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                             backgroundColor: Colors.transparent,
                             child: new Image.asset(
                               "static/images/task_download_img.png",
-                              width: 48,
-                              height: 48,
+                              width: ScreenUtil().setWidth(138),
+                              height: ScreenUtil().setWidth(138),
                             ),
                           ),
                         ),
                         new Container(
                           child: new Text(
                             "下载图片",
-                            style: new TextStyle(fontSize: 12.0),
+                            style:
+                                new TextStyle(fontSize: ScreenUtil().setSp(32)),
                           ),
                         )
                       ],
@@ -455,14 +463,15 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                             backgroundColor: Colors.transparent,
                             child: new Image.asset(
                               "static/images/task_text_copy.png",
-                              width: 48,
-                              height: 48,
+                              width: ScreenUtil().setWidth(138),
+                              height: ScreenUtil().setWidth(138),
                             ),
                           ),
                         ),
                         new Container(
                           child: new Text("复制文案",
-                              style: new TextStyle(fontSize: 12.0)),
+                              style: new TextStyle(
+                                  fontSize: ScreenUtil().setSp(32))),
                         )
                       ],
                     ),
@@ -486,14 +495,15 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                             backgroundColor: Colors.transparent,
                             child: new Image.asset(
                               "static/images/task_wechat.png",
-                              width: 48,
-                              height: 48,
+                              width: ScreenUtil().setWidth(138),
+                              height: ScreenUtil().setWidth(138),
                             ),
                           ),
                         ),
                         new Container(
                           child: new Text("微信",
-                              style: new TextStyle(fontSize: 12.0)),
+                              style: new TextStyle(
+                                  fontSize: ScreenUtil().setSp(32))),
                         )
                       ],
                     ),
@@ -517,14 +527,15 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                             backgroundColor: Colors.transparent,
                             child: new Image.asset(
                               "static/images/task_wechat_friends_circle.png",
-                              width: 48,
-                              height: 48,
+                              width: ScreenUtil().setWidth(138),
+                              height: ScreenUtil().setWidth(138),
                             ),
                           ),
                         ),
                         new Container(
                           child: new Text("朋友圈",
-                              style: new TextStyle(fontSize: 12.0)),
+                              style: new TextStyle(
+                                  fontSize: ScreenUtil().setSp(32))),
                         )
                       ],
                     ),
@@ -808,7 +819,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       borderRadius: BorderRadius.circular(48)),
                   child: Text(
                     '复制文案',
-                    style: TextStyle(color: GlobalConfig.taskHeadColor),
+                    style: TextStyle(
+                        color: GlobalConfig.taskHeadColor,
+                        fontSize: ScreenUtil().setSp(42)),
                   ),
                 ),
               ),
@@ -833,7 +846,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       borderRadius: BorderRadius.circular(48)),
                   child: Text(
                     '去提交',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Colors.white, fontSize: ScreenUtil().setSp(42)),
                   ),
                 ),
               ),
