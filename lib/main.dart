@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:star/global_config.dart';
 import 'package:star/pages/task/task_index.dart';
+import 'package:star/pages/widget/splash_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
@@ -17,13 +18,13 @@ void main() {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 
-//  链接：https://juejin.im/post/6844903762398560270
+/*//  链接：https://juejin.im/post/6844903762398560270
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {
     print(flutterErrorDetails.toString());
     return Center(
       child: Text("哎呀呀！走神了。。。"),
     );
-  };
+  };*/
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
-      home: TaskIndexPage(),
+      home: SplashPage(),
     );
   }
 }
