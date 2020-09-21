@@ -67,6 +67,8 @@ dependencies:
   flutter_alipay: ^1.0.0
   #  屏幕适配
   flutter_screenutil: ^2.3.1
+  #  极光推送
+  jpush_flutter: ^0.5.9
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

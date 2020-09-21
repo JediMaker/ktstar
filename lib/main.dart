@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
-      home: Platform.isAndroid ? SplashPage() : TaskIndexPage(),
+      home: TaskIndexPage(),
     );
   }
 }

@@ -41,6 +41,8 @@ class GlobalConfig {
 
   /// 任务墙入口秘钥
   static const String MISSION_WALL_KEY = "xJmIYddp";
+  /// 极光推送appKey
+  static const String JPUSH_APPKEY = "b8b53a639c646141e54bf4df";
 
   static SharedPreferences get prefs => _prefs; // 可选的主题列表
 
@@ -53,7 +55,7 @@ class GlobalConfig {
   static Color taskBtnTxtColor = Color(0xFFD95E00);
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
-  // 是否为release版
+  /// 是否为release版
   static bool isRelease = false;
 
   /// 是否为首次进入app

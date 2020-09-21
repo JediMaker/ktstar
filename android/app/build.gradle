@@ -38,10 +38,15 @@ android {
 
     defaultConfig {
         applicationId "com.ketao.star"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.ketao.star",
+                JPUSH_APPKEY : "b8b53a639c646141e54bf4df", // NOTE: JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     signingConfigs {
         debug {
