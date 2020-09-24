@@ -2,15 +2,21 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:star/http/http_manage.dart';
+import 'package:star/pages/task/task_index.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
 class TaskSubmissionPage extends StatefulWidget {
-  TaskSubmissionPage({Key key}) : super(key: key);
+  TaskSubmissionPage({Key key, @required this.taskId}) : super(key: key);
   final String title = "提交截图审核";
+  String taskId;
 
   @override
   _TaskSubmissionPageState createState() => _TaskSubmissionPageState();
@@ -22,7 +28,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
   final ImagePicker _picker = ImagePicker();
   String _retrieveDataError;
 
-  void _onButtonPressed(ImageSource source, {BuildContext context}) async {
+  _onButtonPressed(ImageSource source, {BuildContext context}) async {
     try {
       final pickedFile = await _picker.getImage(
         source: source,
@@ -39,8 +45,22 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
     }
   }
 
+  String imgUrl;
+
+  _initData() async {
+    var result = await HttpManage.getTaskSubmitInfo(widget.taskId);
+    if (mounted) {
+      if (result.status) {
+        setState(() {
+          imgUrl = result.data.imgUrl;
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
+    _initData();
     super.initState();
   }
 
@@ -54,12 +74,38 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
       alignment: Alignment.center,
       width: double.maxFinite,
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           //todo 提交任务截图
+          var entity = await HttpManage.uploadImage(File(_imageFile.path));
+          if (entity.status) {
+            var imageId = entity.data["id"].toString();
+            var result = await HttpManage.taskSubmit(widget.taskId, imageId);
+            if (result.status) {
+              Fluttertoast.showToast(
+                  msg: "提交成功",
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  gravity: ToastGravity.BOTTOM);
+              NavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, TaskIndexPage());
+            } else {
+              Fluttertoast.showToast(
+                  msg: "${result.errMsg}",
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  gravity: ToastGravity.BOTTOM);
+            }
+          } else {
+            Fluttertoast.showToast(
+                msg: "${entity.errMsg}",
+                backgroundColor: Colors.grey,
+                textColor: Colors.white,
+                gravity: ToastGravity.BOTTOM);
+          }
         },
         child: Container(
-          height: 46,
-          width: 216,
+          height: ScreenUtil().setHeight(135),
+          width: ScreenUtil().setWidth(650),
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -71,7 +117,8 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
               borderRadius: BorderRadius.circular(48)),
           child: Text(
             '立即提交',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+                color: Colors.white, fontSize: ScreenUtil().setSp(48)),
           ),
         ),
       ),
@@ -89,8 +136,8 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
             _onButtonPressed(ImageSource.gallery, context: context);
           },
           child: Container(
-            height: 46,
-            width: 216,
+            height: ScreenUtil().setHeight(135),
+            width: ScreenUtil().setWidth(650),
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -103,7 +150,9 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                 borderRadius: BorderRadius.circular(48)),
             child: Text(
               '重新上传',
-              style: TextStyle(color: GlobalConfig.taskHeadColor),
+              style: TextStyle(
+                  color: GlobalConfig.taskHeadColor,
+                  fontSize: ScreenUtil().setSp(48)),
             ),
           ),
         ),
@@ -115,7 +164,10 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(
+            widget.title,
+            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+          ),
           centerTitle: true,
           elevation: 0,
           backgroundColor: GlobalConfig.taskHeadColor,
@@ -130,20 +182,22 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                   children: <Widget>[
                     Visibility(
                         visible: _imageFile == null,
-                        child: Image.asset(
-                          "static/images/task_example_img.png",
-                          width: 140,
-                          height: 240,
-                          fit: BoxFit.fill,
-                        )),
+                        child: imgUrl == null
+                            ? Image.asset(
+                                "static/images/task_example_img.png",
+                                width: ScreenUtil().setWidth(401),
+                                height: ScreenUtil().setHeight(695),
+                                fit: BoxFit.fill,
+                              )
+                            : CachedNetworkImage(imageUrl: imgUrl)),
                     Visibility(
                       visible: _imageFile != null,
                       child: Image.file(
                         File(_imageFile != null
                             ? _imageFile.path == null ? "" : _imageFile.path
                             : ""),
-                        width: 140,
-                        height: 240,
+                        width: ScreenUtil().setWidth(401),
+                        height: ScreenUtil().setHeight(695),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -151,7 +205,12 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                       alignment: Alignment.topLeft,
                       child: Container(
                           height: 30,
-                          child: Text("${_imageFile != null ? '我的：' : '例如：'}")),
+                          child: Text(
+                            "${_imageFile != null ? '我的：' : '例如：'}",
+                            style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                                color: Color(0xFF222222)),
+                          )),
                     ),
                     /*Image.asset(
                        ),*/
@@ -162,14 +221,16 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                   child: Visibility(
                       visible: _imageFile == null,
                       child: GestureDetector(
-                          onTap: () {
-                            _onButtonPressed(ImageSource.gallery,
-                                context: context);
+                          onTap: () async {
+                            CommonUtils.requestPermission(
+                                Permission.photos,
+                                _onButtonPressed(ImageSource.gallery,
+                                    context: context));
                           },
                           child: Image.asset(
                             "static/images/task_img_pick.png",
-                            width: 140,
-                            height: 96,
+                            width: ScreenUtil().setWidth(425),
+                            height: ScreenUtil().setHeight(290),
                           ))),
                 ),
                 Visibility(
@@ -185,6 +246,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                               text: '请上传朋友圈截图，不可设置分组且禁止随意修改伪造图片，一经发现，金额清零。',
                               style: TextStyle(
                                 color: Color(0xFFB9B9B9),
+                                fontSize: ScreenUtil().setSp(36),
 //                            decoration: TextDecoration.underline,
 //                            decorationStyle: TextDecorationStyle.wavy,
                               ),
