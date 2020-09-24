@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 
 typedef void StopCount(bool b);
 typedef Future<bool> StartCountAction(BuildContext context);
@@ -43,18 +44,18 @@ class _TimerWidgetState extends State<TimerWidget> {
           stopCount: _stopCount,
         );
         widget.startCountAction(context).then((value) => {
-          if (value) {_startCount(true)}
-        });
+              if (value) {_startCount(true)}
+            });
       },
       child: isPressed
           ? timer
           : Text(
-        "获取验证码",
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            decoration: TextDecoration.none),
-      ),
+              "获取验证码",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ScreenUtil().setSp(38),
+                  decoration: TextDecoration.none),
+            ),
     );
   }
 }
@@ -67,9 +68,9 @@ class TimerCount extends StatefulWidget {
 
   TimerCount(
       {this.time = 60,
-        this.stopCount,
-        this.leftLabel = '',
-        this.rightLabel = '秒后重发'});
+      this.stopCount,
+      this.leftLabel = '',
+      this.rightLabel = '秒后重发'});
 
   @override
   State createState() {
@@ -114,7 +115,9 @@ class _TimerCountState extends State<TimerCount> {
       child: new Text(
         widget.leftLabel + '$_time' + widget.rightLabel,
         style: TextStyle(
-            color: Colors.white, fontSize: 14, decoration: TextDecoration.none),
+            color: Colors.white,
+            fontSize: ScreenUtil().setSp(38),
+            decoration: TextDecoration.none),
       ),
     );
   }

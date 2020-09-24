@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:star/global_config.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
+import 'package:star/pages/widget/splash_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
 //
-  GlobalConfig.init().then((value) async => {runApp(TaskIndexPage())});
+  GlobalConfig.init().then((value) async => {runApp(MyApp())});
   if (Platform.isAndroid) {
     //设置状态栏颜色
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
@@ -17,13 +19,13 @@ void main() {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 
-//  链接：https://juejin.im/post/6844903762398560270
+/*//  链接：https://juejin.im/post/6844903762398560270
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {
     print(flutterErrorDetails.toString());
     return Center(
       child: Text("哎呀呀！走神了。。。"),
     );
-  };
+  };*/
 }
 
 class MyApp extends StatelessWidget {
@@ -32,23 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: GlobalConfig.isLogin() ? TaskIndexPage() : LoginPage(),
     );
   }
 }

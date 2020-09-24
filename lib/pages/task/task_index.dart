@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
-import 'package:star/pages/login/login.dart';
+import 'package:star/http/http_manage.dart';
+import 'package:star/models/home_entity.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,62 +33,25 @@ class _TaskIndexPageState extends State<TaskIndexPage>
 
   @override
   void initState() {
+    HttpManage.getUserInfo();
     super.initState();
-    _currentIndex = widget.currentIndex;
-    _navigationViews = <NavigationIconView>[
-      new NavigationIconView(
-          icon: Image.asset(
-            "static/images/home_unselect.png",
-            width: 29,
-            height: 25,
-          ),
-          activeIcon: Image.asset(
-            "static/images/home_select.png",
-            width: 29,
-            height: 25,
-          ),
-          title: new Text('任务大厅'),
-          vsync: this),
-      new NavigationIconView(
-          icon: Image.asset(
-            "static/images/mine_unselect.png",
-            width: 20,
-            height: 25,
-          ),
-          activeIcon: Image.asset(
-            "static/images/mine_select.png",
-            width: 20,
-            height: 25,
-          ),
-          title: new Text('我的'),
-          vsync: this)
-    ];
-    for (NavigationIconView view in _navigationViews) {
-      view.controller.addListener(_rebuild);
-    }
 
-    _pageList = <StatefulWidget>[
-//      new HomePage(tabIndex: _homeTabIndex),
-      TaskListPage(),
-      TaskMinePage(),
-      /*   new NoticePage(),
-      new MyPage()*/
-    ];
-    _currentPage = _pageList[_currentIndex];
+    _currentIndex = widget.currentIndex;
   }
 
   DateTime _lastQuitTime;
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: '可淘星选',
-      home: WillPopScope(
+    ScreenUtil.init(context,
+        width: 1125, height: 2436, allowFontScaling: false);
+    return Scaffold(
+      body: WillPopScope(
           onWillPop: () async {
             if (_lastQuitTime == null ||
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+                    .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
               Fluttertoast.showToast(
                   msg: "再按一次返回键退出应用",
                   backgroundColor: Colors.grey,
@@ -106,6 +71,52 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   }
 
   Scaffold buildHomeWidget() {
+    _navigationViews = <NavigationIconView>[
+      new NavigationIconView(
+          icon: Image.asset(
+            "static/images/home_unselect.png",
+            width: 29,
+            height: 25,
+          ),
+          activeIcon: Image.asset(
+            "static/images/home_select.png",
+            width: 29,
+            height: 25,
+          ),
+          title: new Text(
+            '首页',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this),
+      new NavigationIconView(
+          icon: Image.asset(
+            "static/images/mine_unselect.png",
+            width: 20,
+            height: 25,
+          ),
+          activeIcon: Image.asset(
+            "static/images/mine_select.png",
+            width: 20,
+            height: 25,
+          ),
+          title: new Text(
+            '我的',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this)
+    ];
+    for (NavigationIconView view in _navigationViews) {
+      view.controller.addListener(_rebuild);
+    }
+
+    _pageList = <StatefulWidget>[
+//      new HomePage(tabIndex: _homeTabIndex),
+      TaskListPage(),
+      TaskMinePage(),
+      /*   new NoticePage(),
+      new MyPage()*/
+    ];
+    _currentPage = _pageList[_currentIndex];
     return new Scaffold(
         body: new Center(child: _currentPage),
         bottomNavigationBar: Builder(

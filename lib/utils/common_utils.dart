@@ -298,10 +298,40 @@ class CommonUtils {
   }
 
   ///
-  /// 请求授权
+  /// [permission] 需要授权的权限
+  ///
+  /// [fun] 授权成功后执行的方法
+  ///
+  /// 请求权限授权
+  ///
   static Future<PermissionStatus> requestPermission(
-      Permission permission) async {
+      Permission permission, fun) async {
     final status = await permission.request();
+    switch (status) {
+      case PermissionStatus.denied:
+        print("denied");
+        Fluttertoast.showToast(
+            msg: "相关功能受限，请设置允许相关权限",
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            gravity: ToastGravity.BOTTOM);
+        break;
+      case PermissionStatus.granted:
+        fun;
+        break;
+      case PermissionStatus.restricted:
+        break;
+      case PermissionStatus.undetermined:
+        break;
+      case PermissionStatus.permanentlyDenied:
+        Fluttertoast.showToast(
+            msg: "相关功能受限，请设置允许相关权限",
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            gravity: ToastGravity.BOTTOM);
+        openAppSettings();
+        break;
+    }
     return status;
   }
 }
