@@ -7,12 +7,14 @@ import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/result_bean_entity.dart';
+import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/pages/widget/time_widget.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:star/models/login_entity.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -26,19 +28,21 @@ class _LoginPageState extends State<LoginPage> {
   var _description = '您好，\n请输入您的账号密码';
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
-  TextEditingController _checkCodeController = new TextEditingController()
-    ..addListener(() {});
+  TextEditingController _checkCodeController = new TextEditingController();
+  TextEditingController _inviteCodeController = new TextEditingController();
   bool _pwdShow = false; //密码是否显示明文
   bool _checkCodeInputShow = false; //验证码输入框是否显示
-  bool _pwdInputShow = true; //密码输入框是否显示明文
+  bool _pwdInputShow = true; //密码输入框是否显示
   String phoneNumber;
   String checkCode;
   String password;
+  String inviteCode;
   int pageType = 0; //页面展示类型 0-登录  1-注册  2-快速登录
   ScrollController scrollController = ScrollController();
   FocusNode _phoneFocusNode = FocusNode();
   FocusNode _passwordFocusNode = FocusNode();
   FocusNode _checkCodeFocusNode = FocusNode();
+  FocusNode _inviteCodeFocusNode = FocusNode();
 
   String _result = "无";
 
@@ -52,12 +56,42 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((res) {
+    GlobalConfig.isBindWechat = false;
+    fluwx.weChatResponseEventHandler
+        .distinct((a, b) => a == b)
+        .listen((res) async {
       if (res is fluwx.WeChatAuthResponse) {
-        setState(() {
-          _result = "state :${res.state} \n code:${res.code}";
-          print("微信授权结果：" + _result);
-        });
+        _result = "state :${res.state} \n code:${res.code}";
+        print("微信授权结果：" + _result);
+        print("微信授权code" + res.code.toString());
+        if (CommonUtils.isEmpty(res.code)) {
+          Fluttertoast.showToast(
+              msg: "微信授权获取失败，请重新授权！",
+              textColor: Colors.white,
+              backgroundColor: Colors.grey);
+        } else {
+          /* Fluttertoast.showToast(
+              msg: "微信授权获取成功，正在登录！",
+              textColor: Colors.white,
+              backgroundColor: Colors.grey);*/
+          if (GlobalConfig.isBindWechat) {
+            return;
+          }
+          var result = await HttpManage.wechatLogin(res.code);
+          if (result.status) {
+            Fluttertoast.showToast(
+                msg: "登陆成功",
+                textColor: Colors.white,
+                backgroundColor: Colors.grey);
+            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                context, TaskIndexPage());
+          } else {
+            Fluttertoast.showToast(
+                msg: "${result.errMsg}",
+                textColor: Colors.white,
+                backgroundColor: Colors.grey);
+          }
+        }
       }
     });
     super.initState();
@@ -69,11 +103,14 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
     _checkCodeController.dispose();
     scrollController.dispose();
+    _inviteCodeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        width: 1125, height: 2436, allowFontScaling: false);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -139,6 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                                 buildPhoneContainer(),
                                 buildCheckCodeLayout(),
                                 buildPasswordLayout(),
+                                buildInviteCodeLayout(),
                                 SizedBox(
                                   height: ScreenUtil().setHeight(156),
                                 ),
@@ -209,9 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                       .sendWeChatAuth(
                           scope: "snsapi_userinfo",
                           state: "wechat_sdk_demo_test")
-                      .then((data) {
-                    print(data.toString());
-                  });
+                      .then((code) {});
                 },
                 child: new Container(
                   child: new Column(
@@ -259,11 +295,7 @@ class _LoginPageState extends State<LoginPage> {
                         break;
                       case 1:
                       case 2:
-                        pageType = 0;
-                        _pwdInputShow = true;
-                        _checkCodeInputShow = false;
-                        _description = '您好，\n请输入您的账号密码';
-                        widget.title = '登录';
+                        changToLogin();
                         break;
                     }
                   });
@@ -342,17 +374,28 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void changToLogin() {
+    pageType = 0;
+    _pwdInputShow = true;
+    _checkCodeInputShow = false;
+    _description = '您好，\n请输入您的账号密码';
+    widget.title = '登录';
+  }
+
   ///清空输入框
   resetInputValues() {
     phoneNumber = "";
     checkCode = "";
     password = "";
+    inviteCode = "";
     _phoneController.text = "";
     _passwordController.text = "";
     _checkCodeController.text = "";
+    _inviteCodeController.text = "";
     _phoneFocusNode.unfocus();
     _passwordFocusNode.unfocus();
     _checkCodeFocusNode.unfocus();
+    _inviteCodeFocusNode.unfocus();
   }
 
   /// 登录/注册按钮操作
@@ -486,6 +529,50 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               hintText: '请输入密码',
+              hintStyle: TextStyle(
+                fontSize: ScreenUtil().setSp(42),
+              )),
+        ),
+      ),
+    );
+  }
+
+  Widget buildInviteCodeLayout() {
+    return Visibility(
+      visible: pageType == 1,
+      child: Container(
+        height: ScreenUtil().setHeight(160),
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(left: 24, right: 24, top: 20),
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: Color(0xFFF5F5F5),
+          borderRadius: BorderRadius.circular(48),
+        ),
+        child: TextField(
+          controller: _inviteCodeController,
+          focusNode: _inviteCodeFocusNode,
+          onChanged: (value) {
+            inviteCode = value.trim();
+          },
+          decoration: InputDecoration(
+              /*  labelText: widget.address.addressDetail == null
+                                  ? ''
+                                  : widget.address.addressDetail,*/
+              border: InputBorder.none,
+              prefixIcon: Container(
+                alignment: Alignment.center,
+                width: 50,
+                child: Text(
+                  "邀请码\t\t>",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFFAFAFAF),
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              hintText: '邀请码（选填）',
               hintStyle: TextStyle(
                 fontSize: ScreenUtil().setSp(42),
               )),
@@ -628,7 +715,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> smsSend(BuildContext context) async {
     if (CommonUtils.isPhoneLegal(phoneNumber)) {
       ResultBeanEntity result = await HttpManage.sendVerificationCode(
-          phoneNumber, "${pageType == 1 ? '2' : pageType == 2 ? "1" : "3"}");
+          phoneNumber, "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
 
       if (result.status) {
         Fluttertoast.showToast(
@@ -638,7 +725,7 @@ class _LoginPageState extends State<LoginPage> {
         return true;
       } else {
         Fluttertoast.showToast(
-            msg: result.errMsg.toString(),
+            msg: "${result.errMsg}",
             textColor: Colors.white,
             backgroundColor: Colors.grey);
         return false;
@@ -650,31 +737,30 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _login() async {
-    ResultBeanEntity result = await HttpManage.login(phoneNumber, password);
+    LoginEntity result = await HttpManage.login(phoneNumber, password);
     if (result.status) {
       Fluttertoast.showToast(
           msg: "登陆成功", textColor: Colors.white, backgroundColor: Colors.grey);
       GlobalConfig.saveLoginStatus(true);
-      Navigator.pop(context, true);
+      NavigatorUtils.navigatorRouterAndRemoveUntil(context, TaskIndexPage());
     } else {
       Fluttertoast.showToast(
-          msg: result.errMsg.toString(),
+          msg: "${result.errMsg}",
           textColor: Colors.white,
           backgroundColor: Colors.grey);
     }
   }
 
   Future<void> _fastLogin() async {
-    ResultBeanEntity result =
-        await HttpManage.quickLogin(phoneNumber, checkCode);
+    LoginEntity result = await HttpManage.quickLogin(phoneNumber, checkCode);
     if (result.status) {
       Fluttertoast.showToast(
           msg: "登陆成功", textColor: Colors.white, backgroundColor: Colors.grey);
       GlobalConfig.saveLoginStatus(true);
-      Navigator.pop(context, true);
+      NavigatorUtils.navigatorRouterAndRemoveUntil(context, TaskIndexPage());
     } else {
       Fluttertoast.showToast(
-          msg: result.errMsg.toString(),
+          msg: "${result.errMsg}",
           textColor: Colors.white,
           backgroundColor: Colors.grey);
     }
@@ -682,15 +768,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _register() async {
     ResultBeanEntity result =
-        await HttpManage.register(phoneNumber, checkCode, password);
+        await HttpManage.register(phoneNumber, checkCode, password, inviteCode);
     if (result.status) {
       Fluttertoast.showToast(
           msg: "注册成功，请登陆！",
           textColor: Colors.white,
           backgroundColor: Colors.grey);
+      if (mounted) {
+        setState(() {
+          changToLogin();
+        });
+      }
     } else {
       Fluttertoast.showToast(
-          msg: result.errMsg.toString(),
+          msg: "${result.errMsg}",
           textColor: Colors.white,
           backgroundColor: Colors.grey);
     }

@@ -10,6 +10,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:star/http/http_manage.dart';
+import 'package:star/models/task_detail_entity.dart';
 import 'package:star/pages/task/task_gallery.dart';
 import 'package:star/pages/task/task_submission.dart';
 import 'package:star/utils/common_utils.dart';
@@ -18,7 +20,9 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import '../../global_config.dart';
 
 class TaskDetailPage extends StatefulWidget {
-  TaskDetailPage({Key key}) : super(key: key);
+  String taskId;
+
+  TaskDetailPage({Key key, @required this.taskId}) : super(key: key);
   final String title = "任务下载";
 
   @override
@@ -44,6 +48,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         });
       }
     });
+    _initData();
     super.initState();
   }
 
@@ -832,7 +837,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return TaskSubmissionPage();
+                    return TaskSubmissionPage(
+                      taskId: widget.taskId,
+                    );
                   }));
                 },
                 child: Container(
@@ -934,5 +941,23 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         ),
       ),
     );
+  }
+
+  _initData() async {
+    var result = await HttpManage.getTaskDetail(widget.taskId);
+    if (mounted) {
+      if (result.status) {
+        setState(() {
+          des = result.data.title + "\n" + result.data.text;
+          images = result.data.fileId;
+        });
+      } else {
+        Fluttertoast.showToast(
+            msg: "${result.errMsg}",
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            gravity: ToastGravity.BOTTOM);
+      }
+    }
   }
 }

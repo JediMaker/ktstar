@@ -1,27 +1,48 @@
+import 'package:star/global_config.dart';
+
 class APi {
-  static const String BASE_URL = "https://task.ktkj.shop/";
+//  6YHgt890Mgplu7054fg8k3g3dQ2CXmh4
+  static String BASE_URL = GlobalConfig.isRelease
+      ? "https://task.ktkj.shop/"
+      : "http://api.ktxx.com/";
+
+//      : "http://api.ketaoxx.com/";
+
+//  static const String BASE_URL = "https://task.ktkj.shop/";
   static const int CONNECT_TIMEOUT = 5000;
   static const int RECEIVE_TIMEOUT = 3000;
 
   static const String INTERFACE_KEY = "6YHgt890Mgplu7054fg8k3g3dQ2CXmh4";
 
   ///注册
-  static const String REGISTER = "/api/register";
+  static const String REGISTER = "login/register";
 
   ///发送验证码
-  static const String SMS_SEND = "/api/send-msg";
+  static const String SMS_SEND = "login/send-msg";
 
   ///登录
-  static const String LOGIN = "/api/login";
+  static const String LOGIN = "login/login";
 
   ///快速登录
-  static const String FAST_LOGIN = "/api/tel-login";
+  static const String FAST_LOGIN = "login/fast-login";
+
+  ///第三方微信登录
+  static const String WECHAT_LOGIN = "login/third-login";
 
   ///修改密码
   static const String RESET_PASSWORD = "/api/setpwd";
 
   ///获取用户信息
-  static const String USER_INFO = "/api/userinfo";
+  static const String USER_INFO = "user/user-info";
+
+  ///提现申请
+  static const String USER_WITHDRAWAL_APPLICATION = "user/tx-apply";
+
+  ///升级VIP用户
+  static const String USER_UPGRADE_VIP = "pay/upgrade-pay";
+
+  ///检测支付是否成功
+  static const String PAY_CHECK_SUCCESS = "pay/check-success";
 
   ///修改昵称
   static const String USER_ENAME = "/api/index.php?route=api/user/euname";
@@ -34,6 +55,33 @@ class APi {
 
   ///创建二维码
   static const String CREATE_QRCODE = "/api/create-qrcode";
+
+  ///任务详情
+  static const String TASK_DETAIL = "task/detail";
+
+  ///任务领取
+  static const String TASK_RECEIVE = "task/receive";
+
+  ///任务提交
+  static const String TASK_SUBMIT_SAVE = "task/submit-save";
+
+  ///获取任务提交信息
+  static const String TASK_SUBMIT_INFO = "task/submit-info";
+
+  ///上传图片
+  static const String SITE_UPLOAD_IMG = "site/upload";
+
+  ///绑定第三方
+  static const String SITE_BIND_THIRD = "site/bind-third";
+
+  ///绑定手机号码
+  static const String SITE_BIND_PHONE = "site/bind-phone";
+
+  ///获取首页数据
+  static const String SITE_HOME = "site/home";
+
+  ///获取vip价格
+  static const String SITE_VIP_PRICE = "site/vip-price";
 
 /*------------------地址相关START-------------------*/
 
@@ -65,9 +113,8 @@ class APi {
   ///获取令牌access_token
   static const String ACCESS_TOKEN2 = "api/index.php?route=oauth/oauth2/token";
 
-  ///获取令牌access_token
-  static const String REFRESH_TOKEN =
-      "/api/index.php?route=oauth/oauth2/refresh_token";
+  ///刷新token
+  static const String REFRESH_TOKEN = "login/refer-token";
 
   ///刷新令牌
   static const String REFRESH_TOKEN2 =

@@ -31,7 +31,6 @@ class Utils {
     return double.parse(num.toStringAsFixed(3));
   }
 
-
   ///
   /// 当有界面使用的时候
   //
@@ -98,7 +97,7 @@ class Utils {
     /// 存储所有key
     List<String> allKeys = [];
     parameter.forEach((key, value) {
-      allKeys.add(key + value);
+      allKeys.add(key +"="+ value);
     });
 
     /// key排序
@@ -112,13 +111,15 @@ class Utils {
     //   pairs.add("$key${parameter[key]}");
     // });
     /// 数组转string
-    String pairsString = allKeys.join("");
+    String pairsString = allKeys.join("&");
 
     /// 拼接 ABC 是你的秘钥
     String sign = pairsString + APi.INTERFACE_KEY;
+    print("sign:"+sign);
 
     /// hash
     String signString = generateMd5(sign); //.toUpperCase()
+    print("MD5sign:"+signString);
     //String signString = md5.convert(utf8.encode(sign)).toString().toUpperCase();  //直接写也可以
     return signString;
   }

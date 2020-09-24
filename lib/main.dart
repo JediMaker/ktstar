@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:star/global_config.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/splash_page.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
-      home: TaskIndexPage(),
+      home: GlobalConfig.isLogin() ? TaskIndexPage() : LoginPage(),
     );
   }
 }
