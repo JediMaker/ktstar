@@ -37,7 +37,6 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 

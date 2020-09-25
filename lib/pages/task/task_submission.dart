@@ -75,7 +75,6 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
       width: double.maxFinite,
       child: GestureDetector(
         onTap: () async {
-          //todo 提交任务截图
           var entity = await HttpManage.uploadImage(File(_imageFile.path));
           if (entity.status) {
             var imageId = entity.data["id"].toString();

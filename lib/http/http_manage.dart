@@ -717,7 +717,7 @@ class HttpManage {
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
-    var response =  await Dio().post(
+    var response =  await HttpManage.dio.post(
       APi.REFRESH_TOKEN,
       data: formData,
     );

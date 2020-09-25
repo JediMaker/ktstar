@@ -242,7 +242,6 @@ class _LoginPageState extends State<LoginPage> {
             margin: EdgeInsets.symmetric(vertical: 20),
             child: new FlatButton(
                 onPressed: () {
-                  //TODO 接入微信登陆
                   fluwx
                       .sendWeChatAuth(
                           scope: "snsapi_userinfo",
@@ -325,7 +324,6 @@ class _LoginPageState extends State<LoginPage> {
                 if (mounted) {
                   setState(() {
                     if (pageType == 1) {
-                      //todo 跳转注册协议页面
                       NavigatorUtils.navigatorRouter(
                           context,
                           WebViewPage(

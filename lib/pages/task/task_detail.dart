@@ -30,7 +30,6 @@ class TaskDetailPage extends StatefulWidget {
 }
 
 void main() {
-  runApp(TaskDetailPage());
 }
 
 class _TaskDetailPageState extends State<TaskDetailPage> {

@@ -46,14 +46,7 @@ class TokenInterceptors extends InterceptorsWrapper {
       var entity = ResultBeanEntity();
       resultBeanEntityFromJson(entity, extractData);
       if (entity.errCode.toString() == "308") {
-        await HttpManage.referToken(request);
-        request.headers["token"] = GlobalConfig.getLoginInfo().token;
-        response = await Dio().request(request.path,
-            data: request.data,
-            queryParameters: request.queryParameters,
-            cancelToken: request.cancelToken,
-            options: request,
-            onReceiveProgress: request.onReceiveProgress);
+        response = await getAuthorization(request);
       }
       if (entity.errCode.toString() == "303") {
         Fluttertoast.showToast(
@@ -80,19 +73,22 @@ class TokenInterceptors extends InterceptorsWrapper {
   }
 
   ///获取授权token
-  getAuthorization() async {
-//    String token = await LocalStorage.get(Config.TOKEN_KEY);
-    /* if (token == null) {
-      String basic = await LocalStorage.get(Config.USER_BASIC_CODE);
-      if (basic == null) {
-        //提示输入账号密码
-      } else {
-        //通过 basic 去获取token，获取到设置，返回token
-        return "Basic $basic";
-      }
+  Future<Response> getAuthorization(request) async {
+    Response response;
+    var result = await HttpManage.referToken(request);
+    print("getAuthorization" + result.data.toString());
+    if (result.status) {
+      request.headers["token"] = GlobalConfig.getLoginInfo().token;
+      response = await Dio().request(request.path,
+          data: request.data,
+          queryParameters: request.queryParameters,
+          cancelToken: request.cancelToken,
+          options: request,
+          onReceiveProgress: request.onReceiveProgress);
+      print("getAuthorizationBeforeresponse" + response.data.toString());
     } else {
-      this._token = token;
-      return token;
-    }*/
+      getAuthorization(request);
+    }
+    return response;
   }
 }
