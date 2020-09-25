@@ -4,7 +4,7 @@ class APi {
 //  6YHgt890Mgplu7054fg8k3g3dQ2CXmh4
   static String BASE_URL = GlobalConfig.isRelease
       ? "https://task.ktkj.shop/"
-      : "http://api.ktxx.com/";
+      : "http://test-api.ketaokeji.shop/";
 
 //      : "http://api.ketaoxx.com/";
 
@@ -82,6 +82,12 @@ class APi {
 
   ///获取vip价格
   static const String SITE_VIP_PRICE = "site/vip-price";
+
+  ///话费充值列表
+  static const String SITE_RECHARGE = "site/recharge";
+
+  ///话费充值
+  static const String PAY_RECHARGE = "pay/recharge-pay";
 
 /*------------------地址相关START-------------------*/
 

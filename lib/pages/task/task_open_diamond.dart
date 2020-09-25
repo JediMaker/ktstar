@@ -50,32 +50,36 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
         if (res.isSuccessful && GlobalConfig.payType == 0) {
-          var result = await HttpManage.checkPayResult(payNo);
-          if (result.status) {
-            var payStatus = result.data["pay_status"].toString();
-            switch (payStatus) {
-              case "1": //未成功
-                Fluttertoast.showToast(
-                    msg: "支付失败！",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.grey);
-                break;
-              case "2": //已成功
-                Fluttertoast.showToast(
-                    msg: "开通成功,去领任务吧",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.grey);
-                break;
-            }
-          } else {
-            Fluttertoast.showToast(
-                msg: "${result.errMsg}",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
-          }
+          _checkPayStatus();
         }
       }
     });
+  }
+
+  _checkPayStatus() async {
+    var result = await HttpManage.checkPayResult(payNo);
+    if (result.status) {
+      var payStatus = result.data["pay_status"].toString();
+      switch (payStatus) {
+        case "1": //未成功
+          Fluttertoast.showToast(
+              msg: "支付失败！",
+              textColor: Colors.white,
+              backgroundColor: Colors.grey);
+          break;
+        case "2": //已成功
+          Fluttertoast.showToast(
+              msg: "开通成功,去领任务吧",
+              textColor: Colors.white,
+              backgroundColor: Colors.grey);
+          break;
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "${result.errMsg}",
+          textColor: Colors.white,
+          backgroundColor: Colors.grey);
+    }
   }
 
   @override
@@ -461,14 +465,11 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
       payResult = null;
     }
 
-    if (!mounted) return;
-
-    setState(() {
-      _payResult = payResult;
-      Fluttertoast.showToast(
-          msg: _payResult == null ? "" : _payResult.toString(),
-          textColor: Colors.black);
-    });
+    _payResult = payResult;
+    print("用户升级支付宝支付结果：" + _payResult.toString());
+    if (_payResult.resultStatus == "9000") {
+      _checkPayStatus();
+    }
   }
 
   _changeSelectedPayWay(int i) {

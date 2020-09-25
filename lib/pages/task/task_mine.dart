@@ -65,7 +65,11 @@ class _TaskMinePageState extends State<TaskMinePage> {
   @override
   void initState() {
     _initUserData();
+    initWeChatResHandler();
+    super.initState();
+  }
 
+  initWeChatResHandler() async {
     GlobalConfig.isBindWechat = true;
     fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
@@ -83,25 +87,34 @@ class _TaskMinePageState extends State<TaskMinePage> {
               msg: "微信授权获取成功，正在登录！",
               textColor: Colors.white,
               backgroundColor: Colors.grey);*/
-          if (!GlobalConfig.isBindWechat) {
-            return;
-          }
-          var result = await HttpManage.bindWechat(res.code);
-          if (result.status) {
-            Fluttertoast.showToast(
-                msg: "微信授权成功,去领任务吧",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
-          } else {
-            Fluttertoast.showToast(
-                msg: "${result.errMsg}",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
+          if (GlobalConfig.isBindWechat) {
+            var result = await HttpManage.bindWechat(res.code);
+            if (result.status) {
+              String isMerge = result.data["is_merge"].toString();
+              switch (isMerge) {
+                case "1":
+                  Fluttertoast.showToast(
+                      msg: "微信授权绑定成功！",
+                      textColor: Colors.white,
+                      backgroundColor: Colors.grey);
+                  break;
+                case "2":
+                  Fluttertoast.showToast(
+                      msg: "微信账户数据合并成功，请重新登录！",
+                      textColor: Colors.white,
+                      backgroundColor: Colors.grey);
+                  break;
+              }
+            } else {
+              Fluttertoast.showToast(
+                  msg: "${result.errMsg}",
+                  textColor: Colors.white,
+                  backgroundColor: Colors.grey);
+            }
           }
         }
       }
     });
-    super.initState();
   }
 
   @override
@@ -370,6 +383,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   }
 
   Widget buildCardInfo() {
+    //话费 话费充值
     return Container(
       child: Stack(
         children: <Widget>[
@@ -518,8 +532,12 @@ class _TaskMinePageState extends State<TaskMinePage> {
             /* Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return LoginPage();
             }));*/
-            if (CommonUtils.isEmpty(availableCashAmount) ||
-                int.parse(availableCashAmount.toString()) <= 0) {
+            try {
+              if (CommonUtils.isEmpty(availableCashAmount) ||
+                  int.parse(availableCashAmount.toString()) <= 0) {
+                return;
+              }
+            } catch (e) {
               return;
             }
             var result = await HttpManage.withdrawalApplication(
@@ -684,10 +702,22 @@ class _TaskMinePageState extends State<TaskMinePage> {
                           var result = await HttpManage.bindPhone(
                               tel: dialogPhoneNumber.toString());
                           if (result.status) {
-                            Fluttertoast.showToast(
-                                msg: "绑定成功！",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            String isMerge = result.data["is_merge"].toString();
+                            switch (isMerge) {
+                              case "1":
+                                Fluttertoast.showToast(
+                                    msg: "手机号绑定成功！",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                                break;
+                              case "2":
+                                Fluttertoast.showToast(
+                                    msg: "手机账户数据合并成功，请重新登录！",
+                                    textColor: Colors.white,
+                                    toastLength: Toast.LENGTH_LONG,
+                                    backgroundColor: Colors.grey);
+                                break;
+                            }
                           } else {
                             Fluttertoast.showToast(
                                 msg: "${result.errMsg}",

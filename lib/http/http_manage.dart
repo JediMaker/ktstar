@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
+import 'package:star/generated/json/recharge_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
@@ -22,6 +23,7 @@ import 'package:star/http/interceptors/log_interceptor.dart';
 import 'package:star/http/interceptors/token_interceptor.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
 import 'package:star/models/home_entity.dart';
+import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/models/user_info_entity.dart';
@@ -369,6 +371,28 @@ class HttpManage {
   }
 
   ///
+  /// 获取充值列表
+  ///
+  static Future<RechargeEntity> getRechargeList() async {
+    Map paramsMap = Map<String, dynamic>();
+//    paramsMap["token"] = "${GlobalConfig.getLoginInfo().token}";
+//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    FormData formData = FormData.fromMap(paramsMap);
+//    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.get(
+      APi.SITE_RECHARGE,
+//      queryParameters: paramsMap,
+    );
+    //1. 读取json文件
+//    String jsonString = await rootBundle.loadString("static/files/data.json");
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+//    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = RechargeEntity();
+    rechargeEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   /// 获取vip价格信息
   ///
   static Future<VipPriceEntity> getVipPrice() async {
@@ -391,7 +415,7 @@ class HttpManage {
   ///
   /// 绑定手机号码
   ///
-  static Future<ResultBeanEntity> bindPhone({tel,code=12345}) async {
+  static Future<ResultBeanEntity> bindPhone({tel, code = 12345}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
@@ -565,6 +589,58 @@ class HttpManage {
   }
 
   ///
+  ///[tel] 	充值手机号码
+  ///
+  ///[rechargeId] 充值id
+  ///
+  /// 获取话费充值微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> getRechargeWeChatPayInfo(
+      tel, rechargeId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["tel"] = "$tel";
+    paramsMap["recharge_id"] = "$rechargeId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_RECHARGE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[tel] 	充值手机号码
+  ///
+  ///[rechargeId] 充值id
+  ///
+  /// 获取话费充值支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> getRechargeAliPayInfo(
+      tel, rechargeId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["tel"] = "$tel";
+    paramsMap["recharge_id"] = "$rechargeId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_RECHARGE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///[type] 	提现类型 1支付宝 2微信
   ///
   ///[txPrice] 	提现金额
@@ -641,7 +717,7 @@ class HttpManage {
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
-    var response = await HttpManage.dio.post(
+    var response =  await Dio().post(
       APi.REFRESH_TOKEN,
       data: formData,
     );

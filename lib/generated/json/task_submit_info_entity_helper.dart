@@ -11,7 +11,10 @@ taskSubmitInfoEntityFromJson(TaskSubmitInfoEntity data, Map<String, dynamic> jso
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new TaskSubmitInfoData().fromJson(json['data']);
+		try {
+			data.data = new TaskSubmitInfoData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

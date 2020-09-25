@@ -11,7 +11,10 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new UserInfoData().fromJson(json['data']);
+		try {
+			data.data = new UserInfoData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

@@ -11,7 +11,10 @@ alipayPayinfoEntityFromJson(AlipayPayinfoEntity data, Map<String, dynamic> json)
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new AlipayPayinfoData().fromJson(json['data']);
+		try {
+			data.data = new AlipayPayinfoData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

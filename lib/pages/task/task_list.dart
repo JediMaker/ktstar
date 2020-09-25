@@ -9,6 +9,7 @@ import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/user_info_entity.dart';
+import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
@@ -34,10 +35,16 @@ class _TaskListPageState extends State<TaskListPage> {
   HomeEntity entity;
   List<HomeDataBanner> bannerList;
   List<HomeDataTaskListList> taskList;
+  ScrollController _scrollController;
+  SwiperController _swiperController;
+  bool _isLoop = false;
 
   @override
   initState() {
     _initData();
+    _scrollController = ScrollController()..addListener(() {});
+    _swiperController = new SwiperController();
+    _swiperController.startAutoplay();
     super.initState();
   }
 
@@ -50,6 +57,7 @@ class _TaskListPageState extends State<TaskListPage> {
         taskList = entity.data.taskList.xList;
         taskCompletedNum = entity.data.taskList.useTaskTotal;
         taskTotalNum = entity.data.taskList.taskTotal;
+        _isLoop = true;
       });
     }
   }
@@ -82,6 +90,9 @@ class _TaskListPageState extends State<TaskListPage> {
 
   @override
   void dispose() {
+    _swiperController.stopAutoplay();
+    _swiperController.dispose();
+    _isLoop = false;
     super.dispose();
   }
 
@@ -157,22 +168,25 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget buildBannerLayout() {
     return Container(
       height: ScreenUtil().setHeight(623),
-      width: ScreenUtil().setWidth(1125),
+      width: double.maxFinite,
+//      width: ScreenUtil().setWidth(1125),
       /*  decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),*/
       child: Swiper(
         itemCount: bannerList == null ? 0 : bannerList.length,
-        key: UniqueKey(),
+//        key: GlobalKey(),
         /*itemWidth: ScreenUtil().setWidth(1125),
         itemHeight: ScreenUtil().setHeight(623),
         transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
         //bannerList == null ? 0 : bannerList.length,
-        loop: false,
-        autoplay: true,
+        loop: _isLoop,
+        autoplay: false,
+        controller: _swiperController,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
         onIndexChanged: (index) {
           print("bannerIndex=" + index.toString());
+          print("bannerList.length=" + bannerList.length.toString());
           if (mounted) {
             setState(() {
               bannerIndex = index;
@@ -188,11 +202,24 @@ class _TaskListPageState extends State<TaskListPage> {
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
           var bannerData = bannerList[index];
-          return CachedNetworkImage(
-            imageUrl: bannerData.imgPath,
-            height: ScreenUtil().setHeight(623),
-            width: ScreenUtil().setWidth(1125),
-            fit: BoxFit.fill,
+          return GestureDetector(
+            onTap: () {
+              switch (bannerList[bannerIndex].uri.toString().trim()) {
+                case "upgrade":
+                  NavigatorUtils.navigatorRouter(
+                      context, TaskOpenDiamondPage());
+                  break;
+                case "recharge":
+                  NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                  break;
+              }
+            },
+            child: CachedNetworkImage(
+              imageUrl: bannerData.imgPath,
+              height: ScreenUtil().setHeight(623),
+//              width: ScreenUtil().setWidth(1125),
+              fit: BoxFit.fill,
+            ),
           );
         },
       ),
