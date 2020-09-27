@@ -18,6 +18,8 @@ class UserInfoData with JsonConvert<UserInfoData> {
 	String gender;
 	@JSONField(name: "is_withdrawal")
 	String isWithdrawal;
+	@JSONField(name: "wx_no")
+	String wxNo;
 	@JSONField(name: "zfb_name")
 	String zfbName;
 	@JSONField(name: "zfb_account")
