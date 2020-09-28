@@ -195,7 +195,7 @@ class HttpManage {
 
     print(HttpManage.dio.toString());
     var response = await HttpManage.dio.post(
-      APi.REGISTER,
+      APi.RESET_PASSWORD,
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
