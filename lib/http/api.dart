@@ -3,7 +3,8 @@ import 'package:star/global_config.dart';
 class APi {
 //  6YHgt890Mgplu7054fg8k3g3dQ2CXmh4
   static String BASE_URL = GlobalConfig.isRelease
-      ? "https://task.ktkj.shop/"
+//      ? "https://task.ktkj.shop/"
+      ? "http://test-api.ketaokeji.shop/"
       : "http://test-api.ketaokeji.shop/";
 
 //      : "http://api.ketaoxx.com/";
@@ -16,6 +17,7 @@ class APi {
 
   ///注册
   static const String REGISTER = "login/register";
+
 
   ///发送验证码
   static const String SMS_SEND = "login/send-msg";
