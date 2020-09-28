@@ -46,6 +46,9 @@ userInfoDataFromJson(UserInfoData data, Map<String, dynamic> json) {
 	if (json['gender'] != null) {
 		data.gender = json['gender']?.toString();
 	}
+	if (json['code'] != null) {
+		data.code = json['code']?.toString();
+	}
 	if (json['is_withdrawal'] != null) {
 		data.isWithdrawal = json['is_withdrawal']?.toString();
 	}
@@ -83,6 +86,7 @@ Map<String, dynamic> userInfoDataToJson(UserInfoData entity) {
 	data['tel'] = entity.tel;
 	data['type'] = entity.type;
 	data['gender'] = entity.gender;
+	data['code'] = entity.code;
 	data['is_withdrawal'] = entity.isWithdrawal;
 	data['wx_no'] = entity.wxNo;
 	data['zfb_name'] = entity.zfbName;

@@ -35,8 +35,29 @@ class APi {
   ///获取用户信息
   static const String USER_INFO = "user/user-info";
 
+  ///获取收益列表
+  static const String USER_PROFIT_LIST = "user/profit-list";
+
+  ///获取消息列表
+  static const String USER_MSG_LIST = "user/msg-list";
+
   ///提现申请
   static const String USER_WITHDRAWAL_APPLICATION = "user/tx-apply";
+
+  ///获取提现列表
+  static const String USER_WITHDRAWAL_LIST = "user/tx-list";
+
+  ///获取粉丝列表
+  static const String USER_FANS_LIST = "user/fans-list";
+
+  ///获取粉丝列表
+  static const String USER_TOTAL_FANS = "user/total-fans";
+
+  ///获取粉丝列表
+  static const String USER_TASK_LIST = "user/task-list";
+
+  ///获取当前版本信息
+  static const String SITE_VERSION = "site/version";
 
   ///升级VIP用户
   static const String USER_UPGRADE_VIP = "pay/upgrade-pay";
@@ -71,11 +92,23 @@ class APi {
   ///上传图片
   static const String SITE_UPLOAD_IMG = "site/upload";
 
-  ///绑定第三方
+  ///绑定第三方,微信授权
   static const String SITE_BIND_THIRD = "site/bind-third";
 
   ///绑定手机号码
   static const String SITE_BIND_PHONE = "site/bind-phone";
+
+  ///修改手机号码
+  static const String SITE_MODIFY_PHONE = "site/modify-phone";
+
+  ///添加体验会员手机号码
+  static const String SITE_EXPERIENCE_MEMBER_PHONE_ADD = "user/set-experience";
+
+  ///绑定微信号
+  static const String SITE_BIND_WECHAT_NO = "user/bind-wx";
+
+  ///修改微信号
+  static const String SITE_MODIFY_WECHAT_NO = "user/bind-wx";
 
   ///获取首页数据
   static const String SITE_HOME = "site/home";
@@ -88,6 +121,9 @@ class APi {
 
   ///话费充值
   static const String PAY_RECHARGE = "pay/recharge-pay";
+
+  ///会员升级获取到的优惠券信息
+  static const String PAY_COUPON = "pay/pay-coupon";
 
 /*------------------地址相关START-------------------*/
 

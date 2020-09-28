@@ -16,6 +16,7 @@ class UserInfoData with JsonConvert<UserInfoData> {
 	String tel;
 	String type;
 	String gender;
+	String code;
 	@JSONField(name: "is_withdrawal")
 	String isWithdrawal;
 	@JSONField(name: "wx_no")

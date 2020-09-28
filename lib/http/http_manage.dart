@@ -6,11 +6,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
+import 'package:star/generated/json/fans_list_entity_helper.dart';
+import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
+import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
+import 'package:star/generated/json/message_list_entity_helper.dart';
+import 'package:star/generated/json/pay_coupon_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
+import 'package:star/generated/json/task_record_list_entity_helper.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/generated/json/vip_price_entity_helper.dart';
@@ -22,9 +28,15 @@ import 'package:star/http/interceptors/header_interceptor.dart';
 import 'package:star/http/interceptors/log_interceptor.dart';
 import 'package:star/http/interceptors/token_interceptor.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
+import 'package:star/models/fans_list_entity.dart';
+import 'package:star/models/fans_total_entity.dart';
 import 'package:star/models/home_entity.dart';
+import 'package:star/models/income_list_entity.dart';
+import 'package:star/models/message_list_entity.dart';
+import 'package:star/models/pay_coupon_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
+import 'package:star/models/task_record_list_entity.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
@@ -162,6 +174,36 @@ class HttpManage {
     return entity;
   }
 
+  ///
+  ///[phone] 手机号
+  ///
+  ///[smsCode]验证码
+  ///
+  /// [password]密码
+  ///
+  ///
+  /// 修改密码
+  static Future<ResultBeanEntity> modifyPassword(
+      String phone, String smsCode, String password) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["tel"] = "$phone";
+    paramsMap["password"] = "$password";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["code"] = "$smsCode";
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+
+    print(HttpManage.dio.toString());
+    var response = await HttpManage.dio.post(
+      APi.REGISTER,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
   ///[phone] 手机号
   ///
   ///[smsCode]验证码
@@ -174,6 +216,7 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["code"] = "$smsCode";
+    paramsMap["register_id"] = "${GlobalConfig.getJpushRegistrationId()}";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
@@ -203,6 +246,7 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["password"] = "$password";
+    paramsMap["register_id"] = "${GlobalConfig.getJpushRegistrationId()}";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
@@ -433,6 +477,55 @@ class HttpManage {
   }
 
   ///
+  ///[tel] 手机号
+  ///
+  ///[code]验证码
+  ///
+  /// 修改手机号码
+  ///
+  static Future<ResultBeanEntity> modifyPhone({tel, code = 12345}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["tel"] = "$tel";
+    paramsMap["code"] = "$code";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SITE_BIND_PHONE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[tel] 手机号
+  ///
+  ///[code]验证码
+  ///
+  /// 添加体验会员手机号码
+  ///
+  static Future<ResultBeanEntity> addExperienceMemberPhone(
+      {tel, code = 12345}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["tel"] = "$tel";
+    paramsMap["code"] = "$code";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SITE_EXPERIENCE_MEMBER_PHONE_ADD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///[taskId] 	任务id
   ///
   ///[imgId]图片资源id
@@ -475,6 +568,149 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = TaskSubmitInfoEntity();
     taskSubmitInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///
+  ///
+  /// 获取粉丝列表
+  ///
+  static Future<FansListEntity> getFansList(page, pageSize, {type = ""}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap["type"] = "$type";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_FANS_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = FansListEntity();
+    fansListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  /// 获取粉丝数据汇总
+  ///
+  static Future<FansTotalEntity> getFansTotal() async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_TOTAL_FANS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = FansTotalEntity();
+    fansTotalEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///
+  ///[pageSize] 	单页数据量
+  ///
+  ///[isWithdrawal] 获取数据类型是否是提现列表
+  ///
+  /// fasle 获取收益列表 true 获取提现列表
+  ///
+  static Future<IncomeListEntity> getProfitList(page, pageSize,
+      {isWithdrawal = false}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      !isWithdrawal ? APi.USER_PROFIT_LIST : APi.USER_WITHDRAWAL_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = IncomeListEntity();
+    incomeListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///
+  ///
+  /// 获取任务提交列表
+  ///
+  static Future<TaskRecordListEntity> getTaskRecordList(page, pageSize) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_TASK_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskRecordListEntity();
+    taskRecordListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///
+  ///
+  /// 获取消息列表
+  ///
+  static Future<MessageListEntity> getMsgList(page, pageSize) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_MSG_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = MessageListEntity();
+    messageListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///
+  ///
+  /// 获取提现列表
+  ///
+  static Future<MessageListEntity> getWithdrawalList(page, pageSize) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_MSG_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = MessageListEntity();
+    messageListEntityFromJson(entity, extractData);
     return entity;
   }
 
@@ -536,6 +772,50 @@ class HttpManage {
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_CHECK_SUCCESS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[weChatNo] 	微信号
+  ///
+  ///
+  /// 绑定微信号
+  ///
+  static Future<ResultBeanEntity> bindWeChatNo(weChatNo) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["wx_no"] = "$weChatNo";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SITE_BIND_WECHAT_NO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[weChatNo] 	微信号
+  ///
+  ///
+  /// 修改微信号
+  ///
+  static Future<ResultBeanEntity> modifyWeChatNo(weChatNo) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["wx_no"] = "$weChatNo";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SITE_MODIFY_WECHAT_NO,
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
@@ -641,6 +921,28 @@ class HttpManage {
   }
 
   ///
+  ///  [payNo] 	支付单号
+  ///
+  ///
+  /// 获取话费充值优惠券信息
+  ///
+  static Future<PayCouponEntity> getRechargeCoupon(payNo) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["pay_no"] = "$payNo";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_COUPON,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = PayCouponEntity();
+    payCouponEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///[type] 	提现类型 1支付宝 2微信
   ///
   ///[txPrice] 	提现金额
@@ -717,7 +1019,7 @@ class HttpManage {
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
-    var response =  await HttpManage.dio.post(
+    var response = await HttpManage.dio.post(
       APi.REFRESH_TOKEN,
       data: formData,
     );

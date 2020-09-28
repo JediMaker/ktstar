@@ -6,6 +6,7 @@ import 'package:star/global_config.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/splash_page.dart';
+import 'package:star/utils/common_utils.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
@@ -34,6 +35,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
+      theme: ThemeData(
+//        primarySwatch: CommonUtils.createMaterialColor(Colors.white),
+        // This makes the visual density adapt to the platform that you run
+        // the app on. For desktop platforms, the controls will be smaller and
+        // closer together (more dense) than on mobile platforms.
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: GlobalConfig.isLogin() ? TaskIndexPage() : LoginPage(),
     );
   }

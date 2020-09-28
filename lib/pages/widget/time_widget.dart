@@ -7,8 +7,10 @@ typedef Future<bool> StartCountAction(BuildContext context);
 class TimerWidget extends StatefulWidget {
   final int time;
   final StartCountAction startCountAction;
+  Color textColor;
 
-  TimerWidget({this.time = 10, this.startCountAction});
+  TimerWidget(
+      {this.time = 10, this.startCountAction, this.textColor = Colors.white});
 
   @override
   State createState() {
@@ -52,7 +54,7 @@ class _TimerWidgetState extends State<TimerWidget> {
           : Text(
               "获取验证码",
               style: TextStyle(
-                  color: Colors.white,
+                  color: widget.textColor,
                   fontSize: ScreenUtil().setSp(38),
                   decoration: TextDecoration.none),
             ),
@@ -65,11 +67,13 @@ class TimerCount extends StatefulWidget {
   final StopCount stopCount;
   final String leftLabel;
   final String rightLabel;
+  Color textColor;
 
   TimerCount(
       {this.time = 60,
       this.stopCount,
       this.leftLabel = '',
+      this.textColor = Colors.white,
       this.rightLabel = '秒后重发'});
 
   @override
@@ -115,7 +119,7 @@ class _TimerCountState extends State<TimerCount> {
       child: new Text(
         widget.leftLabel + '$_time' + widget.rightLabel,
         style: TextStyle(
-            color: Colors.white,
+            color: widget.textColor,
             fontSize: ScreenUtil().setSp(38),
             decoration: TextDecoration.none),
       ),

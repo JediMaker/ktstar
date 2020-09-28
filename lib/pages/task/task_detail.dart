@@ -29,8 +29,7 @@ class TaskDetailPage extends StatefulWidget {
   _TaskDetailPageState createState() => _TaskDetailPageState();
 }
 
-void main() {
-}
+void main() {}
 
 class _TaskDetailPageState extends State<TaskDetailPage> {
   Permission _permission = Permission.storage;
@@ -64,6 +63,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 //    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1141259048,554497535&fm=26&gp=0.jpg",
 //    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2396361575,51762536&fm=26&gp=0.jpg",
   ];
+  var des = "";
+
+/*
   var des = "南湖月饼礼盒八饼八味伴手礼多口味蛋黄莲蓉五仁老广式酥皮水果味\n" +
       "【价格】25.8元\n" +
       "  【券后价】9.8元\n" +
@@ -72,6 +74,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       "--------\n" +
       "复ૢ製评论¢9XBPc3Y8XcJ₳\n" +
       "【tao寶】即可️💕查看";
+*/
 
   @override
   Widget build(BuildContext context) {

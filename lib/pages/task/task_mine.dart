@@ -7,12 +7,19 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/login/login.dart';
+import 'package:star/pages/login/modify_password.dart';
+import 'package:star/pages/task/pay_result.dart';
+import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
+import 'package:star/pages/task/task_open_diamond_dialog.dart';
+import 'package:star/pages/task/task_record_list.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
+import 'fans_list.dart';
+import 'income_list.dart';
 
 class TaskMinePage extends StatefulWidget {
   TaskMinePage({Key key}) : super(key: key);
@@ -24,16 +31,37 @@ class TaskMinePage extends StatefulWidget {
 
 class _TaskMinePageState extends State<TaskMinePage> {
   var headUrl;
-  var nickName;
-  var dialogNickName;
-  var dialogPhoneNumber;
-  var phoneNumber;
+  var nickName = '';
+  var _dialogNickName;
+  var _dialogPhoneNumber = '';
+  var _weChatNo = "";
+  var _dialogWeChatNo = '';
+  var _phoneNumber = '';
+  var _code = '';
+  var _phoneHintText = '请输入您的手机号';
+  var _cardBgImageName = 'task_mine_card_bg.png';
+  TextEditingController _dialogPhoneNumberController;
+  TextEditingController _dialogNickNameController;
+  TextEditingController _dialogWeChatNoController;
+
   var totalAssetsAmount; //总资产金额
   var availableCashAmount; // 可提现金额
   var cashWithdrawal; //  已提现金额
+  ///  注册时间
+  var registerTime;
   bool isDiamonVip = false;
-  var userType; //账号类型 0普通用户 1体验用户 2VIP用户 3代理
+
+  ///微信授权绑定
+  bool isWeChatBinded = false;
+
+  ///微信账号绑定
+  bool isWeChatNoBinded = false;
+
+  ///账号类型 0普通用户 1体验用户 2VIP用户 3代理
+  String userType;
   UserInfoEntity entity;
+  Color _cardTextColor = Colors.white;
+  Color _headBgColor = Color(0xffF93736);
 
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
@@ -43,18 +71,35 @@ class _TaskMinePageState extends State<TaskMinePage> {
           headUrl = result.data.avatar;
           nickName = result.data.username;
           userType = result.data.type;
-          phoneNumber = result.data.tel;
+          _phoneNumber = result.data.tel;
           totalAssetsAmount = result.data.totalPrice;
           cashWithdrawal = result.data.txPrice;
           availableCashAmount = result.data.nowPrice;
+          isWeChatBinded = result.data.bindThird == 2;
+          registerTime = result.data.regDate;
+          _weChatNo = result.data.wxNo;
+          _code = result.data.code;
+          _dialogWeChatNo = result.data.wxNo;
+          isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo);
           switch (result.data.type) {
             case "0":
+              isDiamonVip = false;
+              _cardBgImageName = 'task_mine_card_bg.png';
+              break;
             case "1":
               isDiamonVip = false;
+              _headBgColor = Color(0xffcc9976);
+              _cardBgImageName = 'task_mine_card_bg_expirence.png';
               break;
             case "2":
-            case "3":
               isDiamonVip = true;
+              _cardBgImageName = 'task_mine_card_vip.png';
+              break;
+            case "3":
+//              #F8D9BA
+              isDiamonVip = true;
+              _cardTextColor = Color(0xffF8D9BA);
+              _cardBgImageName = 'task_mine_card_proxy.png';
               break;
           }
         });
@@ -64,6 +109,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
 
   @override
   void initState() {
+    _dialogPhoneNumberController = new TextEditingController();
+    _dialogNickNameController = new TextEditingController();
+    _dialogWeChatNoController = new TextEditingController();
     _initUserData();
     initWeChatResHandler();
     super.initState();
@@ -126,166 +174,636 @@ class _TaskMinePageState extends State<TaskMinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GradientAppBar(
-          gradient: buildBackgroundLinearGradient(),
+//          gradient: buildBackgroundLinearGradient(),
+          gradient: LinearGradient(colors: [
+//            Color(0xfff5f5f5),
+//            Color(0xfff5f5f5),
+            Colors.white,
+            Colors.white,
+          ]),
           title: Text(
             "我的",
-            style: TextStyle(
+            /*style: TextStyle(
                 color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                fontSize: ScreenUtil().setSp(54)),
+                fontSize: ScreenUtil().setSp(54)),*/
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
           centerTitle: true,
           elevation: 0,
         ),
-        body: Column(
-          children: <Widget>[
-            Column(
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+//                buildTopLayout(),
+                  buildHeadLayout(),
+                  buildCardInfo(),
+//                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
+                  itemsLayout(),
+                ],
+              ),
+              buildListItem(),
+            ],
+          ),
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
+  }
+
+  Container buildListItem() {
+    return Container(
+      margin: EdgeInsets.symmetric(
+          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:
+              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+              color: Colors.white,
+              width: 0.5)),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: Row(
               children: <Widget>[
-                buildTopLayout(),
-                buildCardInfo(),
-                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
+                /*  Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "手机号",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
               ],
             ),
-            ListTile(
-              title: Text("微信绑定"),
-              onTap: () {
+            onTap: () {
+              _phoneHintText = "请输入您的手机号";
+              if (CommonUtils.isEmpty(_phoneNumber)) {
+                _dialogPhoneNumberController.text = "";
+                //绑定手机号
+                showMyDialog(showPhone: true, bindPhone: true);
+              } else {
+                _dialogPhoneNumberController.text = _phoneNumber;
+                //修改手机号
+                showMyDialog(showPhone: true, modifyPhone: true);
+              }
+            },
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  _phoneNumber == null ? "" : _phoneNumber,
+                  style: TextStyle(color: Color(0xff999999)),
+                ),
+                Text(
+                  "\t>",
+                  style: TextStyle(color: Color(0xff999999)),
+                )
+              ],
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /* Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "微信授权",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              if (!isWeChatBinded) {
                 fluwx
                     .sendWeChatAuth(
                         scope: "snsapi_userinfo", state: "wechat_sdk_demo_test")
                     .then((code) {});
-              },
+              }
+            },
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  !isWeChatBinded ? "未绑定" : "已绑定",
+                  style: TextStyle(
+                      color: !isWeChatBinded
+                          ? Color(0xffF93736)
+                          : Color(0xff3BBC6E)),
+                ),
+                Text(
+                  !isWeChatBinded ? "\t>" : "",
+                  style: TextStyle(color: Color(0xff999999)),
+                )
+              ],
             ),
-            Visibility(
-              visible: false,
-              child: Flexible(
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "微信号输入",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+                Text(
+                  "(便于您的粉丝联系您)",
+                  style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: ScreenUtil().setSp(32)),
+                ),
+              ],
+            ),
+            onTap: () {
+              //todo 绑定微信号
+              if (CommonUtils.isEmpty(_weChatNo)) {
+                _dialogWeChatNoController.text = "";
+                //绑定微信号
+                showMyDialog(showWeChatNo: true, bindWeChatNo: true);
+              } else {
+                _dialogWeChatNoController.text = _weChatNo;
+                //修改微信号
+                showMyDialog(showWeChatNo: true, bindWeChatNo: false);
+              }
+            },
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  !isWeChatNoBinded ? "未设置" : "$_weChatNo",
+                  style: TextStyle(
+                      color: !isWeChatNoBinded
+                          ? Color(0xffF93736)
+                          : Color(0xff999999)),
+                ),
+                Text(
+                  !isWeChatNoBinded ? "\t>" : "\t>",
+                  style: TextStyle(color: Color(0xff999999)),
+                )
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !CommonUtils.isEmpty(_phoneNumber),
+            child: ListTile(
+              title: Row(
+                children: <Widget>[
+                  /* Image.asset(
+                    "static/images/icon_fans.png",
+                    width: ScreenUtil().setWidth(44),
+                    height: ScreenUtil().setWidth(71),
+                  ),*/
+                  Text(
+                    "设置密码",
+                    style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                        fontSize: ScreenUtil().setSp(38)),
                   ),
-                  margin:
-                      EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
-                  child: Column(
+                ],
+              ),
+              onTap: () {
+                //todo 设置密码跳转
+                var title = "设置密码";
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    ModifyPasswordPage(
+                      title: title,
+                    ));
+              },
+              trailing: Wrap(
+                children: <Widget>[
+                  Text(
+                    "\t>",
+                    style: TextStyle(color: Color(0xff999999)),
+                  )
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "注册时间",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {},
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  registerTime == null ? "" : registerTime,
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+                Text(
+                  !isWeChatBinded ? "" : "",
+                  style: TextStyle(color: Color(0xff999999)),
+                )
+              ],
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "关于我们",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              //todo 关于我们跳转
+            },
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  "\t>",
+                  style: TextStyle(color: Color(0xff999999)),
+                )
+              ],
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /* Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "退出登录",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              showCupertinoDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: Text('提示'),
+                      content: Text('确认退出登录吗？'),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          child: Text('取消'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        CupertinoDialogAction(
+                          child: Text(
+                            '退出',
+                            style: TextStyle(color: GlobalConfig.colorPrimary),
+                          ),
+                          onPressed: () {
+                            GlobalConfig.prefs.remove("hasLogin");
+                            GlobalConfig.saveLoginStatus(false);
+                            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                                context, LoginPage());
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  "\t>",
+                  style: TextStyle(color: Color(0xff999999)),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Visibility buildtasklistVisibility() {
+    return Visibility(
+      visible: false,
+      child: Flexible(
+        child: Card(
+          shape: RoundedRectangleBorder(
+            side: BorderSide.none,
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          ),
+          margin: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+          child: Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: Text(
+                        "时间",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color(0xFF999999),
+                            fontSize: ScreenUtil().setSp(36)),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: Text(
+                        "金额",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color(0xFF999999),
+                            fontSize: ScreenUtil().setSp(36)),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: Text(
+                        "说明",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color(0xFF999999),
+                            fontSize: ScreenUtil().setSp(36)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(
+                    height: 1,
+                    color: Color(0xFFEFEFEF),
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Stack(
+                      alignment: Alignment.topRight,
+                      children: <Widget>[
+                        Image.asset(
+                          "static/images/task_uncompleted.png",
+                          fit: BoxFit.cover,
+                          width: 40,
+                          height: 40,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          alignment: Alignment.center,
+                          height: 48,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Text(
+                                  "2020-01-32",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: ScreenUtil().setSp(36)),
+                                ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Text(
+                                  "1元",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: ScreenUtil().setSp(36)),
+                                ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Text(
+                                  "每天任务完成",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: ScreenUtil().setSp(36)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                  itemCount: 10,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget itemsLayout() {
+    bool isProxy = false;
+    if ("3" == userType) {
+      isProxy = true;
+    }
+    return Container(
+      height: ScreenUtil().setHeight(292),
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:
+              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(28))),
+          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+              color: Colors.white,
+              width: 0.5)),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          new Flexible(
+            fit: FlexFit.tight,
+            child: new FlatButton(
+                onPressed: () async {
+                  NavigatorUtils.navigatorRouter(context, FansListPage());
+                },
+                child: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Flexible(
-                              flex: 1,
-                              fit: FlexFit.tight,
-                              child: Text(
-                                "时间",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xFF999999),
-                                    fontSize: ScreenUtil().setSp(36)),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              fit: FlexFit.tight,
-                              child: Text(
-                                "金额",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xFF999999),
-                                    fontSize: ScreenUtil().setSp(36)),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              fit: FlexFit.tight,
-                              child: Text(
-                                "说明",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xFF999999),
-                                    fontSize: ScreenUtil().setSp(36)),
-                              ),
-                            ),
-                          ],
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/icon_fans.png",
+                            width: ScreenUtil().setWidth(110),
+                            height: ScreenUtil().setWidth(110),
+                          ),
                         ),
                       ),
-                      Flexible(
-                        flex: 1,
-                        child: ListView.separated(
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(
-                            height: 1,
-                            color: Color(0xFFEFEFEF),
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Stack(
-                              alignment: Alignment.topRight,
-                              children: <Widget>[
-                                Image.asset(
-                                  "static/images/task_uncompleted.png",
-                                  fit: BoxFit.cover,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 16),
-                                  alignment: Alignment.center,
-                                  height: 48,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Flexible(
-                                        flex: 1,
-                                        fit: FlexFit.tight,
-                                        child: Text(
-                                          "2020-01-32",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Color(0xFF222222),
-                                              fontSize: ScreenUtil().setSp(36)),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        flex: 1,
-                                        fit: FlexFit.tight,
-                                        child: Text(
-                                          "1元",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Color(0xFF222222),
-                                              fontSize: ScreenUtil().setSp(36)),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        flex: 1,
-                                        fit: FlexFit.tight,
-                                        child: Text(
-                                          "每天任务完成",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Color(0xFF222222),
-                                              fontSize: ScreenUtil().setSp(36)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                          itemCount: 10,
+                      new Container(
+                        child: new Text(
+                          "我的粉丝",
+                          style:
+                              new TextStyle(fontSize: ScreenUtil().setSp(38)),
                         ),
                       )
                     ],
                   ),
-                ),
-              ),
+                )),
+          ),
+          new Flexible(
+            fit: FlexFit.tight,
+            child: new FlatButton(
+                onPressed: () {
+                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+                },
+                child: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/icon_message.png",
+                            width: ScreenUtil().setWidth(110),
+                            height: ScreenUtil().setWidth(110),
+                          ),
+                        ),
+                      ),
+                      new Container(
+                        child: new Text("我的消息",
+                            style: new TextStyle(
+                                fontSize: ScreenUtil().setSp(38))),
+                      )
+                    ],
+                  ),
+                )),
+          ),
+          new Flexible(
+            fit: FlexFit.tight,
+            child: Ink(
+              child: new InkWell(
+                  onTap: () {
+                    if (isProxy) {
+                      _dialogPhoneNumberController.text = "";
+                      _phoneHintText = "请输入要添加的手机号";
+                      showMyDialog(
+                        addExperienceAccount: true,
+                      );
+                    } else {
+                      NavigatorUtils.navigatorRouter(
+                          context, TaskRecordListPage());
+                    }
+                  },
+                  child: new Container(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                          margin: const EdgeInsets.only(bottom: 6.0),
+                          child: new CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.transparent,
+                            child: new Image.asset(
+                              "static/images/icon_task_record.png",
+                              width: ScreenUtil().setWidth(110),
+                              height: ScreenUtil().setWidth(110),
+                            ),
+                          ),
+                        ),
+                        new Container(
+                          child: new Text("${isProxy ? "添加体验会员" : "任务提交记录"}",
+                              style: new TextStyle(
+                                  fontSize: ScreenUtil().setSp(38))),
+                        )
+                      ],
+                    ),
+                  )),
             ),
-          ],
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+          ),
+          new Flexible(
+            fit: FlexFit.tight,
+            child: Container(
+              child: new FlatButton(
+                  onPressed: () {},
+                  child: new Container(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                          margin: const EdgeInsets.only(bottom: 6.0),
+                          child: new CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.transparent,
+                            child: new Image.asset(
+                              "static/images/icon_invite.png",
+                              width: ScreenUtil().setWidth(110),
+                              height: ScreenUtil().setWidth(110),
+                            ),
+                          ),
+                        ),
+                        new Container(
+                          child: new Text("邀请好友",
+                              style: new TextStyle(
+                                  fontSize: ScreenUtil().setSp(38))),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   LinearGradient buildBackgroundLinearGradient() {
@@ -333,7 +851,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
     //
     return GestureDetector(
       onTap: () {
-        showMyDialog(showNickName: false);
+        /* showMyDialog(
+          showPhone: true,
+        );*/
       },
       child: Visibility(
         visible: !isDiamonVip,
@@ -384,193 +904,417 @@ class _TaskMinePageState extends State<TaskMinePage> {
 
   Widget buildCardInfo() {
     //话费 话费充值
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            height: ScreenUtil().setHeight(140),
-            decoration:
-                BoxDecoration(gradient: buildBackgroundLinearGradient()),
-          ),
-          Card(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-            child: Container(
-              height: ScreenUtil().setHeight(257),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.tight,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "任务奖励金",
-                          style: TextStyle(
-                              color: Color(0xFF222222),
-                              fontSize: ScreenUtil().setSp(42)),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(16),
-                        ),
-                        Text(
-                          "${totalAssetsAmount == null ? '¥ 0' : '¥ $totalAssetsAmount'}",
-                          style: TextStyle(
-                              color: Color(0xFF222222),
-                              fontSize: ScreenUtil().setSp(56),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+    return Card(
+      margin: EdgeInsets.symmetric(
+          horizontal: 16, vertical: ScreenUtil().setHeight(39)),
+      child: Container(
+        height: ScreenUtil().setHeight(437),
+        width: double.maxFinite,
+        padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(64)),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: Image.asset(
+                  "static/images/$_cardBgImageName",
+                  fit: BoxFit.fill,
+                ).image)),
+        child: Column(
+          children: <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: GestureDetector(
+                    onTap: () {
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          IncomeListPage(
+                            pageType: 0,
+                          ));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(60)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                "可提现(元)",
+                                style: TextStyle(
+                                    color: _cardTextColor,
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                              Icon(Icons.arrow_right,
+                                  color: _cardTextColor,
+                                  size: ScreenUtil().setSp(42)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(16),
+                          ),
+                          Text(
+                            "${availableCashAmount == null ? '¥ 0' : '¥ $availableCashAmount'}",
+                            style: TextStyle(
+                                color: _cardTextColor,
+                                fontSize: ScreenUtil().setSp(42),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.tight,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "已提现",
+                ),
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: GestureDetector(
+                    onTap: () async {
+                      try {
+                        if (CommonUtils.isEmpty(availableCashAmount) ||
+                            int.parse(availableCashAmount.toString()) <= 0) {
+                          return;
+                        }
+                      } catch (e) {
+                        return;
+                      }
+                      var result = await HttpManage.withdrawalApplication(
+                          "2", availableCashAmount, "", "");
+                      if (result.status) {
+                        Fluttertoast.showToast(
+                            msg: "提现申请已提交",
+                            textColor: Colors.white,
+                            backgroundColor: Colors.grey);
+                        _initUserData();
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "${result.errMsg}",
+                            textColor: Colors.white,
+                            backgroundColor: Colors.grey);
+                      }
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.only(left: ScreenUtil().setWidth(240)),
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        width: ScreenUtil().setWidth(196),
+                        height: ScreenUtil().setHeight(79),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(ScreenUtil().setWidth(51))),
+                            border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                color: _cardTextColor,
+                                width: 0.5)),
+                        child: Text(
+                          "去提现",
                           style: TextStyle(
-                              color: Color(0xFF222222),
-                              fontSize: ScreenUtil().setSp(42)),
+//                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                              color: _cardTextColor,
+                              fontSize: ScreenUtil().setSp(38)),
                         ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(16),
-                        ),
-                        Text(
-                          "${cashWithdrawal == null ? '¥ 0' : '¥ $cashWithdrawal'}",
-                          style: TextStyle(
-                              color: Color(0xFF222222),
-                              fontSize: ScreenUtil().setSp(56),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16.0)),
+            SizedBox(
+              height: ScreenUtil().setHeight(48),
             ),
-          )
-        ],
+            Row(
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: GestureDetector(
+                    onTap: () {
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          IncomeListPage(
+                            pageType: 1,
+                          ));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(60)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                "总资产(元)",
+                                style: TextStyle(
+                                    color: _cardTextColor,
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                              Icon(Icons.arrow_right,
+                                  color: _cardTextColor,
+                                  size: ScreenUtil().setSp(42)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(16),
+                          ),
+                          Text(
+                            "${totalAssetsAmount == null ? '¥ 0' : '¥ $totalAssetsAmount'}",
+                            style: TextStyle(
+                                color: _cardTextColor,
+                                fontSize: ScreenUtil().setSp(42),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: GestureDetector(
+                    onTap: () {
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          IncomeListPage(
+                            pageType: 2,
+                          ));
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.only(left: ScreenUtil().setWidth(240)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "已提现(元)",
+                                style: TextStyle(
+                                    color: _cardTextColor,
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                              Icon(Icons.arrow_right,
+                                  color: _cardTextColor,
+                                  size: ScreenUtil().setSp(42)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(16),
+                          ),
+                          Text(
+                            "${cashWithdrawal == null ? '¥ 0' : '¥ $cashWithdrawal'}",
+                            style: TextStyle(
+                                color: _cardTextColor,
+                                fontSize: ScreenUtil().setSp(42),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),
     );
   }
 
   Widget buildTopLayout() {
     return Container(
-        height: 100,
         decoration: BoxDecoration(gradient: buildBackgroundLinearGradient()),
         child: Column(
           children: <Widget>[
-            Visibility(
-              visible: false,
-              child: Container(
-                  alignment: Alignment.center,
-                  height: 56,
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Text("${widget.title}",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          letterSpacing: 1))),
-            ),
             buildHeadLayout(),
           ],
         ));
   }
 
+  String _getImgName(_type) {
+    switch (_type) {
+      case "0":
+        return "icon_nomal.png";
+      case "1":
+        return "icon_experience.png";
+      case "2":
+        return "icon_vip.png";
+    }
+    return "";
+  }
+
   Widget buildHeadLayout() {
-    return GestureDetector(
-      onTap: () {
-        showMyDialog(showNickName: false);
+    String text = "";
+    switch (userType) {
+      case "0":
+        text = "普通会员";
+        break;
+      case "1":
+        text = "体验会员";
+        break;
+      case "2":
+        text = "钻石vip";
+        break;
+      case "3":
+        text = "代理";
+        break;
+    }
+    return ListTile(
+      onTap: () async {
+        switch (userType) {
+          case "0":
+          case "1":
+            await NavigatorUtils.navigatorRouter(
+                context, TaskOpenDiamondPage());
+            /*var result = await showDialog(
+                context: context,
+                builder: (context) {
+                  return TaskOpenDiamondDialogPage();
+                });*/
+//            NavigatorUtils.navigatorRouter(context, PayResultPage());
+            _initUserData();
+            break;
+        }
       },
-      child: ListTile(
-        leading: headUrl == null
-            ? Image.asset(
-                "static/images/task_default_head.png",
-                width: 60,
-                height: 60,
-              )
-            : ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: headUrl,
-                  width: ScreenUtil().setWidth(120),
-                  height: ScreenUtil().setWidth(120),
-                  fit: BoxFit.cover,
-                ),
-              ),
-        title: Row(
+      leading: Container(
+        width: ScreenUtil().setWidth(168),
+        height: ScreenUtil().setWidth(168),
+        child: Stack(
+          children: <Widget>[
+            headUrl == null
+                ? Image.asset(
+                    "static/images/task_default_head.png",
+                    width: ScreenUtil().setWidth(146),
+                    height: ScreenUtil().setWidth(146),
+                    fit: BoxFit.fill,
+                  )
+                : ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: headUrl,
+                      width: ScreenUtil().setWidth(146),
+                      height: ScreenUtil().setWidth(146),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+            Visibility(
+                child: Container(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                  width: ScreenUtil().setWidth(147),
+                  height: ScreenUtil().setHeight(45),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(ScreenUtil().setWidth(23))),
+                    gradient: LinearGradient(colors: [
+                      Color(0xff505050),
+                      Color(0xff222222),
+                    ]),
+                  ),
+                  child: Text("$text",
+                      style: TextStyle(
+                        color: _cardTextColor,
+                        fontSize: ScreenUtil().setSp(28),
+                      ))),
+            ))
+          ],
+        ),
+      ),
+      title: Container(
+        child: Row(
           children: <Widget>[
             Text(
               "${nickName == null ? '' : nickName}",
-              style: TextStyle(
+              /*style: TextStyle(
                   color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: ScreenUtil().setSp(42)),*/
+              style: TextStyle(
+                  color: Color(0xFF222222),
                   fontWeight: FontWeight.bold,
                   fontSize: ScreenUtil().setSp(42)),
             ),
             SizedBox(
               width: ScreenUtil().setWidth(26),
             ),
+            Image.asset(
+              "static/images/${_getImgName(userType)}",
+              width: ScreenUtil().setWidth(185),
+              height: ScreenUtil().setHeight(53),
+              fit: BoxFit.fill,
+            ),
 //            Image.asset("", width:)
           ],
         ),
-        subtitle: Text(
-          "${phoneNumber == null ? '' : phoneNumber}",
-          style: TextStyle(
-              color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-              fontSize: ScreenUtil().setSp(42)),
-        ),
-        trailing: GestureDetector(
-          onTap: () async {
-            //todo 提现到微信
-            /* Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return LoginPage();
-            }));*/
-            try {
-              if (CommonUtils.isEmpty(availableCashAmount) ||
-                  int.parse(availableCashAmount.toString()) <= 0) {
-                return;
-              }
-            } catch (e) {
+      ),
+      subtitle: Text(
+        "邀请码：${_code == null ? '' : _code}",
+        style: TextStyle(
+            color: Color(0xFF222222),
+            fontWeight: FontWeight.bold,
+            fontSize: ScreenUtil().setSp(42)),
+      ),
+      trailing: GestureDetector(
+        /* onTap: () async {
+          */ /* Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return LoginPage();
+          }));*/ /*
+          try {
+            if (CommonUtils.isEmpty(availableCashAmount) ||
+                int.parse(availableCashAmount.toString()) <= 0) {
               return;
             }
-            var result = await HttpManage.withdrawalApplication(
-                "2",
-                availableCashAmount == null ? "1" : availableCashAmount,
-                "",
-                "");
-            if (result.status) {
-              /* Fluttertoast.showToast(
-                  msg: "提现申请已提交",
-                  textColor: Colors.white,
-                  backgroundColor: Colors.grey);*/
-              _initUserData();
-            } else {
-              Fluttertoast.showToast(
-                  msg: "${result.errMsg}",
-                  textColor: Colors.white,
-                  backgroundColor: Colors.grey);
-            }
-          },
+          } catch (e) {
+            return;
+          }
+          var result = await HttpManage.withdrawalApplication(
+              "2",
+              availableCashAmount == null ? "1" : availableCashAmount,
+              "",
+              "");
+          if (result.status) {
+            */ /* Fluttertoast.showToast(
+                msg: "提现申请已提交",
+                textColor: Colors.white,
+                backgroundColor: Colors.grey);*/ /*
+            _initUserData();
+          } else {
+            Fluttertoast.showToast(
+                msg: "${result.errMsg}",
+                textColor: Colors.white,
+                backgroundColor: Colors.grey);
+          }
+        },*/
+        child: Visibility(
+          visible: !isDiamonVip,
           child: Container(
-            width: 60,
-            height: 24,
+            width: ScreenUtil().setWidth(196),
+            height: ScreenUtil().setHeight(79),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(24)),
+                color: _headBgColor,
+                borderRadius: BorderRadius.all(
+                    Radius.circular(ScreenUtil().setWidth(51))),
                 border: Border.all(
-                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                    color: _headBgColor,
                     width: 0.5)),
             child: Text(
-              "去提现",
+              "点亮vip",
               style: TextStyle(
-                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+//                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                  color: Colors.white,
                   fontSize: ScreenUtil().setSp(38)),
             ),
           ),
@@ -579,7 +1323,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
     );
   }
 
-  void showMyDialog({bool showNickName}) {
+  void showMyDialog(
+      {bool showNickName = false,
+      bool showPhone = false,
+      bool bindPhone = false,
+      bool bindWeChatNo = false,
+      bool modifyPhone = false,
+      bool addExperienceAccount = false,
+      bool showWeChatNo = false}) {
     showDialog(
         context: context,
         builder: (context) {
@@ -614,40 +1365,78 @@ class _TaskMinePageState extends State<TaskMinePage> {
                             ),
                       ),
                       onChanged: (value) {
-                        dialogNickName = value.trim();
+                        _dialogNickName = value.trim();
                       }),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                height: 46,
-                decoration: BoxDecoration(
-                    color: Color(0xFFEFEFEF),
-                    borderRadius: BorderRadius.all(Radius.circular(46))),
-                child: TextField(
-                    textAlignVertical: TextAlignVertical.center,
-                    style: TextStyle(fontSize: 14),
-                    textInputAction: TextInputAction.send,
-                    keyboardType: TextInputType.number,
-                    decoration: new InputDecoration(
-                      hintText: '手机号：',
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 3.0, horizontal: 15.0),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(46)),
-                          // 边框默认色
-                          borderSide:
-                              const BorderSide(color: Colors.transparent)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(46)),
-                          borderSide:
-                              const BorderSide(color: Colors.transparent)
-                          // 聚焦之后的边框色
-                          ),
-                    ),
-                    onChanged: (value) {
-                      dialogPhoneNumber = value.trim();
-                    }),
+              Visibility(
+                visible: showPhone,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  height: 46,
+                  decoration: BoxDecoration(
+                      color: Color(0xFFEFEFEF),
+                      borderRadius: BorderRadius.all(Radius.circular(46))),
+                  child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      style: TextStyle(fontSize: 14),
+                      textInputAction: TextInputAction.send,
+                      keyboardType: TextInputType.number,
+                      controller: _dialogPhoneNumberController,
+                      decoration: new InputDecoration(
+                        hintText: _phoneHintText,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 15.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(46)),
+                            // 边框默认色
+                            borderSide:
+                                const BorderSide(color: Colors.transparent)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(46)),
+                            borderSide:
+                                const BorderSide(color: Colors.transparent)
+                            // 聚焦之后的边框色
+                            ),
+                      ),
+                      onChanged: (value) {
+                        _dialogPhoneNumber = value.trim();
+                      }),
+                ),
+              ),
+              Visibility(
+                visible: showWeChatNo,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  height: 46,
+                  decoration: BoxDecoration(
+                      color: Color(0xFFEFEFEF),
+                      borderRadius: BorderRadius.all(Radius.circular(46))),
+                  child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      style: TextStyle(fontSize: 14),
+                      textInputAction: TextInputAction.send,
+                      controller: _dialogWeChatNoController,
+                      decoration: new InputDecoration(
+                        hintText: '请输入您的微信号：',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 15.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(46)),
+                            // 边框默认色
+                            borderSide:
+                                const BorderSide(color: Colors.transparent)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(46)),
+                            borderSide:
+                                const BorderSide(color: Colors.transparent)
+                            // 聚焦之后的边框色
+                            ),
+                      ),
+                      onChanged: (value) {
+                        _dialogWeChatNo = value.trim();
+                      }),
+                ),
               ),
               Container(
                 height: 1,
@@ -685,44 +1474,127 @@ class _TaskMinePageState extends State<TaskMinePage> {
                       fit: FlexFit.tight,
                       child: GestureDetector(
                         onTap: () async {
-                          if ( //CommonUtils.isEmpty(dialogNickName) ||
-                              CommonUtils.isEmpty(dialogPhoneNumber)) {
-                            Fluttertoast.showToast(
-                                msg: "请检查填写的信息是否完整！",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
-                            return;
-                          }
-                          if (!CommonUtils.isPhoneLegal(dialogPhoneNumber)) {
-                            CommonUtils.showSimplePromptDialog(
-                                context, "温馨提示", "请输入正确的手机号");
-                            return;
-                          }
-
-                          var result = await HttpManage.bindPhone(
-                              tel: dialogPhoneNumber.toString());
-                          if (result.status) {
-                            String isMerge = result.data["is_merge"].toString();
-                            switch (isMerge) {
-                              case "1":
-                                Fluttertoast.showToast(
-                                    msg: "手机号绑定成功！",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
-                                break;
-                              case "2":
-                                Fluttertoast.showToast(
-                                    msg: "手机账户数据合并成功，请重新登录！",
-                                    textColor: Colors.white,
-                                    toastLength: Toast.LENGTH_LONG,
-                                    backgroundColor: Colors.grey);
-                                break;
+                          if (showPhone) {
+                            if ( //CommonUtils.isEmpty(dialogNickName) ||
+                                CommonUtils.isEmpty(_dialogPhoneNumber)) {
+                              Fluttertoast.showToast(
+                                  msg: "请检查填写的信息是否完整！",
+                                  textColor: Colors.white,
+                                  backgroundColor: Colors.grey);
+                              return;
                             }
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "${result.errMsg}",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            if (!CommonUtils.isPhoneLegal(_dialogPhoneNumber)) {
+                              CommonUtils.showSimplePromptDialog(
+                                  context, "温馨提示", "请输入正确的手机号");
+                              return;
+                            }
+
+                            if (bindPhone) {
+                              //绑定手机号
+                              var result = await HttpManage.bindPhone(
+                                  tel: _dialogPhoneNumber.toString());
+                              if (result.status) {
+                                String isMerge =
+                                    result.data["is_merge"].toString();
+                                switch (isMerge) {
+                                  case "1":
+                                    Fluttertoast.showToast(
+                                        msg: "手机号绑定成功！",
+                                        textColor: Colors.white,
+                                        backgroundColor: Colors.grey);
+                                    _initUserData();
+                                    break;
+
+                                  case "2":
+                                    Fluttertoast.showToast(
+                                        msg: "手机账户数据合并成功，请重新登录！",
+                                        textColor: Colors.white,
+                                        toastLength: Toast.LENGTH_LONG,
+                                        backgroundColor: Colors.grey);
+                                    break;
+                                }
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "${result.errMsg}",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                              }
+                            }
+                            if (modifyPhone) {
+                              //todo 修改手机号
+                              var result = await HttpManage.bindPhone(
+                                  tel: _dialogPhoneNumber.toString());
+                              if (result.status) {
+                                Fluttertoast.showToast(
+                                    msg: "手机号修改成功！",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                                _initUserData();
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "${result.errMsg}",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                              }
+                            }
+                            if (addExperienceAccount) {
+                              var result =
+                                  await HttpManage.addExperienceMemberPhone(
+                                      tel: _dialogPhoneNumber.toString());
+                              if (result.status) {
+                                Fluttertoast.showToast(
+                                    msg: "体验会员添加成功！",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "${result.errMsg}",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                              }
+                            }
+                          }
+                          if (showWeChatNo) {
+                            if ( //CommonUtils.isEmpty(dialogNickName) ||
+                                CommonUtils.isEmpty(_dialogWeChatNo)) {
+                              Fluttertoast.showToast(
+                                  msg: "微信号不能为空！",
+                                  textColor: Colors.white,
+                                  backgroundColor: Colors.grey);
+                              return;
+                            }
+                            if (bindWeChatNo) {
+                              var result = await HttpManage.bindWeChatNo(
+                                  _dialogWeChatNo.toString());
+                              if (result.status) {
+                                Fluttertoast.showToast(
+                                    msg: "微信号绑定成功！",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                                _initUserData();
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "${result.errMsg}",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                              }
+                            } else {
+                              //微信号修改
+                              var result = await HttpManage.modifyWeChatNo(
+                                  _dialogWeChatNo.toString());
+                              if (result.status) {
+                                Fluttertoast.showToast(
+                                    msg: "微信号修改成功！",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                                _initUserData();
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "${result.errMsg}",
+                                    textColor: Colors.white,
+                                    backgroundColor: Colors.grey);
+                              }
+                            }
                           }
                           Navigator.of(context).pop();
                         },

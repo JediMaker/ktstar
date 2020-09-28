@@ -124,6 +124,7 @@ class GlobalConfig {
     _initFluwx();
     HttpManage.init();
     _initJPushPlatformState();
+    Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
   }

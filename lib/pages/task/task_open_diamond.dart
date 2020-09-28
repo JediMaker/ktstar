@@ -12,6 +12,8 @@ import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/models/vip_price_entity.dart';
+import 'package:star/pages/task/pay_result.dart';
+import 'package:star/utils/navigator_utils.dart';
 
 class TaskOpenDiamondPage extends StatefulWidget {
   TaskOpenDiamondPage({Key key}) : super(key: key);
@@ -26,7 +28,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
 
   String _result = "无";
   int _payway = 0;
-  var payNo;
+  var _payNo;
   String oldPrice = "";
   String nowPrice = "";
   bool showOldPrice = false;
@@ -57,7 +59,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
   }
 
   _checkPayStatus() async {
-    var result = await HttpManage.checkPayResult(payNo);
+    var result = await HttpManage.checkPayResult(_payNo);
     if (result.status) {
       var payStatus = result.data["pay_status"].toString();
       switch (payStatus) {
@@ -68,10 +70,12 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
               backgroundColor: Colors.grey);
           break;
         case "2": //已成功
-          Fluttertoast.showToast(
+          /* Fluttertoast.showToast(
               msg: "开通成功,去领任务吧",
               textColor: Colors.white,
-              backgroundColor: Colors.grey);
+              backgroundColor: Colors.grey);*/
+          NavigatorUtils.navigatorRouterAndRemoveUntil(
+              context, PayResultPage(payNo: _payNo,));
           break;
       }
     } else {
@@ -102,6 +106,15 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
             widget.title,
             style: TextStyle(
                 color: Colors.white, fontSize: ScreenUtil().setSp(54)),
+          ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
           centerTitle: true,
           elevation: 0,
@@ -358,7 +371,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                         if (_payway == 1) {
                           var result = await HttpManage.getWechatPayInfo();
                           if (result.status) {
-                            payNo = result.data.payNo;
+                            _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
                             Fluttertoast.showToast(
@@ -370,7 +383,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                           var result = await HttpManage.getAliPayInfo();
                           if (result.status) {
                             _payInfo = result.data.payInfo;
-                            payNo = result.data.payNo;
+                            _payNo = result.data.payNo;
                             callAlipay();
                           } else {
                             Fluttertoast.showToast(
