@@ -66,7 +66,10 @@ wechatPayinfoDataPayInfoFromJson(WechatPayinfoDataPayInfo data, Map<String, dyna
 		data.prepayid = json['prepayid']?.toString();
 	}
 	if (json['timestamp'] != null) {
-		data.timestamp = json['timestamp']?.toInt();
+		try {
+			data.timestamp = json['timestamp']?.toInt();
+		} catch (e) {
+		}
 	}
 	if (json['sign'] != null) {
 		data.sign = json['sign']?.toString();
