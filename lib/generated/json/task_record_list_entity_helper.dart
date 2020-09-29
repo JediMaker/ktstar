@@ -72,6 +72,12 @@ taskRecordListDataListFromJson(TaskRecordListDataList data, Map<String, dynamic>
 	if (json['check_time'] != null) {
 		data.checkTime = json['check_time']?.toString();
 	}
+	if (json['task_id'] != null) {
+		data.taskId = json['task_id']?.toString();
+	}
+	if (json['re_submit'] != null) {
+		data.reSubmit = json['re_submit']?.toString();
+	}
 	return data;
 }
 
@@ -83,5 +89,7 @@ Map<String, dynamic> taskRecordListDataListToJson(TaskRecordListDataList entity)
 	data['reject_reason'] = entity.rejectReason;
 	data['submit_time'] = entity.submitTime;
 	data['check_time'] = entity.checkTime;
+	data['task_id'] = entity.taskId;
+	data['re_submit'] = entity.reSubmit;
 	return data;
 }
