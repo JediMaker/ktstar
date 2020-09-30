@@ -25,4 +25,10 @@ class FansListDataList with JsonConvert<FansListDataList> {
 	String username;
 	@JSONField(name: "created_time")
 	String createdTime;
+	@JSONField(name: "total_count")
+	String totalCount;
+	@JSONField(name: "complete_status")
+	String completeStatus;
+	@JSONField(name: "complete_count")
+	String completeCount;
 }

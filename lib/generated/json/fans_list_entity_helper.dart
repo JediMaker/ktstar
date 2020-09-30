@@ -66,6 +66,15 @@ fansListDataListFromJson(FansListDataList data, Map<String, dynamic> json) {
 	if (json['created_time'] != null) {
 		data.createdTime = json['created_time']?.toString();
 	}
+	if (json['total_count'] != null) {
+		data.totalCount = json['total_count']?.toString();
+	}
+	if (json['complete_status'] != null) {
+		data.completeStatus = json['complete_status']?.toString();
+	}
+	if (json['complete_count'] != null) {
+		data.completeCount = json['complete_count']?.toString();
+	}
 	return data;
 }
 
@@ -75,5 +84,8 @@ Map<String, dynamic> fansListDataListToJson(FansListDataList entity) {
 	data['avatar'] = entity.avatar;
 	data['username'] = entity.username;
 	data['created_time'] = entity.createdTime;
+	data['total_count'] = entity.totalCount;
+	data['complete_status'] = entity.completeStatus;
+	data['complete_count'] = entity.completeCount;
 	return data;
 }
