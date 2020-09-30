@@ -97,7 +97,7 @@ class Utils {
     /// 存储所有key
     List<String> allKeys = [];
     parameter.forEach((key, value) {
-      allKeys.add(key +"="+ value);
+      allKeys.add(key + "=" + value);
     });
 
     /// key排序
@@ -115,11 +115,11 @@ class Utils {
 
     /// 拼接 ABC 是你的秘钥
     String sign = pairsString + APi.INTERFACE_KEY;
-    print("sign:"+sign);
+    print("sign:" + sign);
 
     /// hash
     String signString = generateMd5(sign); //.toUpperCase()
-    print("MD5sign:"+signString);
+    print("MD5sign:" + signString);
     //String signString = md5.convert(utf8.encode(sign)).toString().toUpperCase();  //直接写也可以
     return signString;
   }
@@ -134,7 +134,7 @@ class Utils {
 }
 
 ///底部裁剪
-class BottonClipper extends CustomClipper<Path> {
+class BottomClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     // 路径
@@ -154,6 +154,38 @@ class BottonClipper extends CustomClipper<Path> {
     // 设置路径的结束点
     path.lineTo(size.width, size.height - 50);
     path.lineTo(size.width, 0);
+
+    // 返回路径
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+///顶部裁剪
+class TopClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    // 路径
+    var path = Path();
+    // 设置路径的开始点
+    path.lineTo(size.width / 2, 0);
+    path.lineTo(size.width / 2, 50);
+
+    // 设置曲线的开始样式
+    var firstControlPoint = Offset(50, 0);
+    // 设置曲线的结束样式
+    var firstEndPont = Offset(size.width, 0);
+    // 把设置的曲线添加到路径里面
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPont.dx, firstEndPont.dy);
+
+    // 设置路径的结束点
+    path.lineTo(0, 50);
+    path.lineTo(size.width,50);
 
     // 返回路径
     return path;

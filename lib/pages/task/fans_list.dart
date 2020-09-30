@@ -1,12 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
+import 'package:star/pages/widget/no_data.dart';
+
+import '../../global_config.dart';
 
 class FansListPage extends StatefulWidget {
   //是否代理商
@@ -41,15 +45,64 @@ class _FansListPageState extends State<FansListPage>
     if (result.status) {
       if (mounted) {
         setState(() {
+          _totalMembersNumber = result.data.countInfo.total.toString();
+          _vipMembersNumber = result.data.countInfo.vip.toString();
+          _experienceMembersNumber =
+              result.data.countInfo.experience.toString();
+          _ordinaryMembersNumber = result.data.countInfo.ordinary.toString();
           if (widget.isAgent) {
-            _totalMembersNumber = result.data.countInfo.total.toString();
-            _vipMembersNumber = result.data.countInfo.vip.toString();
-            _experienceMembersNumber =
-                result.data.countInfo.experience.toString();
-            _ordinaryMembersNumber = result.data.countInfo.ordinary.toString();
           } else {
             _agentInfo = result.data.agentInfo;
           }
+          if (widget.isAgent) {
+            _tabValues = [
+              '全部($_totalMembersNumber)',
+              'vip($_vipMembersNumber)',
+              '普通($_ordinaryMembersNumber)',
+              '体验($_experienceMembersNumber)',
+            ];
+            _tabViews = [
+              FansTabView(
+                fansType: "",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "vip",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "ordinary",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "experience",
+                isAgent: widget.isAgent,
+              ),
+            ];
+          } else {
+            _tabValues = [
+              '全部($_totalMembersNumber)',
+              'vip会员($_vipMembersNumber)',
+              '普通会员($_ordinaryMembersNumber)',
+            ];
+            _tabViews = [
+              FansTabView(
+                fansType: "",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "vip",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "ordinary",
+                isAgent: widget.isAgent,
+              ),
+            ];
+          }
+
+          _tabController =
+              TabController(length: widget.isAgent ? 4 : 3, vsync: this);
         });
       }
     } else {}
@@ -63,48 +116,56 @@ class _FansListPageState extends State<FansListPage>
       '普通会员',
       '体验会员',
     ];*/
-    _initFansTotalsData();
     if (widget.isAgent) {
       _tabValues = [
-        ' 全部 （$_totalMembersNumber）',
-        'vip会员（$_vipMembersNumber）',
-        '普通会员（$_ordinaryMembersNumber）',
-        '体验会员（$_experienceMembersNumber）',
+        '全部($_totalMembersNumber)',
+        'vip($_vipMembersNumber)',
+        '普通($_ordinaryMembersNumber)',
+        '体验($_experienceMembersNumber)',
       ];
       _tabViews = [
         FansTabView(
           fansType: "",
+          isAgent: widget.isAgent,
         ),
         FansTabView(
           fansType: "vip",
+          isAgent: widget.isAgent,
         ),
         FansTabView(
           fansType: "ordinary",
+          isAgent: widget.isAgent,
         ),
         FansTabView(
           fansType: "experience",
+          isAgent: widget.isAgent,
         ),
       ];
     } else {
       _tabValues = [
-        ' 全部 （$_totalMembersNumber）',
-        'vip会员（$_vipMembersNumber）',
-        '普通会员（$_ordinaryMembersNumber）',
+        '全部($_totalMembersNumber)',
+        'vip会员($_vipMembersNumber)',
+        '普通会员($_ordinaryMembersNumber)',
       ];
       _tabViews = [
         FansTabView(
           fansType: "",
+          isAgent: widget.isAgent,
         ),
         FansTabView(
           fansType: "vip",
+          isAgent: widget.isAgent,
         ),
         FansTabView(
           fansType: "ordinary",
+          isAgent: widget.isAgent,
         ),
       ];
     }
 
     _tabController = TabController(length: widget.isAgent ? 4 : 3, vsync: this);
+    _initFansTotalsData();
+
     super.initState();
   }
 
@@ -115,82 +176,89 @@ class _FansListPageState extends State<FansListPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-          ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Color(0xFF222222),
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            brightness: Brightness.dark,
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            centerTitle: true,
+            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            elevation: 0,
           ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Visibility(visible: !widget.isAgent, child: buildHeadLayout()),
-              Flexible(
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 16, vertical: ScreenUtil().setHeight(30)),
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(ScreenUtil().setWidth(30))),
-                      border: Border.all(
-//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                          color: Colors.white,
-                          width: 0.5)),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 48,
-                        alignment: Alignment.center,
+          body: Center(
+            child: Column(
+              children: <Widget>[
+                Visibility(visible: !widget.isAgent, child: buildHeadLayout()),
+                Flexible(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+                    padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+                    decoration: BoxDecoration(
                         color: Colors.white,
-                        child: Center(
-                          child: TabBar(
-                            tabs: _tabValues.map((f) {
-                              return Text(
-                                f,
-                                textAlign: TextAlign.center,
-                                style:
-                                    TextStyle(fontSize: ScreenUtil().setSp(38)),
-                              );
-                            }).toList(),
-                            controller: _tabController,
-                            indicatorColor: Color(0xffF93736),
-                            indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: false,
-                            labelColor: Color(0xffF93736),
-                            unselectedLabelColor: Colors.black,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(ScreenUtil().setWidth(30))),
+                        border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                            color: Colors.white,
+                            width: 0.5)),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 48,
+                          alignment: Alignment.center,
+                          color: Colors.white,
+                          child: Center(
+                            child: TabBar(
+                              tabs: _tabValues.map((f) {
+                                return Text(
+                                  f,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      TextStyle(fontSize: ScreenUtil().setSp(38)),
+                                );
+                              }).toList(),
+                              controller: _tabController,
+                              indicatorColor: Color(0xffF93736),
+                              indicatorSize: TabBarIndicatorSize.label,
+                              isScrollable: false,
+                              labelColor: Color(0xffF93736),
+                              unselectedLabelColor: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: _tabViews,
-                        ),
-                      )
-                    ],
+                        Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: _tabViews,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+    );
   }
 
   Widget buildHeadLayout() {
@@ -218,25 +286,77 @@ class _FansListPageState extends State<FansListPage>
       wechatNo = _agentInfo.wxNo;
     } catch (e) {}
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
-      height: ScreenUtil().setHeight(295),
-      padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:
-              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-          border: Border.all(
-//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-              color: Colors.white,
-              width: 0.5)),
+      margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
       child: Stack(
         children: <Widget>[
           Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+            height: ScreenUtil().setHeight(295),
+            padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                    Radius.circular(ScreenUtil().setWidth(30))),
+                border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                    color: Colors.white,
+                    width: 0.5)),
+            child: ListTile(
+              onTap: () async {},
+              leading: Container(
+//                width: ScreenUtil().setWidth(137),
+//                height: ScreenUtil().setHeight(197),
+                child: headUrl == null
+                    ? Visibility(
+                        visible: false,
+                        child: Image.asset(
+                          "static/images/task_default_head.png",
+                          width: ScreenUtil().setWidth(120),
+                          height: ScreenUtil().setWidth(120),
+                          fit: BoxFit.fill,
+                        ),
+                      )
+                    : ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: headUrl,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+              ),
+              title: Container(
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "${nickName == null ? '' : nickName}",
+                      /*style: TextStyle(
+                          color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(42)),*/
+                      style: TextStyle(
+                          color: Color(0xFF222222),
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(42)),
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(26),
+                    ),
+//            Image.asset("", width:)
+                  ],
+                ),
+              ),
+              subtitle: Text(
+                "${wechatNo == null ? '' : wechatNo}",
+                style: TextStyle(
+                    color: Color(0xFF222222), fontSize: ScreenUtil().setSp(42)),
+              ),
+            ),
+          ),
+          Container(
             alignment: Alignment.topRight,
             margin: EdgeInsets.only(
-              right: ScreenUtil().setWidth(117),
+              right: ScreenUtil().setWidth(130),
             ),
             child: Container(
                 width: ScreenUtil().setWidth(180),
@@ -257,54 +377,6 @@ class _FansListPageState extends State<FansListPage>
                       color: Colors.white, fontSize: ScreenUtil().setSp(32)),
                 )),
           ),
-          ListTile(
-            onTap: () async {},
-            leading: Container(
-              child: headUrl == null
-                  ? ClipOval(
-                      child: Image.asset(
-                        "static/images/task_default_head.png",
-                        width: ScreenUtil().setWidth(120),
-                        height: ScreenUtil().setWidth(120),
-                        fit: BoxFit.fill,
-                      ),
-                    )
-                  : ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: headUrl,
-                        width: ScreenUtil().setWidth(197),
-                        height: ScreenUtil().setWidth(197),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-            ),
-            title: Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "${nickName == null ? '' : nickName}",
-                    /*style: TextStyle(
-                        color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: ScreenUtil().setSp(42)),*/
-                    style: TextStyle(
-                        color: Color(0xFF222222),
-                        fontWeight: FontWeight.bold,
-                        fontSize: ScreenUtil().setSp(42)),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(26),
-                  ),
-//            Image.asset("", width:)
-                ],
-              ),
-            ),
-            subtitle: Text(
-              "${wechatNo == null ? '' : wechatNo}",
-              style: TextStyle(
-                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(42)),
-            ),
-          ),
         ],
       ),
     );
@@ -314,8 +386,10 @@ class _FansListPageState extends State<FansListPage>
 class FansTabView extends StatefulWidget {
   ///类型 默认全部  vip：VIP用户，experience：体验用户，ordinary：普通用户
   String fansType;
+  bool isAgent;
 
-  FansTabView({Key key, this.fansType = ""}) : super(key: key);
+  FansTabView({Key key, this.fansType = "", this.isAgent = false})
+      : super(key: key);
 
   @override
   _FansTabViewState createState() => _FansTabViewState();
@@ -390,6 +464,7 @@ class _FansTabViewState extends State<FansTabView> {
           _initData();
         }
       },
+      emptyWidget: _fansList== null ||_fansList.length==0? NoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -418,6 +493,9 @@ class _FansTabViewState extends State<FansTabView> {
 
     ///账户类型 0普通用户 1体验用户 2VIP用户
     String userType;
+    String completeTaskNum = '';
+    String totalTaskNum = '';
+    bool taskComplete = false;
     /*switch (userType) {
       case "0":
         text = "普通会员";
@@ -437,6 +515,9 @@ class _FansTabViewState extends State<FansTabView> {
       nickName = listItem.username;
       bindTime = listItem.createdTime;
       userType = listItem.isVip;
+      completeTaskNum = listItem.completeCount;
+      totalTaskNum = listItem.totalCount;
+      taskComplete = listItem.completeStatus == "2";
     } catch (e) {}
     return ListTile(
       onTap: () async {},
@@ -480,16 +561,47 @@ class _FansTabViewState extends State<FansTabView> {
           ],
         ),
       ),
-      subtitle: Text(
-        "${bindTime == null ? '' : bindTime}",
-        style: TextStyle(
-            color: Color(0xFF999999), fontSize: ScreenUtil().setSp(42)),
+      subtitle: Row(
+        children: <Widget>[
+          Text(
+            "${bindTime == null ? '' : bindTime}",
+            style: TextStyle(
+                color: Color(0xFF999999), fontSize: ScreenUtil().setSp(42)),
+          ),
+          SizedBox(
+            width: ScreenUtil().setWidth(26),
+          ),
+          Visibility(
+            visible: widget.isAgent && userType != "0" && totalTaskNum != '0',
+            child: Container(
+              width: ScreenUtil().setWidth(98),
+              height: ScreenUtil().setWidth(49),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: !taskComplete ? Color(0xffFFE1E1) : Color(0xffE1EAFF),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(ScreenUtil().setWidth(25))),
+                border: Border.all(
+                    color:
+                        !taskComplete ? Color(0xffFFE1E1) : Color(0xffE1EAFF),
+                    width: 0.5),
+              ),
+              child: Text(
+                "${'$completeTaskNum/$totalTaskNum'}",
+                style: TextStyle(
+                    color:
+                        !taskComplete ? Color(0xffF32E43) : Color(0xff2E5CF3),
+                    fontSize: ScreenUtil().setSp(36)),
+              ),
+            ),
+          ),
+        ],
       ),
       trailing: GestureDetector(
         child: Image.asset(
           "static/images/${_getImgName(userType)}",
           width: ScreenUtil().setWidth(185),
-          height: ScreenUtil().setHeight(53),
+          height: ScreenUtil().setHeight(67),
           fit: BoxFit.fill,
         ),
       ),

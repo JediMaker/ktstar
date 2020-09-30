@@ -124,3 +124,4 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - static/images/
+    - static/images/withdrawal_checked.png

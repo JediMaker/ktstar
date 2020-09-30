@@ -58,6 +58,22 @@ class _TaskListPageState extends State<TaskListPage> {
         taskCompletedNum = entity.data.taskList.useTaskTotal;
         taskTotalNum = entity.data.taskList.taskTotal;
         _isLoop = true;
+        switch (bannerList[0].uri.toString().trim()) {
+          case "upgrade":
+            _gradientCorlor = LinearGradient(colors: [
+              Color(0xFF7E090F),
+              Color(0xFF810A0C),
+              Color(0xFF7D0A0F),
+            ]);
+
+            break;
+          case "recharge":
+            _gradientCorlor = LinearGradient(colors: [
+              Color(0xFF4A07C6),
+              Color(0xFF4A07C6),
+            ]);
+            break;
+        }
       });
     }
   }
@@ -97,18 +113,22 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   var images = [
-    "https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg",
+    /* "https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg",
     "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1141259048,554497535&fm=26&gp=0.jpg",
-    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2396361575,51762536&fm=26&gp=0.jpg",
+    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2396361575,51762536&fm=26&gp=0.jpg",*/
   ];
 
   var iconsUrls = [
-    "static/images/task_icon_1.png",
+    /*"static/images/task_icon_1.png",
     "static/images/task_icon_2.png",
     "static/images/task_icon_3.png",
     "static/images/task_icon_4.png",
-    "static/images/task_icon_5.png",
+    "static/images/task_icon_5.png",*/
   ];
+  LinearGradient _gradientCorlor = LinearGradient(colors: [
+    Color(0xFF4A07C6),
+    Color(0xFF4A07C6),
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -120,16 +140,7 @@ class _TaskListPageState extends State<TaskListPage> {
           ),
           centerTitle: true,
           elevation: 0,
-          gradient: bannerIndex == 0
-              ? LinearGradient(colors: [
-                  Color(0xFF7E090F),
-                  Color(0xFF810A0C),
-                  Color(0xFF7D0A0F),
-                ])
-              : LinearGradient(colors: [
-                  Color(0xFFFBA951),
-                  Color(0xFFFFDCAC),
-                ]),
+          gradient: _gradientCorlor,
         ),
         body: Builder(
           builder: (context) => CustomScrollView(
@@ -185,11 +196,25 @@ class _TaskListPageState extends State<TaskListPage> {
         controller: _swiperController,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
         onIndexChanged: (index) {
-          print("bannerIndex=" + index.toString());
-          print("bannerList.length=" + bannerList.length.toString());
           if (mounted) {
             setState(() {
               bannerIndex = index;
+              switch (bannerList[bannerIndex].uri.toString().trim()) {
+                case "upgrade":
+                  _gradientCorlor = LinearGradient(colors: [
+                    Color(0xFF7E090F),
+                    Color(0xFF810A0C),
+                    Color(0xFF7D0A0F),
+                  ]);
+
+                  break;
+                case "recharge":
+                  _gradientCorlor = LinearGradient(colors: [
+                    Color(0xFF4A07C6),
+                    Color(0xFF4A07C6),
+                  ]);
+                  break;
+              }
             });
           }
         },

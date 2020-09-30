@@ -7,9 +7,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
+import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/widget/select_choice.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/common_utils.dart';
+import 'package:star/utils/navigator_utils.dart';
 import '../../global_config.dart';
 
 void main() {
@@ -58,10 +60,12 @@ class _RechargeListPageState extends State<RechargeListPage> {
                     backgroundColor: Colors.grey);
                 break;
               case "2": //已成功
-                Fluttertoast.showToast(
+                /* Fluttertoast.showToast(
                     msg: "支付成功！",
                     textColor: Colors.white,
-                    backgroundColor: Colors.grey);
+                    backgroundColor: Colors.grey);*/
+                NavigatorUtils.navigatorRouterAndRemoveUntil(
+                    context, RechargeResultPage());
                 break;
             }
           } else {
@@ -78,6 +82,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
   @override
   void initState() {
     _initData();
+    _initWeChatResponseHandler();
     super.initState();
   }
 
@@ -115,6 +120,17 @@ class _RechargeListPageState extends State<RechargeListPage> {
         appBar: AppBar(
           title: Text(widget.title),
           centerTitle: true,
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back_white.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           backgroundColor: Color(0xFF489FFF),
         ),
         body: SingleChildScrollView(

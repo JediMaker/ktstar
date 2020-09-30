@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/income_list_entity.dart';
+import 'package:star/pages/widget/no_data.dart';
 
 class IncomeListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
@@ -86,45 +87,51 @@ class _IncomeListPageState extends State<IncomeListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(
-              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Color(0xFF222222),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          brightness: Brightness.dark,
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          centerTitle: true,
+          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          elevation: 0,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: EasyRefresh.custom(
-        topBouncing: false,
-        bottomBouncing: false,
-        header: MaterialHeader(),
-        footer: MaterialFooter(),
-        enableControlFinishLoad: true,
-        enableControlFinishRefresh: true,
-        controller: _refreshController,
-        onRefresh: () {
-          page = 1;
-          _initData();
-        },
-        onLoad: () {
-          if (!isFirstLoading) {
-            page++;
+        body: EasyRefresh.custom(
+          topBouncing: false,
+          bottomBouncing: false,
+          header: MaterialHeader(),
+          footer: MaterialFooter(),
+          enableControlFinishLoad: true,
+          enableControlFinishRefresh: true,
+          controller: _refreshController,
+          onRefresh: () {
+            page = 1;
             _initData();
-          }
-        },
-        slivers: <Widget>[buildCenter()],
+          },
+          onLoad: () {
+            if (!isFirstLoading) {
+              page++;
+              _initData();
+            }
+          },
+          emptyWidget: _profitList== null||_profitList.length==0 ? NoDataPage() : null,
+          slivers: <Widget>[buildCenter()],
+        ),
       ),
     );
   }
@@ -178,11 +185,11 @@ class _IncomeListPageState extends State<IncomeListPage> {
       }
       switch (status) {
         case "0": //未打款
-          desc = "审核中，请耐心等候~";
+//          desc = "审核中，请耐心等候~";
           statusText += "已提交";
           break;
         case "1": //已打款
-          desc = "恭喜！收益已打款成功！";
+//          desc = "恭喜！收益已打款成功！";
           statusText += "成功";
           break;
         case "3": //被驳回
@@ -241,6 +248,9 @@ class _IncomeListPageState extends State<IncomeListPage> {
                       "static/images/$iconName",
                       width: ScreenUtil().setWidth(60),
                       height: ScreenUtil().setWidth(60),
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(20),
                     ),
                     Text(
                       statusText,

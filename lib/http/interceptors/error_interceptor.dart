@@ -42,21 +42,21 @@ class ErrorInterceptors extends InterceptorsWrapper {
 //        return "CONNECT TIMEOUT";
       case DioErrorType.SEND_TIMEOUT:
         Fluttertoast.showToast(
-            msg: "网络连接超时！",
+            msg: "网络异常，发送数据超时！",
             textColor: Colors.white,
             backgroundColor: Colors.grey);
         break;
 //        return 'Send Time Out';
       case DioErrorType.RESPONSE:
         Fluttertoast.showToast(
-            msg: "网络连接错误！",
+            msg: "服务器异常！",
             textColor: Colors.white,
             backgroundColor: Colors.grey);
         return "Server Incorrect Status";
       case DioErrorType.RECEIVE_TIMEOUT:
 //        return "Receive Time Out";
         Fluttertoast.showToast(
-            msg: "网络连接超时！",
+            msg: "网络异常，网络数据接收超时！",
             textColor: Colors.white,
             backgroundColor: Colors.grey);
         break;

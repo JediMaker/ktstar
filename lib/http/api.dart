@@ -4,20 +4,19 @@ class APi {
 //  6YHgt890Mgplu7054fg8k3g3dQ2CXmh4
   static String BASE_URL = GlobalConfig.isRelease
 //      ? "https://task.ktkj.shop/"
-      ? "http://test-api.ketaokeji.shop/"
+      ? "https://api.ktkj.shop/"
       : "http://test-api.ketaokeji.shop/";
 
 //      : "http://api.ketaoxx.com/";
 
 //  static const String BASE_URL = "https://task.ktkj.shop/";
-  static const int CONNECT_TIMEOUT = 5000;
-  static const int RECEIVE_TIMEOUT = 3000;
+  static const int CONNECT_TIMEOUT = 10000;
+  static const int RECEIVE_TIMEOUT = 10000;
 
   static const String INTERFACE_KEY = "6YHgt890Mgplu7054fg8k3g3dQ2CXmh4";
 
   ///注册
   static const String REGISTER = "login/register";
-
 
   ///发送验证码
   static const String SMS_SEND = "login/send-msg";

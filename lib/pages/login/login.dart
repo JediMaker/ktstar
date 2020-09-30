@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: <Widget>[
                           ClipPath(
                             // 只裁切底部的方法
-                            clipper: BottonClipper(),
+                            clipper: BottomClipper(),
                             child: Container(
                               color: GlobalConfig.taskHeadColor,
                               height: ScreenUtil().setHeight(500),

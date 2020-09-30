@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,6 +63,7 @@ class GlobalConfig {
   static List<MaterialColor> get themes => _themes;
 
   static const Color taskHeadColor = Color(0xFFFD8B4E);
+  static const Color taskNomalHeadColor = Color(0xFFF5F5F5);
   static Color taskHeadDisableColor = Color(0xFFFFBB97);
   static Color taskBtnBgColor = Color(0xFFFFECDE);
   static Color taskBtnBgGreyColor = Color(0xFFEFEFEF);
@@ -105,6 +107,7 @@ class GlobalConfig {
 
   //初始化全局信息，会在APP启动时执行
   static Future init() async {
+    _requestPermission();
     _prefs = await SharedPreferences.getInstance();
     var _profile = _prefs.getString("profile");
     if (_profile != null) {
@@ -124,6 +127,7 @@ class GlobalConfig {
     _initFluwx();
     HttpManage.init();
     _initJPushPlatformState();
+
     Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
@@ -187,6 +191,14 @@ class GlobalConfig {
         doOnAndroid: true,
         doOnIOS: true,
         universalLink: "https://www.ktkj.shop/");
+  }
+
+  static _requestPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.photos,
+      Permission.storage,
+      Permission.camera,
+    ].request();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/message_list_entity.dart';
+import 'package:star/pages/widget/no_data.dart';
+
+import '../../global_config.dart';
 
 class TaskMessagePage extends StatefulWidget {
   TaskMessagePage({Key key}) : super(key: key);
@@ -68,47 +71,52 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                widget.title,
-                style: TextStyle(
-                    color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-              ),
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Color(0xFF222222),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              elevation: 0,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
-            body: EasyRefresh.custom(
-              topBouncing: false,
-              bottomBouncing: false,
-              header: MaterialHeader(),
-              footer: MaterialFooter(),
-              enableControlFinishLoad: true,
-              enableControlFinishRefresh: true,
-              controller: _refreshController,
-              onRefresh: () {
-                page = 1;
+            brightness: Brightness.dark,
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            centerTitle: true,
+            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            elevation: 0,
+          ),
+          body: EasyRefresh.custom(
+            topBouncing: false,
+            bottomBouncing: false,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            enableControlFinishLoad: true,
+            enableControlFinishRefresh: true,
+            controller: _refreshController,
+            onRefresh: () {
+              page = 1;
+              _initData();
+            },
+            onLoad: () {
+              if (!isFirstLoading) {
+                page++;
                 _initData();
-              },
-              onLoad: () {
-                if (!isFirstLoading) {
-                  page++;
-                  _initData();
-                }
-              },
-              slivers: <Widget>[buildCenter()],
-            ) // This trailing comma makes auto-formatting nicer for build methods.
-            ));
+              }
+            },
+            emptyWidget: _msgList== null||_msgList.length==0 ? NoDataPage() : null,
+            slivers: <Widget>[buildCenter()],
+          ) // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+    );
   }
 
   Widget buildCenter() {
@@ -186,6 +194,9 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(20),
+                    ),
                     Text(
                       type == "2" ? "官方提醒" : "系统通知  ",
                       style: TextStyle(
@@ -196,19 +207,12 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
                 ),
               ),
               Container(
-                width: ScreenUtil().setWidth(180),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      noticeTime,
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(28),
-                        color: Color(0xff999999),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  noticeTime,
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(28),
+                    color: Color(0xff999999),
+                  ),
                 ),
               ),
             ],

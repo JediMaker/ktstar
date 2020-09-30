@@ -3,9 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/task_record_list_entity.dart';
+import 'package:star/pages/task/task_submission.dart';
+import 'package:star/pages/widget/no_data.dart';
+import 'package:star/utils/navigator_utils.dart';
 
 class TaskRecordListPage extends StatefulWidget {
   TaskRecordListPage({Key key}) : super(key: key);
@@ -67,47 +71,58 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title ,style: TextStyle(
-              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Color(0xFF222222),
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
+            brightness: Brightness.dark,
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            centerTitle: true,
 //          backgroundColor: Color(0xfff5f5f5),
-          elevation: 0,
-        ),
-        body: EasyRefresh.custom(
-          topBouncing: false,
-          bottomBouncing: false,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
-          enableControlFinishLoad: true,
-          enableControlFinishRefresh: true,
-          controller: _refreshController,
-          onRefresh: () {
-            page = 1;
-            _initData();
-          },
-          onLoad: () {
-            if (!isFirstLoading) {
-              page++;
+            elevation: 0,
+          ),
+          body: EasyRefresh.custom(
+            topBouncing: false,
+            bottomBouncing: false,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            enableControlFinishLoad: true,
+            enableControlFinishRefresh: true,
+            controller: _refreshController,
+            onRefresh: () {
+              page = 1;
               _initData();
-            }
-          },
-          slivers: <Widget>[buildCenter()],
-        )
+            },
+            onLoad: () {
+              if (!isFirstLoading) {
+                page++;
+                _initData();
+              }
+            },
+            emptyWidget: _recordList == null || _recordList.length == 0
+                ? NoDataPage()
+                : null,
+            slivers: <Widget>[buildCenter()],
+          )
 
-        /// This trailing comma makes auto-formatting nicer for build methods.
-        );
+          /// This trailing comma makes auto-formatting nicer for build methods.
+          ),
+    );
   }
 
   Widget buildCenter() {
@@ -133,13 +148,18 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
     String rejectReason = "";
     String submitTime = "";
     String checkTime = "";
+    String taskId;
+    String reSubmit = "0";
+    bool showSubmitButton = false;
     try {
+      taskId = listItem.taskId;
       title = listItem.title;
       price = listItem.price;
       status = listItem.status;
       rejectReason = listItem.rejectReason;
       submitTime = listItem.submitTime;
       checkTime = listItem.checkTime;
+      reSubmit = listItem.reSubmit;
     } catch (e) {}
     var statusDesc = "";
     Color bgColor = Colors.white;
@@ -161,6 +181,8 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
         txtColor = Color(0xffF93736);
         break;
     }
+    showSubmitButton = reSubmit == "2";
+    print(reSubmit);
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -182,11 +204,11 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Image.asset(
+                    /* Image.asset(
                       "static/images/icon_fans.png",
                       width: ScreenUtil().setWidth(44),
                       height: ScreenUtil().setWidth(71),
-                    ),
+                    ),*/
                     Text(
                       title,
                       style: TextStyle(
@@ -248,7 +270,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                 decoration: BoxDecoration(
                     color: bgColor,
                     borderRadius: BorderRadius.all(
-                        Radius.circular(ScreenUtil().setWidth(30))),
+                        Radius.circular(ScreenUtil().setWidth(10))),
                     border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                         color: bgColor,
@@ -258,7 +280,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                   statusDesc,
                   style: TextStyle(
                     color: txtColor,
-                    fontSize: ScreenUtil().setSp(36),
+                    fontSize: ScreenUtil().setSp(32),
                   ),
                 ),
               ),
@@ -298,64 +320,108 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
           SizedBox(
             height: ScreenUtil().setHeight(55),
           ),
-          Wrap(
-            runSpacing: 4,
-            spacing: 4,
-            crossAxisAlignment: WrapCrossAlignment.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.asset(
-                "static/images/icon_submit_time.png",
-                width: ScreenUtil().setWidth(32),
-                height: ScreenUtil().setWidth(32),
-                fit: BoxFit.fill,
-              ),
-              Text(
-                //状态：
-                "提交时间：",
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(32),
-                  color: Color(0xffb9b9b9),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Wrap(
+                      runSpacing: 4,
+                      spacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "static/images/icon_submit_time.png",
+                          width: ScreenUtil().setWidth(32),
+                          height: ScreenUtil().setWidth(32),
+                          fit: BoxFit.fill,
+                        ),
+                        Text(
+                          //状态：
+                          "提交时间：",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xffb9b9b9),
+                          ),
+                        ),
+                        Text(
+                          //
+                          //                                2019-07-02 19:01:32
+                          //                            ：
+                          submitTime,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xff222222),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(16),
+                    ),
+                    Wrap(
+                      runSpacing: 4,
+                      spacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "static/images/icon_check_time.png",
+                          width: ScreenUtil().setWidth(32),
+                          height: ScreenUtil().setWidth(32),
+                          fit: BoxFit.fill,
+                        ),
+                        Text(
+                          //状态：
+                          "审核时间：",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xffb9b9b9),
+                          ),
+                        ),
+                        Text(
+                          checkTime,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xff222222),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                //
-                //                                2019-07-02 19:01:32
-                //                            ：
-                submitTime,
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(32),
-                  color: Color(0xff222222),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(16),
-          ),
-          Wrap(
-            runSpacing: 4,
-            spacing: 4,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                "static/images/icon_check_time.png",
-                width: ScreenUtil().setWidth(32),
-                height: ScreenUtil().setWidth(32),
-                fit: BoxFit.fill,
-              ),
-              Text(
-                //状态：
-                "审核时间：",
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(32),
-                  color: Color(0xffb9b9b9),
-                ),
-              ),
-              Text(
-                checkTime,
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(32),
-                  color: Color(0xff222222),
+              Visibility(
+                visible: showSubmitButton,
+                child: GestureDetector(
+                  onTap: () {
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        TaskSubmissionPage(
+                          taskId: taskId,
+                        ));
+                  },
+                  child: Container(
+                    width: ScreenUtil().setWidth(176),
+                    height: ScreenUtil().setHeight(68),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(ScreenUtil().setWidth(47))),
+                        border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                            color: Color(0xFFCE0100),
+                            width: 0.5)),
+                    child: Text(
+                      //状态：
+                      "重新提交",
+                      style: TextStyle(
+                        color: Color(0xFFCE0100),
+                        fontSize: ScreenUtil().setSp(34),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

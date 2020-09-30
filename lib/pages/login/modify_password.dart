@@ -52,16 +52,18 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                 color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
           leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Color(0xFF222222),
+            icon: Image.asset(
+              "static/images/icon_ios_back.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
             ),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor:GlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Container(

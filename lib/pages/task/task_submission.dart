@@ -167,6 +167,17 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
             widget.title,
             style: TextStyle(fontSize: ScreenUtil().setSp(54)),
           ),
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back_white.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           centerTitle: true,
           elevation: 0,
           backgroundColor: GlobalConfig.taskHeadColor,

@@ -8,11 +8,14 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/login/modify_password.dart';
+import 'package:star/pages/order/recharge_order_list.dart';
+import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/task/pay_result.dart';
 import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_record_list.dart';
+import 'package:star/pages/withdrawal/withdrawal.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/navigator_utils.dart';
@@ -20,6 +23,7 @@ import 'package:star/utils/navigator_utils.dart';
 import '../../global_config.dart';
 import 'fans_list.dart';
 import 'income_list.dart';
+import 'invitation_poster.dart';
 
 class TaskMinePage extends StatefulWidget {
   TaskMinePage({Key key}) : super(key: key);
@@ -39,23 +43,24 @@ class _TaskMinePageState extends State<TaskMinePage> {
   var _phoneNumber = '';
   var _code = '';
   var _phoneHintText = '请输入您的手机号';
-  var _cardBgImageName = 'task_mine_card_bg.png';
+  var _cardBgImageName = '';
+  var _isWithdrawal = '';
   TextEditingController _dialogPhoneNumberController;
   TextEditingController _dialogNickNameController;
   TextEditingController _dialogWeChatNoController;
 
-  var totalAssetsAmount; //总资产金额
-  var availableCashAmount; // 可提现金额
-  var cashWithdrawal; //  已提现金额
+  var _totalAssetsAmount; //总资产金额
+  var _availableCashAmount; // 可提现金额
+  var _cashWithdrawal; //  已提现金额
   ///  注册时间
   var registerTime;
-  bool isDiamonVip = false;
+  bool isDiamonVip = true;
 
   ///微信授权绑定
-  bool isWeChatBinded = false;
+  int isWeChatBinded = -1;
 
   ///微信账号绑定
-  bool isWeChatNoBinded = false;
+  int isWeChatNoBinded = -1;
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理
   String userType;
@@ -72,15 +77,16 @@ class _TaskMinePageState extends State<TaskMinePage> {
           nickName = result.data.username;
           userType = result.data.type;
           _phoneNumber = result.data.tel;
-          totalAssetsAmount = result.data.totalPrice;
-          cashWithdrawal = result.data.txPrice;
-          availableCashAmount = result.data.nowPrice;
-          isWeChatBinded = result.data.bindThird == 2;
+          _totalAssetsAmount = result.data.totalPrice;
+          _cashWithdrawal = result.data.txPrice;
+          _availableCashAmount = result.data.nowPrice;
+          isWeChatBinded = result.data.bindThird;
+          _isWithdrawal = result.data.isWithdrawal;
           registerTime = result.data.regDate;
           _weChatNo = result.data.wxNo;
           _code = result.data.code;
           _dialogWeChatNo = result.data.wxNo;
-          isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo);
+          isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
           switch (result.data.type) {
             case "0":
               isDiamonVip = false;
@@ -93,13 +99,13 @@ class _TaskMinePageState extends State<TaskMinePage> {
               break;
             case "2":
               isDiamonVip = true;
-              _cardBgImageName = 'task_mine_card_vip.png';
+              _cardBgImageName = 'task_mine_card_bg_vip.png';
               break;
             case "3":
 //              #F8D9BA
               isDiamonVip = true;
               _cardTextColor = Color(0xffF8D9BA);
-              _cardBgImageName = 'task_mine_card_proxy.png';
+              _cardBgImageName = 'task_mine_card_bg_proxy.png';
               break;
           }
         });
@@ -172,46 +178,67 @@ class _TaskMinePageState extends State<TaskMinePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: GradientAppBar(
+    return SafeArea(
+      child: Scaffold(
+          appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
-          gradient: LinearGradient(colors: [
+            gradient: LinearGradient(colors: [
 //            Color(0xfff5f5f5),
 //            Color(0xfff5f5f5),
-            Colors.white,
-            Colors.white,
-          ]),
-          title: Text(
-            "我的",
-            /*style: TextStyle(
-                color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                fontSize: ScreenUtil().setSp(54)),*/
-            style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+              GlobalConfig.taskNomalHeadColor,
+              GlobalConfig.taskNomalHeadColor,
+            ]),
+            brightness: Brightness.dark,
+            title: Text(
+              "我的",
+              /*style: TextStyle(
+                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                  fontSize: ScreenUtil().setSp(54)),*/
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+            ),
+            centerTitle: true,
+            elevation: 0,
           ),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
 //                buildTopLayout(),
-                  buildHeadLayout(),
-                  buildCardInfo(),
+                    buildHeadLayout(),
+                    buildCardInfo(),
 //                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
-                  itemsLayout(),
-                ],
-              ),
-              buildListItem(),
-            ],
+                    itemsLayout(),
+                  ],
+                ),
+                buildListItem(),
+              ],
+            ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+    );
   }
 
   Container buildListItem() {
+    var bindWechatText = "";
+    switch (isWeChatBinded) {
+      case 1:
+        bindWechatText = "未绑定";
+        break;
+      case 2:
+        bindWechatText = "已绑定";
+        break;
+    }
+    var bindWechatNoText = "";
+    switch (isWeChatNoBinded) {
+      case 0:
+        bindWechatNoText = "未设置";
+        break;
+      case 1:
+        bindWechatNoText = _weChatNo;
+        break;
+    }
     return Container(
       margin: EdgeInsets.symmetric(
           horizontal: 16, vertical: ScreenUtil().setHeight(30)),
@@ -250,7 +277,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
               } else {
                 _dialogPhoneNumberController.text = _phoneNumber;
                 //修改手机号
-                showMyDialog(showPhone: true, modifyPhone: true);
+//                showMyDialog(showPhone: true, modifyPhone: true);
               }
             },
             trailing: Wrap(
@@ -260,10 +287,17 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   style: TextStyle(color: Color(0xff999999)),
                 ),
                 Text(
-                  "\t>",
+                  "",
                   style: TextStyle(color: Color(0xff999999)),
                 )
               ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
             ),
           ),
           ListTile(
@@ -283,7 +317,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
               ],
             ),
             onTap: () {
-              if (!isWeChatBinded) {
+              if (isWeChatBinded == 1) {
                 fluwx
                     .sendWeChatAuth(
                         scope: "snsapi_userinfo", state: "wechat_sdk_demo_test")
@@ -293,17 +327,24 @@ class _TaskMinePageState extends State<TaskMinePage> {
             trailing: Wrap(
               children: <Widget>[
                 Text(
-                  !isWeChatBinded ? "未绑定" : "已绑定",
+                  bindWechatText,
                   style: TextStyle(
-                      color: !isWeChatBinded
+                      color: isWeChatBinded == 1
                           ? Color(0xffF93736)
-                          : Color(0xff3BBC6E)),
+                          : Color(0xff999999)),
                 ),
                 Text(
-                  !isWeChatBinded ? "\t>" : "",
+                  isWeChatBinded == 1 ? "\t>" : "",
                   style: TextStyle(color: Color(0xff999999)),
                 )
               ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
             ),
           ),
           ListTile(
@@ -343,54 +384,73 @@ class _TaskMinePageState extends State<TaskMinePage> {
             trailing: Wrap(
               children: <Widget>[
                 Text(
-                  !isWeChatNoBinded ? "未设置" : "$_weChatNo",
+                  bindWechatNoText,
                   style: TextStyle(
-                      color: !isWeChatNoBinded
+                      color: isWeChatNoBinded == 0
                           ? Color(0xffF93736)
                           : Color(0xff999999)),
                 ),
                 Text(
-                  !isWeChatNoBinded ? "\t>" : "\t>",
+                  "\t>",
                   style: TextStyle(color: Color(0xff999999)),
                 )
               ],
             ),
           ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
+            ),
+          ),
           Visibility(
-            visible: !CommonUtils.isEmpty(_phoneNumber),
-            child: ListTile(
-              title: Row(
-                children: <Widget>[
-                  /* Image.asset(
-                    "static/images/icon_fans.png",
-                    width: ScreenUtil().setWidth(44),
-                    height: ScreenUtil().setWidth(71),
-                  ),*/
-                  Text(
-                    "设置密码",
-                    style: TextStyle(
+            visible: false,
+//            visible: !CommonUtils.isEmpty(_phoneNumber),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Row(
+                    children: <Widget>[
+                      /* Image.asset(
+                        "static/images/icon_fans.png",
+                        width: ScreenUtil().setWidth(44),
+                        height: ScreenUtil().setWidth(71),
+                      ),*/
+                      Text(
+                        "设置密码",
+                        style: TextStyle(
 //                color:  Color(0xFF222222) ,
-                        fontSize: ScreenUtil().setSp(38)),
+                            fontSize: ScreenUtil().setSp(38)),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              onTap: () {
-                //todo 设置密码跳转
-                var title = "设置密码";
-                NavigatorUtils.navigatorRouter(
-                    context,
-                    ModifyPasswordPage(
-                      title: title,
-                    ));
-              },
-              trailing: Wrap(
-                children: <Widget>[
-                  Text(
-                    "\t>",
-                    style: TextStyle(color: Color(0xff999999)),
-                  )
-                ],
-              ),
+                  onTap: () {
+                    //todo 设置密码跳转
+                    var title = "设置密码";
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        ModifyPasswordPage(
+                          title: title,
+                        ));
+                  },
+                  trailing: Wrap(
+                    children: <Widget>[
+                      Text(
+                        "\t>",
+                        style: TextStyle(color: Color(0xff999999)),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
+              ],
             ),
           ),
           ListTile(
@@ -419,37 +479,58 @@ class _TaskMinePageState extends State<TaskMinePage> {
                       fontSize: ScreenUtil().setSp(38)),
                 ),
                 Text(
-                  !isWeChatBinded ? "" : "",
+                  "",
                   style: TextStyle(color: Color(0xff999999)),
                 )
               ],
             ),
           ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                /*Image.asset(
-                  "static/images/icon_fans.png",
-                  width: ScreenUtil().setWidth(44),
-                  height: ScreenUtil().setWidth(71),
-                ),*/
-                Text(
-                  "关于我们",
-                  style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                      fontSize: ScreenUtil().setSp(38)),
-                ),
-              ],
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
             ),
-            onTap: () {
-              //todo 关于我们跳转
-            },
-            trailing: Wrap(
+          ),
+          Visibility(
+            visible: false,
+            child: Column(
               children: <Widget>[
-                Text(
-                  "\t>",
-                  style: TextStyle(color: Color(0xff999999)),
-                )
+                ListTile(
+                  title: Row(
+                    children: <Widget>[
+                      /*Image.asset(
+                        "static/images/icon_fans.png",
+                        width: ScreenUtil().setWidth(44),
+                        height: ScreenUtil().setWidth(71),
+                      ),*/
+                      Text(
+                        "关于我们",
+                        style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                            fontSize: ScreenUtil().setSp(38)),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    //todo 关于我们跳转
+                  },
+                  trailing: Wrap(
+                    children: <Widget>[
+                      Text(
+                        "\t>",
+                        style: TextStyle(color: Color(0xff999999)),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
               ],
             ),
           ),
@@ -502,7 +583,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
             trailing: Wrap(
               children: <Widget>[
                 Text(
-                  "\t>",
+                  "",
                   style: TextStyle(color: Color(0xff999999)),
                 )
               ],
@@ -648,6 +729,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
     if ("3" == userType) {
       isProxy = true;
     }
+    Color _itemsTextColor = Color(0xff666666);
     return Container(
       height: ScreenUtil().setHeight(292),
       margin: EdgeInsets.symmetric(horizontal: 16),
@@ -666,9 +748,13 @@ class _TaskMinePageState extends State<TaskMinePage> {
         children: <Widget>[
           new Flexible(
             fit: FlexFit.tight,
-            child: new FlatButton(
-                onPressed: () async {
-                  NavigatorUtils.navigatorRouter(context, FansListPage());
+            child: new InkWell(
+                onTap: () async {
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      FansListPage(
+                        isAgent: userType == "3",
+                      ));
                 },
                 child: new Container(
                   child: new Column(
@@ -688,9 +774,11 @@ class _TaskMinePageState extends State<TaskMinePage> {
                       ),
                       new Container(
                         child: new Text(
-                          "我的粉丝",
-                          style:
-                              new TextStyle(fontSize: ScreenUtil().setSp(38)),
+                          "粉丝",
+                          style: new TextStyle(
+                            fontSize: ScreenUtil().setSp(38),
+                            color: _itemsTextColor,
+                          ),
                         ),
                       )
                     ],
@@ -699,8 +787,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
           ),
           new Flexible(
             fit: FlexFit.tight,
-            child: new FlatButton(
-                onPressed: () {
+            child: new InkWell(
+                onTap: () {
                   NavigatorUtils.navigatorRouter(context, TaskMessagePage());
                 },
                 child: new Container(
@@ -720,8 +808,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
                         ),
                       ),
                       new Container(
-                        child: new Text("我的消息",
+                        child: new Text("消息",
                             style: new TextStyle(
+                                color: _itemsTextColor,
                                 fontSize: ScreenUtil().setSp(38))),
                       )
                     ],
@@ -736,9 +825,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                     if (isProxy) {
                       _dialogPhoneNumberController.text = "";
                       _phoneHintText = "请输入要添加的手机号";
-                      showMyDialog(
-                        addExperienceAccount: true,
-                      );
+                      showMyDialog(addExperienceAccount: true, showPhone: true);
                     } else {
                       NavigatorUtils.navigatorRouter(
                           context, TaskRecordListPage());
@@ -761,8 +848,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
                           ),
                         ),
                         new Container(
-                          child: new Text("${isProxy ? "添加体验会员" : "任务提交记录"}",
+                          child: new Text("${isProxy ? "添加会员" : "任务记录"}",
                               style: new TextStyle(
+                                  color: _itemsTextColor,
                                   fontSize: ScreenUtil().setSp(38))),
                         )
                       ],
@@ -773,8 +861,58 @@ class _TaskMinePageState extends State<TaskMinePage> {
           new Flexible(
             fit: FlexFit.tight,
             child: Container(
-              child: new FlatButton(
-                  onPressed: () {},
+              child: new InkWell(
+                  onTap: () {
+                    Fluttertoast.showToast(
+                        msg: "暂未开放",
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        gravity: ToastGravity.BOTTOM);
+                    return;
+                    /*  NavigatorUtils.navigatorRouter(
+                        context, RechargeOrderListPage());*/
+                  },
+                  child: new Container(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                          margin: const EdgeInsets.only(bottom: 6.0),
+                          child: new CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.transparent,
+                            child: new Image.asset(
+                              "static/images/icon_order.png",
+                              width: ScreenUtil().setWidth(110),
+                              height: ScreenUtil().setWidth(110),
+                            ),
+                          ),
+                        ),
+                        new Container(
+                          child: new Text("订单",
+                              style: new TextStyle(
+                                  color: _itemsTextColor,
+                                  fontSize: ScreenUtil().setSp(38))),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+          ),
+          new Flexible(
+            fit: FlexFit.tight,
+            child: Container(
+              child: new InkWell(
+                  onTap: () {
+                    Fluttertoast.showToast(
+                        msg: "暂未开放",
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        gravity: ToastGravity.BOTTOM);
+                    return;
+                    /* NavigatorUtils.navigatorRouter(
+                        context, InvitationPosterPage());*/
+                  },
                   child: new Container(
                     child: new Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -794,6 +932,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                         new Container(
                           child: new Text("邀请好友",
                               style: new TextStyle(
+                                  color: _itemsTextColor,
                                   fontSize: ScreenUtil().setSp(38))),
                         )
                       ],
@@ -907,224 +1046,252 @@ class _TaskMinePageState extends State<TaskMinePage> {
     return Card(
       margin: EdgeInsets.symmetric(
           horizontal: 16, vertical: ScreenUtil().setHeight(39)),
-      child: Container(
-        height: ScreenUtil().setHeight(437),
-        width: double.maxFinite,
-        padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(64)),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: Image.asset(
-                  "static/images/$_cardBgImageName",
-                  fit: BoxFit.fill,
-                ).image)),
-        child: Column(
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        children: <Widget>[
+          /* Image.asset(
+            "static/images/$_cardBgImageName",
+            fit: BoxFit.fill,
+          ),*/
+          Container(
+            height: ScreenUtil().setHeight(437),
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(64)),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: Image.asset(
+                      "static/images/$_cardBgImageName",
+                      fit: BoxFit.fill,
+                    ).image)),
+            child: Column(
               children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  child: GestureDetector(
-                    onTap: () {
-                      NavigatorUtils.navigatorRouter(
-                          context,
-                          IncomeListPage(
-                            pageType: 0,
-                          ));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(60)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: GestureDetector(
+                        onTap: () {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              IncomeListPage(
+                                pageType: 0,
+                              ));
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(left: ScreenUtil().setWidth(60)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    "可提现(元)",
+                                    style: TextStyle(
+                                        color: _cardTextColor,
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  ),
+                                  Icon(Icons.arrow_right,
+                                      color: _cardTextColor,
+                                      size: ScreenUtil().setSp(42)),
+                                ],
+                              ),
+                              SizedBox(
+                                height: ScreenUtil().setHeight(16),
+                              ),
                               Text(
-                                "可提现(元)",
+                                "${_availableCashAmount == null ? '¥ 0' : '¥ $_availableCashAmount'}",
                                 style: TextStyle(
                                     color: _cardTextColor,
-                                    fontSize: ScreenUtil().setSp(32)),
+                                    fontSize: ScreenUtil().setSp(42),
+                                    fontWeight: FontWeight.bold),
                               ),
-                              Icon(Icons.arrow_right,
-                                  color: _cardTextColor,
-                                  size: ScreenUtil().setSp(42)),
                             ],
                           ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(16),
-                          ),
-                          Text(
-                            "${availableCashAmount == null ? '¥ 0' : '¥ $availableCashAmount'}",
-                            style: TextStyle(
-                                color: _cardTextColor,
-                                fontSize: ScreenUtil().setSp(42),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  child: GestureDetector(
-                    onTap: () async {
-                      try {
-                        if (CommonUtils.isEmpty(availableCashAmount) ||
-                            int.parse(availableCashAmount.toString()) <= 0) {
-                          return;
-                        }
-                      } catch (e) {
-                        return;
-                      }
-                      var result = await HttpManage.withdrawalApplication(
-                          "2", availableCashAmount, "", "");
-                      if (result.status) {
-                        Fluttertoast.showToast(
-                            msg: "提现申请已提交",
-                            textColor: Colors.white,
-                            backgroundColor: Colors.grey);
-                        _initUserData();
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "${result.errMsg}",
-                            textColor: Colors.white,
-                            backgroundColor: Colors.grey);
-                      }
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.only(left: ScreenUtil().setWidth(240)),
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: ScreenUtil().setWidth(196),
-                        height: ScreenUtil().setHeight(79),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(ScreenUtil().setWidth(51))),
-                            border: Border.all(
-//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                                color: _cardTextColor,
-                                width: 0.5)),
-                        child: Text(
-                          "去提现",
-                          style: TextStyle(
-//                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                              color: _cardTextColor,
-                              fontSize: ScreenUtil().setSp(38)),
                         ),
                       ),
                     ),
-                  ),
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: GestureDetector(
+                        onTap: () async {
+                          try {
+                            if (CommonUtils.isEmpty(_availableCashAmount) ||
+                                double.parse(_availableCashAmount.toString()) <=
+                                    0) {
+                              Fluttertoast.showToast(
+                                  msg: "暂无可提现金额",
+                                  textColor: Colors.white,
+                                  backgroundColor: Colors.grey);
+                              return;
+                            }
+                          } catch (e) {
+                            return;
+                          }
+
+                          if (_isWithdrawal == "0") {
+                            await NavigatorUtils.navigatorRouter(
+                                context,
+                                WithdrawalPage(
+                                    availableCashAmount: _availableCashAmount));
+                            _initUserData();
+                            /*var result = await HttpManage.withdrawalApplication(
+                                "2", _availableCashAmount, "", "");
+                            if (result.status) {
+                              Fluttertoast.showToast(
+                                  msg: "提现申请已提交",
+                                  textColor: Colors.white,
+                                  backgroundColor: Colors.grey);
+                              _initUserData();
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "${result.errMsg}",
+                                  textColor: Colors.white,
+                                  backgroundColor: Colors.grey);
+                            }*/
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "暂不可提现",
+                                textColor: Colors.white,
+                                backgroundColor: Colors.grey);
+                          }
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(left: ScreenUtil().setWidth(240)),
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            width: ScreenUtil().setWidth(196),
+                            height: ScreenUtil().setHeight(79),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(ScreenUtil().setWidth(51))),
+                                border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                    color: _cardTextColor,
+                                    width: 0.5)),
+                            child: Text(
+                              "去提现",
+                              style: TextStyle(
+//                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                  color: _cardTextColor,
+                                  fontSize: ScreenUtil().setSp(38)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(48),
+                ),
+                Row(
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: GestureDetector(
+                        onTap: () {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              IncomeListPage(
+                                pageType: 1,
+                              ));
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(left: ScreenUtil().setWidth(60)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    "总资产(元)",
+                                    style: TextStyle(
+                                        color: _cardTextColor,
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  ),
+                                  Icon(Icons.arrow_right,
+                                      color: _cardTextColor,
+                                      size: ScreenUtil().setSp(42)),
+                                ],
+                              ),
+                              SizedBox(
+                                height: ScreenUtil().setHeight(16),
+                              ),
+                              Text(
+                                "${_totalAssetsAmount == null ? '¥ 0' : '¥ $_totalAssetsAmount'}",
+                                style: TextStyle(
+                                    color: _cardTextColor,
+                                    fontSize: ScreenUtil().setSp(42),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: GestureDetector(
+                        onTap: () {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              IncomeListPage(
+                                pageType: 2,
+                              ));
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(left: ScreenUtil().setWidth(240)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "已提现(元)",
+                                    style: TextStyle(
+                                        color: _cardTextColor,
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  ),
+                                  Icon(Icons.arrow_right,
+                                      color: _cardTextColor,
+                                      size: ScreenUtil().setSp(42)),
+                                ],
+                              ),
+                              SizedBox(
+                                height: ScreenUtil().setHeight(16),
+                              ),
+                              Text(
+                                "${_cashWithdrawal == null ? '¥ 0' : '¥ $_cashWithdrawal'}",
+                                style: TextStyle(
+                                    color: _cardTextColor,
+                                    fontSize: ScreenUtil().setSp(42),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: ScreenUtil().setHeight(48),
-            ),
-            Row(
-              children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  child: GestureDetector(
-                    onTap: () {
-                      NavigatorUtils.navigatorRouter(
-                          context,
-                          IncomeListPage(
-                            pageType: 1,
-                          ));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(60)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                "总资产(元)",
-                                style: TextStyle(
-                                    color: _cardTextColor,
-                                    fontSize: ScreenUtil().setSp(32)),
-                              ),
-                              Icon(Icons.arrow_right,
-                                  color: _cardTextColor,
-                                  size: ScreenUtil().setSp(42)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(16),
-                          ),
-                          Text(
-                            "${totalAssetsAmount == null ? '¥ 0' : '¥ $totalAssetsAmount'}",
-                            style: TextStyle(
-                                color: _cardTextColor,
-                                fontSize: ScreenUtil().setSp(42),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  child: GestureDetector(
-                    onTap: () {
-                      NavigatorUtils.navigatorRouter(
-                          context,
-                          IncomeListPage(
-                            pageType: 2,
-                          ));
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.only(left: ScreenUtil().setWidth(240)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "已提现(元)",
-                                style: TextStyle(
-                                    color: _cardTextColor,
-                                    fontSize: ScreenUtil().setSp(32)),
-                              ),
-                              Icon(Icons.arrow_right,
-                                  color: _cardTextColor,
-                                  size: ScreenUtil().setSp(42)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(16),
-                          ),
-                          Text(
-                            "${cashWithdrawal == null ? '¥ 0' : '¥ $cashWithdrawal'}",
-                            style: TextStyle(
-                                color: _cardTextColor,
-                                fontSize: ScreenUtil().setSp(42),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
@@ -1177,6 +1344,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
           case "1":
             await NavigatorUtils.navigatorRouter(
                 context, TaskOpenDiamondPage());
+            /* NavigatorUtils.navigatorRouterAndRemoveUntil(
+                context, RechargeResultPage());*/
             /*var result = await showDialog(
                 context: context,
                 builder: (context) {
@@ -1193,12 +1362,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
         child: Stack(
           children: <Widget>[
             headUrl == null
-                ? Image.asset(
-                    "static/images/task_default_head.png",
-                    width: ScreenUtil().setWidth(146),
-                    height: ScreenUtil().setWidth(146),
-                    fit: BoxFit.fill,
-                  )
+                ? Visibility(
+                    visible: false,
+                    child: Image.asset(
+                      "static/images/task_default_head.png",
+                      width: ScreenUtil().setWidth(146),
+                      height: ScreenUtil().setWidth(146),
+                      fit: BoxFit.fill,
+                    ))
                 : ClipOval(
                     child: CachedNetworkImage(
                       imageUrl: headUrl,
@@ -1223,6 +1394,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                     ]),
                   ),
                   child: Text("$text",
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: _cardTextColor,
                         fontSize: ScreenUtil().setSp(28),
@@ -1234,16 +1406,19 @@ class _TaskMinePageState extends State<TaskMinePage> {
       title: Container(
         child: Row(
           children: <Widget>[
-            Text(
-              "${nickName == null ? '' : nickName}",
-              /*style: TextStyle(
-                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: ScreenUtil().setSp(42)),*/
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontWeight: FontWeight.bold,
-                  fontSize: ScreenUtil().setSp(42)),
+            Container(
+              child: Text(
+                "${nickName == null ? '' : nickName}",
+                /*style: TextStyle(
+                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenUtil().setSp(42)),*/
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Color(0xFF222222),
+                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenUtil().setSp(42)),
+              ),
             ),
             SizedBox(
               width: ScreenUtil().setWidth(26),
@@ -1251,7 +1426,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
             Image.asset(
               "static/images/${_getImgName(userType)}",
               width: ScreenUtil().setWidth(185),
-              height: ScreenUtil().setHeight(53),
+              height: ScreenUtil().setHeight(67),
               fit: BoxFit.fill,
             ),
 //            Image.asset("", width:)
@@ -1261,9 +1436,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
       subtitle: Text(
         "邀请码：${_code == null ? '' : _code}",
         style: TextStyle(
-            color: Color(0xFF222222),
-            fontWeight: FontWeight.bold,
-            fontSize: ScreenUtil().setSp(42)),
+            color: Color(0xFF222222), fontSize: ScreenUtil().setSp(42)),
       ),
       trailing: GestureDetector(
         /* onTap: () async {

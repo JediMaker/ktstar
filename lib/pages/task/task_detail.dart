@@ -56,9 +56,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   }
 
   var images = [
-    "https://pic1.zhimg.com/50/v2-0008057d1ad2bd813aea4fc247959e63_400x224.jpg",
+  /*  "https://pic1.zhimg.com/50/v2-0008057d1ad2bd813aea4fc247959e63_400x224.jpg",
     "https://pic3.zhimg.com/50/v2-7fc9a1572c6fc72a3dea0b73a9be36e7_400x224.jpg",
-    "https://pic4.zhimg.com/50/v2-898f43a488b606061c877ac2a471e221_400x224.jpg",
+    "https://pic4.zhimg.com/50/v2-898f43a488b606061c877ac2a471e221_400x224.jpg",*/
 //    "https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg",
 //    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1141259048,554497535&fm=26&gp=0.jpg",
 //    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2396361575,51762536&fm=26&gp=0.jpg",
@@ -83,6 +83,17 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           title: Text(
             widget.title,
             style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+          ),
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back_white.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
           centerTitle: true,
           backgroundColor: GlobalConfig.taskHeadColor,
