@@ -118,7 +118,11 @@ class _RechargeListPageState extends State<RechargeListPage> {
         width: 1125, height: 2436, allowFontScaling: false);
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+          ),
           centerTitle: true,
           leading: IconButton(
             icon: Image.asset(
