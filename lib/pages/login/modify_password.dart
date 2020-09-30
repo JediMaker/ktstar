@@ -51,6 +51,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
             style: TextStyle(
                 color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
+          brightness: Brightness.dark,
           leading: IconButton(
             icon: Image.asset(
               "static/images/icon_ios_back.png",

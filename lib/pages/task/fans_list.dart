@@ -231,8 +231,8 @@ class _FansListPageState extends State<FansListPage>
                                   textAlign: TextAlign.center,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style:
-                                      TextStyle(fontSize: ScreenUtil().setSp(38)),
+                                  style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(38)),
                                 );
                               }).toList(),
                               controller: _tabController,
@@ -328,16 +328,19 @@ class _FansListPageState extends State<FansListPage>
               title: Container(
                 child: Row(
                   children: <Widget>[
-                    Text(
-                      "${nickName == null ? '' : nickName}",
-                      /*style: TextStyle(
-                          color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setSp(42)),*/
-                      style: TextStyle(
-                          color: Color(0xFF222222),
-                          fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setSp(42)),
+                    Container(
+                      child: Text(
+                        "${nickName == null ? '' : nickName}",
+                        overflow: TextOverflow.ellipsis,
+                        /*style: TextStyle(
+                            color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: ScreenUtil().setSp(42)),*/
+                        style: TextStyle(
+                            color: Color(0xFF222222),
+                            fontWeight: FontWeight.bold,
+                            fontSize: ScreenUtil().setSp(42)),
+                      ),
                     ),
                     SizedBox(
                       width: ScreenUtil().setWidth(26),
@@ -464,7 +467,8 @@ class _FansTabViewState extends State<FansTabView> {
           _initData();
         }
       },
-      emptyWidget: _fansList== null ||_fansList.length==0? NoDataPage() : null,
+      emptyWidget:
+          _fansList == null || _fansList.length == 0 ? NoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -543,16 +547,19 @@ class _FansTabViewState extends State<FansTabView> {
       title: Container(
         child: Row(
           children: <Widget>[
-            Text(
-              "${nickName == null ? '' : nickName}",
-              /*style: TextStyle(
-                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: ScreenUtil().setSp(42)),*/
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontWeight: FontWeight.bold,
-                  fontSize: ScreenUtil().setSp(42)),
+            Container(
+              child: Text(
+                "${nickName == null ? '' : nickName}",
+                overflow: TextOverflow.ellipsis,
+                /*style: TextStyle(
+                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenUtil().setSp(42)),*/
+                style: TextStyle(
+                    color: Color(0xFF222222),
+                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenUtil().setSp(42)),
+              ),
             ),
             SizedBox(
               width: ScreenUtil().setWidth(26),

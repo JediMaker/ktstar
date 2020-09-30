@@ -121,7 +121,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
           title: Text(
             widget.title,
             style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+                color: Colors.white, fontSize: ScreenUtil().setSp(54)),
           ),
           centerTitle: true,
           leading: IconButton(
