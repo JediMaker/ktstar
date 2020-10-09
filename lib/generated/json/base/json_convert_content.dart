@@ -11,6 +11,8 @@ import 'package:star/models/result_bean_entity.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
+import 'package:star/models/version_info_entity.dart';
+import 'package:star/generated/json/version_info_entity_helper.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/fans_total_entity.dart';
@@ -56,7 +58,9 @@ class JsonConvert<T> {
 			return incomeListDataListFromJson(data as IncomeListDataList, json) as T;			case ResultBeanEntity:
 			return resultBeanEntityFromJson(data as ResultBeanEntity, json) as T;			case TaskDetailEntity:
 			return taskDetailEntityFromJson(data as TaskDetailEntity, json) as T;			case TaskDetailData:
-			return taskDetailDataFromJson(data as TaskDetailData, json) as T;			case HomeEntity:
+			return taskDetailDataFromJson(data as TaskDetailData, json) as T;			case VersionInfoEntity:
+			return versionInfoEntityFromJson(data as VersionInfoEntity, json) as T;			case VersionInfoData:
+			return versionInfoDataFromJson(data as VersionInfoData, json) as T;			case HomeEntity:
 			return homeEntityFromJson(data as HomeEntity, json) as T;			case HomeData:
 			return homeDataFromJson(data as HomeData, json) as T;			case HomeDataBanner:
 			return homeDataBannerFromJson(data as HomeDataBanner, json) as T;			case HomeDataTaskList:
@@ -107,7 +111,9 @@ class JsonConvert<T> {
 			return incomeListDataListToJson(data as IncomeListDataList);			case ResultBeanEntity:
 			return resultBeanEntityToJson(data as ResultBeanEntity);			case TaskDetailEntity:
 			return taskDetailEntityToJson(data as TaskDetailEntity);			case TaskDetailData:
-			return taskDetailDataToJson(data as TaskDetailData);			case HomeEntity:
+			return taskDetailDataToJson(data as TaskDetailData);			case VersionInfoEntity:
+			return versionInfoEntityToJson(data as VersionInfoEntity);			case VersionInfoData:
+			return versionInfoDataToJson(data as VersionInfoData);			case HomeEntity:
 			return homeEntityToJson(data as HomeEntity);			case HomeData:
 			return homeDataToJson(data as HomeData);			case HomeDataBanner:
 			return homeDataBannerToJson(data as HomeDataBanner);			case HomeDataTaskList:
@@ -158,7 +164,9 @@ class JsonConvert<T> {
 			return IncomeListDataList().fromJson(json);			case 'ResultBeanEntity':
 			return ResultBeanEntity().fromJson(json);			case 'TaskDetailEntity':
 			return TaskDetailEntity().fromJson(json);			case 'TaskDetailData':
-			return TaskDetailData().fromJson(json);			case 'HomeEntity':
+			return TaskDetailData().fromJson(json);			case 'VersionInfoEntity':
+			return VersionInfoEntity().fromJson(json);			case 'VersionInfoData':
+			return VersionInfoData().fromJson(json);			case 'HomeEntity':
 			return HomeEntity().fromJson(json);			case 'HomeData':
 			return HomeData().fromJson(json);			case 'HomeDataBanner':
 			return HomeDataBanner().fromJson(json);			case 'HomeDataTaskList':
@@ -210,7 +218,9 @@ class JsonConvert<T> {
 			return List<IncomeListDataList>();			case 'ResultBeanEntity':
 			return List<ResultBeanEntity>();			case 'TaskDetailEntity':
 			return List<TaskDetailEntity>();			case 'TaskDetailData':
-			return List<TaskDetailData>();			case 'HomeEntity':
+			return List<TaskDetailData>();			case 'VersionInfoEntity':
+			return List<VersionInfoEntity>();			case 'VersionInfoData':
+			return List<VersionInfoData>();			case 'HomeEntity':
 			return List<HomeEntity>();			case 'HomeData':
 			return List<HomeData>();			case 'HomeDataBanner':
 			return List<HomeDataBanner>();			case 'HomeDataTaskList':

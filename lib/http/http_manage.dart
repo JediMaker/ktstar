@@ -19,6 +19,7 @@ import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_record_list_entity_helper.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
+import 'package:star/generated/json/version_info_entity_helper.dart';
 import 'package:star/generated/json/vip_price_entity_helper.dart';
 import 'package:star/generated/json/wechat_payinfo_entity_helper.dart';
 import 'package:star/global_config.dart';
@@ -46,6 +47,7 @@ import 'interceptors/response_interceptor.dart';
 import 'package:star/models/result_bean_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/vip_price_entity.dart';
+import 'package:star/models/version_info_entity.dart';
 
 void getHttp() async {
   try {
@@ -497,6 +499,19 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 获取应用版本信息
+  ///
+  static Future<VersionInfoEntity> getVersionInfo() async {
+    var response = await HttpManage.dio.post(
+      APi.SITE_VERSION,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = VersionInfoEntity();
+    versionInfoEntityFromJson(entity, extractData);
     return entity;
   }
 

@@ -7,6 +7,7 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widget/navigation_icon_view.dart';
@@ -34,6 +35,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   @override
   void initState() {
     HttpManage.getUserInfo();
+    Utils.checkAppVersion(context);
     super.initState();
 
     _currentIndex = widget.currentIndex;

@@ -56,7 +56,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   }
 
   var images = [
-  /*  "https://pic1.zhimg.com/50/v2-0008057d1ad2bd813aea4fc247959e63_400x224.jpg",
+    /*  "https://pic1.zhimg.com/50/v2-0008057d1ad2bd813aea4fc247959e63_400x224.jpg",
     "https://pic3.zhimg.com/50/v2-7fc9a1572c6fc72a3dea0b73a9be36e7_400x224.jpg",
     "https://pic4.zhimg.com/50/v2-898f43a488b606061c877ac2a471e221_400x224.jpg",*/
 //    "https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg",
@@ -144,17 +144,25 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       child: Container(
         color: Colors.white,
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-        child: new SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: new Row(
-            children: images
-                .asMap()
-                .keys
-                .map((index) => buildAspectRatio(images[index], index))
-                .toList(),
-//            images.map((url) => buildAspectRatio(url)).toList(),
-//            images.map((url) => buildAspectRatio(url)).toList(),
+        child: new GridView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            // 左右间隔
+            crossAxisSpacing: 8,
+            // 上下间隔
+            mainAxisSpacing: 4,
+            //宽高比 默认1
+//              childAspectRatio: 3 / 4,
           ),
+          children: images
+              .asMap()
+              .keys
+              .map((index) => buildAspectRatio(images[index], index))
+              .toList(),
+//            images.map((url) => buildAspectRatio(url)).toList(),
+//            images.map((url) => buildAspectRatio(url)).toList(),
         ),
       ),
     );

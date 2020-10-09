@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
+import 'package:star/http/http_manage.dart';
 import 'package:star/utils/common_utils.dart';
+import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
   static double formatNum(double num, int postion) {
@@ -131,6 +137,97 @@ class Utils {
     // 这里其实就是 digest.toString()
     return hex.encode(digest.bytes);
   }
+
+  static String _localVersion;
+  static String _flatform;
+  static String url;
+
+//  https://www.jianshu.com/p/89f619c632dd
+  static checkAppVersion(BuildContext context) async {
+    /// 获取当前版本
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    _localVersion = packageInfo.version;
+    String updateTime = GlobalConfig.prefs.getString('updateTime') ?? null;
+
+    /// 一天之内只提醒一次需要更新
+
+    if (updateTime != null &&
+        DateTime.parse(updateTime).day == DateTime.now().day) {
+      return;
+    }
+    var versionInfo = await HttpManage.getVersionInfo();
+    try {
+      if (versionInfo.status) {
+        print(
+            "_localVersion=$_localVersion；versionInfo。versionNo=${versionInfo.data.versionNo}");
+        if (_localVersion == versionInfo.data.versionNo) return;
+        final bool wantsUpdate = await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) =>
+              _buildDialog(context, packageInfo, versionInfo.data.versionNo),
+          barrierDismissible: false,
+        );
+        if (Platform.isIOS) {
+          url = versionInfo.data.iosUrl;
+        } else {
+          url = versionInfo.data.androidUrl;
+        }
+        if (wantsUpdate != null && wantsUpdate) {
+          GlobalConfig.prefs.remove('updateTime');
+
+          if (await canLaunch(url) != null) {
+            await launch(url, forceSafariVC: false);
+          } else {
+            throw 'Could not launch $url';
+          }
+        } else {
+          GlobalConfig.prefs.setString('updateTime', DateTime.now().toString());
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+}
+
+Widget _buildDialog(
+    BuildContext context, PackageInfo packageInfo, String versionShort) {
+  final ThemeData theme = Theme.of(context);
+
+  final TextStyle dialogTextStyle =
+      theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);
+
+  return CupertinoAlertDialog(
+    title: Text('是否立即更新${packageInfo.appName}?'),
+    content: Text('检测到新版本 v$versionShort', style: dialogTextStyle),
+    actions: <Widget>[
+      CupertinoDialogAction(
+        child: const Text('下次再说'),
+        onPressed: () {
+          Navigator.pop(context, false);
+        },
+      ),
+      CupertinoDialogAction(
+        child: const Text('立即更新'),
+        onPressed: () {
+          Navigator.pop(context, true);
+        },
+      ),
+    ],
+  );
+}
+
+Future updateNow(BuildContext context) async {
+  if (Platform.isIOS) {
+    print('is ios');
+    final url =
+        "https://itunes.apple.com/cn/app/id1380512641"; // id 后面的数字换成自己的应用 id 就行了
+    if (await canLaunch(url) != null) {
+      await launch(url, forceSafariVC: false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
 
 ///底部裁剪
@@ -185,7 +282,7 @@ class TopClipper extends CustomClipper<Path> {
 
     // 设置路径的结束点
     path.lineTo(0, 50);
-    path.lineTo(size.width,50);
+    path.lineTo(size.width, 50);
 
     // 返回路径
     return path;

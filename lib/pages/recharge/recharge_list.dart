@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -170,38 +172,65 @@ class _RechargeListPageState extends State<RechargeListPage> {
                         : Text(""),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    if (!CommonUtils.isPhoneLegal(_phoneController.text)) {
-                      CommonUtils.showSimplePromptDialog(
-                          context, "温馨提示", "请输入正确的手机号");
-                      return;
-                    }
-                    try {
-                      _selectedRechargeData = _dataList[_selectIndex];
-                    } catch (e) {
-                      print(e);
-                    }
-                    if (!CommonUtils.isEmpty(_selectedRechargeData)) {
-                      _showSelectPayWayBottomSheet(context);
-                    }
-                  },
-                  child: Container(
-                    //diamond
-                    height: ScreenUtil().setHeight(140),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(46)),
-                      gradient: LinearGradient(colors: [
-                        Color(0xFF489FFF),
-                        Color(0xFF489FFF),
-                      ]),
+                Visibility(
+                  visible: !Platform.isIOS,
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (!CommonUtils.isPhoneLegal(_phoneController.text)) {
+                        CommonUtils.showSimplePromptDialog(
+                            context, "温馨提示", "请输入正确的手机号");
+                        return;
+                      }
+                      try {
+                        _selectedRechargeData = _dataList[_selectIndex];
+                      } catch (e) {
+                        print(e);
+                      }
+                      if (!CommonUtils.isEmpty(_selectedRechargeData)) {
+                        _showSelectPayWayBottomSheet(context);
+                      }
+                    },
+                    child: Container(
+                      //diamond
+                      height: ScreenUtil().setHeight(140),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(46)),
+                        gradient: LinearGradient(colors: [
+                          Color(0xFF489FFF),
+                          Color(0xFF489FFF),
+                        ]),
+                      ),
+                      child: Text(
+                        "支付",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: ScreenUtil().setSp(42)),
+                      ),
                     ),
-                    child: Text(
-                      "支付",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(42)),
+                  ),
+                ),
+                Visibility(
+                  visible: Platform.isIOS,
+                  child: GestureDetector(
+
+                    child: Container(
+                      //diamond
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(46)),
+                        gradient: LinearGradient(colors: [
+                          Color(0xFF489FFF),
+                          Color(0xFF489FFF),
+                        ]),
+                      ),
+                      child: Text(
+                        "由于相关规范，iOS功能暂不可用，请到公众号内或安卓端使用",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: ScreenUtil().setSp(42)),
+                      ),
                     ),
                   ),
                 ),

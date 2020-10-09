@@ -75,7 +75,10 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
               textColor: Colors.white,
               backgroundColor: Colors.grey);*/
           NavigatorUtils.navigatorRouterAndRemoveUntil(
-              context, PayResultPage(payNo: _payNo,));
+              context,
+              PayResultPage(
+                payNo: _payNo,
+              ));
           break;
       }
     } else {
@@ -225,51 +228,84 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      //标语
-                      _showSelectPayWayBottomSheet(context);
-                    },
-                    child: Container(
-                      //diamond
-                      height: ScreenUtil().setHeight(140),
-                      alignment: Alignment.center,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 65, horizontal: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(46)),
-                        gradient: LinearGradient(colors: [
-                          Color(0xFFA75441),
-                          Color(0xFF773A2C),
-                        ]),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "$nowPrice元/年\t",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: ScreenUtil().setSp(42)),
-                          ),
-                          Visibility(
-                            visible: showOldPrice,
-                            child: Text(
-                              "$oldPrice元/年",
+                  Visibility(
+                    visible: !H.Platform.isIOS,
+                    child: GestureDetector(
+                      onTap: () async {
+                        //标语
+                        _showSelectPayWayBottomSheet(context);
+                      },
+                      child: Container(
+                        //diamond
+                        height: ScreenUtil().setHeight(140),
+                        alignment: Alignment.center,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 65, horizontal: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(46)),
+                          gradient: LinearGradient(colors: [
+                            Color(0xFFA75441),
+                            Color(0xFF773A2C),
+                          ]),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "$nowPrice元/年\t",
                               style: TextStyle(
                                   color: Colors.white,
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: ScreenUtil().setSp(32)),
+                                  fontSize: ScreenUtil().setSp(42)),
                             ),
-                          ),
-                          Text(
-                            showOldPrice ? "\t限时开通" : "\t立即开通",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: ScreenUtil().setSp(42)),
-                          ),
-                        ],
+                            Visibility(
+                              visible: showOldPrice,
+                              child: Text(
+                                "$oldPrice元/年",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                            ),
+                            Text(
+                              showOldPrice ? "\t限时开通" : "\t立即开通",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(42)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: H.Platform.isIOS,
+                    child: GestureDetector(
+                      onTap: () async {},
+                      child: Container(
+                        //diamond
+                        alignment: Alignment.center,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 65, horizontal: 16),
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(46)),
+                          gradient: LinearGradient(colors: [
+                            Color(0xFFA75441),
+                            Color(0xFF773A2C),
+                          ]),
+                        ),
+                        child: Wrap(
+                          children: <Widget>[
+                            Text(
+                              "由于相关规范，iOS功能暂不可用，请到公众号内或安卓端使用",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(42)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
