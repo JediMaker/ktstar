@@ -200,8 +200,11 @@ Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
 
   return CupertinoAlertDialog(
     title: Text('v${versionInfo.data.versionNo}版本更新啦！'),
-    content: Text(
-      '${versionInfo.data.desc}',
+    content: Container(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: Text(
+        '${versionInfo.data.desc}',
+      ),
     ),
     actions: <Widget>[
       CupertinoDialogAction(

@@ -28,6 +28,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
   var _bannerIndex;
   var _linkUrl;
   var _inviteCode;
+  var _canLoop = false;
   Permission _permission = Permission.storage;
 
   void _initData() async {
@@ -38,6 +39,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
           _bannerList = result.data.imgs;
           _linkUrl = result.data.url;
           _inviteCode = result.data.code;
+          _canLoop = true;
         });
       }
     } else {
@@ -133,8 +135,8 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                                             "可淘星选:$_linkUrl 邀请码:$_inviteCode"));
                                     Fluttertoast.showToast(
                                         msg: "已复制文本",
-                                        backgroundColor: Colors.white,
-                                        textColor: Colors.black,
+                                        backgroundColor: Colors.grey,
+                                        textColor: Colors.white,
                                         gravity: ToastGravity.BOTTOM);
                                   },
                                   child: Container(
@@ -217,18 +219,26 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
   }
 
   _savePosterImg() async {
-    var response = await Dio().get(_bannerList[_bannerIndex],
-        options: Options(responseType: ResponseType.bytes));
-    var result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name:
-            "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
-    Fluttertoast.showToast(
-        msg: "图片已下载",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        gravity: ToastGravity.BOTTOM);
+    try {
+      Fluttertoast.showToast(
+          msg: "图片已保存",
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          gravity: ToastGravity.BOTTOM);
+      var response = await Dio().get(_bannerList[_bannerIndex],
+          options: Options(responseType: ResponseType.bytes));
+      var result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 60,
+          name:
+              "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "图片下载失败",
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          gravity: ToastGravity.BOTTOM);
+    }
   }
 
   Widget buildBannerLayout() {
@@ -247,6 +257,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
         transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
         //bannerList == null ? 0 : bannerList.length,
         autoplay: false,
+        loop: _canLoop,
         viewportFraction: 0.75,
         scale: 0.9,
 //          indicatorLayout: PageIndicatorLayout.COLOR,

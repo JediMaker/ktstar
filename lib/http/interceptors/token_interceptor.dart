@@ -70,10 +70,15 @@ class TokenInterceptors extends InterceptorsWrapper {
               builder: (context) {
                 return CupertinoAlertDialog(
                   title: Text('提示'),
-                  content: Text('您的账号已在其他设备上登录'),
+                  content: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text('您的账号已在其他设备上登录')),
                   actions: <Widget>[
                     CupertinoDialogAction(
-                      child: Text('关闭'),
+                      child: Text(
+                        '关闭',
+                        style: TextStyle(color: Color(0xff222222)),
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
