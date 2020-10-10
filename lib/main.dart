@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
+      navigatorKey: GlobalConfig.navigatorKey,
       theme: ThemeData(
 //        primarySwatch: CommonUtils.createMaterialColor(Colors.white),
         // This makes the visual density adapt to the platform that you run

@@ -31,7 +31,7 @@ class APi {
   static const String WECHAT_LOGIN = "login/third-login";
 
   ///修改密码
-  static const String RESET_PASSWORD = "/api/setpwd";
+  static const String RESET_PASSWORD = "user/set-pwd";
 
   ///获取用户信息
   static const String USER_INFO = "user/user-info";
@@ -41,6 +41,9 @@ class APi {
 
   ///获取消息列表
   static const String USER_MSG_LIST = "user/msg-list";
+
+  ///获取话费充值列表
+  static const String USER_HF_LIST= "user/hf-list";
 
   ///提现申请
   static const String USER_WITHDRAWAL_APPLICATION = "user/tx-apply";
@@ -53,6 +56,9 @@ class APi {
 
   ///获取粉丝列表
   static const String USER_TOTAL_FANS = "user/total-fans";
+
+  /// 我的海报
+  static const String USER_SHARE = "user/share";
 
   ///获取粉丝列表
   static const String USER_TASK_LIST = "user/task-list";

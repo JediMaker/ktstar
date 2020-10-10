@@ -1,7 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:star/http/http_manage.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/utils.dart';
 
 import '../../global_config.dart';
@@ -15,15 +24,34 @@ class InvitationPosterPage extends StatefulWidget {
 }
 
 class _InvitationPosterPageState extends State<InvitationPosterPage> {
-  var bannerList = [
-    "https://alipic.lanhuapp.com/xd3fcd5d5d-1a92-4581-9108-d0e37df3b07a",
-    "https://alipic.lanhuapp.com/xdd1598cdc-57cf-42c2-a5e6-5fc63407c9eb",
-    "https://alipic.lanhuapp.com/xd1bf21073-256d-4846-afa3-bb61fd0b9aae",
-  ];
-  var bannerIndex;
+  List<String> _bannerList = [];
+  var _bannerIndex;
+  var _linkUrl;
+  var _inviteCode;
+  Permission _permission = Permission.storage;
+
+  void _initData() async {
+    var result = await HttpManage.getInvitationPosters();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          _bannerList = result.data.imgs;
+          _linkUrl = result.data.url;
+          _inviteCode = result.data.code;
+        });
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "${result.errMsg}",
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          gravity: ToastGravity.BOTTOM);
+    }
+  }
 
   @override
   void initState() {
+    _initData();
     super.initState();
   }
 
@@ -77,7 +105,9 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                 child: Column(
                   children: <Widget>[
                     Flexible(
-                        fit: FlexFit.tight, flex: 9, child: buildBannerLayout()),
+                        fit: FlexFit.tight,
+                        flex: 9,
+                        child: buildBannerLayout()),
                     Flexible(
                       fit: FlexFit.tight,
                       flex: 2,
@@ -97,11 +127,21 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                             children: <Widget>[
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Clipboard.setData(ClipboardData(
+                                        text:
+                                            "可淘星选:$_linkUrl 邀请码:$_inviteCode"));
+                                    Fluttertoast.showToast(
+                                        msg: "已复制文本",
+                                        backgroundColor: Colors.white,
+                                        textColor: Colors.black,
+                                        gravity: ToastGravity.BOTTOM);
+                                  },
                                   child: Container(
                                     alignment: Alignment.center,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Image.asset(
                                           "static/images/icon_share.png",
@@ -132,11 +172,15 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                               ),
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    CommonUtils.requestPermission(
+                                        _permission, _savePosterImg());
+                                  },
                                   child: Container(
                                     alignment: Alignment.center,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Image.asset(
                                           "static/images/icon_download.png",
@@ -172,6 +216,21 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
     );
   }
 
+  _savePosterImg() async {
+    var response = await Dio().get(_bannerList[_bannerIndex],
+        options: Options(responseType: ResponseType.bytes));
+    var result = await ImageGallerySaver.saveImage(
+        Uint8List.fromList(response.data),
+        quality: 60,
+        name:
+            "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
+    Fluttertoast.showToast(
+        msg: "图片已下载",
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        gravity: ToastGravity.BOTTOM);
+  }
+
   Widget buildBannerLayout() {
     return Container(
       height: ScreenUtil().setHeight(623),
@@ -181,7 +240,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),*/
       child: Swiper(
-        itemCount: bannerList == null ? 0 : bannerList.length,
+        itemCount: _bannerList == null ? 0 : _bannerList.length,
 //        key: GlobalKey(),
         /*itemWidth: ScreenUtil().setWidth(1125),
         itemHeight: ScreenUtil().setHeight(623),
@@ -194,7 +253,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
         onIndexChanged: (index) {
           if (mounted) {
             setState(() {
-              bannerIndex = index;
+              _bannerIndex = index;
             });
           }
         },
@@ -206,7 +265,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                 activeColor: GlobalConfig.taskHeadColor,
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
-          var bannerData = bannerList[index];
+          var bannerData = _bannerList[index];
           return GestureDetector(
             onTap: () {},
             child: ClipRRect(

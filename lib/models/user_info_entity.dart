@@ -35,4 +35,6 @@ class UserInfoData with JsonConvert<UserInfoData> {
 	String txPrice;
 	@JSONField(name: "total_price")
 	String totalPrice;
+	@JSONField(name: "pwd_status")
+	String pwdStatus;
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
@@ -8,6 +9,8 @@ import 'package:star/global_config.dart';
 import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/result_bean_entity.dart';
+import 'package:star/pages/login/login.dart';
+import 'package:star/utils/navigator_utils.dart';
 
 /**
  * Token拦截器
@@ -55,10 +58,42 @@ class TokenInterceptors extends InterceptorsWrapper {
             backgroundColor: Colors.grey);
       }
       if (entity.errCode.toString() == "304") {
-        Fluttertoast.showToast(
+        /*Fluttertoast.showToast(
             msg: "您的账号已在其他设备上登录！",
             textColor: Colors.white,
-            backgroundColor: Colors.grey);
+            backgroundColor: Colors.grey);*/
+
+        Future.delayed(Duration(seconds: 0)).then((onValue) {
+          var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+          showCupertinoDialog(
+              context: context,
+              builder: (context) {
+                return CupertinoAlertDialog(
+                  title: Text('提示'),
+                  content: Text('您的账号已在其他设备上登录'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: Text('关闭'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    CupertinoDialogAction(
+                      child: Text(
+                        '登录',
+                        style: TextStyle(color: GlobalConfig.colorPrimary),
+                      ),
+                      onPressed: () {
+                        GlobalConfig.prefs.remove("hasLogin");
+                        GlobalConfig.saveLoginStatus(false);
+                        NavigatorUtils.navigatorRouterAndRemoveUntil(
+                            context, LoginPage());
+                      },
+                    ),
+                  ],
+                );
+              });
+        });
       }
     } catch (e) {}
     return response;

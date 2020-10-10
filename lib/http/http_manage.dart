@@ -13,6 +13,8 @@ import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/generated/json/pay_coupon_entity_helper.dart';
+import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
+import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
@@ -35,6 +37,7 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/pay_coupon_entity.dart';
+import 'package:star/models/poster_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_record_list_entity.dart';
@@ -48,6 +51,7 @@ import 'package:star/models/result_bean_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/vip_price_entity.dart';
 import 'package:star/models/version_info_entity.dart';
+import 'package:star/models/phone_charge_list_entity.dart';
 
 void getHttp() async {
   try {
@@ -394,6 +398,21 @@ class HttpManage {
     return entity;
   }
 
+
+  ///
+  /// 获取邀请海报
+  ///
+  static Future<PosterEntity> getInvitationPosters() async {
+    var response = await HttpManage.dio.get(
+      APi.USER_SHARE,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = PosterEntity();
+    posterEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+
   ///
   /// 获取首页信息
   ///
@@ -702,6 +721,31 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = MessageListEntity();
     messageListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///
+  ///
+  /// 获取话费充值列表
+  ///
+  static Future<PhoneChargeListEntity> getPhoneChargesList(page, pageSize) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_HF_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = PhoneChargeListEntity();
+
+    phoneChargeListEntityFromJson(entity, extractData);
     return entity;
   }
 

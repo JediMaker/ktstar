@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/message_list_entity.dart';
+import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -23,15 +24,16 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<MessageListDataList> _msgList;
+  List<PhoneChargeListDataList> _phoneChargeList;
 
   _initData() async {
-    MessageListEntity result = await HttpManage.getMsgList(page, 10);
+    PhoneChargeListEntity result =
+        await HttpManage.getPhoneChargesList(page, 10);
     if (result.status) {
       if (mounted) {
         setState(() {
           if (page == 1) {
-            _msgList = result.data.xList;
+            _phoneChargeList = result.data.xList;
           } else {
             if (result == null ||
                 result.data == null ||
@@ -40,7 +42,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
               //              _refreshController.resetLoadState();
               _refreshController.finishLoad(noMore: true);
             } else {
-              _msgList += result.data.xList;
+              _phoneChargeList += result.data.xList;
             }
           }
           isFirstLoading = false;
@@ -103,16 +105,19 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
             enableControlFinishRefresh: true,
             controller: _refreshController,
             onRefresh: () {
-              /* page = 1;
-              _initData();*/
+              page = 1;
+              _initData();
             },
             onLoad: () {
               if (!isFirstLoading) {
-                /*page++;
-                _initData();*/
+                page++;
+                _initData();
               }
             },
-            emptyWidget: _msgList == null || _msgList.length == 0 ? NoDataPage() : null,
+            emptyWidget:
+                _phoneChargeList == null || _phoneChargeList.length == 0
+                    ? NoDataPage()
+                    : null,
             slivers: <Widget>[buildCenter()],
           ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
@@ -126,56 +131,61 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            MessageListDataList listItem = _msgList[index];
+            PhoneChargeListDataList listItem = _phoneChargeList[index];
             return buildItemLayout(listItem: listItem);
           },
-          itemCount: _msgList == null ? 0 : _msgList.length,
+          itemCount: _phoneChargeList == null ? 0 : _phoneChargeList.length,
         ),
       ),
     );
   }
 
-  buildItemLayout({MessageListDataList listItem}) {
+  buildItemLayout({PhoneChargeListDataList listItem}) {
     String id = "1";
-    String title = "1";
-    String desc = "1";
-    String createTime = "1";
+    String title = "";
+    String createTime = "";
     String phoneNumberType = "";
-    String phoneNumber = "13122220000";
-    String phoneMoney = "100";
-    String totalMoney = "99.99";
-    String saleMoney = "99.99"; //
-    String payMoney = "94.99"; //
-    String contactPhone = "18236953178"; //
-    String orderNo = "5498754639669231"; //
+    String phoneNumber = "";
+    String phoneMoney = "";
+    String totalMoney = "";
+    String saleMoney = ""; //
+    String payMoney = ""; //
+    String contactPhone = ""; //
+    String orderNo = ""; //
     String rechargeStatus = "1";
     String rechargeStatusText = "";
     String iconName = '';
     bool showContact = false;
     try {
-      phoneNumberType = listItem.type;
+      phoneNumberType = listItem.type.toString();
       title = listItem.title;
-      desc = listItem.desc;
-      createTime = listItem.noticeTime;
-      rechargeStatus = listItem.readStatus;
+      createTime = listItem.czTime;
+
+      phoneNumber = listItem.phone;
+      phoneMoney = listItem.faceMoney;
+      totalMoney = listItem.useMoney;
+      saleMoney = listItem.useMoney;
+      payMoney = listItem.payMoney;
+      orderNo = listItem.orderNo;
+      rechargeStatus = listItem.status;
     } catch (e) {}
     switch (rechargeStatus) {
-      case "0":
+      case "1":
         rechargeStatusText = "充值成功"; //chinaUnicom china_mobile china_telecom
         break;
-      case "1":
+      case "9":
         rechargeStatusText = "充值失败";
         showContact = true;
         break;
-      case "2":
+      case "0":
         rechargeStatusText = "充值中";
         break;
     }
     switch (phoneNumberType) {
-      case "0":
+      case "2":
         iconName = "china_mobile.png";
         break;
-      case "2":
+      case "3":
         iconName = "china_telecom.png";
         break;
       case "1":

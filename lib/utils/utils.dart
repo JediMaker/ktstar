@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
+import 'package:star/models/version_info_entity.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -164,7 +165,7 @@ class Utils {
         final bool wantsUpdate = await showDialog<bool>(
           context: context,
           builder: (BuildContext context) =>
-              _buildDialog(context, packageInfo, versionInfo.data.versionNo),
+              _buildDialog(context, packageInfo, versionInfo),
           barrierDismissible: false,
         );
         if (Platform.isIOS) {
@@ -190,25 +191,33 @@ class Utils {
   }
 }
 
-Widget _buildDialog(
-    BuildContext context, PackageInfo packageInfo, String versionShort) {
+Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
+    VersionInfoEntity versionInfo) {
   final ThemeData theme = Theme.of(context);
 
-  final TextStyle dialogTextStyle =
-      theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);
+  /*final TextStyle dialogTextStyle =
+      theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);*/
 
   return CupertinoAlertDialog(
-    title: Text('是否立即更新${packageInfo.appName}?'),
-    content: Text('检测到新版本 v$versionShort', style: dialogTextStyle),
+    title: Text('v${versionInfo.data.versionNo}版本更新啦！'),
+    content: Text(
+      '${versionInfo.data.desc}',
+    ),
     actions: <Widget>[
       CupertinoDialogAction(
-        child: const Text('下次再说'),
+        child: Text(
+          '以后再说',
+          style: TextStyle(color: Color(0xff999999)),
+        ),
         onPressed: () {
           Navigator.pop(context, false);
         },
       ),
       CupertinoDialogAction(
-        child: const Text('立即更新'),
+        child: Text(
+          '立即更新',
+          style: TextStyle(color: GlobalConfig.colorPrimary),
+        ),
         onPressed: () {
           Navigator.pop(context, true);
         },

@@ -43,6 +43,7 @@ class _TimerWidgetState extends State<TimerWidget> {
         }
         timer = new TimerCount(
           time: 60,
+          textColor: widget.textColor,
           stopCount: _stopCount,
         );
         widget.startCountAction(context).then((value) => {
@@ -108,7 +109,6 @@ class _TimerCountState extends State<TimerCount> {
     if (mounted) {
       setState(() {
         _time -= 1;
-        print(_time);
       });
     }
   }

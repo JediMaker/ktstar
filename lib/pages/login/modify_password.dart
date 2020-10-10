@@ -64,7 +64,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
             },
           ),
           centerTitle: true,
-          backgroundColor:GlobalConfig.taskNomalHeadColor,
+          backgroundColor: GlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Container(
@@ -193,6 +193,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                                 msg: "修改密码成功！",
                                 textColor: Colors.white,
                                 backgroundColor: Colors.grey);
+                            Navigator.of(context).pop();
                             return true;
                           } else {
                             Fluttertoast.showToast(
@@ -214,7 +215,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                                 borderRadius: BorderRadius.circular(36.0),
                                 color: Color(0xffF32E43)),
                             child: Text(
-                              "确认修改",
+                              widget.title == "设置密码" ? "确认" : "确认修改",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: ScreenUtil().setSp(48)),
@@ -230,7 +231,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
   Future<bool> smsSend(BuildContext context) async {
     if (CommonUtils.isPhoneLegal(_phoneController.value.text)) {
       var result = await HttpManage.sendVerificationCode(
-          _phoneController.value.text, "2");
+          _phoneController.value.text, "4");
       if (result.status) {
         Fluttertoast.showToast(
             msg: "验证码已发送，请注意查收！",

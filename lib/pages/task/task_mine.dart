@@ -45,6 +45,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   var _phoneHintText = '请输入您的手机号';
   var _cardBgImageName = '';
   var _isWithdrawal = '';
+  var _pwdStatus = '';
   TextEditingController _dialogPhoneNumberController;
   TextEditingController _dialogNickNameController;
   TextEditingController _dialogWeChatNoController;
@@ -86,6 +87,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
           _weChatNo = result.data.wxNo;
           _code = result.data.code;
           _dialogWeChatNo = result.data.wxNo;
+          _pwdStatus = result.data.pwdStatus;
           isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
           switch (result.data.type) {
             case "0":
@@ -222,6 +224,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
 
   Container buildListItem() {
     var bindWechatText = "";
+    var title = "设置密码";
     switch (isWeChatBinded) {
       case 1:
         bindWechatText = "未绑定";
@@ -237,6 +240,13 @@ class _TaskMinePageState extends State<TaskMinePage> {
         break;
       case 1:
         bindWechatNoText = _weChatNo;
+        break;
+    }
+    switch (_pwdStatus) {
+      case "1":
+        break;
+      case "2":
+        title = "修改密码";
         break;
     }
     return Container(
@@ -277,19 +287,25 @@ class _TaskMinePageState extends State<TaskMinePage> {
               } else {
                 _dialogPhoneNumberController.text = _phoneNumber;
                 //修改手机号
-//                showMyDialog(showPhone: true, modifyPhone: true);
+                showMyDialog(showPhone: true, modifyPhone: true);
               }
             },
             trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Text(
                   _phoneNumber == null ? "" : _phoneNumber,
                   style: TextStyle(color: Color(0xff999999)),
                 ),
-                Text(
+                /*Text(
                   "",
                   style: TextStyle(color: Color(0xff999999)),
-                )
+                ),*/
+                Icon(
+                  Icons.chevron_right,
+                  color: Color(0xff999999),
+                ),
               ],
             ),
           ),
@@ -325,6 +341,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
               }
             },
             trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Text(
                   bindWechatText,
@@ -333,10 +351,16 @@ class _TaskMinePageState extends State<TaskMinePage> {
                           ? Color(0xffF93736)
                           : Color(0xff999999)),
                 ),
-                Text(
+                /* Text(
                   isWeChatBinded == 1 ? "\t>" : "",
                   style: TextStyle(color: Color(0xff999999)),
-                )
+                ),*/
+                Visibility(
+                    visible: isWeChatBinded == 1,
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: Color(0xff999999),
+                    )),
               ],
             ),
           ),
@@ -382,6 +406,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
               }
             },
             trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Text(
                   bindWechatNoText,
@@ -390,10 +416,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
                           ? Color(0xffF93736)
                           : Color(0xff999999)),
                 ),
-                Text(
+                /*Text(
                   "\t>",
                   style: TextStyle(color: Color(0xff999999)),
-                )
+                ),*/
+                Icon(
+                  Icons.chevron_right,
+                  color: Color(0xff999999),
+                ),
               ],
             ),
           ),
@@ -405,7 +435,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
             ),
           ),
           Visibility(
-            visible: false,
+            visible: true,
 //            visible: !CommonUtils.isEmpty(_phoneNumber),
             child: Column(
               children: <Widget>[
@@ -418,28 +448,31 @@ class _TaskMinePageState extends State<TaskMinePage> {
                         height: ScreenUtil().setWidth(71),
                       ),*/
                       Text(
-                        "设置密码",
+                        title,
                         style: TextStyle(
 //                color:  Color(0xFF222222) ,
                             fontSize: ScreenUtil().setSp(38)),
                       ),
                     ],
                   ),
-                  onTap: () {
-                    //todo 设置密码跳转
-                    var title = "设置密码";
-                    NavigatorUtils.navigatorRouter(
+                  onTap: () async {
+                    await NavigatorUtils.navigatorRouter(
                         context,
                         ModifyPasswordPage(
                           title: title,
                         ));
+                    _initUserData();
                   },
                   trailing: Wrap(
                     children: <Widget>[
-                      Text(
+                      /*Text(
                         "\t>",
                         style: TextStyle(color: Color(0xff999999)),
-                      )
+                      )*/
+                      Icon(
+                        Icons.chevron_right,
+                        color: Color(0xff999999),
+                      ),
                     ],
                   ),
                 ),
@@ -471,6 +504,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
             ),
             onTap: () {},
             trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Text(
                   registerTime == null ? "" : registerTime,
@@ -516,11 +551,17 @@ class _TaskMinePageState extends State<TaskMinePage> {
                     //todo 关于我们跳转
                   },
                   trailing: Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: <Widget>[
-                      Text(
+                      /* Text(
                         "\t>",
                         style: TextStyle(color: Color(0xff999999)),
-                      )
+                      ),*/
+                      Icon(
+                        Icons.chevron_right,
+                        color: Color(0xff999999),
+                      ),
                     ],
                   ),
                 ),
@@ -581,6 +622,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   });
             },
             trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Text(
                   "",
@@ -863,14 +906,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
             child: Container(
               child: new InkWell(
                   onTap: () {
-                    Fluttertoast.showToast(
+                    /* Fluttertoast.showToast(
                         msg: "暂未开放",
                         backgroundColor: Colors.grey,
                         textColor: Colors.white,
                         gravity: ToastGravity.BOTTOM);
-                    return;
-                    /*  NavigatorUtils.navigatorRouter(
-                        context, RechargeOrderListPage());*/
+                    return;*/
+                    NavigatorUtils.navigatorRouter(
+                        context, RechargeOrderListPage());
                   },
                   child: new Container(
                     child: new Column(
@@ -904,14 +947,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
             child: Container(
               child: new InkWell(
                   onTap: () {
-                    Fluttertoast.showToast(
+                    /* Fluttertoast.showToast(
                         msg: "暂未开放",
                         backgroundColor: Colors.grey,
                         textColor: Colors.white,
                         gravity: ToastGravity.BOTTOM);
-                    return;
-                    /* NavigatorUtils.navigatorRouter(
-                        context, InvitationPosterPage());*/
+                    return;*/
+                    NavigatorUtils.navigatorRouter(
+                        context, InvitationPosterPage());
                   },
                   child: new Container(
                     child: new Column(

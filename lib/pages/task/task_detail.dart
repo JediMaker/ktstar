@@ -405,7 +405,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name: "kt_${CommonUtils.currentTimeMillis() + index.toString()}");
+        name: "ktxx_${CommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result);
   }
 

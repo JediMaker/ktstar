@@ -46,6 +46,11 @@ class GlobalConfig {
 
   static SharedPreferences _prefs;
 
+  ///全局context
+
+  static final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+
   ///任务墙渠道别名
   static const String MISSION_WALL_CHANNEL = "ktxx001128";
 
