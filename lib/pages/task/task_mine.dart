@@ -1374,7 +1374,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
         text = "体验会员";
         break;
       case "2":
-        text = "钻石vip";
+        text = "vip会员";
         break;
       case "3":
         text = "代理";

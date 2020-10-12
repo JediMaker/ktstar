@@ -406,7 +406,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         Uint8List.fromList(response.data),
         quality: 60,
         name: "ktxx_${CommonUtils.currentTimeMillis() + index.toString()}");
-    print("当前$index下载结果" + result);
+    print("当前$index下载结果" + result.toString());
   }
 
   _saveImages() {

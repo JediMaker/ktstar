@@ -190,14 +190,14 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                               _passwordController.value.text);
                           if (result.status) {
                             Fluttertoast.showToast(
-                                msg: "修改密码成功！",
+                                msg: "${ widget.title == "设置密码" ? "设置" : "修改"}密码成功！",
                                 textColor: Colors.white,
                                 backgroundColor: Colors.grey);
                             Navigator.of(context).pop();
                             return true;
                           } else {
                             Fluttertoast.showToast(
-                                msg: "修改密码失败，" + result.errMsg,
+                                msg: "${ widget.title == "设置密码" ? "设置" : "修改"}密码失败，" + result.errMsg,
                                 textColor: Colors.white,
                                 backgroundColor: Colors.grey);
                             return false;

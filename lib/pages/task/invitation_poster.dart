@@ -25,7 +25,7 @@ class InvitationPosterPage extends StatefulWidget {
 
 class _InvitationPosterPageState extends State<InvitationPosterPage> {
   List<String> _bannerList = [];
-  var _bannerIndex;
+  var _bannerIndex = 0;
   var _linkUrl;
   var _inviteCode;
   var _canLoop = false;
@@ -220,19 +220,29 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
 
   _savePosterImg() async {
     try {
-      Fluttertoast.showToast(
-          msg: "图片已保存",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
-      var response = await Dio().get(_bannerList[_bannerIndex],
+      var response = await HttpManage.dio.get(_bannerList[_bannerIndex],
           options: Options(responseType: ResponseType.bytes));
       var result = await ImageGallerySaver.saveImage(
           Uint8List.fromList(response.data),
           quality: 60,
           name:
               "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
+      print("posterDownloadResult=" + result.toString());
+      if (result == true) {
+        Fluttertoast.showToast(
+            msg: "图片已保存",
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            gravity: ToastGravity.BOTTOM);
+      } else {
+        Fluttertoast.showToast(
+            msg: "图片下载失败，请重试！",
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            gravity: ToastGravity.BOTTOM);
+      }
     } catch (e) {
+      print("err=" + e.toString());
       Fluttertoast.showToast(
           msg: "图片下载失败",
           backgroundColor: Colors.grey,
