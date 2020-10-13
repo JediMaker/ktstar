@@ -12,13 +12,13 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
 //
   GlobalConfig.init().then((value) async => {runApp(MyApp())});
-  if (Platform.isAndroid) {
+  /*if (Platform.isAndroid) {
     //设置状态栏颜色
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, //设置为透明
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
+  }*/
 
 /*//  链接：https://juejin.im/post/6844903762398560270
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {

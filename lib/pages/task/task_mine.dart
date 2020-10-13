@@ -180,46 +180,44 @@ class _TaskMinePageState extends State<TaskMinePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: GradientAppBar(
+    return Scaffold(
+        appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
-            gradient: LinearGradient(colors: [
+          gradient: LinearGradient(colors: [
 //            Color(0xfff5f5f5),
 //            Color(0xfff5f5f5),
-              GlobalConfig.taskNomalHeadColor,
-              GlobalConfig.taskNomalHeadColor,
-            ]),
-            brightness: Brightness.dark,
-            title: Text(
-              "我的",
-              /*style: TextStyle(
-                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                  fontSize: ScreenUtil().setSp(54)),*/
-              style: TextStyle(
-                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-            ),
-            centerTitle: true,
-            elevation: 0,
+            GlobalConfig.taskNomalHeadColor,
+            GlobalConfig.taskNomalHeadColor,
+          ]),
+          brightness: Brightness.light,
+          title: Text(
+            "我的",
+            /*style: TextStyle(
+                color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                fontSize: ScreenUtil().setSp(54)),*/
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
+          centerTitle: true,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
 //                buildTopLayout(),
-                    buildHeadLayout(),
-                    buildCardInfo(),
+                  buildHeadLayout(),
+                  buildCardInfo(),
 //                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
-                    itemsLayout(),
-                  ],
-                ),
-                buildListItem(),
-              ],
-            ),
-          ) // This trailing comma makes auto-formatting nicer for build methods.
+                  itemsLayout(),
+                ],
+              ),
+              buildListItem(),
+            ],
           ),
-    );
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   Container buildListItem() {

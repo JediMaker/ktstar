@@ -30,43 +30,41 @@ class _RechargeResultPageState extends State<RechargeResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-          ),
-          centerTitle: true,
-          brightness: Brightness.dark,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
-          elevation: 0,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: TextStyle(
+              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
         ),
-        body: WillPopScope(
-            onWillPop: () async {
-              if (_lastQuitTime == null ||
-                  DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
-                /*Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-                Fluttertoast.showToast(
-                    msg: "再按一次返回键退出应用",
-                    backgroundColor: Colors.grey,
-                    textColor: Colors.white,
-                    gravity: ToastGravity.BOTTOM);
-                _lastQuitTime = DateTime.now();
-                return false;
-              } else {
-                // 退出app
-                await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-//              Navigator.of(context).pop(true);
-                return true;
-              }
-            },
-            child: buildHomeWidget(context)),
-
-        /// This trailing comma makes auto-formatting nicer for build methods.
+        centerTitle: true,
+        brightness: Brightness.light,
+        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        elevation: 0,
       ),
+      body: WillPopScope(
+          onWillPop: () async {
+            if (_lastQuitTime == null ||
+                DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
+              /*Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+              Fluttertoast.showToast(
+                  msg: "再按一次返回键退出应用",
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  gravity: ToastGravity.BOTTOM);
+              _lastQuitTime = DateTime.now();
+              return false;
+            } else {
+              // 退出app
+              await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+//              Navigator.of(context).pop(true);
+              return true;
+            }
+          },
+          child: buildHomeWidget(context)),
+
+      /// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 

@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/fans_list_entity.dart';
@@ -176,89 +178,87 @@ class _FansListPageState extends State<FansListPage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.title,
-              style: TextStyle(
-                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-            ),
-            brightness: Brightness.dark,
-            leading: IconButton(
-              icon: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
-                height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
-            elevation: 0,
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
-          body: Center(
-            child: Column(
-              children: <Widget>[
-                Visibility(visible: !widget.isAgent, child: buildHeadLayout()),
-                Flexible(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 16, vertical: ScreenUtil().setHeight(30)),
-                    padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(ScreenUtil().setWidth(30))),
-                        border: Border.all(
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          centerTitle: true,
+          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          elevation: 0,
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Visibility(visible: !widget.isAgent, child: buildHeadLayout()),
+              Flexible(
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(ScreenUtil().setWidth(30))),
+                      border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                            color: Colors.white,
-                            width: 0.5)),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 48,
-                          alignment: Alignment.center,
                           color: Colors.white,
-                          child: Center(
-                            child: TabBar(
-                              tabs: _tabValues.map((f) {
-                                return Text(
-                                  f,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(38)),
-                                );
-                              }).toList(),
-                              controller: _tabController,
-                              indicatorColor: Color(0xffF93736),
-                              indicatorSize: TabBarIndicatorSize.label,
-                              isScrollable: false,
-                              labelColor: Color(0xffF93736),
-                              unselectedLabelColor: Colors.black,
-                            ),
+                          width: 0.5)),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 48,
+                        alignment: Alignment.center,
+                        color: Colors.white,
+                        child: Center(
+                          child: TabBar(
+                            tabs: _tabValues.map((f) {
+                              return Text(
+                                f,
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style:
+                                    TextStyle(fontSize: ScreenUtil().setSp(38)),
+                              );
+                            }).toList(),
+                            controller: _tabController,
+                            indicatorColor: Color(0xffF93736),
+                            indicatorSize: TabBarIndicatorSize.label,
+                            isScrollable: false,
+                            labelColor: Color(0xffF93736),
+                            unselectedLabelColor: Colors.black,
                           ),
                         ),
-                        Expanded(
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: _tabViews,
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: _tabViews,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ) // This trailing comma makes auto-formatting nicer for build methods.
+              ),
+            ],
           ),
-    );
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   Widget buildHeadLayout() {

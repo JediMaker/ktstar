@@ -71,58 +71,56 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.title,
-              style: TextStyle(
-                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+          ),
+          brightness: Brightness.light,
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
             ),
-            brightness: Brightness.dark,
-            leading: IconButton(
-              icon: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
-                height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
-            centerTitle: true,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          centerTitle: true,
 //          backgroundColor: Color(0xfff5f5f5),
-            elevation: 0,
-          ),
-          body: EasyRefresh.custom(
-            topBouncing: false,
-            bottomBouncing: false,
-            header: MaterialHeader(),
-            footer: MaterialFooter(),
-            enableControlFinishLoad: true,
-            enableControlFinishRefresh: true,
-            controller: _refreshController,
-            onRefresh: () {
-              page = 1;
+          elevation: 0,
+        ),
+        body: EasyRefresh.custom(
+          topBouncing: false,
+          bottomBouncing: false,
+          header: MaterialHeader(),
+          footer: MaterialFooter(),
+          enableControlFinishLoad: true,
+          enableControlFinishRefresh: true,
+          controller: _refreshController,
+          onRefresh: () {
+            page = 1;
+            _initData();
+          },
+          onLoad: () {
+            if (!isFirstLoading) {
+              page++;
               _initData();
-            },
-            onLoad: () {
-              if (!isFirstLoading) {
-                page++;
-                _initData();
-              }
-            },
-            emptyWidget: _recordList == null || _recordList.length == 0
-                ? NoDataPage()
-                : null,
-            slivers: <Widget>[buildCenter()],
-          )
+            }
+          },
+          emptyWidget: _recordList == null || _recordList.length == 0
+              ? NoDataPage()
+              : null,
+          slivers: <Widget>[buildCenter()],
+        )
 
-          /// This trailing comma makes auto-formatting nicer for build methods.
-          ),
-    );
+        /// This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   Widget buildCenter() {

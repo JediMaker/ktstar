@@ -55,7 +55,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
             style: TextStyle(
                 color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           leading: IconButton(
             icon: Image.asset(
               "static/images/list_return.png",

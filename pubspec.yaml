@@ -71,6 +71,8 @@ dependencies:
   jpush_flutter: ^0.5.9
   #  安装包信息
   package_info: ^0.4.3
+  #  状态栏颜色
+  flutter_statusbarcolor: ^0.2.3
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

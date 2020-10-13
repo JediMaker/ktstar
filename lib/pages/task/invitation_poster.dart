@@ -64,158 +64,151 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.title,
-              style: TextStyle(
-                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-            ),
-            brightness: Brightness.dark,
-            leading: IconButton(
-              icon: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
-                height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
-            elevation: 0,
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
           ),
-          body: Stack(
-            children: <Widget>[
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: Container(
+          brightness: Brightness.light,
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          centerTitle: true,
+          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          elevation: 0,
+        ),
+        body: Stack(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: ScreenUtil().setWidth(927),
+                child: Image.asset(
+                  "static/images/invite_bg_bottom.png",
                   height: ScreenUtil().setWidth(927),
-                  child: Image.asset(
-                    "static/images/invite_bg_bottom.png",
-                    height: ScreenUtil().setWidth(927),
-                  ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: ScreenUtil().setWidth(32),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Flexible(
-                        fit: FlexFit.tight,
-                        flex: 9,
-                        child: buildBannerLayout()),
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 2,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: ScreenUtil().setWidth(32),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Flexible(
+                      fit: FlexFit.tight, flex: 9, child: buildBannerLayout()),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 2,
+                    child: Container(
+                      alignment: Alignment.center,
                       child: Container(
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: ScreenUtil().setWidth(793),
-                          height: ScreenUtil().setHeight(126),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(ScreenUtil().setWidth(30))),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Clipboard.setData(ClipboardData(
-                                        text:
-                                            "可淘星选:$_linkUrl 邀请码:$_inviteCode"));
-                                    Fluttertoast.showToast(
-                                        msg: "已复制文本",
-                                        backgroundColor: Colors.grey,
-                                        textColor: Colors.white,
-                                        gravity: ToastGravity.BOTTOM);
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Image.asset(
-                                          "static/images/icon_share.png",
-                                          width: ScreenUtil().setWidth(45),
-                                          height: ScreenUtil().setWidth(45),
-                                        ),
-                                        SizedBox(
-                                          width: ScreenUtil().setWidth(26),
-                                        ),
-                                        Text(
-                                          "分享链接",
-                                          style: TextStyle(
+                        width: ScreenUtil().setWidth(793),
+                        height: ScreenUtil().setHeight(126),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(30))),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Clipboard.setData(ClipboardData(
+                                      text: "可淘星选:$_linkUrl 邀请码:$_inviteCode"));
+                                  Fluttertoast.showToast(
+                                      msg: "已复制文本",
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      gravity: ToastGravity.BOTTOM);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset(
+                                        "static/images/icon_share.png",
+                                        width: ScreenUtil().setWidth(45),
+                                        height: ScreenUtil().setWidth(45),
+                                      ),
+                                      SizedBox(
+                                        width: ScreenUtil().setWidth(26),
+                                      ),
+                                      Text(
+                                        "分享链接",
+                                        style: TextStyle(
 //                                          color: Color(0xFFF93736),
-                                            fontSize: ScreenUtil().setSp(42),
-                                          ),
+                                          fontSize: ScreenUtil().setSp(42),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 1,
+                            ),
+                            Container(
+                              width: 1,
 //                              color: Colors.red,
-                                margin: EdgeInsets.symmetric(
-                                    vertical: ScreenUtil().setHeight(30)),
-                                color: Color(0xFFd1d1d1),
-                              ),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    CommonUtils.requestPermission(
-                                        _permission, _savePosterImg());
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Image.asset(
-                                          "static/images/icon_download.png",
-                                          width: ScreenUtil().setWidth(46),
-                                          height: ScreenUtil().setHeight(43),
-                                        ),
-                                        SizedBox(
-                                          width: ScreenUtil().setWidth(26),
-                                        ),
-                                        Text(
-                                          "保存图片",
-                                          style: TextStyle(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setHeight(30)),
+                              color: Color(0xFFd1d1d1),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  CommonUtils.requestPermission(
+                                      _permission, _savePosterImg());
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset(
+                                        "static/images/icon_download.png",
+                                        width: ScreenUtil().setWidth(46),
+                                        height: ScreenUtil().setHeight(43),
+                                      ),
+                                      SizedBox(
+                                        width: ScreenUtil().setWidth(26),
+                                      ),
+                                      Text(
+                                        "保存图片",
+                                        style: TextStyle(
 //                                        color: Colors.white,
-                                            fontSize: ScreenUtil().setSp(42),
-                                          ),
+                                          fontSize: ScreenUtil().setSp(42),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              )
-            ],
-          ) // This trailing comma makes auto-formatting nicer for build methods.
-          ),
-    );
+                  ),
+                ],
+              ),
+            )
+          ],
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   _savePosterImg() async {
@@ -228,19 +221,11 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
           name:
               "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
       print("posterDownloadResult=" + result.toString());
-      if (result == true) {
-        Fluttertoast.showToast(
-            msg: "图片已保存",
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            gravity: ToastGravity.BOTTOM);
-      } else {
-        Fluttertoast.showToast(
-            msg: "图片下载失败，请重试！",
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            gravity: ToastGravity.BOTTOM);
-      }
+      Fluttertoast.showToast(
+          msg: "图片已保存",
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          gravity: ToastGravity.BOTTOM);
     } catch (e) {
       print("err=" + e.toString());
       Fluttertoast.showToast(

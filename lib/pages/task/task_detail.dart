@@ -17,6 +17,7 @@ import 'package:star/pages/task/task_submission.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../global_config.dart';
 
 class TaskDetailPage extends StatefulWidget {
@@ -409,15 +410,17 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     print("当前$index下载结果" + result.toString());
   }
 
-  _saveImages() {
+  _saveImages({showToast = false}) {
     for (var i = 0; i < images.length; i++) {
       _save(i);
     }
-    Fluttertoast.showToast(
-        msg: "图片已下载",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        gravity: ToastGravity.BOTTOM);
+    if (showToast) {
+      Fluttertoast.showToast(
+          msg: "图片已下载",
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          gravity: ToastGravity.BOTTOM);
+    }
   }
 
   void _shareImage(scene) {
@@ -438,7 +441,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
                   onPressed: () async {
-                    CommonUtils.requestPermission(_permission, _saveImages());
+                    CommonUtils.requestPermission(
+                        _permission, _saveImages(showToast: true));
                   },
                   child: new Container(
                     child: new Column(
@@ -507,8 +511,17 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
                   onPressed: () {
-                    source = WeChatImage.network(images[0]);
-                    _shareImage(WeChatScene.SESSION);
+                    /*     source = WeChatImage.network(images[0]);
+                    _shareImage(WeChatScene.SESSION);*/
+                    Clipboard.setData(ClipboardData(text: des));
+                    CommonUtils.requestPermission(
+                        _permission, _saveImages(showToast: false));
+                    Fluttertoast.showToast(
+                        msg: "已保存文案和图片",
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        gravity: ToastGravity.BOTTOM);
+                    launch("weixin://");
                   },
                   child: new Container(
                     child: new Column(
@@ -539,8 +552,17 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
                   onPressed: () {
-                    source = WeChatImage.network(images[0]);
-                    _shareImage(WeChatScene.TIMELINE);
+                    /*  source = WeChatImage.network(images[0]);
+                    _shareImage(WeChatScene.TIMELINE);*/
+                    Clipboard.setData(ClipboardData(text: des));
+                    CommonUtils.requestPermission(
+                        _permission, _saveImages(showToast: false));
+                    Fluttertoast.showToast(
+                        msg: "已保存文案和图片",
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        gravity: ToastGravity.BOTTOM);
+                    launch("weixin://");
                   },
                   child: new Container(
                     child: new Column(
