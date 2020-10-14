@@ -557,8 +557,8 @@ class _FansTabViewState extends State<FansTabView> {
                     fontSize: ScreenUtil().setSp(42)),*/
                 style: TextStyle(
                     color: Color(0xFF222222),
-                    fontWeight: FontWeight.bold,
-                    fontSize: ScreenUtil().setSp(42)),
+//                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenUtil().setSp(38)),
               ),
             ),
             SizedBox(
