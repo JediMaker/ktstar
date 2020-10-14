@@ -238,8 +238,8 @@ class GlobalConfig {
       debug: true,
     );
     jpush.applyPushAuthority(
-        new NotificationSettingsIOS(sound: true, alert: true, badge: true));
-
+        new NotificationSettingsIOS(sound: true, alert: true, badge: false));
+    jpush.setBadge(0);
     // Platform messages may fail, so we use a try/catch PlatformException.
     jpush.getRegistrationID().then((rid) {
       print("flutter get registration id : $rid");
