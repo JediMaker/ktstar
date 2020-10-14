@@ -202,7 +202,7 @@ class CommonUtils {
               title: Text('温馨提示'),
               content: Container(
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text('由于相关规范，iOS功能暂不可用，请到公众号内或安卓端使用')),
+                  child: Text('iOS暂不支持购买')),
               actions: <Widget>[
                 CupertinoDialogAction(
                   child: Text(
