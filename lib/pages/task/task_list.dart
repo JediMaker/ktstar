@@ -180,7 +180,7 @@ class _TaskListPageState extends State<TaskListPage> {
 
   Widget buildBannerLayout() {
     return Container(
-      height: ScreenUtil().setHeight(623),
+      height: ScreenUtil().setHeight(741),
       width: double.maxFinite,
 //      width: ScreenUtil().setWidth(1125),
       /*  decoration: BoxDecoration(
@@ -275,13 +275,13 @@ class _TaskListPageState extends State<TaskListPage> {
 //          HttpManage.getTheMissionWallEntrance("13122336666");
         },
         child: Container(
-          height: ScreenUtil().setHeight(360),
+          height: ScreenUtil().setHeight(550),
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           alignment: Alignment.center,
           child: Image.asset(
             'static/images/task_wall.png',
             width: ScreenUtil().setWidth(1061),
-            height: ScreenUtil().setHeight(465),
+            height: ScreenUtil().setHeight(550),
             fit: BoxFit.fill,
           ),
         ),
@@ -456,7 +456,7 @@ class _TaskListPageState extends State<TaskListPage> {
 
   Widget taskCard(context) {
     return Card(
-//      elevation: 2.0,
+      elevation: 0,
       margin: EdgeInsets.only(
           left: 16, right: 16, top: ScreenUtil().setHeight(556)),
       shape: RoundedRectangleBorder(

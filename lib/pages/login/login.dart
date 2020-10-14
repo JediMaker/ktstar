@@ -324,13 +324,6 @@ class _LoginPageState extends State<LoginPage> {
                 if (mounted) {
                   setState(() {
                     if (pageType == 1) {
-                      NavigatorUtils.navigatorRouter(
-                          context,
-                          WebViewPage(
-                            initialUrl: APi.AGREEMENT_REGISTRATION_URL,
-                            showActions: false,
-                            title: "注册协议",
-                          ));
                     } else {
                       resetInputValues();
                       _scrollToTop();
@@ -352,13 +345,41 @@ class _LoginPageState extends State<LoginPage> {
                             "注册即代表同意",
                             style: TextStyle(
                                 color: Color(0xFFAFAFAF),
-                                fontSize: ScreenUtil().setSp(42)),
+                                fontSize: ScreenUtil().setSp(32)),
                           ),
-                          Text(
-                            "《注册协议》",
-                            style: TextStyle(
-                                color: GlobalConfig.taskHeadColor,
-                                fontSize: ScreenUtil().setSp(42)),
+                          GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  WebViewPage(
+                                    initialUrl: APi.AGREEMENT_REGISTRATION_URL,
+                                    showActions: false,
+                                    title: "注册协议",
+                                  ));
+                            },
+                            child: Text(
+                              "《注册协议》",
+                              style: TextStyle(
+                                  color: GlobalConfig.taskHeadColor,
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  WebViewPage(
+                                    initialUrl: APi.AGREEMENT_SERVICES_URL,
+                                    showActions: false,
+                                    title: "服务协议",
+                                  ));
+                            },
+                            child: Text(
+                              "《服务协议》",
+                              style: TextStyle(
+                                  color: GlobalConfig.taskHeadColor,
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
                           ),
                         ],
                       ),

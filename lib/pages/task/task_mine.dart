@@ -13,6 +13,7 @@ import 'package:star/pages/login/modify_password.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/task/pay_result.dart';
+import 'package:star/pages/task/task_about.dart';
 import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
@@ -544,7 +545,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
             ),
           ),
           Visibility(
-            visible: false,
+            visible: true,
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -564,7 +565,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                     ],
                   ),
                   onTap: () {
-                    //todo 关于我们跳转
+                    NavigatorUtils.navigatorRouter(context, AboutPage());
                   },
                   trailing: Wrap(
                     alignment: WrapAlignment.center,
