@@ -504,7 +504,7 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFFAFAFAF),
-                    fontSize: 12,
+                    fontSize: ScreenUtil().setSp(30),
                   ),
                 ),
               ),
@@ -566,7 +566,7 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFFAFAFAF),
-                    fontSize: 12,
+                    fontSize: ScreenUtil().setSp(30),
                   ),
                 ),
               ),
@@ -620,7 +620,7 @@ class _LoginPageState extends State<LoginPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color(0xFFAFAFAF),
-                          fontSize: 12,
+                          fontSize: ScreenUtil().setSp(30),
                         ),
                       ),
                     ),
@@ -686,7 +686,7 @@ class _LoginPageState extends State<LoginPage> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xFFAFAFAF),
-                  fontSize: 12,
+                  fontSize: ScreenUtil().setSp(30),
                 ),
               ),
             ),

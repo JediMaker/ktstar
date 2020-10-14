@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -229,6 +231,10 @@ class _TaskListPageState extends State<TaskListPage> {
           var bannerData = bannerList[index];
           return GestureDetector(
             onTap: () {
+              if(Platform.isIOS){
+                CommonUtils.showIosPayDialog();
+                return;
+              }
               switch (bannerList[bannerIndex].uri.toString().trim()) {
                 case "upgrade":
                   NavigatorUtils.navigatorRouter(
@@ -313,6 +319,10 @@ class _TaskListPageState extends State<TaskListPage> {
           case -2:
             break;
           case -1: //-1去开通
+            if(Platform.isIOS){
+              CommonUtils.showIosPayDialog();
+              return;
+            }
             var result = await showDialog(
                 context: context,
                 builder: (context) {

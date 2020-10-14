@@ -192,6 +192,33 @@ class CommonUtils {
     }
   }
 
+  static Future<Null> showIosPayDialog() {
+    Future.delayed(Duration(seconds: 0)).then((onValue) {
+      var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+      showCupertinoDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text('温馨提示'),
+              content: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Text('由于相关规范，iOS功能暂不可用，请到公众号内或安卓端使用')),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: Text(
+                    '确定',
+//                    style: TextStyle(color: Color(0xff222222)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          });
+    });
+  }
+
   ///版本更新
   static Future<Null> showUpdateDialog(
       BuildContext context, String contentMsg) {

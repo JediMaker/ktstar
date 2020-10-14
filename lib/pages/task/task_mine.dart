@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -294,7 +296,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
               children: <Widget>[
                 Text(
                   _phoneNumber == null ? "" : _phoneNumber,
-                  style: TextStyle(color: Color(0xff999999)),
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(38),
+                      color: Color(0xff999999)),
                 ),
                 /*Text(
                   "",
@@ -345,6 +349,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                 Text(
                   bindWechatText,
                   style: TextStyle(
+                      fontSize: ScreenUtil().setSp(38),
                       color: isWeChatBinded == 1
                           ? Color(0xffF93736)
                           : Color(0xff999999)),
@@ -377,17 +382,23 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   width: ScreenUtil().setWidth(44),
                   height: ScreenUtil().setWidth(71),
                 ),*/
-                Text(
-                  "微信号输入",
-                  style: TextStyle(
+                Container(
+                  child: Text(
+                    "微信号输入",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
 //                color:  Color(0xFF222222) ,
-                      fontSize: ScreenUtil().setSp(38)),
+                        fontSize: ScreenUtil().setSp(38)),
+                  ),
                 ),
-                Text(
-                  "(便于您的粉丝联系您)",
-                  style: TextStyle(
-                      color: Color(0xFF999999),
-                      fontSize: ScreenUtil().setSp(32)),
+                Container(
+                  child: Text(
+                    "(便于您的粉丝联系您)",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Color(0xFF999999),
+                        fontSize: ScreenUtil().setSp(32)),
+                  ),
                 ),
               ],
             ),
@@ -407,12 +418,19 @@ class _TaskMinePageState extends State<TaskMinePage> {
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                Text(
-                  bindWechatNoText,
-                  style: TextStyle(
-                      color: isWeChatNoBinded == 0
-                          ? Color(0xffF93736)
-                          : Color(0xff999999)),
+                Container(
+                  child: Text(
+                    bindWechatNoText,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(38),
+                        color: isWeChatNoBinded == 0
+                            ? Color(0xffF93736)
+                            : Color(0xff999999)),
+                  ),
+                  constraints: BoxConstraints(
+                    maxWidth: ScreenUtil().setWidth(200),
+                  ),
                 ),
                 /*Text(
                   "\t>",
@@ -1383,6 +1401,10 @@ class _TaskMinePageState extends State<TaskMinePage> {
         switch (userType) {
           case "0":
           case "1":
+            if (Platform.isIOS) {
+              CommonUtils.showIosPayDialog();
+              return;
+            }
             await NavigatorUtils.navigatorRouter(
                 context, TaskOpenDiamondPage());
             /* NavigatorUtils.navigatorRouterAndRemoveUntil(
