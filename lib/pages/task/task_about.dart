@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:star/http/api.dart';
 import 'package:star/pages/widget/my_webview.dart';
 
@@ -131,6 +132,7 @@ class _AboutPageState extends State<AboutPage>
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -149,6 +151,7 @@ class _AboutPageState extends State<AboutPage>
               Navigator.of(context).pop();
             },
           ),
+          brightness: Brightness.light,
           centerTitle: true,
           backgroundColor: GlobalConfig.taskNomalHeadColor,
           elevation: 0,
