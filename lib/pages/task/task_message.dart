@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
+import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
@@ -47,11 +48,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
         });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -150,7 +147,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+          horizontal: 16, vertical: ScreenUtil().setHeight(16)),
       padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
       decoration: BoxDecoration(
           color: Colors.white,

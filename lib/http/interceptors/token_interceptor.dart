@@ -10,6 +10,7 @@ import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/result_bean_entity.dart';
 import 'package:star/pages/login/login.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 /**
@@ -52,10 +53,8 @@ class TokenInterceptors extends InterceptorsWrapper {
         response = await getAuthorization(request);
       }
       if (entity.errCode.toString() == "303") {
-        Fluttertoast.showToast(
-            msg: "登陆过期，请重新登录！",
-            textColor: Colors.white,
-            backgroundColor: Colors.grey);
+        CommonUtils.showToast("登陆过期，请重新登录！");
+
       }
       if (entity.errCode.toString() == "304") {
         /*Fluttertoast.showToast(

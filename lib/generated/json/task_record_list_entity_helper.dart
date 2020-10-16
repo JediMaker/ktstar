@@ -78,6 +78,12 @@ taskRecordListDataListFromJson(TaskRecordListDataList data, Map<String, dynamic>
 	if (json['re_submit'] != null) {
 		data.reSubmit = json['re_submit']?.toString();
 	}
+	if (json['com_id'] != null) {
+		data.comId = json['com_id']?.toString();
+	}
+	if (json['category'] != null) {
+		data.category = json['category']?.toString();
+	}
 	return data;
 }
 
@@ -91,5 +97,7 @@ Map<String, dynamic> taskRecordListDataListToJson(TaskRecordListDataList entity)
 	data['check_time'] = entity.checkTime;
 	data['task_id'] = entity.taskId;
 	data['re_submit'] = entity.reSubmit;
+	data['com_id'] = entity.comId;
+	data['category'] = entity.category;
 	return data;
 }

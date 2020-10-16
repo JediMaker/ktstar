@@ -11,6 +11,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
+import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
@@ -426,11 +427,7 @@ class _FansTabViewState extends State<FansTabView> {
         });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 

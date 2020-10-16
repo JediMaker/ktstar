@@ -43,7 +43,7 @@ class APi {
   static const String USER_MSG_LIST = "user/msg-list";
 
   ///获取话费充值列表
-  static const String USER_HF_LIST= "user/hf-list";
+  static const String USER_HF_LIST = "user/hf-list";
 
   ///提现申请
   static const String USER_WITHDRAWAL_APPLICATION = "user/tx-apply";
@@ -95,6 +95,9 @@ class APi {
 
   ///获取任务提交信息
   static const String TASK_SUBMIT_INFO = "task/submit-info";
+
+  ///获取任务重新提交信息
+  static const String TASK_RESUBMIT_INFO = "task/re-submit-info";
 
   ///上传图片
   static const String SITE_UPLOAD_IMG = "site/upload";

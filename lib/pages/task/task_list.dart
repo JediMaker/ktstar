@@ -14,6 +14,7 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
+import 'package:star/pages/task/task_detail_other.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_submission.dart';
@@ -86,21 +87,13 @@ class _TaskListPageState extends State<TaskListPage> {
     UserInfoData userInfoData = GlobalConfig.getUserInfo();
     if (!isTaskWall) {
       if (userInfoData.bindThird == 1) {
-        Fluttertoast.showToast(
-            msg: "请先绑定微信后领取任务",
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            gravity: ToastGravity.BOTTOM);
+        CommonUtils.showToast("请先绑定微信后领取任务");
         return false;
       }
     }
 
     if (CommonUtils.isEmpty(userInfoData.tel)) {
-      Fluttertoast.showToast(
-          msg: "请先绑定手机号后领取任务",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast("请先绑定手机号后领取任务");
       return false;
     }
     return true;
@@ -231,7 +224,7 @@ class _TaskListPageState extends State<TaskListPage> {
           var bannerData = bannerList[index];
           return GestureDetector(
             onTap: () {
-              if(Platform.isIOS){
+              if (Platform.isIOS) {
                 CommonUtils.showIosPayDialog();
                 return;
               }
@@ -293,6 +286,8 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget buildTaskItemLayout(context, HomeDataTaskListList taskItem, index) {
     var bgColor = GlobalConfig.taskBtnBgColor;
     var txtColor = GlobalConfig.taskBtnTxtColor;
+    var category = '';
+    category = taskItem.category;
     switch (taskItem.taskStatus) {
       case -2:
         bgColor = GlobalConfig.taskBtnBgGreyColor;
@@ -319,7 +314,7 @@ class _TaskListPageState extends State<TaskListPage> {
           case -2:
             break;
           case -1: //-1去开通
-            if(Platform.isIOS){
+            if (Platform.isIOS) {
               CommonUtils.showIosPayDialog();
               return;
             }
@@ -331,33 +326,58 @@ class _TaskListPageState extends State<TaskListPage> {
             break;
           case 0: // 领任务
             if (checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
-              var result = await HttpManage.taskReceive(taskItem.id);
-              if (result.status) {
-                var result = await Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return TaskDetailPage(
-                    taskId: taskItem.id,
-                  );
-                }));
-                _initData();
-              } else {
-                Fluttertoast.showToast(
-                    msg: "${result.errMsg}",
-                    backgroundColor: Colors.grey,
-                    textColor: Colors.white,
-                    gravity: ToastGravity.BOTTOM);
+              switch (category) {
+                case "1":
+                  var result = await HttpManage.taskReceive(taskItem.id);
+                  if (result.status) {
+                    var result = await Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return TaskDetailPage(
+                        taskId: taskItem.id,
+                      );
+                    }));
+                    _initData();
+                  } else {
+                    CommonUtils.showToast(result.errMsg);
+                  }
+                  break;
+                case "2":
+                  var result = await HttpManage.taskReceiveOther(taskItem.id);
+                  if (result.status) {
+                    var result = await Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return TaskDetailOtherPage(
+                        taskId: taskItem.id,
+                      );
+                    }));
+                    _initData();
+                  } else {
+                    CommonUtils.showToast(result.errMsg);
+                  }
+                  break;
               }
             }
 
             break;
           case 1: //待提交
-            var result = await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) {
-              return TaskDetailPage(
-                taskId: taskItem.id,
-              );
-            }));
-            _initData();
+            if (category == "1") {
+              var result = await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return TaskDetailPage(
+                  taskId: taskItem.id,
+                );
+              }));
+              _initData();
+            } else {
+              var result = await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return TaskDetailOtherPage(
+                  taskId: taskItem.id,
+                );
+              }));
+              _initData();
+            }
+
             break;
           case 2: //2待审核
             break;
@@ -458,7 +478,7 @@ class _TaskListPageState extends State<TaskListPage> {
     return Card(
       elevation: 0,
       margin: EdgeInsets.only(
-          left: 16, right: 16, top: ScreenUtil().setHeight(556)),
+          left: 16, right: 16, top: ScreenUtil().setHeight(655)),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),

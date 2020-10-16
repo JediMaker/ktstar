@@ -137,10 +137,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
         print("微信授权结果：" + "state :${res.state} \n code:${res.code}");
         print("微信授权code" + res.code.toString());
         if (CommonUtils.isEmpty(res.code)) {
-          Fluttertoast.showToast(
-              msg: "微信授权获取失败，请重新授权！",
-              textColor: Colors.white,
-              backgroundColor: Colors.grey);
+          CommonUtils.showToast("微信授权获取失败，请重新授权！");
         } else {
           /* Fluttertoast.showToast(
               msg: "微信授权获取成功，正在登录！",
@@ -152,23 +149,14 @@ class _TaskMinePageState extends State<TaskMinePage> {
               String isMerge = result.data["is_merge"].toString();
               switch (isMerge) {
                 case "1":
-                  Fluttertoast.showToast(
-                      msg: "微信授权绑定成功！",
-                      textColor: Colors.white,
-                      backgroundColor: Colors.grey);
+                  CommonUtils.showToast("微信授权绑定成功");
                   break;
                 case "2":
-                  Fluttertoast.showToast(
-                      msg: "微信账户数据合并成功，请重新登录！",
-                      textColor: Colors.white,
-                      backgroundColor: Colors.grey);
+                  CommonUtils.showToast("微信账户数据合并成功，请重新登录！");
                   break;
               }
             } else {
-              Fluttertoast.showToast(
-                  msg: "${result.errMsg}",
-                  textColor: Colors.white,
-                  backgroundColor: Colors.grey);
+              CommonUtils.showToast(result.errMsg);
             }
           }
         }
@@ -306,7 +294,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   style: TextStyle(color: Color(0xff999999)),
                 ),*/
                 Icon(
-                  Icons.chevron_right,
+                  Icons.arrow_forward_ios,
+                  size: ScreenUtil().setWidth(32),
                   color: Color(0xff999999),
                 ),
               ],
@@ -362,7 +351,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                 Visibility(
                     visible: isWeChatBinded == 1,
                     child: Icon(
-                      Icons.chevron_right,
+                      Icons.arrow_forward_ios,
+                      size: ScreenUtil().setWidth(32),
                       color: Color(0xff999999),
                     )),
               ],
@@ -438,7 +428,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   style: TextStyle(color: Color(0xff999999)),
                 ),*/
                 Icon(
-                  Icons.chevron_right,
+                  Icons.arrow_forward_ios,
+                  size: ScreenUtil().setWidth(32),
                   color: Color(0xff999999),
                 ),
               ],
@@ -487,7 +478,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                         style: TextStyle(color: Color(0xff999999)),
                       )*/
                       Icon(
-                        Icons.chevron_right,
+                        Icons.arrow_forward_ios,
+                        size: ScreenUtil().setWidth(32),
                         color: Color(0xff999999),
                       ),
                     ],
@@ -576,7 +568,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
                         style: TextStyle(color: Color(0xff999999)),
                       ),*/
                       Icon(
-                        Icons.chevron_right,
+                        Icons.arrow_forward_ios,
+                        size: ScreenUtil().setWidth(32),
                         color: Color(0xff999999),
                       ),
                     ],
@@ -625,7 +618,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                         CupertinoDialogAction(
                           child: Text(
                             '退出',
-                            style: TextStyle(color: GlobalConfig.colorPrimary),
+                            style: TextStyle(color: GlobalConfig.checkedColor),
                           ),
                           onPressed: () {
                             GlobalConfig.prefs.remove("hasLogin");
@@ -1104,6 +1097,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   Widget buildCardInfo() {
     //话费 话费充值
     return Card(
+      elevation: 0,
       margin: EdgeInsets.symmetric(
           horizontal: 16, vertical: ScreenUtil().setHeight(39)),
       child: Stack(
@@ -1113,7 +1107,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
             fit: BoxFit.fill,
           ),*/
           Container(
-            height: ScreenUtil().setHeight(437),
+            height: ScreenUtil().setHeight(490),
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(64)),
             decoration: BoxDecoration(
@@ -1184,10 +1178,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                             if (CommonUtils.isEmpty(_availableCashAmount) ||
                                 double.parse(_availableCashAmount.toString()) <=
                                     0) {
-                              Fluttertoast.showToast(
-                                  msg: "暂无可提现金额",
-                                  textColor: Colors.white,
-                                  backgroundColor: Colors.grey);
+                              CommonUtils.showToast("暂无可提现金额");
                               return;
                             }
                           } catch (e) {
@@ -1215,10 +1206,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                                   backgroundColor: Colors.grey);
                             }*/
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "暂不可提现",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            CommonUtils.showToast("暂不可提现");
                           }
                         },
                         child: Container(
@@ -1714,10 +1702,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                           if (showPhone) {
                             if ( //CommonUtils.isEmpty(dialogNickName) ||
                                 CommonUtils.isEmpty(_dialogPhoneNumber)) {
-                              Fluttertoast.showToast(
-                                  msg: "请检查填写的信息是否完整！",
-                                  textColor: Colors.white,
-                                  backgroundColor: Colors.grey);
+                              CommonUtils.showToast("请检查填写的信息是否完整！");
                               return;
                             }
                             if (!CommonUtils.isPhoneLegal(_dialogPhoneNumber)) {
@@ -1735,26 +1720,16 @@ class _TaskMinePageState extends State<TaskMinePage> {
                                     result.data["is_merge"].toString();
                                 switch (isMerge) {
                                   case "1":
-                                    Fluttertoast.showToast(
-                                        msg: "手机号绑定成功！",
-                                        textColor: Colors.white,
-                                        backgroundColor: Colors.grey);
+                                    CommonUtils.showToast("手机号绑定成功");
                                     _initUserData();
                                     break;
 
                                   case "2":
-                                    Fluttertoast.showToast(
-                                        msg: "手机账户数据合并成功，请重新登录！",
-                                        textColor: Colors.white,
-                                        toastLength: Toast.LENGTH_LONG,
-                                        backgroundColor: Colors.grey);
+                                    CommonUtils.showToast("手机账户数据合并成功，请重新登录！");
                                     break;
                                 }
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "${result.errMsg}",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast(result.errMsg);
                               }
                             }
                             if (modifyPhone) {
@@ -1762,16 +1737,10 @@ class _TaskMinePageState extends State<TaskMinePage> {
                               var result = await HttpManage.bindPhone(
                                   tel: _dialogPhoneNumber.toString());
                               if (result.status) {
-                                Fluttertoast.showToast(
-                                    msg: "手机号修改成功！",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast("手机号修改成功");
                                 _initUserData();
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "${result.errMsg}",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast(result.errMsg);
                               }
                             }
                             if (addExperienceAccount) {
@@ -1779,57 +1748,36 @@ class _TaskMinePageState extends State<TaskMinePage> {
                                   await HttpManage.addExperienceMemberPhone(
                                       tel: _dialogPhoneNumber.toString());
                               if (result.status) {
-                                Fluttertoast.showToast(
-                                    msg: "体验会员添加成功！",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast("体验会员添加成功");
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "${result.errMsg}",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast(result.errMsg);
                               }
                             }
                           }
                           if (showWeChatNo) {
                             if ( //CommonUtils.isEmpty(dialogNickName) ||
                                 CommonUtils.isEmpty(_dialogWeChatNo)) {
-                              Fluttertoast.showToast(
-                                  msg: "微信号不能为空！",
-                                  textColor: Colors.white,
-                                  backgroundColor: Colors.grey);
+                              CommonUtils.showToast("微信号不能为空！");
                               return;
                             }
                             if (bindWeChatNo) {
                               var result = await HttpManage.bindWeChatNo(
                                   _dialogWeChatNo.toString());
                               if (result.status) {
-                                Fluttertoast.showToast(
-                                    msg: "微信号绑定成功！",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast("微信号绑定成功");
                                 _initUserData();
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "${result.errMsg}",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast(result.errMsg);
                               }
                             } else {
                               //微信号修改
                               var result = await HttpManage.modifyWeChatNo(
                                   _dialogWeChatNo.toString());
                               if (result.status) {
-                                Fluttertoast.showToast(
-                                    msg: "微信号修改成功！",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast("微信号修改成功");
                                 _initUserData();
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "${result.errMsg}",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.grey);
+                                CommonUtils.showToast(result.errMsg);
                               }
                             }
                           }

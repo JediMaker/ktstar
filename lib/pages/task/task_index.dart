@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
@@ -7,6 +8,7 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
@@ -47,28 +49,26 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         width: 1125, height: 2436, allowFontScaling: false);
-    return Scaffold(
-      body: WillPopScope(
-          onWillPop: () async {
-            if (_lastQuitTime == null ||
-                DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
-              /*Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              Fluttertoast.showToast(
-                  msg: "再按一次返回键退出应用",
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  gravity: ToastGravity.BOTTOM);
-              _lastQuitTime = DateTime.now();
-              return false;
-            } else {
-              // 退出app
-              await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    return KeyboardDismissOnTap(
+      child: Scaffold(
+        body: WillPopScope(
+            onWillPop: () async {
+              if (_lastQuitTime == null ||
+                  DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
+                /*Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+                CommonUtils.showToast("再按一次返回键退出应用");
+                _lastQuitTime = DateTime.now();
+                return false;
+              } else {
+                // 退出app
+                await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 //              Navigator.of(context).pop(true);
-              return true;
-            }
-          },
-          child: buildHomeWidget()),
+                return true;
+              }
+            },
+            child: buildHomeWidget()),
+      ),
     );
   }
 
@@ -77,13 +77,13 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new NavigationIconView(
           icon: Image.asset(
             "static/images/home_unselect.png",
-            width: 29,
-            height: 25,
+            width: ScreenUtil().setWidth(89),
+            height: ScreenUtil().setWidth(89),
           ),
           activeIcon: Image.asset(
             "static/images/home_select.png",
-            width: 29,
-            height: 25,
+            width: ScreenUtil().setWidth(89),
+            height: ScreenUtil().setWidth(89),
           ),
           title: new Text(
             '首页',
@@ -93,13 +93,13 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new NavigationIconView(
           icon: Image.asset(
             "static/images/mine_unselect.png",
-            width: 20,
-            height: 25,
+            width: ScreenUtil().setWidth(60),
+            height: ScreenUtil().setWidth(77),
           ),
           activeIcon: Image.asset(
             "static/images/mine_select.png",
-            width: 20,
-            height: 25,
+            width: ScreenUtil().setWidth(60),
+            height: ScreenUtil().setWidth(77),
           ),
           title: new Text(
             '我的',
@@ -128,7 +128,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
                         navigationIconView.item)
                     .toList(),
                 currentIndex: _currentIndex,
-                fixedColor: GlobalConfig.taskHeadColor,
+                fixedColor: Color(0xffF93736),
                 type: BottomNavigationBarType.fixed,
                 onTap: (int index) {
                   setState(() {

@@ -415,11 +415,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       _save(i);
     }
     if (showToast) {
-      Fluttertoast.showToast(
-          msg: "图片已下载",
-          backgroundColor: Colors.white,
-          textColor: Colors.black,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast("图片已下载");
     }
   }
 
@@ -476,11 +472,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               child: new FlatButton(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: des));
-                    Fluttertoast.showToast(
-                        msg: "已复制文案",
-                        backgroundColor: Colors.white,
-                        textColor: Colors.black,
-                        gravity: ToastGravity.BOTTOM);
+                    CommonUtils.showToast("已复制文案");
                   },
                   child: new Container(
                     child: new Column(
@@ -516,11 +508,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     Clipboard.setData(ClipboardData(text: des));
                     CommonUtils.requestPermission(
                         _permission, _saveImages(showToast: false));
-                    Fluttertoast.showToast(
-                        msg: "已保存文案和图片",
-                        backgroundColor: Colors.white,
-                        textColor: Colors.black,
-                        gravity: ToastGravity.BOTTOM);
+                    CommonUtils.showToast("已保存文案和图片");
                     launch("weixin://");
                   },
                   child: new Container(
@@ -557,11 +545,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     Clipboard.setData(ClipboardData(text: des));
                     CommonUtils.requestPermission(
                         _permission, _saveImages(showToast: false));
-                    Fluttertoast.showToast(
-                        msg: "已保存文案和图片",
-                        backgroundColor: Colors.white,
-                        textColor: Colors.black,
-                        gravity: ToastGravity.BOTTOM);
+                    CommonUtils.showToast("已保存文案和图片");
                     launch("weixin://");
                   },
                   child: new Container(
@@ -846,11 +830,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               child: GestureDetector(
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: des));
-                  Fluttertoast.showToast(
-                      msg: "已复制文案",
-                      backgroundColor: Colors.white,
-                      textColor: Colors.black,
-                      gravity: ToastGravity.BOTTOM);
+                  CommonUtils.showToast("已复制文案");
                 },
                 child: Container(
                   height: 46,
@@ -995,11 +975,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           images = result.data.fileId;
         });
       } else {
-        Fluttertoast.showToast(
-            msg: "${result.errMsg}",
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            gravity: ToastGravity.BOTTOM);
+        CommonUtils.showToast(result.errMsg);
       }
     }
   }

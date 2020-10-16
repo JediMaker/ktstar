@@ -30,6 +30,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
   var _inviteCode;
   var _canLoop = false;
   Permission _permission = Permission.storage;
+  SwiperController _swiperController;
 
   void _initData() async {
     var result = await HttpManage.getInvitationPosters();
@@ -40,20 +41,24 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
           _linkUrl = result.data.url;
           _inviteCode = result.data.code;
           _canLoop = true;
+          try {
+            if (_bannerList.length > 2) {
+              _bannerIndex = 1;
+            }
+          } catch (e) {
+            print(e);
+          }
         });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
   @override
   void initState() {
     _initData();
+
     super.initState();
   }
 
@@ -128,12 +133,8 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   Clipboard.setData(ClipboardData(
-                                      text: "可淘星选:$_linkUrl 邀请码:$_inviteCode"));
-                                  Fluttertoast.showToast(
-                                      msg: "已复制文本",
-                                      backgroundColor: Colors.grey,
-                                      textColor: Colors.white,
-                                      gravity: ToastGravity.BOTTOM);
+                                      text: "可淘星选:$_linkUrl"));
+                                  CommonUtils.showToast("已复制文本");
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -221,18 +222,10 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
           name:
               "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
       print("posterDownloadResult=" + result.toString());
-      Fluttertoast.showToast(
-          msg: "图片已保存",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast("图片已保存");
     } catch (e) {
       print("err=" + e.toString());
-      Fluttertoast.showToast(
-          msg: "图片下载失败",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast("图片下载失败");
     }
   }
 
@@ -251,17 +244,23 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
         itemHeight: ScreenUtil().setHeight(623),
         transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
         //bannerList == null ? 0 : bannerList.length,
+        controller: _swiperController,
         autoplay: false,
         loop: _canLoop,
+        key: UniqueKey(),
+        index: _bannerIndex,
         viewportFraction: 0.75,
         scale: 0.9,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
         onIndexChanged: (index) {
-          if (mounted) {
+          _bannerIndex = index;
+          print(_bannerIndex.toString());
+
+          /*if (mounted) {
             setState(() {
               _bannerIndex = index;
             });
-          }
+          }*/
         },
         /*pagination: SwiperPagination(
             builder: DotSwiperPaginationBuilder(

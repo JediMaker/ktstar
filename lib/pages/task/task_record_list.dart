@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -7,8 +8,10 @@ import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/task_record_list_entity.dart';
+import 'package:star/pages/task/task_other_submission.dart';
 import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/no_data.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 class TaskRecordListPage extends StatefulWidget {
@@ -48,11 +51,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
         });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -147,10 +146,13 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
     String submitTime = "";
     String checkTime = "";
     String taskId;
+    String comId;
+    String category = '1';
     String reSubmit = "0";
     bool showSubmitButton = false;
     try {
       taskId = listItem.taskId;
+      comId = listItem.comId;
       title = listItem.title;
       price = listItem.price;
       status = listItem.status;
@@ -158,6 +160,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
       submitTime = listItem.submitTime;
       checkTime = listItem.checkTime;
       reSubmit = listItem.reSubmit;
+      category = listItem.category;
     } catch (e) {}
     var statusDesc = "";
     Color bgColor = Colors.white;
@@ -184,7 +187,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+          horizontal: 16, vertical: ScreenUtil().setHeight(16)),
       padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -198,6 +201,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
                 child: Row(
@@ -208,7 +212,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                       height: ScreenUtil().setWidth(71),
                     ),*/
                     Text(
-                      title,
+                      "$title",
                       style: TextStyle(
 //                color:  Color(0xFF222222) ,
                           fontSize: ScreenUtil().setSp(42)),
@@ -241,7 +245,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
             ],
           ),
           SizedBox(
-            height: ScreenUtil().setHeight(30),
+            height: ScreenUtil().setHeight(0),
           ),
           Wrap(
             runSpacing: 4,
@@ -297,19 +301,40 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                   spacing: 4,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: <Widget>[
-                    Image.asset(
-                      "static/images/icon_reason.png",
-                      width: ScreenUtil().setWidth(33),
-                      height: ScreenUtil().setWidth(33),
-                      fit: BoxFit.fill,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "static/images/icon_reason.png",
+                          width: ScreenUtil().setWidth(33),
+                          height: ScreenUtil().setWidth(33),
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(8),
+                        ),
+                        Expanded(
+                          child: Wrap(
+                            children: <Widget>[
+                              Text(
+                                //状态：
+                                "原因：$rejectReason",
+                                style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(36),
+                                    color: Color(0xff666666)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
+                    /*Text(
                       //状态：
                       "原因：$rejectReason",
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(36),
                           color: Color(0xff666666)),
-                    ),
+                    ),*/
                   ],
                 ),
               ],
@@ -391,14 +416,26 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                 ),
               ),
               Visibility(
-                visible: showSubmitButton,
+                visible: showSubmitButton, //showSubmitButton,
                 child: GestureDetector(
                   onTap: () {
-                    NavigatorUtils.navigatorRouter(
-                        context,
-                        TaskSubmissionPage(
-                          taskId: taskId,
-                        ));
+                    if (category == '1') {
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          TaskSubmissionPage(
+                            taskId: taskId,
+                            comId: comId,
+                            pageType: 1,
+                          ));
+                    } else {
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          TaskOtherSubmissionPage(
+                            taskId: taskId,
+                            comId: comId,
+                            pageType: 1,
+                          ));
+                    }
                   },
                   child: Container(
                     width: ScreenUtil().setWidth(176),

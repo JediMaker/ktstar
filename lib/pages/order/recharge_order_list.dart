@@ -8,6 +8,7 @@ import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/widget/no_data.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
@@ -25,13 +26,14 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
   List<PhoneChargeListDataList> _phoneChargeList;
-
+  String contactPhone = ""; //
   _initData() async {
     PhoneChargeListEntity result =
         await HttpManage.getPhoneChargesList(page, 10);
     if (result.status) {
       if (mounted) {
         setState(() {
+          contactPhone=result.data.phone;
           if (page == 1) {
             _phoneChargeList = result.data.xList;
           } else {
@@ -49,11 +51,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
         });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -148,7 +146,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
     String totalMoney = "";
     String saleMoney = ""; //
     String payMoney = ""; //
-    String contactPhone = ""; //
+
     String orderNo = ""; //
     String rechargeStatus = "1";
     String rechargeStatusText = "";
@@ -192,7 +190,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
     }
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+          horizontal: 16, vertical: ScreenUtil().setHeight(16)),
       padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
       decoration: BoxDecoration(
           color: Colors.white,

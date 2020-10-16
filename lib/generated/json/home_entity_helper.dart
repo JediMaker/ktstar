@@ -127,6 +127,9 @@ homeDataTaskListListFromJson(HomeDataTaskListList data, Map<String, dynamic> jso
 	if (json['type'] != null) {
 		data.type = json['type']?.toString();
 	}
+	if (json['category'] != null) {
+		data.category = json['category']?.toString();
+	}
 	if (json['ratio'] != null) {
 		data.ratio = json['ratio']?.toString();
 	}
@@ -145,6 +148,7 @@ Map<String, dynamic> homeDataTaskListListToJson(HomeDataTaskListList entity) {
 	data['icons'] = entity.icons;
 	data['status_desc'] = entity.statusDesc;
 	data['type'] = entity.type;
+	data['category'] = entity.category;
 	data['ratio'] = entity.ratio;
 	data['diamonds_ratio'] = entity.diamondsRatio;
 	return data;

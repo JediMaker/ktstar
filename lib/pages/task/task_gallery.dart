@@ -13,10 +13,13 @@ import 'package:star/utils/common_utils.dart';
 import '../../global_config.dart';
 
 class TaskGalleryPage extends StatefulWidget {
-  TaskGalleryPage({Key key, this.galleryItems, this.index = 0})
+  TaskGalleryPage(
+      {Key key, this.galleryItems, this.index = 0, this.type = 0, this.images})
       : super(key: key);
   final String title = "";
   var galleryItems;
+  List<Image> images = List<Image>();
+  int type;
   int index;
 
   @override
@@ -48,11 +51,7 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
         quality: 60,
         name: "kt_${CommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result);
-    Fluttertoast.showToast(
-        msg: "图片已下载",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        gravity: ToastGravity.BOTTOM);
+    CommonUtils.showToast("图片已下载");
   }
 
   @override
@@ -64,6 +63,10 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
           Navigator.of(context).pop();
         },
         onLongPress: () {
+          if (widget.type == 1) {
+            Navigator.of(context).pop();
+            return;
+          }
           showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -104,12 +107,16 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
           scrollPhysics: const BouncingScrollPhysics(),
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
-              imageProvider: Image.network(widget.galleryItems[index]).image,
+              imageProvider: widget.type == 0
+                  ? Image.network(widget.galleryItems[index]).image
+                  : widget.images[index].image,
               initialScale: PhotoViewComputedScale.contained * 1,
 //          heroAttributes: HeroAttributes(tag: galleryItems[index].id),
             );
           },
-          itemCount: widget.galleryItems.length,
+          itemCount: widget.type == 0
+              ? widget.galleryItems.length
+              : widget.images.length,
           loadingBuilder: (context, event) => Center(
             child: Container(
               width: 20.0,

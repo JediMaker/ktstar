@@ -68,11 +68,7 @@ class Utils {
         .listen((ConnectivityResult result) {
       print(result.toString());
       if (result.toString() == 'ConnectivityResult.none') {
-        Fluttertoast.showToast(
-            msg: '网络连接错误!',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            fontSize: 16.0);
+        CommonUtils.showToast("无网络连接");
       }
     });
   }

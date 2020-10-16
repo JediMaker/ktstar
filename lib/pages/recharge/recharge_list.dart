@@ -56,10 +56,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
             var payStatus = result.data["pay_status"].toString();
             switch (payStatus) {
               case "1": //未成功
-                Fluttertoast.showToast(
-                    msg: "支付失败！",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.grey);
+                CommonUtils.showToast("支付失败！");
                 break;
               case "2": //已成功
                 /* Fluttertoast.showToast(
@@ -71,10 +68,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                 break;
             }
           } else {
-            Fluttertoast.showToast(
-                msg: "${result.errMsg}",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
+            CommonUtils.showToast(result.errMsg);
           }
         }
       }
@@ -463,10 +457,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "${result.errMsg}",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            CommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payWay == 2) {
                           var result = await HttpManage.getRechargeAliPayInfo(
@@ -476,16 +467,10 @@ class _RechargeListPageState extends State<RechargeListPage> {
                             _payNo = result.data.payNo;
                             callAlipay();
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "${result.errMsg}",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            CommonUtils.showToast(result.errMsg);
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "请选择支付方式！",
-                              textColor: Colors.white,
-                              backgroundColor: Colors.grey);
+                          CommonUtils.showToast("请选择支付方式！");
                           return;
                         }
                         Navigator.of(context).pop();

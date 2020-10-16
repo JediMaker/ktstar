@@ -13,6 +13,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/models/vip_price_entity.dart';
 import 'package:star/pages/task/pay_result.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 class TaskOpenDiamondPage extends StatefulWidget {
@@ -64,10 +65,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
       var payStatus = result.data["pay_status"].toString();
       switch (payStatus) {
         case "1": //未成功
-          Fluttertoast.showToast(
-              msg: "支付失败！",
-              textColor: Colors.white,
-              backgroundColor: Colors.grey);
+          CommonUtils.showToast("支付失败");
           break;
         case "2": //已成功
           /* Fluttertoast.showToast(
@@ -82,10 +80,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
           break;
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          textColor: Colors.white,
-          backgroundColor: Colors.grey);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -412,10 +407,7 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "${result.errMsg}",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            CommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
                           var result = await HttpManage.getAliPayInfo();
@@ -424,16 +416,10 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
                             _payNo = result.data.payNo;
                             callAlipay();
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "${result.errMsg}",
-                                textColor: Colors.white,
-                                backgroundColor: Colors.grey);
+                            CommonUtils.showToast(result.errMsg);
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "请选择支付方式！",
-                              textColor: Colors.white,
-                              backgroundColor: Colors.grey);
+                          CommonUtils.showToast("请选择支付方式");
                         }
                         Navigator.of(context).pop();
                       },

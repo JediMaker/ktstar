@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
@@ -65,10 +66,7 @@ class _LoginPageState extends State<LoginPage> {
         print("微信授权结果：" + _result);
         print("微信授权code" + res.code.toString());
         if (CommonUtils.isEmpty(res.code)) {
-          Fluttertoast.showToast(
-              msg: "微信授权获取失败，请重新授权！",
-              textColor: Colors.white,
-              backgroundColor: Colors.grey);
+          CommonUtils.showToast("微信授权获取失败，请重新授权！");
         } else {
           /* Fluttertoast.showToast(
               msg: "微信授权获取成功，正在登录！",
@@ -79,17 +77,11 @@ class _LoginPageState extends State<LoginPage> {
           }
           var result = await HttpManage.wechatLogin(res.code);
           if (result.status) {
-            Fluttertoast.showToast(
-                msg: "登陆成功",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
+            CommonUtils.showToast("登陆成功");
             NavigatorUtils.navigatorRouterAndRemoveUntil(
                 context, TaskIndexPage());
           } else {
-            Fluttertoast.showToast(
-                msg: "${result.errMsg}",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
+            CommonUtils.showToast(result.errMsg);
           }
         }
       }
@@ -111,94 +103,96 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         width: 1125, height: 2436, allowFontScaling: false);
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+    return KeyboardDismissOnTap(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+            ),
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: GlobalConfig.taskHeadColor,
           ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: GlobalConfig.taskHeadColor,
-        ),
-        body: Container(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          color: Colors.white,
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      child: Column(
-                    children: <Widget>[
-                      Container(
-                        width: double.maxFinite,
-                        color: GlobalConfig.taskHeadColor,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                        child: Text(
-                          _description,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: ScreenUtil().setSp(72),
-                            letterSpacing: 1,
-                            color: Colors.white,
+          body: Container(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            color: Colors.white,
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        child: Column(
+                      children: <Widget>[
+                        Container(
+                          width: double.maxFinite,
+                          color: GlobalConfig.taskHeadColor,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 20),
+                          child: Text(
+                            _description,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: ScreenUtil().setSp(72),
+                              letterSpacing: 1,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      // 裁切的控件
-                      Stack(
-                        children: <Widget>[
-                          ClipPath(
-                            // 只裁切底部的方法
-                            clipper: BottomClipper(),
-                            child: Container(
-                              color: GlobalConfig.taskHeadColor,
-                              height: ScreenUtil().setHeight(500),
+                        // 裁切的控件
+                        Stack(
+                          children: <Widget>[
+                            ClipPath(
+                              // 只裁切底部的方法
+                              clipper: BottomClipper(),
+                              child: Container(
+                                color: GlobalConfig.taskHeadColor,
+                                height: ScreenUtil().setHeight(500),
+                              ),
                             ),
-                          ),
-                          Container(
-                            constraints: BoxConstraints(minHeight: 120),
-                            width: double.maxFinite,
-                            margin: EdgeInsets.symmetric(horizontal: 16),
-                            padding: EdgeInsets.only(top: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16))),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                buildPhoneContainer(),
-                                buildCheckCodeLayout(),
-                                buildPasswordLayout(),
-                                buildInviteCodeLayout(),
-                                SizedBox(
-                                  height: ScreenUtil().setHeight(156),
-                                ),
-                                buildBtnLayout(),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                buildBtnsRow(),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  )),
-                  buildWechatLoginContainer(),
-                ],
+                            Container(
+                              constraints: BoxConstraints(minHeight: 120),
+                              width: double.maxFinite,
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              padding: EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16))),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  buildPhoneContainer(),
+                                  buildCheckCodeLayout(),
+                                  buildPasswordLayout(),
+                                  buildInviteCodeLayout(),
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(156),
+                                  ),
+                                  buildBtnLayout(),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  buildBtnsRow(),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    )),
+                    buildWechatLoginContainer(),
+                  ],
+                ),
               ),
             ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+    );
   }
 
   ///
@@ -375,7 +369,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ));
                             },
                             child: Text(
-                              "《服务协议》",
+                              "&《服务协议》",
                               style: TextStyle(
                                   color: GlobalConfig.taskHeadColor,
                                   fontSize: ScreenUtil().setSp(32)),
@@ -427,10 +421,8 @@ class _LoginPageState extends State<LoginPage> {
                 //登录
                 if (CommonUtils.isEmpty(phoneNumber) ||
                     CommonUtils.isEmpty(password)) {
-                  Fluttertoast.showToast(
-                      msg: "请检查填写的信息是否完整！",
-                      textColor: Colors.white,
-                      backgroundColor: Colors.grey);
+                  CommonUtils.showToast("请检查填写的信息是否完整！");
+
                   return;
                 }
                 if (!CommonUtils.isPhoneLegal(phoneNumber)) {
@@ -445,10 +437,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (CommonUtils.isEmpty(phoneNumber) ||
                     CommonUtils.isEmpty(checkCode) ||
                     CommonUtils.isEmpty(password)) {
-                  Fluttertoast.showToast(
-                      msg: "请检查填写的信息是否完整！",
-                      textColor: Colors.white,
-                      backgroundColor: Colors.grey);
+                  CommonUtils.showToast("请检查填写的信息是否完整！");
                   return;
                 }
                 if (!CommonUtils.isPhoneLegal(phoneNumber)) {
@@ -462,10 +451,7 @@ class _LoginPageState extends State<LoginPage> {
                 //快速登陆
                 if (CommonUtils.isEmpty(phoneNumber) ||
                     CommonUtils.isEmpty(checkCode)) {
-                  Fluttertoast.showToast(
-                      msg: "请检查填写的信息是否完整！",
-                      textColor: Colors.white,
-                      backgroundColor: Colors.grey);
+                  CommonUtils.showToast("请检查填写的信息是否完整！");
                   return;
                 }
                 if (!CommonUtils.isPhoneLegal(phoneNumber)) {
@@ -506,6 +492,8 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(48),
         ),
         child: TextField(
+          textAlignVertical: TextAlignVertical.center,
+          textAlign: TextAlign.left,
           controller: _passwordController,
           focusNode: _passwordFocusNode,
           obscureText: !_pwdShow,
@@ -517,6 +505,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ? ''
                                   : widget.address.addressDetail,*/
               border: InputBorder.none,
+              alignLabelWithHint: true,
               prefixIcon: Container(
                 alignment: Alignment.center,
                 width: 50,
@@ -569,6 +558,8 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(48),
         ),
         child: TextField(
+          textAlignVertical: TextAlignVertical.center,
+          textAlign: TextAlign.left,
           controller: _inviteCodeController,
           focusNode: _inviteCodeFocusNode,
           onChanged: (value) {
@@ -613,9 +604,12 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(48),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
               child: TextField(
+                textAlignVertical: TextAlignVertical.center,
+                textAlign: TextAlign.left,
                 controller: _checkCodeController,
                 focusNode: _checkCodeFocusNode,
                 keyboardType: TextInputType.number,
@@ -737,16 +731,10 @@ class _LoginPageState extends State<LoginPage> {
           phoneNumber, "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
 
       if (result.status) {
-        Fluttertoast.showToast(
-            msg: "验证码已发送，请注意查收！",
-            textColor: Colors.white,
-            backgroundColor: Colors.grey);
+        CommonUtils.showToast("验证码已发送，请注意查收！");
         return true;
       } else {
-        Fluttertoast.showToast(
-            msg: "${result.errMsg}",
-            textColor: Colors.white,
-            backgroundColor: Colors.grey);
+        CommonUtils.showToast(result.errMsg);
         return false;
       }
     } else {
@@ -758,30 +746,22 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     LoginEntity result = await HttpManage.login(phoneNumber, password);
     if (result.status) {
-      Fluttertoast.showToast(
-          msg: "登陆成功", textColor: Colors.white, backgroundColor: Colors.grey);
+      CommonUtils.showToast("登陆成功");
       GlobalConfig.saveLoginStatus(true);
       NavigatorUtils.navigatorRouterAndRemoveUntil(context, TaskIndexPage());
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          textColor: Colors.white,
-          backgroundColor: Colors.grey);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
   Future<void> _fastLogin() async {
     LoginEntity result = await HttpManage.quickLogin(phoneNumber, checkCode);
     if (result.status) {
-      Fluttertoast.showToast(
-          msg: "登陆成功", textColor: Colors.white, backgroundColor: Colors.grey);
+      CommonUtils.showToast("登陆成功");
       GlobalConfig.saveLoginStatus(true);
       NavigatorUtils.navigatorRouterAndRemoveUntil(context, TaskIndexPage());
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          textColor: Colors.white,
-          backgroundColor: Colors.grey);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -789,20 +769,18 @@ class _LoginPageState extends State<LoginPage> {
     ResultBeanEntity result =
         await HttpManage.register(phoneNumber, checkCode, password, inviteCode);
     if (result.status) {
-      Fluttertoast.showToast(
-          msg: "注册成功，请登陆！",
-          textColor: Colors.white,
-          backgroundColor: Colors.grey);
+      CommonUtils.showToast("注册成功，请登陆！");
       if (mounted) {
         setState(() {
           changToLogin();
         });
       }
     } else {
-      Fluttertoast.showToast(
+      CommonUtils.showToast(result.errMsg);
+      /*Fluttertoast.showToast(
           msg: "${result.errMsg}",
           textColor: Colors.white,
-          backgroundColor: Colors.grey);
+          backgroundColor: Colors.grey);*/
     }
   }
 }

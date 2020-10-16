@@ -165,11 +165,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                 if (mounted) {
                                   setState(() {
 //                                _aliPaySelected = false;
-                                    Fluttertoast.showToast(
-                                        msg: "暂不支持提现到微信",
-                                        backgroundColor: Colors.grey,
-                                        textColor: Colors.white,
-                                        gravity: ToastGravity.BOTTOM);
+                                    CommonUtils.showToast("暂不支持提现到微信");
                                   });
                                 }
                               },
@@ -383,35 +379,23 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               if (CommonUtils.isEmpty(_aliPayAccount) ||
                   CommonUtils.isEmpty(_aliPayName) ||
                   CommonUtils.isEmpty(_withdrawalAmount)) {
-                Fluttertoast.showToast(
-                    msg: "请检查填写的信息是否完整！",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.grey);
+                CommonUtils.showToast("请检查填写的信息是否完整！");
                 return;
               }
               try {
                 if (double.parse(_withdrawalAmount) >
                     double.parse(widget.availableCashAmount)) {
-                  Fluttertoast.showToast(
-                      msg: "提现金额不能超出账户可提现余额！",
-                      textColor: Colors.white,
-                      backgroundColor: Colors.grey);
+                  CommonUtils.showToast("提现金额不能超出账户可提现余额！");
                   return;
                 }
               } catch (e) {}
               var result = await HttpManage.withdrawalApplication(
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
               if (result.status) {
-                Fluttertoast.showToast(
-                    msg: "提现申请已提交",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.grey);
+                CommonUtils.showToast( "提现申请已提交");
                 Navigator.of(context).pop();
               } else {
-                Fluttertoast.showToast(
-                    msg: "${result.errMsg}",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.grey);
+                CommonUtils.showToast(result.errMsg);
               }
             },
             child: Container(

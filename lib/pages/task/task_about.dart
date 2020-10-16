@@ -68,6 +68,7 @@ class _AboutPageState extends State<AboutPage>
                       Icon(
                         Icons.arrow_forward_ios,
                         size: ScreenUtil().setWidth(32),
+                        color: Color(0xff999999),
                       ),
                     ],
                   ),
@@ -76,8 +77,12 @@ class _AboutPageState extends State<AboutPage>
             ),
           ),
         ),
-        Divider(
-          height: 1,
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 16),
+          child: Divider(
+            height: ScreenUtil().setHeight(1),
+            color: Color(0xFFefefef),
+          ),
         ),
         Ink(
           decoration: BoxDecoration(color: Colors.white),
@@ -116,6 +121,7 @@ class _AboutPageState extends State<AboutPage>
                       Icon(
                         Icons.arrow_forward_ios,
                         size: ScreenUtil().setWidth(32),
+                        color: Color(0xff999999),
                       ),
                     ],
                   ),

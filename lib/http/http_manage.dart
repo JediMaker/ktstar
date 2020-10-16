@@ -18,6 +18,8 @@ import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
+import 'package:star/generated/json/task_detail_other_entity_helper.dart';
+import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
 import 'package:star/generated/json/task_record_list_entity_helper.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
@@ -40,6 +42,8 @@ import 'package:star/models/pay_coupon_entity.dart';
 import 'package:star/models/poster_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
+import 'package:star/models/task_detail_other_entity.dart';
+import 'package:star/models/task_other_submit_info_entity.dart';
 import 'package:star/models/task_record_list_entity.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/models/user_info_entity.dart';
@@ -52,6 +56,7 @@ import 'package:star/models/login_entity.dart';
 import 'package:star/models/vip_price_entity.dart';
 import 'package:star/models/version_info_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
+import 'package:http_parser/http_parser.dart';
 
 void getHttp() async {
   try {
@@ -398,7 +403,6 @@ class HttpManage {
     return entity;
   }
 
-
   ///
   /// 获取邀请海报
   ///
@@ -411,7 +415,6 @@ class HttpManage {
     posterEntityFromJson(entity, extractData);
     return entity;
   }
-
 
   ///
   /// 获取首页信息
@@ -562,13 +565,37 @@ class HttpManage {
   ///
   ///[taskId] 	任务id
   ///
-  ///[imgId]图片资源id
+  ///[imgId]图片资源id集合（多个之间逗号隔开）
   ///
   /// 任务提交
   ///
   static Future<ResultBeanEntity> taskSubmit(taskId, imgId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
+    paramsMap["img_id"] = "$imgId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_SUBMIT_SAVE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[comId] 	任务提交记录id
+  ///
+  ///[imgId]图片资源id集合（多个之间逗号隔开）
+  ///
+  /// 任务重新提交
+  ///
+  static Future<ResultBeanEntity> taskReSubmit(comId, imgId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["com_id"] = "$comId";
     paramsMap["img_id"] = "$imgId";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
@@ -602,6 +629,80 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = TaskSubmitInfoEntity();
     taskSubmitInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  /// [comId] 	任务提交记录id
+  ///
+  /// 获取任务提交信息--其他任务类型
+  ///
+  static Future<TaskOtherSubmitInfoEntity> getTaskOtherSubmitInfo(
+      taskId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_SUBMIT_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskOtherSubmitInfoEntity();
+    taskOtherSubmitInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  ///[comId] 	任务提交记录id
+  ///
+  /// 获取任务重新提交信息
+  ///
+  static Future<TaskSubmitInfoEntity> getTaskReSubmitInfo(taskId, comId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap["com_id"] = "$comId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_RESUBMIT_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskSubmitInfoEntity();
+    taskSubmitInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  ///
+  /// [comId] 	任务提交记录id
+  ///
+  /// 获取任务重新提交信息--其他任务类型
+  ///
+  static Future<TaskOtherSubmitInfoEntity> getTaskOtherReSubmitInfo(
+      taskId, comId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap["com_id"] = "$comId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_RESUBMIT_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskOtherSubmitInfoEntity();
+    taskOtherSubmitInfoEntityFromJson(entity, extractData);
     return entity;
   }
 
@@ -731,7 +832,8 @@ class HttpManage {
   ///
   /// 获取话费充值列表
   ///
-  static Future<PhoneChargeListEntity> getPhoneChargesList(page, pageSize) async {
+  static Future<PhoneChargeListEntity> getPhoneChargesList(
+      page, pageSize) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
@@ -777,7 +879,7 @@ class HttpManage {
   ///[taskId] 	任务id
   ///
   ///
-  /// 获取任务详情
+  /// 获取任务详情--朋友圈任务
   ///
   static Future<TaskDetailEntity> getTaskDetail(taskId) async {
     Map paramsMap = Map<String, dynamic>();
@@ -799,7 +901,29 @@ class HttpManage {
   ///[taskId] 	任务id
   ///
   ///
-  /// 任务领取
+  /// 获取任务详情--非朋友圈任务
+  ///
+  static Future<TaskDetailOtherEntity> getTaskDetailOther(taskId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_DETAIL,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskDetailOtherEntity();
+    taskDetailOtherEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  ///
+  /// 任务领取--朋友圈任务
   ///
   static Future<TaskDetailEntity> taskReceive(taskId) async {
     Map paramsMap = Map<String, dynamic>();
@@ -814,6 +938,28 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = TaskDetailEntity();
     taskDetailEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  ///
+  /// 任务领取--非朋友圈任务
+  ///
+  static Future<TaskDetailOtherEntity> taskReceiveOther(taskId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_RECEIVE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskDetailOtherEntity();
+    taskDetailOtherEntityFromJson(entity, extractData);
     return entity;
   }
 
@@ -1055,6 +1201,39 @@ class HttpManage {
     print("文件路径=" + path);
     print("文件名=" + name);
     print("文件类型=" + suffix);
+    print("文件image=$imageFile");
+    paramsMap["file"] = imageFile;
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    var response = await HttpManage.dio.post(
+      APi.SITE_UPLOAD_IMG,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[image] 	图片文件
+  ///
+  ///
+  /// 以字节数据上传图片
+  ///
+  static Future<ResultBeanEntity> uploadImageWithBytes(
+      ByteData byteData) async {
+    List<int> imageData = byteData.buffer.asUint8List();
+    var name= 'ktxx_${CommonUtils.currentTimeMillis()}.jpg';
+    MultipartFile imageFile = MultipartFile.fromBytes(
+      imageData,
+      // 文件名
+      filename:name,
+      contentType: MediaType("image", "jpg"),
+    );
+    Map paramsMap = Map<String, dynamic>();
+//    print("文件路径=" + path);
+//    print("文件名=" + name);
     print("文件image=$imageFile");
     paramsMap["file"] = imageFile;
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();

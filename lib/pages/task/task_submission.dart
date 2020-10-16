@@ -14,9 +14,17 @@ import 'package:star/utils/navigator_utils.dart';
 import '../../global_config.dart';
 
 class TaskSubmissionPage extends StatefulWidget {
-  TaskSubmissionPage({Key key, @required this.taskId}) : super(key: key);
+  TaskSubmissionPage(
+      {Key key, @required this.taskId, this.pageType = 0, this.comId})
+      : super(key: key);
   final String title = "提交截图审核";
   String taskId;
+
+  ///任务提交记录id
+  String comId;
+
+  /// 页面类型 0 朋友圈任务提交 1任务重新提交
+  int pageType;
 
   @override
   _TaskSubmissionPageState createState() => _TaskSubmissionPageState();
@@ -35,8 +43,6 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
       );
       setState(() async {
         _imageFile = pickedFile;
-        String imgBase64 =
-            await CommonUtils.imageToBase64AndCompress(File(_imageFile.path));
       });
     } catch (e) {
       setState(() {
@@ -48,12 +54,24 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
   String imgUrl;
 
   _initData() async {
-    var result = await HttpManage.getTaskSubmitInfo(widget.taskId);
-    if (mounted) {
-      if (result.status) {
-        setState(() {
-          imgUrl = result.data.imgUrl;
-        });
+    if (widget.pageType == 0) {
+      var result = await HttpManage.getTaskSubmitInfo(widget.taskId);
+      if (mounted) {
+        if (result.status) {
+          setState(() {
+            imgUrl = result.data.imgUrl;
+          });
+        }
+      }
+    } else {
+      var result =
+          await HttpManage.getTaskReSubmitInfo(widget.taskId, widget.comId);
+      if (mounted) {
+        if (result.status) {
+          setState(() {
+            imgUrl = result.data.imgUrl;
+          });
+        }
       }
     }
   }
@@ -80,26 +98,14 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
             var imageId = entity.data["id"].toString();
             var result = await HttpManage.taskSubmit(widget.taskId, imageId);
             if (result.status) {
-              Fluttertoast.showToast(
-                  msg: "提交成功",
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  gravity: ToastGravity.BOTTOM);
+              CommonUtils.showToast("提交成功");
               NavigatorUtils.navigatorRouterAndRemoveUntil(
                   context, TaskIndexPage());
             } else {
-              Fluttertoast.showToast(
-                  msg: "${result.errMsg}",
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  gravity: ToastGravity.BOTTOM);
+              CommonUtils.showToast(result.errMsg);
             }
           } else {
-            Fluttertoast.showToast(
-                msg: "${entity.errMsg}",
-                backgroundColor: Colors.grey,
-                textColor: Colors.white,
-                gravity: ToastGravity.BOTTOM);
+            CommonUtils.showToast(entity.errMsg);
           }
         },
         child: Container(

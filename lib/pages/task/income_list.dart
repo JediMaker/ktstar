@@ -6,6 +6,7 @@ import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
+import 'package:star/utils/common_utils.dart';
 
 class IncomeListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
@@ -53,11 +54,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
         });
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "${result.errMsg}",
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM);
+      CommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -224,7 +221,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+          horizontal: 16, vertical: ScreenUtil().setHeight(16)),
       padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
       decoration: BoxDecoration(
           color: Colors.white,

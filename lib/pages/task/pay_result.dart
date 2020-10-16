@@ -7,6 +7,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/pay_coupon_entity.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
@@ -73,11 +74,7 @@ class _PayResultPageState extends State<PayResultPage> {
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              Fluttertoast.showToast(
-                  msg: "再按一次返回键退出应用",
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  gravity: ToastGravity.BOTTOM);
+              CommonUtils.showToast("再按一次返回键退出应用");
               _lastQuitTime = DateTime.now();
               return false;
             } else {

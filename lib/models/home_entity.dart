@@ -44,6 +44,7 @@ class HomeDataTaskListList with JsonConvert<HomeDataTaskListList> {
 	@JSONField(name: "status_desc")
 	String statusDesc;
 	String type;
+	String category;
 	String ratio;
 	@JSONField(name: "diamonds_ratio")
 	String diamondsRatio;

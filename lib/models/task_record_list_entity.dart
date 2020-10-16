@@ -32,4 +32,7 @@ class TaskRecordListDataList with JsonConvert<TaskRecordListDataList> {
   String taskId;
   @JSONField(name: "re_submit")
   String reSubmit;
+  @JSONField(name: "com_id")
+  String comId;
+  String category;
 }

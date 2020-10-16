@@ -74,6 +74,15 @@ class CommonUtils {
     return false;
   }
 
+  static showToast(msg) {
+    Fluttertoast.showToast(
+        msg: "$msg",
+        backgroundColor: Colors.grey,
+//        backgroundColor: Color(0XFF222222c2),
+        textColor: Colors.white,
+        gravity: ToastGravity.CENTER);
+  }
+
   /// Returns true String or List or Map is not empty.
   static bool isNotEmpty(Object object) {
     return !isEmpty(object);
@@ -257,11 +266,7 @@ class CommonUtils {
               fun();
             } else {
               lastPopTime = DateTime.now();
-              Fluttertoast.showToast(
-                  msg: "请勿重复点击！",
-                  toastLength: Toast.LENGTH_SHORT,
-                  textColor: Colors.white,
-                  backgroundColor: Colors.grey);
+              CommonUtils.showToast( "请勿重复点击！");
             }
           },
           child: childWidget),
@@ -357,11 +362,7 @@ class CommonUtils {
     switch (status) {
       case PermissionStatus.denied:
         print("denied");
-        Fluttertoast.showToast(
-            msg: "相关功能受限，请设置允许相关权限",
-            backgroundColor: Colors.white,
-            textColor: Colors.black,
-            gravity: ToastGravity.BOTTOM);
+        CommonUtils.showToast( "相关功能受限，请设置允许相关权限");
         break;
       case PermissionStatus.granted:
         fun;
@@ -371,11 +372,7 @@ class CommonUtils {
       case PermissionStatus.undetermined:
         break;
       case PermissionStatus.permanentlyDenied:
-        Fluttertoast.showToast(
-            msg: "相关功能受限，请设置允许相关权限",
-            backgroundColor: Colors.white,
-            textColor: Colors.black,
-            gravity: ToastGravity.BOTTOM);
+        CommonUtils.showToast( "相关功能受限，请设置允许相关权限");
         openAppSettings();
         break;
     }

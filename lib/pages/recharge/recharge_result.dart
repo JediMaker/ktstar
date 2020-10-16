@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/pages/task/task_index.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
@@ -48,11 +49,7 @@ class _RechargeResultPageState extends State<RechargeResultPage> {
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              Fluttertoast.showToast(
-                  msg: "再按一次返回键退出应用",
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  gravity: ToastGravity.BOTTOM);
+              CommonUtils.showToast("再按一次返回键退出应用！");
               _lastQuitTime = DateTime.now();
               return false;
             } else {
