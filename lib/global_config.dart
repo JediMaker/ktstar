@@ -76,7 +76,7 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   /// 是否为release版
-  static bool isRelease = true;
+  static bool isRelease = false;
 
   /// 是否为绑定微信
   static bool isBindWechat = false;
@@ -99,7 +99,7 @@ class GlobalConfig {
   static const TASKWALL_ADDRESS = 'https://c.buuyee.com/api/external';
 
   /// 代理的 ip 地址
-  static const localProxyIPAddress = '192.168.0.6';
+  static const localProxyIPAddress = '192.168.0.8';
 
   /// 微信appid
   static const String WECHAT_APPID = 'wx824cc9f48da9315c';
