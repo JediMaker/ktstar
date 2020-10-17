@@ -81,6 +81,9 @@ class GlobalConfig {
   /// 是否为绑定微信
   static bool isBindWechat = false;
 
+  /// ios是否展示第三方登录信息
+  static bool displayThirdLoginInformation = false;
+
   ///
   ///
   /// 支付类型

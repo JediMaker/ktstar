@@ -57,8 +57,26 @@ class _LoginPageState extends State<LoginPage> {
     scrollController.jumpTo(scrollController.position.minScrollExtent);
   }
 
+  _initData() async {
+    var versionInfo = await HttpManage.getVersionInfo();
+    if (versionInfo.status) {
+      switch (versionInfo.data.wxLogin) {
+        case "1": //不显示
+          GlobalConfig.displayThirdLoginInformation = false;
+          setState(() {});
+          break;
+
+        case "2": //显示
+          GlobalConfig.displayThirdLoginInformation = true;
+          setState(() {});
+          break;
+      }
+    }
+  }
+
   @override
   void initState() {
+    _initData();
     GlobalConfig.isBindWechat = false;
     fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
@@ -201,7 +219,8 @@ class _LoginPageState extends State<LoginPage> {
   /// 第三方登录--微信
   Widget buildWechatLoginContainer() {
     return Visibility(
-      visible: Platform.isAndroid,
+      visible: Platform.isAndroid ||
+          (Platform.isIOS && GlobalConfig.displayThirdLoginInformation),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 50),
         height: 150,
