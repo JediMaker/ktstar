@@ -18,4 +18,6 @@ class VersionInfoData with JsonConvert<VersionInfoData> {
 	String androidUrl;
 	@JSONField(name: "ios_url")
 	String iosUrl;
+	@JSONField(name: "wx_login")
+	String wxLogin;
 }

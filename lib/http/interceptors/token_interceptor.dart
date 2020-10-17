@@ -10,6 +10,7 @@ import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/result_bean_entity.dart';
 import 'package:star/pages/login/login.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 /**
@@ -58,12 +59,18 @@ class TokenInterceptors extends InterceptorsWrapper {
             backgroundColor: Colors.grey);
       }
       if (entity.errCode.toString() == "304") {
-        /*Fluttertoast.showToast(
-            msg: "您的账号已在其他设备上登录！",
+        Fluttertoast.showToast(
+            msg: "您的账号已在其他设备上登录，请重新登录！",
             textColor: Colors.white,
-            backgroundColor: Colors.grey);*/
-
-        Future.delayed(Duration(seconds: 0)).then((onValue) {
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.grey);
+        Future.delayed(Duration(seconds: 2)).then((onValue) {
+          var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+          GlobalConfig.prefs.remove("hasLogin");
+          GlobalConfig.saveLoginStatus(false);
+          NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+        });
+        /*Future.delayed(Duration(seconds: 0)).then((onValue) {
           var context = GlobalConfig.navigatorKey.currentState.overlay.context;
           showCupertinoDialog(
               context: context,
@@ -98,7 +105,7 @@ class TokenInterceptors extends InterceptorsWrapper {
                   ],
                 );
               });
-        });
+        });*/
       }
     } catch (e) {}
     return response;

@@ -11,7 +11,11 @@ versionInfoEntityFromJson(VersionInfoEntity data, Map<String, dynamic> json) {
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new VersionInfoData().fromJson(json['data']);
+		try {
+			data.data = new VersionInfoData().fromJson(json['data']);
+		} catch (e) {
+			print(e);
+		}
 	}
 	return data;
 }
@@ -40,6 +44,9 @@ versionInfoDataFromJson(VersionInfoData data, Map<String, dynamic> json) {
 	if (json['ios_url'] != null) {
 		data.iosUrl = json['ios_url']?.toString();
 	}
+	if (json['wx_login'] != null) {
+		data.wxLogin = json['wx_login']?.toString();
+	}
 	return data;
 }
 
@@ -49,5 +56,6 @@ Map<String, dynamic> versionInfoDataToJson(VersionInfoData entity) {
 	data['desc'] = entity.desc;
 	data['android_url'] = entity.androidUrl;
 	data['ios_url'] = entity.iosUrl;
+	data['wx_login'] = entity.wxLogin;
 	return data;
 }
