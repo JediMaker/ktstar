@@ -83,6 +83,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
             },
           ),
           centerTitle: true,
+          brightness: Brightness.light,
           backgroundColor: GlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
@@ -417,40 +418,44 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
               SizedBox(
                 height: ScreenUtil().setHeight(8),
               ),
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Transform.translate(
-                    offset: Offset(0, 1 / 2),
-                    child: Text(
-                      "任务$stepDescText任务",
-                      textAlign: TextAlign.center,
-                      strutStyle: StrutStyle(
-                          forceStrutHeight: true, height: 1, leading: 1),
-                      style: TextStyle(
-                          color: Colors.transparent,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xffFDFFFD),
-                          decorationThickness: 15,
-                          fontSize: ScreenUtil().setSp(42)),
+              Container(
+                width: ScreenUtil().setWidth(760),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Transform.translate(
+                      offset: Offset(0, 1 / 2),
+                      child: Text(
+                        "\t\t$stepDescText\t\t",
+                        textAlign: TextAlign.center,
+                        strutStyle: StrutStyle(
+                            forceStrutHeight: true, height: 1, leading: 1),
+                        style: TextStyle(
+                            color: Colors.transparent,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xffFDFFFD),
+                            letterSpacing: 1,
+                            decorationThickness: 15,
+                            fontSize: ScreenUtil().setSp(42)),
+                      ),
                     ),
-                  ),
-                  Transform.translate(
-                    offset: Offset(0, 1 / 2),
-                    child: Text(
-                      stepDescText,
-                      textAlign: TextAlign.center,
-                      strutStyle: StrutStyle(
-                          forceStrutHeight: true, height: 1, leading: 1),
-                      style: TextStyle(
-                          color: Color(0xffED7F6F),
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setSp(42)),
+                    Transform.translate(
+                      offset: Offset(0, 1 / 2),
+                      child: Text(
+                        "$stepDescText",
+                        textAlign: TextAlign.center,
+                        strutStyle: StrutStyle(
+                            forceStrutHeight: true, height: 1, leading: 1),
+                        style: TextStyle(
+                            color: Color(0xffED7F6F),
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.bold,
+                            fontSize: ScreenUtil().setSp(42)),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(77),
