@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -198,71 +200,74 @@ class _LoginPageState extends State<LoginPage> {
   ///
   /// 第三方登录--微信
   Widget buildWechatLoginContainer() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 50),
-      height: 150,
-      child: Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Flexible(
-                flex: 1,
-                child: Container(
-                  color: Color(0xFFEFEFEF),
-                  height: 1,
+    return Visibility(
+      visible: Platform.isAndroid,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 24, vertical: 50),
+        height: 150,
+        child: Column(
+          children: <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    color: Color(0xFFEFEFEF),
+                    height: 1,
+                  ),
                 ),
-              ),
-              Container(
-                child: Text(
-                  "第三方登录",
-                  style: TextStyle(
-                      color: Color(0xFFAFAFAF),
-                      fontSize: ScreenUtil().setSp(42)),
+                Container(
+                  child: Text(
+                    "第三方登录",
+                    style: TextStyle(
+                        color: Color(0xFFAFAFAF),
+                        fontSize: ScreenUtil().setSp(42)),
+                  ),
                 ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  height: 1,
-                  color: Color(0xFFEFEFEF),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    height: 1,
+                    color: Color(0xFFEFEFEF),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(vertical: 20),
-            child: new FlatButton(
-                onPressed: () {
-                  fluwx
-                      .sendWeChatAuth(
-                          scope: "snsapi_userinfo",
-                          state: "wechat_sdk_demo_test")
-                      .then((code) {});
-                },
-                child: new Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor: Colors.transparent,
-                          child: new Image.asset(
-                            "static/images/task_wechat.png",
-                            width: ScreenUtil().setWidth(138),
-                            height: ScreenUtil().setWidth(138),
+              ],
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(vertical: 20),
+              child: new FlatButton(
+                  onPressed: () {
+                    fluwx
+                        .sendWeChatAuth(
+                            scope: "snsapi_userinfo",
+                            state: "wechat_sdk_demo_test")
+                        .then((code) {});
+                  },
+                  child: new Container(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                          margin: const EdgeInsets.only(bottom: 6.0),
+                          child: new CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.transparent,
+                            child: new Image.asset(
+                              "static/images/task_wechat.png",
+                              width: ScreenUtil().setWidth(138),
+                              height: ScreenUtil().setWidth(138),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-          ),
-        ],
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
