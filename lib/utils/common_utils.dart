@@ -80,7 +80,7 @@ class CommonUtils {
         backgroundColor: Colors.grey,
 //        backgroundColor: Color(0XFF222222c2),
         textColor: Colors.white,
-        gravity: ToastGravity.CENTER);
+        gravity: ToastGravity.BOTTOM);
   }
 
   /// Returns true String or List or Map is not empty.

@@ -73,8 +73,6 @@ dependencies:
   package_info: ^0.4.3
   #  状态栏颜色
   flutter_statusbarcolor: ^0.2.3
-  #  多图选择
-  multi_image_picker: ^4.7.14
   #  软键盘
   flutter_keyboard_visibility: ^3.2.2
 dev_dependencies:
