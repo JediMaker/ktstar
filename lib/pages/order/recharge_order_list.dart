@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -401,6 +403,10 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    if (Platform.isIOS) {
+                      CommonUtils.showIosPayDialog();
+                      return;
+                    }
                     NavigatorUtils.navigatorRouter(context, RechargeListPage());
                   },
                   child: Container(
