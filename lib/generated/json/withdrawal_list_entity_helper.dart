@@ -11,7 +11,10 @@ withdrawalListEntityFromJson(WithdrawalListEntity data, Map<String, dynamic> jso
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new WithdrawalListData().fromJson(json['data']);
+		try {
+			data.data = new WithdrawalListData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

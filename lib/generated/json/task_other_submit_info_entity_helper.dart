@@ -14,7 +14,6 @@ taskOtherSubmitInfoEntityFromJson(TaskOtherSubmitInfoEntity data, Map<String, dy
 		try {
 			data.data = new TaskOtherSubmitInfoData().fromJson(json['data']);
 		} catch (e) {
-			print(e);
 		}
 	}
 	return data;

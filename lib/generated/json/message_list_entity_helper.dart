@@ -11,7 +11,10 @@ messageListEntityFromJson(MessageListEntity data, Map<String, dynamic> json) {
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new MessageListData().fromJson(json['data']);
+		try {
+			data.data = new MessageListData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

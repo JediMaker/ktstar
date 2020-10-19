@@ -11,7 +11,10 @@ taskDetailOtherEntityFromJson(TaskDetailOtherEntity data, Map<String, dynamic> j
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new TaskDetailOtherData().fromJson(json['data']);
+		try {
+			data.data = new TaskDetailOtherData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

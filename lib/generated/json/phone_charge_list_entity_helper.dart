@@ -11,7 +11,10 @@ phoneChargeListEntityFromJson(PhoneChargeListEntity data, Map<String, dynamic> j
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new PhoneChargeListData().fromJson(json['data']);
+		try {
+			data.data = new PhoneChargeListData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

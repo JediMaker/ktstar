@@ -11,7 +11,10 @@ incomeListEntityFromJson(IncomeListEntity data, Map<String, dynamic> json) {
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new IncomeListData().fromJson(json['data']);
+		try {
+			data.data = new IncomeListData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

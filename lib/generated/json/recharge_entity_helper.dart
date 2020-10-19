@@ -11,7 +11,10 @@ rechargeEntityFromJson(RechargeEntity data, Map<String, dynamic> json) {
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new RechargeData().fromJson(json['data']);
+		try {
+			data.data = new RechargeData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

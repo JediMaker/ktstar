@@ -14,7 +14,6 @@ versionInfoEntityFromJson(VersionInfoEntity data, Map<String, dynamic> json) {
 		try {
 			data.data = new VersionInfoData().fromJson(json['data']);
 		} catch (e) {
-			print(e);
 		}
 	}
 	return data;
