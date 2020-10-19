@@ -18,8 +18,10 @@ import '../../global_config.dart';
 class TaskDetailOtherPage extends StatefulWidget {
   String taskId;
 
-  TaskDetailOtherPage({Key key, @required this.taskId}) : super(key: key);
+  TaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
+      : super(key: key);
   final String title = "任务详情";
+  int pageType;
 
   @override
   _TaskDetailOtherPageState createState() => _TaskDetailOtherPageState();
@@ -153,6 +155,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
                   context,
                   TaskOtherSubmissionPage(
                     taskId: widget.taskId,
+                    pageType: widget.pageType,
                   ));
             },
             child: Container(
@@ -426,7 +429,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
                     Transform.translate(
                       offset: Offset(0, 1 / 2),
                       child: Text(
-                        "\t\t$stepDescText\t\t",
+                        "$stepDescText",
                         textAlign: TextAlign.center,
                         strutStyle: StrutStyle(
                             forceStrutHeight: true, height: 1, leading: 1),
@@ -449,8 +452,11 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
                             forceStrutHeight: true, height: 1, leading: 1),
                         style: TextStyle(
                             color: Color(0xffED7F6F),
-                            letterSpacing: 1,
                             fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.none,
+                            decorationColor: Colors.transparent,
+                            letterSpacing: 1,
+                            decorationThickness: 15,
                             fontSize: ScreenUtil().setSp(42)),
                       ),
                     ),

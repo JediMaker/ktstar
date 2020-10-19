@@ -76,7 +76,7 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   /// 是否为release版
-  static bool isRelease = false;
+  static bool isRelease = true;
 
   /// 是否为绑定微信
   static bool isBindWechat = false;

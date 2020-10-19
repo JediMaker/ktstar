@@ -23,8 +23,9 @@ import '../../global_config.dart';
 class TaskDetailPage extends StatefulWidget {
   String taskId;
 
-  TaskDetailPage({Key key, @required this.taskId}) : super(key: key);
+  TaskDetailPage({Key key, @required this.taskId,this.pageType=0}) : super(key: key);
   final String title = "任务下载";
+  int pageType;
 
   @override
   _TaskDetailPageState createState() => _TaskDetailPageState();
@@ -862,6 +863,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       .push(MaterialPageRoute(builder: (context) {
                     return TaskSubmissionPage(
                       taskId: widget.taskId,
+                      pageType: widget.pageType,
                     );
                   }));
                 },

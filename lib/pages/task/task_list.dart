@@ -384,13 +384,25 @@ class _TaskListPageState extends State<TaskListPage> {
           case 3: //3已完成
             break;
           case 4: //--4被驳回
-            var result = await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) {
-              return TaskDetailPage(
-                taskId: taskItem.id,
-              );
-            }));
-            _initData();
+            if (category == "1") {
+              var result = await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return TaskDetailPage(
+                  taskId: taskItem.id,
+                  pageType: 1,
+                );
+              }));
+              _initData();
+            } else {
+              var result = await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return TaskDetailOtherPage(
+                  taskId: taskItem.id,
+                  pageType: 1,
+                );
+              }));
+              _initData();
+            }
             break;
         }
 

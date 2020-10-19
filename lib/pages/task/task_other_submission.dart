@@ -130,15 +130,14 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
         var plusVisible = false;
         if (widget.pageType == 0) {
           plusVisible = images.length <= imgNum;
-
         } else {
-          if(images.length!=0){
+          if (images.length != 0) {
             plusVisible = images.length < imgNum;
           }
         }
         if (index == images.length) {
           return Visibility(
-            visible:plusVisible,
+            visible: plusVisible,
             child: GestureDetector(
               onTap: () {
                 /* if(){
@@ -199,7 +198,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
                         height: ScreenUtil().setWidth(56),
                         alignment: Alignment.center,
                         padding:
-                        EdgeInsets.only(bottom: ScreenUtil().setWidth(6)),
+                            EdgeInsets.only(bottom: ScreenUtil().setWidth(6)),
                         decoration: BoxDecoration(
                             color: Color(0xff99999970),
                             borderRadius: BorderRadius.all(
@@ -269,6 +268,9 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
       width: double.maxFinite,
       child: GestureDetector(
         onTap: () async {
+          if (images.length == 0) {
+            return;
+          }
           String imgIds = allImgIds.join(",");
           if (widget.pageType == 0) {
             ///提交任务
@@ -330,10 +332,10 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              /*color: _imageFile == null
+                /*color: _imageFile == null
                     ? GlobalConfig.taskHeadDisableColor
                     : GlobalConfig.taskHeadColor,*/
-              /*gradient: LinearGradient(
+                /*gradient: LinearGradient(
                     colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
                 border: Border.all(color: GlobalConfig.taskHeadColor),
                 borderRadius: BorderRadius.circular(48)),
@@ -381,7 +383,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
               children: <Widget>[
                 Container(
                   margin:
-                  EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(32)),
+                      EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(32)),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "上传任务截图",
@@ -405,7 +407,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
                           children: <InlineSpan>[
                             TextSpan(
                               text:
-                              '请按照任务要求上传任务截图，禁止随意修改，伪造图片，一经发现，任务给予驳回，追回任务奖励金额。',
+                                  '请按照任务要求上传任务截图，禁止随意修改，伪造图片，一经发现，任务给予驳回，追回任务奖励金额。',
                               style: TextStyle(
                                 color: Color(0xFFB9B9B9),
                                 fontSize: ScreenUtil().setSp(36),
@@ -428,6 +430,6 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             ),
           ),
         ) // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        );
   }
 }
