@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/pages/task/task_gallery.dart';
@@ -35,7 +34,7 @@ class TaskOtherSubmissionPage extends StatefulWidget {
 }
 
 class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
-  List<Asset> images2 = List<Asset>();
+  //List<Asset> images2 = List<Asset>();
   List<Image> images = List<Image>();
   List<String> imageUrls = List<String>();
   var _indexVisible = false;
