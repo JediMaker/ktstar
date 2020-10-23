@@ -38,10 +38,16 @@ homeDataFromJson(HomeData data, Map<String, dynamic> json) {
 		});
 	}
 	if (json['task_list'] != null) {
-		data.taskList = new HomeDataTaskList().fromJson(json['task_list']);
+		data.taskList = new List<HomeDataTaskList>();
+		(json['task_list'] as List).forEach((v) {
+			data.taskList.add(new HomeDataTaskList().fromJson(v));
+		});
 	}
 	if (json['links'] != null) {
 		data.links = json['links']?.toString();
+	}
+	if (json['user_level'] != null) {
+		data.userLevel = json['user_level']?.toString();
 	}
 	return data;
 }
@@ -52,9 +58,10 @@ Map<String, dynamic> homeDataToJson(HomeData entity) {
 		data['banner'] =  entity.banner.map((v) => v.toJson()).toList();
 	}
 	if (entity.taskList != null) {
-		data['task_list'] = entity.taskList.toJson();
+		data['task_list'] =  entity.taskList.map((v) => v.toJson()).toList();
 	}
 	data['links'] = entity.links;
+	data['user_level'] = entity.userLevel;
 	return data;
 }
 
@@ -80,9 +87,9 @@ Map<String, dynamic> homeDataBannerToJson(HomeDataBanner entity) {
 }
 
 homeDataTaskListFromJson(HomeDataTaskList data, Map<String, dynamic> json) {
-	if (json['list'] != null) {
+	if (json['data'] != null) {
 		data.xList = new List<HomeDataTaskListList>();
-		(json['list'] as List).forEach((v) {
+		(json['data'] as List).forEach((v) {
 			data.xList.add(new HomeDataTaskListList().fromJson(v));
 		});
 	}
@@ -92,16 +99,20 @@ homeDataTaskListFromJson(HomeDataTaskList data, Map<String, dynamic> json) {
 	if (json['use_task_total'] != null) {
 		data.useTaskTotal = json['use_task_total']?.toString();
 	}
+	if (json['name'] != null) {
+		data.name = json['name']?.toString();
+	}
 	return data;
 }
 
 Map<String, dynamic> homeDataTaskListToJson(HomeDataTaskList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.xList != null) {
-		data['list'] =  entity.xList.map((v) => v.toJson()).toList();
+		data['data'] =  entity.xList.map((v) => v.toJson()).toList();
 	}
 	data['task_total'] = entity.taskTotal;
 	data['use_task_total'] = entity.useTaskTotal;
+	data['name'] = entity.name;
 	return data;
 }
 
@@ -127,6 +138,12 @@ homeDataTaskListListFromJson(HomeDataTaskListList data, Map<String, dynamic> jso
 	if (json['type'] != null) {
 		data.type = json['type']?.toString();
 	}
+	if (json['subtitle'] != null) {
+		data.subtitle = json['subtitle']?.toString();
+	}
+	if (json['num'] != null) {
+		data.num = json['num']?.toString();
+	}
 	if (json['category'] != null) {
 		data.category = json['category']?.toString();
 	}
@@ -148,6 +165,8 @@ Map<String, dynamic> homeDataTaskListListToJson(HomeDataTaskListList entity) {
 	data['icons'] = entity.icons;
 	data['status_desc'] = entity.statusDesc;
 	data['type'] = entity.type;
+	data['subtitle'] = entity.subtitle;
+	data['num'] = entity.num;
 	data['category'] = entity.category;
 	data['ratio'] = entity.ratio;
 	data['diamonds_ratio'] = entity.diamondsRatio;

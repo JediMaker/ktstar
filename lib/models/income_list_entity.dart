@@ -27,6 +27,8 @@ class IncomeListDataList with JsonConvert<IncomeListDataList> {
 	String timeDesc;
 	@JSONField(name: "reject_reason")
 	String rejectReason;
+	@JSONField(name: "profit_type")
+	String profitType;
 	String desc;
 	String status;
 }

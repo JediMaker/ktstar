@@ -21,6 +21,10 @@ class SelectChoiceChip extends StatefulWidget {
   final ValueChanged<bool> onSelected;
   final bool selected;
   final Widget child;
+  final Border selectBorder;
+  final Border border;
+  final LinearGradient selectGradient;
+  final LinearGradient gradient;
 
   const SelectChoiceChip(
       {@required this.child,
@@ -39,6 +43,10 @@ class SelectChoiceChip extends StatefulWidget {
           BorderSide(color: Colors.red, width: 1, style: BorderStyle.solid)),*/
       this.onSelected,
       this.selected,
+      this.selectBorder,
+      this.border,
+      this.selectGradient,
+      this.gradient,
       this.textSelectColor = const Color(0xFF1C74D0),
       this.boxSelectColor = const Color(0xFF0A7FFF)});
 
@@ -73,10 +81,10 @@ class _SelectChoiceChipState extends State<SelectChoiceChip> {
           )*/
           ,
           decoration: new BoxDecoration(
-            color: _select ? widget.boxSelectColor : widget.boxColor,
-            borderRadius: widget.borderRadius,
-//              border: _select ? widget.selectBorder : widget.border
-          )),
+              color: _select ? widget.boxSelectColor : widget.boxColor,
+              gradient: _select ? widget.selectGradient : widget.gradient,
+              borderRadius: widget.borderRadius,
+              border: _select ? widget.selectBorder : widget.border)),
     );
   }
 }

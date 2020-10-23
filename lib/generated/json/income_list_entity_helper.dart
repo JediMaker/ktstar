@@ -72,6 +72,9 @@ incomeListDataListFromJson(IncomeListDataList data, Map<String, dynamic> json) {
 	if (json['reject_reason'] != null) {
 		data.rejectReason = json['reject_reason']?.toString();
 	}
+	if (json['profit_type'] != null) {
+		data.profitType = json['profit_type']?.toString();
+	}
 	if (json['desc'] != null) {
 		data.desc = json['desc']?.toString();
 	}
@@ -88,6 +91,7 @@ Map<String, dynamic> incomeListDataListToJson(IncomeListDataList entity) {
 	data['create_time'] = entity.createTime;
 	data['time_desc'] = entity.timeDesc;
 	data['reject_reason'] = entity.rejectReason;
+	data['profit_type'] = entity.profitType;
 	data['desc'] = entity.desc;
 	data['status'] = entity.status;
 	return data;

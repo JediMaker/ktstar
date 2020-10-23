@@ -18,4 +18,6 @@ class TaskSubmitInfoData with JsonConvert<TaskSubmitInfoData> {
 	String imgId;
 	@JSONField(name: "img_url")
 	String imgUrl;
+	@JSONField(name: "com_id")
+	String comId;
 }

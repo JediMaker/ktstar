@@ -43,6 +43,9 @@ taskSubmitInfoDataFromJson(TaskSubmitInfoData data, Map<String, dynamic> json) {
 	if (json['img_url'] != null) {
 		data.imgUrl = json['img_url']?.toString();
 	}
+	if (json['com_id'] != null) {
+		data.comId = json['com_id']?.toString();
+	}
 	return data;
 }
 
@@ -52,5 +55,6 @@ Map<String, dynamic> taskSubmitInfoDataToJson(TaskSubmitInfoData entity) {
 	data['status'] = entity.status;
 	data['img_id'] = entity.imgId;
 	data['img_url'] = entity.imgUrl;
+	data['com_id'] = entity.comId;
 	return data;
 }
