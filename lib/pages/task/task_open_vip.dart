@@ -162,7 +162,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                             autoplay: false,
                             loop: false,
                             viewportFraction: 0.86,
-                            scale: 1.0,
+                            scale: 0.96,
                             onIndexChanged: (index) {
                               if (mounted) {
                                 setState(() {
@@ -279,7 +279,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
   }
 
   ///vip价格展示布局
-  Card buildVipCard() {
+  Widget buildVipCard() {
     var name = '';
     var profit_day = '';
     var desc = '';
@@ -290,117 +290,111 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
       desc = _vipInfo.desc;
       year_money = _vipInfo.yearMoney;
     } catch (e) {}
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(32)))),
-      child: Container(
-        width: double.maxFinite,
-        height: ScreenUtil().setHeight(593),
-        decoration: BoxDecoration(
-            image: DecorationImage(
+    return Container(
+      width: double.maxFinite,
+      height: ScreenUtil().setHeight(473),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: Image.asset(
+                "static/images/task_mine_card_bg_vip1.png",
                 fit: BoxFit.fill,
-                image: Image.asset(
-                  "static/images/task_mine_card_bg_vip1.png",
-                  fit: BoxFit.fill,
-                ).image)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setWidth(50),
-                  vertical: ScreenUtil().setHeight(56)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    "$name",
+              ).image)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(50),
+                vertical: ScreenUtil().setHeight(56)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  "$name",
+                  style: TextStyle(
+                      color: Color(
+                        0xff222222,
+                      ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: ScreenUtil().setSp(54)),
+                ),
+                Text(
+                  "(收益$profit_day元起/天)",
+                  style: TextStyle(
+                      color: Color(
+                        0xff222222,
+                      ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: ScreenUtil().setSp(36)),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(50),
+              vertical: ScreenUtil().setHeight(30),
+            ),
+            child: Wrap(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "$desc",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Color(
                           0xff222222,
                         ),
-                        fontWeight: FontWeight.bold,
-                        fontSize: ScreenUtil().setSp(54)),
-                  ),
-                  Text(
-                    "(收益$profit_day元起/天)",
-                    style: TextStyle(
-                        color: Color(
-                          0xff222222,
-                        ),
-                        fontWeight: FontWeight.bold,
                         fontSize: ScreenUtil().setSp(36)),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setWidth(50),
-                vertical: ScreenUtil().setHeight(10),
-              ),
-              child: Wrap(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "$desc",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Color(
-                            0xff222222,
-                          ),
-                          fontSize: ScreenUtil().setSp(36)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(50),
-                    vertical: ScreenUtil().setHeight(33)),
-                child: Text.rich(
-                  TextSpan(
-                    style: TextStyle(
-                      color: Color(0xff222222),
-                    ),
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: "￥",
-                      ),
-                      TextSpan(
-                        text: "$year_money",
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(76),
-                            color: Color(0xff222222),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: "/年",
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
-                          color: Color(0xff222222),
-                        ),
-                      ),
-                    ],
-                  ),
-                  overflow: TextOverflow.ellipsis,
                 ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(50),
+                  vertical: ScreenUtil().setHeight(33)),
+              child: Text.rich(
+                TextSpan(
+                  style: TextStyle(
+                    color: Color(0xff222222),
+                  ),
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: "￥",
+                    ),
+                    TextSpan(
+                      text: "$year_money",
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(76),
+                          color: Color(0xff222222),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: "/年",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(42),
+                        color: Color(0xff222222),
+                      ),
+                    ),
+                  ],
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
 
   ///钻石vip价格展示布局
-  Card buildDiamondVipCard() {
+  Widget buildDiamondVipCard() {
     var name = '';
     var profit_day = '';
     var desc = '';
@@ -411,103 +405,104 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
       desc = _diamondInfo.desc;
       year_money = _diamondInfo.yearMoney;
     } catch (e) {}
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
+    return Container(
+      height: ScreenUtil().setHeight(473),
+      decoration: BoxDecoration(
+          border: Border.all(
+            color: Color(0xFF222328),
+          ),
           borderRadius:
-              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(32)))),
-      child: Container(
-        width: double.maxFinite,
-        height: ScreenUtil().setHeight(593),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: Image.asset(
-                  "static/images/bg_diamond_card.png",
-                  fit: BoxFit.fill,
-                ).image)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setWidth(50),
-                  vertical: ScreenUtil().setHeight(56)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    "$name",
+              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(32))),
+          gradient: LinearGradient(colors: [
+            Color(0xFF222328),
+            Color(0xFF222222),
+          ]),
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: Image.asset(
+                "static/images/bg_diamond_card.png",
+              ).image)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(50),
+                vertical: ScreenUtil().setHeight(56)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  "$name",
+                  style: TextStyle(
+                      color: Color(
+                        0xffE3C19F,
+                      ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: ScreenUtil().setSp(54)),
+                ),
+                Text(
+                  "(收益$profit_day元起/天)",
+                  style: TextStyle(
+                      color: Color(
+                        0xffE3C19F,
+                      ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: ScreenUtil().setSp(36)),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(50),
+              vertical: ScreenUtil().setHeight(30),
+            ),
+            child: Wrap(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "$desc",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Color(
-                          0xffE3C19F,
+                          0xffffffff,
                         ),
-                        fontWeight: FontWeight.bold,
-                        fontSize: ScreenUtil().setSp(54)),
-                  ),
-                  Text(
-                    "(收益$profit_day元起/天)",
-                    style: TextStyle(
-                        color: Color(
-                          0xffE3C19F,
-                        ),
-                        fontWeight: FontWeight.bold,
                         fontSize: ScreenUtil().setSp(36)),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setWidth(50),
-                vertical: ScreenUtil().setHeight(10),
-              ),
-              child: Wrap(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "$desc",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Color(
-                            0xffffffff,
-                          ),
-                          fontSize: ScreenUtil().setSp(36)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setWidth(50),
-                  vertical: ScreenUtil().setHeight(33)),
-              child: Text.rich(TextSpan(
-                style: TextStyle(
-                  color: Color(0xffE3C19F),
                 ),
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: "￥",
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(50),
+                vertical: ScreenUtil().setHeight(33)),
+            child: Text.rich(TextSpan(
+              style: TextStyle(
+                color: Color(0xffE3C19F),
+              ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: "￥",
+                ),
+                TextSpan(
+                  text: "$year_money",
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(76),
+                      fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: "/年",
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(42),
                   ),
-                  TextSpan(
-                    text: "$year_money",
-                    style: TextStyle(
-                        fontSize: ScreenUtil().setSp(76),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: "/年",
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(42),
-                    ),
-                  ),
-                ],
-              )),
-            )
-          ],
-        ),
+                ),
+              ],
+            )),
+          )
+        ],
       ),
     );
   }
