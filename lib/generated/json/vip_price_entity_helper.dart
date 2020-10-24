@@ -1,4 +1,5 @@
 import 'package:star/models/vip_price_entity.dart';
+import 'package:star/models/vip_price_info_entity.dart';
 
 vipPriceEntityFromJson(VipPriceEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
@@ -12,7 +13,7 @@ vipPriceEntityFromJson(VipPriceEntity data, Map<String, dynamic> json) {
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new VipPriceData().fromJson(json['data']);
+			data.data = new VipPriceInfoEntity().fromJson(json['data']);
 		} catch (e) {
 		}
 	}

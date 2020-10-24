@@ -33,6 +33,8 @@ import 'package:star/models/fans_total_entity.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
+import 'package:star/models/vip_price_info_entity.dart';
+import 'package:star/generated/json/vip_price_info_entity_helper.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/models/task_record_list_entity.dart';
@@ -97,7 +99,14 @@ class JsonConvert<T> {
 			return fansTotalDataAgentInfoFromJson(data as FansTotalDataAgentInfo, json) as T;			case FansTotalDataCountInfo:
 			return fansTotalDataCountInfoFromJson(data as FansTotalDataCountInfo, json) as T;			case UserInfoEntity:
 			return userInfoEntityFromJson(data as UserInfoEntity, json) as T;			case UserInfoData:
-			return userInfoDataFromJson(data as UserInfoData, json) as T;			case TaskDetailOtherEntity:
+			return userInfoDataFromJson(data as UserInfoData, json) as T;			case VipPriceInfoEntity:
+			return vipPriceInfoEntityFromJson(data as VipPriceInfoEntity, json) as T;			case VipPriceInfoVip:
+			return vipPriceInfoVipFromJson(data as VipPriceInfoVip, json) as T;			case VipPriceInfoVipIconDesc:
+			return vipPriceInfoVipIconDescFromJson(data as VipPriceInfoVipIconDesc, json) as T;			case VipPriceInfoVipMoneyList:
+			return vipPriceInfoVipMoneyListFromJson(data as VipPriceInfoVipMoneyList, json) as T;			case VipPriceInfoDiamond:
+			return vipPriceInfoDiamondFromJson(data as VipPriceInfoDiamond, json) as T;			case VipPriceInfoDiamondIconDesc:
+			return vipPriceInfoDiamondIconDescFromJson(data as VipPriceInfoDiamondIconDesc, json) as T;			case VipPriceInfoDiamondMoneyList:
+			return vipPriceInfoDiamondMoneyListFromJson(data as VipPriceInfoDiamondMoneyList, json) as T;			case TaskDetailOtherEntity:
 			return taskDetailOtherEntityFromJson(data as TaskDetailOtherEntity, json) as T;			case TaskDetailOtherData:
 			return taskDetailOtherDataFromJson(data as TaskDetailOtherData, json) as T;			case TaskDetailOtherDataDescJson:
 			return taskDetailOtherDataDescJsonFromJson(data as TaskDetailOtherDataDescJson, json) as T;			case TaskRecordListEntity:
@@ -160,7 +169,14 @@ class JsonConvert<T> {
 			return fansTotalDataAgentInfoToJson(data as FansTotalDataAgentInfo);			case FansTotalDataCountInfo:
 			return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);			case UserInfoEntity:
 			return userInfoEntityToJson(data as UserInfoEntity);			case UserInfoData:
-			return userInfoDataToJson(data as UserInfoData);			case TaskDetailOtherEntity:
+			return userInfoDataToJson(data as UserInfoData);			case VipPriceInfoEntity:
+			return vipPriceInfoEntityToJson(data as VipPriceInfoEntity);			case VipPriceInfoVip:
+			return vipPriceInfoVipToJson(data as VipPriceInfoVip);			case VipPriceInfoVipIconDesc:
+			return vipPriceInfoVipIconDescToJson(data as VipPriceInfoVipIconDesc);			case VipPriceInfoVipMoneyList:
+			return vipPriceInfoVipMoneyListToJson(data as VipPriceInfoVipMoneyList);			case VipPriceInfoDiamond:
+			return vipPriceInfoDiamondToJson(data as VipPriceInfoDiamond);			case VipPriceInfoDiamondIconDesc:
+			return vipPriceInfoDiamondIconDescToJson(data as VipPriceInfoDiamondIconDesc);			case VipPriceInfoDiamondMoneyList:
+			return vipPriceInfoDiamondMoneyListToJson(data as VipPriceInfoDiamondMoneyList);			case TaskDetailOtherEntity:
 			return taskDetailOtherEntityToJson(data as TaskDetailOtherEntity);			case TaskDetailOtherData:
 			return taskDetailOtherDataToJson(data as TaskDetailOtherData);			case TaskDetailOtherDataDescJson:
 			return taskDetailOtherDataDescJsonToJson(data as TaskDetailOtherDataDescJson);			case TaskRecordListEntity:
@@ -223,7 +239,14 @@ class JsonConvert<T> {
 			return FansTotalDataAgentInfo().fromJson(json);			case 'FansTotalDataCountInfo':
 			return FansTotalDataCountInfo().fromJson(json);			case 'UserInfoEntity':
 			return UserInfoEntity().fromJson(json);			case 'UserInfoData':
-			return UserInfoData().fromJson(json);			case 'TaskDetailOtherEntity':
+			return UserInfoData().fromJson(json);			case 'VipPriceInfoEntity':
+			return VipPriceInfoEntity().fromJson(json);			case 'VipPriceInfoVip':
+			return VipPriceInfoVip().fromJson(json);			case 'VipPriceInfoVipIconDesc':
+			return VipPriceInfoVipIconDesc().fromJson(json);			case 'VipPriceInfoVipMoneyList':
+			return VipPriceInfoVipMoneyList().fromJson(json);			case 'VipPriceInfoDiamond':
+			return VipPriceInfoDiamond().fromJson(json);			case 'VipPriceInfoDiamondIconDesc':
+			return VipPriceInfoDiamondIconDesc().fromJson(json);			case 'VipPriceInfoDiamondMoneyList':
+			return VipPriceInfoDiamondMoneyList().fromJson(json);			case 'TaskDetailOtherEntity':
 			return TaskDetailOtherEntity().fromJson(json);			case 'TaskDetailOtherData':
 			return TaskDetailOtherData().fromJson(json);			case 'TaskDetailOtherDataDescJson':
 			return TaskDetailOtherDataDescJson().fromJson(json);			case 'TaskRecordListEntity':
@@ -287,7 +310,14 @@ class JsonConvert<T> {
 			return List<FansTotalDataAgentInfo>();			case 'FansTotalDataCountInfo':
 			return List<FansTotalDataCountInfo>();			case 'UserInfoEntity':
 			return List<UserInfoEntity>();			case 'UserInfoData':
-			return List<UserInfoData>();			case 'TaskDetailOtherEntity':
+			return List<UserInfoData>();			case 'VipPriceInfoEntity':
+			return List<VipPriceInfoEntity>();			case 'VipPriceInfoVip':
+			return List<VipPriceInfoVip>();			case 'VipPriceInfoVipIconDesc':
+			return List<VipPriceInfoVipIconDesc>();			case 'VipPriceInfoVipMoneyList':
+			return List<VipPriceInfoVipMoneyList>();			case 'VipPriceInfoDiamond':
+			return List<VipPriceInfoDiamond>();			case 'VipPriceInfoDiamondIconDesc':
+			return List<VipPriceInfoDiamondIconDesc>();			case 'VipPriceInfoDiamondMoneyList':
+			return List<VipPriceInfoDiamondMoneyList>();			case 'TaskDetailOtherEntity':
 			return List<TaskDetailOtherEntity>();			case 'TaskDetailOtherData':
 			return List<TaskDetailOtherData>();			case 'TaskDetailOtherDataDescJson':
 			return List<TaskDetailOtherDataDescJson>();			case 'TaskRecordListEntity':

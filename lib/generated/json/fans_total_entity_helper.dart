@@ -89,6 +89,9 @@ fansTotalDataCountInfoFromJson(FansTotalDataCountInfo data, Map<String, dynamic>
 	if (json['ordinary'] != null) {
 		data.ordinary = json['ordinary']?.toInt();
 	}
+	if (json['diamond'] != null) {
+		data.diamond = json['diamond']?.toInt();
+	}
 	return data;
 }
 
@@ -98,5 +101,6 @@ Map<String, dynamic> fansTotalDataCountInfoToJson(FansTotalDataCountInfo entity)
 	data['vip'] = entity.vip;
 	data['experience'] = entity.experience;
 	data['ordinary'] = entity.ordinary;
+	data['diamond'] = entity.diamond;
 	return data;
 }

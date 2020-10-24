@@ -32,19 +32,31 @@ Map<String, dynamic> taskOtherSubmitInfoEntityToJson(TaskOtherSubmitInfoEntity e
 
 taskOtherSubmitInfoDataFromJson(TaskOtherSubmitInfoData data, Map<String, dynamic> json) {
 	if (json['com_id'] != null) {
-		data.comId = json['com_id']?.toString();
+		try {
+			data.comId = json['com_id']?.toString();
+		} catch (e) {
+		}
 	}
 	if (json['img_id'] != null) {
-		data.imgId = json['img_id']?.map((v) => v?.toString())?.toList()?.cast<String>();
+		try {
+			data.imgId = json['img_id']?.map((v) => v?.toString())?.toList()?.cast<String>();
+		} catch (e) {
+		}
 	}
 	if (json['task_id'] != null) {
 		data.taskId = json['task_id']?.toString();
 	}
 	if (json['img_url'] != null) {
-		data.imgUrl = json['img_url']?.map((v) => v?.toString())?.toList()?.cast<String>();
+		try {
+			data.imgUrl = json['img_url']?.map((v) => v?.toString())?.toList()?.cast<String>();
+		} catch (e) {
+		}
 	}
 	if (json['img_num'] != null) {
-		data.imgNum = json['img_num']?.toInt();
+		try {
+			data.imgNum = json['img_num']?.toInt();
+		} catch (e) {
+		}
 	}
 	return data;
 }

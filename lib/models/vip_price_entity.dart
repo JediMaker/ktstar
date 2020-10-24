@@ -1,5 +1,6 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/models/vip_price_info_entity.dart';
 
 class VipPriceEntity with JsonConvert<VipPriceEntity> {
 	bool status;
@@ -7,7 +8,7 @@ class VipPriceEntity with JsonConvert<VipPriceEntity> {
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	VipPriceData data;
+	VipPriceInfoEntity data;
 }
 
 class VipPriceData with JsonConvert<VipPriceData> {
