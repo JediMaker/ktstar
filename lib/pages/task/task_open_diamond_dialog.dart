@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:star/global_config.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
+import 'package:star/pages/task/task_open_vip.dart';
 
 class TaskOpenDiamondDialogPage extends StatefulWidget {
-  TaskOpenDiamondDialogPage({Key key}) : super(key: key);
+  TaskOpenDiamondDialogPage({Key key, this.taskType = 1}) : super(key: key);
   final String title = "";
+  int taskType;
 
   @override
   _TaskOpenDiamondDialogPageState createState() =>
@@ -40,7 +42,7 @@ class _TaskOpenDiamondDialogPageState extends State<TaskOpenDiamondDialogPage> {
               alignment: Alignment.topCenter,
               children: <Widget>[
                 Image.asset(
-                  "static/images/task_dialog_vip_bg.png",
+                  "static/images/${widget.taskType == 1 ? "task_dialog_vip_bg.png" : "task_dialog_diamond_bg.png"}",
                   width: ScreenUtil().setWidth(728),
                   height: ScreenUtil().setHeight(779),
                 ),
@@ -65,7 +67,7 @@ class _TaskOpenDiamondDialogPageState extends State<TaskOpenDiamondDialogPage> {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return TaskOpenDiamondPage();
+                  return TaskOpenVipPage();
                 }));
               },
               child: Container(

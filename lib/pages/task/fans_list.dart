@@ -41,6 +41,7 @@ class _FansListPageState extends State<FansListPage>
   var _vipMembersNumber = "0";
   var _experienceMembersNumber = "0";
   var _ordinaryMembersNumber = "0";
+  var _diamondMembersNumber = "0";
   FansTotalDataAgentInfo _agentInfo;
 
   _initFansTotalsData() async {
@@ -48,25 +49,36 @@ class _FansListPageState extends State<FansListPage>
     if (result.status) {
       if (mounted) {
         setState(() {
-          _totalMembersNumber = result.data.countInfo.total.toString();
-          _vipMembersNumber = result.data.countInfo.vip.toString();
-          _experienceMembersNumber =
-              result.data.countInfo.experience.toString();
-          _ordinaryMembersNumber = result.data.countInfo.ordinary.toString();
-          if (widget.isAgent) {
-          } else {
-            _agentInfo = result.data.agentInfo;
+          try {
+            _totalMembersNumber = result.data.countInfo.total.toString();
+            _vipMembersNumber = result.data.countInfo.vip.toString();
+            _experienceMembersNumber =
+                result.data.countInfo.experience.toString();
+            _ordinaryMembersNumber = result.data.countInfo.ordinary.toString();
+            _diamondMembersNumber = result.data.countInfo.diamond.toString();
+            if (widget.isAgent) {
+            } else {
+              _agentInfo = result.data.agentInfo;
+            }
+          } catch (e) {
+            print(e);
           }
+
           if (widget.isAgent) {
             _tabValues = [
               '全部($_totalMembersNumber)',
+              '钻石($_diamondMembersNumber)',
               'vip($_vipMembersNumber)',
-              '普通($_ordinaryMembersNumber)',
               '体验($_experienceMembersNumber)',
+              '普通($_ordinaryMembersNumber)',
             ];
             _tabViews = [
               FansTabView(
                 fansType: "",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "diamond",
                 isAgent: widget.isAgent,
               ),
               FansTabView(
@@ -74,23 +86,28 @@ class _FansListPageState extends State<FansListPage>
                 isAgent: widget.isAgent,
               ),
               FansTabView(
-                fansType: "ordinary",
+                fansType: "experience",
                 isAgent: widget.isAgent,
               ),
               FansTabView(
-                fansType: "experience",
+                fansType: "ordinary",
                 isAgent: widget.isAgent,
               ),
             ];
           } else {
             _tabValues = [
               '全部($_totalMembersNumber)',
-              'vip会员($_vipMembersNumber)',
-              '普通会员($_ordinaryMembersNumber)',
+              '钻石($_diamondMembersNumber)',
+              'vip($_vipMembersNumber)',
+              '普通($_ordinaryMembersNumber)',
             ];
             _tabViews = [
               FansTabView(
                 fansType: "",
+                isAgent: widget.isAgent,
+              ),
+              FansTabView(
+                fansType: "diamond",
                 isAgent: widget.isAgent,
               ),
               FansTabView(
@@ -105,7 +122,7 @@ class _FansListPageState extends State<FansListPage>
           }
 
           _tabController =
-              TabController(length: widget.isAgent ? 4 : 3, vsync: this);
+              TabController(length: widget.isAgent ? 5 : 4, vsync: this);
         });
       }
     } else {}
@@ -113,6 +130,7 @@ class _FansListPageState extends State<FansListPage>
 
   @override
   void initState() {
+    _initFansTotalsData();
     /* _tabValues = [
       ' 全部 ',
       'vip会员',
@@ -122,13 +140,18 @@ class _FansListPageState extends State<FansListPage>
     if (widget.isAgent) {
       _tabValues = [
         '全部($_totalMembersNumber)',
+        '钻石($_diamondMembersNumber)',
         'vip($_vipMembersNumber)',
-        '普通($_ordinaryMembersNumber)',
         '体验($_experienceMembersNumber)',
+        '普通($_ordinaryMembersNumber)',
       ];
       _tabViews = [
         FansTabView(
           fansType: "",
+          isAgent: widget.isAgent,
+        ),
+        FansTabView(
+          fansType: "diamond",
           isAgent: widget.isAgent,
         ),
         FansTabView(
@@ -136,23 +159,28 @@ class _FansListPageState extends State<FansListPage>
           isAgent: widget.isAgent,
         ),
         FansTabView(
-          fansType: "ordinary",
+          fansType: "experience",
           isAgent: widget.isAgent,
         ),
         FansTabView(
-          fansType: "experience",
+          fansType: "ordinary",
           isAgent: widget.isAgent,
         ),
       ];
     } else {
       _tabValues = [
         '全部($_totalMembersNumber)',
-        'vip会员($_vipMembersNumber)',
-        '普通会员($_ordinaryMembersNumber)',
+        '钻石($_diamondMembersNumber)',
+        'vip($_vipMembersNumber)',
+        '普通($_ordinaryMembersNumber)',
       ];
       _tabViews = [
         FansTabView(
           fansType: "",
+          isAgent: widget.isAgent,
+        ),
+        FansTabView(
+          fansType: "diamond",
           isAgent: widget.isAgent,
         ),
         FansTabView(
@@ -166,8 +194,7 @@ class _FansListPageState extends State<FansListPage>
       ];
     }
 
-    _tabController = TabController(length: widget.isAgent ? 4 : 3, vsync: this);
-    _initFansTotalsData();
+    _tabController = TabController(length: widget.isAgent ? 5 : 4, vsync: this);
 
     super.initState();
   }
@@ -205,7 +232,9 @@ class _FansListPageState extends State<FansListPage>
         body: Center(
           child: Column(
             children: <Widget>[
-              Visibility(visible: !widget.isAgent, child: buildHeadLayout()),
+              Visibility(
+                  visible: !widget.isAgent && !CommonUtils.isEmpty(_agentInfo),
+                  child: buildHeadLayout()),
               Flexible(
                 child: Container(
                   margin: EdgeInsets.symmetric(
@@ -240,7 +269,7 @@ class _FansListPageState extends State<FansListPage>
                             controller: _tabController,
                             indicatorColor: Color(0xffF93736),
                             indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: false,
+                            isScrollable: _tabValues.length > 4 ? true : false,
                             labelColor: Color(0xffF93736),
                             unselectedLabelColor: Colors.black,
                           ),
@@ -457,6 +486,7 @@ class _FansTabViewState extends State<FansTabView> {
       onRefresh: () {
         page = 1;
         _initData();
+        _refreshController.finishLoad(noMore: false);
       },
       onLoad: () {
         if (!isFirstLoading) {
@@ -492,7 +522,7 @@ class _FansTabViewState extends State<FansTabView> {
     String nickName;
     String bindTime;
 
-    ///账户类型 0普通用户 1体验用户 2VIP用户
+    ///账户类型 0普通用户 1体验用户 2VIP用户 3 钻石用户
     String userType;
     String completeTaskNum = '';
     String totalTaskNum = '';
@@ -620,7 +650,9 @@ class _FansTabViewState extends State<FansTabView> {
         return "icon_experience.png";
       case "2":
         return "icon_vip.png";
+      case "4":
+        return "icon_diamond.png";
     }
-    return "icon_vip.png";
+    return "";
   }
 }

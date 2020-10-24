@@ -105,6 +105,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
           onRefresh: () {
             page = 1;
             _initData();
+            _refreshController.finishLoad(noMore: false);
           },
           onLoad: () {
             if (!isFirstLoading) {
@@ -166,6 +167,11 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
     Color bgColor = Colors.white;
     Color txtColor = Colors.white;
     switch (status) {
+      case "1":
+        statusDesc = "待提交";
+        bgColor = Color(0xffFFC4C4);
+        txtColor = Color(0xffF93736);
+        break;
       case "2":
         statusDesc = "审核中";
         bgColor = Color(0xffFFEAD2);
@@ -450,7 +456,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                             width: 0.5)),
                     child: Text(
                       //状态：
-                      "重新提交",
+                      "${status == "4" ? "重新提交" : "去提交"}",
                       style: TextStyle(
                         color: Color(0xFFCE0100),
                         fontSize: ScreenUtil().setSp(34),

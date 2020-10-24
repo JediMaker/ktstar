@@ -63,12 +63,17 @@ class _LoginPageState extends State<LoginPage> {
       switch (versionInfo.data.wxLogin) {
         case "1": //不显示
           GlobalConfig.displayThirdLoginInformation = false;
-          setState(() {});
+
+          if (mounted) {
+            setState(() {});
+          }
           break;
 
         case "2": //显示
           GlobalConfig.displayThirdLoginInformation = true;
-          setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
           break;
       }
     }

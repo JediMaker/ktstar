@@ -106,6 +106,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           onRefresh: () {
             page = 1;
             _initData();
+            _refreshController.finishLoad(noMore: false);
           },
           onLoad: () {
             if (!isFirstLoading) {

@@ -101,6 +101,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
           onRefresh: () {
             page = 1;
             _initData();
+            _refreshController.finishLoad(noMore: false);
           },
           onLoad: () {
             if (!isFirstLoading) {

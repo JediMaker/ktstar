@@ -39,9 +39,9 @@ class _TaskOpenDiamondPageState extends State<TaskOpenDiamondPage> {
     if (result.status) {
       if (mounted) {
         setState(() {
-          oldPrice = result.data.yPrice.toString();
-          nowPrice = result.data.nowPrice.toString();
-          showOldPrice = !(result.data.nowPrice == result.data.yPrice);
+//          oldPrice = result.data.yPrice.toString();
+//          nowPrice = result.data.nowPrice.toString();
+//          showOldPrice = !(result.data.nowPrice == result.data.yPrice);
         });
       }
     }

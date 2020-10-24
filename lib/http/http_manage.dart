@@ -1033,11 +1033,17 @@ class HttpManage {
   ///[payment] 	支付类型 1支付宝 2微信
   ///
   ///
+  ///[pay_type] 	升级类型 1VIP，3钻石
+  ///
+  ///[term] 期限（对应获取VIP价格接口返回值money_list->type）
+  ///
   /// 获取微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getWechatPayInfo() async {
+  static Future<WechatPayinfoEntity> getWechatPayInfo({pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
+    paramsMap["pay_type"] = "$pay_type";
+    paramsMap["term"] = "$term";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1055,11 +1061,17 @@ class HttpManage {
   ///[payment] 	支付类型 1支付宝 2微信
   ///
   ///
+  ///[pay_type] 	升级类型 1VIP，3钻石
+  ///
+  ///[term] 期限（对应获取VIP价格接口返回值money_list->type）
+  ///
   /// 获取支付宝支付信息
   ///
-  static Future<AlipayPayinfoEntity> getAliPayInfo() async {
+  static Future<AlipayPayinfoEntity> getAliPayInfo({pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
+    paramsMap["pay_type"] = "$pay_type";
+    paramsMap["term"] = "$term";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1224,11 +1236,11 @@ class HttpManage {
   static Future<ResultBeanEntity> uploadImageWithBytes(
       ByteData byteData) async {
     List<int> imageData = byteData.buffer.asUint8List();
-    var name= 'ktxx_${CommonUtils.currentTimeMillis()}.jpg';
+    var name = 'ktxx_${CommonUtils.currentTimeMillis()}.jpg';
     MultipartFile imageFile = MultipartFile.fromBytes(
       imageData,
       // 文件名
-      filename:name,
+      filename: name,
       contentType: MediaType("image", "jpg"),
     );
     Map paramsMap = Map<String, dynamic>();

@@ -17,6 +17,7 @@ import 'package:star/pages/task/task_about.dart';
 import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
+import 'package:star/pages/task/task_open_vip.dart';
 import 'package:star/pages/task/task_record_list.dart';
 import 'package:star/pages/withdrawal/withdrawal.dart';
 import 'package:star/utils/common_utils.dart';
@@ -66,7 +67,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
   ///微信账号绑定
   int isWeChatNoBinded = -1;
 
-  ///账号类型 0普通用户 1体验用户 2VIP用户 3代理
+  ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
   String userType;
   UserInfoEntity entity;
   Color _cardTextColor = Colors.white;
@@ -107,6 +108,12 @@ class _TaskMinePageState extends State<TaskMinePage> {
               _cardBgImageName = 'task_mine_card_bg_vip.png';
               break;
             case "3":
+//              #F8D9BA
+              isDiamonVip = true;
+              _cardTextColor = Color(0xffF8D9BA);
+              _cardBgImageName = 'task_mine_card_bg_proxy.png';
+              break;
+            case "4":
 //              #F8D9BA
               isDiamonVip = true;
               _cardTextColor = Color(0xffF8D9BA);
@@ -1238,7 +1245,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                   ],
                 ),
                 SizedBox(
-                  height: ScreenUtil().setHeight(48),
+                  height: ScreenUtil().setHeight(81),
                 ),
                 Row(
                   children: <Widget>[
@@ -1365,6 +1372,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
         return "icon_experience.png";
       case "2":
         return "icon_vip.png";
+      case "4":
+        return "icon_diamond.png";
     }
     return "";
   }
@@ -1384,6 +1393,9 @@ class _TaskMinePageState extends State<TaskMinePage> {
       case "3":
         text = "代理";
         break;
+      case "4":
+        text = "钻石会员";
+        break;
     }
     return ListTile(
       onTap: () async {
@@ -1394,8 +1406,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
               CommonUtils.showIosPayDialog();
               return;
             }
-            await NavigatorUtils.navigatorRouter(
-                context, TaskOpenDiamondPage());
+            await NavigatorUtils.navigatorRouter(context, TaskOpenVipPage());
             /* NavigatorUtils.navigatorRouterAndRemoveUntil(
                 context, RechargeResultPage());*/
             /*var result = await showDialog(

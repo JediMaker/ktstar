@@ -46,7 +46,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
   String _retrieveDataError;
 
   /// 存储所有上传图片的id
-  List<String> allImgIds = [];
+  List<String> allImgIds = List<String>();
 
   _onButtonPressed(ImageSource source, {BuildContext context}) async {
     try {
@@ -57,6 +57,11 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
       var entity = await HttpManage.uploadImage(File(_imageFile.path));
       if (entity.status) {
         var imageId = entity.data["id"].toString();
+
+        if (allImgIds == null) {
+          allImgIds = List<String>();
+        }
+        print("allImgIds=$imageId" + allImgIds.toString());
         allImgIds.add(imageId);
         var fileImage = Image.file(
           File(_imageFile.path),
@@ -65,10 +70,17 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           fit: BoxFit.fitWidth,
         );
         images.add(fileImage);
-      } else {}
-      print("allImgIds=" + allImgIds.toString());
-      print("images.length=" + images.length.toString());
-      setState(() async {});
+      } else {
+        print("allImgIdsstatus=" + allImgIds.toString());
+      }
+
+      if (mounted) {
+        setState(() {
+          print("allImgIds=" + allImgIds.toString());
+          print("images.length=" + images.length.toString());
+          images = images;
+        });
+      }
     } catch (e) {
       setState(() {
         _pickImageError = e;
@@ -82,9 +94,11 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
       if (mounted) {
         if (result.status) {
           setState(() {
-            imgNum = result.data.imgNum;
-            allImgIds = result.data.imgId;
+            imgNum = result.data.imgNum??"0";
+            widget.comId = result.data.comId??"";
             imageUrls = result.data.imgUrl;
+            allImgIds = result.data.imgId;
+
             for (var url in imageUrls) {
               images.add(Image.network(
                 url,
@@ -129,7 +143,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
       children: List.generate((images.length + 1).toInt(), (index) {
         var plusVisible = false;
         if (widget.pageType == 0) {
-          plusVisible = images.length <= imgNum;
+          plusVisible = images.length < imgNum;
         } else {
           if (images.length != 0) {
             plusVisible = images.length < imgNum;
@@ -274,7 +288,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           String imgIds = allImgIds.join(",");
           if (widget.pageType == 0) {
             ///提交任务
-            var result = await HttpManage.taskSubmit(widget.taskId, imgIds);
+            var result = await HttpManage.taskReSubmit(widget.comId, imgIds);
             if (result.status) {
               CommonUtils.showToast("提交成功");
               NavigatorUtils.navigatorRouterAndRemoveUntil(

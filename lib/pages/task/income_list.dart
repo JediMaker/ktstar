@@ -118,6 +118,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
         onRefresh: () {
           page = 1;
           _initData();
+          _refreshController.finishLoad(noMore: false);
         },
         onLoad: () {
           if (!isFirstLoading) {
@@ -125,7 +126,9 @@ class _IncomeListPageState extends State<IncomeListPage> {
             _initData();
           }
         },
-        emptyWidget: _profitList== null||_profitList.length==0 ? NoDataPage() : null,
+        emptyWidget: _profitList == null || _profitList.length == 0
+            ? NoDataPage()
+            : null,
         slivers: <Widget>[buildCenter()],
       ),
     );
@@ -150,6 +153,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
   buildItemLayout({IncomeListDataList listItem}) {
     String price = '';
     String type = '';
+    String profitType = '';
     String rejectReason = '';
     String createTime = '';
     String status = '';
@@ -159,12 +163,13 @@ class _IncomeListPageState extends State<IncomeListPage> {
     String iconName = '';
     try {
       price = listItem.price;
-      type = listItem.type;
       status = listItem.status;
       rejectReason = listItem.rejectReason;
       createTime = listItem.createTime;
       timeDesc = listItem.timeDesc;
       desc = listItem.desc;
+      profitType = listItem.profitType;
+      type = listItem.type;
     } catch (e) {}
     if (isWithdrawal) {
       //type1支付宝提现 2 微信提现
@@ -193,7 +198,17 @@ class _IncomeListPageState extends State<IncomeListPage> {
           break;
       }
     } else {
-      if (GlobalConfig.getUserInfo().type == 3) {
+      switch (profitType) {
+        case "2":
+          iconName = "icon_profit_task.png";
+          statusText = "任务奖励-成功";
+          break;
+        case "1":
+          iconName = "icon_profit_invite.png";
+          statusText = "邀请奖励-成功";
+          break;
+      }
+      /*if (GlobalConfig.getUserInfo().type == 3) {
         switch (type) {
           case "1":
           case "2":
@@ -206,17 +221,8 @@ class _IncomeListPageState extends State<IncomeListPage> {
             break;
         }
       } else {
-        switch (type) {
-          case "1":
-            iconName = "icon_profit_task.png";
-            statusText = "任务奖励-成功";
-            break;
-          case "2":
-            iconName = "icon_profit_invite.png";
-            statusText = "邀请奖励-成功";
-            break;
-        }
-      }
+
+      }*/
     }
 
     return Container(

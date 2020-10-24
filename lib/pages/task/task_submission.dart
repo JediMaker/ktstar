@@ -41,7 +41,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
       final pickedFile = await _picker.getImage(
         source: source,
       );
-      setState(() async {
+      setState(() {
         _imageFile = pickedFile;
       });
     } catch (e) {
@@ -60,6 +60,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
         if (result.status) {
           setState(() {
             imgUrl = result.data.imgUrl;
+            widget.comId = result.data.comId;
           });
         }
       }
@@ -96,7 +97,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
           var entity = await HttpManage.uploadImage(File(_imageFile.path));
           if (entity.status) {
             var imageId = entity.data["id"].toString();
-            var result = await HttpManage.taskSubmit(widget.taskId, imageId);
+            var result = await HttpManage.taskReSubmit(widget.comId, imageId);
             if (result.status) {
               CommonUtils.showToast("提交成功");
               NavigatorUtils.navigatorRouterAndRemoveUntil(
