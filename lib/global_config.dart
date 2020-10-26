@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
@@ -76,7 +77,7 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   /// 是否为release版
-  static bool isRelease = true;
+  static bool isRelease = false;
 
   /// 是否为绑定微信
   static bool isBindWechat = false;
@@ -135,7 +136,7 @@ class GlobalConfig {
     _initFluwx();
     HttpManage.init();
     _initJPushPlatformState();
-
+    configLoading();
     Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
@@ -256,5 +257,20 @@ class GlobalConfig {
     // setState to update our non-existent appearance.
     debugLable = platformVersion;
     print(debugLable.toString());
+  }
+
+  static configLoading() {
+    EasyLoading.instance
+      ..displayDuration = const Duration(milliseconds: 2000)
+      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+      ..loadingStyle = EasyLoadingStyle.dark
+      ..indicatorSize = 45.0
+      ..radius = 10.0
+      ..progressColor = Colors.yellow
+      ..backgroundColor = Colors.green
+      ..indicatorColor = Colors.yellow
+      ..textColor = Colors.yellow
+      ..maskColor = Colors.blue.withOpacity(0.5)
+      ..userInteractions = false;
   }
 }

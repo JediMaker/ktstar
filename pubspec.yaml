@@ -75,6 +75,8 @@ dependencies:
   flutter_statusbarcolor: ^0.2.3
   #  软键盘
   flutter_keyboard_visibility: ^3.2.2
+  #  加载框
+  flutter_easyloading: ^2.0.0
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

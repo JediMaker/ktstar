@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -54,6 +55,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
         source: source,
       );
       _imageFile = pickedFile;
+      EasyLoading.show(status: "图片上传中...");
       var entity = await HttpManage.uploadImage(File(_imageFile.path));
       if (entity.status) {
         var imageId = entity.data["id"].toString();
@@ -81,10 +83,12 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           images = images;
         });
       }
+      EasyLoading.dismiss();
     } catch (e) {
       setState(() {
         _pickImageError = e;
       });
+      EasyLoading.dismiss();
     }
   }
 
@@ -94,8 +98,8 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
       if (mounted) {
         if (result.status) {
           setState(() {
-            imgNum = result.data.imgNum??"0";
-            widget.comId = result.data.comId??"";
+            imgNum = result.data.imgNum ?? "0";
+            widget.comId = result.data.comId ?? "";
             imageUrls = result.data.imgUrl;
             allImgIds = result.data.imgId;
 
@@ -367,83 +371,85 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
-          ),
-          leading: IconButton(
-            icon: Image.asset(
-              "static/images/icon_ios_back_white.png",
-              width: ScreenUtil().setWidth(36),
-              height: ScreenUtil().setHeight(63),
-              fit: BoxFit.fill,
+    return FlutterEasyLoading(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(fontSize: ScreenUtil().setSp(54)),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back_white.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: GlobalConfig.taskHeadColor,
           ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: GlobalConfig.taskHeadColor,
-        ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(32),
-              vertical: ScreenUtil().setWidth(32)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin:
-                      EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(32)),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "上传任务截图",
-                    style: TextStyle(
-                        fontSize: ScreenUtil().setSp(42),
-                        color: Color(0xff222222)),
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(32),
+                vertical: ScreenUtil().setWidth(32)),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(32)),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "上传任务截图",
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                          color: Color(0xff222222)),
+                    ),
                   ),
-                ),
-                buildGridView(),
-                SizedBox(
-                  height: ScreenUtil().setHeight(32),
-                ),
-                Visibility(
-                  visible: true,
-                  child: Wrap(
-                    children: <Widget>[
-                      Text.rich(
-                        TextSpan(
-                          text: '* ',
-                          style: TextStyle(color: Color(0xFFF93736)),
-                          children: <InlineSpan>[
-                            TextSpan(
-                              text:
-                                  '请按照任务要求上传任务截图，禁止随意修改，伪造图片，一经发现，任务给予驳回，追回任务奖励金额。',
-                              style: TextStyle(
-                                color: Color(0xFFB9B9B9),
-                                fontSize: ScreenUtil().setSp(36),
+                  buildGridView(),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(32),
+                  ),
+                  Visibility(
+                    visible: true,
+                    child: Wrap(
+                      children: <Widget>[
+                        Text.rich(
+                          TextSpan(
+                            text: '* ',
+                            style: TextStyle(color: Color(0xFFF93736)),
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text:
+                                    '请按照任务要求上传任务截图，禁止随意修改，伪造图片，一经发现，任务给予驳回，追回任务奖励金额。',
+                                style: TextStyle(
+                                  color: Color(0xFFB9B9B9),
+                                  fontSize: ScreenUtil().setSp(36),
 //                            decoration: TextDecoration.underline,
 //                            decorationStyle: TextDecorationStyle.wavy,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                buildSubmitButton(),
+                  buildSubmitButton(),
 //                buildUploadtButton(),
-                /* CachedNetworkImage(
-                  imageUrl: "",
-                ),*/
-              ],
+                  /* CachedNetworkImage(
+                    imageUrl: "",
+                  ),*/
+                ],
+              ),
             ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+    );
   }
 }

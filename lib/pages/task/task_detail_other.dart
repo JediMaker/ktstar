@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,30 +34,32 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
   int page = 1;
   bool isFirstLoading = true;
   List<TaskDetailOtherDataDescJson> _descJsonList;
+  String title = '';
 
   _initData() async {
+    EasyLoading.show();
     var result = await HttpManage.getTaskDetailOther(widget.taskId);
     if (mounted) {
       if (result.status) {
         setState(() {
           _descJsonList = result.data.descJson;
+          title = result.data.title;
         });
       } else {
         CommonUtils.showToast(result.errMsg);
       }
     }
+    EasyLoading.dismiss();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     _initData();
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -65,111 +68,117 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
     ScreenUtil.init(context,
         width: 1125, height: 2436, allowFontScaling: false);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
-    String title = '关注可淘星选公众号';
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-          ),
-          leading: IconButton(
-            icon: Image.asset(
-              "static/images/icon_ios_back.png",
-              width: ScreenUtil().setWidth(36),
-              height: ScreenUtil().setHeight(63),
-              fit: BoxFit.fill,
+
+    return FlutterEasyLoading(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          centerTitle: true,
-          brightness: Brightness.light,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            width: double.maxFinite,
-            constraints: BoxConstraints(
-              minHeight: ScreenUtil().setHeight(2436),
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            color: Color(0xffFFF1F2),
-            child: Column(
-              children: <Widget>[
-                Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Image.asset(
-                      "static/images/bg_title.png",
-                      width: ScreenUtil().setWidth(1125),
-                      height: ScreenUtil().setHeight(363),
-                      fit: BoxFit.fill,
-                    ),
-                    Text(
-                      title,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setSp(61)),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(12),
-                ),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    TaskDetailOtherDataDescJson listItem = _descJsonList[index];
-                    return buildItemLayout(listItem: listItem, index: index);
-                  },
-                  itemCount: _descJsonList == null ? 0 : _descJsonList.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(
-                    height: ScreenUtil().setHeight(0.1),
-                    color: Color(0xffFFF1F2),
+            centerTitle: true,
+            brightness: Brightness.light,
+            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              width: double.maxFinite,
+              constraints: BoxConstraints(
+                minHeight: ScreenUtil().setHeight(2436),
+              ),
+              color: Color(0xffFFF1F2),
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        "static/images/bg_title.png",
+                        width: ScreenUtil().setWidth(1125),
+                        height: ScreenUtil().setHeight(363),
+                        fit: BoxFit.fill,
+                      ),
+                      Text(
+                        title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: ScreenUtil().setSp(61)),
+                      ),
+                    ],
                   ),
-                ),
-                buildBtnLayout(),
-                SizedBox(
-                  height: ScreenUtil().setHeight(120),
-                ),
-              ],
+                  SizedBox(
+                    height: ScreenUtil().setHeight(12),
+                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      TaskDetailOtherDataDescJson listItem =
+                          _descJsonList[index];
+                      return buildItemLayout(listItem: listItem, index: index);
+                    },
+                    itemCount: _descJsonList == null ? 0 : _descJsonList.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
+                      height: ScreenUtil().setHeight(0.1),
+                      color: Color(0xffFFF1F2),
+                    ),
+                  ),
+                  buildBtnLayout(),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(120),
+                  ),
+                ],
+              ),
             ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+    );
   }
 
   Widget buildBtnLayout() {
-    return Container(
-      alignment: Alignment.center,
-      height: ScreenUtil().setHeight(120),
-      child: Ink(
-        child: InkWell(
-            onTap: () async {
-              NavigatorUtils.navigatorRouter(
-                  context,
-                  TaskOtherSubmissionPage(
-                    taskId: widget.taskId,
-                    pageType: widget.pageType,
-                  ));
-            },
-            child: Container(
-                alignment: Alignment.center,
-                width: ScreenUtil().setWidth(773),
-                height: ScreenUtil().setHeight(120),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(69.0),
-                    color: Color(0XffF32E43)),
-                child: Text(
-                  "去提交",
-                  style: TextStyle(
-                      color: Colors.white, fontSize: ScreenUtil().setSp(42)),
-                ))),
+    return Visibility(
+      visible: _descJsonList != null,
+      child: Container(
+        alignment: Alignment.center,
+        height: ScreenUtil().setHeight(120),
+        child: Ink(
+          child: InkWell(
+              onTap: () async {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    TaskOtherSubmissionPage(
+                      taskId: widget.taskId,
+                      pageType: widget.pageType,
+                    ));
+              },
+              child: Container(
+                  alignment: Alignment.center,
+                  width: ScreenUtil().setWidth(773),
+                  height: ScreenUtil().setHeight(120),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(69.0),
+                      color: Color(0XffF32E43)),
+                  child: Text(
+                    "去提交",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: ScreenUtil().setSp(42)),
+                  ))),
+        ),
       ),
     );
   }
