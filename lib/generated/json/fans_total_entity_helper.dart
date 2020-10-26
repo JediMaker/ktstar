@@ -32,10 +32,16 @@ Map<String, dynamic> fansTotalEntityToJson(FansTotalEntity entity) {
 
 fansTotalDataFromJson(FansTotalData data, Map<String, dynamic> json) {
 	if (json['agent_info'] != null) {
-		data.agentInfo = new FansTotalDataAgentInfo().fromJson(json['agent_info']);
+		try {
+			data.agentInfo = new FansTotalDataAgentInfo().fromJson(json['agent_info']);
+		} catch (e) {
+		}
 	}
 	if (json['count_info'] != null) {
-		data.countInfo = new FansTotalDataCountInfo().fromJson(json['count_info']);
+		try {
+			data.countInfo = new FansTotalDataCountInfo().fromJson(json['count_info']);
+		} catch (e) {
+		}
 	}
 	return data;
 }
@@ -78,19 +84,34 @@ Map<String, dynamic> fansTotalDataAgentInfoToJson(FansTotalDataAgentInfo entity)
 
 fansTotalDataCountInfoFromJson(FansTotalDataCountInfo data, Map<String, dynamic> json) {
 	if (json['total'] != null) {
-		data.total = json['total']?.toInt();
+		try {
+			data.total = json['total']?.toInt();
+		} catch (e) {
+		}
 	}
 	if (json['vip'] != null) {
-		data.vip = json['vip']?.toInt();
+		try {
+			data.vip = json['vip']?.toInt();
+		} catch (e) {
+		}
 	}
 	if (json['experience'] != null) {
-		data.experience = json['experience']?.toInt();
+		try {
+			data.experience = json['experience']?.toInt();
+		} catch (e) {
+		}
 	}
 	if (json['ordinary'] != null) {
-		data.ordinary = json['ordinary']?.toInt();
+		try {
+			data.ordinary = json['ordinary']?.toInt();
+		} catch (e) {
+		}
 	}
 	if (json['diamond'] != null) {
-		data.diamond = json['diamond']?.toInt();
+		try {
+			data.diamond = json['diamond']?.toInt();
+		} catch (e) {
+		}
 	}
 	return data;
 }
