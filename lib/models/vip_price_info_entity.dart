@@ -13,6 +13,8 @@ class VipPriceInfoVip with JsonConvert<VipPriceInfoVip> {
 	String desc;
 	@JSONField(name: "year_money")
 	String yearMoney;
+	@JSONField(name: "b_year_money")
+	String bYearMoney;
 	@JSONField(name: "icon_desc")
 	List<VipPriceInfoVipIconDesc> iconDesc;
 	@JSONField(name: "money_list")
@@ -23,12 +25,14 @@ class VipPriceInfoVipIconDesc with JsonConvert<VipPriceInfoVipIconDesc> {
 	String icon;
 	String desc;
 	String subdesc;
+	String ssubdesc;
 }
 
 class VipPriceInfoVipMoneyList with JsonConvert<VipPriceInfoVipMoneyList> {
 	String type;
 	String desc;
 	String price;
+	bool flag;
 	@JSONField(name: "next_price")
 	String nextPrice;
 	@JSONField(name: "money_price")
@@ -42,6 +46,8 @@ class VipPriceInfoDiamond with JsonConvert<VipPriceInfoDiamond> {
 	String desc;
 	@JSONField(name: "year_money")
 	String yearMoney;
+	@JSONField(name: "b_year_money")
+	String bYearMoney;
 	@JSONField(name: "icon_desc")
 	List<VipPriceInfoDiamondIconDesc> iconDesc;
 	@JSONField(name: "money_list")
@@ -52,12 +58,14 @@ class VipPriceInfoDiamondIconDesc with JsonConvert<VipPriceInfoDiamondIconDesc> 
 	String icon;
 	String desc;
 	String subdesc;
+	String ssubdesc;
 }
 
 class VipPriceInfoDiamondMoneyList with JsonConvert<VipPriceInfoDiamondMoneyList> {
 	String type;
 	String desc;
 	String price;
+	bool flag;
 	@JSONField(name: "next_price")
 	String nextPrice;
 	@JSONField(name: "money_price")

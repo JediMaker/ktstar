@@ -34,6 +34,9 @@ vipPriceInfoVipFromJson(VipPriceInfoVip data, Map<String, dynamic> json) {
 	if (json['year_money'] != null) {
 		data.yearMoney = json['year_money']?.toString();
 	}
+	if (json['b_year_money'] != null) {
+		data.bYearMoney = json['b_year_money']?.toString();
+	}
 	if (json['icon_desc'] != null) {
 		data.iconDesc = new List<VipPriceInfoVipIconDesc>();
 		(json['icon_desc'] as List).forEach((v) {
@@ -55,6 +58,7 @@ Map<String, dynamic> vipPriceInfoVipToJson(VipPriceInfoVip entity) {
 	data['profit_day'] = entity.profitDay;
 	data['desc'] = entity.desc;
 	data['year_money'] = entity.yearMoney;
+	data['b_year_money'] = entity.bYearMoney;
 	if (entity.iconDesc != null) {
 		data['icon_desc'] =  entity.iconDesc.map((v) => v.toJson()).toList();
 	}
@@ -74,6 +78,9 @@ vipPriceInfoVipIconDescFromJson(VipPriceInfoVipIconDesc data, Map<String, dynami
 	if (json['subdesc'] != null) {
 		data.subdesc = json['subdesc']?.toString();
 	}
+	if (json['ssubdesc'] != null) {
+		data.ssubdesc = json['ssubdesc']?.toString();
+	}
 	return data;
 }
 
@@ -82,6 +89,7 @@ Map<String, dynamic> vipPriceInfoVipIconDescToJson(VipPriceInfoVipIconDesc entit
 	data['icon'] = entity.icon;
 	data['desc'] = entity.desc;
 	data['subdesc'] = entity.subdesc;
+	data['ssubdesc'] = entity.ssubdesc;
 	return data;
 }
 
@@ -94,6 +102,9 @@ vipPriceInfoVipMoneyListFromJson(VipPriceInfoVipMoneyList data, Map<String, dyna
 	}
 	if (json['price'] != null) {
 		data.price = json['price']?.toString();
+	}
+	if (json['flag'] != null) {
+		data.flag = json['flag'];
 	}
 	if (json['next_price'] != null) {
 		data.nextPrice = json['next_price']?.toString();
@@ -109,6 +120,7 @@ Map<String, dynamic> vipPriceInfoVipMoneyListToJson(VipPriceInfoVipMoneyList ent
 	data['type'] = entity.type;
 	data['desc'] = entity.desc;
 	data['price'] = entity.price;
+	data['flag'] = entity.flag;
 	data['next_price'] = entity.nextPrice;
 	data['money_price'] = entity.moneyPrice;
 	return data;
@@ -126,6 +138,9 @@ vipPriceInfoDiamondFromJson(VipPriceInfoDiamond data, Map<String, dynamic> json)
 	}
 	if (json['year_money'] != null) {
 		data.yearMoney = json['year_money']?.toString();
+	}
+	if (json['b_year_money'] != null) {
+		data.bYearMoney = json['b_year_money']?.toString();
 	}
 	if (json['icon_desc'] != null) {
 		data.iconDesc = new List<VipPriceInfoDiamondIconDesc>();
@@ -148,6 +163,7 @@ Map<String, dynamic> vipPriceInfoDiamondToJson(VipPriceInfoDiamond entity) {
 	data['profit_day'] = entity.profitDay;
 	data['desc'] = entity.desc;
 	data['year_money'] = entity.yearMoney;
+	data['b_year_money'] = entity.bYearMoney;
 	if (entity.iconDesc != null) {
 		data['icon_desc'] =  entity.iconDesc.map((v) => v.toJson()).toList();
 	}
@@ -167,6 +183,9 @@ vipPriceInfoDiamondIconDescFromJson(VipPriceInfoDiamondIconDesc data, Map<String
 	if (json['subdesc'] != null) {
 		data.subdesc = json['subdesc']?.toString();
 	}
+	if (json['ssubdesc'] != null) {
+		data.ssubdesc = json['ssubdesc']?.toString();
+	}
 	return data;
 }
 
@@ -175,6 +194,7 @@ Map<String, dynamic> vipPriceInfoDiamondIconDescToJson(VipPriceInfoDiamondIconDe
 	data['icon'] = entity.icon;
 	data['desc'] = entity.desc;
 	data['subdesc'] = entity.subdesc;
+	data['ssubdesc'] = entity.ssubdesc;
 	return data;
 }
 
@@ -187,6 +207,9 @@ vipPriceInfoDiamondMoneyListFromJson(VipPriceInfoDiamondMoneyList data, Map<Stri
 	}
 	if (json['price'] != null) {
 		data.price = json['price']?.toString();
+	}
+	if (json['flag'] != null) {
+		data.flag = json['flag'];
 	}
 	if (json['next_price'] != null) {
 		data.nextPrice = json['next_price']?.toString();
@@ -202,6 +225,7 @@ Map<String, dynamic> vipPriceInfoDiamondMoneyListToJson(VipPriceInfoDiamondMoney
 	data['type'] = entity.type;
 	data['desc'] = entity.desc;
 	data['price'] = entity.price;
+	data['flag'] = entity.flag;
 	data['next_price'] = entity.nextPrice;
 	data['money_price'] = entity.moneyPrice;
 	return data;
