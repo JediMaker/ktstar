@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
@@ -35,7 +37,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff666666);
   Color _layoutSelectedColor = Colors.white;
-  int _selectIndex = 0;
+  int _selectIndex = -1;
   String _selectPrice = "";
   int _currentIndex = 0;
   int _payway = 0;
@@ -63,6 +65,11 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
         setState(() {
           _vipInfo = result.data.vip;
           _diamondInfo = result.data.diamond;
+          if (_vipInfo.moneyList.length > 0 &&
+              !CommonUtils.isEmpty(_vipInfo.moneyList[0]) &&
+              _vipInfo.moneyList[0].flag) {
+            _selectIndex = 0;
+          }
         });
       }
     }
@@ -167,13 +174,25 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                               if (mounted) {
                                 setState(() {
                                   _currentIndex = index;
-                                  print("_currentIndex=$_currentIndex");
+                                  _selectIndex = -1;
                                   if (_currentIndex == 0) {
                                     //VIP会员
                                     _isDiamondVip = false;
+                                    if (_vipInfo.moneyList.length > 0 &&
+                                        !CommonUtils.isEmpty(
+                                            _vipInfo.moneyList[0]) &&
+                                        _vipInfo.moneyList[0].flag) {
+                                      _selectIndex = 0;
+                                    }
                                   } else {
                                     ///钻石会员
                                     _isDiamondVip = true;
+                                    if (_diamondInfo.moneyList.length > 0 &&
+                                        !CommonUtils.isEmpty(
+                                            _diamondInfo.moneyList[0]) &&
+                                        _diamondInfo.moneyList[0].flag) {
+                                      _selectIndex = 0;
+                                    }
                                   }
                                 });
                               }
@@ -197,6 +216,10 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
               Visibility(
                 child: GestureDetector(
                   onTap: () async {
+                    if (_selectIndex == -1) {
+                      CommonUtils.showToast("请选择会员卡类型");
+                      return;
+                    }
                     //标语
                     _showSelectPayWayBottomSheet(context);
                   },
@@ -284,11 +307,13 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
     var profit_day = '';
     var desc = '';
     var year_money = '';
+    var b_year_money = '';
     try {
       name = _vipInfo.name;
       profit_day = _vipInfo.profitDay;
       desc = _vipInfo.desc;
       year_money = _vipInfo.yearMoney;
+      b_year_money = _vipInfo.bYearMoney;
     } catch (e) {}
     return Container(
       width: double.maxFinite,
@@ -319,7 +344,16 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                       fontWeight: FontWeight.bold,
                       fontSize: ScreenUtil().setSp(54)),
                 ),
-                Text(
+                Container(
+                  margin: EdgeInsets.only(left: ScreenUtil().setWidth(5)),
+                  child: Image.asset(
+                    "static/images/icon_o_vip.png",
+                    width: ScreenUtil().setWidth(61),
+                    height: ScreenUtil().setWidth(61),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                /*Text(
                   "(收益$profit_day元起/天)",
                   style: TextStyle(
                       color: Color(
@@ -327,7 +361,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                       ),
                       fontWeight: FontWeight.bold,
                       fontSize: ScreenUtil().setSp(36)),
-                ),
+                ),*/
               ],
             ),
           ),
@@ -340,14 +374,14 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
               children: <Widget>[
                 Container(
                   child: Text(
-                    "$desc",
+                    "$desc，收益$profit_day元起/天",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Color(
                           0xff222222,
                         ),
-                        fontSize: ScreenUtil().setSp(36)),
+                        fontSize: ScreenUtil().setSp(42)),
                   ),
                 ),
               ],
@@ -359,32 +393,76 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
               margin: EdgeInsets.symmetric(
                   horizontal: ScreenUtil().setWidth(50),
                   vertical: ScreenUtil().setHeight(33)),
-              child: Text.rich(
-                TextSpan(
-                  style: TextStyle(
-                    color: Color(0xff222222),
-                  ),
-                  children: <InlineSpan>[
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text.rich(
                     TextSpan(
-                      text: "￥",
-                    ),
-                    TextSpan(
-                      text: "$year_money",
                       style: TextStyle(
-                          fontSize: ScreenUtil().setSp(76),
-                          color: Color(0xff222222),
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: "/年",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(42),
                         color: Color(0xff222222),
                       ),
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: "￥",
+                        ),
+                        TextSpan(
+                          text: "$year_money",
+                          style: TextStyle(
+                              fontSize: ScreenUtil().setSp(76),
+                              color: Color(0xff222222),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text: "/年",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(42),
+                            color: Color(0xff222222),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Visibility(
+                    visible: !CommonUtils.isEmpty(b_year_money),
+                    child: Container(
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
+                      child: Text.rich(
+                        TextSpan(
+                          style: TextStyle(
+                            color: Color(0xff222222),
+                          ),
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text: "（原价",
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                                color: Color(0xff222222),
+                              ),
+                            ),
+                            TextSpan(
+                              text: "$b_year_money",
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                                color: Color(0xff222222),
+                              ),
+                            ),
+                            TextSpan(
+                              text: "/年）",
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                                color: Color(0xff222222),
+                              ),
+                            ),
+                          ],
+                        ),
+                        style:
+                            TextStyle(decoration: TextDecoration.lineThrough),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           )
@@ -399,11 +477,13 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
     var profit_day = '';
     var desc = '';
     var year_money = '';
+    var b_year_money = '';
     try {
       name = _diamondInfo.name;
       profit_day = _diamondInfo.profitDay;
       desc = _diamondInfo.desc;
       year_money = _diamondInfo.yearMoney;
+      b_year_money = _diamondInfo.bYearMoney;
     } catch (e) {}
     return Container(
       height: ScreenUtil().setHeight(473),
@@ -430,7 +510,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                 horizontal: ScreenUtil().setWidth(50),
                 vertical: ScreenUtil().setHeight(56)),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   "$name",
@@ -441,7 +521,16 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                       fontWeight: FontWeight.bold,
                       fontSize: ScreenUtil().setSp(54)),
                 ),
-                Text(
+                Container(
+                  margin: EdgeInsets.only(left: ScreenUtil().setWidth(5)),
+                  child: Image.asset(
+                    "static/images/icon_o_diamond.png",
+                    width: ScreenUtil().setWidth(60),
+                    height: ScreenUtil().setWidth(60),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                /*Text(
                   "(收益$profit_day元起/天)",
                   style: TextStyle(
                       color: Color(
@@ -449,7 +538,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                       ),
                       fontWeight: FontWeight.bold,
                       fontSize: ScreenUtil().setSp(36)),
-                ),
+                ),*/
               ],
             ),
           ),
@@ -462,14 +551,14 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
               children: <Widget>[
                 Container(
                   child: Text(
-                    "$desc",
+                    "$desc，收益$profit_day元起/天",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Color(
                           0xffffffff,
                         ),
-                        fontSize: ScreenUtil().setSp(36)),
+                        fontSize: ScreenUtil().setSp(42)),
                   ),
                 ),
               ],
@@ -479,28 +568,69 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
             margin: EdgeInsets.symmetric(
                 horizontal: ScreenUtil().setWidth(50),
                 vertical: ScreenUtil().setHeight(33)),
-            child: Text.rich(TextSpan(
-              style: TextStyle(
-                color: Color(0xffE3C19F),
-              ),
-              children: <InlineSpan>[
-                TextSpan(
-                  text: "￥",
-                ),
-                TextSpan(
-                  text: "$year_money",
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text.rich(TextSpan(
                   style: TextStyle(
-                      fontSize: ScreenUtil().setSp(76),
-                      fontWeight: FontWeight.bold),
-                ),
-                TextSpan(
-                  text: "/年",
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(42),
+                    color: Color(0xffE3C19F),
+                  ),
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: "￥",
+                    ),
+                    TextSpan(
+                      text: "$year_money",
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(76),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: "/年",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(42),
+                      ),
+                    ),
+                  ],
+                )),
+                Visibility(
+                  visible: !CommonUtils.isEmpty(b_year_money),
+                  child: Container(
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
+                    child: Text.rich(
+                      TextSpan(
+                        style: TextStyle(
+                          color: Color(0xffE3C19F),
+                        ),
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text: "（原价",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
+                          TextSpan(
+                            text: "$b_year_money",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
+                          TextSpan(
+                            text: "/年）",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
+                        ],
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(decoration: TextDecoration.lineThrough),
+                    ),
                   ),
                 ),
               ],
-            )),
+            ),
           )
         ],
       ),
@@ -668,6 +798,14 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                     fontSize: ScreenUtil().setSp(30), color: _textBottomColor),
               ),
             ),
+            new Container(
+              margin: EdgeInsets.only(top: 4),
+              child: new Text(
+                "${!_isDiamondVip ? "${itemVip.ssubdesc}" : "${itemDiamond.ssubdesc}"}",
+                style: new TextStyle(
+                    fontSize: ScreenUtil().setSp(30), color: _textBottomColor),
+              ),
+            ),
           ],
         ),
       ),
@@ -728,92 +866,101 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
       {VipPriceInfoVipMoneyList itemVip,
       VipPriceInfoDiamondMoneyList itemDiamond,
       int index}) {
-    String title = '连续包年';
-    String yearPrice = '799.00';
-    String monthPrice = '22.5';
+    String title = '';
+    String yearPrice = '';
+    String monthPrice = '';
     String renewalPrice = ''; //续费价格
     String des = ''; //续费价格
+    bool flag = false; //续费价格
     try {
       if (_isDiamondVip) {
         title = itemDiamond.desc;
         yearPrice = itemDiamond.price;
         renewalPrice = itemDiamond.nextPrice;
         monthPrice = itemDiamond.moneyPrice;
+        flag = itemDiamond.flag;
       } else {
         title = itemVip.desc;
         yearPrice = itemVip.price;
         renewalPrice = itemVip.nextPrice;
         monthPrice = itemVip.moneyPrice;
+        flag = itemVip.flag;
       }
       des = '$title续费$renewalPrice元';
     } catch (e) {}
     return SelectChoiceChip(
       width: ScreenUtil().setWidth(325),
       height: ScreenUtil().setHeight(393),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            child: Text(
-              "${title}",
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(47),
-                color: Color(0xff666666),
+      child: Container(
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(32)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Text(
+                "${title}",
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(47),
+                  color: Color(0xff666666),
+                ),
               ),
             ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "￥",
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(47),
-                    color: Color(0xffBD8B4C),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "￥",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(47),
+                      color: Color(0xffBD8B4C),
+                    ),
                   ),
-                ),
-                Text(
-                  "${yearPrice}",
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(61),
-                    color: Color(0xffBD8B4C),
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    "${flag ? yearPrice : "--"}",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(61),
+                      color: Color(0xffBD8B4C),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(
-              vertical: ScreenUtil().setHeight(15),
-            ),
-            child: Text(
-              //
-              "折合￥${monthPrice}元/月",
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(32),
-                color: Color(0xff999999),
+                ],
               ),
             ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Color(0xffE5BD7B),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(ScreenUtil().setWidth(10)))),
-            height: ScreenUtil().setHeight(65),
-            width: ScreenUtil().setWidth(266),
-            child: Text(
-              "$des",
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: ScreenUtil().setSp(32), color: Colors.white),
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: ScreenUtil().setHeight(15),
+              ),
+              child: Text(
+                //
+                "折合￥${flag ? monthPrice : "--"}元/月",
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(32),
+                  color: Color(0xff999999),
+                ),
+              ),
             ),
-          ),
-        ],
+            Visibility(
+              visible: !flag,
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Color(0xffE5BD7B),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(ScreenUtil().setWidth(10)))),
+                height: ScreenUtil().setHeight(65),
+                width: ScreenUtil().setWidth(266),
+                child: Text(
+                  "${flag ? des : "暂未开通"}",
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(32), color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       borderRadius: BorderRadius.all(Radius.circular(5)),
       selected: _selectIndex == index,
@@ -831,6 +978,10 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
       boxColor: Colors.white,
       onSelected: (v) {
         setState(() {
+          if (!flag) {
+            CommonUtils.showToast("暂未开通，敬请期待");
+            return;
+          }
           _selectIndex = index;
           _selectPrice = yearPrice;
         });
