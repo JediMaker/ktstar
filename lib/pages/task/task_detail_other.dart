@@ -37,7 +37,10 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
   String title = '';
 
   _initData() async {
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {
+    }
     var result = await HttpManage.getTaskDetailOther(widget.taskId);
     if (mounted) {
       if (result.status) {
@@ -49,7 +52,10 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
         CommonUtils.showToast(result.errMsg);
       }
     }
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {
+    }
   }
 
   @override
@@ -454,7 +460,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
                     ),
                     Transform.translate(
                       offset: Offset(0, 1 / 2),
-                      child: Text(
+                      child: SelectableText(
                         "$stepDescText",
                         textAlign: TextAlign.center,
                         strutStyle: StrutStyle(

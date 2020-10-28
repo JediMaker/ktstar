@@ -7,6 +7,9 @@ import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/splash_page.dart';
 import 'package:star/utils/common_utils.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'pages/widget/common_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
@@ -44,6 +47,19 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: GlobalConfig.isLogin() ? TaskIndexPage() : LoginPage(),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        ///自定义代理
+        CommonLocalizationsDelegate(),
+      ],
+
+      ///指定简体中文
+      locale: const Locale('zh', 'CN'),
+      supportedLocales: [
+        const Locale('zh', 'CN'),
+        const Locale('en', 'US'),
+      ],
     );
   }
 }
