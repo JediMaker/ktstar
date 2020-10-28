@@ -112,6 +112,9 @@ vipPriceInfoVipMoneyListFromJson(VipPriceInfoVipMoneyList data, Map<String, dyna
 	if (json['money_price'] != null) {
 		data.moneyPrice = json['money_price']?.toString();
 	}
+	if (json['original_price'] != null) {
+		data.originalPrice = json['original_price']?.toString();
+	}
 	return data;
 }
 
@@ -123,6 +126,7 @@ Map<String, dynamic> vipPriceInfoVipMoneyListToJson(VipPriceInfoVipMoneyList ent
 	data['flag'] = entity.flag;
 	data['next_price'] = entity.nextPrice;
 	data['money_price'] = entity.moneyPrice;
+	data['original_price'] = entity.originalPrice;
 	return data;
 }
 
@@ -217,6 +221,9 @@ vipPriceInfoDiamondMoneyListFromJson(VipPriceInfoDiamondMoneyList data, Map<Stri
 	if (json['money_price'] != null) {
 		data.moneyPrice = json['money_price']?.toString();
 	}
+	if (json['original_price'] != null) {
+		data.originalPrice = json['original_price']?.toString();
+	}
 	return data;
 }
 
@@ -228,5 +235,6 @@ Map<String, dynamic> vipPriceInfoDiamondMoneyListToJson(VipPriceInfoDiamondMoney
 	data['flag'] = entity.flag;
 	data['next_price'] = entity.nextPrice;
 	data['money_price'] = entity.moneyPrice;
+	data['original_price'] = entity.originalPrice;
 	return data;
 }

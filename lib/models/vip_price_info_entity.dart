@@ -37,6 +37,8 @@ class VipPriceInfoVipMoneyList with JsonConvert<VipPriceInfoVipMoneyList> {
 	String nextPrice;
 	@JSONField(name: "money_price")
 	String moneyPrice;
+	@JSONField(name: "original_price")
+	String originalPrice;
 }
 
 class VipPriceInfoDiamond with JsonConvert<VipPriceInfoDiamond> {
@@ -70,4 +72,6 @@ class VipPriceInfoDiamondMoneyList with JsonConvert<VipPriceInfoDiamondMoneyList
 	String nextPrice;
 	@JSONField(name: "money_price")
 	String moneyPrice;
+	@JSONField(name: "original_price")
+	String originalPrice;
 }
