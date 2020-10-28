@@ -23,7 +23,8 @@ import '../../global_config.dart';
 class TaskDetailPage extends StatefulWidget {
   String taskId;
 
-  TaskDetailPage({Key key, @required this.taskId,this.pageType=0}) : super(key: key);
+  TaskDetailPage({Key key, @required this.taskId, this.pageType = 0})
+      : super(key: key);
   final String title = "任务下载";
   int pageType;
 
@@ -437,147 +438,149 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  onPressed: () async {
-                    CommonUtils.requestPermission(
-                        _permission, _saveImages(showToast: true));
-                  },
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                          margin: const EdgeInsets.only(bottom: 6.0),
-                          child: new CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.transparent,
-                            child: new Image.asset(
-                              "static/images/task_download_img.png",
-                              width: ScreenUtil().setWidth(138),
-                              height: ScreenUtil().setWidth(138),
-                            ),
+                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                fun: _saveImagesWithPermission,
+                childWidget: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/task_download_img.png",
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
                           ),
                         ),
-                        new Container(
-                          child: new Text(
-                            "下载图片",
-                            style:
-                                new TextStyle(fontSize: ScreenUtil().setSp(32)),
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
+                      ),
+                      new Container(
+                        child: new Text(
+                          "下载图片",
+                          style:
+                              new TextStyle(fontSize: ScreenUtil().setSp(32)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: des));
-                    CommonUtils.showToast("已复制文案");
-                  },
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                          margin: const EdgeInsets.only(bottom: 6.0),
-                          child: new CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.transparent,
-                            child: new Image.asset(
-                              "static/images/task_text_copy.png",
-                              width: ScreenUtil().setWidth(138),
-                              height: ScreenUtil().setWidth(138),
-                            ),
+                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                fun: _copyText,
+                childWidget: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/task_text_copy.png",
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
                           ),
                         ),
-                        new Container(
-                          child: new Text("复制文案",
-                              style: new TextStyle(
-                                  fontSize: ScreenUtil().setSp(32))),
-                        )
-                      ],
-                    ),
-                  )),
+                      ),
+                      new Container(
+                        child: new Text("复制文案",
+                            style: new TextStyle(
+                                fontSize: ScreenUtil().setSp(32))),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  onPressed: () {
-                    /*     source = WeChatImage.network(images[0]);
-                    _shareImage(WeChatScene.SESSION);*/
-                    Clipboard.setData(ClipboardData(text: des));
-                    CommonUtils.requestPermission(
-                        _permission, _saveImages(showToast: false));
-                    CommonUtils.showToast("已保存文案和图片");
-                    launch("weixin://");
-                  },
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                          margin: const EdgeInsets.only(bottom: 6.0),
-                          child: new CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.transparent,
-                            child: new Image.asset(
-                              "static/images/task_wechat.png",
-                              width: ScreenUtil().setWidth(138),
-                              height: ScreenUtil().setWidth(138),
-                            ),
+                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                fun: _goWechat,
+                childWidget: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/task_wechat.png",
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
                           ),
                         ),
-                        new Container(
-                          child: new Text("微信",
-                              style: new TextStyle(
-                                  fontSize: ScreenUtil().setSp(32))),
-                        )
-                      ],
-                    ),
-                  )),
+                      ),
+                      new Container(
+                        child: new Text("微信",
+                            style: new TextStyle(
+                                fontSize: ScreenUtil().setSp(32))),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  onPressed: () {
-                    /*  source = WeChatImage.network(images[0]);
-                    _shareImage(WeChatScene.TIMELINE);*/
-                    Clipboard.setData(ClipboardData(text: des));
-                    CommonUtils.requestPermission(
-                        _permission, _saveImages(showToast: false));
-                    CommonUtils.showToast("已保存文案和图片");
-                    launch("weixin://");
-                  },
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                          margin: const EdgeInsets.only(bottom: 6.0),
-                          child: new CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.transparent,
-                            child: new Image.asset(
-                              "static/images/task_wechat_friends_circle.png",
-                              width: ScreenUtil().setWidth(138),
-                              height: ScreenUtil().setWidth(138),
-                            ),
+                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                fun: _goWechat,
+                childWidget: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/task_wechat_friends_circle.png",
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
                           ),
                         ),
-                        new Container(
-                          child: new Text("朋友圈",
-                              style: new TextStyle(
-                                  fontSize: ScreenUtil().setSp(32))),
-                        )
-                      ],
-                    ),
-                  )),
+                      ),
+                      new Container(
+                        child: new Text("朋友圈",
+                            style: new TextStyle(
+                                fontSize: ScreenUtil().setSp(32))),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _saveImagesWithPermission() {
+    CommonUtils.requestPermission(_permission, _saveImages(showToast: true));
+  }
+
+  void _goWechat() {
+    Clipboard.setData(ClipboardData(text: des));
+    CommonUtils.requestPermission(_permission, _saveImages(showToast: false));
+    CommonUtils.showToast("已保存文案和图片");
+    launch("weixin://");
+  }
+
+  void _copyText() {
+    Clipboard.setData(ClipboardData(text: des));
+    CommonUtils.showToast("已复制文案");
   }
 
   Widget myServiceCard2() {
@@ -830,8 +833,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               flex: 1,
               child: GestureDetector(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: des));
-                  CommonUtils.showToast("已复制文案");
+                  _copyText();
                 },
                 child: Container(
                   height: 46,
