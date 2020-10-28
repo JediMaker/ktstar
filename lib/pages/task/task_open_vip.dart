@@ -424,7 +424,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Visibility(
-                    visible: !CommonUtils.isEmpty(b_year_money),
+                    visible: false,
                     child: Container(
                       margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
                       child: Text.rich(
@@ -594,7 +594,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                   ],
                 )),
                 Visibility(
-                  visible: !CommonUtils.isEmpty(b_year_money),
+                  visible: false,
                   child: Container(
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
                     child: Text.rich(
@@ -871,6 +871,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
     String monthPrice = '';
     String renewalPrice = ''; //续费价格
     String des = ''; //续费价格
+    String originalPrice = ''; //原价
     bool flag = false; //续费价格
     try {
       if (_isDiamondVip) {
@@ -879,12 +880,14 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
         renewalPrice = itemDiamond.nextPrice;
         monthPrice = itemDiamond.moneyPrice;
         flag = itemDiamond.flag;
+        originalPrice = itemDiamond.originalPrice;
       } else {
         title = itemVip.desc;
         yearPrice = itemVip.price;
         renewalPrice = itemVip.nextPrice;
         monthPrice = itemVip.moneyPrice;
         flag = itemVip.flag;
+        originalPrice = itemVip.originalPrice;
       }
       des = '$title续费$renewalPrice元';
     } catch (e) {}
@@ -917,7 +920,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                     ),
                   ),
                   Text(
-                    "${flag ? yearPrice : "--"}",
+                    "$yearPrice",
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(61),
                       color: Color(0xffBD8B4C),
@@ -933,15 +936,17 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
               ),
               child: Text(
                 //
-                "折合￥${flag ? monthPrice : "--"}元/月",
+                "原价￥$originalPrice",
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
+                  decoration: TextDecoration.lineThrough,
                   fontSize: ScreenUtil().setSp(32),
                   color: Color(0xff999999),
                 ),
               ),
             ),
             Visibility(
-              visible: !flag,
+              visible: true,
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -951,7 +956,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                 height: ScreenUtil().setHeight(65),
                 width: ScreenUtil().setWidth(266),
                 child: Text(
-                  "${flag ? des : "暂未开通"}",
+                  "${flag ? "折合￥${flag ? monthPrice : "--"}元/月" : "暂未开通"}",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
