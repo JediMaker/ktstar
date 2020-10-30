@@ -51,23 +51,26 @@ class TokenInterceptors extends InterceptorsWrapper {
       resultBeanEntityFromJson(entity, extractData);
       if (entity.errCode.toString() == "308") {
         response = await getAuthorization(request);
+        return response;
       }
       if (entity.errCode.toString() == "303") {
         CommonUtils.showToast("登陆过期，请重新登录！");
-
       }
       if (entity.errCode.toString() == "304") {
-        Fluttertoast.showToast(
-            msg: "您的账号已在其他设备上登录，请重新登录！",
-            textColor: Colors.white,
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.grey);
-        Future.delayed(Duration(seconds: 2)).then((onValue) {
-          var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+        if (GlobalConfig.isLogin()) {
           GlobalConfig.prefs.remove("hasLogin");
           GlobalConfig.saveLoginStatus(false);
-          NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
-        });
+          Fluttertoast.showToast(
+              msg: "您的账号已在其他设备上登录，请重新登录！",
+              textColor: Colors.white,
+              toastLength: Toast.LENGTH_LONG,
+              backgroundColor: Colors.grey);
+          Future.delayed(Duration(seconds: 1)).then((onValue) {
+            var context =
+                GlobalConfig.navigatorKey.currentState.overlay.context;
+            NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+          });
+        }
         /*Future.delayed(Duration(seconds: 0)).then((onValue) {
           var context = GlobalConfig.navigatorKey.currentState.overlay.context;
           showCupertinoDialog(
@@ -122,17 +125,19 @@ class TokenInterceptors extends InterceptorsWrapper {
     Response response;
     var result = await HttpManage.referToken(request);
     print("getAuthorization" + result.data.toString());
-    if (result.status) {
-      request.headers["token"] = GlobalConfig.getLoginInfo().token;
-      response = await Dio().request(request.path,
-          data: request.data,
-          queryParameters: request.queryParameters,
-          cancelToken: request.cancelToken,
-          options: request,
-          onReceiveProgress: request.onReceiveProgress);
-      print("getAuthorizationBeforeresponse" + response.data.toString());
-    } else {
-      getAuthorization(request);
+    if (!CommonUtils.isEmpty(result.data)) {
+      if (result.status) {
+        request.headers["token"] = GlobalConfig.getLoginInfo().token;
+        response = await Dio().request(request.path,
+            data: request.data,
+            queryParameters: request.queryParameters,
+            cancelToken: request.cancelToken,
+            options: request,
+            onReceiveProgress: request.onReceiveProgress);
+        print("getAuthorizationBeforeresponse" + response.data.toString());
+      } else {
+        getAuthorization(request);
+      }
     }
     return response;
   }
