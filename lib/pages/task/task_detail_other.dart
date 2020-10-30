@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +14,7 @@ import 'package:star/pages/task/task_gallery.dart';
 import 'package:star/pages/task/task_other_submission.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 
 import '../../global_config.dart';
@@ -39,8 +42,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
   _initData() async {
     try {
       EasyLoading.show();
-    } catch (e) {
-    }
+    } catch (e) {}
     var result = await HttpManage.getTaskDetailOther(widget.taskId);
     if (mounted) {
       if (result.status) {
@@ -54,8 +56,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
     }
     try {
       EasyLoading.dismiss();
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   @override
@@ -441,38 +442,68 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    Transform.translate(
-                      offset: Offset(0, 1 / 2),
-                      child: Text(
-                        "$stepDescText",
-                        textAlign: TextAlign.center,
-                        strutStyle: StrutStyle(
-                            forceStrutHeight: true, height: 1, leading: 1),
-                        style: TextStyle(
-                            color: Colors.transparent,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Color(0xffFDFFFD),
-                            letterSpacing: 1,
-                            decorationThickness: 15,
-                            fontSize: ScreenUtil().setSp(42)),
+                    Visibility(
+                      visible: false,
+                      child: Transform.translate(
+                        offset: Offset(0, 1 / 2),
+                        child: Text(
+                          "$stepDescText",
+                          textAlign: TextAlign.center,
+                          strutStyle: StrutStyle(
+                              forceStrutHeight: true, height: 1, leading: 1),
+                          style: TextStyle(
+                              color: Colors.transparent,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Color(0xffFDFFFD),
+                              letterSpacing: 1,
+                              decorationThickness: 15,
+                              fontSize: ScreenUtil().setSp(42)),
+                        ),
                       ),
                     ),
-                    Transform.translate(
-                      offset: Offset(0, 1 / 2),
-                      child: SelectableText(
-                        "$stepDescText",
-                        textAlign: TextAlign.center,
-                        strutStyle: StrutStyle(
-                            forceStrutHeight: true, height: 1, leading: 1),
-                        style: TextStyle(
+                    Visibility(
+                      visible: !_iSStepDescTextComtainsHtml(stepDescText),
+                      child: Transform.translate(
+                        offset: Offset(0, 1 / 2),
+                        child: SelectableText(
+                          "$stepDescText",
+                          textAlign: TextAlign.center,
+                          /*strutStyle: StrutStyle(
+                              forceStrutHeight: true, height: 1, leading: 1),*/
+                          style: TextStyle(
+                              color: Color(0xffED7F6F),
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.none,
+                              decorationColor: Colors.transparent,
+                              letterSpacing: 1,
+                              decorationThickness: 15,
+                              fontSize: ScreenUtil().setSp(42)),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: _iSStepDescTextComtainsHtml(stepDescText),
+                      child: Html(
+                        data:
+                            "<div>${stepDescText.replaceAll("</a>", "</a><br/>")}</div>",
+                        style: {
+                          "div": Style(
+                            fontSize: FontSize(ScreenUtil().setSp(42)),
                             color: Color(0xffED7F6F),
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.none,
-                            decorationColor: Colors.transparent,
-                            letterSpacing: 1,
-                            decorationThickness: 15,
-                            fontSize: ScreenUtil().setSp(42)),
+                            fontWeight: FontWeight.w700,
+                            margin: EdgeInsets.only(
+                                bottom: ScreenUtil().setHeight(20)),
+                            textAlign: TextAlign.center,
+                          ),
+                        },
+                        onLinkTap: (url) async {
+                          if (await canLaunch(url) != null) {
+                            await launch(url, forceSafariVC: false);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -490,5 +521,15 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
         ],
       ),
     );
+  }
+
+  _iSStepDescTextComtainsHtml(String desc) {
+    if (CommonUtils.isEmpty(desc)) {
+      return false;
+    }
+    if (desc.contains("</")) {
+      return true;
+    }
+    return false;
   }
 }

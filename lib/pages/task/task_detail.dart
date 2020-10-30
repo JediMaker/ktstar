@@ -572,9 +572,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   }
 
   void _goWechat() {
-    Clipboard.setData(ClipboardData(text: des));
+   /* Clipboard.setData(ClipboardData(text: des));
     CommonUtils.requestPermission(_permission, _saveImages(showToast: false));
-    CommonUtils.showToast("已保存文案和图片");
+    CommonUtils.showToast("已保存文案和图片");*/
     launch("weixin://");
   }
 

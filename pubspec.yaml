@@ -78,7 +78,8 @@ dependencies:
   flutter_keyboard_visibility: ^3.2.2
   #  加载框
   flutter_easyloading: ^2.0.0
-
+  #  html支持
+  flutter_html: ^1.0.0
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

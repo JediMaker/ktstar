@@ -23,6 +23,8 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
+import 'package:star/models/task_share_entity.dart';
+import 'package:star/generated/json/task_share_entity_helper.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
 import 'package:star/models/message_list_entity.dart';
@@ -86,7 +88,11 @@ class JsonConvert<T> {
 			return rechargeEntityFromJson(data as RechargeEntity, json) as T;			case RechargeData:
 			return rechargeDataFromJson(data as RechargeData, json) as T;			case RechargeDataRechageList:
 			return rechargeDataRechageListFromJson(data as RechargeDataRechageList, json) as T;			case RechargeDatacouponList:
-			return rechargeDatacouponListFromJson(data as RechargeDatacouponList, json) as T;			case AlipayPayinfoEntity:
+			return rechargeDatacouponListFromJson(data as RechargeDatacouponList, json) as T;			case TaskShareEntity:
+			return taskShareEntityFromJson(data as TaskShareEntity, json) as T;			case TaskShareData:
+			return taskShareDataFromJson(data as TaskShareData, json) as T;			case TaskShareDataShareInfo:
+			return taskShareDataShareInfoFromJson(data as TaskShareDataShareInfo, json) as T;			case TaskShareDataFooterImg:
+			return taskShareDataFooterImgFromJson(data as TaskShareDataFooterImg, json) as T;			case AlipayPayinfoEntity:
 			return alipayPayinfoEntityFromJson(data as AlipayPayinfoEntity, json) as T;			case AlipayPayinfoData:
 			return alipayPayinfoDataFromJson(data as AlipayPayinfoData, json) as T;			case MessageListEntity:
 			return messageListEntityFromJson(data as MessageListEntity, json) as T;			case MessageListData:
@@ -156,7 +162,11 @@ class JsonConvert<T> {
 			return rechargeEntityToJson(data as RechargeEntity);			case RechargeData:
 			return rechargeDataToJson(data as RechargeData);			case RechargeDataRechageList:
 			return rechargeDataRechageListToJson(data as RechargeDataRechageList);			case RechargeDatacouponList:
-			return rechargeDatacouponListToJson(data as RechargeDatacouponList);			case AlipayPayinfoEntity:
+			return rechargeDatacouponListToJson(data as RechargeDatacouponList);			case TaskShareEntity:
+			return taskShareEntityToJson(data as TaskShareEntity);			case TaskShareData:
+			return taskShareDataToJson(data as TaskShareData);			case TaskShareDataShareInfo:
+			return taskShareDataShareInfoToJson(data as TaskShareDataShareInfo);			case TaskShareDataFooterImg:
+			return taskShareDataFooterImgToJson(data as TaskShareDataFooterImg);			case AlipayPayinfoEntity:
 			return alipayPayinfoEntityToJson(data as AlipayPayinfoEntity);			case AlipayPayinfoData:
 			return alipayPayinfoDataToJson(data as AlipayPayinfoData);			case MessageListEntity:
 			return messageListEntityToJson(data as MessageListEntity);			case MessageListData:
@@ -226,7 +236,11 @@ class JsonConvert<T> {
 			return RechargeEntity().fromJson(json);			case 'RechargeData':
 			return RechargeData().fromJson(json);			case 'RechargeDataRechageList':
 			return RechargeDataRechageList().fromJson(json);			case 'RechargeDatacouponList':
-			return RechargeDatacouponList().fromJson(json);			case 'AlipayPayinfoEntity':
+			return RechargeDatacouponList().fromJson(json);			case 'TaskShareEntity':
+			return TaskShareEntity().fromJson(json);			case 'TaskShareData':
+			return TaskShareData().fromJson(json);			case 'TaskShareDataShareInfo':
+			return TaskShareDataShareInfo().fromJson(json);			case 'TaskShareDataFooterImg':
+			return TaskShareDataFooterImg().fromJson(json);			case 'AlipayPayinfoEntity':
 			return AlipayPayinfoEntity().fromJson(json);			case 'AlipayPayinfoData':
 			return AlipayPayinfoData().fromJson(json);			case 'MessageListEntity':
 			return MessageListEntity().fromJson(json);			case 'MessageListData':
@@ -297,7 +311,11 @@ class JsonConvert<T> {
 			return List<RechargeEntity>();			case 'RechargeData':
 			return List<RechargeData>();			case 'RechargeDataRechageList':
 			return List<RechargeDataRechageList>();			case 'RechargeDatacouponList':
-			return List<RechargeDatacouponList>();			case 'AlipayPayinfoEntity':
+			return List<RechargeDatacouponList>();			case 'TaskShareEntity':
+			return List<TaskShareEntity>();			case 'TaskShareData':
+			return List<TaskShareData>();			case 'TaskShareDataShareInfo':
+			return List<TaskShareDataShareInfo>();			case 'TaskShareDataFooterImg':
+			return List<TaskShareDataFooterImg>();			case 'AlipayPayinfoEntity':
 			return List<AlipayPayinfoEntity>();			case 'AlipayPayinfoData':
 			return List<AlipayPayinfoData>();			case 'MessageListEntity':
 			return List<MessageListEntity>();			case 'MessageListData':

@@ -19,6 +19,7 @@ import 'package:star/pages/task/task_detail_other.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
+import 'package:star/pages/task/task_share.dart';
 import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/utils/common_utils.dart';
@@ -120,10 +121,12 @@ class _TaskListPageState extends State<TaskListPage>
     var result = await HttpManage.getHomeInfo();
     if (mounted) {
       setState(() {
-        entity = result;
-        bannerList = entity.data.banner;
-        taskListAll = entity.data.taskList;
-        userType = entity.data.userLevel;
+        try {
+          entity = result;
+          bannerList = entity.data.banner;
+          taskListAll = entity.data.taskList;
+          userType = entity.data.userLevel;
+        } catch (e) {}
 //        _tabController = TabController(length: 3, vsync: this);
         switch (userType) {
           case "1": //体验
@@ -1091,6 +1094,10 @@ class _TaskListTabViewState extends State<TaskListTabView>
     }
     return GestureDetector(
       onTap: () async {
+        /*      if (true) {
+          NavigatorUtils.navigatorRouter(context, TaskSharePage());
+          return;
+        }*/
         switch (taskItem.taskStatus) {
           case -2:
             break;
@@ -1129,10 +1136,10 @@ class _TaskListTabViewState extends State<TaskListTabView>
               }
               switch (category) {
                 case "1":
-                  if (userType == "0") {
+                  /*if (userType == "0") {
                     CommonUtils.showToast("您只能领取非朋友圈任务");
                     return;
-                  }
+                  }*/
                   var result = await HttpManage.taskReceive(taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
@@ -1152,6 +1159,20 @@ class _TaskListTabViewState extends State<TaskListTabView>
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return TaskDetailOtherPage(
+                        taskId: taskItem.id,
+                      );
+                    }));
+                    _initData();
+                  } else {
+                    CommonUtils.showToast(result.errMsg);
+                  }
+                  break;
+                case "3":
+                  var result = await HttpManage.taskReceiveWechat(taskItem.id);
+                  if (result.status) {
+                    var result = await Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return TaskSharePage(
                         taskId: taskItem.id,
                       );
                     }));
@@ -1196,6 +1217,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   .push(MaterialPageRoute(builder: (context) {
                 return TaskDetailOtherPage(
                   taskId: taskItem.id,
+
                 );
               }));
               _initData();
@@ -1203,6 +1225,15 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
             break;
           case 2: //2待审核
+            switch (category) {
+              case "3":
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    TaskSharePage(
+                      taskId: taskItem.id,
+                    ));
+                break;
+            }
             break;
           case 3: //3已完成
             break;
@@ -1230,7 +1261,6 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   .push(MaterialPageRoute(builder: (context) {
                 return TaskDetailPage(
                   taskId: taskItem.id,
-                  pageType: 1,
                 );
               }));
               _initData();
@@ -1239,7 +1269,6 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   .push(MaterialPageRoute(builder: (context) {
                 return TaskDetailOtherPage(
                   taskId: taskItem.id,
-                  pageType: 1,
                 );
               }));
               _initData();
@@ -1348,11 +1377,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text('${taskItem.subtitle}',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(32),
-                                color: Color(0xff999999))),
+                        Container(
+                          child: Text('${taskItem.subtitle}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(32),
+                                  color: Color(0xff999999))),
+                        ),
                       ],
                     ),
                   ),

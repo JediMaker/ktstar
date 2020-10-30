@@ -21,6 +21,7 @@ import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
 import 'package:star/generated/json/task_record_list_entity_helper.dart';
+import 'package:star/generated/json/task_share_entity_helper.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/generated/json/version_info_entity_helper.dart';
@@ -45,6 +46,7 @@ import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
 import 'package:star/models/task_record_list_entity.dart';
+import 'package:star/models/task_share_entity.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
@@ -923,6 +925,28 @@ class HttpManage {
   ///[taskId] 	任务id
   ///
   ///
+  /// 获取任务详情--微信链接分享
+  ///
+  static Future<TaskShareEntity> getTaskDetailWechat(taskId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_DETAIL,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskShareEntity();
+    taskShareEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  ///
   /// 任务领取--朋友圈任务
   ///
   static Future<TaskDetailEntity> taskReceive(taskId) async {
@@ -960,6 +984,28 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = TaskDetailOtherEntity();
     taskDetailOtherEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[taskId] 	任务id
+  ///
+  ///
+  /// 任务领取--微信链接分享
+  ///
+  static Future<TaskShareEntity> taskReceiveWechat(taskId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["task_id"] = "$taskId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.TASK_RECEIVE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = TaskShareEntity();
+    taskShareEntityFromJson(entity, extractData);
     return entity;
   }
 
