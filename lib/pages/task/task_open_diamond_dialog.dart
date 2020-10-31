@@ -65,9 +65,12 @@ class _TaskOpenDiamondDialogPageState extends State<TaskOpenDiamondDialogPage> {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return TaskOpenVipPage();
+                  return TaskOpenVipPage(
+                    taskType: widget.taskType,
+                  );
                 }));
               },
               child: Container(

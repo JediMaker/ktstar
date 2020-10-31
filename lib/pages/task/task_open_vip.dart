@@ -21,8 +21,9 @@ import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
 class TaskOpenVipPage extends StatefulWidget {
-  TaskOpenVipPage({Key key}) : super(key: key);
+  TaskOpenVipPage({Key key, this.taskType = 1}) : super(key: key);
   final String title = "会员中心";
+  int taskType;
 
   @override
   _TaskOpenVipPageState createState() => _TaskOpenVipPageState();
@@ -67,7 +68,14 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
           _diamondInfo = result.data.diamond;
           if (_vipInfo.moneyList.length > 0 &&
               !CommonUtils.isEmpty(_vipInfo.moneyList[0]) &&
-              _vipInfo.moneyList[0].flag) {
+              _vipInfo.moneyList[0].flag &&
+              !_isDiamondVip) {
+            _selectIndex = 0;
+          }
+          if (_diamondInfo.moneyList.length > 0 &&
+              !CommonUtils.isEmpty(_diamondInfo.moneyList[0]) &&
+              _diamondInfo.moneyList[0].flag &&
+              _isDiamondVip) {
             _selectIndex = 0;
           }
         });
@@ -99,7 +107,17 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
   @override
   void initState() {
     _initWeChatResponseHandler();
+    if (mounted) {
+      setState(() {
+        if (widget.taskType != 1) {
+          _currentIndex = 1;
+          _isDiamondVip = true;
+          _selectIndex = -1;
+        }
+      });
+    }
     _initData();
+
     super.initState();
   }
 
@@ -170,6 +188,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                             loop: false,
                             viewportFraction: 0.86,
                             scale: 0.96,
+                            index: _currentIndex,
                             onIndexChanged: (index) {
                               if (mounted) {
                                 setState(() {
@@ -956,7 +975,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                 height: ScreenUtil().setHeight(65),
                 width: ScreenUtil().setWidth(266),
                 child: Text(
-                  "${flag ? "折合￥${flag ? monthPrice : "--"}元/月" : "暂未开通"}",
+                  "${flag ? "${flag ? monthPrice : "--"}" : "暂未开通"}",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

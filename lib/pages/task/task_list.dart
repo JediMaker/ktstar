@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -202,8 +203,9 @@ class _TaskListPageState extends State<TaskListPage>
     "static/images/task_icon_5.png",*/
   ];
   LinearGradient _gradientCorlor = LinearGradient(colors: [
-    Color(0xFF4A07C6),
-    Color(0xFF4A07C6),
+    Color(0xFFB43733),
+    Color(0xFFB43733),
+    Color(0xFFB43733),
   ]);
 
   @override
@@ -275,7 +277,7 @@ class _TaskListPageState extends State<TaskListPage>
           if (mounted) {
             setState(() {
               bannerIndex = index;
-              switch (bannerList[bannerIndex].uri.toString().trim()) {
+              switch (bannerList[index].uri.toString().trim()) {
                 case "upgrade":
                   _gradientCorlor = LinearGradient(colors: [
                     Color(0xFF7E090F),
@@ -288,6 +290,13 @@ class _TaskListPageState extends State<TaskListPage>
                   _gradientCorlor = LinearGradient(colors: [
                     Color(0xFF4A07C6),
                     Color(0xFF4A07C6),
+                  ]);
+                  break;
+                case "upgrade_diamond":
+                  _gradientCorlor = LinearGradient(colors: [
+                    Color(0xFFB43733),
+                    Color(0xFFB43733),
+                    Color(0xFFB43733),
                   ]);
                   break;
               }
@@ -303,12 +312,14 @@ class _TaskListPageState extends State<TaskListPage>
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
           var bannerData = bannerList[index];
+
           return GestureDetector(
             onTap: () {
               if (Platform.isIOS) {
                 CommonUtils.showIosPayDialog();
                 return;
               }
+
               switch (bannerList[bannerIndex].uri.toString().trim()) {
                 case "upgrade":
                   NavigatorUtils.navigatorRouter(context, TaskOpenVipPage());
@@ -319,6 +330,13 @@ class _TaskListPageState extends State<TaskListPage>
                   break;
                 case "recharge":
                   NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                  break;
+                case "upgrade_diamond":
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      TaskOpenVipPage(
+                        taskType: 2,
+                      ));
                   break;
               }
             },
@@ -339,7 +357,7 @@ class _TaskListPageState extends State<TaskListPage>
       child: GestureDetector(
         onTap: () {
           if (checkUserBind(isTaskWall: true)) {
-            NavigatorUtils.navigatorRouter(
+            /* NavigatorUtils.navigatorRouter(
                 context,
                 WebViewPage(
                   initialUrl: HttpManage.getTheMissionWallEntranceUrl(
@@ -347,6 +365,11 @@ class _TaskListPageState extends State<TaskListPage>
                   showActions: true,
                   title: "任务墙",
                   appBarBackgroundColor: Color(0xFFD72825),
+                ));*/
+            NavigatorUtils.navigatorRouter(
+                context,
+                TaskOpenVipPage(
+                  taskType: 2,
                 ));
           }
 //          HttpManage.getTheMissionWallEntrance("13122336666");
@@ -355,12 +378,21 @@ class _TaskListPageState extends State<TaskListPage>
           height: ScreenUtil().setHeight(550),
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           alignment: Alignment.center,
+          child: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xddcdf45d1-4fd3-47e6-9326-88bb1cfd4edf',
+            width: ScreenUtil().setWidth(1061),
+            height: ScreenUtil().setHeight(550),
+            fit: BoxFit.fill,
+          ),
+/*
           child: Image.asset(
             'static/images/task_wall.png',
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
             fit: BoxFit.fill,
           ),
+*/
         ),
       ),
     );
@@ -1217,7 +1249,6 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   .push(MaterialPageRoute(builder: (context) {
                 return TaskDetailOtherPage(
                   taskId: taskItem.id,
-
                 );
               }));
               _initData();
