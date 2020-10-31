@@ -6,6 +6,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -40,7 +41,10 @@ class WebViewPage extends StatefulWidget {
   bool showActions;
 
   WebViewPage(
-      {@required this.initialUrl, this.title, this.showActions = false,this.appBarBackgroundColor=GlobalConfig.taskHeadColor});
+      {@required this.initialUrl,
+      this.title,
+      this.showActions = false,
+      this.appBarBackgroundColor = GlobalConfig.taskHeadColor});
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
@@ -332,7 +336,7 @@ class NavigationControls extends StatelessWidget {
         return Row(
           children: <Widget>[
             IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: const Icon(CupertinoIcons.back),
               onPressed: !webViewReady
                   ? null
                   : () async {
@@ -347,7 +351,7 @@ class NavigationControls extends StatelessWidget {
                     },
             ),
             IconButton(
-              icon: const Icon(Icons.arrow_forward_ios),
+              icon: const Icon(CupertinoIcons.forward),
               onPressed: !webViewReady
                   ? null
                   : () async {
@@ -362,7 +366,7 @@ class NavigationControls extends StatelessWidget {
                     },
             ),
             IconButton(
-              icon: const Icon(Icons.replay),
+              icon: const Icon(CupertinoIcons.refresh),
               onPressed: !webViewReady
                   ? null
                   : () {

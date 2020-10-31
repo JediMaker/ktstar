@@ -130,7 +130,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
               color: Colors.white,
               width: double.infinity,
               height: double.infinity,
-              margin: EdgeInsets.only(bottom: 130),
+              margin: EdgeInsets.only(bottom: 100),
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -286,7 +286,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
               context,
               WebViewPage(
                 initialUrl: "$_adUrl",
-                showActions: false,
+                showActions: true,
                 title: "",
                 appBarBackgroundColor: Color(0xFFD72825),
               ));
@@ -317,7 +317,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
     return Container(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 130,
+        height: 100,
         alignment: Alignment.center,
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
