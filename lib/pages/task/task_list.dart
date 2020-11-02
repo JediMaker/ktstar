@@ -107,6 +107,10 @@ class _TaskListPageState extends State<TaskListPage>
     bus.on("taskListChanged", (listSize) {
       if (mounted) {
         setState(() {
+          if (listSize == 0) {
+            _tabBarViewHeight = ScreenUtil().setHeight(300);
+            return;
+          }
           _tabBarViewHeight = ScreenUtil()
               .setHeight(listSize * (388 - listSize * (12 - listSize * 0.5)));
         });
@@ -356,8 +360,8 @@ class _TaskListPageState extends State<TaskListPage>
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
-          if (checkUserBind(isTaskWall: true)) {
-            /* NavigatorUtils.navigatorRouter(
+          /* if (checkUserBind(isTaskWall: true)) {
+            */ /* NavigatorUtils.navigatorRouter(
                 context,
                 WebViewPage(
                   initialUrl: HttpManage.getTheMissionWallEntranceUrl(
@@ -365,13 +369,14 @@ class _TaskListPageState extends State<TaskListPage>
                   showActions: true,
                   title: "任务墙",
                   appBarBackgroundColor: Color(0xFFD72825),
-                ));*/
-            NavigatorUtils.navigatorRouter(
-                context,
-                TaskOpenVipPage(
-                  taskType: 2,
-                ));
-          }
+                ));*/ /*
+
+          }*/
+          NavigatorUtils.navigatorRouter(
+              context,
+              TaskOpenVipPage(
+                taskType: 2,
+              ));
 //          HttpManage.getTheMissionWallEntrance("13122336666");
         },
         child: Container(
@@ -991,7 +996,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
   int bannerIndex = 0;
   HomeEntity entity;
   List<HomeDataBanner> bannerList;
-  List<HomeDataTaskListList> taskList;
+  List<HomeDataTaskListList> taskList = List<HomeDataTaskListList>();
 
   List<HomeDataTaskList> taskListAll;
   String userType;
@@ -1014,10 +1019,14 @@ class _TaskListTabViewState extends State<TaskListTabView>
     var result = await HttpManage.getHomeInfo();
     if (mounted) {
       setState(() {
-        entity = result;
-        bannerList = entity.data.banner;
-        taskListAll = entity.data.taskList;
-        userType = entity.data.userLevel;
+        try {
+          bus.emit("taskListChanged", 0);
+          entity = result;
+          bannerList = entity.data.banner;
+          taskListAll = entity.data.taskList;
+          userType = entity.data.userLevel;
+        } catch (e) {}
+        var length = 0;
         switch (widget.taskType) {
           case 0: //普通/体验
             for (var taskListItem in taskListAll) {

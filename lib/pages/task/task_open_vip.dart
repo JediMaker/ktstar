@@ -269,18 +269,27 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(50)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                margin: EdgeInsets.only(
+                    bottom: ScreenUtil().setHeight(70),
+                    left: ScreenUtil().setWidth(32),
+                    right: ScreenUtil().setWidth(32)),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
                   children: <Widget>[
                     Text(
                       "开通VIP前阅读",
-                      style: TextStyle(color: Color(0xffAFAFAF)),
+                      style: TextStyle(
+                        color: Color(0xffAFAFAF),
+                        fontSize: ScreenUtil().setSp(32),
+                      ),
                     ),
                     GestureDetector(
                       child: Text(
                         "《会员服务协议》",
-                        style: TextStyle(color: Color(0xffAFAFAF)),
+                        style: TextStyle(
+                          color: Color(0xffAFAFAF),
+                          fontSize: ScreenUtil().setSp(32),
+                        ),
                       ),
                       onTap: () {
                         NavigatorUtils.navigatorRouter(
@@ -294,12 +303,18 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
                     ),
                     Text(
                       "及",
-                      style: TextStyle(color: Color(0xffAFAFAF)),
+                      style: TextStyle(
+                        color: Color(0xffAFAFAF),
+                        fontSize: ScreenUtil().setSp(32),
+                      ),
                     ),
                     GestureDetector(
                       child: Text(
                         "《隐私条款》",
-                        style: TextStyle(color: Color(0xffAFAFAF)),
+                        style: TextStyle(
+                          color: Color(0xffAFAFAF),
+                          fontSize: ScreenUtil().setSp(32),
+                        ),
                       ),
                       onTap: () {
                         Navigator.of(context).push(
