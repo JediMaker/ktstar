@@ -171,18 +171,22 @@ class Utils {
         }
         if (wantsUpdate != null && wantsUpdate) {
           GlobalConfig.prefs.remove('updateTime');
-
-          if (await canLaunch(url) != null) {
-            await launch(url, forceSafariVC: false);
-          } else {
-            throw 'Could not launch $url';
-          }
+          await launchUrl(url);
         } else {
           GlobalConfig.prefs.setString('updateTime', DateTime.now().toString());
         }
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  static launchUrl(url) async {
+    if (await canLaunch(url) != null) {
+      await launch(url, forceSafariVC: false);
+    } else {
+//      throw 'Could not launch $url';
+      CommonUtils.showToast("链接打开失败！");
     }
   }
 }

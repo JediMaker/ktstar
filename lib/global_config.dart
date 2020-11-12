@@ -77,7 +77,7 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   /// 是否为release版
-  static bool isRelease = true;
+  static bool isRelease = false;
 
   /// 是否为绑定微信
   static bool isBindWechat = false;
@@ -92,6 +92,8 @@ class GlobalConfig {
   /// 0 开通vip
   ///
   /// 1 话费充值
+  ///
+  /// 2 商品支付
   ///
   static int payType = 0;
 

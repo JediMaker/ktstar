@@ -1,5 +1,7 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/models/home_goods_list_entity.dart';
+import 'package:star/models/home_icon_list_entity.dart';
 
 class HomeEntity with JsonConvert<HomeEntity> {
   bool status;
@@ -13,8 +15,12 @@ class HomeEntity with JsonConvert<HomeEntity> {
 class HomeData with JsonConvert<HomeData> {
   List<HomeDataBanner> banner;
   @JSONField(name: "task_list")
-	List<HomeDataTaskList>  taskList;
+  List<HomeDataTaskList> taskList;
   String links;
+  @JSONField(name: "goods_list")
+  List<HomeGoodsListGoodsList> goodsList;
+  @JSONField(name: "icon_list")
+  List<HomeIconListIconList> iconList;
   @JSONField(name: "user_level")
   String userLevel;
 }
@@ -42,7 +48,7 @@ class HomeDataTaskListList with JsonConvert<HomeDataTaskListList> {
   String sharePrice;
   String title;
   @JSONField(name: "task_status")
-	int taskStatus;
+  int taskStatus;
   String icons;
   @JSONField(name: "status_desc")
   String statusDesc;

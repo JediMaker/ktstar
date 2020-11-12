@@ -72,6 +72,9 @@ class APi {
   ///检测支付是否成功
   static const String PAY_CHECK_SUCCESS = "pay/check-success";
 
+  ///检测支付是否成功
+  static const String PAY_GOODS_PAY = "/pay/goods-pay";
+
   ///修改昵称
   static const String USER_ENAME = "/api/index.php?route=api/user/euname";
 
@@ -132,22 +135,27 @@ class APi {
   ///话费充值
   static const String PAY_RECHARGE = "pay/recharge-pay";
 
+  ///商品支付
+  static const String PAY_GOODS = "pay/goods-pay";
+
   ///会员升级获取到的优惠券信息
   static const String PAY_COUPON = "pay/pay-coupon";
 
 /*------------------地址相关START-------------------*/
 
-  ///收货地址
-  static const String USER_ADDRESS = "/api/index.php?route=api/address";
-  static const String USER_ADDRESS_ADD = "/api/index.php?route=api/address/add";
-  static const String USER_ADDRESS_EDIT =
-      "/api/index.php?route=api/address/edit";
-  static const String USER_ADDRESS_DELETE =
-      "/api/index.php?route=api/address/delete";
+  ///收货地址-列表
+  static const String USER_ADDRESS = "/addr/list";
+
+  ///收货地址-详情
+  static const String USER_ADDRESS_INFO = "/addr/info";
+
+  ///收货地址-添加
+  static const String USER_ADDRESS_ADD = "/addr/add";
+  static const String USER_ADDRESS_EDIT = "/addr/edit";
+  static const String USER_ADDRESS_DELETE = "/addr/del";
 
   ///  获取省市区三级级区域地址列表
-  static const String REGIONAL_ADDRESS_LIST =
-      "/api/index.php?route=api/checkout/get_regions";
+  static const String REGIONAL_ADDRESS_LIST = "/addr/region";
 
 /*------------------地址相关END-------------------*/
 
@@ -230,18 +238,29 @@ class APi {
   ///订单相关
   static const String ORDER_CHECKOUT = "/api/index.php?route=api/checkout";
 
+  ///添加订单
+  static const String ORDER_CREATE = "/order/create";
+
+  ///订单修改收货地址
+  static const String ORDER_CHANGE_ADDR = "order/change-addr";
+
   ///提交订单
-  static const String ORDER_CHECKOUT_CONFIRM =
-      "/api/index.php?route=api/checkout/confirm";
+  static const String ORDER_SUBMIT = "order/submit";
 
   ///确定提交
-  static const String ORDER_DETAIL = "/api/index.php?route=api/order";
+  static const String ORDER_DETAIL = "order/info";
 
   ///订单详情
   static const String ORDER_HISTORY = "/api/index.php?route=api/order/history";
 
-  ///历史订单
-  static const String ORDER_STATUS = "/api/index.php?route=api/order/status";
+  ///商品详情
+  static const String GOODS_INFO = "/goods/info";
+
+  ///订单列表
+  static const String ORDER_LIST = "/order/list";
+
+  ///订单确认收货
+  static const String ORDER_ENSURE_RECEIVE = "order/confirm";
 
   ///各个状态订单
   static const String ORDER_DEL = "/api/index.php?route=api/order/del";
@@ -250,6 +269,6 @@ class APi {
   static const String ORDER_CHECKOUTXX =
       "/api/index.php?route=api/checkout/checkout";
 
-  ///订单列表页面去支付调用
-
+  ///订单删除
+  static const String E_BASE_URL = "/api/index.php?route=api/checkout/checkout";
 }

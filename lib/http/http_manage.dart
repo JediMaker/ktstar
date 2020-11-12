@@ -5,17 +5,23 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:star/generated/json/address_info_entity_helper.dart';
+import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
+import 'package:star/generated/json/goods_info_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
+import 'package:star/generated/json/order_detail_entity_helper.dart';
+import 'package:star/generated/json/order_list_entity_helper.dart';
 import 'package:star/generated/json/pay_coupon_entity_helper.dart';
 import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
+import 'package:star/generated/json/region_data_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
@@ -33,15 +39,20 @@ import 'package:star/http/interceptors/error_interceptor.dart';
 import 'package:star/http/interceptors/header_interceptor.dart';
 import 'package:star/http/interceptors/log_interceptor.dart';
 import 'package:star/http/interceptors/token_interceptor.dart';
+import 'package:star/models/address_info_entity.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
+import 'package:star/models/goods_info_entity.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/message_list_entity.dart';
+import 'package:star/models/order_detail_entity.dart';
+import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/pay_coupon_entity.dart';
 import 'package:star/models/poster_entity.dart';
 import 'package:star/models/recharge_entity.dart';
+import 'package:star/models/region_data_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
@@ -58,6 +69,7 @@ import 'package:star/models/login_entity.dart';
 import 'package:star/models/vip_price_entity.dart';
 import 'package:star/models/version_info_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
+import 'package:star/models/address_list_entity.dart';
 import 'package:http_parser/http_parser.dart';
 
 void getHttp() async {
@@ -102,17 +114,17 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (!GlobalConfig.isRelease) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
-        client.findProxy = (uri) {
-          return 'PROXY ${GlobalConfig.localProxyIPAddress}:${GlobalConfig.localProxyPort}';
-        };
-        //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
+//    if (!GlobalConfig.isRelease) {
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.findProxy = (uri) {
+        return 'PROXY ${GlobalConfig.localProxyIPAddress}:${GlobalConfig.localProxyPort}';
       };
-    }
+      //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+    };
+//    }
 //    /api/index.php?route=oauth/oauth2/authorize
   }
 
@@ -858,6 +870,31 @@ class HttpManage {
   ///[pageSize] 	单页数据量
   ///
   ///
+  /// 获取订单列表
+  ///
+  static Future<OrderListEntity> getOrderList(page, pageSize) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = OrderListEntity();
+
+    orderListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///
+  ///
   /// 获取提现列表
   ///
   static Future<MessageListEntity> getWithdrawalList(page, pageSize) async {
@@ -1184,6 +1221,51 @@ class HttpManage {
   }
 
   ///
+  ///
+  ///[orderId] 订单id
+  ///
+  /// 获取商品购买微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> getGoodsPayWeChatPayInfo({orderId}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_GOODS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[orderId] 订单id
+  ///
+  /// 获取商品购买支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> getGoodsPayAliPayInfo({orderId}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_GOODS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///  [payNo] 	支付单号
   ///
   ///
@@ -1325,6 +1407,243 @@ class HttpManage {
     if (entity.status) {
       GlobalConfig.prefs.setString("loginData", response.data.toString());
     }
+    return entity;
+  }
+
+  ///获取省市区区域数据
+  static Future<RegionDataEntity> getAddressAreaList() async {
+    var response = await HttpManage.dio.post(
+      APi.REGIONAL_ADDRESS_LIST,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+
+    var entity = RegionDataEntity();
+    regionDataEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///获取收货地址列表
+  static Future<AddressListEntity> getListOfAddresses() async {
+    var response = await HttpManage.dio.get(
+      APi.USER_ADDRESS,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+
+    var entity = AddressListEntity();
+    addressListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///修改收货地址
+  static Future<ResultBeanEntity> modifyShippingAddress(
+      {String consignee,
+      String mobile,
+      province,
+      provinceId,
+      city,
+      cityId,
+      county,
+      countyId,
+      String address,
+      String isDefault,
+      addressId}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["consignee"] = "$consignee";
+    paramsMap["mobile"] = "$mobile";
+    paramsMap["province_id"] = "$provinceId";
+    paramsMap["city_id"] = "$cityId";
+    paramsMap["county_id"] = "$countyId";
+    paramsMap["address"] = "$address";
+    paramsMap["is_default"] = "$isDefault";
+    paramsMap["addr_id"] = "$addressId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_ADDRESS_EDIT,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///添加收货地址
+  static Future<ResultBeanEntity> addShippingAddress(
+      {String consignee,
+      String mobile,
+      province,
+      provinceId,
+      city,
+      cityId,
+      county,
+      countyId,
+      String address,
+      String isDefault}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["consignee"] = "$consignee";
+    paramsMap["mobile"] = "$mobile";
+    paramsMap["province_id"] = "$provinceId";
+    paramsMap["city_id"] = "$cityId";
+    paramsMap["county_id"] = "$countyId";
+    paramsMap["address"] = "$address";
+    paramsMap["is_default"] = "$isDefault";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_ADDRESS_ADD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///删除收货地址
+  static Future<ResultBeanEntity> deleteShippingAddress(addressId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["addr_id"] = "$addressId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_ADDRESS_DELETE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///收货地址详情
+  static Future<AddressInfoEntity> getShippingAddressDetail(addressId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["addr_id"] = "$addressId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_ADDRESS_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AddressInfoEntity();
+    addressInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///订单提交
+  static orderSubmission(String addressId, List<String> cartIdList) {}
+
+  static orderCheckoutX(String orderId) {}
+
+  ///获取订单详情
+  static Future<OrderDetailEntity> orderDetail(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap["type"] = "all";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_DETAIL,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = OrderDetailEntity();
+    orderDetailEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///订单确认收货
+  static Future<ResultBeanEntity> orderConfirm(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_ENSURE_RECEIVE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///提交订单
+  static Future<ResultBeanEntity> orderSubmit(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_SUBMIT,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///获取商品详情
+  static Future<GoodsInfoEntity> getProductDetails(productId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["goods_id"] = "$productId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.GOODS_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = GoodsInfoEntity();
+    goodsInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///创建订单
+  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["goods_id"] = "$goodsId";
+    paramsMap["goods_num"] = "$goodsNum";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_CREATE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///订单切换收货地址
+  static Future<ResultBeanEntity> orderChangeBindAddress(
+      String orderId, addressId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap["addr_id"] = "$addressId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_CHANGE_ADDR,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 }

@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/user_info_entity.dart';
+import 'package:star/pages/adress/my_adress.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/login/modify_password.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
@@ -23,6 +25,7 @@ import 'package:star/pages/withdrawal/withdrawal.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/navigator_utils.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../global_config.dart';
 import 'fans_list.dart';
@@ -37,7 +40,8 @@ class TaskMinePage extends StatefulWidget {
   _TaskMinePageState createState() => _TaskMinePageState();
 }
 
-class _TaskMinePageState extends State<TaskMinePage> {
+class _TaskMinePageState extends State<TaskMinePage>
+    with AutomaticKeepAliveClientMixin {
   var headUrl;
   var nickName = '';
   var _dialogNickName;
@@ -199,23 +203,66 @@ class _TaskMinePageState extends State<TaskMinePage> {
           centerTitle: true,
           elevation: 0,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-//                buildTopLayout(),
-                  buildHeadLayout(),
-                  buildCardInfo(),
-//                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
-                  itemsLayout(),
-                ],
-              ),
-              buildListItem(),
-            ],
-          ),
+        body: EasyRefresh.custom(
+          enableControlFinishLoad: false,
+          onRefresh: () async {
+            _initUserData();
+          },
+          header: CustomHeader(
+              completeDuration: Duration(seconds: 2),
+              headerBuilder: (context,
+                  refreshState,
+                  pulledExtent,
+                  refreshTriggerPullDistance,
+                  refreshIndicatorExtent,
+                  axisDirection,
+                  float,
+                  completeDuration,
+                  enableInfiniteRefresh,
+                  success,
+                  noMore) {
+                return Stack(
+                  children: <Widget>[
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        width: 30.0,
+                        height: 30.0,
+                        child: SpinKitCircle(
+                          color: GlobalConfig.taskBtnTxtGreyColor,
+                          size: 30.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+          slivers: <Widget>[
+            buildContent(),
+          ],
         ) // This trailing comma makes auto-formatting nicer for build methods.
         );
+  }
+
+  Widget buildContent() {
+    return SliverToBoxAdapter(
+      child: Column(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+//                buildTopLayout(),
+              buildHeadLayout(),
+              buildCardInfo(),
+//                !isDiamonVip ? buildBanner(context) : buildProxyBanner(context),
+              itemsLayout(),
+            ],
+          ),
+          buildListItem(),
+        ],
+      ),
+    );
   }
 
   Container buildListItem() {
@@ -258,6 +305,48 @@ class _TaskMinePageState extends State<TaskMinePage> {
               width: 0.5)),
       child: Column(
         children: <Widget>[
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*  Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "收货地址",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              NavigatorUtils.navigatorRouter(context, AddressListPage(type: 1));
+            },
+            trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                /*Text(
+                  "",
+                  style: TextStyle(color: Color(0xff999999)),
+                ),*/
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: ScreenUtil().setWidth(32),
+                  color: Color(0xff999999),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
+            ),
+          ),
           ListTile(
             title: Row(
               children: <Widget>[
@@ -1188,9 +1277,7 @@ class _TaskMinePageState extends State<TaskMinePage> {
                               CommonUtils.showToast("暂无可提现金额");
                               return;
                             }
-                          } catch (e) {
-                            return;
-                          }
+                          } catch (e) {}
 
                           if (_isWithdrawal == "0") {
                             await NavigatorUtils.navigatorRouter(
@@ -1811,4 +1898,8 @@ class _TaskMinePageState extends State<TaskMinePage> {
           );
         });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

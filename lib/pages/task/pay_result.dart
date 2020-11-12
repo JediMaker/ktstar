@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/pay_coupon_entity.dart';
+import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/utils/common_utils.dart';
@@ -14,9 +15,10 @@ import '../../global_config.dart';
 
 class PayResultPage extends StatefulWidget {
   String payNo;
+  int type;
 
-  PayResultPage({Key key, this.payNo = ""}) : super(key: key);
-  final String title = "购买成功";
+  PayResultPage({Key key, this.payNo = "", this.type = 0,this.title= "购买成功"}) : super(key: key);
+   String title ;
 
   @override
   _PayResultPageState createState() => _PayResultPageState();
@@ -30,6 +32,9 @@ class _PayResultPageState extends State<PayResultPage> {
   String _endTime = '';
 
   _initData() async {
+    if (widget.type == 1) {
+      return;
+    }
     var result = await HttpManage.getRechargeCoupon(widget.payNo);
     if (result.status) {
       if (mounted) {
@@ -53,7 +58,9 @@ class _PayResultPageState extends State<PayResultPage> {
   void dispose() {
     super.dispose();
   }
+
   DateTime _lastQuitTime;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,8 +171,13 @@ class _PayResultPageState extends State<PayResultPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouter(
-                                context, RechargeListPage());
+                            if (widget.type == 0) {
+                              NavigatorUtils.navigatorRouter(
+                                  context, RechargeListPage());
+                            } else {
+                              NavigatorUtils.navigatorRouter(
+                                  context, RechargeOrderListPage());
+                            }
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -183,7 +195,7 @@ class _PayResultPageState extends State<PayResultPage> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(34))),
                               child: Text(
-                                "去充值",
+                                "${widget.type == 0 ? "去充值" : "查看订单"}",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -202,119 +214,122 @@ class _PayResultPageState extends State<PayResultPage> {
             SizedBox(
               height: ScreenUtil().setHeight(30),
             ),
-            Container(
-              color: Colors.white,
-              alignment: Alignment.center,
-              padding:
-                  EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(30)),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: <Widget>[
-                  Image.asset(
-                    "static/images/pay_bg.png",
-                    width: ScreenUtil().setWidth(1028),
-                    height: ScreenUtil().setWidth(504),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(28),
-                        top: ScreenUtil().setHeight(30)),
-                    child: Image.asset(
-                      "static/images/pay_fg.png",
+            Visibility(
+              visible: widget.type == 0,
+              child: Container(
+                color: Colors.white,
+                alignment: Alignment.center,
+                padding:
+                    EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(30)),
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    Image.asset(
+                      "static/images/pay_bg.png",
+                      width: ScreenUtil().setWidth(1028),
+                      height: ScreenUtil().setWidth(504),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: ScreenUtil().setWidth(28),
+                          top: ScreenUtil().setHeight(30)),
+                      child: Image.asset(
+                        "static/images/pay_fg.png",
+                        width: ScreenUtil().setWidth(972),
+                        height: ScreenUtil().setWidth(443),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(160),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(100)),
                       width: ScreenUtil().setWidth(972),
                       height: ScreenUtil().setWidth(443),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(160),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(100)),
-                    width: ScreenUtil().setWidth(972),
-                    height: ScreenUtil().setWidth(443),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "¥ $_money",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(72)),
-                                  ),
-                                  SizedBox(
-                                    height: ScreenUtil().setHeight(24),
-                                  ),
-                                  Text(
-                                    "充值话费满$_condition元$_money元",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(37)),
-                                  ),
-                                ],
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "¥ $_money",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: ScreenUtil().setSp(72)),
+                                    ),
+                                    SizedBox(
+                                      height: ScreenUtil().setHeight(24),
+                                    ),
+                                    Text(
+                                      "充值话费满$_condition元$_money元",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: ScreenUtil().setSp(37)),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                NavigatorUtils.navigatorRouter(
-                                    context, RechargeListPage());
-                              },
-                              child: Container(
+                              GestureDetector(
+                                onTap: () {
+                                  NavigatorUtils.navigatorRouter(
+                                      context, RechargeListPage());
+                                },
                                 child: Container(
-                                  alignment: Alignment.center,
-                                  height: ScreenUtil().setHeight(84),
-                                  width: ScreenUtil().setWidth(210),
-                                  decoration: BoxDecoration(
-                                      /*gradient: LinearGradient(colors: [
-                                        Color(0xFFFBA951),
-                                        Color(0xFFFFDCAC),
-                                      ]),*/
-                                      color: Colors.white,
-                                      border: Border.all(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: ScreenUtil().setHeight(84),
+                                    width: ScreenUtil().setWidth(210),
+                                    decoration: BoxDecoration(
+                                        /*gradient: LinearGradient(colors: [
+                                          Color(0xFFFBA951),
+                                          Color(0xFFFFDCAC),
+                                        ]),*/
                                         color: Colors.white,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(34))),
+                                    child: Text(
+                                      "立即使用",
+                                      style: TextStyle(
+                                        color: Color(0xffFF5F4F),
+                                        fontSize: ScreenUtil().setSp(36),
                                       ),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(34))),
-                                  child: Text(
-                                    "立即使用",
-                                    style: TextStyle(
-                                      color: Color(0xffFF5F4F),
-                                      fontSize: ScreenUtil().setSp(36),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(60),
-                        ),
-                        Divider(
-                          height: ScreenUtil().setHeight(1),
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(55),
-                        ),
-                        Text(
-                          "有效期：$_startTime-$_endTime",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: ScreenUtil().setSp(37)),
-                        ),
-                      ],
+                            ],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(60),
+                          ),
+                          Divider(
+                            height: ScreenUtil().setHeight(1),
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(55),
+                          ),
+                          Text(
+                            "有效期：$_startTime-$_endTime",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: ScreenUtil().setSp(37)),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

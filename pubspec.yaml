@@ -80,6 +80,8 @@ dependencies:
   flutter_easyloading: ^2.0.0
   #  html支持
   flutter_html: ^1.0.0
+  #  图片取色
+  palette_generator: ^0.2.3
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

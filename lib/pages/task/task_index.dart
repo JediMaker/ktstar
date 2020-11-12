@@ -33,7 +33,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   List<NavigationIconView> _navigationViews;
   List<StatefulWidget> _pageList;
   StatefulWidget _currentPage;
-
+//默认索引
+  int positionIndex = 0;
   @override
   void initState() {
     HttpManage.getUserInfo();
@@ -44,6 +45,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   }
 
   DateTime _lastQuitTime;
+  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
                 return false;
               } else {
                 // 退出app
-                await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                await SystemChannels.platform
+                    .invokeMethod('SystemNavigator.pop');
 //              Navigator.of(context).pop(true);
                 return true;
               }
@@ -71,7 +74,11 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       ),
     );
   }
-
+  void onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
   Scaffold buildHomeWidget() {
     _navigationViews = <NavigationIconView>[
       new NavigationIconView(
@@ -111,7 +118,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       view.controller.addListener(_rebuild);
     }
 
-    _pageList = <StatefulWidget>[
+     _pageList = <StatefulWidget>[
 //      new HomePage(tabIndex: _homeTabIndex),
       TaskListPage(),
       TaskMinePage(),
@@ -120,7 +127,12 @@ class _TaskIndexPageState extends State<TaskIndexPage>
     ];
     _currentPage = _pageList[_currentIndex];
     return new Scaffold(
-        body: new Center(child: _currentPage),
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: onPageChanged,
+          children: _pageList,
+          physics: NeverScrollableScrollPhysics(), // 禁止滑动
+        ),
         bottomNavigationBar: Builder(
             builder: (context) => BottomNavigationBar(
                 items: _navigationViews
@@ -155,6 +167,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
                       _currentIndex = index;
                       _navigationViews[_currentIndex].controller.forward();
                       _currentPage = _pageList[_currentIndex];
+                      _pageController.jumpToPage(_currentIndex);
                     }
                   });
                 })));

@@ -1,4 +1,6 @@
 import 'package:star/models/home_entity.dart';
+import 'package:star/models/home_goods_list_entity.dart';
+import 'package:star/models/home_icon_list_entity.dart';
 
 homeEntityFromJson(HomeEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
@@ -46,6 +48,18 @@ homeDataFromJson(HomeData data, Map<String, dynamic> json) {
 	if (json['links'] != null) {
 		data.links = json['links']?.toString();
 	}
+	if (json['goods_list'] != null) {
+		data.goodsList = new List<HomeGoodsListGoodsList>();
+		(json['goods_list'] as List).forEach((v) {
+			data.goodsList.add(new HomeGoodsListGoodsList().fromJson(v));
+		});
+	}
+	if (json['icon_list'] != null) {
+		data.iconList = new List<HomeIconListIconList>();
+		(json['icon_list'] as List).forEach((v) {
+			data.iconList.add(new HomeIconListIconList().fromJson(v));
+		});
+	}
 	if (json['user_level'] != null) {
 		data.userLevel = json['user_level']?.toString();
 	}
@@ -61,6 +75,12 @@ Map<String, dynamic> homeDataToJson(HomeData entity) {
 		data['task_list'] =  entity.taskList.map((v) => v.toJson()).toList();
 	}
 	data['links'] = entity.links;
+	if (entity.goodsList != null) {
+		data['goods_list'] =  entity.goodsList.map((v) => v.toJson()).toList();
+	}
+	if (entity.iconList != null) {
+		data['icon_list'] =  entity.iconList.map((v) => v.toJson()).toList();
+	}
 	data['user_level'] = entity.userLevel;
 	return data;
 }

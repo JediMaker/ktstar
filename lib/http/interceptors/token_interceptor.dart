@@ -61,7 +61,7 @@ class TokenInterceptors extends InterceptorsWrapper {
           GlobalConfig.prefs.remove("hasLogin");
           GlobalConfig.saveLoginStatus(false);
           Fluttertoast.showToast(
-              msg: "您的账号已在其他设备上登录，请重新登录！",
+              msg: "登陆信息已失效，请重新登录！",
               textColor: Colors.white,
               toastLength: Toast.LENGTH_LONG,
               backgroundColor: Colors.grey);

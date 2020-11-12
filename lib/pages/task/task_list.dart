@@ -1,18 +1,26 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluwx/fluwx.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
+import 'package:star/models/home_goods_list_entity.dart';
+import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/user_info_entity.dart';
+import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
@@ -26,6 +34,8 @@ import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:star/utils/utils.dart';
 
 class TaskListPage extends StatefulWidget {
   TaskListPage({Key key}) : super(key: key);
@@ -36,31 +46,35 @@ class TaskListPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<TaskListPage>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  final dataKey = new GlobalKey();
   String taskCompletedNum = "";
   String taskTotalNum = "";
   int bannerIndex = 0;
   HomeEntity entity;
   TabController _tabController;
   List<HomeDataBanner> bannerList;
+  List<Color> bannerColorList;
   static List<HomeDataTaskListList> taskList;
   static List<HomeDataTaskListList> taskVipList;
   static List<HomeDataTaskListList> taskDiamondVipList;
   List<HomeDataTaskList> taskListAll;
-  ScrollController _scrollController;
   SwiperController _swiperController;
   bool _isLoop = false;
+  bool _isMarqueeLoop = false;
+  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
+  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
 
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
 
   List<String> _tabValues = [
-    "普通专区",
+    "新人专区",
     "vip专区",
     "钻石专区",
   ];
   List<String> nomalItems = [
-    "普通专区",
+    "新人专区",
     "vip专区",
     "钻石专区",
   ];
@@ -69,6 +83,7 @@ class _TaskListPageState extends State<TaskListPage>
     "vip专区",
     "钻石专区",
   ];
+  List<String> _tabValuesRemote = List<String>();
   List<Widget> _tabViews = [
 /*    buildTaskListTabView(
       taskType: 0,
@@ -90,13 +105,32 @@ class _TaskListPageState extends State<TaskListPage>
     ),
   ];
 
+  var _marqueeSwiperController = SwiperController();
+
   @override
   initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    weChatResponseEventHandler.listen((res) {
+      if (res is WeChatLaunchMiniProgramResponse) {
+        print("拉起小程序isSuccessful:${res.isSuccessful}");
+      }
+    });
+    _tabController = TabController(length: 3, vsync: ScrollableState());
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        try {
+          if (taskListAll != null && taskListAll.length > 0) {
+            bus.emit("taskListChanged", 0);
+            bus.emit("taskListChanged",
+                taskListAll[_tabController.index].xList.length);
+          }
+        } catch (e) {}
+      }
+    });
     _initData();
-    _scrollController = ScrollController()..addListener(() {});
     _swiperController = new SwiperController();
+    _marqueeSwiperController = SwiperController();
     _swiperController.startAutoplay();
+    _marqueeSwiperController.startAutoplay();
 
 //    try {
 //      userType = GlobalConfig.getUserInfo().type;
@@ -108,7 +142,7 @@ class _TaskListPageState extends State<TaskListPage>
       if (mounted) {
         setState(() {
           if (listSize == 0) {
-            _tabBarViewHeight = ScreenUtil().setHeight(300);
+            _tabBarViewHeight = ScreenUtil().setHeight(330);
             return;
           }
           _tabBarViewHeight = ScreenUtil()
@@ -131,11 +165,37 @@ class _TaskListPageState extends State<TaskListPage>
           bannerList = entity.data.banner;
           taskListAll = entity.data.taskList;
           userType = entity.data.userLevel;
+          goodsList = entity.data.goodsList;
+          iconList = entity.data.iconList;
         } catch (e) {}
 //        _tabController = TabController(length: 3, vsync: this);
+        _tabController =
+            TabController(length: taskListAll.length, vsync: ScrollableState());
+        _tabController.addListener(() {
+          try {
+            if (taskListAll != null && taskListAll.length > 0) {
+              bus.emit("taskListChanged", 0);
+              bus.emit("taskListChanged",
+                  taskListAll[_tabController.index].xList.length);
+            }
+          } catch (e) {}
+        });
+        _tabValuesRemote.clear();
+        List<Widget> listTabViews = List<Widget>();
+        for (var valueItem in taskListAll) {
+          _tabValuesRemote.add(valueItem.name);
+        }
+        for (var i = 0; i < taskListAll.length; i++) {
+          listTabViews.add(TaskListTabView(
+            taskType: i,
+            taskList: taskListAll[i].xList,
+          ));
+        }
+        _tabValues = _tabValuesRemote;
+        _tabViews = listTabViews;
         switch (userType) {
           case "1": //体验
-            _tabValues = experienceItems;
+//            _tabValues = experienceItems;
             break;
           case "2": //vip
             _tabController.animateTo(1);
@@ -144,24 +204,28 @@ class _TaskListPageState extends State<TaskListPage>
             _tabController.animateTo(2);
             break;
         }
+
         _isLoop = true;
+        _isMarqueeLoop = true;
+        initBannerListColor();
+      });
+    }
+  }
 
-        switch (bannerList[0].uri.toString().trim()) {
-          case "upgrade":
-            _gradientCorlor = LinearGradient(colors: [
-              Color(0xFF7E090F),
-              Color(0xFF810A0C),
-              Color(0xFF7D0A0F),
-            ]);
-
-            break;
-          case "recharge":
-            _gradientCorlor = LinearGradient(colors: [
-              Color(0xFF4A07C6),
-              Color(0xFF4A07C6),
-            ]);
-            break;
-        }
+  initBannerListColor() async {
+    for (var bannerItem in bannerList) {
+      PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
+          Image.network("${bannerItem.imgPath}").image);
+      bannerColorList.add(generator.dominantColor.color);
+    }
+    if (mounted) {
+      setState(() {
+        try {
+          _gradientCorlor = LinearGradient(colors: [
+            bannerColorList[bannerIndex],
+            bannerColorList[bannerIndex],
+          ]);
+        } catch (e) {}
       });
     }
   }
@@ -188,8 +252,11 @@ class _TaskListPageState extends State<TaskListPage>
   void dispose() {
     _swiperController.stopAutoplay();
     _swiperController.dispose();
+    _marqueeSwiperController.stopAutoplay();
+    _marqueeSwiperController.dispose();
     _tabController.dispose();
     _isLoop = false;
+    _isMarqueeLoop = false;
     super.dispose();
   }
 
@@ -215,33 +282,542 @@ class _TaskListPageState extends State<TaskListPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: GradientAppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          gradient: _gradientCorlor,
+      appBar: GradientAppBar(
+        title: Text(
+          widget.title,
+          style: TextStyle(fontSize: ScreenUtil().setSp(54)),
         ),
-        body: Builder(
-          builder: (context) => CustomScrollView(
+        centerTitle: true,
+        elevation: 0,
+        gradient: _gradientCorlor,
+      ),
+      body: Builder(
+        builder: (context) {
+          return EasyRefresh.custom(
+            firstRefresh: true,
+            enableControlFinishLoad: false,
+            header: CustomHeader(
+                completeDuration: Duration(seconds: 2),
+                headerBuilder: (context,
+                    refreshState,
+                    pulledExtent,
+                    refreshTriggerPullDistance,
+                    refreshIndicatorExtent,
+                    axisDirection,
+                    float,
+                    completeDuration,
+                    enableInfiniteRefresh,
+                    success,
+                    noMore) {
+                  return Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          child: SpinKitCircle(
+                            color: GlobalConfig.colorPrimary,
+                            size: 30.0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+            firstRefreshWidget: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Center(
+                  child: SizedBox(
+                height: 200.0,
+                width: 300.0,
+                child: Card(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: 50.0,
+                        height: 50.0,
+                        child: SpinKitFadingCube(
+                          color: GlobalConfig.colorPrimary,
+                          size: 25.0,
+                        ),
+                      ),
+                      Container(
+                        child: Text("正在加载。。。"),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            ),
             slivers: <Widget>[
-//              buildBannerLayout(),
-//              buildBannerLayout2(),
               SliverToBoxAdapter(
                 child: Stack(
                   children: <Widget>[
                     buildBannerLayout(),
-                    taskCard2(context),
+//                    _buildHotspot(),
+                    itemsLayout(),
                   ],
                 ),
               ),
+              SliverToBoxAdapter(
+                  child: Visibility(
+                visible: goodsList.length > 0,
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: ScreenUtil().setHeight(30), left: 16, right: 16),
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.circular(ScreenUtil().setWidth(32))),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.maxFinite,
+                        height: ScreenUtil().setHeight(60),
+                        margin:
+                            EdgeInsets.only(bottom: ScreenUtil().setHeight(30)),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              "https://alipic.lanhuapp.com/xd67a75142-cf33-4b26-a6d5-2752852c1630",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(goodsList.length, (index) {
+                            HomeGoodsListGoodsList item;
+                            try {
+                              item = goodsList[index];
+                            } catch (e) {}
+                            return productItem(item: item);
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+              SliverToBoxAdapter(child: taskCard2(context)),
               buildTaskWall(),
             ],
+            onRefresh: () async {
+              _initData();
+            },
+          );
+        },
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget buildContent() {
+    return Builder(
+      builder: (context) => SliverToBoxAdapter(
+        child: CustomScrollView(
+          slivers: <Widget>[
+//              buildBannerLayout(),
+//              buildBannerLayout2(),
+            SliverToBoxAdapter(
+              child: Stack(
+                children: <Widget>[
+                  buildBannerLayout(),
+                  _buildHotspot(),
+                ],
+              ),
+            ),
+
+            SliverToBoxAdapter(
+                child: Container(
+              margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(30), left: 16, right: 16),
+              padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.circular(ScreenUtil().setWidth(32))),
+              child: Column(
+                children: <Widget>[
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: <Widget>[
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                        productItem(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )),
+            SliverToBoxAdapter(child: taskCard2(context)),
+            buildTaskWall(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  var _priceColor = const Color(0xffe31735);
+
+  Widget productItem({HomeGoodsListGoodsList item}) {
+    String id = '';
+    String goodsName = '';
+    String goodsImg = '';
+    String originalPrice = '';
+    String salePrice = '';
+    double topMargin = 0;
+    try {
+      id = item.id;
+      goodsName = item.goodsName;
+      goodsImg = item.goodsImg;
+      originalPrice = item.originalPrice;
+      salePrice = item.salePrice;
+      if (goodsName.length < 8) {
+        topMargin = ScreenUtil().setHeight(50);
+      }
+    } catch (e) {}
+    return GestureDetector(
+      onTap: () {
+//        launchWeChatMiniProgram(username: "gh_8ae370170974");
+        NavigatorUtils.navigatorRouter(
+            context,
+            GoodsDetailPage(
+              productId: id,
+            ));
+      },
+      child: Container(
+//            color: Colors.blue ,商学院
+          width: ScreenUtil().setWidth(340),
+          margin: EdgeInsets.only(right: ScreenUtil().setWidth(30)),
+          constraints: BoxConstraints(
+            minHeight: ScreenUtil().setHeight(550),
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+          decoration: BoxDecoration(
+            color: Color(0xffFFF0E8),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
+          ),
+          child: Padding(
+//                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
+            padding: const EdgeInsets.all(0),
+//            child: InkWell(
+//              splashColor: Colors.yellow,
+
+//        onDoubleTap: () => showSnackBar(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+//                        fit: StackFit.expand,
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                      topLeft: Radius.circular(ScreenUtil().setWidth(30)),
+                    ),
+                    child: CachedNetworkImage(
+                      fadeInDuration: Duration(milliseconds: 0),
+                      fadeOutDuration: Duration(milliseconds: 0),
+                      height: ScreenUtil().setWidth(340),
+                      width: ScreenUtil().setWidth(340),
+                      fit: BoxFit.fitWidth,
+                      imageUrl: "$goodsImg",
+                    ),
+                  ),
+                ),
+
+//                          SizedBox(
+//                            height: 10,
+//                          ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(20),
+                    vertical: ScreenUtil().setHeight(16),
+                  ),
+                  child: Text(
+                    "$goodsName",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(38),
+                      color: Color(0xff222222),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: topMargin),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        margin:
+                            EdgeInsets.only(bottom: ScreenUtil().setHeight(8)),
+                        child: Text(
+                          '￥',
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(26),
+                            color: _priceColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '$salePrice',
+//                          '27.5',
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                          color: _priceColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(20),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              bottom: ScreenUtil().setHeight(8)),
+                          child: Text(
+                            "￥$originalPrice",
+                            overflow: TextOverflow.ellipsis,
+//                            '${0}人评价',
+//                            '23234人评价',
+//                          product
+                            style: TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: ScreenUtil().setSp(32),
+                                color: Color(0xFF979896)),
+                          ),
+                        ),
+                      ),
+                      /* Icon(
+                          Icons.more_horiz,
+                          size: 15,
+                          color: Color(0xFF979896),
+                        ),*/
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                )
+//                          descStack(product),
+//                          ratingStack(product.rating),
+//                          Container( child: imageStack(product.image),),
+              ],
+            ),
+          )),
+    );
+  }
+
+  ///icon 操作列表
+  Widget itemsLayout() {
+    Color _itemsTextColor = Color(0xff222222);
+    return Container(
+      height: ScreenUtil().setHeight(332),
+      margin: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: ScreenUtil().setHeight(655),
+      ),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:
+              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(28))),
+          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+              color: Colors.white,
+              width: 0.5)),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: iconList.asMap().keys.map((index) {
+            HomeIconListIconList item;
+            try {
+              item = iconList[index];
+            } catch (e) {}
+            return iconItem(_itemsTextColor, item: item);
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  Widget iconItem(Color _itemsTextColor, {HomeIconListIconList item}) {
+    String icon = '';
+    String name = '';
+    String type = '';
+    String appId = '';
+    String path = '';
+    try {
+      icon = item.icon;
+      name = item.name;
+      type = item.type;
+      appId = item.appId;
+      path = item.path;
+//      print("icon=${icon+name+type+appId+path}");
+
+    } catch (e) {}
+    return new InkWell(
+        onTap: () async {
+          if (type == 'anchor') {
+            //滚动到指定位置
+//            _tabController.animateTo(2);
+            List<String> items = path.split("_");
+            String indexString = items[items.length - 1];
+            print("indexString=$indexString");
+            try {
+              int index = int.parse(indexString);
+              _tabController.animateTo(index);
+              Scrollable.ensureVisible(dataKey.currentContext);
+            } catch (e) {
+              print(e);
+            }
+            return;
+          }
+          if (type == 'weapp') {
+            launchWeChatMiniProgram(
+              username: appId,
+            );
+            return;
+          }
+          if (type == 'link') {
+            /*PaletteGenerator generator =
+                await PaletteGenerator.fromImageProvider(
+                    Image.network("$icon").image);
+            NavigatorUtils.navigatorRouter(
+                context,
+                WebViewPage(
+                  initialUrl: path,
+                  showActions: true,
+                  appBarBackgroundColor: generator.dominantColor.color,
+                ));*/
+            Utils.launchUrl(path);
+            return;
+          }
+        },
+        child: Container(
+          height: double.infinity,
+          width: (ScreenUtil.screenWidth - 40) / 4,
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.only(bottom: 8.0),
+                child: new CircleAvatar(
+                  radius: 20.0,
+                  backgroundColor: Colors.transparent,
+                  child: CachedNetworkImage(
+                    imageUrl: "$icon",
+                    width: ScreenUtil().setWidth(136),
+                    height: ScreenUtil().setWidth(136),
+                  ),
+                ),
+              ),
+              new Container(
+                child: new Text(
+                  "$name",
+                  style: new TextStyle(
+                    fontSize: ScreenUtil().setSp(42),
+                    color: _itemsTextColor,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  ///实时动态热点轮播
+  ///
+  Widget _buildHotspot() {
+    return GestureDetector(
+      onTap: () {
+        launchWeChatMiniProgram(username: "gh_7b424680d04a");
+      },
+      child: Container(
+        height: ScreenUtil().setHeight(140),
+        margin: EdgeInsets.only(
+            left: 16, right: 16, top: ScreenUtil().setHeight(655)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: ScreenUtil().setWidth(32),
+                horizontal: ScreenUtil().setWidth(32),
+              ),
+              child: CachedNetworkImage(
+                imageUrl:
+                    "https://alipic.lanhuapp.com/xd9a50a007-6769-44e8-93ed-3e33e099a277",
+                width: ScreenUtil().setWidth(236),
+                height: ScreenUtil().setHeight(66),
+              ),
+            ),
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  return Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(
+                      vertical: ScreenUtil().setWidth(32),
+                    ),
+                    child: Swiper(
+                      key: ValueKey(context),
+                      controller: _marqueeSwiperController,
+                      loop: true,
+                      autoplay: true,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "用户￥$index刚刚获得了免单奖励",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: const Color(0xff666666),
+                              fontSize: ScreenUtil().setSp(36),
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: 6,
+                      curve: Curves.linear,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildBannerLayout2() {
@@ -268,20 +844,35 @@ class _TaskListPageState extends State<TaskListPage>
       ),*/
       child: Swiper(
         itemCount: bannerList == null ? 0 : bannerList.length,
-//        key: GlobalKey(),
         /*itemWidth: ScreenUtil().setWidth(1125),
         itemHeight: ScreenUtil().setHeight(623),
         transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
         //bannerList == null ? 0 : bannerList.length,
         loop: _isLoop,
         autoplay: false,
+        key: ValueKey(context),
         controller: _swiperController,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
-        onIndexChanged: (index) {
+        onIndexChanged: (index) async {
+          if (!CommonUtils.isEmpty(bannerColorList) &&
+              !CommonUtils.isEmpty(bannerColorList[index])) {
+            _gradientCorlor = LinearGradient(colors: [
+              bannerColorList[index],
+              bannerColorList[index],
+            ]);
+            if (mounted) {
+              setState(() {
+                bannerIndex = index;
+              });
+            }
+            return;
+          }
+          PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
+              Image.network("${bannerList[index].imgPath}").image);
           if (mounted) {
             setState(() {
               bannerIndex = index;
-              switch (bannerList[index].uri.toString().trim()) {
+              /*switch (bannerList[index].uri.toString().trim()) {
                 case "upgrade":
                   _gradientCorlor = LinearGradient(colors: [
                     Color(0xFF7E090F),
@@ -303,7 +894,17 @@ class _TaskListPageState extends State<TaskListPage>
                     Color(0xFFB43733),
                   ]);
                   break;
-              }
+              }*/
+              try {
+                _gradientCorlor = LinearGradient(colors: [
+                  generator.dominantColor.color,
+                  generator.dominantColor.color,
+                ]);
+              } catch (e) {}
+              /*_gradientCorlor = LinearGradient(colors: [
+                generator.dominantColor.color,
+                generator.dominantColor.color,
+              ]);*/
             });
           }
         },
@@ -316,7 +917,6 @@ class _TaskListPageState extends State<TaskListPage>
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
           var bannerData = bannerList[index];
-
           return GestureDetector(
             onTap: () {
               if (Platform.isIOS) {
@@ -899,8 +1499,8 @@ class _TaskListPageState extends State<TaskListPage>
   Widget taskCard2(context) {
     return Card(
       elevation: 0,
-      margin: EdgeInsets.only(
-          left: 16, right: 16, top: ScreenUtil().setHeight(655)),
+      margin:
+          EdgeInsets.only(left: 16, right: 16, top: ScreenUtil().setHeight(32)),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),
@@ -908,6 +1508,7 @@ class _TaskListPageState extends State<TaskListPage>
         children: <Widget>[
           Container(
             height: 48,
+            key: dataKey,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -945,7 +1546,7 @@ class _TaskListPageState extends State<TaskListPage>
     );
   }
 
-  var _tabBarViewHeight = ScreenUtil().setHeight(300);
+  var _tabBarViewHeight = ScreenUtil().setHeight(330);
 
   Widget buildTaskListTabView({int taskType}) {
     var taskList;
@@ -975,6 +1576,10 @@ class _TaskListPageState extends State<TaskListPage>
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class TaskListTabView extends StatefulWidget {
@@ -989,7 +1594,7 @@ class TaskListTabView extends StatefulWidget {
 }
 
 class _TaskListTabViewState extends State<TaskListTabView>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   AnimationController _controller;
   String taskCompletedNum = "";
   String taskTotalNum = "";
@@ -1003,7 +1608,10 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this);
+    _controller = AnimationController(vsync: ScrollableState());
+    try {
+      taskList = widget.taskList;
+    } catch (e) {}
     _initData();
     super.initState();
   }
@@ -1030,7 +1638,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
         switch (widget.taskType) {
           case 0: //普通/体验
             for (var taskListItem in taskListAll) {
-              if (taskListItem.name == "普通专区" || taskListItem.name == "体验专区") {
+              if (taskListItem.name == "新人专区" || taskListItem.name == "体验专区") {
                 taskList = taskListItem.xList;
                 bus.emit("taskListChanged", taskList.length);
                 return;
@@ -1109,8 +1717,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   Widget buildTaskItemLayout(context, HomeDataTaskListList taskItem, index) {
-    var bgColor = GlobalConfig.taskBtnBgColor;
-    var txtColor = GlobalConfig.taskBtnTxtColor;
+    var bgColor = Color(0xffF32E43); // GlobalConfig.taskBtnBgColor;
+    var txtColor = Colors.white; //GlobalConfig.taskBtnTxtColor;
     var category = '';
     category = taskItem.category;
     switch (taskItem.taskStatus) {
@@ -1383,6 +1991,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                       alignment: Alignment.center,
                       child: Text(
                         "奖励(元)",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(30),
                           color: Color(0xffF32E43),
@@ -1479,4 +2088,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -296,7 +296,9 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
           ),
           Visibility(
             // todo
-            visible: status == "4" ? true : false,
+            visible: category == "3"
+                ? !CommonUtils.isEmpty(rejectReason) ? true : false
+                : status == "4" ? true : false,
             child: Column(
               children: <Widget>[
                 SizedBox(
