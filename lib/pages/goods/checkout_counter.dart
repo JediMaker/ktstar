@@ -2,12 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/task/pay_result.dart';
+import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
@@ -175,123 +178,159 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
           backgroundColor: GlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.only(left: 16),
-                height: 50,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      '订单总额：',
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(48),
+        body: KeyboardDismissOnTap(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.only(left: 16),
+                  height: 50,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '订单总额：',
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(48),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      widget.orderMoney == null ? "" : "￥${widget.orderMoney}",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: ScreenUtil().setSp(56),
+                      SizedBox(
+                        width: 15,
                       ),
-                    )
-                  ],
+                      PriceText(
+                        text: widget.orderMoney == null
+                            ? ""
+                            : "${widget.orderMoney}",
+                        fontSize: ScreenUtil().setSp(42),
+                        fontBigSize: ScreenUtil().setSp(56),
+                        textColor: Colors.red,
+                        /* style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(56),
+                        ),*/
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        '请选择支付方式：',
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(48),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 1,
-                      color: Colors.black12,
-                    ),
-                    ListTile(
-                      onTap: () async {
-                        var result = await HttpManage.getGoodsPayAliPayInfo(
-                            orderId: widget.orderId);
-                        if (result.status) {
-                          _payInfo = result.data.payInfo;
-                          _payNo = result.data.payNo;
-                          callAlipay();
-                        } else {
-                          CommonUtils.showToast(result.errMsg);
-                        }
-                      },
-                      leading: CachedNetworkImage(
-                        imageUrl:
-                            'https://alipic.lanhuapp.com/xdb61f0e63-777a-485a-97c7-ecdd8e261ff2',
-                        width: ScreenUtil().setWidth(78),
-                        height: ScreenUtil().setWidth(78),
-                        fit: BoxFit.fill,
-                      ),
-                      title: Text(
-                        '支付宝',
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(48),
-                        ),
-                      ),
-                      trailing: Icon(
-                        CupertinoIcons.forward,
-                        size: 16,
-                      ),
-                    ),
-                    Divider(
-                      height: 1,
-                      color: Colors.black12,
-                    ),
-                    ListTile(
-                      onTap: () async {
-                        var result = await HttpManage.getGoodsPayWeChatPayInfo(
-                            orderId: widget.orderId);
-                        if (result.status) {
-                          _payNo = result.data.payNo;
-                          callWxPay(result.data);
-                        } else {
-                          CommonUtils.showToast(result.errMsg);
-                        }
-                      },
-                      leading: CachedNetworkImage(
-                        imageUrl:
-                            'https://alipic.lanhuapp.com/xdb0f27927-d450-4cc2-a0df-4147410870e7',
-                        width: ScreenUtil().setWidth(78),
-                        height: ScreenUtil().setWidth(78),
-                        fit: BoxFit.fill,
-                      ),
-                      title: Text(
-                        '微信',
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(48),
-                        ),
-                      ),
-                      trailing: Icon(
-                        CupertinoIcons.forward,
-                        size: 16,
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-            ],
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          '请选择支付方式：',
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(48),
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Colors.black12,
+                      ),
+                      ListTile(
+                        onTap: () async {
+                          var result = await HttpManage.getGoodsPayAliPayInfo(
+                              orderId: widget.orderId);
+                          if (result.status) {
+                            _payInfo = result.data.payInfo;
+                            _payNo = result.data.payNo;
+                            callAlipay();
+                          } else {
+                            CommonUtils.showToast(result.errMsg);
+                          }
+                        },
+                        leading: CachedNetworkImage(
+                          imageUrl:
+                              'https://alipic.lanhuapp.com/xdb61f0e63-777a-485a-97c7-ecdd8e261ff2',
+                          width: ScreenUtil().setWidth(78),
+                          height: ScreenUtil().setWidth(78),
+                          fit: BoxFit.fill,
+                        ),
+                        title: Text(
+                          '支付宝',
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(48),
+                          ),
+                        ),
+                        trailing: Icon(
+                          CupertinoIcons.forward,
+                          size: 16,
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Colors.black12,
+                      ),
+                      ListTile(
+                        onTap: () async {
+                          var result =
+                              await HttpManage.getGoodsPayWeChatPayInfo(
+                                  orderId: widget.orderId);
+                          if (result.status) {
+                            _payNo = result.data.payNo;
+                            callWxPay(result.data);
+                          } else {
+                            CommonUtils.showToast(result.errMsg);
+                          }
+                        },
+                        leading: CachedNetworkImage(
+                          imageUrl:
+                              'https://alipic.lanhuapp.com/xdb0f27927-d450-4cc2-a0df-4147410870e7',
+                          width: ScreenUtil().setWidth(78),
+                          height: ScreenUtil().setWidth(78),
+                          fit: BoxFit.fill,
+                        ),
+                        title: Text(
+                          '微信',
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(48),
+                          ),
+                        ),
+                        trailing: Icon(
+                          CupertinoIcons.forward,
+                          size: 16,
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Colors.black12,
+                      ),
+                      ListTile(
+                        onTap: () async {
+                          CommonUtils.showPayPasswordDialog(
+                            context,
+                          );
+                        },
+                        leading: CachedNetworkImage(
+                          imageUrl:
+                              'https://alipic.lanhuapp.com/xdd5f9c369-8c30-4f93-bcf0-151a16b97220',
+                          width: ScreenUtil().setWidth(78),
+                          height: ScreenUtil().setWidth(78),
+                          fit: BoxFit.fill,
+                        ),
+                        title: Text(
+                          '余额支付',
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(48),
+                          ),
+                        ),
+                        trailing: Icon(
+                          CupertinoIcons.forward,
+                          size: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       )),

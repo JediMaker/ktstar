@@ -21,11 +21,13 @@ import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
 import 'package:star/pages/task/task_record_list.dart';
+import 'package:star/pages/task/task_safe_setting.dart';
 import 'package:star/pages/withdrawal/withdrawal.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:star/utils/utils.dart';
 
 import '../../global_config.dart';
 import 'fans_list.dart';
@@ -679,6 +681,93 @@ class _TaskMinePageState extends State<TaskMinePage>
                   ),
                 ),
               ],
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /* Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "检测更新",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              Utils.checkAppVersion(context, checkDerictly: true);
+            },
+            trailing: Visibility(
+              visible: GlobalConfig.prefs.getBool('needUpdate') == null
+                  ? false
+                  : GlobalConfig.prefs.getBool('needUpdate'),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "有新版本可以更新",
+                    style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: ScreenUtil().setSp(38)),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: ScreenUtil().setWidth(32),
+                    color: Color(0xff999999),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /* Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "安全设置",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              NavigatorUtils.navigatorRouter(context, SafeSettingsPage());
+            },
+            trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: ScreenUtil().setWidth(32),
+                  color: Color(0xff999999),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
             ),
           ),
           ListTile(

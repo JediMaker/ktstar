@@ -30,6 +30,7 @@ import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
 import 'package:star/pages/task/task_share.dart';
 import 'package:star/pages/task/task_submission.dart';
+import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -213,6 +214,7 @@ class _TaskListPageState extends State<TaskListPage>
   }
 
   initBannerListColor() async {
+    bannerColorList = List<Color>();
     for (var bannerItem in bannerList) {
       PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
           Image.network("${bannerItem.imgPath}").image);
@@ -289,6 +291,7 @@ class _TaskListPageState extends State<TaskListPage>
         ),
         centerTitle: true,
         elevation: 0,
+        brightness: Brightness.dark,
         gradient: _gradientCorlor,
       ),
       body: Builder(
@@ -487,7 +490,9 @@ class _TaskListPageState extends State<TaskListPage>
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
       if (goodsName.length < 8) {
-        topMargin = ScreenUtil().setHeight(50);
+        topMargin = ScreenUtil().setHeight(70);
+      } else {
+        topMargin = ScreenUtil().setHeight(10);
       }
     } catch (e) {}
     return GestureDetector(
@@ -504,7 +509,7 @@ class _TaskListPageState extends State<TaskListPage>
           width: ScreenUtil().setWidth(340),
           margin: EdgeInsets.only(right: ScreenUtil().setWidth(30)),
           constraints: BoxConstraints(
-            minHeight: ScreenUtil().setHeight(550),
+            minHeight: ScreenUtil().setHeight(560),
           ),
           decoration: BoxDecoration(
             color: Color(0xffFFF0E8),
@@ -567,26 +572,17 @@ class _TaskListPageState extends State<TaskListPage>
                       SizedBox(
                         width: 5,
                       ),
-                      Container(
-                        margin:
-                            EdgeInsets.only(bottom: ScreenUtil().setHeight(8)),
-                        child: Text(
-                          '￥',
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(26),
-                            color: _priceColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '$salePrice',
+                      PriceText(
+                        text: '$salePrice',
+                        textColor: _priceColor,
+                        fontSize: ScreenUtil().setSp(32),
+                        fontBigSize: ScreenUtil().setSp(42),
 //                          '27.5',
-                        style: TextStyle(
+                        /*style: TextStyle(
                           fontSize: ScreenUtil().setSp(42),
                           color: _priceColor,
                           fontWeight: FontWeight.bold,
-                        ),
+                        ),*/
                       ),
                       SizedBox(
                         width: ScreenUtil().setWidth(20),
@@ -594,17 +590,20 @@ class _TaskListPageState extends State<TaskListPage>
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(
-                              bottom: ScreenUtil().setHeight(8)),
-                          child: Text(
-                            "￥$originalPrice",
-                            overflow: TextOverflow.ellipsis,
+                              bottom: ScreenUtil().setHeight(2)),
+                          child: Visibility(
+                            visible: salePrice != originalPrice,
+                            child: Text(
+                              "￥$originalPrice",
+                              overflow: TextOverflow.ellipsis,
 //                            '${0}人评价',
 //                            '23234人评价',
 //                          product
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: ScreenUtil().setSp(32),
-                                color: Color(0xFF979896)),
+                              style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: ScreenUtil().setSp(32),
+                                  color: Color(0xFF979896)),
+                            ),
                           ),
                         ),
                       ),
@@ -856,13 +855,13 @@ class _TaskListPageState extends State<TaskListPage>
         onIndexChanged: (index) async {
           if (!CommonUtils.isEmpty(bannerColorList) &&
               !CommonUtils.isEmpty(bannerColorList[index])) {
-            _gradientCorlor = LinearGradient(colors: [
-              bannerColorList[index],
-              bannerColorList[index],
-            ]);
             if (mounted) {
               setState(() {
                 bannerIndex = index;
+                _gradientCorlor = LinearGradient(colors: [
+                  bannerColorList[index],
+                  bannerColorList[index],
+                ]);
               });
             }
             return;
@@ -1517,18 +1516,21 @@ class _TaskListPageState extends State<TaskListPage>
             child: Center(
               child: TabBar(
                 tabs: _tabValues.map((f) {
-                  return Text(
-                    f,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: ScreenUtil().setSp(38)),
+                  return Container(
+                    width: (ScreenUtil.screenWidth - 80) / 4,
+                    child: Text(
+                      f,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: ScreenUtil().setSp(38)),
+                    ),
                   );
                 }).toList(),
                 controller: _tabController,
                 indicatorColor: Color(0xffF93736),
                 indicatorSize: TabBarIndicatorSize.label,
-                isScrollable: false,
+                isScrollable: true,
                 labelColor: Color(0xffF93736),
                 unselectedLabelColor: Colors.black,
               ),
@@ -1609,9 +1611,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
   @override
   void initState() {
     _controller = AnimationController(vsync: ScrollableState());
-    try {
-      taskList = widget.taskList;
-    } catch (e) {}
+    if (mounted) {
+      setState(() {
+        try {
+          taskList = widget.taskList;
+        } catch (e) {}
+      });
+    }
     _initData();
     super.initState();
   }
@@ -1633,9 +1639,11 @@ class _TaskListTabViewState extends State<TaskListTabView>
           bannerList = entity.data.banner;
           taskListAll = entity.data.taskList;
           userType = entity.data.userLevel;
+          taskList = taskListAll[widget.taskType].xList;
+          bus.emit("taskListChanged", taskList.length);
         } catch (e) {}
         var length = 0;
-        switch (widget.taskType) {
+        /* switch (widget.taskType) {
           case 0: //普通/体验
             for (var taskListItem in taskListAll) {
               if (taskListItem.name == "新人专区" || taskListItem.name == "体验专区") {
@@ -1663,7 +1671,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
               }
             }
             break;
-        }
+        }*/
       });
     }
   }
@@ -1979,7 +1987,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                           color: Colors.white),
                     ),
                   ),
-                  Center(
+                  Flexible(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(

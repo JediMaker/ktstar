@@ -11,6 +11,8 @@ import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/generated/json/goods_info_entity_helper.dart';
+import 'package:star/generated/json/goods_queue_entity_helper.dart';
+import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
@@ -44,6 +46,8 @@ import 'package:star/models/alipay_payinfo_entity.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
 import 'package:star/models/goods_info_entity.dart';
+import 'package:star/models/goods_queue_entity.dart';
+import 'package:star/models/goods_queue_persional_entity.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/message_list_entity.dart';
@@ -114,17 +118,17 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-//    if (!GlobalConfig.isRelease) {
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (client) {
-      client.findProxy = (uri) {
-        return 'PROXY ${GlobalConfig.localProxyIPAddress}:${GlobalConfig.localProxyPort}';
+    if (!GlobalConfig.isRelease) {
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.findProxy = (uri) {
+          return 'PROXY ${GlobalConfig.localProxyIPAddress}:${GlobalConfig.localProxyPort}';
+        };
+        //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
       };
-      //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    };
-//    }
+    }
 //    /api/index.php?route=oauth/oauth2/authorize
   }
 
@@ -144,7 +148,7 @@ class HttpManage {
   ///
   /// [phone]     手机号
   ///
-  /// [type]    类型 2快速登录 1注册 3 其他
+  /// [type]    类型 1注册 2快速登录 3 其他，4设置密码
   ///
   /// 发送验证码
   static Future<ResultBeanEntity> sendVerificationCode(
@@ -209,6 +213,35 @@ class HttpManage {
   ///
   /// 修改密码
   static Future<ResultBeanEntity> modifyPassword(
+      String phone, String smsCode, String password) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["tel"] = "$phone";
+    paramsMap["password"] = "$password";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["code"] = "$smsCode";
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+
+    print(HttpManage.dio.toString());
+    var response = await HttpManage.dio.post(
+      APi.RESET_PASSWORD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+  ///
+  ///[phone] 手机号
+  ///
+  ///[smsCode]验证码
+  ///
+  /// [password]密码
+  ///
+  ///
+  /// 修改支付密码
+  static Future<ResultBeanEntity> modifyPayPassword(
       String phone, String smsCode, String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
@@ -1639,6 +1672,59 @@ class HttpManage {
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_CHANGE_ADDR,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///商品排队列表
+  static Future<GoodsQueueEntity> getGoodsQueueList(String goodsId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["goods_id"] = "$goodsId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.QUEUE_GOODS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = GoodsQueueEntity();
+    goodsQueueEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///个人所有商品排队列表
+  static Future<GoodsQueuePersionalEntity> getGoodsQueuePersonalList() async {
+    var response = await HttpManage.dio.post(
+      APi.QUEUE_MY,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = GoodsQueuePersionalEntity();
+    goodsQueuePersionalEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///订单参与排队
+  ///
+  ///[joinStatus]  是否参与排队 1参与 2不参与
+  ///
+  ///
+  ///
+  ///
+  static Future<ResultBeanEntity> orderIsJoinQueue(
+      String orderId, String joinStatus) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap["bx_status"] = "$joinStatus";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_QUEUE,
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;

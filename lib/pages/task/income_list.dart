@@ -199,6 +199,10 @@ class _IncomeListPageState extends State<IncomeListPage> {
       }
     } else {
       switch (profitType) {
+        case "3":
+          iconName = "icon_profit_task.png";
+          statusText = "消费补贴-成功";
+          break;
         case "2":
           iconName = "icon_profit_task.png";
           statusText = "任务奖励-成功";

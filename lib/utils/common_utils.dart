@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:star/global_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quiver/strings.dart';
@@ -77,7 +79,7 @@ class CommonUtils {
   static showToast(msg) {
     Fluttertoast.showToast(
         msg: "$msg",
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.black38,
 //        backgroundColor: Color(0XFF222222c2),
         textColor: Colors.white,
         gravity: ToastGravity.BOTTOM);
@@ -266,7 +268,7 @@ class CommonUtils {
               fun();
             } else {
               lastPopTime = DateTime.now();
-              CommonUtils.showToast( "请勿重复点击！");
+              CommonUtils.showToast("请勿重复点击！");
             }
           },
           child: childWidget),
@@ -349,6 +351,122 @@ class CommonUtils {
         });
   }
 
+  static Future<Null> showPayPasswordDialog(
+    BuildContext context,
+  ) {
+    return NavigatorUtils.showGSYDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: SimpleDialog(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Center(
+                            child: Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(61),
+                          ),
+                          child: new Text(
+                            "请输入支付密码",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(48),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(vertical: 30),
+                          child: PinCodeTextField(
+                            length: 6,
+                            obsecureText: true,
+                            autoFocus: true,
+                            animationType: AnimationType.fade,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            autoDismissKeyboard: true,
+                            textInputType: TextInputType.number,
+                            errorTextSpace: 0,
+                            textStyle:
+                                TextStyle(fontSize: ScreenUtil().setSp(42)),
+                            validator: (v) {
+                              if (v.length < 3) {
+                                return "I'm from validator";
+                              } else {
+                                return null;
+                              }
+                            },
+
+                            pinTheme: PinTheme(
+                              shape: PinCodeFieldShape.box,
+                              borderWidth: ScreenUtil().setWidth(1),
+                              borderRadius: BorderRadius.circular(0),
+                              fieldHeight: ScreenUtil().setWidth(130),
+                              fieldWidth: ScreenUtil().setWidth(130),
+                              activeColor: Color(0xffeaeaea),
+                              activeFillColor: Colors.white,
+                              selectedColor: Color(0xffeaeaea),
+                              selectedFillColor: Colors.white,
+                              inactiveColor: Color(0xffeaeaea),
+                              inactiveFillColor: Colors.white,
+                              disabledColor: Colors.white,
+                            ),
+                            animationDuration: Duration(milliseconds: 300),
+//                        backgroundColor: Colors.green.shade50,
+                            enableActiveFill: true,
+                            onCompleted: (v) {
+                              print("Completed");
+                            },
+                            onChanged: (value) {
+                              print(value);
+                            },
+                            beforeTextPaste: (text) {
+                              print("Allowing to paste $text");
+                              //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                              //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                              return true;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned.fill(
+                      top: 0,
+                      left: 0,
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: GestureDetector(
+                            onTap: () {
+//                    launch(Address.updateUrl);
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                width: ScreenUtil().setWidth(120),
+                                height: ScreenUtil().setWidth(120),
+                                alignment: Alignment.topCenter,
+                                child: FlatButton(
+                                  child: new Icon(
+                                    CupertinoIcons.clear_thick,
+                                    color: Color(0xff999999),
+                                    size: ScreenUtil().setSp(56),
+                                  ),
+                                ))),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   ///
   /// [permission] 需要授权的权限
   ///
@@ -362,7 +480,7 @@ class CommonUtils {
     switch (status) {
       case PermissionStatus.denied:
         print("denied");
-        CommonUtils.showToast( "相关功能受限，请设置允许相关权限");
+        CommonUtils.showToast("相关功能受限，请设置允许相关权限");
         break;
       case PermissionStatus.granted:
         fun;
@@ -372,7 +490,7 @@ class CommonUtils {
       case PermissionStatus.undetermined:
         break;
       case PermissionStatus.permanentlyDenied:
-        CommonUtils.showToast( "相关功能受限，请设置允许相关权限");
+        CommonUtils.showToast("相关功能受限，请设置允许相关权限");
         openAppSettings();
         break;
     }

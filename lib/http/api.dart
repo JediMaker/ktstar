@@ -259,6 +259,9 @@ class APi {
   ///订单列表
   static const String ORDER_LIST = "/order/list";
 
+  ///订单排队
+  static const String ORDER_QUEUE = "/order/queue";
+
   ///订单确认收货
   static const String ORDER_ENSURE_RECEIVE = "order/confirm";
 
@@ -271,4 +274,10 @@ class APi {
 
   ///订单删除
   static const String E_BASE_URL = "/api/index.php?route=api/checkout/checkout";
+
+  ///  获取商品排队详情
+  static const String QUEUE_GOODS = "/queue/goods";
+
+  ///  获取本人排队信息
+  static const String QUEUE_MY = "/queue/my";
 }

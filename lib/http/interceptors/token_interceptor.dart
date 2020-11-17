@@ -60,11 +60,7 @@ class TokenInterceptors extends InterceptorsWrapper {
         if (GlobalConfig.isLogin()) {
           GlobalConfig.prefs.remove("hasLogin");
           GlobalConfig.saveLoginStatus(false);
-          Fluttertoast.showToast(
-              msg: "登陆信息已失效，请重新登录！",
-              textColor: Colors.white,
-              toastLength: Toast.LENGTH_LONG,
-              backgroundColor: Colors.grey);
+          CommonUtils.showToast("登陆状态已过期，请重新登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) {
             var context =
                 GlobalConfig.navigatorKey.currentState.overlay.context;

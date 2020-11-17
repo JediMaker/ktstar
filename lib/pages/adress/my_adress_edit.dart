@@ -14,12 +14,14 @@ class AddressDetailPage extends StatefulWidget {
   //todo AddressBeanDataAddress address;
   var addressId;
   String defaultAddressId;
+  String title;
   int type; //0、订单选择地址  1、地址编辑修改
 
   AddressDetailPage({
     @required this.addressId,
     @required this.defaultAddressId,
     @required this.type = 1,
+    this.title = '编辑收货地址',
     Key key,
   }) : super(key: key);
 
@@ -105,7 +107,7 @@ class _AddressDetailPageState extends State<AddressDetailPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '编辑收货地址',
+          widget.title,
           style: TextStyle(
               color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
         ),

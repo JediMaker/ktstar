@@ -4,7 +4,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
+import 'package:star/pages/withdrawal/withdrawal_result.dart';
 import 'package:star/utils/common_utils.dart';
+import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
@@ -33,6 +35,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
 
   @override
   void initState() {
+//    var text = "13122223333".replaceFirst(new RegExp(r'\d{4}'), '****', 3);
+    _aliPayAccountController.text = '';
+    _aliPayAccount = "";
     super.initState();
   }
 
@@ -360,6 +365,15 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                             color: Color(0xFF999999),
                             fontSize: ScreenUtil().setSp(36)),
                       ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
+                      Text(
+                        "*请填写正确的支付宝账号，以防止造成资金损失\n*提现手续费10% \t限时免费(截止到2020-11-20)",
+                        style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: ScreenUtil().setSp(32)),
+                      ),
                       buildBtnLayout(),
                     ],
                   ),
@@ -398,7 +412,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
               if (result.status) {
                 CommonUtils.showToast("提现申请已提交");
-                Navigator.of(context).pop();
+//                Navigator.of(context).pop();
+                NavigatorUtils.navigatorRouterReplaceMent(
+                    context, WithdrawalResultPage());
               } else {
                 CommonUtils.showToast(result.errMsg);
               }

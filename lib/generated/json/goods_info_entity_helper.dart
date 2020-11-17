@@ -49,6 +49,12 @@ goodsInfoDataFromJson(GoodsInfoData data, Map<String, dynamic> json) {
 	if (json['detail_imgs'] != null) {
 		data.detailImgs = json['detail_imgs']?.map((v) => v?.toString())?.toList()?.cast<String>();
 	}
+	if (json['queue_count'] != null) {
+		data.queueCount = json['queue_count']?.toString();
+	}
+	if (json['bt_price'] != null) {
+		data.btPrice = json['bt_price']?.toString();
+	}
 	return data;
 }
 
@@ -60,5 +66,7 @@ Map<String, dynamic> goodsInfoDataToJson(GoodsInfoData entity) {
 	data['sale_price'] = entity.salePrice;
 	data['banner_imgs'] = entity.bannerImgs;
 	data['detail_imgs'] = entity.detailImgs;
+	data['queue_count'] = entity.queueCount;
+	data['bt_price'] = entity.btPrice;
 	return data;
 }

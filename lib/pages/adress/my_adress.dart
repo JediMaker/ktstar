@@ -282,6 +282,7 @@ class _AddressListPageState extends State<AddressListPage>
                       type: widget.type,
 //                        address: AddressBeanDataAddress(),
                       addressId: null,
+                      title: '添加收货地址',
                       defaultAddressId: null));
               if (result) {
                 _initData();

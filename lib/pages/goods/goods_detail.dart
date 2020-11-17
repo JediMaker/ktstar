@@ -15,8 +15,10 @@ import 'package:star/bus/my_event_bus.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/pages/goods/ensure_order.dart';
+import 'package:star/pages/goods/free_queue.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
+import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/goods_select_choice.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -41,6 +43,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
   GoodsInfoEntity detailData;
   var _salePrice = '';
   var _originalPrice = '';
+  var _queueCount = '0';
+  var _btPrice = '';
 
   Future _initData() async {
     try {
@@ -57,9 +61,15 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
               _detailImgs = detailData.data.detailImgs;
               _salePrice = detailData.data.salePrice;
               _originalPrice = detailData.data.originalPrice;
-            } catch (e) {}
+              _queueCount = detailData.data.queueCount;
+              _btPrice = detailData.data.btPrice;
+            } catch (e) {
+              try {
+                EasyLoading.dismiss();
+              } catch (e) {}
+            }
           });
-        } else {}
+        }
       } else {
         Fluttertoast.showToast(
             msg: resultData.errMsg,
@@ -166,18 +176,17 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-                                  Text(
-                                    "￥$_salePrice",
-                                    style: TextStyle(
-                                        color: _txtRedColor,
-                                        fontSize: ScreenUtil().setSp(56),
-                                        fontWeight: FontWeight.bold),
+                                  PriceText(
+                                    text: '$_salePrice',
+                                    textColor: _txtRedColor,
+                                    fontSize: ScreenUtil().setSp(42),
+                                    fontBigSize: ScreenUtil().setSp(56),
                                   ),
                                   SizedBox(
-                                    width: 20,
+                                    width: 16,
                                   ),
                                   Visibility(
-                                    visible: true,
+                                    visible: _originalPrice != _salePrice,
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           bottom: ScreenUtil().setHeight(8)),
@@ -189,6 +198,24 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                             fontSize: ScreenUtil().setSp(36),
                                             decoration:
                                                 TextDecoration.lineThrough),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                  Visibility(
+                                    visible: !CommonUtils.isEmpty(_btPrice),
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          bottom: ScreenUtil().setHeight(8)),
+                                      child: Text(
+                                        "补贴：￥$_btPrice",
+//                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
+                                        style: TextStyle(
+                                          color: _txtRedColor,
+                                          fontSize: ScreenUtil().setSp(36),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -213,6 +240,69 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            NavigatorUtils.navigatorRouter(
+                                context,
+                                FreeQueuePage(
+                                  goodsId: widget.productId,
+                                ));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 0),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 18, horizontal: 16),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                    ScreenUtil().setWidth(30)))),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text(
+                                        "排队",
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(38),
+                                          color: Color(0xff999999),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "目前该商品已有$_queueCount人正在参与排队",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(42),
+                                          color: Color(0xff222222),
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: true,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            bottom: ScreenUtil().setHeight(8)),
+                                        child: Icon(
+                                          CupertinoIcons.forward,
+                                          color: Color(0xff999999),
+                                          size: ScreenUtil().setSp(38),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -324,7 +414,10 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                 alignment: Alignment.topLeft,
                 child: ClipOval(
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: CachedNetworkImage(
+                      imageUrl:
+                          "https://alipic.lanhuapp.com/xded955fd8-b440-4233-863c-337b04b3e66b",
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -653,12 +746,20 @@ class _DetailWindowState extends State<DetailWindow>
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      if (!CommonUtils.isEmpty(context)) {
-        NavigatorUtils.navigatorRouter(
-            context,
-            EnsureOrderPage(
-              orderId: "$orderId",
-            ));
+      if (!CommonUtils.isEmpty(context) && !CommonUtils.isEmpty(orderId)) {
+        try {
+          NavigatorUtils.navigatorRouter(
+              context,
+              EnsureOrderPage(
+                orderId: "$orderId",
+              ));
+        } catch (e) {
+          NavigatorUtils.navigatorRouter(
+              context,
+              EnsureOrderPage(
+                orderId: "$orderId",
+              ));
+        }
       }
     }
   }
@@ -675,6 +776,12 @@ class _DetailWindowState extends State<DetailWindow>
     return SliverToBoxAdapter(
       child: Container(
         padding: EdgeInsets.all(20.0),
+//        decoration: BoxDecoration(
+//            border: Border(
+//                bottom: BorderSide(
+//          width: ScreenUtil().setHeight(1),
+//          color: Color(0xffdedede),
+//        ))),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -697,7 +804,13 @@ class _DetailWindowState extends State<DetailWindow>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text.rich(
+                  PriceText(
+                    text: '$goodsPrice',
+                    textColor: _txtRedColor,
+                    fontSize: ScreenUtil().setSp(32),
+                    fontBigSize: ScreenUtil().setSp(42),
+                  ),
+                  /* Text.rich(
                     TextSpan(children: [
                       TextSpan(
                         text: "￥",
@@ -717,7 +830,7 @@ class _DetailWindowState extends State<DetailWindow>
                       fontSize: ScreenUtil().setSp(56),
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
+                  ),*/
                   Container(
                     width: double.maxFinite,
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),

@@ -7,6 +7,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
@@ -140,45 +141,89 @@ class Utils {
   static String url;
 
 //  https://www.jianshu.com/p/89f619c632dd
-  static checkAppVersion(BuildContext context) async {
+  static checkAppVersion(BuildContext context,
+      {bool checkDerictly = false}) async {
     /// 获取当前版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _localVersion = packageInfo.version;
     String updateTime = GlobalConfig.prefs.getString('updateTime') ?? null;
 
     /// 一天之内只提醒一次需要更新
-
-    if (updateTime != null &&
-        DateTime.parse(updateTime).day == DateTime.now().day) {
-      return;
+    if (!checkDerictly) {
+      if (updateTime != null &&
+          DateTime.parse(updateTime).day == DateTime.now().day) {
+        return;
+      }
     }
+
     var versionInfo = await HttpManage.getVersionInfo();
     try {
       if (versionInfo.status) {
         print(
             "_localVersion=$_localVersion；versionInfo。versionNo=${versionInfo.data.versionNo}");
-        if (_localVersion == versionInfo.data.versionNo) return;
-        final bool wantsUpdate = await showDialog<bool>(
-          context: context,
-          builder: (BuildContext context) =>
-              _buildDialog(context, packageInfo, versionInfo),
-          barrierDismissible: false,
-        );
-        if (Platform.isIOS) {
-          url = versionInfo.data.iosUrl;
-        } else {
-          url = versionInfo.data.androidUrl;
+        bool needUpdate =
+            isVersionGreatThanLocal(versionInfo.data.versionNo, _localVersion);
+        if (!needUpdate) {
+          if (checkDerictly) {
+            CommonUtils.showToast("当前已是最新版本");
+          }
+          return;
         }
-        if (wantsUpdate != null && wantsUpdate) {
-          GlobalConfig.prefs.remove('updateTime');
-          await launchUrl(url);
+        if (needUpdate) {
+          GlobalConfig.prefs.setBool('needUpdate', true);
+          final bool wantsUpdate = await showDialog<bool>(
+            context: context,
+            builder: (BuildContext context) =>
+                _buildDialog(context, packageInfo, versionInfo),
+            barrierDismissible: false,
+          );
+          if (Platform.isIOS) {
+            url = versionInfo.data.iosUrl;
+          } else {
+            url = versionInfo.data.androidUrl;
+          }
+          if (wantsUpdate != null && wantsUpdate) {
+            GlobalConfig.prefs.remove('updateTime');
+            GlobalConfig.prefs.remove('needUpdate');
+            await launchUrl(url);
+          } else {
+            GlobalConfig.prefs
+                .setString('updateTime', DateTime.now().toString());
+          }
         } else {
-          GlobalConfig.prefs.setString('updateTime', DateTime.now().toString());
+          GlobalConfig.prefs.setBool('needUpdate', false);
         }
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  static bool isVersionGreatThanLocal(
+      String versionRemote, String clientVersion) {
+    versionRemote.compareTo(clientVersion);
+    bool result = false;
+    if (!CommonUtils.isEmpty(versionRemote) &&
+        versionRemote.indexOf(".") >= 0) {
+      List<String> versionNum = versionRemote.split(".");
+      List<String> currentNum = clientVersion.split(".");
+      int loop_count = versionNum.length;
+      if (currentNum.length < versionNum.length) {
+        loop_count = currentNum.length;
+      }
+
+      for (int i = 0; i < loop_count; i++) {
+        if (int.parse(versionNum[i]) > int.parse(currentNum[i])) {
+          result = true;
+          break;
+        } else if (int.parse(versionNum[i]) == int.parse(currentNum[i])) {
+          continue;
+        } else {
+          return result;
+        }
+      }
+    }
+    return result;
   }
 
   static launchUrl(url) async {
@@ -210,7 +255,10 @@ Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
       CupertinoDialogAction(
         child: Text(
           '以后再说',
-          style: TextStyle(color: Color(0xff999999)),
+          style: TextStyle(
+            color: Color(0xff222222),
+            fontSize: ScreenUtil().setSp(42),
+          ),
         ),
         onPressed: () {
           Navigator.pop(context, false);
@@ -219,7 +267,9 @@ Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
       CupertinoDialogAction(
         child: Text(
           '立即更新',
-          style: TextStyle(color: GlobalConfig.colorPrimary),
+          style: TextStyle(
+            fontSize: ScreenUtil().setSp(42),
+          ),
         ),
         onPressed: () {
           Navigator.pop(context, true);

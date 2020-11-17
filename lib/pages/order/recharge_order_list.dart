@@ -12,9 +12,11 @@ import 'package:star/models/order_detail_entity.dart';
 import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/pages/goods/checkout_counter.dart';
+import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/order/order_detail.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
+import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -151,6 +153,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
 
     String orderNo = ""; //
     String btnTxt = ""; //
+    Color btnTxtColor = Color(0xFF222222); //
+    Color btnTxtBorderColor = Color(0xFF999999); //
     String orderStatus = "";
     String orderStatusText = "";
     bool showContact = false;
@@ -197,6 +201,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
         case "3":
           orderStatusText = "待收货";
           btnTxt = "确认收货";
+          btnTxtColor = Colors.redAccent; //
+          btnTxtBorderColor = Colors.redAccent; //
           break;
         case "5":
           orderStatusText = "已完成";
@@ -395,14 +401,12 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                             case "2":
                               break;
                             case "3":
-                              //确认收货
-                              var result =
-                                  await HttpManage.orderConfirm(orderId);
-                              if (result.status) {
-                                CommonUtils.showToast("确认收货成功");
-                              } else {
-                                CommonUtils.showToast("${result.errMsg}");
-                              }
+                              showDialog<bool>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _buildReceiveDialog(context, orderId),
+                                barrierDismissible: false,
+                              );
                               break;
                             case "5":
                               orderStatusText = "已完成";
@@ -419,13 +423,13 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                                 Radius.circular(ScreenUtil().setWidth(39))),
                             border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                                color: Color(0xFF999999),
+                                color: btnTxtBorderColor,
                                 width: 0.5)),
                         child: Text(
                           //状态：
                           "$btnTxt",
                           style: TextStyle(
-                            color: Color(0xFF222222),
+                            color: btnTxtColor,
                             fontSize: ScreenUtil().setSp(42),
                           ),
                         ),
@@ -438,6 +442,110 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDialog(BuildContext context, orderId) {
+    return CupertinoAlertDialog(
+      title: Text('提示'),
+      content: Container(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text(
+          '当前订单商品可参与消费补贴，获取现金补贴,是否参与排队补贴？',
+        ),
+      ),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          child: Text(
+            '返回首页',
+            style: TextStyle(
+              color: Color(0xff222222),
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+          onPressed: () async {
+            var result = await HttpManage.orderIsJoinQueue(orderId, "2");
+            /* if (!CommonUtils.isEmpty(result.errMsg)) {
+              CommonUtils.showToast(result.errMsg);
+            }*/
+            Navigator.pop(context, false);
+            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                context, TaskIndexPage());
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            '加入排队',
+            style: TextStyle(
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+          onPressed: () async {
+            var result = await HttpManage.orderIsJoinQueue(orderId, "1");
+            if (!CommonUtils.isEmpty(result.errMsg)) {
+              CommonUtils.showToast(result.errMsg);
+            }
+            Navigator.pop(context, false);
+            if (result.status) {
+              NavigatorUtils.navigatorRouter(context, FreeQueuePersonalPage());
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReceiveDialog(BuildContext context, orderId) {
+    return CupertinoAlertDialog(
+      title: Text('提示'),
+      content: Container(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text(
+          '是否确认收货？',
+        ),
+      ),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          child: Text(
+            '取消',
+            style: TextStyle(
+              color: Color(0xff222222),
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+          onPressed: () async {
+            Navigator.pop(context, false);
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            '确定',
+            style: TextStyle(
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+          onPressed: () async {
+            //确认收货
+
+            var result = await HttpManage.orderConfirm(orderId);
+            if (result.status) {
+              Navigator.pop(context, false);
+              CommonUtils.showToast("确认收货成功");
+              showDialog<bool>(
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildDialog(context, orderId),
+                barrierDismissible: false,
+              );
+              page = 1;
+              _initData();
+              _refreshController.finishLoad(noMore: false);
+            } else {
+              CommonUtils.showToast("${result.errMsg}");
+            }
+          },
+        ),
+      ],
     );
   }
 
