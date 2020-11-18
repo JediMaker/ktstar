@@ -11,7 +11,10 @@ taskShareEntityFromJson(TaskShareEntity data, Map<String, dynamic> json) {
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new TaskShareData().fromJson(json['data']);
+		try {
+			data.data = new TaskShareData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }

@@ -35,6 +35,8 @@ import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/generated/json/version_info_entity_helper.dart';
 import 'package:star/generated/json/vip_price_entity_helper.dart';
 import 'package:star/generated/json/wechat_payinfo_entity_helper.dart';
+import 'package:star/generated/json/withdrawal_info_entity_helper.dart';
+import 'package:star/generated/json/withdrawal_user_info_entity_helper.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
 import 'package:star/http/interceptors/error_interceptor.dart';
@@ -65,6 +67,7 @@ import 'package:star/models/task_share_entity.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
+import 'package:star/models/withdrawal_info_entity.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/utils.dart';
 import 'interceptors/response_interceptor.dart';
@@ -74,6 +77,7 @@ import 'package:star/models/vip_price_entity.dart';
 import 'package:star/models/version_info_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/models/address_list_entity.dart';
+import 'package:star/models/withdrawal_user_info_entity.dart';
 import 'package:http_parser/http_parser.dart';
 
 void getHttp() async {
@@ -232,6 +236,7 @@ class HttpManage {
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
+
   ///
   ///[phone] 手机号
   ///
@@ -1579,6 +1584,7 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["type"] = "all";
+    paramsMap["user_flag"] = "1";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1730,6 +1736,30 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///获取提现用户信息
+  ///
+  static Future<WithdrawalUserInfoEntity> getWithdrawalUserInfo() async {
+    var response = await HttpManage.dio.get(
+      APi.USER_TX_USER,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WithdrawalUserInfoEntity();
+    withdrawalUserInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///获取用户提现信息
+  ///
+  static Future<WithdrawalInfoEntity> getWithdrawalInfo() async {
+    var response = await HttpManage.dio.get(
+      APi.USER_TX_SUCCESS,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WithdrawalInfoEntity();
+    withdrawalInfoEntityFromJson(entity, extractData);
     return entity;
   }
 }

@@ -63,6 +63,12 @@ class APi {
   ///获取粉丝列表
   static const String USER_TASK_LIST = "user/task-list";
 
+  ///获取提现用户账户信息
+  static const String USER_TX_USER = "user/tx-user";
+
+  ///获取提现用户提现信息
+  static const String USER_TX_SUCCESS = "user/tx-success";
+
   ///获取当前版本信息
   static const String SITE_VERSION = "site/version";
 

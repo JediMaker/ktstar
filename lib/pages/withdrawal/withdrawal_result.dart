@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:star/http/http_manage.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -15,18 +16,38 @@ class WithdrawalResultPage extends StatefulWidget {
 }
 
 class _WithdrawalResultPageState extends State<WithdrawalResultPage> {
-  var _withdrawalPrice = '9.9';
+  var _withdrawalPrice = '';
 
-  var _withdrawalFee = '0.9';
+  var _withdrawalFee = '';
 
-  var _realReceivePrice = '9.0';
+  var _realReceivePrice = '';
 
-  var _withdrawalAccount = '130****1254';
+  var _withdrawalAccount = '';
 
-  var _accountBalance = '2079';
+  var _accountBalance = '';
+
+  _initData() async {
+    var result = await HttpManage.getWithdrawalInfo();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          try {
+            _withdrawalPrice = result.data.useModel.applyPrice;
+            _withdrawalFee = result.data.useModel.serviceFee;
+            _realReceivePrice = result.data.useModel.price;
+            _withdrawalAccount = result.data.user.zfbAccount;
+            _accountBalance = result.data.user.price;
+          } catch (e) {
+            print(e);
+          }
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
+    _initData();
     super.initState();
   }
 
@@ -78,8 +99,7 @@ class _WithdrawalResultPageState extends State<WithdrawalResultPage> {
                     width: double.infinity,
                     color: Color(0xffFFDDDC),
                     padding: EdgeInsets.symmetric(
-                        vertical: ScreenUtil().setHeight(28),
-                        horizontal: ScreenUtil().setWidth(32)),
+                        vertical: ScreenUtil().setHeight(28), horizontal: 16),
                     child: Text(
                       "审核通过后，将提现至您当前绑定的支付宝账号，请注意查收~",
                       style: TextStyle(
@@ -120,125 +140,157 @@ class _WithdrawalResultPageState extends State<WithdrawalResultPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                              text: '提现金额：',
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      child: Text(
+                                        "提现账户：",
+                                        style: TextStyle(
+                                          color: Color(0xFF222222),
+                                          fontSize: ScreenUtil().setSp(42),
+                                        ),
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                                TextSpan(
+                                  text: '$_withdrawalAccount',
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                              ]),
                               style: TextStyle(
                                 color: Color(0xFF222222),
                                 fontSize: ScreenUtil().setSp(42),
                               ),
                             ),
-                            TextSpan(
-                              text: '￥$_withdrawalPrice',
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                          ]),
-                          style: TextStyle(
-                            color: Color(0xFFF93736),
-                            fontSize: ScreenUtil().setSp(42),
                           ),
-                        ),
+                        ],
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                              text: '提现手续费：',
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                  text: '提现金额：',
+                                  style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '￥$_withdrawalPrice',
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                              ]),
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFFF93736),
                                 fontSize: ScreenUtil().setSp(42),
                               ),
                             ),
-                            TextSpan(
-                              text: '￥$_withdrawalFee',
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                          ]),
-                          style: TextStyle(
-                            color: Color(0xFFF93736),
-                            fontSize: ScreenUtil().setSp(42),
                           ),
-                        ),
+                        ],
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                              text: '到账金额：',
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                  text: '服  务  费：',
+                                  style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '￥$_withdrawalFee',
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                              ]),
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFFF93736),
                                 fontSize: ScreenUtil().setSp(42),
                               ),
                             ),
-                            TextSpan(
-                              text: '￥$_realReceivePrice',
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                          ]),
-                          style: TextStyle(
-                            color: Color(0xFF222222),
-                            fontSize: ScreenUtil().setSp(42),
                           ),
-                        ),
+                        ],
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                              text: '提现账户：',
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                  text: '到账金额：',
+                                  style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '￥$_realReceivePrice',
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                              ]),
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFFF93736),
                                 fontSize: ScreenUtil().setSp(42),
                               ),
                             ),
-                            TextSpan(
-                              text: '￥$_withdrawalAccount',
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                          ]),
-                          style: TextStyle(
-                            color: Color(0xFFF93736),
-                            fontSize: ScreenUtil().setSp(42),
                           ),
-                        ),
+                        ],
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                              text: '当前余额：',
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                  text: '当前余额：',
+                                  style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '￥$_accountBalance',
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                              ]),
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFFF93736),
                                 fontSize: ScreenUtil().setSp(42),
                               ),
                             ),
-                            TextSpan(
-                              text: '￥$_accountBalance',
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                          ]),
-                          style: TextStyle(
-                            color: Color(0xFFF93736),
-                            fontSize: ScreenUtil().setSp(42),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),

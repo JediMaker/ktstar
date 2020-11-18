@@ -33,11 +33,37 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
   FocusNode _withdrawalAmountFocusNode = FocusNode();
   String _withdrawalAmount;
 
+  bool startFlag = false;
+  String lastDate = '';
+
+  var _desc = '';
+
+  _initData() async {
+    var result = await HttpManage.getWithdrawalUserInfo();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          try {
+            _aliPayAccountController.text = result.data.user.zfbAccount;
+            _aliPayAccount = result.data.user.zfbAccount;
+            _aliPayNameController.text = result.data.user.zfbName;
+            _aliPayName = result.data.user.zfbName;
+            widget.availableCashAmount = result.data.user.price;
+            startFlag = result.data.startFlag;
+            lastDate = result.data.lastDate;
+            if (!startFlag) {
+              _desc = '限时免费(截止日期：$lastDate)';
+            }
+          } catch (e) {}
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
 //    var text = "13122223333".replaceFirst(new RegExp(r'\d{4}'), '****', 3);
-    _aliPayAccountController.text = '';
-    _aliPayAccount = "";
+    _initData();
     super.initState();
   }
 
@@ -369,7 +395,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                         height: ScreenUtil().setHeight(20),
                       ),
                       Text(
-                        "*请填写正确的支付宝账号，以防止造成资金损失\n*提现手续费10% \t限时免费(截止到2020-11-20)",
+                        "*请填写正确的支付宝账号，以防止造成资金损失\n*提现手续费10% \t$_desc",
                         style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: ScreenUtil().setSp(32)),
