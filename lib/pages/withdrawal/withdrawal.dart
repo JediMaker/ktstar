@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -80,334 +81,336 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyboardDismissOnTap(
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.title,
-              style: TextStyle(
-                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-            ),
-            brightness: Brightness.light,
-            leading: IconButton(
-              icon: Image.asset(
-                "static/images/list_return.png",
-                width: ScreenUtil().setWidth(63),
-                height: ScreenUtil().setHeight(44),
-                fit: BoxFit.fill,
+    return FlutterEasyLoading(
+      child: KeyboardDismissOnTap(
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                widget.title,
+                style: TextStyle(
+                    color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              brightness: Brightness.light,
+              leading: IconButton(
+                icon: Image.asset(
+                  "static/images/list_return.png",
+                  width: ScreenUtil().setWidth(63),
+                  height: ScreenUtil().setHeight(44),
+                  fit: BoxFit.fill,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              centerTitle: true,
+              backgroundColor: GlobalConfig.taskNomalHeadColor,
+              elevation: 0,
             ),
-            centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
-            elevation: 0,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(16),
-                  margin: EdgeInsets.only(top: 16),
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "提现方式",
-                        style: TextStyle(
+            body: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    margin: EdgeInsets.only(top: 16),
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "提现方式",
+                          style: TextStyle(
 //                color:  Color(0xFF222222) ,
-                            fontSize: ScreenUtil().setSp(48)),
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(55),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (mounted) {
-                                    setState(() {
-                                      _aliPaySelected = true;
-                                    });
-                                  }
-                                },
-                                child: Stack(
-                                  alignment: Alignment.topLeft,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: ScreenUtil().setWidth(500),
-                                      height: ScreenUtil().setHeight(127),
-                                      decoration: BoxDecoration(
-                                        color: _aliPaySelected
-                                            ? Colors.white
-                                            : Color(0xffEFEFEF),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                                ScreenUtil().setWidth(20))),
-                                        border: Border.all(
-                                            color: _aliPaySelected
-                                                ? Color(0xffF32E43)
-                                                : Color(0xffEFEFEF),
-                                            width: 0.5),
+                              fontSize: ScreenUtil().setSp(48)),
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(55),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (mounted) {
+                                      setState(() {
+                                        _aliPaySelected = true;
+                                      });
+                                    }
+                                  },
+                                  child: Stack(
+                                    alignment: Alignment.topLeft,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.center,
+                                        width: ScreenUtil().setWidth(500),
+                                        height: ScreenUtil().setHeight(127),
+                                        decoration: BoxDecoration(
+                                          color: _aliPaySelected
+                                              ? Colors.white
+                                              : Color(0xffEFEFEF),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                  ScreenUtil().setWidth(20))),
+                                          border: Border.all(
+                                              color: _aliPaySelected
+                                                  ? Color(0xffF32E43)
+                                                  : Color(0xffEFEFEF),
+                                              width: 0.5),
+                                        ),
+                                        child: Wrap(
+                                          alignment: WrapAlignment.center,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          spacing: ScreenUtil().setWidth(21),
+                                          children: <Widget>[
+                                            Image.asset(
+                                              "static/images/withdrawal_zfb.png",
+                                              width: ScreenUtil().setWidth(63),
+                                              height: ScreenUtil().setWidth(63),
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Text(
+                                              "支付宝",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      ScreenUtil().setSp(48)),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      child: Wrap(
-                                        alignment: WrapAlignment.center,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.center,
-                                        spacing: ScreenUtil().setWidth(21),
-                                        children: <Widget>[
-                                          Image.asset(
-                                            "static/images/withdrawal_zfb.png",
-                                            width: ScreenUtil().setWidth(63),
-                                            height: ScreenUtil().setWidth(63),
-                                            fit: BoxFit.fill,
-                                          ),
-                                          Text(
-                                            "支付宝",
-                                            style: TextStyle(
-                                                fontSize:
-                                                    ScreenUtil().setSp(48)),
-                                          ),
-                                        ],
+                                      Visibility(
+                                        visible: _aliPaySelected,
+                                        child: Image.asset(
+                                          "static/images/withdrawal_checked.png",
+                                          width: ScreenUtil().setWidth(72),
+                                          height: ScreenUtil().setHeight(59),
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                    ),
-                                    Visibility(
-                                      visible: _aliPaySelected,
-                                      child: Image.asset(
-                                        "static/images/withdrawal_checked.png",
-                                        width: ScreenUtil().setWidth(72),
-                                        height: ScreenUtil().setHeight(59),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (mounted) {
-                                    setState(() {
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (mounted) {
+                                      setState(() {
 //                                _aliPaySelected = false;
-                                      CommonUtils.showToast("暂不支持提现到微信");
-                                    });
-                                  }
-                                },
-                                child: Stack(
-                                  alignment: Alignment.topLeft,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: ScreenUtil().setWidth(500),
-                                      height: ScreenUtil().setHeight(127),
-                                      decoration: BoxDecoration(
-                                        color: !_aliPaySelected
-                                            ? Colors.white
-                                            : Color(0xffEFEFEF),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                                ScreenUtil().setWidth(20))),
-                                        border: Border.all(
-                                            color: !_aliPaySelected
-                                                ? Color(0xffF32E43)
-                                                : Color(0xffEFEFEF),
-                                            width: 0.5),
-                                      ),
-                                      child: Wrap(
-                                        spacing: ScreenUtil().setWidth(21),
-                                        alignment: WrapAlignment.center,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.center,
-                                        children: <Widget>[
-                                          Image.asset(
-                                            "static/images/withdrawal_wx.png",
-                                            width: ScreenUtil().setWidth(63),
-                                            height: ScreenUtil().setWidth(63),
-                                            fit: BoxFit.fill,
-                                          ),
-                                          Text(
-                                            "微信",
-                                            style: TextStyle(
+                                        CommonUtils.showToast("暂不支持提现到微信");
+                                      });
+                                    }
+                                  },
+                                  child: Stack(
+                                    alignment: Alignment.topLeft,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.center,
+                                        width: ScreenUtil().setWidth(500),
+                                        height: ScreenUtil().setHeight(127),
+                                        decoration: BoxDecoration(
+                                          color: !_aliPaySelected
+                                              ? Colors.white
+                                              : Color(0xffEFEFEF),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                  ScreenUtil().setWidth(20))),
+                                          border: Border.all(
+                                              color: !_aliPaySelected
+                                                  ? Color(0xffF32E43)
+                                                  : Color(0xffEFEFEF),
+                                              width: 0.5),
+                                        ),
+                                        child: Wrap(
+                                          spacing: ScreenUtil().setWidth(21),
+                                          alignment: WrapAlignment.center,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          children: <Widget>[
+                                            Image.asset(
+                                              "static/images/withdrawal_wx.png",
+                                              width: ScreenUtil().setWidth(63),
+                                              height: ScreenUtil().setWidth(63),
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Text(
+                                              "微信",
+                                              style: TextStyle(
 //                color:  Color(0xFF222222) ,
-                                                fontSize:
-                                                    ScreenUtil().setSp(48)),
-                                          ),
-                                        ],
+                                                  fontSize:
+                                                      ScreenUtil().setSp(48)),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Visibility(
-                                      visible: !_aliPaySelected,
-                                      child: Image.asset(
-                                        "static/images/withdrawal_checked.png",
-                                        width: ScreenUtil().setWidth(72),
-                                        height: ScreenUtil().setHeight(59),
-                                        fit: BoxFit.fill,
+                                      Visibility(
+                                        visible: !_aliPaySelected,
+                                        child: Image.asset(
+                                          "static/images/withdrawal_checked.png",
+                                          width: ScreenUtil().setWidth(72),
+                                          height: ScreenUtil().setHeight(59),
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(55),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "支付宝账号",
-                            style: TextStyle(
+                          ],
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(55),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "支付宝账号",
+                              style: TextStyle(
 //                color:  Color(0xFF222222) ,
-                                fontSize: ScreenUtil().setSp(48)),
-                          ),
-                          Expanded(
-                            child: buildAliPayAccountContainer(),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _aliPayAccountController.text = "";
-                              _aliPayAccount = "";
-                            },
-                            child: Image.asset(
-                              "static/images/money_del.png",
-                              width: ScreenUtil().setWidth(45),
-                              height: ScreenUtil().setWidth(45),
-                              fit: BoxFit.fill,
+                                  fontSize: ScreenUtil().setSp(48)),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(55),
-                      ),
-                      Divider(
-                        height: ScreenUtil().setHeight(1),
-                        color: Color(0xFFdddddd),
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(67),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "支付宝姓名",
-                            style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                                fontSize: ScreenUtil().setSp(48)),
-                          ),
-                          Expanded(
-                            child: buildAliPayNameContainer(),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _aliPayNameController.text = "";
-                              _aliPayName = "";
-                            },
-                            child: Image.asset(
-                              "static/images/money_del.png",
-                              width: ScreenUtil().setWidth(45),
-                              height: ScreenUtil().setWidth(45),
-                              fit: BoxFit.fill,
+                            Expanded(
+                              child: buildAliPayAccountContainer(),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(20),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  color: Colors.white,
-                  constraints: BoxConstraints(
-                    minHeight: ScreenUtil().setHeight(1350),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "提现金额",
-                        style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                            fontSize: ScreenUtil().setSp(48)),
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(55),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "￥",
-                            style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                                fontWeight: FontWeight.bold,
-                                fontSize: ScreenUtil().setSp(56)),
-                          ),
-                          Expanded(
-                            child: buildWithdrawalAmountContainer(),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _withdrawalAmountController.text = "";
-                              _withdrawalAmount = "";
-                            },
-                            child: Image.asset(
-                              "static/images/money_del.png",
-                              width: ScreenUtil().setWidth(45),
-                              height: ScreenUtil().setWidth(45),
-                              fit: BoxFit.fill,
+                            GestureDetector(
+                              onTap: () {
+                                _aliPayAccountController.text = "";
+                                _aliPayAccount = "";
+                              },
+                              child: Image.asset(
+                                "static/images/money_del.png",
+                                width: ScreenUtil().setWidth(45),
+                                height: ScreenUtil().setWidth(45),
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(55),
-                      ),
-                      Divider(
-                        height: ScreenUtil().setHeight(1),
-                        color: Color(0xFFdddddd),
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(67),
-                      ),
-                      Text(
-                        "可提现余额￥${widget.availableCashAmount}",
-                        style: TextStyle(
-                            color: Color(0xFF999999),
-                            fontSize: ScreenUtil().setSp(36)),
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(20),
-                      ),
-                      Text(
-                        "*请填写正确的支付宝账号，以防止造成资金损失\n*提现手续费10% \t$_desc",
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: ScreenUtil().setSp(32)),
-                      ),
-                      buildBtnLayout(),
-                    ],
+                          ],
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(55),
+                        ),
+                        Divider(
+                          height: ScreenUtil().setHeight(1),
+                          color: Color(0xFFdddddd),
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(67),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "支付宝姓名",
+                              style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                                  fontSize: ScreenUtil().setSp(48)),
+                            ),
+                            Expanded(
+                              child: buildAliPayNameContainer(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                _aliPayNameController.text = "";
+                                _aliPayName = "";
+                              },
+                              child: Image.asset(
+                                "static/images/money_del.png",
+                                width: ScreenUtil().setWidth(45),
+                                height: ScreenUtil().setWidth(45),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: ScreenUtil().setHeight(20),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    color: Colors.white,
+                    constraints: BoxConstraints(
+                      minHeight: ScreenUtil().setHeight(1350),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "提现金额",
+                          style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                              fontSize: ScreenUtil().setSp(48)),
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(55),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "￥",
+                              style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: ScreenUtil().setSp(56)),
+                            ),
+                            Expanded(
+                              child: buildWithdrawalAmountContainer(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                _withdrawalAmountController.text = "";
+                                _withdrawalAmount = "";
+                              },
+                              child: Image.asset(
+                                "static/images/money_del.png",
+                                width: ScreenUtil().setWidth(45),
+                                height: ScreenUtil().setWidth(45),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(55),
+                        ),
+                        Divider(
+                          height: ScreenUtil().setHeight(1),
+                          color: Color(0xFFdddddd),
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(67),
+                        ),
+                        Text(
+                          "可提现余额￥${widget.availableCashAmount}",
+                          style: TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: ScreenUtil().setSp(36)),
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(20),
+                        ),
+                        Text(
+                          "*请填写正确的支付宝账号，以防止造成资金损失\n*提现手续费10% \t$_desc",
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: ScreenUtil().setSp(32)),
+                        ),
+                        buildBtnLayout(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ) // This trailing comma makes auto-formatting nicer for build methods.
             ),
-          ) // This trailing comma makes auto-formatting nicer for build methods.
-          ),
+      ),
     );
   }
 
@@ -434,8 +437,10 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                   return;
                 }
               } catch (e) {}
+              EasyLoading.show();
               var result = await HttpManage.withdrawalApplication(
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
+              EasyLoading.dismiss();
               if (result.status) {
                 CommonUtils.showToast("提现申请已提交");
 //                Navigator.of(context).pop();

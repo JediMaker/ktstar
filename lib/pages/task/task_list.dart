@@ -385,14 +385,33 @@ class _TaskListPageState extends State<TaskListPage>
                   child: Column(
                     children: <Widget>[
                       Container(
-                        width: double.maxFinite,
-                        height: ScreenUtil().setHeight(60),
-                        margin:
-                            EdgeInsets.only(bottom: ScreenUtil().setHeight(30)),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              "https://alipic.lanhuapp.com/xd67a75142-cf33-4b26-a6d5-2752852c1630",
-                          fit: BoxFit.fill,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil().setWidth(400),
+                              height: ScreenUtil().setHeight(60),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                            Container(
+                              child: Text(
+                                "更多惊喜福利 敬请期待",
+                                style: TextStyle(
+                                  color: Color(0xffB9B9B9),
+                                  fontSize: ScreenUtil().setSp(26),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        margin: EdgeInsets.only(
+                          bottom: ScreenUtil().setHeight(30),
                         ),
                       ),
                       SingleChildScrollView(
