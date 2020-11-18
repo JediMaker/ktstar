@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -25,6 +26,7 @@ import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_detail_other.dart';
+import 'package:star/pages/task/task_gallery.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
@@ -917,7 +919,7 @@ class _TaskListPageState extends State<TaskListPage>
         itemBuilder: (context, index) {
           var bannerData = bannerList[index];
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               if (Platform.isIOS) {
                 CommonUtils.showIosPayDialog();
                 return;
@@ -941,6 +943,42 @@ class _TaskListPageState extends State<TaskListPage>
                         taskType: 2,
                       ));
                   break;
+              }
+              if (bannerList[bannerIndex].uri.toString().startsWith("http")) {
+
+                bool isImage = false;
+                Response resust = await Dio().get(bannerList[bannerIndex].uri);
+                String contentType = resust.headers['content-type'].toString();
+                if(contentType.startsWith("[image/")){
+                  isImage=true;
+                }
+                if (isImage) {
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      TaskGalleryPage(
+                        galleryItems: [bannerList[bannerIndex].uri.toString()],
+                      ));
+                  return;
+                }
+                /*print("contentType=$contentType");
+                print(
+                    "contentTypeIsImage=${contentType.startsWith("[image/")}");*/
+                var hColor = GlobalConfig.taskHeadColor;
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPage(
+                      initialUrl: bannerList[bannerIndex].uri.toString(),
+                      showActions: true,
+                      title: "",
+                      appBarBackgroundColor: hColor,
+                    ));
+                /*try {
+                  PaletteGenerator generator =
+                      await PaletteGenerator.fromImageProvider(Image.network(
+                              "${bannerList[bannerIndex].uri.toString()}")
+                          .image);
+                  hColor = generator.dominantColor.color;
+                } catch (e) {}*/
               }
             },
             child: CachedNetworkImage(
