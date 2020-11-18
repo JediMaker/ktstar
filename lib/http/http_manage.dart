@@ -1304,6 +1304,29 @@ class HttpManage {
   }
 
   ///
+  ///[orderId] 订单id
+  ///
+  /// 获取商品购买余额支付信息
+  ///
+  static Future<AlipayPayinfoEntity> getGoodsPayBalanceInfo({orderId,payPassword}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "3";
+    paramsMap["order_id"] = "$orderId";
+    paramsMap["pay_pwd"] = "$payPassword";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_GOODS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///  [payNo] 	支付单号
   ///
   ///

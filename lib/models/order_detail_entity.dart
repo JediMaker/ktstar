@@ -1,5 +1,6 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/models/order_user_info_entity.dart';
 
 class OrderDetailEntity with JsonConvert<OrderDetailEntity> {
 	bool status;
@@ -36,6 +37,8 @@ class OrderDetailData with JsonConvert<OrderDetailData> {
 	String sendName;
 	@JSONField(name: "send_number")
 	String sendNumber;
+	@JSONField(name: "user_info")
+	OrderUserInfoUserInfo userInfo;
 }
 
 class OrderDetailDataGoodsList with JsonConvert<OrderDetailDataGoodsList> {

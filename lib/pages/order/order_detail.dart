@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/order_detail_entity.dart';
@@ -37,57 +38,62 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   List<OrderDetailDataGoodsList> goodsList;
 
   Future _initData({bool onlyChangeAddress = false}) async {
+    EasyLoading.show();
     var entityResult = await HttpManage.orderDetail(widget.orderId);
 /*
     OrderCheckoutEntity entityResult =
         await HttpManage.orderCheckout(widget.cartIdList);
 */
-    if (mounted) {
-      setState(() {
-        entity = entityResult;
-        addressDetail = entityResult.data.address;
-        iphone = entityResult.data.mobile;
-        name = entityResult.data.consignee;
-        goodsList = entityResult.data.goodsList;
-        totalPrice = entityResult.data.totalPrice;
-        payPrice = entityResult.data.payPrice;
-        orderNum = entityResult.data.orderno;
-        payment = entityResult.data.payment;
-        dateAdded = entityResult.data.createTime;
-        orderStatus = entityResult.data.status.toString();
-        if (!CommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
-          try {
-            defProductId = goodsList[0].goodsId;
-          } catch (e) {}
-        }
-        sum = goodsList.length;
+    try {
+      if (mounted) {
+            setState(() {
+              entity = entityResult;
+              addressDetail = entityResult.data.address;
+              iphone = entityResult.data.mobile;
+              name = entityResult.data.consignee;
+              goodsList = entityResult.data.goodsList;
+              totalPrice = entityResult.data.totalPrice;
+              payPrice = entityResult.data.payPrice;
+              orderNum = entityResult.data.orderno;
+              payment = entityResult.data.payment;
+              dateAdded = entityResult.data.createTime;
+              orderStatus = entityResult.data.status.toString();
+              if (!CommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
+                try {
+                  defProductId = goodsList[0].goodsId;
+                } catch (e) {}
+              }
+              sum = goodsList.length;
 
-        switch (orderStatus) {
-          case "1":
-            orderStatusText = "待付款"; //chinaUnicom china_mobile china_telecom
-            break;
-          case "2":
-            orderStatusText = "待发货";
-            break;
-          case "3":
-            orderStatusText = "待收货";
-            break;
-          case "5":
-            orderStatusText = "已完成";
-            break;
-        }
-        if (orderStatus != "1") {
-          switch (payment) {
-            case "1":
-              _payWayText = "微信支付"; //chinaUnicom china_mobile china_telecom
-              break;
-            case "2":
-              _payWayText = "支付宝支付";
-              break;
+              switch (orderStatus) {
+                case "1":
+                  orderStatusText = "待付款"; //chinaUnicom china_mobile china_telecom
+                  break;
+                case "2":
+                  orderStatusText = "待发货";
+                  break;
+                case "3":
+                  orderStatusText = "待收货";
+                  break;
+                case "5":
+                  orderStatusText = "已完成";
+                  break;
+              }
+              if (orderStatus != "1") {
+                switch (payment) {
+                  case "1":
+                    _payWayText = "微信支付"; //chinaUnicom china_mobile china_telecom
+                    break;
+                  case "2":
+                    _payWayText = "支付宝支付";
+                    break;
+                }
+              }
+            });
           }
-        }
-      });
+    } catch (e) {
     }
+    EasyLoading.dismiss();
   }
 
   @override
@@ -104,93 +110,95 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-          ),
-          brightness: Brightness.light,
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(
-                ScreenUtil().setHeight(ScreenUtil().setHeight(5))),
-            child: CachedNetworkImage(
-              imageUrl:
-                  "https://alipic.lanhuapp.com/xd1503b270-f796-4b53-8146-3ba0d3a09a34",
+    return FlutterEasyLoading(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
-          ),
-          leading: IconButton(
-            icon: Image.asset(
-              "static/images/icon_ios_back.png",
-              width: ScreenUtil().setWidth(36),
-              height: ScreenUtil().setHeight(63),
-              fit: BoxFit.fill,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
-          elevation: 0,
-        ),
-        body: Stack(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 50),
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  buildAddressInfoContainer(),
-                  buildGoodsList(),
-                  buildTotalBox(),
-                  buildOrderInfoBox(),
-                ],
+            brightness: Brightness.light,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(
+                  ScreenUtil().setHeight(ScreenUtil().setHeight(5))),
+              child: CachedNetworkImage(
+                imageUrl:
+                    "https://alipic.lanhuapp.com/xd1503b270-f796-4b53-8146-3ba0d3a09a34",
               ),
             ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 50,
-                color: Colors.white,
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: GestureDetector(
-                  onTap: () {
-                    if (defProductId != null) {
-                      NavigatorUtils.navigatorRouter(
-                          context,
-                          GoodsDetailPage(
-                            productId: defProductId,
-                          ));
-                    }
-                  },
-                  child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        border: Border(
-                          top: BorderSide(width: 0.5, color: Colors.redAccent),
-                          left: BorderSide(width: 0.5, color: Colors.redAccent),
-                          right:
-                              BorderSide(width: 0.5, color: Colors.redAccent),
-                          bottom:
-                              BorderSide(width: 0.5, color: Colors.redAccent),
-                        ),
-                      ),
-                      child: Text(
-                        '再次购买',
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: ScreenUtil().setSp(42)),
-                      )),
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            centerTitle: true,
+            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            elevation: 0,
+          ),
+          body: Stack(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(bottom: 50),
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    buildAddressInfoContainer(),
+                    buildGoodsList(),
+                    buildTotalBox(),
+                    buildOrderInfoBox(),
+                  ],
                 ),
               ),
-            )
-          ],
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 50,
+                  color: Colors.white,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (defProductId != null) {
+                        NavigatorUtils.navigatorRouter(
+                            context,
+                            GoodsDetailPage(
+                              productId: defProductId,
+                            ));
+                      }
+                    },
+                    child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          border: Border(
+                            top: BorderSide(width: 0.5, color: Colors.redAccent),
+                            left: BorderSide(width: 0.5, color: Colors.redAccent),
+                            right:
+                                BorderSide(width: 0.5, color: Colors.redAccent),
+                            bottom:
+                                BorderSide(width: 0.5, color: Colors.redAccent),
+                          ),
+                        ),
+                        child: Text(
+                          '再次购买',
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: ScreenUtil().setSp(42)),
+                        )),
+                  ),
+                ),
+              )
+            ],
+          ) // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+    );
   }
 
   Widget buildTotalBox() {

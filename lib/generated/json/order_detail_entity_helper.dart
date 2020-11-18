@@ -1,4 +1,5 @@
 import 'package:star/models/order_detail_entity.dart';
+import 'package:star/models/order_user_info_entity.dart';
 
 orderDetailEntityFromJson(OrderDetailEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
@@ -82,6 +83,9 @@ orderDetailDataFromJson(OrderDetailData data, Map<String, dynamic> json) {
 	if (json['send_number'] != null) {
 		data.sendNumber = json['send_number']?.toString();
 	}
+	if (json['user_info'] != null) {
+		data.userInfo = new OrderUserInfoUserInfo().fromJson(json['user_info']);
+	}
 	return data;
 }
 
@@ -105,6 +109,9 @@ Map<String, dynamic> orderDetailDataToJson(OrderDetailData entity) {
 	data['confirm_time'] = entity.confirmTime;
 	data['send_name'] = entity.sendName;
 	data['send_number'] = entity.sendNumber;
+	if (entity.userInfo != null) {
+		data['user_info'] = entity.userInfo.toJson();
+	}
 	return data;
 }
 

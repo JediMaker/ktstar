@@ -82,7 +82,6 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
                   ),
                 ),
                 Container(
-                  height: ScreenUtil().setHeight(147),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -156,7 +155,6 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
                   ),
                 ),
                 Container(
-                  height: ScreenUtil().setHeight(147),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(6.0),

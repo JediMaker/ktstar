@@ -352,7 +352,7 @@ class CommonUtils {
   }
 
   static Future<Null> showPayPasswordDialog(
-    BuildContext context,
+    BuildContext context,orderId
   ) {
     return NavigatorUtils.showGSYDialog(
         context: context,
@@ -422,6 +422,7 @@ class CommonUtils {
                             enableActiveFill: true,
                             onCompleted: (v) {
                               print("Completed");
+
                             },
                             onChanged: (value) {
                               print(value);
