@@ -217,6 +217,7 @@ class _TaskListPageState extends State<TaskListPage>
 
   initBannerListColor() async {
     bannerColorList = List<Color>();
+    bannerColorList.clear();
     for (var bannerItem in bannerList) {
       PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
           Image.network("${bannerItem.imgPath}").image);
@@ -856,7 +857,8 @@ class _TaskListPageState extends State<TaskListPage>
 //          indicatorLayout: PageIndicatorLayout.COLOR,
         onIndexChanged: (index) async {
           if (!CommonUtils.isEmpty(bannerColorList) &&
-              !CommonUtils.isEmpty(bannerColorList[index])) {
+              !CommonUtils.isEmpty(bannerColorList[index]) &&
+              bannerColorList.length == bannerList.length) {
             if (mounted) {
               setState(() {
                 bannerIndex = index;
@@ -945,12 +947,12 @@ class _TaskListPageState extends State<TaskListPage>
                   break;
               }
               if (bannerList[bannerIndex].uri.toString().startsWith("http")) {
-
-                bool isImage = false;
+                Utils.launchUrl(bannerList[bannerIndex].uri.toString());
+                /*bool isImage = false;
                 Response resust = await Dio().get(bannerList[bannerIndex].uri);
                 String contentType = resust.headers['content-type'].toString();
-                if(contentType.startsWith("[image/")){
-                  isImage=true;
+                if (contentType.startsWith("[image/")) {
+                  isImage = true;
                 }
                 if (isImage) {
                   NavigatorUtils.navigatorRouter(
@@ -960,9 +962,9 @@ class _TaskListPageState extends State<TaskListPage>
                       ));
                   return;
                 }
-                /*print("contentType=$contentType");
+                */ /*print("contentType=$contentType");
                 print(
-                    "contentTypeIsImage=${contentType.startsWith("[image/")}");*/
+                    "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
                 var hColor = GlobalConfig.taskHeadColor;
                 NavigatorUtils.navigatorRouter(
                     context,
@@ -971,7 +973,7 @@ class _TaskListPageState extends State<TaskListPage>
                       showActions: true,
                       title: "",
                       appBarBackgroundColor: hColor,
-                    ));
+                    ));*/
                 /*try {
                   PaletteGenerator generator =
                       await PaletteGenerator.fromImageProvider(Image.network(

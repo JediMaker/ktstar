@@ -927,7 +927,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
     } catch (e) {}
     return SelectChoiceChip(
       width: ScreenUtil().setWidth(325),
-      height: ScreenUtil().setHeight(363),
+      height: ScreenUtil().setHeight(393),
       child: Container(
         padding: EdgeInsets.only(top: ScreenUtil().setHeight(32)),
         child: Column(
@@ -966,7 +966,7 @@ class _TaskOpenVipPageState extends State<TaskOpenVipPage> {
             ),
             Container(
               margin: EdgeInsets.symmetric(
-                vertical: ScreenUtil().setHeight(20),
+                vertical: ScreenUtil().setHeight(15),
               ),
               child: Text(
                 //
