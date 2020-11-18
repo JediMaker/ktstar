@@ -53,7 +53,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
             startFlag = result.data.startFlag;
             lastDate = result.data.lastDate;
             if (!startFlag) {
-              _desc = '限时免费(截止日期：$lastDate)';
+              _desc = '限时免费（截止日期：$lastDate）';
             }
           } catch (e) {}
         });
