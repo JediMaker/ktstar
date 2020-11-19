@@ -72,6 +72,7 @@ class _TaskMinePageState extends State<TaskMinePage>
 
   ///微信账号绑定
   int isWeChatNoBinded = -1;
+  var _payPwdStatus = '1';
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
   String userType;
@@ -98,6 +99,7 @@ class _TaskMinePageState extends State<TaskMinePage>
           _code = result.data.code;
           _dialogWeChatNo = result.data.wxNo;
           _pwdStatus = result.data.pwdStatus;
+          _payPwdStatus = result.data.payPwdStatus;
           isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
           switch (result.data.type) {
             case "0":
@@ -683,6 +685,57 @@ class _TaskMinePageState extends State<TaskMinePage>
               ],
             ),
           ),
+          Visibility(
+            //todo
+            visible: true,
+            child: ListTile(
+              title: Row(
+                children: <Widget>[
+                  /* Image.asset(
+                    "static/images/icon_fans.png",
+                    width: ScreenUtil().setWidth(44),
+                    height: ScreenUtil().setWidth(71),
+                  ),*/
+                  Text(
+                    "安全设置",
+                    style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                        fontSize: ScreenUtil().setSp(38)),
+                  ),
+                ],
+              ),
+              onTap: () {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    SafeSettingsPage(
+                      hasPayPassword: _payPwdStatus == "2",
+                      phoneNum: _phoneNumber,
+                    ));
+              },
+              trailing: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: ScreenUtil().setWidth(32),
+                    color: Color(0xff999999),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Visibility(
+            //todo
+            visible: true,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              child: Divider(
+                height: ScreenUtil().setHeight(1),
+                color: Color(0xFFefefef),
+              ),
+            ),
+          ),
           ListTile(
             title: Row(
               children: <Widget>[
@@ -723,44 +776,6 @@ class _TaskMinePageState extends State<TaskMinePage>
                   ),
                 ],
               ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(
-              height: ScreenUtil().setHeight(1),
-              color: Color(0xFFefefef),
-            ),
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                /* Image.asset(
-                  "static/images/icon_fans.png",
-                  width: ScreenUtil().setWidth(44),
-                  height: ScreenUtil().setWidth(71),
-                ),*/
-                Text(
-                  "安全设置",
-                  style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                      fontSize: ScreenUtil().setSp(38)),
-                ),
-              ],
-            ),
-            onTap: () {
-              NavigatorUtils.navigatorRouter(context, SafeSettingsPage());
-            },
-            trailing: Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: ScreenUtil().setWidth(32),
-                  color: Color(0xff999999),
-                ),
-              ],
             ),
           ),
           Container(

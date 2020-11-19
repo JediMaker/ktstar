@@ -69,6 +69,16 @@ class APi {
   ///获取提现用户提现信息
   static const String USER_TX_SUCCESS = "user/tx-success";
 
+  ///设置用户支付密码
+  static const String USER_SET_PAY_PASSWORD = "user/set-password";
+
+  ///修改支付密码发送短信验证码
+  static const String USER_SEND_SMS = "user/send-sms";
+  ///修改支付密码
+  static const String USER_RESET_PAY_PASSWORD = "user/reset-password";
+  ///校验支付密码
+  static const String USER_CHECK_PASSWORD = "user/check-password";
+
   ///获取当前版本信息
   static const String SITE_VERSION = "site/version";
 

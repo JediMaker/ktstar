@@ -7,11 +7,13 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:star/bus/my_event_bus.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/task/pay_result.dart';
 import 'package:star/pages/widget/PriceText.dart';
+import 'package:star/pages/withdrawal/pay_password_setting.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/models/order_user_info_entity.dart';
@@ -41,6 +43,8 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
   var _balance = '';
   var _payPrice = '';
   bool _hasPayPassword = true;
+  bool _canUseBalance = true;
+  int _payWay = 3;
 
   _initWeChatResponseHandler() {
     GlobalConfig.payType = 2;
@@ -142,13 +146,23 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
   }
 
   Future _initData({bool onlyChangeAddress = false}) async {
+    EasyLoading.show();
     var entityResult = await HttpManage.orderDetail(widget.orderId);
+    EasyLoading.dismiss();
     if (mounted) {
       setState(() {
         _payPrice = entityResult.data.payPrice;
         _oUserInfo = entityResult.data.userInfo;
         _balance = _oUserInfo.price;
         _hasPayPassword = _oUserInfo.payPwdFlag;
+        try {
+          if (double.parse(_balance) > double.parse(_payPrice)) {
+            _canUseBalance = true;
+          } else {
+            _canUseBalance = false;
+            _payWay = 1;
+          }
+        } catch (e) {}
       });
     }
   }
@@ -158,6 +172,12 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
     _controller = AnimationController(vsync: this);
     _initWeChatResponseHandler();
     _initData();
+    bus.on("refreshCheckOutCounterPage", (refresh) {
+      if (refresh) {
+        print("refreshCheckOutCounterPage()");
+        _initData();
+      }
+    });
     super.initState();
   }
 
@@ -223,11 +243,14 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                               borderRadius: BorderRadius.circular(0),
                               fieldHeight: ScreenUtil().setWidth(130),
                               fieldWidth: ScreenUtil().setWidth(130),
-                              activeColor: Color(0xffeaeaea),
+                              activeColor: Colors.grey[400],
+                              //Color(0xffeaeaea),
                               activeFillColor: Colors.white,
-                              selectedColor: Color(0xffeaeaea),
+                              selectedColor: Colors.grey[400],
+                              // Color(0xffeaeaea),
                               selectedFillColor: Colors.white,
-                              inactiveColor: Color(0xffeaeaea),
+                              inactiveColor: Colors.grey[400],
+                              //Color(0xffeaeaea),
                               inactiveFillColor: Colors.white,
                               disabledColor: Colors.white,
                             ),
@@ -237,10 +260,10 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                             onCompleted: (v) async {
                               Navigator.pop(context);
                               try {
-                                EasyLoading.show();
+                                EasyLoading.show(status: "正在支付");
                                 var result =
                                     await HttpManage.getGoodsPayBalanceInfo(
-                                        orderId: orderId);
+                                        orderId: orderId, payPassword: v);
                                 EasyLoading.dismiss();
                                 if (result.status) {
                                   _payInfo = result.data.payInfo;
@@ -295,6 +318,49 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
             ),
           );
         });
+  }
+
+  Widget _buildDialog(BuildContext context) {
+    return CupertinoAlertDialog(
+      title: Text('提示'),
+      content: Container(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text(
+          '您还未设置余额支付密码，是否去设置？',
+        ),
+      ),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          child: Text(
+            '取消',
+            style: TextStyle(
+              color: Color(0xff222222),
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+          onPressed: () async {
+            Navigator.pop(context, false);
+          },
+        ),
+        CupertinoDialogAction(
+          child: Text(
+            '去设置',
+            style: TextStyle(
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+          onPressed: () async {
+            Navigator.pop(context, false);
+            NavigatorUtils.navigatorRouter(
+                context,
+                PayPasswordSettingPage(
+                  pageType: 0,
+                  refreshCheckOutCounterPage: true,
+                ));
+          },
+        ),
+      ],
+    );
   }
 
   @override
@@ -375,29 +441,65 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                             ),
                           ),
                         ),
+                        Visibility(
+                          //todo
+                          visible: true,
+                          child: Divider(
+                            height: 1,
+                            color: Colors.black12,
+                          ),
+                        ),
+                        Visibility(
+                          //todo
+                          visible: true,
+                          child: Opacity(
+                            opacity: _canUseBalance ? 1 : 0.6,
+                            child: ListTile(
+                              onTap: () async {
+                                if (!_canUseBalance) {
+                                  CommonUtils.showToast("账户余额不足！");
+                                  return;
+                                }
+                                setState(() {
+                                  _payWay = 3;
+                                });
+                              },
+                              selected: _payWay == 3,
+                              leading: CachedNetworkImage(
+                                imageUrl:
+                                    'https://alipic.lanhuapp.com/xdd5f9c369-8c30-4f93-bcf0-151a16b97220',
+                                width: ScreenUtil().setWidth(78),
+                                height: ScreenUtil().setWidth(78),
+                                fit: BoxFit.fill,
+                              ),
+                              title: Text(
+                                '余额支付', //(可用余额:￥$_balance)
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(48),
+                                  color: Color(0xff222222),
+                                ),
+                              ),
+                              trailing: CachedNetworkImage(
+                                imageUrl:
+                                    "${_payWay == 3 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
+                                width: ScreenUtil().setWidth(60),
+                                height: ScreenUtil().setWidth(60),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
                         Divider(
                           height: 1,
                           color: Colors.black12,
                         ),
                         ListTile(
                           onTap: () async {
-                            try {
-                              EasyLoading.show();
-                              var result =
-                                  await HttpManage.getGoodsPayAliPayInfo(
-                                      orderId: widget.orderId);
-                              EasyLoading.dismiss();
-                              if (result.status) {
-                                _payInfo = result.data.payInfo;
-                                _payNo = result.data.payNo;
-                                callAlipay();
-                              } else {
-                                CommonUtils.showToast(result.errMsg);
-                              }
-                            } catch (e) {
-                              EasyLoading.dismiss();
-                            }
+                            setState(() {
+                              _payWay = 1;
+                            });
                           },
+                          selected: _payWay == 1,
                           leading: CachedNetworkImage(
                             imageUrl:
                                 'https://alipic.lanhuapp.com/xdb61f0e63-777a-485a-97c7-ecdd8e261ff2',
@@ -409,11 +511,15 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                             '支付宝',
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(48),
+                              color: Color(0xff222222),
                             ),
                           ),
-                          trailing: Icon(
-                            CupertinoIcons.forward,
-                            size: 16,
+                          trailing: CachedNetworkImage(
+                            imageUrl:
+                                "${_payWay == 1 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
+                            width: ScreenUtil().setWidth(60),
+                            height: ScreenUtil().setWidth(60),
+                            fit: BoxFit.fill,
                           ),
                         ),
                         Divider(
@@ -422,22 +528,11 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                         ),
                         ListTile(
                           onTap: () async {
-                            try {
-                              EasyLoading.show();
-                              var result =
-                                  await HttpManage.getGoodsPayWeChatPayInfo(
-                                      orderId: widget.orderId);
-                              EasyLoading.dismiss();
-                              if (result.status) {
-                                _payNo = result.data.payNo;
-                                callWxPay(result.data);
-                              } else {
-                                CommonUtils.showToast(result.errMsg);
-                              }
-                            } catch (e) {
-                              EasyLoading.dismiss();
-                            }
+                            setState(() {
+                              _payWay = 2;
+                            });
                           },
+                          selected: _payWay == 2,
                           leading: CachedNetworkImage(
                             imageUrl:
                                 'https://alipic.lanhuapp.com/xdb0f27927-d450-4cc2-a0df-4147410870e7',
@@ -449,51 +544,110 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                             '微信',
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(48),
+                              color: Color(0xff222222),
                             ),
                           ),
-                          trailing: Icon(
-                            CupertinoIcons.forward,
-                            size: 16,
-                          ),
-                        ),
-                        Divider(
-                          height: 1,
-                          color: Colors.black12,
-                        ),
-                        ListTile(
-                          onTap: () async {
-                            if (!_hasPayPassword) {
-                              CommonUtils.showToast("请先设置支付密码！");
-                              return;
-                            }
-                            showPayPasswordDialog(context, widget.orderId);
-                          },
-                          leading: CachedNetworkImage(
+                          trailing: CachedNetworkImage(
                             imageUrl:
-                                'https://alipic.lanhuapp.com/xdd5f9c369-8c30-4f93-bcf0-151a16b97220',
-                            width: ScreenUtil().setWidth(78),
-                            height: ScreenUtil().setWidth(78),
+                                "${_payWay == 2 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
+                            width: ScreenUtil().setWidth(60),
+                            height: ScreenUtil().setWidth(60),
                             fit: BoxFit.fill,
-                          ),
-                          title: Text(
-                            '余额支付(可用余额:￥$_balance)',
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(48),
-                            ),
-                          ),
-                          trailing: Icon(
-                            CupertinoIcons.forward,
-                            size: 16,
                           ),
                         ),
                       ],
                     ),
                   ),
+                  buildBtnLayout(),
                 ],
               ),
             ),
           ),
         )),
+      ),
+    );
+  }
+
+  invokeWxPay() async {
+    try {
+      EasyLoading.show();
+      var result =
+          await HttpManage.getGoodsPayWeChatPayInfo(orderId: widget.orderId);
+      EasyLoading.dismiss();
+      if (result.status) {
+        _payNo = result.data.payNo;
+        callWxPay(result.data);
+      } else {
+        CommonUtils.showToast(result.errMsg);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  invokeAlipay() async {
+    try {
+      EasyLoading.show();
+      var result =
+          await HttpManage.getGoodsPayAliPayInfo(orderId: widget.orderId);
+      EasyLoading.dismiss();
+      if (result.status) {
+        _payInfo = result.data.payInfo;
+        _payNo = result.data.payNo;
+        callAlipay();
+      } else {
+        CommonUtils.showToast(result.errMsg);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  /// 登录/注册按钮操作
+  Widget buildBtnLayout() {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(
+        top: ScreenUtil().setHeight(257),
+      ),
+      child: Ink(
+        child: InkWell(
+            onTap: () async {
+              switch (_payWay) {
+                case 1:
+                  invokeAlipay();
+                  break;
+                case 2:
+                  invokeWxPay();
+                  break;
+                case 3:
+                  if (!_hasPayPassword) {
+                    showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) => _buildDialog(context),
+                      barrierDismissible: false,
+                    );
+                    return;
+                  }
+                  showPayPasswordDialog(context, widget.orderId);
+                  break;
+              }
+            },
+            child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: ScreenUtil().setHeight(152),
+                width: ScreenUtil().setWidth(810),
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(ScreenUtil().setWidth(100)),
+                    color: Color(0xffF32E43)),
+                child: Text(
+                  "支付",
+                  style: TextStyle(
+                      color: Colors.white, fontSize: ScreenUtil().setSp(48)),
+                ))),
       ),
     );
   }

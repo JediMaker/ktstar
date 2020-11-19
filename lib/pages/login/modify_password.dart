@@ -228,8 +228,9 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                             Navigator.of(context).pop();
                             return true;
                           } else {
-                            CommonUtils.showToast(
-                                "${widget.title == "设置密码" ? "设置" : "修改"}密码失败！");
+                            CommonUtils.showToast("${result.errMsg}");
+                         /*   CommonUtils.showToast(
+                                "${widget.title == "设置密码" ? "设置" : "修改"}密码失败！");*/
                             return false;
                           }
                         }

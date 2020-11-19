@@ -176,6 +176,31 @@ class HttpManage {
   }
 
   ///
+  /// [phone]     手机号
+  ///
+  ///
+  ///
+  /// 发送修改支付密码验证码
+  static Future<ResultBeanEntity> sendPayPasswordModifyVerificationCode(
+      String phone, String type) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["tel"] = "$phone";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields
+      ..add(MapEntry(
+          "sign", "${Utils.getSign(paramsMap)}")); //类型  1-注册 2-登录 3-绑定手机号码
+    var response = await HttpManage.dio.post(
+      APi.USER_SEND_SMS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var httpResult = ResultBeanEntity();
+    resultBeanEntityFromJson(httpResult, extractData);
+    return httpResult;
+  }
+
+  ///
   ///[phone] 手机号
   ///
   ///[smsCode]验证码
@@ -258,7 +283,7 @@ class HttpManage {
 
     print(HttpManage.dio.toString());
     var response = await HttpManage.dio.post(
-      APi.RESET_PASSWORD,
+      APi.USER_RESET_PAY_PASSWORD,
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
@@ -1308,7 +1333,8 @@ class HttpManage {
   ///
   /// 获取商品购买余额支付信息
   ///
-  static Future<AlipayPayinfoEntity> getGoodsPayBalanceInfo({orderId,payPassword}) async {
+  static Future<AlipayPayinfoEntity> getGoodsPayBalanceInfo(
+      {orderId, payPassword}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "3";
     paramsMap["order_id"] = "$orderId";
@@ -1783,6 +1809,39 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = WithdrawalInfoEntity();
     withdrawalInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  static Future<ResultBeanEntity> setPayPassword(String currentPassword) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["password"] = "$currentPassword";
+    paramsMap["re_password"] = "$currentPassword";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_SET_PAY_PASSWORD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  static Future<ResultBeanEntity> checkPayPassword(String currentPassword) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["password"] = "$currentPassword";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_CHECK_PASSWORD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 }

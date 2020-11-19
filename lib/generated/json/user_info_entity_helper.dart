@@ -79,6 +79,9 @@ userInfoDataFromJson(UserInfoData data, Map<String, dynamic> json) {
 	if (json['pwd_status'] != null) {
 		data.pwdStatus = json['pwd_status']?.toString();
 	}
+	if (json['pay_pwd_status'] != null) {
+		data.payPwdStatus = json['pay_pwd_status']?.toString();
+	}
 	return data;
 }
 
@@ -100,5 +103,6 @@ Map<String, dynamic> userInfoDataToJson(UserInfoData entity) {
 	data['tx_price'] = entity.txPrice;
 	data['total_price'] = entity.totalPrice;
 	data['pwd_status'] = entity.pwdStatus;
+	data['pay_pwd_status'] = entity.payPwdStatus;
 	return data;
 }

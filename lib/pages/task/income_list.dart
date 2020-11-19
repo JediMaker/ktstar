@@ -199,6 +199,10 @@ class _IncomeListPageState extends State<IncomeListPage> {
       }
     } else {
       switch (profitType) {
+        case "4":
+          iconName = "icon_profit_task.png";
+          statusText = "商品消费-成功";
+          break;
         case "3":
           iconName = "icon_profit_task.png";
           statusText = "消费补贴-成功";
@@ -319,7 +323,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
                   Text(
                     //您于2020-23-12 14:32:10提交的任务截图被驳回，驳回原因为截图不符合
                     //要求。请当天及时重新提交~：
-                    "${isWithdrawal ? "-" : "+"}$price",
+                    "${isWithdrawal ? "-" : profitType == "4" ? "" : "+"}$price",
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(42),
                       color: Color(0xFF222222),
