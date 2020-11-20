@@ -58,6 +58,9 @@ taskOtherSubmitInfoDataFromJson(TaskOtherSubmitInfoData data, Map<String, dynami
 		} catch (e) {
 		}
 	}
+	if (json['need_remark'] != null) {
+		data.needRemark = json['need_remark']?.toString();
+	}
 	return data;
 }
 
@@ -68,5 +71,6 @@ Map<String, dynamic> taskOtherSubmitInfoDataToJson(TaskOtherSubmitInfoData entit
 	data['task_id'] = entity.taskId;
 	data['img_url'] = entity.imgUrl;
 	data['img_num'] = entity.imgNum;
+	data['need_remark'] = entity.needRemark;
 	return data;
 }

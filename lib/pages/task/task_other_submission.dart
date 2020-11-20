@@ -40,14 +40,18 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
   List<String> imageUrls = List<String>();
   var _indexVisible = false;
   int imgNum = 1;
-
+  var _remark = '';
   PickedFile _imageFile;
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
   String _retrieveDataError;
 
+  TextEditingController _remarkController;
+
   /// 存储所有上传图片的id
   List<String> allImgIds = List<String>();
+
+  bool _needRemark = false;
 
   _onButtonPressed(ImageSource source, {BuildContext context}) async {
     try {
@@ -102,6 +106,11 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             widget.comId = result.data.comId ?? "";
             imageUrls = result.data.imgUrl;
             allImgIds = result.data.imgId;
+            try {
+              _needRemark = result.data.needRemark == "2";
+            } catch (e) {
+              _needRemark = false;
+            }
 
             for (var url in imageUrls) {
               images.add(Image.network(
@@ -123,6 +132,11 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             imgNum = result.data.imgNum;
             allImgIds = result.data.imgId;
             imageUrls = result.data.imgUrl;
+            try {
+              _needRemark = result.data.needRemark == "2";
+            } catch (e) {
+              _needRemark = false;
+            }
             for (var url in imageUrls) {
               images.add(Image.network(
                 url,
@@ -271,12 +285,14 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
 
   @override
   void initState() {
+    _remarkController = new TextEditingController();
     _initData();
     super.initState();
   }
 
   @override
   void dispose() {
+    _remarkController.dispose();
     super.dispose();
   }
 
@@ -289,10 +305,15 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           if (images.length == 0) {
             return;
           }
+          if (_needRemark && CommonUtils.isEmpty(_remark)) {
+            CommonUtils.showToast("任务备注不能为空！");
+            return;
+          }
           String imgIds = allImgIds.join(",");
           if (widget.pageType == 0) {
             ///提交任务
-            var result = await HttpManage.taskReSubmit(widget.comId, imgIds);
+            var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
+                remark: _remark);
             if (result.status) {
               CommonUtils.showToast("提交成功");
               NavigatorUtils.navigatorRouterAndRemoveUntil(
@@ -302,7 +323,8 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             }
           } else {
             ///重新提交任务
-            var result = await HttpManage.taskReSubmit(widget.comId, imgIds);
+            var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
+                remark: _remark);
             if (result.status) {
               CommonUtils.showToast("提交成功");
               NavigatorUtils.navigatorRouterAndRemoveUntil(
@@ -369,6 +391,8 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
     );
   }
 
+  Color _textGray = Color(0xff999999);
+
   @override
   Widget build(BuildContext context) {
     return FlutterEasyLoading(
@@ -401,8 +425,8 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(32)),
+                    margin: EdgeInsets.symmetric(
+                        vertical: ScreenUtil().setWidth(32)),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "上传任务截图",
@@ -412,6 +436,57 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
                     ),
                   ),
                   buildGridView(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Visibility(
+                    visible: _needRemark,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "任务备注",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: _needRemark,
+                    child: Container(
+                      height: ScreenUtil().setHeight(260),
+                      margin: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: _remarkController,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                        onChanged: (value) {
+                          _remark = value;
+                        },
+                        decoration: InputDecoration(
+                          /*  labelText: widget.address.addressDetail == null
+                          ? ''
+                          : widget.address.addressDetail,*/
+                          fillColor: Colors.white,
+                          border: InputBorder.none,
+                          hintText: '请输入任务备注',
+                          hintStyle: TextStyle(
+                            fontSize: ScreenUtil().setSp(42),
+                            color: _textGray,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   SizedBox(
                     height: ScreenUtil().setHeight(32),
                   ),

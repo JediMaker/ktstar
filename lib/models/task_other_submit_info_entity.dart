@@ -21,4 +21,6 @@ class TaskOtherSubmitInfoData with JsonConvert<TaskOtherSubmitInfoData> {
 	List<String> imgUrl;
 	@JSONField(name: "img_num")
 	int imgNum;
+	@JSONField(name: "need_remark")
+	String needRemark;
 }

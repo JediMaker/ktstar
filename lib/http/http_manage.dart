@@ -670,10 +670,11 @@ class HttpManage {
   ///
   /// 任务重新提交
   ///
-  static Future<ResultBeanEntity> taskReSubmit(comId, imgId) async {
+  static Future<ResultBeanEntity> taskReSubmit(comId, imgId, {remark}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["com_id"] = "$comId";
     paramsMap["img_id"] = "$imgId";
+    paramsMap["remark"] = "$remark";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1829,7 +1830,8 @@ class HttpManage {
     return entity;
   }
 
-  static Future<ResultBeanEntity> checkPayPassword(String currentPassword) async {
+  static Future<ResultBeanEntity> checkPayPassword(
+      String currentPassword) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$currentPassword";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
