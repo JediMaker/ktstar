@@ -78,6 +78,9 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
   String get copyButtonLabel => "复制";
 
   @override
+  String get modalBarrierDismissLabel => "";
+
+  @override
   String get cutButtonLabel => "剪切";
 
   @override
@@ -145,4 +148,7 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
   @override
   // TODO: implement todayLabel
   String get todayLabel => throw UnimplementedError();
+
+  @override
+  String tabSemanticsLabel({int tabIndex, int tabCount}) => '';
 }
