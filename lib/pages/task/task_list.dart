@@ -22,6 +22,7 @@ import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
+import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
@@ -384,34 +385,41 @@ class _TaskListPageState extends State<TaskListPage>
                           BorderRadius.circular(ScreenUtil().setWidth(32))),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: ScreenUtil().setWidth(400),
-                              height: ScreenUtil().setHeight(60),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(),
-                            ),
-                            Container(
-                              child: Text(
-                                "更多惊喜福利 敬请期待",
-                                style: TextStyle(
-                                  color: Color(0xffB9B9B9),
-                                  fontSize: ScreenUtil().setSp(26),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          NavigatorUtils.navigatorRouter(
+                              context, GoodsListPage());
+                        },
+                        child: Container(
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                width: ScreenUtil().setWidth(400),
+                                height: ScreenUtil().setHeight(60),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
+                                  fit: BoxFit.fill,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.only(
-                          bottom: ScreenUtil().setHeight(30),
+                              Expanded(
+                                child: Container(),
+                              ),
+                              Container(
+                                child: Text(
+                                  "查看更多 》",
+                                  style: TextStyle(
+                                    color: Color(0xffB9B9B9),
+                                    fontSize: ScreenUtil().setSp(32),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          margin: EdgeInsets.only(
+                            bottom: ScreenUtil().setHeight(30),
+                          ),
                         ),
                       ),
                       SingleChildScrollView(
