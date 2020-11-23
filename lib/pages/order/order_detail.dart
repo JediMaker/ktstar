@@ -35,6 +35,12 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   var _payWayText = "--";
   var payPrice;
   var orderStatusText = '';
+
+  String payTime;
+  String sendTime;
+  String confirmTime;
+  String sendName;
+  String sendNumber;
   List<OrderDetailDataGoodsList> goodsList;
 
   Future _initData({bool onlyChangeAddress = false}) async {
@@ -46,53 +52,60 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 */
     try {
       if (mounted) {
-            setState(() {
-              entity = entityResult;
-              addressDetail = entityResult.data.address;
-              iphone = entityResult.data.mobile;
-              name = entityResult.data.consignee;
-              goodsList = entityResult.data.goodsList;
-              totalPrice = entityResult.data.totalPrice;
-              payPrice = entityResult.data.payPrice;
-              orderNum = entityResult.data.orderno;
-              payment = entityResult.data.payment;
-              dateAdded = entityResult.data.createTime;
-              orderStatus = entityResult.data.status.toString();
-              if (!CommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
-                try {
-                  defProductId = goodsList[0].goodsId;
-                } catch (e) {}
-              }
-              sum = goodsList.length;
-
-              switch (orderStatus) {
-                case "1":
-                  orderStatusText = "待付款"; //chinaUnicom china_mobile china_telecom
-                  break;
-                case "2":
-                  orderStatusText = "待发货";
-                  break;
-                case "3":
-                  orderStatusText = "待收货";
-                  break;
-                case "5":
-                  orderStatusText = "已完成";
-                  break;
-              }
-              if (orderStatus != "1") {
-                switch (payment) {
-                  case "1":
-                    _payWayText = "微信支付"; //chinaUnicom china_mobile china_telecom
-                    break;
-                  case "2":
-                    _payWayText = "支付宝支付";
-                    break;
-                }
-              }
-            });
+        setState(() {
+          entity = entityResult;
+          addressDetail = entityResult.data.address;
+          iphone = entityResult.data.mobile;
+          name = entityResult.data.consignee;
+          goodsList = entityResult.data.goodsList;
+          totalPrice = entityResult.data.totalPrice;
+          payPrice = entityResult.data.payPrice;
+          orderNum = entityResult.data.orderno;
+          payment = entityResult.data.payment;
+          dateAdded = entityResult.data.createTime;
+          payTime = entityResult.data.payTime;
+          sendTime = entityResult.data.sendTime;
+          confirmTime = entityResult.data.confirmTime;
+          sendName = entityResult.data.sendName;
+          sendNumber = entityResult.data.sendNumber;
+          orderStatus = entityResult.data.status.toString();
+          if (!CommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
+            try {
+              defProductId = goodsList[0].goodsId;
+            } catch (e) {}
           }
-    } catch (e) {
-    }
+          sum = goodsList.length;
+
+          switch (orderStatus) {
+            case "1":
+              orderStatusText = "待付款"; //chinaUnicom china_mobile china_telecom
+              break;
+            case "2":
+              orderStatusText = "待发货";
+              break;
+            case "3":
+              orderStatusText = "待收货";
+              break;
+            case "5":
+              orderStatusText = "已完成";
+              break;
+          }
+          if (orderStatus != "1") {
+            switch (payment) {
+              case "2":
+                _payWayText = "微信支付"; //chinaUnicom china_mobile china_telecom
+                break;
+              case "1":
+                _payWayText = "支付宝支付";
+                break;
+              case "3":
+                _payWayText = "余额支付";
+                break;
+            }
+          }
+        });
+      }
+    } catch (e) {}
     EasyLoading.dismiss();
   }
 
@@ -178,8 +191,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                           border: Border(
-                            top: BorderSide(width: 0.5, color: Colors.redAccent),
-                            left: BorderSide(width: 0.5, color: Colors.redAccent),
+                            top:
+                                BorderSide(width: 0.5, color: Colors.redAccent),
+                            left:
+                                BorderSide(width: 0.5, color: Colors.redAccent),
                             right:
                                 BorderSide(width: 0.5, color: Colors.redAccent),
                             bottom:
@@ -325,34 +340,240 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               ],
             ),
           ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(
-                horizontal: 16, vertical: ScreenUtil().setHeight(10)),
-            child: Divider(
-              height: ScreenUtil().setHeight(1),
-              color: Color(0xFFefefef),
-            ),
-          ),
-          Container(
-            color: Colors.white,
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            child: Row(
+          Visibility(
+            child: Column(
               children: <Widget>[
-                Text(
-                  '下单日期',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: ScreenUtil().setSp(36),
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(10)),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
                   ),
                 ),
-                Expanded(child: Text("")),
-                Text(
-                  "${dateAdded == null ? "" : dateAdded}",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: ScreenUtil().setSp(36),
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '下单日期',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                      Expanded(child: Text("")),
+                      Text(
+                        "${dateAdded == null ? "" : dateAdded}",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !CommonUtils.isEmpty(payTime),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(10)),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '付款时间',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                      Expanded(child: Text("")),
+                      Text(
+                        "${payTime == null ? "" : payTime}",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !CommonUtils.isEmpty(sendTime),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(10)),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '发货时间',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                      Expanded(child: Text("")),
+                      Text(
+                        "${sendTime == null ? "" : sendTime}",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !CommonUtils.isEmpty(sendName),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(10)),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '快递公司',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                      Expanded(child: Text("")),
+                      Text(
+                        "${sendName == null ? "" : sendName}",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !CommonUtils.isEmpty(sendNumber),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(10)),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '快递单号',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                      Expanded(child: Text("")),
+                      Text(
+                        "${sendNumber == null ? "" : sendNumber}",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !CommonUtils.isEmpty(confirmTime),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16, vertical: ScreenUtil().setHeight(10)),
+                  child: Divider(
+                    height: ScreenUtil().setHeight(1),
+                    color: Color(0xFFefefef),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '收货时间',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                      Expanded(child: Text("")),
+                      Text(
+                        "${confirmTime == null ? "" : confirmTime}",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenUtil().setSp(36),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
