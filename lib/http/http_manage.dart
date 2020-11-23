@@ -1485,6 +1485,7 @@ class HttpManage {
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    GlobalConfig.prefs.setBool("canRefreshToken", false);
     var response = await HttpManage.dio.post(
       APi.REFRESH_TOKEN,
       data: formData,
@@ -1494,6 +1495,7 @@ class HttpManage {
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       GlobalConfig.prefs.setString("loginData", response.data.toString());
+      GlobalConfig.prefs.setBool("canRefreshToken", true);
     }
     return entity;
   }

@@ -51,7 +51,9 @@ class TokenInterceptors extends InterceptorsWrapper {
       resultBeanEntityFromJson(entity, extractData);
       if (entity.errCode.toString() == "308") {
         response = await getAuthorization(request);
-        return response;
+        if (!CommonUtils.isEmpty(response)) {
+          return response;
+        }
       }
       if (entity.errCode.toString() == "303") {
         CommonUtils.showToast("登陆过期，请重新登录！");
@@ -119,20 +121,22 @@ class TokenInterceptors extends InterceptorsWrapper {
   ///获取授权token
   Future<Response> getAuthorization(request) async {
     Response response;
-    var result = await HttpManage.referToken(request);
-    print("getAuthorization" + result.data.toString());
-    if (!CommonUtils.isEmpty(result.data)) {
-      if (result.status) {
-        request.headers["token"] = GlobalConfig.getLoginInfo().token;
-        response = await Dio().request(request.path,
-            data: request.data,
-            queryParameters: request.queryParameters,
-            cancelToken: request.cancelToken,
-            options: request,
-            onReceiveProgress: request.onReceiveProgress);
-        print("getAuthorizationBeforeresponse" + response.data.toString());
-      } else {
-        getAuthorization(request);
+    if (GlobalConfig.prefs.getBool("canRefreshToken")) {
+      var result = await HttpManage.referToken(request);
+      print("getAuthorization" + result.data.toString());
+      if (!CommonUtils.isEmpty(result.data)) {
+        if (result.status) {
+          request.headers["token"] = GlobalConfig.getLoginInfo().token;
+          response = await Dio().request(request.path,
+              data: request.data,
+              queryParameters: request.queryParameters,
+              cancelToken: request.cancelToken,
+              options: request,
+              onReceiveProgress: request.onReceiveProgress);
+          print("getAuthorizationBeforeresponse" + response.data.toString());
+        } else {
+          getAuthorization(request);
+        }
       }
     }
     return response;

@@ -132,6 +132,7 @@ class GlobalConfig {
     if (!_prefs.containsKey("isFirst")) {
       saveIsFirst(true);
     }
+    prefs.setBool("canRefreshToken", true);
     if (!isRelease) {
 //      GlobalConfig.prefs.setString("uid", "123");
     }

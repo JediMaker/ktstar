@@ -446,7 +446,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                             color: Colors.grey,
                             onPressed: () {
                               NavigatorUtils.navigatorRouterAndRemoveUntil(
-                                  context, TaskIndexPage());
+                                  this.context, TaskIndexPage());
                             }),
                       ),
                       Expanded(
@@ -746,16 +746,16 @@ class _DetailWindowState extends State<DetailWindow>
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      if (!CommonUtils.isEmpty(context) && !CommonUtils.isEmpty(orderId)) {
+      if (!CommonUtils.isEmpty(this.context) && !CommonUtils.isEmpty(orderId)) {
         try {
           NavigatorUtils.navigatorRouter(
-              context,
+              this.context,
               EnsureOrderPage(
                 orderId: "$orderId",
               ));
         } catch (e) {
           NavigatorUtils.navigatorRouter(
-              context,
+              this.context,
               EnsureOrderPage(
                 orderId: "$orderId",
               ));
