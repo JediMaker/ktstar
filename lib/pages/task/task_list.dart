@@ -71,6 +71,7 @@ class _TaskListPageState extends State<TaskListPage>
 
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
+  var _tabIndexBeforeRefresh = 0;
 
   List<String> _tabValues = [
     "新人专区",
@@ -122,6 +123,7 @@ class _TaskListPageState extends State<TaskListPage>
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         try {
+          _tabIndexBeforeRefresh = _tabController.index;
           if (taskListAll != null && taskListAll.length > 0) {
             bus.emit("taskListChanged", 0);
             bus.emit("taskListChanged",
@@ -149,18 +151,22 @@ class _TaskListPageState extends State<TaskListPage>
             _tabBarViewHeight = ScreenUtil().setHeight(330);
             return;
           }
+          if (listSize > 6) {
+            _tabBarViewHeight = ScreenUtil().setHeight(listSize * 300) + 40;
+            return;
+          }
           _tabBarViewHeight = ScreenUtil()
               .setHeight(listSize * (388 - listSize * (12 - listSize * 0.5)));
         });
       }
     });
     bus.on("refreshData", (data) {
-      _initData();
+      _initData(isRefresh: true);
     });
     super.initState();
   }
 
-  Future _initData() async {
+  Future _initData({bool isRefresh = false}) async {
     var result = await HttpManage.getHomeInfo();
     if (mounted) {
       setState(() {
@@ -177,6 +183,7 @@ class _TaskListPageState extends State<TaskListPage>
             TabController(length: taskListAll.length, vsync: ScrollableState());
         _tabController.addListener(() {
           try {
+            _tabIndexBeforeRefresh = _tabController.index;
             if (taskListAll != null && taskListAll.length > 0) {
               bus.emit("taskListChanged", 0);
               bus.emit("taskListChanged",
@@ -197,20 +204,24 @@ class _TaskListPageState extends State<TaskListPage>
         }
         _tabValues = _tabValuesRemote;
         _tabViews = listTabViews;
-        switch (userType) {
-          case "1": //体验
+        if (!isRefresh) {
+          switch (userType) {
+            case "1": //体验
 //            _tabValues = experienceItems;
-            _tabController.animateTo(0);
-            break;
-          case "2": //vip
-            _tabController.animateTo(1);
-            break;
-          case "4": //钻石
-            _tabController.animateTo(2);
-            break;
-          default:
-            _tabController.animateTo(0);
-            break;
+              _tabController.animateTo(0);
+              break;
+            case "2": //vip
+              _tabController.animateTo(1);
+              break;
+            case "4": //钻石
+              _tabController.animateTo(2);
+              break;
+            default:
+              _tabController.animateTo(0);
+              break;
+          }
+        } else {
+          _tabController.animateTo(_tabIndexBeforeRefresh);
         }
 
         _isLoop = true;
@@ -448,7 +459,8 @@ class _TaskListPageState extends State<TaskListPage>
               buildTaskWall(),
             ],
             onRefresh: () async {
-              _initData();
+//              _initData();
+              bus.emit("refreshData");
             },
           );
         },
@@ -1683,6 +1695,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   @override
   void initState() {
+    super.initState();
     _controller = AnimationController(vsync: ScrollableState());
     if (mounted) {
       setState(() {
@@ -1692,7 +1705,9 @@ class _TaskListTabViewState extends State<TaskListTabView>
       });
     }
     _initData();
-    super.initState();
+    bus.on("refreshData", (data) {
+      _initData();
+    });
   }
 
   @override
