@@ -77,6 +77,9 @@ class CommonUtils {
   }
 
   static showToast(msg) {
+    if (msg == "token已过期" || '您的账号已在其他设备上登录' == msg) {
+      return;
+    }
     Fluttertoast.showToast(
         msg: "$msg",
         backgroundColor: Colors.black38,
@@ -351,9 +354,7 @@ class CommonUtils {
         });
   }
 
-  static Future<Null> showPayPasswordDialog(
-    BuildContext context,orderId
-  ) {
+  static Future<Null> showPayPasswordDialog(BuildContext context, orderId) {
     return NavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
@@ -422,7 +423,6 @@ class CommonUtils {
                             enableActiveFill: true,
                             onCompleted: (v) {
                               print("Completed");
-
                             },
                             onChanged: (value) {
                               print(value);

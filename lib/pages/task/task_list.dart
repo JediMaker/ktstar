@@ -200,12 +200,16 @@ class _TaskListPageState extends State<TaskListPage>
         switch (userType) {
           case "1": //体验
 //            _tabValues = experienceItems;
+            _tabController.animateTo(0);
             break;
           case "2": //vip
             _tabController.animateTo(1);
             break;
           case "4": //钻石
             _tabController.animateTo(2);
+            break;
+          default:
+            _tabController.animateTo(0);
             break;
         }
 
@@ -384,6 +388,7 @@ class _TaskListPageState extends State<TaskListPage>
                       borderRadius:
                           BorderRadius.circular(ScreenUtil().setWidth(32))),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
@@ -425,6 +430,7 @@ class _TaskListPageState extends State<TaskListPage>
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: List.generate(goodsList.length, (index) {
                             HomeGoodsListGoodsList item;
                             try {
@@ -597,7 +603,7 @@ class _TaskListPageState extends State<TaskListPage>
                   margin: EdgeInsets.only(top: topMargin),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
                         width: 5,

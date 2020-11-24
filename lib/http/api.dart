@@ -74,8 +74,10 @@ class APi {
 
   ///修改支付密码发送短信验证码
   static const String USER_SEND_SMS = "user/send-sms";
+
   ///修改支付密码
   static const String USER_RESET_PAY_PASSWORD = "user/reset-password";
+
   ///校验支付密码
   static const String USER_CHECK_PASSWORD = "user/check-password";
 
@@ -207,6 +209,9 @@ class APi {
   ///首页最新商品列表
   static const String HOME_HotProducts_LIST =
       "/api/index.php?route=api/home/getProductHotList";
+
+  ///首页最新商品列表
+  static const String GOODS_LIST = "goods/lists";
 
   ///首页热门商品列表
   static const String HOME_SEARCH_PRODUCTS_LIST =

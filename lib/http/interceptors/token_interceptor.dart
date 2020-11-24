@@ -123,17 +123,29 @@ class TokenInterceptors extends InterceptorsWrapper {
     Response response;
     if (GlobalConfig.prefs.getBool("canRefreshToken")) {
       var result = await HttpManage.referToken(request);
-      print("getAuthorization" + result.data.toString());
       if (!CommonUtils.isEmpty(result.data)) {
         if (result.status) {
           request.headers["token"] = GlobalConfig.getLoginInfo().token;
-          response = await Dio().request(request.path,
-              data: request.data,
-              queryParameters: request.queryParameters,
-              cancelToken: request.cancelToken,
-              options: request,
-              onReceiveProgress: request.onReceiveProgress);
-          print("getAuthorizationBeforeresponse" + response.data.toString());
+          try {
+            if (request.data is FormData) {
+              // https://github.com/flutterchina/dio/issues/482
+              FormData formData = FormData();
+              formData.fields.addAll(request.data.fields);
+              for (MapEntry mapFile in request.data.files) {
+                formData.files.add(MapEntry(
+                    mapFile.key,
+                    MultipartFile.fromFileSync(mapFile.value.FILE_PATH,
+                        filename: mapFile.value.filename)));
+              }
+              request.data = formData;
+            }
+            response = await Dio().request(request.path,
+                data: request.data,
+                queryParameters: request.queryParameters,
+                cancelToken: request.cancelToken,
+                options: request,
+                onReceiveProgress: request.onReceiveProgress);
+          } catch (e) {}
         } else {
           getAuthorization(request);
         }

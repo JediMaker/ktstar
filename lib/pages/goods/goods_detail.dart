@@ -99,7 +99,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
     super.dispose();
   }
 
-  var _detailImgs = [];
+  var _detailImgs = List<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +126,12 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                           Container(
                             height: ScreenUtil().setHeight(1231),
                             child: Swiper(
+                              key: UniqueKey(),
                               itemHeight: ScreenUtil().setHeight(1231),
                               itemCount: detailData == null ||
                                       detailData.data == null ||
                                       detailData.data.bannerImgs == null
-                                  ? 1
+                                  ? 0
                                   : detailData.data.bannerImgs.length,
 /*
                               itemCount: detailData == null ||
@@ -403,7 +404,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                           fit: BoxFit.fill,
                         );
                       },
-                      childCount: _detailImgs.length,
+                      childCount: _detailImgs == null ? 0 : _detailImgs.length,
 /*
                       childCount: detailData == null ||
                               detailData.data == null ||

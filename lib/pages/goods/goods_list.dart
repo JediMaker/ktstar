@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/pages/widget/PriceText.dart';
@@ -28,21 +31,24 @@ class _GoodsListPageState extends State<GoodsListPage> {
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
 
   _initData() async {
-    var result = await HttpManage.getHomeInfo();
+    var result = await HttpManage.getGoodsList();
     if (result.status) {
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
+      homeGoodsListEntityFromJson(entity, result.data);
       if (mounted) {
         setState(() {
           if (page == 1) {
-            goodsList = result.data.goodsList;
+            goodsList = entity.goodsList;
+            _refreshController.finishLoad(noMore: true);
           } else {
             if (result == null ||
                 result.data == null ||
-                result.data.goodsList == null ||
-                result.data.goodsList.length == 0) {
+                entity.goodsList == null ||
+                entity.goodsList.length == 0) {
               //              _refreshController.resetLoadState();
               _refreshController.finishLoad(noMore: true);
             } else {
-              goodsList += result.data.goodsList;
+              goodsList += entity.goodsList;
             }
           }
           isFirstLoading = false;
@@ -159,14 +165,14 @@ class _GoodsListPageState extends State<GoodsListPage> {
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '预估补贴￥9.9';
+    String profit = '预估补贴￥0';
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '预估补贴￥${(double.parse(item.salePrice) / 2).toString()}';
+      profit = '预估补贴￥${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
@@ -276,7 +282,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
                   margin: EdgeInsets.only(top: topMargin),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
                         width: 5,
