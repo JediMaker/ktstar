@@ -501,7 +501,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
                             children: <InlineSpan>[
                               TextSpan(
                                 text:
-                                    '请按照任务要求上传任务截图，禁止随意修改，伪造图片，一经发现，任务给予驳回，追回任务奖励金额。',
+                                    '请按照任务要求上传任务截图，禁止随意修改，伪造图片，一经发现，任务给予驳回，追回任务奖励金额。每个任务最多可提交5次',
                                 style: TextStyle(
                                   color: Color(0xFFB9B9B9),
                                   fontSize: ScreenUtil().setSp(36),

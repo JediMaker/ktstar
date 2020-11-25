@@ -424,10 +424,10 @@ class _TaskListPageState extends State<TaskListPage>
                               ),
                               Container(
                                 child: Text(
-                                  "查看更多 》",
+                                  "查看更多 >>",
                                   style: TextStyle(
-                                    color: Color(0xffB9B9B9),
-                                    fontSize: ScreenUtil().setSp(32),
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(38),
                                   ),
                                 ),
                               ),

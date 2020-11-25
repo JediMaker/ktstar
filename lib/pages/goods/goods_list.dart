@@ -222,9 +222,8 @@ class _GoodsListPageState extends State<GoodsListPage> {
                     child: CachedNetworkImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
-                      height: ScreenUtil().setWidth(523),
                       width: ScreenUtil().setWidth(523),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.fitWidth,
                       imageUrl: "$goodsImg",
                     ),
                   ),
