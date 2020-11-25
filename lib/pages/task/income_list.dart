@@ -211,6 +211,10 @@ class _IncomeListPageState extends State<IncomeListPage> {
           iconName = "icon_profit_task.png";
           statusText = "任务奖励-成功";
           break;
+        case "0":
+          iconName = "icon_profit_task.png";
+          statusText = "活动奖励-成功";
+          break;
         case "1":
           iconName = "icon_profit_invite.png";
           statusText = "邀请奖励-成功";

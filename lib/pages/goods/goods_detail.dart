@@ -99,7 +99,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
     super.dispose();
   }
 
-  var _detailImgs = [];
+  var _detailImgs = List<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -110,149 +110,66 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
           alignment: Alignment.center,
           fit: StackFit.expand,
           children: <Widget>[
-            CustomScrollView(
-              slivers: <Widget>[
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      bottom: ScreenUtil().setHeight(60),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: ScreenUtil().setHeight(1231),
-                          child: Swiper(
-                            itemHeight: ScreenUtil().setHeight(1231),
-                            itemCount: detailData == null ||
-                                    detailData.data == null ||
-                                    detailData.data.bannerImgs == null
-                                ? 1
-                                : detailData.data.bannerImgs.length,
+            Container(
+              padding: EdgeInsets.only(
+                bottom: ScreenUtil().setHeight(245),
+              ),
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        bottom: ScreenUtil().setHeight(60),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: ScreenUtil().setHeight(1231),
+                            child: Swiper(
+                              key: UniqueKey(),
+                              itemHeight: ScreenUtil().setHeight(1231),
+                              itemCount: detailData == null ||
+                                      detailData.data == null ||
+                                      detailData.data.bannerImgs == null
+                                  ? 0
+                                  : detailData.data.bannerImgs.length,
 /*
-                            itemCount: detailData == null ||
-                                    detailData.data == null ||
-                                    detailData.data.images == null
-                                ? 1
-                                : detailData.data.images.length,
+                              itemCount: detailData == null ||
+                                      detailData.data == null ||
+                                      detailData.data.images == null
+                                  ? 1
+                                  : detailData.data.images.length,
 */
-                            itemBuilder: (BuildContext context, int index) {
-                              return detailData != null
-                                  ? new CachedNetworkImage(
-                                      imageUrl: detailData
-                                                  .data.bannerImgs[index] ==
-                                              null
-                                          ? ""
-                                          : detailData.data.bannerImgs[index],
-                                      fit: BoxFit.fill,
-                                    )
-                                  : Image.asset("static/images/c_error.jpg");
-                            },
-                            autoplay: true,
-                            controller: SwiperController(),
-                            pagination: new SwiperPagination(
-                                alignment: Alignment.bottomRight,
-                                builder: FractionPaginationBuilder(
-                                  activeColor: Colors.black,
-                                  color: Colors.black,
-                                  fontSize: ScreenUtil().setSp(20),
-                                  activeFontSize: ScreenUtil().setSp(20),
-                                )),
+                              itemBuilder: (BuildContext context, int index) {
+                                return detailData != null
+                                    ? new CachedNetworkImage(
+                                        imageUrl: detailData
+                                                    .data.bannerImgs[index] ==
+                                                null
+                                            ? ""
+                                            : detailData.data.bannerImgs[index],
+                                        fit: BoxFit.fill,
+                                      )
+                                    : Image.asset("static/images/c_error.jpg");
+                              },
+                              autoplay: true,
+                              controller: SwiperController(),
+                              pagination: new SwiperPagination(
+                                  alignment: Alignment.bottomRight,
+                                  builder: FractionPaginationBuilder(
+                                    activeColor: Colors.black,
+                                    color: Colors.black,
+                                    fontSize: ScreenUtil().setSp(20),
+                                    activeFontSize: ScreenUtil().setSp(20),
+                                  )),
+                            ),
                           ),
-                        ),
-                        Divider(
-                          height: 1,
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 16),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(ScreenUtil().setWidth(30)))),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  PriceText(
-                                    text: '$_salePrice',
-                                    textColor: _txtRedColor,
-                                    fontSize: ScreenUtil().setSp(42),
-                                    fontBigSize: ScreenUtil().setSp(56),
-                                  ),
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Visibility(
-                                    visible: _originalPrice != _salePrice,
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          bottom: ScreenUtil().setHeight(8)),
-                                      child: Text(
-                                        "￥$_originalPrice",
-//                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: ScreenUtil().setSp(36),
-                                            decoration:
-                                                TextDecoration.lineThrough),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Visibility(
-                                    visible: !CommonUtils.isEmpty(_btPrice),
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          bottom: ScreenUtil().setHeight(8)),
-                                      child: Text(
-                                        "补贴：￥$_btPrice",
-//                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
-                                        style: TextStyle(
-                                          color: _txtRedColor,
-                                          fontSize: ScreenUtil().setSp(36),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Wrap(
-                                  spacing: 10,
-                                  children: <Widget>[
-                                    Text(
-                                      "${detailData == null || detailData.data == null ? "" : detailData.data.goodsName}",
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(42),
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                          Divider(
+                            height: 1,
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            NavigatorUtils.navigatorRouter(
-                                context,
-                                FreeQueuePage(
-                                  goodsId: widget.productId,
-                                ));
-                          },
-                          child: Container(
+                          Container(
                             margin: EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 0),
+                                horizontal: 16, vertical: 16),
                             padding: EdgeInsets.symmetric(
                                 vertical: 18, horizontal: 16),
                             decoration: BoxDecoration(
@@ -262,151 +179,243 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                             child: Column(
                               children: <Widget>[
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        "排队",
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(38),
-                                          color: Color(0xff999999),
+                                    PriceText(
+                                      text: '$_salePrice',
+                                      textColor: _txtRedColor,
+                                      fontSize: ScreenUtil().setSp(42),
+                                      fontBigSize: ScreenUtil().setSp(56),
+                                    ),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                    Visibility(
+                                      visible: _originalPrice != _salePrice,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            bottom: ScreenUtil().setHeight(8)),
+                                        child: Text(
+                                          "￥$_originalPrice",
+//                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: ScreenUtil().setSp(36),
+                                              decoration:
+                                                  TextDecoration.lineThrough),
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "目前该商品已有$_queueCount人正在参与排队",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(42),
-                                          color: Color(0xff222222),
-                                        ),
-                                      ),
+                                      width: 16,
                                     ),
                                     Visibility(
-                                      visible: true,
+                                      visible: !CommonUtils.isEmpty(_btPrice),
                                       child: Container(
                                         margin: EdgeInsets.only(
                                             bottom: ScreenUtil().setHeight(8)),
-                                        child: Icon(
-                                          CupertinoIcons.forward,
-                                          color: Color(0xff999999),
-                                          size: ScreenUtil().setSp(38),
+                                        child: Text(
+                                          "补贴：￥$_btPrice",
+//                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
+                                          style: TextStyle(
+                                            color: _txtRedColor,
+                                            fontSize: ScreenUtil().setSp(36),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Wrap(
+                                    spacing: 10,
+                                    children: <Widget>[
+                                      Text(
+                                        "${detailData == null || detailData.data == null ? "" : detailData.data.goodsName}",
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(42),
+                                        ),
+                                        textAlign: TextAlign.start,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(57),
-                        ),
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Container(
+                          GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  FreeQueuePage(
+                                    goodsId: widget.productId,
+                                  ));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 0),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 18, horizontal: 16),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                          ScreenUtil().setWidth(30)))),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          "排队",
+                                          style: TextStyle(
+                                            fontSize: ScreenUtil().setSp(38),
+                                            color: Color(0xff999999),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          "目前该商品已有$_queueCount人正在参与排队",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: ScreenUtil().setSp(42),
+                                            color: Color(0xff222222),
+                                          ),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: true,
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              bottom:
+                                                  ScreenUtil().setHeight(8)),
+                                          child: Icon(
+                                            CupertinoIcons.forward,
+                                            color: Color(0xff999999),
+                                            size: ScreenUtil().setSp(38),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(57),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                          width: ScreenUtil().setWidth(9),
+                                          height: ScreenUtil().setWidth(9),
+                                          child: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFFFF8800))),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: ScreenUtil().setWidth(12),
+                                        height: ScreenUtil().setWidth(12),
+                                        child: CircleAvatar(
+                                            backgroundColor: Color(0xFFFF7270)),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: ScreenUtil().setWidth(16),
+                                        height: ScreenUtil().setWidth(16),
+                                        child: CircleAvatar(
+                                            backgroundColor: Color(0xFFFBEE3A)),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text("商品详情"),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: ScreenUtil().setWidth(16),
+                                        height: ScreenUtil().setWidth(16),
+                                        child: CircleAvatar(
+                                            backgroundColor: Color(0xFFFBEE3A)),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: ScreenUtil().setWidth(12),
+                                        height: ScreenUtil().setWidth(12),
+                                        child: CircleAvatar(
+                                            backgroundColor: Color(0xFFFF7270)),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
                                         width: ScreenUtil().setWidth(9),
                                         height: ScreenUtil().setWidth(9),
                                         child: CircleAvatar(
-                                            backgroundColor:
-                                                Color(0xFFFF8800))),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: ScreenUtil().setWidth(12),
-                                      height: ScreenUtil().setWidth(12),
-                                      child: CircleAvatar(
-                                          backgroundColor: Color(0xFFFF7270)),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: ScreenUtil().setWidth(16),
-                                      height: ScreenUtil().setWidth(16),
-                                      child: CircleAvatar(
-                                          backgroundColor: Color(0xFFFBEE3A)),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text("商品详情"),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: ScreenUtil().setWidth(16),
-                                      height: ScreenUtil().setWidth(16),
-                                      child: CircleAvatar(
-                                          backgroundColor: Color(0xFFFBEE3A)),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: ScreenUtil().setWidth(12),
-                                      height: ScreenUtil().setWidth(12),
-                                      child: CircleAvatar(
-                                          backgroundColor: Color(0xFFFF7270)),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: ScreenUtil().setWidth(9),
-                                      height: ScreenUtil().setWidth(9),
-                                      child: CircleAvatar(
-                                          backgroundColor: Color(0xFFFF8800)),
-                                    ),
-                                  ],
+                                            backgroundColor: Color(0xFFFF8800)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (content, index) {
-                      return CachedNetworkImage(
-                        imageUrl: _detailImgs[index],
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (content, index) {
+                        return CachedNetworkImage(
+                          imageUrl: _detailImgs[index],
 /*
          todo               imageUrl: detailData.data.images[index].popup == null
-                            ? ""
-                            : detailData.data.images[index].popup,
+                              ? ""
+                              : detailData.data.images[index].popup,
 */
-                        fit: BoxFit.fill,
-                      );
-                    },
-                    childCount: _detailImgs.length,
+                          fit: BoxFit.fill,
+                        );
+                      },
+                      childCount: _detailImgs == null ? 0 : _detailImgs.length,
 /*
-                    childCount: detailData == null ||
-                            detailData.data == null ||
-                            detailData.data.images == null
-                        ? 0
-                        : detailData.data.images.length,
+                      childCount: detailData == null ||
+                              detailData.data == null ||
+                              detailData.data.images == null
+                          ? 0
+                          : detailData.data.images.length,
 */
-                  ),
-                )
-              ],
+                    ),
+                  )
+                ],
+              ),
             ),
             SafeArea(
               child: Container(
@@ -446,7 +455,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                             color: Colors.grey,
                             onPressed: () {
                               NavigatorUtils.navigatorRouterAndRemoveUntil(
-                                  context, TaskIndexPage());
+                                  this.context, TaskIndexPage());
                             }),
                       ),
                       Expanded(
@@ -746,16 +755,16 @@ class _DetailWindowState extends State<DetailWindow>
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      if (!CommonUtils.isEmpty(context) && !CommonUtils.isEmpty(orderId)) {
+      if (!CommonUtils.isEmpty(this.context) && !CommonUtils.isEmpty(orderId)) {
         try {
           NavigatorUtils.navigatorRouter(
-              context,
+              this.context,
               EnsureOrderPage(
                 orderId: "$orderId",
               ));
         } catch (e) {
           NavigatorUtils.navigatorRouter(
-              context,
+              this.context,
               EnsureOrderPage(
                 orderId: "$orderId",
               ));

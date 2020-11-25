@@ -1485,6 +1485,7 @@ class HttpManage {
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    GlobalConfig.prefs.setBool("canRefreshToken", false);
     var response = await HttpManage.dio.post(
       APi.REFRESH_TOKEN,
       data: formData,
@@ -1494,6 +1495,7 @@ class HttpManage {
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       GlobalConfig.prefs.setString("loginData", response.data.toString());
+      GlobalConfig.prefs.setBool("canRefreshToken", true);
     }
     return entity;
   }
@@ -1830,6 +1832,7 @@ class HttpManage {
     return entity;
   }
 
+  ///修改余额支付密码
   static Future<ResultBeanEntity> checkPayPassword(
       String currentPassword) async {
     Map paramsMap = Map<String, dynamic>();
@@ -1840,6 +1843,22 @@ class HttpManage {
     var response = await HttpManage.dio.post(
       APi.USER_CHECK_PASSWORD,
       data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+//
+  ///获取商品列表
+  static Future<ResultBeanEntity> getGoodsList() async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.get(
+      APi.GOODS_LIST,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();

@@ -34,6 +34,9 @@ homeGoodsListGoodsListFromJson(HomeGoodsListGoodsList data, Map<String, dynamic>
 	if (json['sale_price'] != null) {
 		data.salePrice = json['sale_price']?.toString();
 	}
+	if (json['bt_price'] != null) {
+		data.btPrice = json['bt_price']?.toString();
+	}
 	return data;
 }
 
@@ -44,5 +47,6 @@ Map<String, dynamic> homeGoodsListGoodsListToJson(HomeGoodsListGoodsList entity)
 	data['goods_img'] = entity.goodsImg;
 	data['original_price'] = entity.originalPrice;
 	data['sale_price'] = entity.salePrice;
+	data['bt_price'] = entity.btPrice;
 	return data;
 }

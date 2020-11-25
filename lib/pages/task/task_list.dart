@@ -22,6 +22,7 @@ import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
+import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
@@ -70,6 +71,7 @@ class _TaskListPageState extends State<TaskListPage>
 
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
+  var _tabIndexBeforeRefresh = 0;
 
   List<String> _tabValues = [
     "新人专区",
@@ -121,6 +123,7 @@ class _TaskListPageState extends State<TaskListPage>
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         try {
+          _tabIndexBeforeRefresh = _tabController.index;
           if (taskListAll != null && taskListAll.length > 0) {
             bus.emit("taskListChanged", 0);
             bus.emit("taskListChanged",
@@ -148,18 +151,22 @@ class _TaskListPageState extends State<TaskListPage>
             _tabBarViewHeight = ScreenUtil().setHeight(330);
             return;
           }
+          if (listSize > 6) {
+            _tabBarViewHeight = ScreenUtil().setHeight(listSize * 300) + 40;
+            return;
+          }
           _tabBarViewHeight = ScreenUtil()
               .setHeight(listSize * (388 - listSize * (12 - listSize * 0.5)));
         });
       }
     });
     bus.on("refreshData", (data) {
-      _initData();
+      _initData(isRefresh: true);
     });
     super.initState();
   }
 
-  Future _initData() async {
+  Future _initData({bool isRefresh = false}) async {
     var result = await HttpManage.getHomeInfo();
     if (mounted) {
       setState(() {
@@ -176,6 +183,7 @@ class _TaskListPageState extends State<TaskListPage>
             TabController(length: taskListAll.length, vsync: ScrollableState());
         _tabController.addListener(() {
           try {
+            _tabIndexBeforeRefresh = _tabController.index;
             if (taskListAll != null && taskListAll.length > 0) {
               bus.emit("taskListChanged", 0);
               bus.emit("taskListChanged",
@@ -196,16 +204,24 @@ class _TaskListPageState extends State<TaskListPage>
         }
         _tabValues = _tabValuesRemote;
         _tabViews = listTabViews;
-        switch (userType) {
-          case "1": //体验
+        if (!isRefresh) {
+          switch (userType) {
+            case "1": //体验
 //            _tabValues = experienceItems;
-            break;
-          case "2": //vip
-            _tabController.animateTo(1);
-            break;
-          case "4": //钻石
-            _tabController.animateTo(2);
-            break;
+              _tabController.animateTo(0);
+              break;
+            case "2": //vip
+              _tabController.animateTo(1);
+              break;
+            case "4": //钻石
+              _tabController.animateTo(2);
+              break;
+            default:
+              _tabController.animateTo(0);
+              break;
+          }
+        } else {
+          _tabController.animateTo(_tabIndexBeforeRefresh);
         }
 
         _isLoop = true;
@@ -383,40 +399,49 @@ class _TaskListPageState extends State<TaskListPage>
                       borderRadius:
                           BorderRadius.circular(ScreenUtil().setWidth(32))),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: ScreenUtil().setWidth(400),
-                              height: ScreenUtil().setHeight(60),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(),
-                            ),
-                            Container(
-                              child: Text(
-                                "更多惊喜福利 敬请期待",
-                                style: TextStyle(
-                                  color: Color(0xffB9B9B9),
-                                  fontSize: ScreenUtil().setSp(26),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          NavigatorUtils.navigatorRouter(
+                              context, GoodsListPage());
+                        },
+                        child: Container(
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                width: ScreenUtil().setWidth(400),
+                                height: ScreenUtil().setHeight(60),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
+                                  fit: BoxFit.fill,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.only(
-                          bottom: ScreenUtil().setHeight(30),
+                              Expanded(
+                                child: Container(),
+                              ),
+                              Container(
+                                child: Text(
+                                  "查看更多 >>",
+                                  style: TextStyle(
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(38),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          margin: EdgeInsets.only(
+                            bottom: ScreenUtil().setHeight(30),
+                          ),
                         ),
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: List.generate(goodsList.length, (index) {
                             HomeGoodsListGoodsList item;
                             try {
@@ -434,7 +459,8 @@ class _TaskListPageState extends State<TaskListPage>
               buildTaskWall(),
             ],
             onRefresh: () async {
-              _initData();
+//              _initData();
+              bus.emit("refreshData");
             },
           );
         },
@@ -589,7 +615,7 @@ class _TaskListPageState extends State<TaskListPage>
                   margin: EdgeInsets.only(top: topMargin),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
                         width: 5,
@@ -1669,6 +1695,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   @override
   void initState() {
+    super.initState();
     _controller = AnimationController(vsync: ScrollableState());
     if (mounted) {
       setState(() {
@@ -1678,7 +1705,9 @@ class _TaskListTabViewState extends State<TaskListTabView>
       });
     }
     _initData();
-    super.initState();
+    bus.on("refreshData", (data) {
+      _initData();
+    });
   }
 
   @override
