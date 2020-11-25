@@ -144,5 +144,17 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
 
   @override
   // TODO: implement todayLabel
-  String get todayLabel => throw UnimplementedError();
+  String get todayLabel => '今天';
+
+  @override
+  // TODO: implement modalBarrierDismissLabel
+  String get modalBarrierDismissLabel => '取消';
+
+  @override
+  String tabSemanticsLabel({int tabIndex, int tabCount}) {
+    // TODO: implement tabSemanticsLabel
+    assert(tabIndex >= 1);
+    assert(tabCount >= 1);
+    return 'Tab $tabIndex of $tabCount';
+  }
 }
