@@ -63,6 +63,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
   void initState() {
     super.initState();
     _refreshController = EasyRefreshController();
+    _refreshController.finishLoad(noMore: true);
     _initData();
   }
 
@@ -222,8 +223,9 @@ class _GoodsListPageState extends State<GoodsListPage> {
                     child: CachedNetworkImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
+                      height: ScreenUtil().setWidth(523),
                       width: ScreenUtil().setWidth(523),
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fill,
                       imageUrl: "$goodsImg",
                     ),
                   ),
