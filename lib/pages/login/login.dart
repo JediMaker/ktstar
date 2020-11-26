@@ -211,6 +211,57 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     )),
                     buildWechatLoginContainer(),
+                    Visibility(
+                      visible: pageType == 0,
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "注册即代表同意",
+                              style: TextStyle(
+                                  color: Color(0xFFAFAFAF),
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                NavigatorUtils.navigatorRouter(
+                                    context,
+                                    WebViewPage(
+                                      initialUrl:
+                                          APi.AGREEMENT_REGISTRATION_URL,
+                                      showActions: false,
+                                      title: "注册协议",
+                                    ));
+                              },
+                              child: Text(
+                                "《注册协议》",
+                                style: TextStyle(
+                                    color: GlobalConfig.taskHeadColor,
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                NavigatorUtils.navigatorRouter(
+                                    context,
+                                    WebViewPage(
+                                      initialUrl: APi.AGREEMENT_SERVICES_URL,
+                                      showActions: false,
+                                      title: "服务协议",
+                                    ));
+                              },
+                              child: Text(
+                                "&《服务协议》",
+                                style: TextStyle(
+                                    color: GlobalConfig.taskHeadColor,
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -757,7 +808,8 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> smsSend(BuildContext context) async {
     if (CommonUtils.isPhoneLegal(phoneNumber)) {
       ResultBeanEntity result = await HttpManage.sendVerificationCode(
-          phoneNumber, "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
+          phoneNumber,
+          "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
 
       if (result.status) {
         CommonUtils.showToast("验证码已发送，请注意查收！");
