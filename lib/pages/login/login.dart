@@ -214,6 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                     Visibility(
                       visible: pageType == 0,
                       child: Container(
+                        margin: EdgeInsets.only(bottom: 50),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -228,14 +229,13 @@ class _LoginPageState extends State<LoginPage> {
                                 NavigatorUtils.navigatorRouter(
                                     context,
                                     WebViewPage(
-                                      initialUrl:
-                                          APi.AGREEMENT_REGISTRATION_URL,
+                                      initialUrl: APi.AGREEMENT_SERVICES_URL,
                                       showActions: false,
-                                      title: "注册协议",
+                                      title: "服务协议",
                                     ));
                               },
                               child: Text(
-                                "《注册协议》",
+                                "《服务协议》",
                                 style: TextStyle(
                                     color: GlobalConfig.taskHeadColor,
                                     fontSize: ScreenUtil().setSp(32)),
@@ -246,13 +246,14 @@ class _LoginPageState extends State<LoginPage> {
                                 NavigatorUtils.navigatorRouter(
                                     context,
                                     WebViewPage(
-                                      initialUrl: APi.AGREEMENT_SERVICES_URL,
+                                      initialUrl:
+                                          APi.AGREEMENT_PRIVACY_URL,
                                       showActions: false,
-                                      title: "服务协议",
+                                      title: "隐私政策",
                                     ));
                               },
                               child: Text(
-                                "&《服务协议》",
+                                "&《隐私政策》",
                                 style: TextStyle(
                                     color: GlobalConfig.taskHeadColor,
                                     fontSize: ScreenUtil().setSp(32)),
@@ -278,8 +279,7 @@ class _LoginPageState extends State<LoginPage> {
       visible: Platform.isAndroid ||
           (Platform.isIOS && GlobalConfig.displayThirdLoginInformation),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 24, vertical: 50),
-        height: 150,
+        margin: EdgeInsets.only(left: 24, right: 24, top: 40, bottom: 20),
         child: Column(
           children: <Widget>[
             Row(
@@ -312,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin: EdgeInsets.only(top: 20),
               child: new FlatButton(
                   onPressed: () {
                     fluwx
