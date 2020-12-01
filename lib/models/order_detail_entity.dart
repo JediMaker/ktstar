@@ -52,4 +52,6 @@ class OrderDetailDataGoodsList with JsonConvert<OrderDetailDataGoodsList> {
 	String goodsNum;
 	@JSONField(name: "sale_price")
 	String salePrice;
+	@JSONField(name: "spec_item")
+	String specItem;
 }

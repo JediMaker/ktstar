@@ -1,4 +1,5 @@
 import 'package:star/models/goods_info_entity.dart';
+import 'package:star/models/goods_spec_info_entity.dart';
 
 goodsInfoEntityFromJson(GoodsInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
@@ -55,6 +56,9 @@ goodsInfoDataFromJson(GoodsInfoData data, Map<String, dynamic> json) {
 	if (json['bt_price'] != null) {
 		data.btPrice = json['bt_price']?.toString();
 	}
+	if (json['spec_info'] != null) {
+		data.specInfo = new GoodsSpecInfoSpecInfo().fromJson(json['spec_info']);
+	}
 	return data;
 }
 
@@ -68,5 +72,8 @@ Map<String, dynamic> goodsInfoDataToJson(GoodsInfoData entity) {
 	data['detail_imgs'] = entity.detailImgs;
 	data['queue_count'] = entity.queueCount;
 	data['bt_price'] = entity.btPrice;
+	if (entity.specInfo != null) {
+		data['spec_info'] = entity.specInfo.toJson();
+	}
 	return data;
 }
