@@ -51,10 +51,14 @@ import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
+import 'package:star/models/task_record_list_entity.dart';
+import 'package:star/generated/json/task_record_list_entity_helper.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/models/result_bean_entity.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
+import 'package:star/models/goods_spec_info_entity.dart';
+import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
 import 'package:star/models/address_info_entity.dart';
@@ -77,8 +81,6 @@ import 'package:star/models/region_data_entity.dart';
 import 'package:star/generated/json/region_data_entity_helper.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
-import 'package:star/models/task_record_list_entity.dart';
-import 'package:star/generated/json/task_record_list_entity_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -161,10 +163,21 @@ class JsonConvert<T> {
 			return homeDataFromJson(data as HomeData, json) as T;			case HomeDataBanner:
 			return homeDataBannerFromJson(data as HomeDataBanner, json) as T;			case HomeDataTaskList:
 			return homeDataTaskListFromJson(data as HomeDataTaskList, json) as T;			case HomeDataTaskListList:
-			return homeDataTaskListListFromJson(data as HomeDataTaskListList, json) as T;			case UserInfoEntity:
+			return homeDataTaskListListFromJson(data as HomeDataTaskListList, json) as T;			case TaskRecordListEntity:
+			return taskRecordListEntityFromJson(data as TaskRecordListEntity, json) as T;			case TaskRecordListData:
+			return taskRecordListDataFromJson(data as TaskRecordListData, json) as T;			case TaskRecordListDataList:
+			return taskRecordListDataListFromJson(data as TaskRecordListDataList, json) as T;			case UserInfoEntity:
 			return userInfoEntityFromJson(data as UserInfoEntity, json) as T;			case UserInfoData:
 			return userInfoDataFromJson(data as UserInfoData, json) as T;			case ResultBeanEntity:
-			return resultBeanEntityFromJson(data as ResultBeanEntity, json) as T;			case AlipayPayinfoEntity:
+			return resultBeanEntityFromJson(data as ResultBeanEntity, json) as T;			case GoodsSpecInfoEntity:
+			return goodsSpecInfoEntityFromJson(data as GoodsSpecInfoEntity, json) as T;			case GoodsSpecInfoSpecInfo:
+			return goodsSpecInfoSpecInfoFromJson(data as GoodsSpecInfoSpecInfo, json) as T;			case GoodsSpecInfoSpecInfoSpecItem:
+			return goodsSpecInfoSpecInfoSpecItemFromJson(data as GoodsSpecInfoSpecInfoSpecItem, json) as T;			case GoodsSpecInfoSpecInfoSpecPrice:
+			return goodsSpecInfoSpecInfoSpecPriceFromJson(data as GoodsSpecInfoSpecInfoSpecPrice, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds00:
+			return goodsSpecInfoSpecInfoSpecPriceIds00FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds00, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds01:
+			return goodsSpecInfoSpecInfoSpecPriceIds01FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds01, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds10:
+			return goodsSpecInfoSpecInfoSpecPriceIds10FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds10, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds11:
+			return goodsSpecInfoSpecInfoSpecPriceIds11FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds11, json) as T;			case AlipayPayinfoEntity:
 			return alipayPayinfoEntityFromJson(data as AlipayPayinfoEntity, json) as T;			case AlipayPayinfoData:
 			return alipayPayinfoDataFromJson(data as AlipayPayinfoData, json) as T;			case AddressInfoEntity:
 			return addressInfoEntityFromJson(data as AddressInfoEntity, json) as T;			case AddressInfoData:
@@ -194,10 +207,7 @@ class JsonConvert<T> {
 			return regionDataDatachildchildFromJson(data as RegionDataDatachildchild, json) as T;			case FansListEntity:
 			return fansListEntityFromJson(data as FansListEntity, json) as T;			case FansListData:
 			return fansListDataFromJson(data as FansListData, json) as T;			case FansListDataList:
-			return fansListDataListFromJson(data as FansListDataList, json) as T;			case TaskRecordListEntity:
-			return taskRecordListEntityFromJson(data as TaskRecordListEntity, json) as T;			case TaskRecordListData:
-			return taskRecordListDataFromJson(data as TaskRecordListData, json) as T;			case TaskRecordListDataList:
-			return taskRecordListDataListFromJson(data as TaskRecordListDataList, json) as T;    }
+			return fansListDataListFromJson(data as FansListDataList, json) as T;    }
     return data as T;
   }
 
@@ -273,10 +283,21 @@ class JsonConvert<T> {
 			return homeDataToJson(data as HomeData);			case HomeDataBanner:
 			return homeDataBannerToJson(data as HomeDataBanner);			case HomeDataTaskList:
 			return homeDataTaskListToJson(data as HomeDataTaskList);			case HomeDataTaskListList:
-			return homeDataTaskListListToJson(data as HomeDataTaskListList);			case UserInfoEntity:
+			return homeDataTaskListListToJson(data as HomeDataTaskListList);			case TaskRecordListEntity:
+			return taskRecordListEntityToJson(data as TaskRecordListEntity);			case TaskRecordListData:
+			return taskRecordListDataToJson(data as TaskRecordListData);			case TaskRecordListDataList:
+			return taskRecordListDataListToJson(data as TaskRecordListDataList);			case UserInfoEntity:
 			return userInfoEntityToJson(data as UserInfoEntity);			case UserInfoData:
 			return userInfoDataToJson(data as UserInfoData);			case ResultBeanEntity:
-			return resultBeanEntityToJson(data as ResultBeanEntity);			case AlipayPayinfoEntity:
+			return resultBeanEntityToJson(data as ResultBeanEntity);			case GoodsSpecInfoEntity:
+			return goodsSpecInfoEntityToJson(data as GoodsSpecInfoEntity);			case GoodsSpecInfoSpecInfo:
+			return goodsSpecInfoSpecInfoToJson(data as GoodsSpecInfoSpecInfo);			case GoodsSpecInfoSpecInfoSpecItem:
+			return goodsSpecInfoSpecInfoSpecItemToJson(data as GoodsSpecInfoSpecInfoSpecItem);			case GoodsSpecInfoSpecInfoSpecPrice:
+			return goodsSpecInfoSpecInfoSpecPriceToJson(data as GoodsSpecInfoSpecInfoSpecPrice);			case GoodsSpecInfoSpecInfoSpecPriceIds00:
+			return goodsSpecInfoSpecInfoSpecPriceIds00ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds00);			case GoodsSpecInfoSpecInfoSpecPriceIds01:
+			return goodsSpecInfoSpecInfoSpecPriceIds01ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds01);			case GoodsSpecInfoSpecInfoSpecPriceIds10:
+			return goodsSpecInfoSpecInfoSpecPriceIds10ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds10);			case GoodsSpecInfoSpecInfoSpecPriceIds11:
+			return goodsSpecInfoSpecInfoSpecPriceIds11ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds11);			case AlipayPayinfoEntity:
 			return alipayPayinfoEntityToJson(data as AlipayPayinfoEntity);			case AlipayPayinfoData:
 			return alipayPayinfoDataToJson(data as AlipayPayinfoData);			case AddressInfoEntity:
 			return addressInfoEntityToJson(data as AddressInfoEntity);			case AddressInfoData:
@@ -306,10 +327,7 @@ class JsonConvert<T> {
 			return regionDataDatachildchildToJson(data as RegionDataDatachildchild);			case FansListEntity:
 			return fansListEntityToJson(data as FansListEntity);			case FansListData:
 			return fansListDataToJson(data as FansListData);			case FansListDataList:
-			return fansListDataListToJson(data as FansListDataList);			case TaskRecordListEntity:
-			return taskRecordListEntityToJson(data as TaskRecordListEntity);			case TaskRecordListData:
-			return taskRecordListDataToJson(data as TaskRecordListData);			case TaskRecordListDataList:
-			return taskRecordListDataListToJson(data as TaskRecordListDataList);    }
+			return fansListDataListToJson(data as FansListDataList);    }
     return data as T;
   }
   //Go back to a single instance by type
@@ -385,10 +403,21 @@ class JsonConvert<T> {
 			return HomeData().fromJson(json);			case 'HomeDataBanner':
 			return HomeDataBanner().fromJson(json);			case 'HomeDataTaskList':
 			return HomeDataTaskList().fromJson(json);			case 'HomeDataTaskListList':
-			return HomeDataTaskListList().fromJson(json);			case 'UserInfoEntity':
+			return HomeDataTaskListList().fromJson(json);			case 'TaskRecordListEntity':
+			return TaskRecordListEntity().fromJson(json);			case 'TaskRecordListData':
+			return TaskRecordListData().fromJson(json);			case 'TaskRecordListDataList':
+			return TaskRecordListDataList().fromJson(json);			case 'UserInfoEntity':
 			return UserInfoEntity().fromJson(json);			case 'UserInfoData':
 			return UserInfoData().fromJson(json);			case 'ResultBeanEntity':
-			return ResultBeanEntity().fromJson(json);			case 'AlipayPayinfoEntity':
+			return ResultBeanEntity().fromJson(json);			case 'GoodsSpecInfoEntity':
+			return GoodsSpecInfoEntity().fromJson(json);			case 'GoodsSpecInfoSpecInfo':
+			return GoodsSpecInfoSpecInfo().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecItem':
+			return GoodsSpecInfoSpecInfoSpecItem().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPrice':
+			return GoodsSpecInfoSpecInfoSpecPrice().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds00':
+			return GoodsSpecInfoSpecInfoSpecPriceIds00().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
+			return GoodsSpecInfoSpecInfoSpecPriceIds01().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds10':
+			return GoodsSpecInfoSpecInfoSpecPriceIds10().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds11':
+			return GoodsSpecInfoSpecInfoSpecPriceIds11().fromJson(json);			case 'AlipayPayinfoEntity':
 			return AlipayPayinfoEntity().fromJson(json);			case 'AlipayPayinfoData':
 			return AlipayPayinfoData().fromJson(json);			case 'AddressInfoEntity':
 			return AddressInfoEntity().fromJson(json);			case 'AddressInfoData':
@@ -418,10 +447,7 @@ class JsonConvert<T> {
 			return RegionDataDatachildchild().fromJson(json);			case 'FansListEntity':
 			return FansListEntity().fromJson(json);			case 'FansListData':
 			return FansListData().fromJson(json);			case 'FansListDataList':
-			return FansListDataList().fromJson(json);			case 'TaskRecordListEntity':
-			return TaskRecordListEntity().fromJson(json);			case 'TaskRecordListData':
-			return TaskRecordListData().fromJson(json);			case 'TaskRecordListDataList':
-			return TaskRecordListDataList().fromJson(json);    }
+			return FansListDataList().fromJson(json);    }
     return null;
   }
 
@@ -498,10 +524,21 @@ class JsonConvert<T> {
 			return List<HomeData>();			case 'HomeDataBanner':
 			return List<HomeDataBanner>();			case 'HomeDataTaskList':
 			return List<HomeDataTaskList>();			case 'HomeDataTaskListList':
-			return List<HomeDataTaskListList>();			case 'UserInfoEntity':
+			return List<HomeDataTaskListList>();			case 'TaskRecordListEntity':
+			return List<TaskRecordListEntity>();			case 'TaskRecordListData':
+			return List<TaskRecordListData>();			case 'TaskRecordListDataList':
+			return List<TaskRecordListDataList>();			case 'UserInfoEntity':
 			return List<UserInfoEntity>();			case 'UserInfoData':
 			return List<UserInfoData>();			case 'ResultBeanEntity':
-			return List<ResultBeanEntity>();			case 'AlipayPayinfoEntity':
+			return List<ResultBeanEntity>();			case 'GoodsSpecInfoEntity':
+			return List<GoodsSpecInfoEntity>();			case 'GoodsSpecInfoSpecInfo':
+			return List<GoodsSpecInfoSpecInfo>();			case 'GoodsSpecInfoSpecInfoSpecItem':
+			return List<GoodsSpecInfoSpecInfoSpecItem>();			case 'GoodsSpecInfoSpecInfoSpecPrice':
+			return List<GoodsSpecInfoSpecInfoSpecPrice>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds00':
+			return List<GoodsSpecInfoSpecInfoSpecPriceIds00>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
+			return List<GoodsSpecInfoSpecInfoSpecPriceIds01>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds10':
+			return List<GoodsSpecInfoSpecInfoSpecPriceIds10>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds11':
+			return List<GoodsSpecInfoSpecInfoSpecPriceIds11>();			case 'AlipayPayinfoEntity':
 			return List<AlipayPayinfoEntity>();			case 'AlipayPayinfoData':
 			return List<AlipayPayinfoData>();			case 'AddressInfoEntity':
 			return List<AddressInfoEntity>();			case 'AddressInfoData':
@@ -531,10 +568,7 @@ class JsonConvert<T> {
 			return List<RegionDataDatachildchild>();			case 'FansListEntity':
 			return List<FansListEntity>();			case 'FansListData':
 			return List<FansListData>();			case 'FansListDataList':
-			return List<FansListDataList>();			case 'TaskRecordListEntity':
-			return List<TaskRecordListEntity>();			case 'TaskRecordListData':
-			return List<TaskRecordListData>();			case 'TaskRecordListDataList':
-			return List<TaskRecordListDataList>();    }
+			return List<FansListDataList>();    }
     return null;
   }
 
