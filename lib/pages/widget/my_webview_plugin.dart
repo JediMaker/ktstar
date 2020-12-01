@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/utils.dart';
@@ -170,6 +171,7 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     return WebviewScaffold(
       appBar: AppBar(
         backgroundColor: widget.appBarBackgroundColor,
@@ -197,6 +199,7 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
           },
         ),
         centerTitle: true,
+        brightness: Brightness.light,
         elevation: 0,
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
