@@ -23,7 +23,7 @@ goodsSpecInfoSpecInfoFromJson(GoodsSpecInfoSpecInfo data, Map<String, dynamic> j
 		});
 	}
 	if (json['spec_price'] != null) {
-		data.specPrice = new GoodsSpecInfoSpecInfoSpecPrice().fromJson(json['spec_price']);
+		data.specPrice = json['spec_price'];
 	}
 	return data;
 }
@@ -33,9 +33,7 @@ Map<String, dynamic> goodsSpecInfoSpecInfoToJson(GoodsSpecInfoSpecInfo entity) {
 	if (entity.specItem != null) {
 		data['spec_item'] =  entity.specItem.map((v) => v.toJson()).toList();
 	}
-	if (entity.specPrice != null) {
-		data['spec_price'] = entity.specPrice.toJson();
-	}
+	data['spec_price'] = entity.specPrice;
 	return data;
 }
 
@@ -58,7 +56,7 @@ Map<String, dynamic> goodsSpecInfoSpecInfoSpecItemToJson(GoodsSpecInfoSpecInfoSp
 
 goodsSpecInfoSpecInfoSpecPriceFromJson(GoodsSpecInfoSpecInfoSpecPrice data, Map<String, dynamic> json) {
 	if (json['ids_0_0'] != null) {
-		data.ids00 = new GoodsSpecInfoSpecInfoSpecPriceIds00().fromJson(json['ids_0_0']);
+		data.ids00 = new GoodsSpecInfoSpecInfoSpecPriceIds().fromJson(json['ids_0_0']);
 	}
 	if (json['ids_0_1'] != null) {
 		data.ids01 = new GoodsSpecInfoSpecInfoSpecPriceIds01().fromJson(json['ids_0_1']);
@@ -89,7 +87,7 @@ Map<String, dynamic> goodsSpecInfoSpecInfoSpecPriceToJson(GoodsSpecInfoSpecInfoS
 	return data;
 }
 
-goodsSpecInfoSpecInfoSpecPriceIds00FromJson(GoodsSpecInfoSpecInfoSpecPriceIds00 data, Map<String, dynamic> json) {
+goodsSpecInfoSpecInfoSpecPriceIdsFromJson(GoodsSpecInfoSpecInfoSpecPriceIds data, Map<String, dynamic> json) {
 	if (json['spec_id'] != null) {
 		data.specId = json['spec_id']?.toString();
 	}
@@ -102,7 +100,7 @@ goodsSpecInfoSpecInfoSpecPriceIds00FromJson(GoodsSpecInfoSpecInfoSpecPriceIds00 
 	return data;
 }
 
-Map<String, dynamic> goodsSpecInfoSpecInfoSpecPriceIds00ToJson(GoodsSpecInfoSpecInfoSpecPriceIds00 entity) {
+Map<String, dynamic> goodsSpecInfoSpecInfoSpecPriceIdsToJson(GoodsSpecInfoSpecInfoSpecPriceIds entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['spec_id'] = entity.specId;
 	data['spec_img'] = entity.specImg;

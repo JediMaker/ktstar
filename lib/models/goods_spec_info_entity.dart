@@ -10,7 +10,7 @@ class GoodsSpecInfoSpecInfo with JsonConvert<GoodsSpecInfoSpecInfo> {
 	@JSONField(name: "spec_item")
 	List<GoodsSpecInfoSpecInfoSpecItem> specItem;
 	@JSONField(name: "spec_price")
-	GoodsSpecInfoSpecInfoSpecPrice specPrice;
+	dynamic specPrice;
 }
 
 class GoodsSpecInfoSpecInfoSpecItem with JsonConvert<GoodsSpecInfoSpecInfoSpecItem> {
@@ -21,7 +21,7 @@ class GoodsSpecInfoSpecInfoSpecItem with JsonConvert<GoodsSpecInfoSpecInfoSpecIt
 
 class GoodsSpecInfoSpecInfoSpecPrice with JsonConvert<GoodsSpecInfoSpecInfoSpecPrice> {
 	@JSONField(name: "ids_0_0")
-	GoodsSpecInfoSpecInfoSpecPriceIds00 ids00;
+	GoodsSpecInfoSpecInfoSpecPriceIds ids00;
 	@JSONField(name: "ids_0_1")
 	GoodsSpecInfoSpecInfoSpecPriceIds01 ids01;
 	@JSONField(name: "ids_1_0")
@@ -30,7 +30,7 @@ class GoodsSpecInfoSpecInfoSpecPrice with JsonConvert<GoodsSpecInfoSpecInfoSpecP
 	GoodsSpecInfoSpecInfoSpecPriceIds11 ids11;
 }
 
-class GoodsSpecInfoSpecInfoSpecPriceIds00 with JsonConvert<GoodsSpecInfoSpecInfoSpecPriceIds00> {
+class GoodsSpecInfoSpecInfoSpecPriceIds with JsonConvert<GoodsSpecInfoSpecInfoSpecPriceIds> {
 	@JSONField(name: "spec_id")
 	String specId;
 	@JSONField(name: "spec_img")

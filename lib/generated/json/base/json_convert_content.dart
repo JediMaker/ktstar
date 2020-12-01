@@ -173,8 +173,8 @@ class JsonConvert<T> {
 			return goodsSpecInfoEntityFromJson(data as GoodsSpecInfoEntity, json) as T;			case GoodsSpecInfoSpecInfo:
 			return goodsSpecInfoSpecInfoFromJson(data as GoodsSpecInfoSpecInfo, json) as T;			case GoodsSpecInfoSpecInfoSpecItem:
 			return goodsSpecInfoSpecInfoSpecItemFromJson(data as GoodsSpecInfoSpecInfoSpecItem, json) as T;			case GoodsSpecInfoSpecInfoSpecPrice:
-			return goodsSpecInfoSpecInfoSpecPriceFromJson(data as GoodsSpecInfoSpecInfoSpecPrice, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds00:
-			return goodsSpecInfoSpecInfoSpecPriceIds00FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds00, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds01:
+			return goodsSpecInfoSpecInfoSpecPriceFromJson(data as GoodsSpecInfoSpecInfoSpecPrice, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds:
+			return goodsSpecInfoSpecInfoSpecPriceIdsFromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds01:
 			return goodsSpecInfoSpecInfoSpecPriceIds01FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds01, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds10:
 			return goodsSpecInfoSpecInfoSpecPriceIds10FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds10, json) as T;			case GoodsSpecInfoSpecInfoSpecPriceIds11:
 			return goodsSpecInfoSpecInfoSpecPriceIds11FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds11, json) as T;			case AlipayPayinfoEntity:
@@ -293,8 +293,8 @@ class JsonConvert<T> {
 			return goodsSpecInfoEntityToJson(data as GoodsSpecInfoEntity);			case GoodsSpecInfoSpecInfo:
 			return goodsSpecInfoSpecInfoToJson(data as GoodsSpecInfoSpecInfo);			case GoodsSpecInfoSpecInfoSpecItem:
 			return goodsSpecInfoSpecInfoSpecItemToJson(data as GoodsSpecInfoSpecInfoSpecItem);			case GoodsSpecInfoSpecInfoSpecPrice:
-			return goodsSpecInfoSpecInfoSpecPriceToJson(data as GoodsSpecInfoSpecInfoSpecPrice);			case GoodsSpecInfoSpecInfoSpecPriceIds00:
-			return goodsSpecInfoSpecInfoSpecPriceIds00ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds00);			case GoodsSpecInfoSpecInfoSpecPriceIds01:
+			return goodsSpecInfoSpecInfoSpecPriceToJson(data as GoodsSpecInfoSpecInfoSpecPrice);			case GoodsSpecInfoSpecInfoSpecPriceIds:
+			return goodsSpecInfoSpecInfoSpecPriceIdsToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds);			case GoodsSpecInfoSpecInfoSpecPriceIds01:
 			return goodsSpecInfoSpecInfoSpecPriceIds01ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds01);			case GoodsSpecInfoSpecInfoSpecPriceIds10:
 			return goodsSpecInfoSpecInfoSpecPriceIds10ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds10);			case GoodsSpecInfoSpecInfoSpecPriceIds11:
 			return goodsSpecInfoSpecInfoSpecPriceIds11ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds11);			case AlipayPayinfoEntity:
@@ -413,8 +413,8 @@ class JsonConvert<T> {
 			return GoodsSpecInfoEntity().fromJson(json);			case 'GoodsSpecInfoSpecInfo':
 			return GoodsSpecInfoSpecInfo().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecItem':
 			return GoodsSpecInfoSpecInfoSpecItem().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPrice':
-			return GoodsSpecInfoSpecInfoSpecPrice().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds00':
-			return GoodsSpecInfoSpecInfoSpecPriceIds00().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
+			return GoodsSpecInfoSpecInfoSpecPrice().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds':
+			return GoodsSpecInfoSpecInfoSpecPriceIds().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
 			return GoodsSpecInfoSpecInfoSpecPriceIds01().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds10':
 			return GoodsSpecInfoSpecInfoSpecPriceIds10().fromJson(json);			case 'GoodsSpecInfoSpecInfoSpecPriceIds11':
 			return GoodsSpecInfoSpecInfoSpecPriceIds11().fromJson(json);			case 'AlipayPayinfoEntity':
@@ -534,8 +534,8 @@ class JsonConvert<T> {
 			return List<GoodsSpecInfoEntity>();			case 'GoodsSpecInfoSpecInfo':
 			return List<GoodsSpecInfoSpecInfo>();			case 'GoodsSpecInfoSpecInfoSpecItem':
 			return List<GoodsSpecInfoSpecInfoSpecItem>();			case 'GoodsSpecInfoSpecInfoSpecPrice':
-			return List<GoodsSpecInfoSpecInfoSpecPrice>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds00':
-			return List<GoodsSpecInfoSpecInfoSpecPriceIds00>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
+			return List<GoodsSpecInfoSpecInfoSpecPrice>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds':
+			return List<GoodsSpecInfoSpecInfoSpecPriceIds>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
 			return List<GoodsSpecInfoSpecInfoSpecPriceIds01>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds10':
 			return List<GoodsSpecInfoSpecInfoSpecPriceIds10>();			case 'GoodsSpecInfoSpecInfoSpecPriceIds11':
 			return List<GoodsSpecInfoSpecInfoSpecPriceIds11>();			case 'AlipayPayinfoEntity':
