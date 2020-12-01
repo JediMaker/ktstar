@@ -35,6 +35,8 @@ import 'package:star/pages/task/task_share.dart';
 import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/my_webview.dart';
+import 'package:star/pages/widget/my_webview_plugin.dart';
+import 'package:star/pages/widget/my_webview_plugn.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -303,6 +305,28 @@ class _TaskListPageState extends State<TaskListPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /* appBar: PreferredSize(
+        preferredSize: Size.fromHeight(56 + MediaQuery.of(context).padding.top),
+        child: AnimatedContainer(
+          width: double.maxFinite,
+//          height: 56 + ScreenUtil.statusBarHeight,
+          alignment: Alignment.center,
+          height: 56 + MediaQuery.of(context).padding.top,
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          duration: Duration(milliseconds: 300),
+          curve: Curves.ease,
+          decoration: BoxDecoration(
+            gradient: _gradientCorlor,
+          ),
+          child: Text(
+            widget.title,
+            style: TextStyle(
+              fontSize: ScreenUtil().setSp(54),
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),*/
       appBar: GradientAppBar(
         title: Text(
           widget.title,
@@ -316,7 +340,6 @@ class _TaskListPageState extends State<TaskListPage>
       body: Builder(
         builder: (context) {
           return EasyRefresh.custom(
-            firstRefresh: true,
             enableControlFinishLoad: false,
             header: CustomHeader(
                 completeDuration: Duration(seconds: 2),
@@ -760,8 +783,29 @@ class _TaskListPageState extends State<TaskListPage>
                   showActions: true,
                   appBarBackgroundColor: generator.dominantColor.color,
                 ));*/
+            if (path.contains("czb365")) {
+              PaletteGenerator generator =
+                  await PaletteGenerator.fromImageProvider(
+                      Image.network("$icon").image);
+              //platformType=渠道编码&platformCode=用户手92657653
+              /*path =
+                  "https://open.czb365.com/redirection/todo/?platformType=98653913&authCode=ffd529e2c4dd3c810c5dc040af220c0f";
+             */ NavigatorUtils.navigatorRouter(
+                  context,
+                  WebViewPluginPage(
+                    initialUrl: path,
+                    showActions: true,
+                    title: "优惠加油",
+                    appBarBackgroundColor: Colors.white,
+                  ));
+              return;
+              /* NavigatorUtils.navigatorRouter(context, MyTestApp());
+              return;*/
+            }
+            /* path =
+                "https://st.czb365.com/v3_prod/?platformType=98653913&authCode=121e08b8bbc4126be6b08576706fb139";
             Utils.launchUrl(path);
-            return;
+            return;*/
           }
         },
         child: Container(
@@ -897,6 +941,8 @@ class _TaskListPageState extends State<TaskListPage>
         //bannerList == null ? 0 : bannerList.length,
         loop: _isLoop,
         autoplay: false,
+        duration: 50,
+        autoplayDisableOnInteraction: true,
         key: ValueKey(context),
         controller: _swiperController,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
@@ -906,11 +952,11 @@ class _TaskListPageState extends State<TaskListPage>
               bannerColorList.length == bannerList.length) {
             if (mounted) {
               setState(() {
-                bannerIndex = index;
                 _gradientCorlor = LinearGradient(colors: [
                   bannerColorList[index],
                   bannerColorList[index],
                 ]);
+                bannerIndex = index;
               });
             }
             return;
@@ -1704,10 +1750,12 @@ class _TaskListTabViewState extends State<TaskListTabView>
         } catch (e) {}
       });
     }
-    _initData();
-    bus.on("refreshData", (data) {
+    if (taskList == null || taskList.length <= 0) {
       _initData();
-    });
+    }
+    /* bus.on("refreshData", (data) {
+      _initData();
+    });*/
   }
 
   @override
