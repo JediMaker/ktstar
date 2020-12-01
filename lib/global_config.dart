@@ -101,11 +101,16 @@ class GlobalConfig {
   static bool get isFirst =>
       prefs.containsKey("isFirst") ? prefs.getBool("isFirst") : true;
 
+  /// 是否为首次进入app
+  static bool get isAgreePrivacy => prefs.containsKey("isAgreePrivacy")
+      ? prefs.getBool("isAgreePrivacy")
+      : true;
+
   /// taskWallAddress
   static const TASKWALL_ADDRESS = 'https://c.buuyee.com/api/external';
 
   /// 代理的 ip 地址
-  static const localProxyIPAddress = '192.168.0.8';
+  static const localProxyIPAddress = '192.168.0.10';
 
   /// 微信appid
   static const String WECHAT_APPID = 'wx824cc9f48da9315c';
@@ -133,6 +138,10 @@ class GlobalConfig {
       saveIsFirst(true);
     }
     prefs.setBool("canRefreshToken", true);
+    if (!_prefs.containsKey("isAgreePrivacy")) {
+      prefs.setBool("isAgreePrivacy", false);
+    }
+
     if (!isRelease) {
 //      GlobalConfig.prefs.setString("uid", "123");
     }

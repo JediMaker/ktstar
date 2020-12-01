@@ -1702,10 +1702,11 @@ class HttpManage {
   }
 
   ///创建订单
-  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum) async {
+  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum,{specId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$goodsId";
     paramsMap["goods_num"] = "$goodsNum";
+    paramsMap["spec_id"] = "$specId";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));

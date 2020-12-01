@@ -647,6 +647,21 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               fontSize: ScreenUtil().setSp(42),
                             ),
                           ),
+                          Container(
+                            child: Text(
+                              product.specItem == null
+                                  ? ""
+                                  : product.specItem,
+//                                  item.wareName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(38),
+                                color: Color(0xff666666),
+                              ),
+                            ),
+                            margin: EdgeInsets.only(top: ScreenUtil().setHeight(18)),
+                          ),
                           /*Wrap(
                             children: product.option.map((op) {
                               return Container(
