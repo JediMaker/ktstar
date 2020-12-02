@@ -972,8 +972,13 @@ class _DetailWindowState extends State<DetailWindow>
       goodsId = widget.detailData.data.id;
       goodsNum = _count;
     } catch (e) {}
+    /* try {
+                EasyLoading.dismiss();
+              } catch (e) {}*/
+    EasyLoading.show();
     var result =
         await HttpManage.createOrder(goodsId, goodsNum, specId: specId);
+    EasyLoading.dismiss();
     if (result.status) {
       try {
         orderId = result.data['order_id'].toString();
