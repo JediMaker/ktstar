@@ -789,8 +789,8 @@ class _TaskListPageState extends State<TaskListPage>
                       Image.network("$icon").image);
               //platformType=渠道编码&platformCode=用户手92657653
               /*path =
-                  "https://open.czb365.com/redirection/todo/?platformType=98653913&authCode=ffd529e2c4dd3c810c5dc040af220c0f";
-             */ NavigatorUtils.navigatorRouter(
+                  "https://st.czb365.com/v3_prod/"; *///?platformType=98653913&authCode=040af220c0f
+              NavigatorUtils.navigatorRouter(
                   context,
                   WebViewPluginPage(
                     initialUrl: path,
@@ -802,10 +802,8 @@ class _TaskListPageState extends State<TaskListPage>
               /* NavigatorUtils.navigatorRouter(context, MyTestApp());
               return;*/
             }
-            /* path =
-                "https://st.czb365.com/v3_prod/?platformType=98653913&authCode=121e08b8bbc4126be6b08576706fb139";
             Utils.launchUrl(path);
-            return;*/
+            return;
           }
         },
         child: Container(
