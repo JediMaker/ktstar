@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
+import 'package:star/pages/order/order_logistics_tracking.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
@@ -175,38 +176,82 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   color: Colors.white,
                   alignment: Alignment.centerRight,
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (defProductId != null) {
-                        NavigatorUtils.navigatorRouter(
-                            context,
-                            GoodsDetailPage(
-                              productId: defProductId,
-                            ));
-                      }
-                    },
-                    child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                          border: Border(
-                            top:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                            left:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                            right:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                            bottom:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                          ),
-                        ),
-                        child: Text(
-                          '再次购买',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: ScreenUtil().setSp(42)),
-                        )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Visibility(
+                          visible: orderStatus != '1',
+                          child: GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  OrderLogisticsTrackingPage(
+                                    orderId: widget.orderId,
+                                  ));
+                            },
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 6),
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  border: Border(
+                                    top: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    left: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    right: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    bottom: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                  ),
+                                ),
+                                child: Text(
+                                  '查看物流',
+                                  //Logistics物流跟踪 order_logistics_tracking
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                )),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          if (defProductId != null) {
+                            NavigatorUtils.navigatorRouter(
+                                context,
+                                GoodsDetailPage(
+                                  productId: defProductId,
+                                ));
+                          }
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              border: Border(
+                                top: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                                left: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                                right: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                                bottom: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                              ),
+                            ),
+                            child: Text(
+                              '再次购买',
+                              style: TextStyle(
+                                  color: Colors.redAccent,
+                                  fontSize: ScreenUtil().setSp(42)),
+                            )),
+                      ),
+                    ],
                   ),
                 ),
               )
@@ -649,9 +694,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                           ),
                           Container(
                             child: Text(
-                              product.specItem == null
-                                  ? ""
-                                  : product.specItem,
+                              product.specItem == null ? "" : product.specItem,
 //                                  item.wareName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -660,7 +703,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                 color: Color(0xff666666),
                               ),
                             ),
-                            margin: EdgeInsets.only(top: ScreenUtil().setHeight(18)),
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(18)),
                           ),
                           /*Wrap(
                             children: product.option.map((op) {
