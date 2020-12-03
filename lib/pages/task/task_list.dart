@@ -702,7 +702,10 @@ class _TaskListPageState extends State<TaskListPage>
   Widget itemsLayout() {
     Color _itemsTextColor = Color(0xff222222);
     return Container(
-      height: ScreenUtil().setHeight(332),
+      padding: EdgeInsets.only(
+        top: 16,
+        bottom: 16,
+      ),
       margin: EdgeInsets.only(
         left: 16,
         right: 16,
@@ -717,19 +720,17 @@ class _TaskListPageState extends State<TaskListPage>
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
               color: Colors.white,
               width: 0.5)),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: iconList.asMap().keys.map((index) {
-            HomeIconListIconList item;
-            try {
-              item = iconList[index];
-            } catch (e) {}
-            return iconItem(_itemsTextColor, item: item);
-          }).toList(),
-        ),
+      child: new Wrap(
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        crossAxisAlignment: CrossAxisAlignment.center,
+        runSpacing: 16,
+        children: iconList.asMap().keys.map((index) {
+          HomeIconListIconList item;
+          try {
+            item = iconList[index];
+          } catch (e) {}
+          return iconItem(_itemsTextColor, item: item);
+        }).toList(),
       ),
     );
   }
@@ -766,10 +767,20 @@ class _TaskListPageState extends State<TaskListPage>
             }
             return;
           }
-          if (type == 'weapp') {
-            launchWeChatMiniProgram(
-              username: appId,
-            );
+          if (type == 'webapp') {
+            launchWeChatMiniProgram(username: appId, path: path);
+            return;
+          }
+          if (type == 'app') {
+            switch (path) {
+              case "recharge":
+                NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                break;
+            }
+            return;
+          }
+          if (type == 'toast') {
+            CommonUtils.showToast("敬请期待");
             return;
           }
           if (type == 'link') {
@@ -789,7 +800,7 @@ class _TaskListPageState extends State<TaskListPage>
                       Image.network("$icon").image);
               //platformType=渠道编码&platformCode=用户手92657653
               /*path =
-                  "https://st.czb365.com/v3_prod/"; *///?platformType=98653913&authCode=040af220c0f
+                  "https://st.czb365.com/v3_prod/"; */ //?platformType=98653913&authCode=040af220c0f
               NavigatorUtils.navigatorRouter(
                   context,
                   WebViewPluginPage(
@@ -807,7 +818,6 @@ class _TaskListPageState extends State<TaskListPage>
           }
         },
         child: Container(
-          height: double.infinity,
           width: (ScreenUtil.screenWidth - 40) / 4,
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
