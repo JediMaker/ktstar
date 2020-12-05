@@ -49,6 +49,10 @@ class _OrderLogisticsTrackingPageState
           setState(() {
             _expressList = result.data.expressList;
             _deliveryList = List<LogisticsInfoDataExpressList>();
+            if (CommonUtils.isEmpty(_expressList)) {
+              CommonUtils.showToast('暂无物流信息');
+              return;
+            }
             for (LogisticsInfoDataExpressList item in _expressList) {
               if (!CommonUtils.isEmpty(item.xList)) {
                 for (var it = 0; it < item.xList.length; it++) {

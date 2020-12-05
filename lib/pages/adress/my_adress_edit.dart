@@ -11,7 +11,6 @@ import '../../global_config.dart';
 import 'my_adress.dart';
 
 class AddressDetailPage extends StatefulWidget {
-  //todo AddressBeanDataAddress address;
   var addressId;
   String defaultAddressId;
   String title;
