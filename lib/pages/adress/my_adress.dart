@@ -44,7 +44,6 @@ class _AddressListPageState extends State<AddressListPage>
   }
 
   Widget _buildListTile(BuildContext context, AddressListData item) {
-    //todo AddressBeanDataAddress item
     var avatarName = '';
     var name = '';
     var phone = '';

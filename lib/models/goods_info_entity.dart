@@ -1,5 +1,6 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/models/goods_spec_info_entity.dart';
 
 class GoodsInfoEntity with JsonConvert<GoodsInfoEntity> {
   bool status;
@@ -26,4 +27,6 @@ class GoodsInfoData with JsonConvert<GoodsInfoData> {
   String queueCount;
   @JSONField(name: "bt_price")
   String btPrice;
+  @JSONField(name: "spec_info")
+  GoodsSpecInfoSpecInfo specInfo;
 }

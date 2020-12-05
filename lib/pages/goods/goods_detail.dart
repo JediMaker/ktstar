@@ -12,16 +12,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:ui' as ui show window;
 
 import 'package:star/bus/my_event_bus.dart';
+import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/pages/goods/ensure_order.dart';
 import 'package:star/pages/goods/free_queue.dart';
-import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/goods_select_choice.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:star/models/goods_spec_info_entity.dart';
 
 import '../../global_config.dart';
 
@@ -58,15 +59,16 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
           setState(() {
             try {
               detailData = resultData;
-              _detailImgs = detailData.data.detailImgs;
-              _salePrice = detailData.data.salePrice;
-              _originalPrice = detailData.data.originalPrice;
-              _queueCount = detailData.data.queueCount;
-              _btPrice = detailData.data.btPrice;
+              _salePrice = resultData.data.salePrice;
+              _originalPrice = resultData.data.originalPrice;
+              _queueCount = resultData.data.queueCount;
+              _btPrice = resultData.data.btPrice;
+              _detailImgs = resultData.data.detailImgs;
             } catch (e) {
-              try {
+              print(e);
+              /* try {
                 EasyLoading.dismiss();
-              } catch (e) {}
+              } catch (e) {}*/
             }
           });
         }
@@ -538,6 +540,13 @@ class _DetailWindowState extends State<DetailWindow>
   var _txtRedColor = const Color(0xffF93736);
   var _bgRedColor = const Color(0xffF32e43);
 
+  ///选中的商品规格id
+  var specId;
+  GoodsSpecInfoSpecInfo _specInfo;
+  var _defaultImgUrl = '';
+  var _goodsName = '';
+  var _goodsPrice = '';
+
   @override
   void initState() {
     _controller = AnimationController(vsync: this);
@@ -632,117 +641,330 @@ class _DetailWindowState extends State<DetailWindow>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        width: double.maxFinite,
-        height: ScreenUtil().setHeight(700),
-        constraints: BoxConstraints(
-          minHeight: ScreenUtil().setHeight(500), //设置最小高度（必要）
-          maxHeight: MediaQuery.of(context).size.height / 1.5, //设置最大高度（必要）
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(
-              ScreenUtil().setWidth(30),
-            ),
-            topRight: Radius.circular(
-              ScreenUtil().setWidth(30),
-            ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              buildTopBox(),
+              Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    size: 22,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-//        height:  MediaQueryData.fromWindow(ui.window).size.height * 9.0 / 16.0,
-        child: Stack(
-          children: <Widget>[
-            CustomScrollView(
-              slivers: <Widget>[
-                buildTopBox(),
-//                buildSpecList(),
-              ],
-            ),
-            Positioned.fill(
-              bottom: ScreenUtil().setHeight(0),
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: ScreenUtil().setHeight(340),
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              "数量",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(""),
-                            ),
-                            Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1,
-                                        color:
-                                            Colors.black12) //设置所有的边框宽度为1 颜色为浅灰
-                                    ),
-                                child: Row(
-                                  children: <Widget>[
-                                    _reduceBtn(context),
-                                    _countArea(),
-                                    _addBtn(context)
-                                  ],
-                                ))
-                          ],
+          buildSpecList(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: ScreenUtil().setHeight(340),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          "数量",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(42),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: GestureDetector(
-                          onTap: () async {
-                            createBuyOrder(context);
-                            Navigator.maybePop(context);
-                          },
-                          child: Container(
-                            height: ScreenUtil().setHeight(155),
-                            color: minStockNum > 0 ? _bgRedColor : Colors.grey,
-                            alignment: Alignment.center,
-                            child: Text(
-                              "确定",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: ScreenUtil().setSp(48),
-                              ),
+                        Expanded(
+                          child: Text(""),
+                        ),
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1,
+                                    color: Colors.black12) //设置所有的边框宽度为1 颜色为浅灰
+                                ),
+                            child: Row(
+                              children: <Widget>[
+                                _reduceBtn(context),
+                                _countArea(),
+                                _addBtn(context)
+                              ],
+                            ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Opacity(
+                      opacity: canSubmit ? 1 : 0.4,
+                      child: GestureDetector(
+                        onTap: () async {
+                          if (canSubmit) {
+                            createBuyOrder();
+                            if (!mounted) return;
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: Container(
+                          height: ScreenUtil().setHeight(155),
+                          color: minStockNum > 0 ? _bgRedColor : Colors.grey,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "${canSubmit ? '确定' : '缺货'}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(48),
                             ),
                           ),
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          /*  SafeArea(
+            child: Container(
+              width: double.maxFinite,
+              constraints: BoxConstraints(
+                maxHeight:
+                    MediaQuery.of(context).size.height / 1.5, //设置最大高度（必要）
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(
+                    ScreenUtil().setWidth(30),
+                  ),
+                  topRight: Radius.circular(
+                    ScreenUtil().setWidth(30),
                   ),
                 ),
               ),
+//        height:  MediaQueryData.fromWindow(ui.window).size.height * 9.0 / 16.0,
+              child: Stack(
+                children: <Widget>[
+                  Column(
+                    children: [],
+                  ),
+                  Positioned.fill(
+                    bottom: ScreenUtil().setHeight(0),
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: ScreenUtil().setHeight(340),
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    "数量",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(42),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(""),
+                                  ),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 1,
+                                              color: Colors
+                                                  .black12) //设置所有的边框宽度为1 颜色为浅灰
+                                          ),
+                                      child: Row(
+                                        children: <Widget>[
+                                          _reduceBtn(context),
+                                          _countArea(),
+                                          _addBtn(context)
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  createBuyOrder(context);
+                                  Navigator.maybePop(context);
+                                },
+                                child: Container(
+                                  height: ScreenUtil().setHeight(155),
+                                  color: minStockNum > 0
+                                      ? _bgRedColor
+                                      : Colors.grey,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "确定",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: ScreenUtil().setSp(48),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 8),
+                            child: Icon(Icons.close, size: 22)),
+                      )),
+                ],
+              ),
             ),
-            Positioned(
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                      child: Icon(Icons.close, size: 22)),
-                )),
-          ],
-        ),
+          ),*/
+        ],
       ),
     );
   }
 
-  Future createBuyOrder(context) async {
+  Widget buildSpecList() {
+    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<GoodsSpecInfoSpecInfoSpecItem>();
+    var _specPrice;
+    try {
+      _specItem = widget.detailData.data.specInfo.specItem;
+      _specPrice = widget.detailData.data.specInfo.specPrice;
+    } catch (e) {}
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          GoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
+          return Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: ScreenUtil().setWidth(20),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Visibility(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      bottom: ScreenUtil().setWidth(20),
+                    ),
+                    child: Text(
+                      "${opItem.name}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: ScreenUtil().setSp(42),
+                      ),
+                    ),
+                  ),
+                  visible: opItem.xList != null && opItem.xList.length > 0,
+                ),
+                Wrap(
+                  spacing: ScreenUtil().setWidth(60),
+                  runSpacing: ScreenUtil().setWidth(60),
+                  alignment: WrapAlignment.start,
+                  children: opItem.xList.asMap().keys.map((valueIndex) {
+                    return GoodsSelectChoiceChip(
+                      /*label:
+                        Text('${option.productOptionValue[valueIndex].name}'),
+                    selected: selectedMap[option.productOptionId] ==
+                        option.productOptionValue[valueIndex]
+                            .productOptionValueId,
+                    labelStyle: TextStyle(
+                        backgroundColor: Colors.transparent,
+                        color: Colors.black),
+                    //修改边框样式
+                    selectBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Colors.blue, width: 0.5),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Colors.black, width: 1),
+                    ),
+                    backgroundColor: Colors.transparent,*/
+                      text: '${opItem.xList[valueIndex]}',
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      textSelectColor: Color(0xffF93736),
+                      selected: selectedMap[index] == valueIndex,
+                      onSelected: (v) {
+                        setState(() {
+                          selectedMap.addEntries([MapEntry(index, valueIndex)]);
+//                          checkSelectedData(_specPrice);
+                        });
+                      },
+                    );
+                  }).toList(),
+                )
+              ],
+            ),
+          );
+        },
+        itemCount: _specItem.length);
+  }
+
+  bool canSubmit = true;
+
+  void checkSelectedData(
+      _specPrice, List<GoodsSpecInfoSpecInfoSpecItem> _specItem) {
+    for (var index = 0; index < _specItem.length; index++) {
+      if (!selectedMap.containsKey(index)) {
+        for (var j = 0; j < _specItem[index].xList.length; j++) {
+          selectedMap.addEntries([MapEntry(index, j)]);
+          break;
+        }
+      }
+    }
+    var _indexTxt = 'ids';
+    selectedMap.forEach((key, value) {
+      _indexTxt += '_' + value.toString();
+    });
+    if (_specPrice.toString().contains(_indexTxt)) {
+      try {
+        canSubmit = true;
+        GoodsSpecInfoSpecInfoSpecPriceIds specInfo =
+            GoodsSpecInfoSpecInfoSpecPriceIds();
+        goodsSpecInfoSpecInfoSpecPriceIdsFromJson(
+            specInfo, _specPrice[_indexTxt]);
+        _defaultImgUrl = specInfo.specImg;
+        _goodsPrice = specInfo.specPrice;
+        specId = specInfo.specId;
+        print(
+            'specImg=$_defaultImgUrl&&specPrice=$_goodsPrice&&specId=$specId');
+
+        /* if (mounted) {
+        setState(() {});
+      }*/
+      } catch (e) {
+        print("specIdspecIdspecIdspecId$e");
+      }
+    } else {
+      canSubmit = false;
+      print("specIdspecIdspecIdspecId=====null");
+    }
+  }
+
+  Future createBuyOrder() async {
     var goodsId = '';
     var goodsNum;
     var orderId = '';
@@ -750,113 +972,117 @@ class _DetailWindowState extends State<DetailWindow>
       goodsId = widget.detailData.data.id;
       goodsNum = _count;
     } catch (e) {}
-    var result = await HttpManage.createOrder(goodsId, goodsNum);
+    /* try {
+                EasyLoading.dismiss();
+              } catch (e) {}*/
+    EasyLoading.show();
+    var result =
+        await HttpManage.createOrder(goodsId, goodsNum, specId: specId);
+    EasyLoading.dismiss();
     if (result.status) {
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      if (!CommonUtils.isEmpty(this.context) && !CommonUtils.isEmpty(orderId)) {
-        try {
-          NavigatorUtils.navigatorRouter(
-              this.context,
-              EnsureOrderPage(
-                orderId: "$orderId",
-              ));
-        } catch (e) {
-          NavigatorUtils.navigatorRouter(
-              this.context,
-              EnsureOrderPage(
-                orderId: "$orderId",
-              ));
-        }
-      }
+      var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+      NavigatorUtils.navigatorRouter(
+          context,
+          EnsureOrderPage(
+            orderId: "$orderId",
+          ));
+    } else {
+      CommonUtils.showToast("${result.errMsg}");
     }
   }
 
   Widget buildTopBox() {
-    var _defaultImgUrl = '';
-    var goodsName = '';
-    var goodsPrice = '';
     try {
       _defaultImgUrl = widget.detailData.data.bannerImgs[0];
-      goodsName = widget.detailData.data.goodsName;
-      goodsPrice = widget.detailData.data.salePrice;
+      _goodsName = widget.detailData.data.goodsName;
+      _goodsPrice = widget.detailData.data.salePrice;
+      _specInfo = widget.detailData.data.specInfo;
     } catch (e) {}
-    return SliverToBoxAdapter(
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-//        decoration: BoxDecoration(
-//            border: Border(
-//                bottom: BorderSide(
-//          width: ScreenUtil().setHeight(1),
-//          color: Color(0xffdedede),
-//        ))),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            CachedNetworkImage(
-              imageUrl: "$_defaultImgUrl",
+    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<GoodsSpecInfoSpecInfoSpecItem>();
+    var _specPrice;
+    try {
+      _specItem = widget.detailData.data.specInfo.specItem;
+      _specPrice = widget.detailData.data.specInfo.specPrice;
+      checkSelectedData(_specPrice, _specItem);
+    } catch (e) {}
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: ScreenUtil().setHeight(1),
+        color: Color(0xffdedede),
+      ))),
+      margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(20)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          CachedNetworkImage(
+            imageUrl: "$_defaultImgUrl",
 /*
-                  widget.detailData == null || widget.detailData.data == null
-                      ? ""
-                      : widget.detailData.data.thumb,
+                widget.detailData == null || widget.detailData.data == null
+                    ? ""
+                    : widget.detailData.data.thumb,
 */
-              width: ScreenUtil().setWidth(180),
-              height: ScreenUtil().setWidth(180),
-              fit: BoxFit.fill,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  PriceText(
-                    text: '$goodsPrice',
-                    textColor: _txtRedColor,
-                    fontSize: ScreenUtil().setSp(32),
-                    fontBigSize: ScreenUtil().setSp(42),
-                  ),
-                  /* Text.rich(
-                    TextSpan(children: [
-                      TextSpan(
-                        text: "￥",
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
-                        ),
-                      ),
-                      TextSpan(
-                        text: "$goodsPrice",
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
-                        ),
-                      ),
-                    ]),
-                    style: TextStyle(
-                      color: _txtRedColor,
-                      fontSize: ScreenUtil().setSp(56),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),*/
-                  Container(
-                    width: double.maxFinite,
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
-                    child: Text(
-                      "$goodsName",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+            width: ScreenUtil().setWidth(180),
+            height: ScreenUtil().setWidth(180),
+            fit: BoxFit.fill,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                PriceText(
+                  text: '$_goodsPrice',
+                  textColor: _txtRedColor,
+                  fontSize: ScreenUtil().setSp(32),
+                  fontBigSize: ScreenUtil().setSp(42),
+                ),
+                /* Text.rich(
+                  TextSpan(children: [
+                    TextSpan(
+                      text: "￥",
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(42),
                       ),
                     ),
+                    TextSpan(
+                      text: "$goodsPrice",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(42),
+                      ),
+                    ),
+                  ]),
+                  style: TextStyle(
+                    color: _txtRedColor,
+                    fontSize: ScreenUtil().setSp(56),
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
+                ),*/
+                Container(
+                  width: double.maxFinite,
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
+                  child: Text(
+                    "$_goodsName",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(42),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

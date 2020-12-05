@@ -16,6 +16,7 @@ import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
+import 'package:star/generated/json/logistics_info_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/generated/json/order_detail_entity_helper.dart';
 import 'package:star/generated/json/order_list_entity_helper.dart';
@@ -52,6 +53,7 @@ import 'package:star/models/goods_queue_entity.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/income_list_entity.dart';
+import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/models/order_list_entity.dart';
@@ -1684,6 +1686,23 @@ class HttpManage {
     return entity;
   }
 
+  ///订单物流信息
+  static Future<LogisticsInfoEntity> getOrderLogisticsInfo(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.ORDER_LOGISTICS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    LogisticsInfoEntity entity = LogisticsInfoEntity();
+    logisticsInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
   ///获取商品详情
   static Future<GoodsInfoEntity> getProductDetails(productId) async {
     Map paramsMap = Map<String, dynamic>();
@@ -1702,10 +1721,12 @@ class HttpManage {
   }
 
   ///创建订单
-  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum) async {
+  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum,
+      {specId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$goodsId";
     paramsMap["goods_num"] = "$goodsNum";
+    paramsMap["spec_id"] = "$specId";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));

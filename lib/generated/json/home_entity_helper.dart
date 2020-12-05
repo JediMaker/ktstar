@@ -173,6 +173,15 @@ homeDataTaskListListFromJson(HomeDataTaskListList data, Map<String, dynamic> jso
 	if (json['diamonds_ratio'] != null) {
 		data.diamondsRatio = json['diamonds_ratio']?.toString();
 	}
+	if (json['is_higher'] != null) {
+		data.isHigher = json['is_higher']?.toString();
+	}
+	if (json['is_new'] != null) {
+		data.isNew = json['is_new']?.toString();
+	}
+	if (json['last_simple_id'] != null) {
+		data.lastSimpleId = json['last_simple_id']?.toString();
+	}
 	return data;
 }
 
@@ -190,5 +199,8 @@ Map<String, dynamic> homeDataTaskListListToJson(HomeDataTaskListList entity) {
 	data['category'] = entity.category;
 	data['ratio'] = entity.ratio;
 	data['diamonds_ratio'] = entity.diamondsRatio;
+	data['is_higher'] = entity.isHigher;
+	data['is_new'] = entity.isNew;
+	data['last_simple_id'] = entity.lastSimpleId;
 	return data;
 }

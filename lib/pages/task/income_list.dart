@@ -158,6 +158,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
     String createTime = '';
     String status = '';
     String statusText = '';
+    String prefixText = '+';
     String timeDesc = '';
     String desc = '';
     String iconName = '';
@@ -172,6 +173,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
       type = listItem.type;
     } catch (e) {}
     if (isWithdrawal) {
+      prefixText = '-';
       //type1支付宝提现 2 微信提现
       switch (type) {
         case "1":
@@ -199,9 +201,17 @@ class _IncomeListPageState extends State<IncomeListPage> {
       }
     } else {
       switch (profitType) {
+        case "5":
+          iconName = "icon_profit_invite.png";
+          statusText = "会员退款-成功";
+          if (double.parse(price) < 0) {
+            prefixText = '';
+          }
+          break;
         case "4":
           iconName = "icon_profit_task.png";
           statusText = "商品消费-成功";
+          prefixText = '';
           break;
         case "3":
           iconName = "icon_profit_task.png";
@@ -327,7 +337,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
                   Text(
                     //您于2020-23-12 14:32:10提交的任务截图被驳回，驳回原因为截图不符合
                     //要求。请当天及时重新提交~：
-                    "${isWithdrawal ? "-" : profitType == "4" ? "" : "+"}$price",
+                    "$prefixText$price",
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(42),
                       color: Color(0xFF222222),

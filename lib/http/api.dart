@@ -268,6 +268,9 @@ class APi {
   ///提交订单
   static const String ORDER_SUBMIT = "order/submit";
 
+  ///订单物流
+  static const String ORDER_LOGISTICS = "order/express";
+
   ///确定提交
   static const String ORDER_DETAIL = "order/info";
 

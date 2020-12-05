@@ -20,6 +20,7 @@ import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:star/pages/order/order_logistics_tracking.dart';
 
 import '../../global_config.dart';
 
@@ -369,28 +370,66 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Container(
+                    child: Visibility(
+                      visible: orderType == "1",
+                      child: Container(
+                          child: Text(
+                        "订单编号：$orderNo",
+                        style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xff666666)),
+                      )),
+                    ),
+                  ),
+                  Visibility(
+                    visible: orderType == "2" && orderStatus != '1',
+                    child: GestureDetector(
+                      onTap: () async {
+                        NavigatorUtils.navigatorRouter(
+                            context,
+                            OrderLogisticsTrackingPage(
+                              orderId: orderId,
+                            ));
+                      },
+                      child: Container(
+                        width: ScreenUtil().setWidth(235),
+                        height: ScreenUtil().setHeight(77),
+                        margin: EdgeInsets.only(
+                          right: ScreenUtil().setWidth(16),
+                        ),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(ScreenUtil().setWidth(39))),
+                            border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                color: btnTxtBorderColor,
+                                width: 0.5)),
                         child: Text(
-                      "订单编号：$orderNo",
-                      style: TextStyle(
-                          fontSize: ScreenUtil().setSp(32),
-                          color: Color(0xff666666)),
-                    )),
+                          //状态：
+                          "查看物流",
+                          style: TextStyle(
+                            color: btnTxtColor,
+                            fontSize: ScreenUtil().setSp(42),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   Visibility(
                     visible: showBtn,
                     child: GestureDetector(
                       onTap: () async {
-                        if (Platform.isIOS) {
-                          CommonUtils.showIosPayDialog();
-                          return;
-                        }
                         if (orderType == "1") {
                           NavigatorUtils.navigatorRouter(
                               context, RechargeListPage());
                         } else if (orderType == "2") {
                           switch (orderStatus) {
                             case "1":
+                              if (Platform.isIOS) {
+                                CommonUtils.showIosPayDialog();
+                                return;
+                              }
                               NavigatorUtils.navigatorRouter(
                                   context,
                                   CheckOutCounterPage(
@@ -600,6 +639,22 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                                 color: Color(0xff222222),
                                 fontSize: ScreenUtil().setSp(42),
                               ),
+                            ),
+                            Container(
+                              child: Text(
+                                product.specItem == null
+                                    ? ""
+                                    : product.specItem,
+//                                  item.wareName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(38),
+                                  color: Color(0xff666666),
+                                ),
+                              ),
+                              margin: EdgeInsets.only(
+                                  top: ScreenUtil().setHeight(18)),
                             ),
                             /*Wrap(
                             children: product.option.map((op) {

@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
+import 'package:star/pages/order/order_logistics_tracking.dart';
+import 'package:star/pages/order/return/return_option.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
@@ -175,38 +177,82 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   color: Colors.white,
                   alignment: Alignment.centerRight,
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (defProductId != null) {
-                        NavigatorUtils.navigatorRouter(
-                            context,
-                            GoodsDetailPage(
-                              productId: defProductId,
-                            ));
-                      }
-                    },
-                    child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                          border: Border(
-                            top:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                            left:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                            right:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                            bottom:
-                                BorderSide(width: 0.5, color: Colors.redAccent),
-                          ),
-                        ),
-                        child: Text(
-                          '再次购买',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: ScreenUtil().setSp(42)),
-                        )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Visibility(
+                          visible: orderStatus != '1',
+                          child: GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  OrderLogisticsTrackingPage(
+                                    orderId: widget.orderId,
+                                  ));
+                            },
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 6),
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  border: Border(
+                                    top: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    left: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    right: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    bottom: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                  ),
+                                ),
+                                child: Text(
+                                  '查看物流',
+                                  //Logistics物流跟踪 order_logistics_tracking
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                )),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          if (defProductId != null) {
+                            NavigatorUtils.navigatorRouter(
+                                context,
+                                GoodsDetailPage(
+                                  productId: defProductId,
+                                ));
+                          }
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              border: Border(
+                                top: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                                left: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                                right: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                                bottom: BorderSide(
+                                    width: 0.5, color: Colors.redAccent),
+                              ),
+                            ),
+                            child: Text(
+                              '再次购买',
+                              style: TextStyle(
+                                  color: Colors.redAccent,
+                                  fontSize: ScreenUtil().setSp(42)),
+                            )),
+                      ),
+                    ],
                   ),
                 ),
               )
@@ -526,7 +572,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                         ),
                       ),
                       Expanded(child: Text("")),
-                      Text(
+                      SelectableText(
                         "${sendNumber == null ? "" : sendNumber}",
                         style: TextStyle(
                           color: Colors.grey,
@@ -647,6 +693,20 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               fontSize: ScreenUtil().setSp(42),
                             ),
                           ),
+                          Container(
+                            child: Text(
+                              product.specItem == null ? "" : product.specItem,
+//                                  item.wareName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(38),
+                                color: Color(0xff666666),
+                              ),
+                            ),
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(18)),
+                          ),
                           /*Wrap(
                             children: product.option.map((op) {
                               return Container(
@@ -728,17 +788,58 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 padding: EdgeInsets.symmetric(
                     horizontal: 16, vertical: ScreenUtil().setHeight(30)),
                 alignment: Alignment.centerLeft,
-                child: Text.rich(TextSpan(
-                    text: '小计：',
-                    style: TextStyle(fontSize: ScreenUtil().setSp(32)),
-                    children: [
-                      TextSpan(
-                        text: '￥$totalPrice',
-                        style: TextStyle(
-                          color: Color(0xFFF93736),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text.rich(TextSpan(
+                          text: '小计：',
+                          style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                          children: [
+                            TextSpan(
+                              text: '￥$totalPrice',
+                              style: TextStyle(
+                                color: Color(0xFFF93736),
+                              ),
+                            ),
+                          ])),
+                    ),
+                    Visibility(
+                      visible: !GlobalConfig.isRelease, //todo 去除展示控制
+                      child: GestureDetector(
+                        onTap: () async {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              ReturnGoodsOptionPage(
+                                product: product,
+                              ));
+                        },
+                        child: Container(
+                          width: ScreenUtil().setWidth(235),
+                          height: ScreenUtil().setHeight(77),
+                          margin: EdgeInsets.only(
+                            right: ScreenUtil().setWidth(16),
+                          ),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(ScreenUtil().setWidth(39))),
+                              border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                  color: Color(0xff999999),
+                                  width: 0.5)),
+                          child: Text(
+                            //状态：
+                            "退换",
+                            style: TextStyle(
+                              color: Color(0xff666666),
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
                         ),
                       ),
-                    ])),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
