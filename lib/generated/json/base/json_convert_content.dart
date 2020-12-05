@@ -73,12 +73,12 @@ import 'package:star/models/goods_spec_info_entity.dart';
 import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
 import 'package:star/models/withdrawal_user_info_entity.dart';
 import 'package:star/generated/json/withdrawal_user_info_entity_helper.dart';
+import 'package:star/models/logistics_info_entity.dart';
+import 'package:star/generated/json/logistics_info_entity_helper.dart';
 import 'package:star/models/withdrawal_list_entity.dart';
 import 'package:star/generated/json/withdrawal_list_entity_helper.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
-import 'package:star/models/logistics_info_entity.dart';
-import 'package:star/generated/json/logistics_info_entity_helper.dart';
 import 'package:star/models/address_list_entity.dart';
 import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/models/goods_info_entity.dart';
@@ -200,17 +200,17 @@ class JsonConvert<T> {
 			return goodsSpecInfoSpecInfoSpecPriceIds11FromJson(data as GoodsSpecInfoSpecInfoSpecPriceIds11, json) as T;			case WithdrawalUserInfoEntity:
 			return withdrawalUserInfoEntityFromJson(data as WithdrawalUserInfoEntity, json) as T;			case WithdrawalUserInfoData:
 			return withdrawalUserInfoDataFromJson(data as WithdrawalUserInfoData, json) as T;			case WithdrawalUserInfoDataUser:
-			return withdrawalUserInfoDataUserFromJson(data as WithdrawalUserInfoDataUser, json) as T;			case WithdrawalListEntity:
-			return withdrawalListEntityFromJson(data as WithdrawalListEntity, json) as T;			case WithdrawalListData:
-			return withdrawalListDataFromJson(data as WithdrawalListData, json) as T;			case WithdrawalListDataList:
-			return withdrawalListDataListFromJson(data as WithdrawalListDataList, json) as T;			case LoginEntity:
-			return loginEntityFromJson(data as LoginEntity, json) as T;			case LoginData:
-			return loginDataFromJson(data as LoginData, json) as T;			case LogisticsInfoEntity:
+			return withdrawalUserInfoDataUserFromJson(data as WithdrawalUserInfoDataUser, json) as T;			case LogisticsInfoEntity:
 			return logisticsInfoEntityFromJson(data as LogisticsInfoEntity, json) as T;			case LogisticsInfoData:
 			return logisticsInfoDataFromJson(data as LogisticsInfoData, json) as T;			case LogisticsInfoDataExpressList:
 			return logisticsInfoDataExpressListFromJson(data as LogisticsInfoDataExpressList, json) as T;			case LogisticsInfoDataExpressListList:
 			return logisticsInfoDataExpressListListFromJson(data as LogisticsInfoDataExpressListList, json) as T;			case LogisticsInfoDataExpressInfo:
-			return logisticsInfoDataExpressInfoFromJson(data as LogisticsInfoDataExpressInfo, json) as T;			case AddressListEntity:
+			return logisticsInfoDataExpressInfoFromJson(data as LogisticsInfoDataExpressInfo, json) as T;			case WithdrawalListEntity:
+			return withdrawalListEntityFromJson(data as WithdrawalListEntity, json) as T;			case WithdrawalListData:
+			return withdrawalListDataFromJson(data as WithdrawalListData, json) as T;			case WithdrawalListDataList:
+			return withdrawalListDataListFromJson(data as WithdrawalListDataList, json) as T;			case LoginEntity:
+			return loginEntityFromJson(data as LoginEntity, json) as T;			case LoginData:
+			return loginDataFromJson(data as LoginData, json) as T;			case AddressListEntity:
 			return addressListEntityFromJson(data as AddressListEntity, json) as T;			case AddressListData:
 			return addressListDataFromJson(data as AddressListData, json) as T;			case GoodsInfoEntity:
 			return goodsInfoEntityFromJson(data as GoodsInfoEntity, json) as T;			case GoodsInfoData:
@@ -325,17 +325,17 @@ class JsonConvert<T> {
 			return goodsSpecInfoSpecInfoSpecPriceIds11ToJson(data as GoodsSpecInfoSpecInfoSpecPriceIds11);			case WithdrawalUserInfoEntity:
 			return withdrawalUserInfoEntityToJson(data as WithdrawalUserInfoEntity);			case WithdrawalUserInfoData:
 			return withdrawalUserInfoDataToJson(data as WithdrawalUserInfoData);			case WithdrawalUserInfoDataUser:
-			return withdrawalUserInfoDataUserToJson(data as WithdrawalUserInfoDataUser);			case WithdrawalListEntity:
-			return withdrawalListEntityToJson(data as WithdrawalListEntity);			case WithdrawalListData:
-			return withdrawalListDataToJson(data as WithdrawalListData);			case WithdrawalListDataList:
-			return withdrawalListDataListToJson(data as WithdrawalListDataList);			case LoginEntity:
-			return loginEntityToJson(data as LoginEntity);			case LoginData:
-			return loginDataToJson(data as LoginData);			case LogisticsInfoEntity:
+			return withdrawalUserInfoDataUserToJson(data as WithdrawalUserInfoDataUser);			case LogisticsInfoEntity:
 			return logisticsInfoEntityToJson(data as LogisticsInfoEntity);			case LogisticsInfoData:
 			return logisticsInfoDataToJson(data as LogisticsInfoData);			case LogisticsInfoDataExpressList:
 			return logisticsInfoDataExpressListToJson(data as LogisticsInfoDataExpressList);			case LogisticsInfoDataExpressListList:
 			return logisticsInfoDataExpressListListToJson(data as LogisticsInfoDataExpressListList);			case LogisticsInfoDataExpressInfo:
-			return logisticsInfoDataExpressInfoToJson(data as LogisticsInfoDataExpressInfo);			case AddressListEntity:
+			return logisticsInfoDataExpressInfoToJson(data as LogisticsInfoDataExpressInfo);			case WithdrawalListEntity:
+			return withdrawalListEntityToJson(data as WithdrawalListEntity);			case WithdrawalListData:
+			return withdrawalListDataToJson(data as WithdrawalListData);			case WithdrawalListDataList:
+			return withdrawalListDataListToJson(data as WithdrawalListDataList);			case LoginEntity:
+			return loginEntityToJson(data as LoginEntity);			case LoginData:
+			return loginDataToJson(data as LoginData);			case AddressListEntity:
 			return addressListEntityToJson(data as AddressListEntity);			case AddressListData:
 			return addressListDataToJson(data as AddressListData);			case GoodsInfoEntity:
 			return goodsInfoEntityToJson(data as GoodsInfoEntity);			case GoodsInfoData:
@@ -450,17 +450,17 @@ class JsonConvert<T> {
 			return GoodsSpecInfoSpecInfoSpecPriceIds11().fromJson(json);			case 'WithdrawalUserInfoEntity':
 			return WithdrawalUserInfoEntity().fromJson(json);			case 'WithdrawalUserInfoData':
 			return WithdrawalUserInfoData().fromJson(json);			case 'WithdrawalUserInfoDataUser':
-			return WithdrawalUserInfoDataUser().fromJson(json);			case 'WithdrawalListEntity':
-			return WithdrawalListEntity().fromJson(json);			case 'WithdrawalListData':
-			return WithdrawalListData().fromJson(json);			case 'WithdrawalListDataList':
-			return WithdrawalListDataList().fromJson(json);			case 'LoginEntity':
-			return LoginEntity().fromJson(json);			case 'LoginData':
-			return LoginData().fromJson(json);			case 'LogisticsInfoEntity':
+			return WithdrawalUserInfoDataUser().fromJson(json);			case 'LogisticsInfoEntity':
 			return LogisticsInfoEntity().fromJson(json);			case 'LogisticsInfoData':
 			return LogisticsInfoData().fromJson(json);			case 'LogisticsInfoDataExpressList':
 			return LogisticsInfoDataExpressList().fromJson(json);			case 'LogisticsInfoDataExpressListList':
 			return LogisticsInfoDataExpressListList().fromJson(json);			case 'LogisticsInfoDataExpressInfo':
-			return LogisticsInfoDataExpressInfo().fromJson(json);			case 'AddressListEntity':
+			return LogisticsInfoDataExpressInfo().fromJson(json);			case 'WithdrawalListEntity':
+			return WithdrawalListEntity().fromJson(json);			case 'WithdrawalListData':
+			return WithdrawalListData().fromJson(json);			case 'WithdrawalListDataList':
+			return WithdrawalListDataList().fromJson(json);			case 'LoginEntity':
+			return LoginEntity().fromJson(json);			case 'LoginData':
+			return LoginData().fromJson(json);			case 'AddressListEntity':
 			return AddressListEntity().fromJson(json);			case 'AddressListData':
 			return AddressListData().fromJson(json);			case 'GoodsInfoEntity':
 			return GoodsInfoEntity().fromJson(json);			case 'GoodsInfoData':
@@ -576,17 +576,17 @@ class JsonConvert<T> {
 			return List<GoodsSpecInfoSpecInfoSpecPriceIds11>();			case 'WithdrawalUserInfoEntity':
 			return List<WithdrawalUserInfoEntity>();			case 'WithdrawalUserInfoData':
 			return List<WithdrawalUserInfoData>();			case 'WithdrawalUserInfoDataUser':
-			return List<WithdrawalUserInfoDataUser>();			case 'WithdrawalListEntity':
-			return List<WithdrawalListEntity>();			case 'WithdrawalListData':
-			return List<WithdrawalListData>();			case 'WithdrawalListDataList':
-			return List<WithdrawalListDataList>();			case 'LoginEntity':
-			return List<LoginEntity>();			case 'LoginData':
-			return List<LoginData>();			case 'LogisticsInfoEntity':
+			return List<WithdrawalUserInfoDataUser>();			case 'LogisticsInfoEntity':
 			return List<LogisticsInfoEntity>();			case 'LogisticsInfoData':
 			return List<LogisticsInfoData>();			case 'LogisticsInfoDataExpressList':
 			return List<LogisticsInfoDataExpressList>();			case 'LogisticsInfoDataExpressListList':
 			return List<LogisticsInfoDataExpressListList>();			case 'LogisticsInfoDataExpressInfo':
-			return List<LogisticsInfoDataExpressInfo>();			case 'AddressListEntity':
+			return List<LogisticsInfoDataExpressInfo>();			case 'WithdrawalListEntity':
+			return List<WithdrawalListEntity>();			case 'WithdrawalListData':
+			return List<WithdrawalListData>();			case 'WithdrawalListDataList':
+			return List<WithdrawalListDataList>();			case 'LoginEntity':
+			return List<LoginEntity>();			case 'LoginData':
+			return List<LoginData>();			case 'AddressListEntity':
 			return List<AddressListEntity>();			case 'AddressListData':
 			return List<AddressListData>();			case 'GoodsInfoEntity':
 			return List<GoodsInfoEntity>();			case 'GoodsInfoData':

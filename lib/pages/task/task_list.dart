@@ -153,8 +153,8 @@ class _TaskListPageState extends State<TaskListPage>
             _tabBarViewHeight = ScreenUtil().setHeight(330);
             return;
           }
-          if (listSize > 6) {
-            _tabBarViewHeight = ScreenUtil().setHeight(listSize * 300) + 40;
+          if (listSize > 0) {
+            _tabBarViewHeight = ScreenUtil().setHeight(listSize * 300) + 48;
             return;
           }
           _tabBarViewHeight = ScreenUtil()
@@ -179,7 +179,9 @@ class _TaskListPageState extends State<TaskListPage>
           userType = entity.data.userLevel;
           goodsList = entity.data.goodsList;
           iconList = entity.data.iconList;
-        } catch (e) {}
+        } catch (e) {
+          print(e);
+        }
 //        _tabController = TabController(length: 3, vsync: this);
         _tabController =
             TabController(length: taskListAll.length, vsync: ScrollableState());
@@ -191,14 +193,16 @@ class _TaskListPageState extends State<TaskListPage>
               bus.emit("taskListChanged",
                   taskListAll[_tabController.index].xList.length);
             }
-          } catch (e) {}
+          } catch (e) {
+            print(e);
+          }
         });
         _tabValuesRemote.clear();
         List<Widget> listTabViews = List<Widget>();
         for (var valueItem in taskListAll) {
           _tabValuesRemote.add(valueItem.name);
         }
-        for (var i = 0; i < taskListAll.length; i++) {
+        for (int i = 0; i < taskListAll.length; i++) {
           listTabViews.add(TaskListTabView(
             taskType: i,
             taskList: taskListAll[i].xList,
@@ -1719,7 +1723,6 @@ class _TaskListPageState extends State<TaskListPage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 
@@ -1747,6 +1750,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
   List<HomeDataTaskList> taskListAll;
   String userType;
 
+  ///是否是首个
+  ///高佣任务
+  bool _isFirstHighCommissionTask = true;
+
+  ///首个高佣任务索引
+  int firstHighIndex = -1;
+
   @override
   void initState() {
     super.initState();
@@ -1758,6 +1768,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
         } catch (e) {}
       });
     }
+
     if (taskList == null || taskList.length <= 0) {
       _initData();
     }
@@ -1826,6 +1837,15 @@ class _TaskListTabViewState extends State<TaskListTabView>
   }
 
   Widget buildTaskListTabView() {
+    ///解决首次数据加载失败问题
+    if (!CommonUtils.isEmpty(taskList)) {
+    } else {
+      ///    组件创建完成的回调通知方法
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _initData();
+      });
+    }
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1872,7 +1892,16 @@ class _TaskListTabViewState extends State<TaskListTabView>
     var bgColor = Color(0xffF32E43); // GlobalConfig.taskBtnBgColor;
     var txtColor = Colors.white; //GlobalConfig.taskBtnTxtColor;
     var category = '';
+    bool _isSimpleTask = taskItem.isHigher == '2';
+    var _taskIcon = _isSimpleTask
+        ? 'https://alipic.lanhuapp.com/xda2c7b7e5-0688-4d52-9325-b497a2d6e7c4'
+        : 'https://alipic.lanhuapp.com/xd68fb6c67-b856-405d-9902-0da1a0b6a56f';
+    if (!_isSimpleTask && _isFirstHighCommissionTask) {
+      firstHighIndex = index;
+      _isFirstHighCommissionTask = false;
+    }
     category = taskItem.category;
+    bool _isNewTask = taskItem.isNew == '1';
     switch (taskItem.taskStatus) {
       case -2:
         bgColor = GlobalConfig.taskBtnBgGreyColor;
@@ -1893,351 +1922,397 @@ class _TaskListTabViewState extends State<TaskListTabView>
       case 4:
         break;
     }
-    return GestureDetector(
-      onTap: () async {
-        /*      if (true) {
-          NavigatorUtils.navigatorRouter(context, TaskSharePage());
-          return;
-        }*/
-        switch (taskItem.taskStatus) {
-          case -2:
-            break;
-          case -1: //-1去开通
-            if (Platform.isIOS) {
-              CommonUtils.showIosPayDialog();
+
+    return Column(
+      children: [
+        Visibility(
+          visible: firstHighIndex == index,
+          child: Container(
+            color: GlobalConfig.taskNomalHeadColor,
+            height: 8,
+          ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            /*      if (true) {
+              NavigatorUtils.navigatorRouter(context, TaskSharePage());
               return;
-            }
-            var result = await showDialog(
-                context: context,
-                builder: (context) {
-                  return TaskOpenDiamondDialogPage(
-                    taskType: widget.taskType,
-                  );
-                });
-            break;
-          case 0: // 领任务
-            if (checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
-              switch (userType) {
-                case "0": //普通
-                  break;
-                case "1": //体验
-                  break;
-                case "2": //vip
-                  if (widget.taskType != 1) {
-                    CommonUtils.showToast("请到vip专区领取任务");
-                    return;
-                  }
-                  break;
-                case "4": //钻石
-                  if (widget.taskType != 2) {
-                    CommonUtils.showToast("请到钻石专区领取任务");
-                    return;
-                  }
-                  break;
-              }
-              switch (category) {
-                case "1":
-                  /*if (userType == "0") {
-                    CommonUtils.showToast("您只能领取非朋友圈任务");
-                    return;
-                  }*/
-                  var result = await HttpManage.taskReceive(taskItem.id);
-                  if (result.status) {
-                    var result = await Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return TaskDetailPage(
-                        taskId: taskItem.id,
+            }*/
+            switch (taskItem.taskStatus) {
+              case -2:
+                break;
+              case -1: //-1去开通
+                if (Platform.isIOS) {
+                  CommonUtils.showIosPayDialog();
+                  return;
+                }
+                var result = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return TaskOpenDiamondDialogPage(
+                        taskType: widget.taskType,
                       );
-                    }));
-                    _initData();
-                  } else {
-                    CommonUtils.showToast(result.errMsg);
-                  }
-                  break;
-                case "2":
-                  var result = await HttpManage.taskReceiveOther(taskItem.id);
-                  if (result.status) {
-                    var result = await Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return TaskDetailOtherPage(
-                        taskId: taskItem.id,
-                      );
-                    }));
-                    _initData();
-                  } else {
-                    CommonUtils.showToast(result.errMsg);
-                  }
-                  break;
-                case "3":
-                  var result = await HttpManage.taskReceiveWechat(taskItem.id);
-                  if (result.status) {
-                    var result = await Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return TaskSharePage(
-                        taskId: taskItem.id,
-                      );
-                    }));
-                    _initData();
-                  } else {
-                    CommonUtils.showToast(result.errMsg);
-                  }
-                  break;
-              }
-            }
-
-            break;
-          case 1: //待提交
-            switch (userType) {
-              case "0": //普通
+                    });
                 break;
-              case "1": //体验
-                break;
-              case "2": //vip
-                if (widget.taskType != 1) {
-                  CommonUtils.showToast("请到vip专区提交任务");
-                  return;
-                }
-                break;
-              case "4": //钻石
-                if (widget.taskType != 2) {
-                  CommonUtils.showToast("请到钻石专区提交任务");
-                  return;
-                }
-                break;
-            }
-            if (category == "1") {
-              var result = await Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) {
-                return TaskDetailPage(
-                  taskId: taskItem.id,
-                );
-              }));
-              _initData();
-            } else {
-              var result = await Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) {
-                return TaskDetailOtherPage(
-                  taskId: taskItem.id,
-                );
-              }));
-              _initData();
-            }
-
-            break;
-          case 2: //2待审核
-            switch (category) {
-              case "3":
-                NavigatorUtils.navigatorRouter(
-                    context,
-                    TaskSharePage(
-                      taskId: taskItem.id,
-                    ));
-                break;
-            }
-            break;
-          case 3: //3已完成
-            break;
-          case 4: //--4被驳回
-            switch (userType) {
-              case "0": //普通
-                break;
-              case "1": //体验
-                break;
-              case "2": //vip
-                if (widget.taskType != 1) {
-                  CommonUtils.showToast("请到vip专区提交任务");
-                  return;
-                }
-                break;
-              case "4": //钻石
-                if (widget.taskType != 2) {
-                  CommonUtils.showToast("请到钻石专区提交任务");
-                  return;
-                }
-                break;
-            }
-            if (category == "1") {
-              var result = await Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) {
-                return TaskDetailPage(
-                  taskId: taskItem.id,
-                );
-              }));
-              _initData();
-            } else {
-              var result = await Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) {
-                return TaskDetailOtherPage(
-                  taskId: taskItem.id,
-                );
-              }));
-              _initData();
-            }
-            break;
-        }
-
-        /*if (checkUserBind()) {
-                      if (index == taskStatus) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                          return TaskDetailPage();
-                        }));
-                      } else if (index == 2) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                          return TaskSubmissionPage();
-                        }));
-                      } else {
-                        var result = await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return TaskOpenDiamondDialogPage();
-                            });
-                        print('$result');
+              case 0: // 领任务
+                if (checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
+                  switch (userType) {
+                    case "0": //普通
+                      break;
+                    case "1": //体验
+                      break;
+                    case "2": //vip
+                      if (widget.taskType != 1) {
+                        CommonUtils.showToast("请到vip专区领取任务");
+                        return;
                       }
-                    }*/
-      },
-      child: Container(
-        height: ScreenUtil().setHeight(300),
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: ScreenUtil().setWidth(184),
-              height: ScreenUtil().setHeight(216),
-              margin: EdgeInsets.only(right: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(ScreenUtil().setWidth(24))),
-                border: Border.all(
-                    color: Color(0xffF32E43), width: ScreenUtil().setWidth(2)),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: ScreenUtil().setHeight(141),
-                    decoration: BoxDecoration(
-                      color: Color(0xffF32E43),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(ScreenUtil().setHeight(24)),
-                          topRight:
-                              Radius.circular(ScreenUtil().setHeight(24))),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "${taskItem.sharePrice}",
-                      style: TextStyle(
-                          fontSize: ScreenUtil().setSp(54),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
+                      break;
+                    case "4": //钻石
+                      if (widget.taskType != 2) {
+                        CommonUtils.showToast("请到钻石专区领取任务");
+                        return;
+                      }
+                      break;
+                  }
+                  switch (category) {
+                    case "1":
+                      /*if (userType == "0") {
+                        CommonUtils.showToast("您只能领取非朋友圈任务");
+                        return;
+                      }*/
+                      var result = await HttpManage.taskReceive(taskItem.id);
+                      if (result.status) {
+                        var result = await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return TaskDetailPage(
+                            taskId: taskItem.id,
+                          );
+                        }));
+                        _initData();
+                      } else {
+                        CommonUtils.showToast(result.errMsg);
+                      }
+                      break;
+                    case "2":
+                      var result =
+                          await HttpManage.taskReceiveOther(taskItem.id);
+                      if (result.status) {
+                        var result = await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return TaskDetailOtherPage(
+                            taskId: taskItem.id,
+                          );
+                        }));
+                        _initData();
+                      } else {
+                        CommonUtils.showToast(result.errMsg);
+                      }
+                      break;
+                    case "3":
+                      var result =
+                          await HttpManage.taskReceiveWechat(taskItem.id);
+                      if (result.status) {
+                        var result = await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return TaskSharePage(
+                            taskId: taskItem.id,
+                          );
+                        }));
+                        _initData();
+                      } else {
+                        CommonUtils.showToast(result.errMsg);
+                      }
+                      break;
+                  }
+                }
+
+                break;
+              case 1: //待提交
+                switch (userType) {
+                  case "0": //普通
+                    break;
+                  case "1": //体验
+                    break;
+                  case "2": //vip
+                    if (widget.taskType != 1) {
+                      CommonUtils.showToast("请到vip专区提交任务");
+                      return;
+                    }
+                    break;
+                  case "4": //钻石
+                    if (widget.taskType != 2) {
+                      CommonUtils.showToast("请到钻石专区提交任务");
+                      return;
+                    }
+                    break;
+                }
+                if (category == "1") {
+                  var result = await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TaskDetailPage(
+                      taskId: taskItem.id,
+                    );
+                  }));
+                  _initData();
+                } else {
+                  var result = await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TaskDetailOtherPage(
+                      taskId: taskItem.id,
+                    );
+                  }));
+                  _initData();
+                }
+
+                break;
+              case 2: //2待审核
+                switch (category) {
+                  case "3":
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        TaskSharePage(
+                          taskId: taskItem.id,
+                        ));
+                    break;
+                }
+                break;
+              case 3: //3已完成
+                break;
+              case 4: //--4被驳回
+                switch (userType) {
+                  case "0": //普通
+                    break;
+                  case "1": //体验
+                    break;
+                  case "2": //vip
+                    if (widget.taskType != 1) {
+                      CommonUtils.showToast("请到vip专区提交任务");
+                      return;
+                    }
+                    break;
+                  case "4": //钻石
+                    if (widget.taskType != 2) {
+                      CommonUtils.showToast("请到钻石专区提交任务");
+                      return;
+                    }
+                    break;
+                }
+                if (category == "1") {
+                  var result = await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TaskDetailPage(
+                      taskId: taskItem.id,
+                    );
+                  }));
+                  _initData();
+                } else {
+                  var result = await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return TaskDetailOtherPage(
+                      taskId: taskItem.id,
+                    );
+                  }));
+                  _initData();
+                }
+                break;
+            }
+
+            /*if (checkUserBind()) {
+                          if (index == taskStatus) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                              return TaskDetailPage();
+                            }));
+                          } else if (index == 2) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                              return TaskSubmissionPage();
+                            }));
+                          } else {
+                            var result = await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return TaskOpenDiamondDialogPage();
+                                });
+                            print('$result');
+                          }
+                        }*/
+          },
+          child: Container(
+            height: ScreenUtil().setHeight(300),
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(184),
+                  height: ScreenUtil().setHeight(216),
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(ScreenUtil().setWidth(24))),
+                    border: Border.all(
+                        color: Color(0xffF32E43),
+                        width: ScreenUtil().setWidth(2)),
                   ),
-                  Flexible(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft:
-                                Radius.circular(ScreenUtil().setHeight(24)),
-                            bottomRight:
-                                Radius.circular(ScreenUtil().setHeight(24))),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "奖励(元)",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(30),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: ScreenUtil().setHeight(141),
+                        decoration: BoxDecoration(
                           color: Color(0xffF32E43),
+                          borderRadius: BorderRadius.only(
+                              topLeft:
+                                  Radius.circular(ScreenUtil().setHeight(24)),
+                              topRight:
+                                  Radius.circular(ScreenUtil().setHeight(24))),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${taskItem.sharePrice}",
+                          style: TextStyle(
+                              fontSize: ScreenUtil().setSp(54),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                       ),
-                    ),
-                  ),
-                  /* ClipOval(
-                        child: CachedNetworkImage(
-                          fit: BoxFit.fill,
-                          width: ScreenUtil().setWidth(110),
-                          height: ScreenUtil().setWidth(110),
-                          imageUrl: taskItem.icons,
-                        ),
-                      ),*/
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      '${taskItem.title}',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: ScreenUtil().setSp(42)),
-                    ),
-                    alignment: Alignment.centerLeft,
-                  ),
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          child: Text('${taskItem.subtitle}',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(32),
-                                  color: Color(0xff999999))),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: ScreenUtil().setWidth(48),
-                          height: ScreenUtil().setHeight(48),
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            CupertinoIcons.news_solid,
-                            size: ScreenUtil().setWidth(36),
-                            color: Color(0XFF666666),
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft:
+                                    Radius.circular(ScreenUtil().setHeight(24)),
+                                bottomRight: Radius.circular(
+                                    ScreenUtil().setHeight(24))),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "奖励(元)",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(30),
+                              color: Color(0xffF32E43),
+                            ),
                           ),
                         ),
-/*
-                            child: Image.asset(
-                              "static/images/task_img_star.png",
-                              width: ScreenUtil().setWidth(36),
-                              height: ScreenUtil().setWidth(36),
+                      ),
+                      /* ClipOval(
+                            child: CachedNetworkImage(
                               fit: BoxFit.fill,
-                            )),
+                              width: ScreenUtil().setWidth(110),
+                              height: ScreenUtil().setWidth(110),
+                              imageUrl: taskItem.icons,
+                            ),
+                          ),*/
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            visible: true,
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: "$_taskIcon",
+                                width: ScreenUtil().setWidth(70),
+                                height: ScreenUtil().setHeight(50),
+                              ),
+                              margin: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(6),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: Text(
+                                '${taskItem.title}',
+                                overflow: TextOverflow.ellipsis,
+                                style:
+                                    TextStyle(fontSize: ScreenUtil().setSp(42)),
+                              ),
+                              alignment: Alignment.centerLeft,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              child: Text('${taskItem.subtitle}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(32),
+                                      color: Color(0xff999999))),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil().setWidth(48),
+                              height: ScreenUtil().setHeight(48),
+                              alignment: Alignment.centerLeft,
+                              child: _isNewTask
+                                  ? CachedNetworkImage(
+                                      imageUrl:
+                                          "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
+                                      width: ScreenUtil().setWidth(29),
+                                      height: ScreenUtil().setHeight(35),
+                                    )
+                                  : Icon(
+                                      CupertinoIcons.news_solid,
+                                      size: ScreenUtil().setWidth(36),
+                                      color: Color(0XFF666666),
+                                    ),
+                            ),
+/*
+                                child: Image.asset(
+                                  "static/images/task_img_star.png",
+                                  width: ScreenUtil().setWidth(36),
+                                  height: ScreenUtil().setWidth(36),
+                                  fit: BoxFit.fill,
+                                )),
 */
-                        Text('剩余任务：${taskItem.num}条',
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(32),
-                                color: Color(0xff666666))),
-                      ],
+                            Text('剩余任务：${taskItem.num}条',
+                                style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(32),
+                                    color: Color(0xff666666))),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        color: bgColor,
+                        border: Border.all(
+                            width: 0.5,
+                            color: bgColor,
+                            style: BorderStyle.solid)),
+                    child: Text(
+                      "${taskItem.statusDesc}",
+                      style: TextStyle(
+                          color: txtColor, fontSize: ScreenUtil().setSp(36)),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                    color: bgColor,
-                    border: Border.all(
-                        width: 0.5, color: bgColor, style: BorderStyle.solid)),
-                child: Text(
-                  "${taskItem.statusDesc}",
-                  style: TextStyle(
-                      color: txtColor, fontSize: ScreenUtil().setSp(36)),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
