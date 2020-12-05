@@ -50,7 +50,7 @@ class _OrderLogisticsTrackingPageState
             _expressList = result.data.expressList;
             _deliveryList = List<LogisticsInfoDataExpressList>();
             if (CommonUtils.isEmpty(_expressList)) {
-              CommonUtils.showToast('暂无物流信息');
+              CommonUtils.showToast('物流信息查询异常，请稍后再试！');
               return;
             }
             for (LogisticsInfoDataExpressList item in _expressList) {
