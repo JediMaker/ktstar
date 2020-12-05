@@ -47,12 +47,17 @@ class _OrderLogisticsTrackingPageState
       try {
         if (mounted) {
           setState(() {
+            if (!CommonUtils.isEmpty(result.data.expressInfo)) {
+              _waybillNumber = result.data.expressInfo.number;
+              if (!CommonUtils.isEmpty(result.data.expressInfo.name)) {
+                _carrier = result.data.expressInfo.name;
+                if (!CommonUtils.isEmpty(result.data.expressInfo.tel)) {
+                  _carrier += "(${result.data.expressInfo.tel})";
+                }
+              }
+            }
             _expressList = result.data.expressList;
             _deliveryList = List<LogisticsInfoDataExpressList>();
-            if (CommonUtils.isEmpty(_expressList)) {
-              CommonUtils.showToast('物流信息查询异常，请稍后再试！');
-              return;
-            }
             for (LogisticsInfoDataExpressList item in _expressList) {
               if (!CommonUtils.isEmpty(item.xList)) {
                 for (var it = 0; it < item.xList.length; it++) {
@@ -70,13 +75,6 @@ class _OrderLogisticsTrackingPageState
                 }
               } else {
                 _deliveryList.add(item);
-              }
-            }
-            _waybillNumber = result.data.expressInfo.number;
-            if (!CommonUtils.isEmpty(result.data.expressInfo.name)) {
-              _carrier = result.data.expressInfo.name;
-              if (!CommonUtils.isEmpty(result.data.expressInfo.tel)) {
-                _carrier += "(${result.data.expressInfo.tel})";
               }
             }
           });
@@ -182,6 +180,24 @@ class _OrderLogisticsTrackingPageState
                 Container(
                   color: GlobalConfig.taskNomalHeadColor,
                   height: 10,
+                ),
+                Visibility(
+                  visible: CommonUtils.isEmpty(_deliveryList),
+                  child: Container(
+                    color: GlobalConfig.taskNomalHeadColor,
+                    child: Center(
+                      child: SelectableText.rich(
+                        TextSpan(
+                          text: '物流信息数据异常！',
+                        ),
+                        style: TextStyle(
+                          color: Color(0xff222222),
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 Visibility(
                   visible: !CommonUtils.isEmpty(_deliveryList),
