@@ -6,6 +6,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/order/order_logistics_tracking.dart';
+import 'package:star/pages/order/return/return_option.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
@@ -571,7 +572,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                         ),
                       ),
                       Expanded(child: Text("")),
-                      Text(
+                      SelectableText(
                         "${sendNumber == null ? "" : sendNumber}",
                         style: TextStyle(
                           color: Colors.grey,
@@ -787,17 +788,58 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 padding: EdgeInsets.symmetric(
                     horizontal: 16, vertical: ScreenUtil().setHeight(30)),
                 alignment: Alignment.centerLeft,
-                child: Text.rich(TextSpan(
-                    text: '小计：',
-                    style: TextStyle(fontSize: ScreenUtil().setSp(32)),
-                    children: [
-                      TextSpan(
-                        text: '￥$totalPrice',
-                        style: TextStyle(
-                          color: Color(0xFFF93736),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text.rich(TextSpan(
+                          text: '小计：',
+                          style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                          children: [
+                            TextSpan(
+                              text: '￥$totalPrice',
+                              style: TextStyle(
+                                color: Color(0xFFF93736),
+                              ),
+                            ),
+                          ])),
+                    ),
+                    Visibility(
+                      visible: !GlobalConfig.isRelease, //todo 去除展示控制
+                      child: GestureDetector(
+                        onTap: () async {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              ReturnGoodsOptionPage(
+                                product: product,
+                              ));
+                        },
+                        child: Container(
+                          width: ScreenUtil().setWidth(235),
+                          height: ScreenUtil().setHeight(77),
+                          margin: EdgeInsets.only(
+                            right: ScreenUtil().setWidth(16),
+                          ),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(ScreenUtil().setWidth(39))),
+                              border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                  color: Color(0xff999999),
+                                  width: 0.5)),
+                          child: Text(
+                            //状态：
+                            "退换",
+                            style: TextStyle(
+                              color: Color(0xff666666),
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
                         ),
                       ),
-                    ])),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
