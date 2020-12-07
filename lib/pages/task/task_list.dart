@@ -745,14 +745,15 @@ class _TaskListPageState extends State<TaskListPage>
     String type = '';
     String appId = '';
     String path = '';
+    String subtitle = '';
     try {
       icon = item.icon;
       name = item.name;
       type = item.type;
       appId = item.appId;
       path = item.path;
-//      print("icon=${icon+name+type+appId+path}");
-
+      subtitle = item.subtitle;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
     } catch (e) {}
     return new InkWell(
         onTap: () async {
@@ -844,6 +845,20 @@ class _TaskListPageState extends State<TaskListPage>
                   style: new TextStyle(
                     fontSize: ScreenUtil().setSp(42),
                     color: _itemsTextColor,
+                  ),
+                ),
+              ),
+              Visibility(
+                child: new Container(
+                  margin: const EdgeInsets.only(top: 4.0),
+                  child: new Text(
+                    "$subtitle",
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(
+                      fontSize: ScreenUtil().setSp(32),
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff999999),
+                    ),
                   ),
                 ),
               )
@@ -1894,7 +1909,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
     var category = '';
     bool _isSimpleTask = taskItem.isHigher == '2';
     var _taskIcon = _isSimpleTask
-        ? 'https://alipic.lanhuapp.com/xda2c7b7e5-0688-4d52-9325-b497a2d6e7c4'
+        ? 'https://alipic.lanhuapp.com/xd56dccbf4-9fcf-46e6-84dd-831e424dacac'
         : 'https://alipic.lanhuapp.com/xd68fb6c67-b856-405d-9902-0da1a0b6a56f';
     if (!_isSimpleTask && _isFirstHighCommissionTask) {
       firstHighIndex = index;
@@ -1933,6 +1948,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
           ),
         ),
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () async {
             /*      if (true) {
               NavigatorUtils.navigatorRouter(context, TaskSharePage());
@@ -2264,8 +2280,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                   ? CachedNetworkImage(
                                       imageUrl:
                                           "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
-                                      width: ScreenUtil().setWidth(29),
-                                      height: ScreenUtil().setHeight(35),
+                                      width: ScreenUtil().setWidth(36),
+                                      height: ScreenUtil().setHeight(36),
                                     )
                                   : Icon(
                                       CupertinoIcons.news_solid,
