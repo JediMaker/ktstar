@@ -483,7 +483,7 @@ class _TaskListPageState extends State<TaskListPage>
                 ),
               )),
               SliverToBoxAdapter(child: taskCard2(context)),
-              buildTaskWall(),
+             // buildTaskWall(),
             ],
             onRefresh: () async {
 //              _initData();
@@ -542,7 +542,7 @@ class _TaskListPageState extends State<TaskListPage>
               ),
             )),
             SliverToBoxAdapter(child: taskCard2(context)),
-            buildTaskWall(),
+//            buildTaskWall(),
           ],
         ),
       ),
@@ -2237,7 +2237,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                 height: ScreenUtil().setHeight(50),
                               ),
                               margin: EdgeInsets.only(
-                                right: ScreenUtil().setWidth(6),
+                                right: ScreenUtil().setWidth(8),
                               ),
                             ),
                           ),
@@ -2280,8 +2280,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                   ? CachedNetworkImage(
                                       imageUrl:
                                           "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
-                                      width: ScreenUtil().setWidth(36),
-                                      height: ScreenUtil().setHeight(36),
+                                      width: ScreenUtil().setWidth(30),
+                                      height: ScreenUtil().setHeight(54),
                                     )
                                   : Icon(
                                       CupertinoIcons.news_solid,

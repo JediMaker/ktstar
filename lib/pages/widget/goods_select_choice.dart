@@ -32,13 +32,13 @@ class GoodsSelectChoiceChip extends StatefulWidget {
       ),
       this.margin = const EdgeInsets.symmetric(vertical: 5),
       this.fontSize,
-      this.textColor = const Color(0xFF535353),
+      this.textColor = const Color(0xFF222222),
       this.boxColor = const Color(0xFFFFFFFF),
       this.borderRadius = const BorderRadius.all(Radius.circular(12)),
       this.border = const Border.fromBorderSide(BorderSide(
-          color: Color(0xFFf0f0f0), width: 1, style: BorderStyle.solid)),
+          color: Color(0xFFf0f0f0), width: 0.5, style: BorderStyle.solid)),
       this.selectBorder = const Border.fromBorderSide(BorderSide(
-          color: const Color(0xffF93736), width: 1, style: BorderStyle.solid)),
+          color: const Color(0xffF93736), width: 0.5, style: BorderStyle.solid)),
       this.onSelected,
       this.selected,
       this.textSelectColor = const Color(0xFF1C74D0),
