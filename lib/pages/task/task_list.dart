@@ -1072,6 +1072,10 @@ class _TaskListPageState extends State<TaskListPage>
                 case "recharge":
                   NavigatorUtils.navigatorRouter(context, RechargeListPage());
                   break;
+                case "goods_list":
+                  NavigatorUtils.navigatorRouter(
+                      context, GoodsListPage());
+                  break;
                 case "upgrade_diamond":
                   NavigatorUtils.navigatorRouter(
                       context,
