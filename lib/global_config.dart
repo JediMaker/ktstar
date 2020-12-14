@@ -47,6 +47,7 @@ class GlobalConfig {
 
   static SharedPreferences _prefs;
 
+
   ///全局context
 
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -64,6 +65,13 @@ class GlobalConfig {
   ///
   static const String JPUSH_REGISTRATIONID = "b8b53a639c646141e54bf4df";
 
+
+  /// 渠道名称--华为
+  static const String CHANEL_HUAWEI = "huawei";
+
+  /// 渠道名称--小米
+  static const String CHANEL_XIAOMI = "xiaomi";
+
   static SharedPreferences get prefs => _prefs; // 可选的主题列表
 
   static List<MaterialColor> get themes => _themes;
@@ -77,13 +85,16 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   /// 是否为release版
-  static bool isRelease = true;
+  static bool isRelease = false;
 
   /// 是否为绑定微信
   static bool isBindWechat = false;
 
   /// ios是否展示第三方登录信息
   static bool displayThirdLoginInformation = false;
+  /// 渠道类型
+  static String get chanelType =>'CHANEL_HUAWEI';
+
 
   ///
   ///

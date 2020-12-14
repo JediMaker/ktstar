@@ -113,11 +113,12 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     super.initState();
-  /*  if (!GlobalConfig.isAgreePrivacy) {
+    if (!GlobalConfig.isAgreePrivacy &&
+        GlobalConfig.chanelType == GlobalConfig.CHANEL_HUAWEI) {
       Future.delayed(Duration(milliseconds: 500), () {
         showPrivacyDialog(context);
       });
-    }*/
+    }
   }
 
   @override
