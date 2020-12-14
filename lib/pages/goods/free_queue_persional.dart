@@ -303,9 +303,9 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
         alignment: Alignment.center,
         child: CachedNetworkImage(
           imageUrl:
-              "https://alipic.lanhuapp.com/xdf74f93a7-8a9b-420e-9459-dbb5dd5823c6",
-          width: ScreenUtil().setWidth(43),
-          height: ScreenUtil().setHeight(52),
+              "https://alipic.lanhuapp.com/xde429b121-45d4-4b1a-97ea-0dedaed74a42",
+          width: ScreenUtil().setWidth(60),
+          height: ScreenUtil().setWidth(60),
         ),
       );
     }
@@ -329,10 +329,11 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
     var _dateJoin = '';
     var _queueStatus = '';
     var _queueStatusText = '';
-    var _queueStatusTextColor = Color(0xff222222);
+    var _queueStatusTextColor = Color(0xff999999);
     var _queuePrice = '';
     var goodsId = '';
     var _imageUrl = '';
+    var _powerNum = '';
     bool done = false;
     try {
       goodsId = item.goodsId;
@@ -342,15 +343,16 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
       index = item.rank;
       _queueStatus = item.status;
       _queuePrice = item.goodsPrice;
+      _powerNum = item.powerNum;
     } catch (e) {}
     switch (_queueStatus) {
       case "2":
-        _queueStatusText = '已完成';
+        _queueStatusText = '已补贴';
         _queueStatusTextColor = Color(0xff999999);
         done = true;
         break;
       case "1":
-        _queueStatusText = '补贴中';
+        _queueStatusText = '助力值';
         break;
     }
     return Column(
@@ -375,68 +377,89 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                              margin: EdgeInsets.only(left: 8),
-                              child: Text(
-                                "$_itemNickName",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(38),
-                                  color: Color(0xff222222),
-                                ),
-                              )),
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(right: 0, left: 10),
-                            child: Text(
-                              "￥$_queuePrice",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(38),
-                                color: !done
-                                    ? Color(0xffF32E43)
-                                    : _queueStatusTextColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(36),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                              margin: EdgeInsets.only(left: 8),
-                              child: Text(
-                                "$_dateJoin",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(32),
-                                  color: Color(0xff999999),
-                                ),
-                              )),
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(right: 0, left: 10),
-                            child: Text(
-                              "$_queueStatusText",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(32),
-                                color: _queueStatusTextColor,
-                              ),
-                            )),
-                      ],
+                    Container(
+                        margin: EdgeInsets.only(left: 8),
+                        child: Text(
+                          "$_itemNickName",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(38),
+                            color: Color(0xff222222),
+                          ),
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(top: 4, left: 8),
+                        child: Text(
+                          "$_dateJoin",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xff999999),
+                          ),
+                        )),
+                    Visibility(
+                      visible: !done,
+                      child: Container(
+                          margin: EdgeInsets.only(top: 4, left: 8),
+                          child: Text(
+                            "￥$_queuePrice",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(38),
+                              color: !done
+                                  ? Color(0xffF32E43)
+                                  : _queueStatusTextColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
                     ),
                   ],
                 ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Visibility(
+                    visible: !done,
+                    child: Container(
+                        margin: EdgeInsets.only(right: 0, left: 10),
+                        child: Text(
+                          "$_powerNum",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(48),
+                            color: !done
+                                ? Color(0xffF32E43)
+                                : _queueStatusTextColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                  ),
+                  Visibility(
+                    visible: done,
+                    child: Container(
+                        margin: EdgeInsets.only(top: 4, left: 8),
+                        child: Text(
+                          "￥$_queuePrice",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(38),
+                            color: !done
+                                ? Color(0xffF32E43)
+                                : _queueStatusTextColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(top: 4, left: 10),
+                      child: Text(
+                        "$_queueStatusText",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(32),
+                          color: _queueStatusTextColor,
+                        ),
+                      )),
+                ],
               ),
             ],
           ),

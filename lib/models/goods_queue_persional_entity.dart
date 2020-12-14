@@ -21,6 +21,8 @@ class GoodsQueuePersionalData with JsonConvert<GoodsQueuePersionalData> {
 	String createTime;
 	@JSONField(name: "sale_price")
 	String goodsPrice;
+	@JSONField(name: "power_num")
+	String powerNum;
 	int rank;
 	String status;
 }
