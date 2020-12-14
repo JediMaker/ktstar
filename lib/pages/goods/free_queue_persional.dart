@@ -304,8 +304,8 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
         child: CachedNetworkImage(
           imageUrl:
               "https://alipic.lanhuapp.com/xde429b121-45d4-4b1a-97ea-0dedaed74a42",
-          width: ScreenUtil().setWidth(60),
-          height: ScreenUtil().setWidth(60),
+          width: ScreenUtil().setWidth(100),
+          height: ScreenUtil().setWidth(100),
         ),
       );
     }

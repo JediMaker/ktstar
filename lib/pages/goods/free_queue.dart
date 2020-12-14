@@ -417,7 +417,7 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
                   child: _hasSort
                       ? Text.rich(
                           TextSpan(children: [
-                            TextSpan(text: '助力值'), //todo
+                            TextSpan(text: '$_powerNum\t助力值'), //todo
                             WidgetSpan(
                                 child: Container(
                               margin: EdgeInsets.only(left: 8),
