@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
 import 'package:star/models/order_detail_entity.dart';
+import 'package:star/pages/order/return/return_option_info.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 class ReturnGoodsOptionPage extends StatefulWidget {
@@ -230,8 +231,6 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
       padding: EdgeInsets.only(
         top: 16,
         bottom: 16,
-        left: 16,
-        right: 16,
       ),
       margin: EdgeInsets.only(left: 16, right: 16, top: 10),
       width: double.maxFinite,
@@ -248,6 +247,10 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+            ),
             margin: EdgeInsets.only(bottom: 8),
             child: Text(
               '选择服务类型',
@@ -298,13 +301,12 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
         isThreeLine: true,
         dense: false,
         onTap: () {
-          /*Navigator.of(context)
-                  .push(new MaterialPageRoute(builder: (context) {
-                return new AddressDetailPage(
-                    type: widget.type,
-                    address: item,
-                    defaultAddressId: defaultAddressId);
-              }));*/
+          NavigatorUtils.navigatorRouter(
+              context,
+              ReturnOptionInfoPage(
+                product: product,
+                pageType: type,
+              ));
         },
         leading: Container(
           height: double.infinity,
@@ -354,7 +356,6 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
           ),
         ),
         trailing: Container(
-          height: double.infinity,
           alignment: Alignment.center,
           width: ScreenUtil().setWidth(36),
           child: CachedNetworkImage(

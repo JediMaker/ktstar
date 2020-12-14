@@ -48,73 +48,76 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Future _initData({bool onlyChangeAddress = false}) async {
     EasyLoading.show();
     var entityResult = await HttpManage.orderDetail(widget.orderId);
+    EasyLoading.dismiss();
 /*
     OrderCheckoutEntity entityResult =
         await HttpManage.orderCheckout(widget.cartIdList);
 */
     try {
-      if (mounted) {
-        setState(() {
-          entity = entityResult;
-          addressDetail = entityResult.data.address;
-          iphone = entityResult.data.mobile;
-          name = entityResult.data.consignee;
-          goodsList = entityResult.data.goodsList;
-          totalPrice = entityResult.data.totalPrice;
-          payPrice = entityResult.data.payPrice;
-          orderNum = entityResult.data.orderno;
-          payment = entityResult.data.payment;
-          dateAdded = entityResult.data.createTime;
-          payTime = entityResult.data.payTime;
-          sendTime = entityResult.data.sendTime;
-          confirmTime = entityResult.data.confirmTime;
-          sendName = entityResult.data.sendName;
-          sendNumber = entityResult.data.sendNumber;
-          orderStatus = entityResult.data.status.toString();
-          if (!CommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
-            try {
-              defProductId = goodsList[0].goodsId;
-            } catch (e) {}
-          }
-          sum = goodsList.length;
+      if (entityResult.status) {
+        if (mounted) {
+          setState(() {
+            entity = entityResult;
+            addressDetail = entityResult.data.address;
+            iphone = entityResult.data.mobile;
+            name = entityResult.data.consignee;
+            goodsList = entityResult.data.goodsList;
+            totalPrice = entityResult.data.totalPrice;
+            payPrice = entityResult.data.payPrice;
+            orderNum = entityResult.data.orderno;
+            payment = entityResult.data.payment;
+            dateAdded = entityResult.data.createTime;
+            payTime = entityResult.data.payTime;
+            sendTime = entityResult.data.sendTime;
+            confirmTime = entityResult.data.confirmTime;
+            sendName = entityResult.data.sendName;
+            sendNumber = entityResult.data.sendNumber;
+            orderStatus = entityResult.data.status.toString();
+            if (!CommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
+              try {
+                defProductId = goodsList[0].goodsId;
+              } catch (e) {}
+            }
+            sum = goodsList.length;
 
-          switch (orderStatus) {
-            case "1":
-              orderStatusText = "待付款"; //chinaUnicom china_mobile china_telecom
-              break;
-            case "2":
-              orderStatusText = "待发货";
-              break;
-            case "3":
-              orderStatusText = "待收货";
-              break;
-            case "5":
-              orderStatusText = "已完成";
-              break;
-          }
-          if (orderStatus != "1") {
-            switch (payment) {
-              case "2":
-                _payWayText = "微信支付"; //chinaUnicom china_mobile china_telecom
-                break;
+            switch (orderStatus) {
               case "1":
-                _payWayText = "支付宝支付";
+                orderStatusText =
+                    "待付款"; //chinaUnicom china_mobile china_telecom
+                break;
+              case "2":
+                orderStatusText = "待发货";
                 break;
               case "3":
-                _payWayText = "余额支付";
+                orderStatusText = "待收货";
+                break;
+              case "5":
+                orderStatusText = "已完成";
                 break;
             }
-          }
-        });
-      }
+            if (orderStatus != "1") {
+              switch (payment) {
+                case "2":
+                  _payWayText = "微信支付"; //chinaUnicom china_mobile china_telecom
+                  break;
+                case "1":
+                  _payWayText = "支付宝支付";
+                  break;
+                case "3":
+                  _payWayText = "余额支付";
+                  break;
+              }
+            }
+          });
+        }
+      } else {}
     } catch (e) {}
-    EasyLoading.dismiss();
   }
 
   @override
   void initState() {
-    _initData();
     super.initState();
+    _initData();
   }
 
   @override
