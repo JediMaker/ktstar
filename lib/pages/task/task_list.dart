@@ -36,7 +36,6 @@ import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
-import 'package:star/pages/widget/my_webview_plugn.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -74,7 +73,7 @@ class _TaskListPageState extends State<TaskListPage>
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
   var _tabIndexBeforeRefresh = 0;
-
+  bool isFirstLoading = true;
   List<String> _tabValues = [
     "新人专区",
     "vip专区",
@@ -95,21 +94,16 @@ class _TaskListPageState extends State<TaskListPage>
 /*    buildTaskListTabView(
       taskType: 0,
     ),
+    Container(),
     buildTaskListTabView(
       taskType: 1,
     ),
     buildTaskListTabView(
       taskType: 2,
     ),*/
-    TaskListTabView(
-      taskType: 0,
-    ),
-    TaskListTabView(
-      taskType: 1,
-    ),
-    TaskListTabView(
-      taskType: 2,
-    ),
+    Container(),
+    Container(),
+    Container(),
   ];
 
   var _marqueeSwiperController = SwiperController();
@@ -118,10 +112,11 @@ class _TaskListPageState extends State<TaskListPage>
   initState() {
     weChatResponseEventHandler.listen((res) {
       if (res is WeChatLaunchMiniProgramResponse) {
-        print("拉起小程序isSuccessful:${res.isSuccessful}");
+//        print("拉起小程序isSuccessful:${res.isSuccessful}");
       }
     });
-    _tabController = TabController(length: 3, vsync: ScrollableState());
+    _tabController =
+        TabController(length: _tabViews.length, vsync: ScrollableState());
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         try {
@@ -203,11 +198,20 @@ class _TaskListPageState extends State<TaskListPage>
           _tabValuesRemote.add(valueItem.name);
         }
         for (int i = 0; i < taskListAll.length; i++) {
-          listTabViews.add(TaskListTabView(
-            taskType: i,
-            taskList: taskListAll[i].xList,
-          ));
+          try {
+            listTabViews.add(TaskListTabView(
+              taskType: i,
+              taskList: taskListAll[i].xList,
+              userType: userType,
+            ));
+            /* print(
+                ' listTabViews.add(TaskListTabViewexception=$i&&taskListAll[i].xList=${taskListAll[i].xList}');
+          */
+          } catch (e) {
+            //print(' listTabViews.add(TaskListTabViewexception=$e');
+          }
         }
+        isFirstLoading = false;
         _tabValues = _tabValuesRemote;
         _tabViews = listTabViews;
         if (!isRefresh) {
@@ -259,8 +263,18 @@ class _TaskListPageState extends State<TaskListPage>
 
   ///
   /// 确认账户信息是否绑定手机号以及微信授权
-  static checkUserBind({bool isTaskWall = false}) {
+  static checkUserBind({bool isTaskWall = false}) async {
     UserInfoData userInfoData = GlobalConfig.getUserInfo();
+    if (CommonUtils.isEmpty(userInfoData)) {
+      print("userInfoData is empty is true");
+      var result = await HttpManage.getUserInfo();
+      if (result.status) {
+        userInfoData = GlobalConfig.getUserInfo();
+      } else {
+        CommonUtils.showToast("${result.errMsg}");
+        return false;
+      }
+    }
     if (!isTaskWall) {
       if (userInfoData.bindThird == 1) {
         CommonUtils.showToast("请先绑定微信后领取任务");
@@ -483,11 +497,13 @@ class _TaskListPageState extends State<TaskListPage>
                 ),
               )),
               SliverToBoxAdapter(child: taskCard2(context)),
-             // buildTaskWall(),
+              // buildTaskWall(),
             ],
             onRefresh: () async {
 //              _initData();
-              bus.emit("refreshData");
+              if (!isFirstLoading) {
+                bus.emit("refreshData");
+              }
             },
           );
         },
@@ -762,7 +778,7 @@ class _TaskListPageState extends State<TaskListPage>
 //            _tabController.animateTo(2);
             List<String> items = path.split("_");
             String indexString = items[items.length - 1];
-            print("indexString=$indexString");
+//            print("indexString=$indexString");
             try {
               int index = int.parse(indexString);
               _tabController.animateTo(index);
@@ -1203,7 +1219,7 @@ class _TaskListPageState extends State<TaskListPage>
                 });
             break;
           case 0: // 领任务
-            if (checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
+            if (await checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
               switch (category) {
                 case "1":
                   var result = await HttpManage.taskReceive(taskItem.id);
@@ -1407,7 +1423,7 @@ class _TaskListPageState extends State<TaskListPage>
                 });
             break;
           case 0: // 领任务
-            if (checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
+            if (await checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
               switch (category) {
                 case "1":
                   var result = await HttpManage.taskReceive(taskItem.id);
@@ -1744,11 +1760,13 @@ class _TaskListPageState extends State<TaskListPage>
 class TaskListTabView extends StatefulWidget {
   int taskType;
   List<HomeDataTaskListList> taskList;
+  String userType;
 
   @override
   _TaskListTabViewState createState() => _TaskListTabViewState();
 
-  TaskListTabView({Key key, @required this.taskList, this.taskType})
+  TaskListTabView(
+      {Key key, @required this.taskList, this.taskType, this.userType})
       : super(key: key);
 }
 
@@ -1780,13 +1798,14 @@ class _TaskListTabViewState extends State<TaskListTabView>
       setState(() {
         try {
           taskList = widget.taskList;
+          userType = widget.userType;
         } catch (e) {}
       });
     }
 
-    if (taskList == null || taskList.length <= 0) {
+    /*  if (taskList == null || taskList.length <= 0) {
       _initData();
-    }
+    }*/
     /* bus.on("refreshData", (data) {
       _initData();
     });*/
@@ -1858,6 +1877,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
       ///    组件创建完成的回调通知方法
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _initData();
+        /*  print(
+            "widget.taskType=${widget.taskType} has zero length data && taskList=$taskList");*/
       });
     }
 
@@ -1886,8 +1907,18 @@ class _TaskListTabViewState extends State<TaskListTabView>
   }
 
   /// 确认账户信息是否绑定手机号以及微信授权
-  checkUserBind({bool isTaskWall = false}) {
+  checkUserBind({bool isTaskWall = false}) async {
     UserInfoData userInfoData = GlobalConfig.getUserInfo();
+    if (CommonUtils.isEmpty(userInfoData)) {
+      print("userInfoData is empty is true");
+      var result = await HttpManage.getUserInfo();
+      if (result.status) {
+        userInfoData = GlobalConfig.getUserInfo();
+      } else {
+        CommonUtils.showToast("${result.errMsg}");
+        return false;
+      }
+    }
     if (!isTaskWall) {
       if (userInfoData.bindThird == 1) {
         CommonUtils.showToast("请先绑定微信后领取任务");
@@ -1971,7 +2002,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                     });
                 break;
               case 0: // 领任务
-                if (checkUserBind(isTaskWall: !GlobalConfig.isBindWechat)) {
+                if (await checkUserBind(
+                    isTaskWall: !GlobalConfig.isBindWechat)) {
                   switch (userType) {
                     case "0": //普通
                       break;

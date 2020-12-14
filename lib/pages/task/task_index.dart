@@ -37,7 +37,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   int positionIndex = 0;
   @override
   void initState() {
-    HttpManage.getUserInfo();
+
     Utils.checkAppVersion(context);
     super.initState();
 
