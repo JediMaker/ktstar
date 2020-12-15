@@ -1073,8 +1073,7 @@ class _TaskListPageState extends State<TaskListPage>
                   NavigatorUtils.navigatorRouter(context, RechargeListPage());
                   break;
                 case "goods_list":
-                  NavigatorUtils.navigatorRouter(
-                      context, GoodsListPage());
+                  NavigatorUtils.navigatorRouter(context, GoodsListPage());
                   break;
                 case "upgrade_diamond":
                   NavigatorUtils.navigatorRouter(
@@ -1801,8 +1800,10 @@ class _TaskListTabViewState extends State<TaskListTabView>
     if (mounted) {
       setState(() {
         try {
+          bus.emit("taskListChanged", 0);
           taskList = widget.taskList;
           userType = widget.userType;
+          bus.emit("taskListChanged", taskList.length);
         } catch (e) {}
       });
     }
