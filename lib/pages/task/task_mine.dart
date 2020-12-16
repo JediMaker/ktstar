@@ -10,6 +10,7 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/adress/my_adress.dart';
+import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/login/modify_password.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
@@ -309,6 +310,48 @@ class _TaskMinePageState extends State<TaskMinePage>
               width: 0.5)),
       child: Column(
         children: <Widget>[
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*  Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "个人榜单",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () {
+              NavigatorUtils.navigatorRouter(context, FreeQueuePersonalPage());
+            },
+            trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                /*Text(
+                  "",
+                  style: TextStyle(color: Color(0xff999999)),
+                ),*/
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: ScreenUtil().setWidth(32),
+                  color: Color(0xff999999),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
+            ),
+          ),
           ListTile(
             title: Row(
               children: <Widget>[

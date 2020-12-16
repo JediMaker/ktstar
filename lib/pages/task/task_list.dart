@@ -132,7 +132,6 @@ class _TaskListPageState extends State<TaskListPage>
     _initData();
     _swiperController = new SwiperController();
     _marqueeSwiperController = SwiperController();
-    _swiperController.startAutoplay();
     _marqueeSwiperController.startAutoplay();
 
 //    try {
@@ -258,6 +257,9 @@ class _TaskListPageState extends State<TaskListPage>
           ]);
         } catch (e) {}
       });
+    }
+    if(bannerList.length>1){
+      _swiperController.startAutoplay();
     }
   }
 
