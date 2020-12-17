@@ -6,6 +6,7 @@ import 'package:fluwx/fluwx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
+import 'package:star/pages/goods/free_queue.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/pages/task/task_index.dart';
@@ -34,6 +35,8 @@ class FreeQueuePersonalPage extends StatefulWidget {
 class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
   List<GoodsQueuePersionalData> _dataList = List<GoodsQueuePersionalData>();
 
+  var _emptyShow = false;
+
   _initData() async {
     try {
       EasyLoading.show();
@@ -43,6 +46,7 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
           setState(() {
             try {
               _dataList = result.data;
+              _emptyShow = CommonUtils.isEmpty(_dataList);
             } catch (e) {}
           });
         } else {
@@ -238,7 +242,7 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
         child: Column(
           children: <Widget>[
             Visibility(
-              visible: CommonUtils.isEmpty(_dataList),
+              visible: _emptyShow,
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
@@ -405,38 +409,11 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
-        if (CommonUtils.isEmpty(goodsId) || done) {
-          return;
-        }
-        try {
-          EasyLoading.show();
-          var result = await HttpManage.getGoodsQueueList(goodsId);
-          EasyLoading.dismiss();
-          if (mounted) {
-            if (result.status) {
-              setState(() {
-                try {
-                  var _goodsInfo = result.data.goodsInfo;
-                  var _signPackage = result.data.signPackage;
-                  _webUrl = _signPackage.url;
-                  _shareTitle = _goodsInfo.gName;
-                  _shareDesc = _goodsInfo.gDesc;
-                  _shareThumbnail = _goodsInfo.gImg;
-                } catch (e) {}
-              });
-              showCupertinoModalBottomSheet(
-                expand: false,
-                context: this.context,
-                backgroundColor: Colors.white,
-                builder: (context) => shareItems(),
-              );
-            } else {
-              CommonUtils.showToast(result.errMsg);
-            }
-          }
-        } catch (e) {
-          EasyLoading.dismiss();
-        }
+        NavigatorUtils.navigatorRouter(
+            context,
+            FreeQueuePage(
+              goodsId: goodsId,
+            ));
       },
       child: Column(
         children: <Widget>[
@@ -500,73 +477,114 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Visibility(
-                      visible: !done,
-                      child: Row(
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () async {
+                    if (CommonUtils.isEmpty(goodsId) || done) {
+                      return;
+                    }
+                    try {
+                      EasyLoading.show();
+                      var result = await HttpManage.getGoodsQueueList(goodsId);
+                      EasyLoading.dismiss();
+                      if (mounted) {
+                        if (result.status) {
+                          setState(() {
+                            try {
+                              var _goodsInfo = result.data.goodsInfo;
+                              var _signPackage = result.data.signPackage;
+                              _webUrl = _signPackage.url;
+                              _shareTitle = _goodsInfo.gName;
+                              _shareDesc = _goodsInfo.gDesc;
+                              _shareThumbnail = _goodsInfo.gImg;
+                            } catch (e) {}
+                          });
+                          showCupertinoModalBottomSheet(
+                            expand: false,
+                            context: this.context,
+                            backgroundColor: Colors.white,
+                            builder: (context) => shareItems(),
+                          );
+                        } else {
+                          CommonUtils.showToast(result.errMsg);
+                        }
+                      }
+                    } catch (e) {
+                      EasyLoading.dismiss();
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(right: 3, left: 10),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://alipic.lanhuapp.com/xdbc37de1c-84ed-41a8-bd8b-c0c9729f1e3c",
-                              width: ScreenUtil().setWidth(20),
-                              height: ScreenUtil().setHeight(40),
+                          Visibility(
+                            visible: !done,
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 3, left: 10),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        "https://alipic.lanhuapp.com/xdbc37de1c-84ed-41a8-bd8b-c0c9729f1e3c",
+                                    width: ScreenUtil().setWidth(20),
+                                    height: ScreenUtil().setHeight(40),
+                                  ),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.only(right: 0, left: 0),
+                                    child: Text(
+                                      "$_powerNum",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(48),
+                                        color: !done
+                                            ? Color(0xffF32E43)
+                                            : _queueStatusTextColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )),
+                              ],
                             ),
                           ),
+                          Visibility(
+                            visible: done,
+                            child: Container(
+                                margin: EdgeInsets.only(top: 4, left: 8),
+                                child: Text(
+                                  "￥$_queuePrice",
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(38),
+                                    color: !done
+                                        ? Color(0xffF32E43)
+                                        : _queueStatusTextColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                          ),
                           Container(
-                              margin: EdgeInsets.only(right: 0, left: 0),
+                              margin: EdgeInsets.only(top: 4, left: 10),
                               child: Text(
-                                "$_powerNum",
+                                "$_queueStatusText",
                                 style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(48),
-                                  color: !done
-                                      ? Color(0xffF32E43)
-                                      : _queueStatusTextColor,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: ScreenUtil().setSp(32),
+                                  color: _queueStatusTextColor,
                                 ),
                               )),
                         ],
                       ),
-                    ),
-                    Visibility(
-                      visible: done,
-                      child: Container(
-                          margin: EdgeInsets.only(top: 4, left: 8),
-                          child: Text(
-                            "￥$_queuePrice",
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(38),
-                              color: !done
-                                  ? Color(0xffF32E43)
-                                  : _queueStatusTextColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(top: 4, left: 10),
-                        child: Text(
-                          "$_queueStatusText",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(32),
-                            color: _queueStatusTextColor,
+                      Visibility(
+                        visible: !done,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 0, left: 8),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://alipic.lanhuapp.com/xd2e6c09da-9f63-4b1b-9c30-a41ca0a63491",
+                            width: ScreenUtil().setWidth(40),
+                            height: ScreenUtil().setHeight(40),
                           ),
-                        )),
-                  ],
-                ),
-                Visibility(
-                  visible: !done,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 0, left: 8),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://alipic.lanhuapp.com/xd2e6c09da-9f63-4b1b-9c30-a41ca0a63491",
-                      width: ScreenUtil().setWidth(40),
-                      height: ScreenUtil().setHeight(40),
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
