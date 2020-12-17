@@ -23,8 +23,8 @@ import 'package:star/models/task_record_list_entity.dart';
 import 'package:star/generated/json/task_record_list_entity_helper.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
-import 'package:star/models/task_submit_info_entity.dart';
-import 'package:star/generated/json/task_submit_info_entity_helper.dart';
+import 'package:star/models/goods_queue_persional_entity.dart';
+import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/generated/json/order_detail_entity_helper.dart';
 import 'package:star/models/order_list_entity.dart';
@@ -35,18 +35,20 @@ import 'package:star/models/poster_entity.dart';
 import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
-import 'package:star/models/goods_queue_entity.dart';
-import 'package:star/generated/json/goods_queue_entity_helper.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/generated/json/wechat_payinfo_entity_helper.dart';
 import 'package:star/models/result_bean_entity.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
+import 'package:star/models/goods_queue_entity.dart';
+import 'package:star/generated/json/goods_queue_entity_helper.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/generated/json/home_icon_list_entity_helper.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
+import 'package:star/models/task_submit_info_entity.dart';
+import 'package:star/generated/json/task_submit_info_entity_helper.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/models/version_info_entity.dart';
@@ -65,8 +67,6 @@ import 'package:star/models/fans_total_entity.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
-import 'package:star/models/goods_queue_persional_entity.dart';
-import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
 import 'package:star/models/goods_spec_info_entity.dart';
@@ -126,9 +126,9 @@ class JsonConvert<T> {
 			return taskRecordListDataListFromJson(data as TaskRecordListDataList, json) as T;			case TaskDetailOtherEntity:
 			return taskDetailOtherEntityFromJson(data as TaskDetailOtherEntity, json) as T;			case TaskDetailOtherData:
 			return taskDetailOtherDataFromJson(data as TaskDetailOtherData, json) as T;			case TaskDetailOtherDataDescJson:
-			return taskDetailOtherDataDescJsonFromJson(data as TaskDetailOtherDataDescJson, json) as T;			case TaskSubmitInfoEntity:
-			return taskSubmitInfoEntityFromJson(data as TaskSubmitInfoEntity, json) as T;			case TaskSubmitInfoData:
-			return taskSubmitInfoDataFromJson(data as TaskSubmitInfoData, json) as T;			case OrderDetailEntity:
+			return taskDetailOtherDataDescJsonFromJson(data as TaskDetailOtherDataDescJson, json) as T;			case GoodsQueuePersionalEntity:
+			return goodsQueuePersionalEntityFromJson(data as GoodsQueuePersionalEntity, json) as T;			case GoodsQueuePersionalData:
+			return goodsQueuePersionalDataFromJson(data as GoodsQueuePersionalData, json) as T;			case OrderDetailEntity:
 			return orderDetailEntityFromJson(data as OrderDetailEntity, json) as T;			case OrderDetailData:
 			return orderDetailDataFromJson(data as OrderDetailData, json) as T;			case OrderDetailDataGoodsList:
 			return orderDetailDataGoodsListFromJson(data as OrderDetailDataGoodsList, json) as T;			case OrderListEntity:
@@ -143,17 +143,17 @@ class JsonConvert<T> {
 			return rechargeEntityFromJson(data as RechargeEntity, json) as T;			case RechargeData:
 			return rechargeDataFromJson(data as RechargeData, json) as T;			case RechargeDataRechageList:
 			return rechargeDataRechageListFromJson(data as RechargeDataRechageList, json) as T;			case RechargeDatacouponList:
-			return rechargeDatacouponListFromJson(data as RechargeDatacouponList, json) as T;			case GoodsQueueEntity:
+			return rechargeDatacouponListFromJson(data as RechargeDatacouponList, json) as T;			case WechatPayinfoEntity:
+			return wechatPayinfoEntityFromJson(data as WechatPayinfoEntity, json) as T;			case WechatPayinfoData:
+			return wechatPayinfoDataFromJson(data as WechatPayinfoData, json) as T;			case WechatPayinfoDataPayInfo:
+			return wechatPayinfoDataPayInfoFromJson(data as WechatPayinfoDataPayInfo, json) as T;			case ResultBeanEntity:
+			return resultBeanEntityFromJson(data as ResultBeanEntity, json) as T;			case GoodsQueueEntity:
 			return goodsQueueEntityFromJson(data as GoodsQueueEntity, json) as T;			case GoodsQueueData:
 			return goodsQueueDataFromJson(data as GoodsQueueData, json) as T;			case GoodsQueueDataSignPackage:
 			return goodsQueueDataSignPackageFromJson(data as GoodsQueueDataSignPackage, json) as T;			case GoodsQueueDataGoodsInfo:
 			return goodsQueueDataGoodsInfoFromJson(data as GoodsQueueDataGoodsInfo, json) as T;			case GoodsQueueDataList:
 			return goodsQueueDataListFromJson(data as GoodsQueueDataList, json) as T;			case GoodsQueueDataUserInfo:
-			return goodsQueueDataUserInfoFromJson(data as GoodsQueueDataUserInfo, json) as T;			case WechatPayinfoEntity:
-			return wechatPayinfoEntityFromJson(data as WechatPayinfoEntity, json) as T;			case WechatPayinfoData:
-			return wechatPayinfoDataFromJson(data as WechatPayinfoData, json) as T;			case WechatPayinfoDataPayInfo:
-			return wechatPayinfoDataPayInfoFromJson(data as WechatPayinfoDataPayInfo, json) as T;			case ResultBeanEntity:
-			return resultBeanEntityFromJson(data as ResultBeanEntity, json) as T;			case HomeIconListEntity:
+			return goodsQueueDataUserInfoFromJson(data as GoodsQueueDataUserInfo, json) as T;			case HomeIconListEntity:
 			return homeIconListEntityFromJson(data as HomeIconListEntity, json) as T;			case HomeIconListIconList:
 			return homeIconListIconListFromJson(data as HomeIconListIconList, json) as T;			case HomeEntity:
 			return homeEntityFromJson(data as HomeEntity, json) as T;			case HomeData:
@@ -163,7 +163,9 @@ class JsonConvert<T> {
 			return homeDataTaskListListFromJson(data as HomeDataTaskListList, json) as T;			case PhoneChargeListEntity:
 			return phoneChargeListEntityFromJson(data as PhoneChargeListEntity, json) as T;			case PhoneChargeListData:
 			return phoneChargeListDataFromJson(data as PhoneChargeListData, json) as T;			case PhoneChargeListDataList:
-			return phoneChargeListDataListFromJson(data as PhoneChargeListDataList, json) as T;			case MessageListEntity:
+			return phoneChargeListDataListFromJson(data as PhoneChargeListDataList, json) as T;			case TaskSubmitInfoEntity:
+			return taskSubmitInfoEntityFromJson(data as TaskSubmitInfoEntity, json) as T;			case TaskSubmitInfoData:
+			return taskSubmitInfoDataFromJson(data as TaskSubmitInfoData, json) as T;			case MessageListEntity:
 			return messageListEntityFromJson(data as MessageListEntity, json) as T;			case MessageListData:
 			return messageListDataFromJson(data as MessageListData, json) as T;			case MessageListDataList:
 			return messageListDataListFromJson(data as MessageListDataList, json) as T;			case VersionInfoEntity:
@@ -187,9 +189,7 @@ class JsonConvert<T> {
 			return fansTotalDataAgentInfoFromJson(data as FansTotalDataAgentInfo, json) as T;			case FansTotalDataCountInfo:
 			return fansTotalDataCountInfoFromJson(data as FansTotalDataCountInfo, json) as T;			case UserInfoEntity:
 			return userInfoEntityFromJson(data as UserInfoEntity, json) as T;			case UserInfoData:
-			return userInfoDataFromJson(data as UserInfoData, json) as T;			case GoodsQueuePersionalEntity:
-			return goodsQueuePersionalEntityFromJson(data as GoodsQueuePersionalEntity, json) as T;			case GoodsQueuePersionalData:
-			return goodsQueuePersionalDataFromJson(data as GoodsQueuePersionalData, json) as T;			case TaskOtherSubmitInfoEntity:
+			return userInfoDataFromJson(data as UserInfoData, json) as T;			case TaskOtherSubmitInfoEntity:
 			return taskOtherSubmitInfoEntityFromJson(data as TaskOtherSubmitInfoEntity, json) as T;			case TaskOtherSubmitInfoData:
 			return taskOtherSubmitInfoDataFromJson(data as TaskOtherSubmitInfoData, json) as T;			case GoodsSpecInfoEntity:
 			return goodsSpecInfoEntityFromJson(data as GoodsSpecInfoEntity, json) as T;			case GoodsSpecInfoSpecInfo:
@@ -253,9 +253,9 @@ class JsonConvert<T> {
 			return taskRecordListDataListToJson(data as TaskRecordListDataList);			case TaskDetailOtherEntity:
 			return taskDetailOtherEntityToJson(data as TaskDetailOtherEntity);			case TaskDetailOtherData:
 			return taskDetailOtherDataToJson(data as TaskDetailOtherData);			case TaskDetailOtherDataDescJson:
-			return taskDetailOtherDataDescJsonToJson(data as TaskDetailOtherDataDescJson);			case TaskSubmitInfoEntity:
-			return taskSubmitInfoEntityToJson(data as TaskSubmitInfoEntity);			case TaskSubmitInfoData:
-			return taskSubmitInfoDataToJson(data as TaskSubmitInfoData);			case OrderDetailEntity:
+			return taskDetailOtherDataDescJsonToJson(data as TaskDetailOtherDataDescJson);			case GoodsQueuePersionalEntity:
+			return goodsQueuePersionalEntityToJson(data as GoodsQueuePersionalEntity);			case GoodsQueuePersionalData:
+			return goodsQueuePersionalDataToJson(data as GoodsQueuePersionalData);			case OrderDetailEntity:
 			return orderDetailEntityToJson(data as OrderDetailEntity);			case OrderDetailData:
 			return orderDetailDataToJson(data as OrderDetailData);			case OrderDetailDataGoodsList:
 			return orderDetailDataGoodsListToJson(data as OrderDetailDataGoodsList);			case OrderListEntity:
@@ -270,17 +270,17 @@ class JsonConvert<T> {
 			return rechargeEntityToJson(data as RechargeEntity);			case RechargeData:
 			return rechargeDataToJson(data as RechargeData);			case RechargeDataRechageList:
 			return rechargeDataRechageListToJson(data as RechargeDataRechageList);			case RechargeDatacouponList:
-			return rechargeDatacouponListToJson(data as RechargeDatacouponList);			case GoodsQueueEntity:
+			return rechargeDatacouponListToJson(data as RechargeDatacouponList);			case WechatPayinfoEntity:
+			return wechatPayinfoEntityToJson(data as WechatPayinfoEntity);			case WechatPayinfoData:
+			return wechatPayinfoDataToJson(data as WechatPayinfoData);			case WechatPayinfoDataPayInfo:
+			return wechatPayinfoDataPayInfoToJson(data as WechatPayinfoDataPayInfo);			case ResultBeanEntity:
+			return resultBeanEntityToJson(data as ResultBeanEntity);			case GoodsQueueEntity:
 			return goodsQueueEntityToJson(data as GoodsQueueEntity);			case GoodsQueueData:
 			return goodsQueueDataToJson(data as GoodsQueueData);			case GoodsQueueDataSignPackage:
 			return goodsQueueDataSignPackageToJson(data as GoodsQueueDataSignPackage);			case GoodsQueueDataGoodsInfo:
 			return goodsQueueDataGoodsInfoToJson(data as GoodsQueueDataGoodsInfo);			case GoodsQueueDataList:
 			return goodsQueueDataListToJson(data as GoodsQueueDataList);			case GoodsQueueDataUserInfo:
-			return goodsQueueDataUserInfoToJson(data as GoodsQueueDataUserInfo);			case WechatPayinfoEntity:
-			return wechatPayinfoEntityToJson(data as WechatPayinfoEntity);			case WechatPayinfoData:
-			return wechatPayinfoDataToJson(data as WechatPayinfoData);			case WechatPayinfoDataPayInfo:
-			return wechatPayinfoDataPayInfoToJson(data as WechatPayinfoDataPayInfo);			case ResultBeanEntity:
-			return resultBeanEntityToJson(data as ResultBeanEntity);			case HomeIconListEntity:
+			return goodsQueueDataUserInfoToJson(data as GoodsQueueDataUserInfo);			case HomeIconListEntity:
 			return homeIconListEntityToJson(data as HomeIconListEntity);			case HomeIconListIconList:
 			return homeIconListIconListToJson(data as HomeIconListIconList);			case HomeEntity:
 			return homeEntityToJson(data as HomeEntity);			case HomeData:
@@ -290,7 +290,9 @@ class JsonConvert<T> {
 			return homeDataTaskListListToJson(data as HomeDataTaskListList);			case PhoneChargeListEntity:
 			return phoneChargeListEntityToJson(data as PhoneChargeListEntity);			case PhoneChargeListData:
 			return phoneChargeListDataToJson(data as PhoneChargeListData);			case PhoneChargeListDataList:
-			return phoneChargeListDataListToJson(data as PhoneChargeListDataList);			case MessageListEntity:
+			return phoneChargeListDataListToJson(data as PhoneChargeListDataList);			case TaskSubmitInfoEntity:
+			return taskSubmitInfoEntityToJson(data as TaskSubmitInfoEntity);			case TaskSubmitInfoData:
+			return taskSubmitInfoDataToJson(data as TaskSubmitInfoData);			case MessageListEntity:
 			return messageListEntityToJson(data as MessageListEntity);			case MessageListData:
 			return messageListDataToJson(data as MessageListData);			case MessageListDataList:
 			return messageListDataListToJson(data as MessageListDataList);			case VersionInfoEntity:
@@ -314,9 +316,7 @@ class JsonConvert<T> {
 			return fansTotalDataAgentInfoToJson(data as FansTotalDataAgentInfo);			case FansTotalDataCountInfo:
 			return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);			case UserInfoEntity:
 			return userInfoEntityToJson(data as UserInfoEntity);			case UserInfoData:
-			return userInfoDataToJson(data as UserInfoData);			case GoodsQueuePersionalEntity:
-			return goodsQueuePersionalEntityToJson(data as GoodsQueuePersionalEntity);			case GoodsQueuePersionalData:
-			return goodsQueuePersionalDataToJson(data as GoodsQueuePersionalData);			case TaskOtherSubmitInfoEntity:
+			return userInfoDataToJson(data as UserInfoData);			case TaskOtherSubmitInfoEntity:
 			return taskOtherSubmitInfoEntityToJson(data as TaskOtherSubmitInfoEntity);			case TaskOtherSubmitInfoData:
 			return taskOtherSubmitInfoDataToJson(data as TaskOtherSubmitInfoData);			case GoodsSpecInfoEntity:
 			return goodsSpecInfoEntityToJson(data as GoodsSpecInfoEntity);			case GoodsSpecInfoSpecInfo:
@@ -380,9 +380,9 @@ class JsonConvert<T> {
 			return TaskRecordListDataList().fromJson(json);			case 'TaskDetailOtherEntity':
 			return TaskDetailOtherEntity().fromJson(json);			case 'TaskDetailOtherData':
 			return TaskDetailOtherData().fromJson(json);			case 'TaskDetailOtherDataDescJson':
-			return TaskDetailOtherDataDescJson().fromJson(json);			case 'TaskSubmitInfoEntity':
-			return TaskSubmitInfoEntity().fromJson(json);			case 'TaskSubmitInfoData':
-			return TaskSubmitInfoData().fromJson(json);			case 'OrderDetailEntity':
+			return TaskDetailOtherDataDescJson().fromJson(json);			case 'GoodsQueuePersionalEntity':
+			return GoodsQueuePersionalEntity().fromJson(json);			case 'GoodsQueuePersionalData':
+			return GoodsQueuePersionalData().fromJson(json);			case 'OrderDetailEntity':
 			return OrderDetailEntity().fromJson(json);			case 'OrderDetailData':
 			return OrderDetailData().fromJson(json);			case 'OrderDetailDataGoodsList':
 			return OrderDetailDataGoodsList().fromJson(json);			case 'OrderListEntity':
@@ -397,17 +397,17 @@ class JsonConvert<T> {
 			return RechargeEntity().fromJson(json);			case 'RechargeData':
 			return RechargeData().fromJson(json);			case 'RechargeDataRechageList':
 			return RechargeDataRechageList().fromJson(json);			case 'RechargeDatacouponList':
-			return RechargeDatacouponList().fromJson(json);			case 'GoodsQueueEntity':
+			return RechargeDatacouponList().fromJson(json);			case 'WechatPayinfoEntity':
+			return WechatPayinfoEntity().fromJson(json);			case 'WechatPayinfoData':
+			return WechatPayinfoData().fromJson(json);			case 'WechatPayinfoDataPayInfo':
+			return WechatPayinfoDataPayInfo().fromJson(json);			case 'ResultBeanEntity':
+			return ResultBeanEntity().fromJson(json);			case 'GoodsQueueEntity':
 			return GoodsQueueEntity().fromJson(json);			case 'GoodsQueueData':
 			return GoodsQueueData().fromJson(json);			case 'GoodsQueueDataSignPackage':
 			return GoodsQueueDataSignPackage().fromJson(json);			case 'GoodsQueueDataGoodsInfo':
 			return GoodsQueueDataGoodsInfo().fromJson(json);			case 'GoodsQueueDataList':
 			return GoodsQueueDataList().fromJson(json);			case 'GoodsQueueDataUserInfo':
-			return GoodsQueueDataUserInfo().fromJson(json);			case 'WechatPayinfoEntity':
-			return WechatPayinfoEntity().fromJson(json);			case 'WechatPayinfoData':
-			return WechatPayinfoData().fromJson(json);			case 'WechatPayinfoDataPayInfo':
-			return WechatPayinfoDataPayInfo().fromJson(json);			case 'ResultBeanEntity':
-			return ResultBeanEntity().fromJson(json);			case 'HomeIconListEntity':
+			return GoodsQueueDataUserInfo().fromJson(json);			case 'HomeIconListEntity':
 			return HomeIconListEntity().fromJson(json);			case 'HomeIconListIconList':
 			return HomeIconListIconList().fromJson(json);			case 'HomeEntity':
 			return HomeEntity().fromJson(json);			case 'HomeData':
@@ -417,7 +417,9 @@ class JsonConvert<T> {
 			return HomeDataTaskListList().fromJson(json);			case 'PhoneChargeListEntity':
 			return PhoneChargeListEntity().fromJson(json);			case 'PhoneChargeListData':
 			return PhoneChargeListData().fromJson(json);			case 'PhoneChargeListDataList':
-			return PhoneChargeListDataList().fromJson(json);			case 'MessageListEntity':
+			return PhoneChargeListDataList().fromJson(json);			case 'TaskSubmitInfoEntity':
+			return TaskSubmitInfoEntity().fromJson(json);			case 'TaskSubmitInfoData':
+			return TaskSubmitInfoData().fromJson(json);			case 'MessageListEntity':
 			return MessageListEntity().fromJson(json);			case 'MessageListData':
 			return MessageListData().fromJson(json);			case 'MessageListDataList':
 			return MessageListDataList().fromJson(json);			case 'VersionInfoEntity':
@@ -441,9 +443,7 @@ class JsonConvert<T> {
 			return FansTotalDataAgentInfo().fromJson(json);			case 'FansTotalDataCountInfo':
 			return FansTotalDataCountInfo().fromJson(json);			case 'UserInfoEntity':
 			return UserInfoEntity().fromJson(json);			case 'UserInfoData':
-			return UserInfoData().fromJson(json);			case 'GoodsQueuePersionalEntity':
-			return GoodsQueuePersionalEntity().fromJson(json);			case 'GoodsQueuePersionalData':
-			return GoodsQueuePersionalData().fromJson(json);			case 'TaskOtherSubmitInfoEntity':
+			return UserInfoData().fromJson(json);			case 'TaskOtherSubmitInfoEntity':
 			return TaskOtherSubmitInfoEntity().fromJson(json);			case 'TaskOtherSubmitInfoData':
 			return TaskOtherSubmitInfoData().fromJson(json);			case 'GoodsSpecInfoEntity':
 			return GoodsSpecInfoEntity().fromJson(json);			case 'GoodsSpecInfoSpecInfo':
@@ -508,9 +508,9 @@ class JsonConvert<T> {
 			return List<TaskRecordListDataList>();			case 'TaskDetailOtherEntity':
 			return List<TaskDetailOtherEntity>();			case 'TaskDetailOtherData':
 			return List<TaskDetailOtherData>();			case 'TaskDetailOtherDataDescJson':
-			return List<TaskDetailOtherDataDescJson>();			case 'TaskSubmitInfoEntity':
-			return List<TaskSubmitInfoEntity>();			case 'TaskSubmitInfoData':
-			return List<TaskSubmitInfoData>();			case 'OrderDetailEntity':
+			return List<TaskDetailOtherDataDescJson>();			case 'GoodsQueuePersionalEntity':
+			return List<GoodsQueuePersionalEntity>();			case 'GoodsQueuePersionalData':
+			return List<GoodsQueuePersionalData>();			case 'OrderDetailEntity':
 			return List<OrderDetailEntity>();			case 'OrderDetailData':
 			return List<OrderDetailData>();			case 'OrderDetailDataGoodsList':
 			return List<OrderDetailDataGoodsList>();			case 'OrderListEntity':
@@ -525,17 +525,17 @@ class JsonConvert<T> {
 			return List<RechargeEntity>();			case 'RechargeData':
 			return List<RechargeData>();			case 'RechargeDataRechageList':
 			return List<RechargeDataRechageList>();			case 'RechargeDatacouponList':
-			return List<RechargeDatacouponList>();			case 'GoodsQueueEntity':
+			return List<RechargeDatacouponList>();			case 'WechatPayinfoEntity':
+			return List<WechatPayinfoEntity>();			case 'WechatPayinfoData':
+			return List<WechatPayinfoData>();			case 'WechatPayinfoDataPayInfo':
+			return List<WechatPayinfoDataPayInfo>();			case 'ResultBeanEntity':
+			return List<ResultBeanEntity>();			case 'GoodsQueueEntity':
 			return List<GoodsQueueEntity>();			case 'GoodsQueueData':
 			return List<GoodsQueueData>();			case 'GoodsQueueDataSignPackage':
 			return List<GoodsQueueDataSignPackage>();			case 'GoodsQueueDataGoodsInfo':
 			return List<GoodsQueueDataGoodsInfo>();			case 'GoodsQueueDataList':
 			return List<GoodsQueueDataList>();			case 'GoodsQueueDataUserInfo':
-			return List<GoodsQueueDataUserInfo>();			case 'WechatPayinfoEntity':
-			return List<WechatPayinfoEntity>();			case 'WechatPayinfoData':
-			return List<WechatPayinfoData>();			case 'WechatPayinfoDataPayInfo':
-			return List<WechatPayinfoDataPayInfo>();			case 'ResultBeanEntity':
-			return List<ResultBeanEntity>();			case 'HomeIconListEntity':
+			return List<GoodsQueueDataUserInfo>();			case 'HomeIconListEntity':
 			return List<HomeIconListEntity>();			case 'HomeIconListIconList':
 			return List<HomeIconListIconList>();			case 'HomeEntity':
 			return List<HomeEntity>();			case 'HomeData':
@@ -545,7 +545,9 @@ class JsonConvert<T> {
 			return List<HomeDataTaskListList>();			case 'PhoneChargeListEntity':
 			return List<PhoneChargeListEntity>();			case 'PhoneChargeListData':
 			return List<PhoneChargeListData>();			case 'PhoneChargeListDataList':
-			return List<PhoneChargeListDataList>();			case 'MessageListEntity':
+			return List<PhoneChargeListDataList>();			case 'TaskSubmitInfoEntity':
+			return List<TaskSubmitInfoEntity>();			case 'TaskSubmitInfoData':
+			return List<TaskSubmitInfoData>();			case 'MessageListEntity':
 			return List<MessageListEntity>();			case 'MessageListData':
 			return List<MessageListData>();			case 'MessageListDataList':
 			return List<MessageListDataList>();			case 'VersionInfoEntity':
@@ -569,9 +571,7 @@ class JsonConvert<T> {
 			return List<FansTotalDataAgentInfo>();			case 'FansTotalDataCountInfo':
 			return List<FansTotalDataCountInfo>();			case 'UserInfoEntity':
 			return List<UserInfoEntity>();			case 'UserInfoData':
-			return List<UserInfoData>();			case 'GoodsQueuePersionalEntity':
-			return List<GoodsQueuePersionalEntity>();			case 'GoodsQueuePersionalData':
-			return List<GoodsQueuePersionalData>();			case 'TaskOtherSubmitInfoEntity':
+			return List<UserInfoData>();			case 'TaskOtherSubmitInfoEntity':
 			return List<TaskOtherSubmitInfoEntity>();			case 'TaskOtherSubmitInfoData':
 			return List<TaskOtherSubmitInfoData>();			case 'GoodsSpecInfoEntity':
 			return List<GoodsSpecInfoEntity>();			case 'GoodsSpecInfoSpecInfo':

@@ -76,6 +76,15 @@ class _LoginPageState extends State<LoginPage> {
           }
           break;
       }
+      if (versionInfo.data.whCheck) {
+        //华为应用市场上架审核中
+        GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+      } else {}
+      if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
+        Future.delayed(Duration(milliseconds: 300), () {
+          showPrivacyDialog(context);
+        });
+      }
     }
   }
 
@@ -113,12 +122,6 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     super.initState();
-    if (!GlobalConfig.isAgreePrivacy &&
-        GlobalConfig.chanelType == GlobalConfig.CHANEL_HUAWEI) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        showPrivacyDialog(context);
-      });
-    }
   }
 
   @override

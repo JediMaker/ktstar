@@ -258,7 +258,7 @@ class _TaskListPageState extends State<TaskListPage>
         } catch (e) {}
       });
     }
-    if(bannerList.length>1){
+    if (bannerList.length > 1) {
       _swiperController.startAutoplay();
     }
   }
@@ -835,6 +835,10 @@ class _TaskListPageState extends State<TaskListPage>
               return;
               /* NavigatorUtils.navigatorRouter(context, MyTestApp());
               return;*/
+            }
+            if (name.contains('游戏')) {
+              CommonUtils.showToast("敬请期待");
+              return;
             }
             Utils.launchUrl(path);
             return;

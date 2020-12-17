@@ -46,6 +46,9 @@ versionInfoDataFromJson(VersionInfoData data, Map<String, dynamic> json) {
 	if (json['wx_login'] != null) {
 		data.wxLogin = json['wx_login']?.toString();
 	}
+	if (json['wh_check'] != null) {
+		data.whCheck = json['wh_check'];
+	}
 	return data;
 }
 
@@ -56,5 +59,6 @@ Map<String, dynamic> versionInfoDataToJson(VersionInfoData entity) {
 	data['android_url'] = entity.androidUrl;
 	data['ios_url'] = entity.iosUrl;
 	data['wx_login'] = entity.wxLogin;
+	data['wh_check'] = entity.whCheck;
 	return data;
 }

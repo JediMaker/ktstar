@@ -132,7 +132,7 @@ class _AboutPageState extends State<AboutPage>
           ),
         ),
         Visibility(
-          visible: GlobalConfig.chanelType==GlobalConfig.CHANEL_HUAWEI,
+          visible: GlobalConfig.isHuaweiUnderReview,
           child: Column(
             children: [
               Container(

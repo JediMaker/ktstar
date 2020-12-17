@@ -117,7 +117,7 @@ class Utils {
     /// 数组转string
     String pairsString = allKeys.join("&");
 
-    /// 拼接 ABC 是你的秘钥
+    /// 拼接 秘钥
     String sign = pairsString + APi.INTERFACE_KEY;
     print("sign:" + sign);
 
@@ -147,6 +147,13 @@ class Utils {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _localVersion = packageInfo.version;
     String updateTime = GlobalConfig.prefs.getString('updateTime') ?? null;
+
+    if (GlobalConfig.isHuaweiUnderReview) {
+      if (checkDerictly) {
+        CommonUtils.showToast("当前已是最新版本");
+      }
+      return;
+    }
 
     /// 一天之内只提醒一次需要更新
     if (!checkDerictly) {
