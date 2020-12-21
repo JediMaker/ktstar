@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:fluwx/fluwx.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_queue_entity.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
@@ -34,6 +36,14 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
   var _nickName = '';
   bool _hasSort = false;
   List<GoodsQueueDataList> _queueList = List<GoodsQueueDataList>();
+  GoodsQueueDataGoodsInfo _goodsInfo;
+  GoodsQueueDataSignPackage _signPackage;
+
+  var _webUrl = '';
+  var _shareTitle = '';
+  var _shareDesc = '';
+  var _shareThumbnail = '';
+  var _powerNum = '0';
 
   @override
   void initState() {
@@ -53,9 +63,16 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
           setState(() {
             try {
               _queueList = result.data.xList;
+              _goodsInfo = result.data.goodsInfo;
+              _signPackage = result.data.signPackage;
               _headImageUrl = result.data.userInfo.avatar;
               _nickName = result.data.userInfo.username;
               _hasSort = result.data.userInfo.myStatus;
+              _powerNum = result.data.userInfo.powerNum;
+              _webUrl = _signPackage.url;
+              _shareTitle = _goodsInfo.gName;
+              _shareDesc = _goodsInfo.gDesc;
+              _shareThumbnail = _goodsInfo.gImg;
             } catch (e) {}
           });
         } else {
@@ -94,32 +111,61 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
               padding: EdgeInsets.only(top: ScreenUtil.statusBarHeight),
               child: Stack(
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "消费补贴",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(54)),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Image.asset(
-                            "static/images/icon_ios_back_white.png",
-                            width: ScreenUtil().setWidth(36),
-                            height: ScreenUtil().setHeight(63),
-                            fit: BoxFit.fill,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+                  Row(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Image.asset(
+                                "static/images/icon_ios_back_white.png",
+                                width: ScreenUtil().setWidth(36),
+                                height: ScreenUtil().setHeight(63),
+                                fit: BoxFit.fill,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "消费补贴",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(54)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(
+                                CupertinoIcons.share,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                showCupertinoModalBottomSheet(
+                                  expand: false,
+                                  context: this.context,
+                                  backgroundColor: Colors.white,
+                                  builder: (context) => shareItems(),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -309,7 +355,7 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
           ),
           Container(
             child: Text(
-              "补贴奖励奖不停，购物省钱又省心",
+              "点击右上角可分享邀请好友助力",
               style: TextStyle(
                 color: CupertinoColors.white,
                 fontWeight: FontWeight.bold,
@@ -371,7 +417,7 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
                   child: _hasSort
                       ? Text.rich(
                           TextSpan(children: [
-                            TextSpan(text: '个人所有排名'),
+                            TextSpan(text: '$_powerNum\t助力值'), //todo
                             WidgetSpan(
                                 child: Container(
                               margin: EdgeInsets.only(left: 8),
@@ -383,7 +429,7 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
                           ]),
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(48),
-                            color: Color(0xff222222),
+                            color: Color(0xffF32E43),
                           ),
                           textAlign: TextAlign.center,
                         )
@@ -459,10 +505,12 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
     var _itemNickName = '';
     var _avatarUrl = '';
     var _dateJoin = '';
+    var _powerNum = '0';
     try {
       _itemNickName = item.username;
       _avatarUrl = item.avatar;
       _dateJoin = item.createTime;
+      _powerNum = item.powerNum;
     } catch (e) {}
     return Column(
       children: <Widget>[
@@ -484,27 +532,57 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
                 ),
               ),
               Expanded(
-                child: Container(
-                    margin: EdgeInsets.only(left: 16),
-                    child: Text(
-                      "$_itemNickName",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(38),
-                        color: Color(0xff222222),
-                      ),
-                    )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "$_itemNickName",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(38),
+                            color: Color(0xff222222),
+                          ),
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(top: 4, left: 10),
+                        child: Text(
+                          "$_dateJoin",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(38),
+                            color: Color(0xff999999),
+                          ),
+                        )),
+                  ],
+                ),
               ),
-              Container(
-                  margin: EdgeInsets.only(right: 0, left: 10),
-                  child: Text(
-                    "$_dateJoin",
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(38),
-                      color: Color(0xff999999),
-                    ),
-                  )),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "$_powerNum",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(48),
+                          color: Color(0xffF32E43),
+                        ),
+                      )),
+                  Container(
+                      margin: EdgeInsets.only(top: 4, left: 10),
+                      child: Text(
+                        "助力值",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(38),
+                          color: Color(0xff999999),
+                        ),
+                      )),
+                ],
+              ),
             ],
           ),
         ),
@@ -521,4 +599,180 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
       ],
     );
   }
+
+  Widget shareItems() {
+    return Container(
+      height: 100,
+      alignment: Alignment.center,
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Visibility(
+            child: new Container(
+              width: MediaQuery.of(context).size.width / 4,
+              child: new FlatButton(
+                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                fun: _saveImagesWithPermission,
+                childWidget: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/task_download_img.png",
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
+                          ),
+                        ),
+                      ),
+                      new Container(
+                        child: new Text(
+                          "下载图片",
+                          style:
+                              new TextStyle(fontSize: ScreenUtil().setSp(32)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            ),
+            visible: false,
+          ),
+          Visibility(
+            child: new Container(
+              width: MediaQuery.of(context).size.width / 4,
+              child: new FlatButton(
+                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                fun: _copyText,
+                childWidget: new Container(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 6.0),
+                        child: new CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.transparent,
+                          child: new Image.asset(
+                            "static/images/task_text_copy.png",
+                            width: ScreenUtil().setWidth(138),
+                            height: ScreenUtil().setWidth(138),
+                          ),
+                        ),
+                      ),
+                      new Container(
+                        child: new Text("复制文案",
+                            style: new TextStyle(
+                                fontSize: ScreenUtil().setSp(32))),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            ),
+            visible: false,
+          ),
+          new Container(
+            width: MediaQuery.of(context).size.width / 2,
+            child: new FlatButton(
+                child: CommonUtils.getNoDuplicateSubmissionWidget(
+              fun: () {
+                _goWechat(type: 0);
+                Navigator.of(context).pop();
+              },
+              childWidget: new Container(
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Container(
+                      margin: const EdgeInsets.only(bottom: 6.0),
+                      child: new CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: Colors.transparent,
+                        child: new Image.asset(
+                          "static/images/task_wechat.png",
+                          width: ScreenUtil().setWidth(138),
+                          height: ScreenUtil().setWidth(138),
+                        ),
+                      ),
+                    ),
+                    new Container(
+                      child: new Text("微信",
+                          style:
+                              new TextStyle(fontSize: ScreenUtil().setSp(32))),
+                    )
+                  ],
+                ),
+              ),
+            )),
+          ),
+          new Container(
+            width: MediaQuery.of(context).size.width / 2,
+            child: new FlatButton(
+                child: CommonUtils.getNoDuplicateSubmissionWidget(
+              fun: () {
+                _goWechat(type: 1);
+                Navigator.of(context).pop();
+              },
+              childWidget: new Container(
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Container(
+                      margin: const EdgeInsets.only(bottom: 6.0),
+                      child: new CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: Colors.transparent,
+                        child: new Image.asset(
+                          "static/images/task_wechat_friends_circle.png",
+                          width: ScreenUtil().setWidth(138),
+                          height: ScreenUtil().setWidth(138),
+                        ),
+                      ),
+                    ),
+                    new Container(
+                      child: new Text("朋友圈",
+                          style:
+                              new TextStyle(fontSize: ScreenUtil().setSp(32))),
+                    )
+                  ],
+                ),
+              ),
+            )),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _saveImagesWithPermission() {}
+
+  ///分享给微信好友或者朋友圈
+  void _goWechat({int type = 0}) {
+    if (CommonUtils.isEmpty(_webUrl)) {
+      return;
+    }
+    if (CommonUtils.isEmpty(_shareThumbnail)) {
+      _shareThumbnail =
+          'https://static-ud.s4.udesk.cn/im_client/images/plugin404.8de7c6fd.png?v=1597492382675';
+    }
+    if (CommonUtils.isEmpty(_shareTitle)) {
+      _shareTitle = '1';
+    }
+    try {
+      shareToWeChat(WeChatShareWebPageModel("$_webUrl",
+          title: _shareTitle,
+          description: _shareDesc,
+          scene: type == 0 ? WeChatScene.SESSION : WeChatScene.TIMELINE,
+          thumbnail: WeChatImage.network("$_shareThumbnail")));
+    } catch (e) {}
+  }
+
+  void _copyText() {}
 }

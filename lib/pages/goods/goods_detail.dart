@@ -880,8 +880,8 @@ class _DetailWindowState extends State<DetailWindow>
                   visible: opItem.xList != null && opItem.xList.length > 0,
                 ),
                 Wrap(
-                  spacing: ScreenUtil().setWidth(60),
-                  runSpacing: ScreenUtil().setWidth(60),
+                  spacing: ScreenUtil().setWidth(26),
+                  runSpacing: ScreenUtil().setWidth(8),
                   alignment: WrapAlignment.start,
                   children: opItem.xList.asMap().keys.map((valueIndex) {
                     return GoodsSelectChoiceChip(
@@ -906,6 +906,7 @@ class _DetailWindowState extends State<DetailWindow>
                       text: '${opItem.xList[valueIndex]}',
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                       textSelectColor: Color(0xffF93736),
+                      fontSize: ScreenUtil().setSp(42),
                       selected: selectedMap[index] == valueIndex,
                       onSelected: (v) {
                         setState(() {

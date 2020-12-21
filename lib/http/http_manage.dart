@@ -1496,6 +1496,7 @@ class HttpManage {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
+      GlobalConfig.prefs.setString("token", entity.data.token);
       GlobalConfig.prefs.setString("loginData", response.data.toString());
       GlobalConfig.prefs.setBool("canRefreshToken", true);
     }

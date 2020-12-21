@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:star/http/api.dart';
 import 'package:star/pages/widget/my_webview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../global_config.dart';
 
@@ -130,7 +131,67 @@ class _AboutPageState extends State<AboutPage>
             ),
           ),
         ),
-
+        Visibility(
+          visible: GlobalConfig.isHuaweiUnderReview,
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(
+                  height: ScreenUtil().setHeight(1),
+                  color: Color(0xFFefefef),
+                ),
+              ),
+              Ink(
+                decoration: BoxDecoration(color: Colors.white),
+                child: InkWell(
+                  onTap: () {
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "客服电话",
+                                style:
+                                    TextStyle(fontSize: ScreenUtil().setSp(42)),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "4006002868",
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                                color: Color(0xff999999),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: ScreenUtil().setWidth(32),
+                              color: Color(0xff999999),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
 //
       ],
     );

@@ -64,6 +64,12 @@ class GlobalConfig {
   ///
   static const String JPUSH_REGISTRATIONID = "b8b53a639c646141e54bf4df";
 
+  /// 渠道名称--华为
+  static const String CHANEL_HUAWEI = "huawei";
+
+  /// 渠道名称--小米
+  static const String CHANEL_XIAOMI = "xiaomi";
+
   static SharedPreferences get prefs => _prefs; // 可选的主题列表
 
   static List<MaterialColor> get themes => _themes;
@@ -85,6 +91,27 @@ class GlobalConfig {
   /// ios是否展示第三方登录信息
   static bool displayThirdLoginInformation = false;
 
+  /// 渠道类型
+  static String get chanelType => getChanelType(chanelType: 1);
+
+  /// [chanelType] 渠道类型
+  ///
+  /// 0 华为
+  ///
+  /// 1 小米
+  ///
+  /// 其他 默认-1
+  ///
+  static String getChanelType({int chanelType = -1}) {
+    switch (chanelType) {
+      case 0:
+        return CHANEL_HUAWEI;
+      case 1:
+        return CHANEL_XIAOMI;
+    }
+    return '';
+  }
+
   ///
   ///
   /// 支付类型
@@ -105,6 +132,10 @@ class GlobalConfig {
   static bool get isAgreePrivacy => prefs.containsKey("isAgreePrivacy")
       ? prefs.getBool("isAgreePrivacy")
       : true;
+
+  /// 是否华为正在审核中
+  static bool get isHuaweiUnderReview =>
+      prefs.getBool("isHuaweiUnderReview") && chanelType == CHANEL_HUAWEI;
 
   /// taskWallAddress
   static const TASKWALL_ADDRESS = 'https://c.buuyee.com/api/external';
@@ -140,6 +171,9 @@ class GlobalConfig {
     prefs.setBool("canRefreshToken", true);
     if (!_prefs.containsKey("isAgreePrivacy")) {
       prefs.setBool("isAgreePrivacy", false);
+    }
+    if (!_prefs.containsKey("isHuaweiUnderReview")) {
+      prefs.setBool("isHuaweiUnderReview", false);
     }
 
     if (!isRelease) {

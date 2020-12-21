@@ -49,6 +49,9 @@ goodsQueuePersionalDataFromJson(GoodsQueuePersionalData data, Map<String, dynami
 	if (json['sale_price'] != null) {
 		data.goodsPrice = json['sale_price']?.toString();
 	}
+	if (json['power_num'] != null) {
+		data.powerNum = json['power_num']?.toString();
+	}
 	if (json['rank'] != null) {
 		data.rank = json['rank']?.toInt();
 	}
@@ -65,6 +68,7 @@ Map<String, dynamic> goodsQueuePersionalDataToJson(GoodsQueuePersionalData entit
 	data['goods_name'] = entity.goodsName;
 	data['create_time'] = entity.createTime;
 	data['sale_price'] = entity.goodsPrice;
+	data['power_num'] = entity.powerNum;
 	data['rank'] = entity.rank;
 	data['status'] = entity.status;
 	return data;

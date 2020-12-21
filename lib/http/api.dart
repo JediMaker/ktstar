@@ -249,9 +249,14 @@ class APi {
   static const String AGREEMENT_SERVICES_URL =
       "https://task.ktkj.shop/tiaokuan.html";
 
+  /* ///用户隐私协议
+  static String AGREEMENT_PRIVACY_URL = "https://task.ktkj.shop/yinsi.html";
+*/
+
   ///用户隐私协议
-  static const String AGREEMENT_PRIVACY_URL =
-      "https://task.ktkj.shop/yinsi.html";
+  static String AGREEMENT_PRIVACY_URL = GlobalConfig.isHuaweiUnderReview
+      ? 'https://task.ktkj.shop/html/hw_ysxy.html'
+      : "https://task.ktkj.shop/yinsi.html";
 
   ///商品详情
   static const String PRODUCT = "/api/index.php?route=api/product";

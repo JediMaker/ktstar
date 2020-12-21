@@ -9,7 +9,7 @@ import 'my_adress_edit.dart';
 import 'package:star/models/address_list_entity.dart';
 
 class AddressListPage extends StatefulWidget {
-  int type; //0、订单选择地址  1、地址编辑修改
+  int type; //0、订单选择地址  1、地址编辑修改  2退换货地址修改
   String orderId;
 
   AddressListPage({
@@ -79,6 +79,15 @@ class _AddressListPageState extends State<AddressListPage>
             } else {
               CommonUtils.showToast("${result.errMsg}");
             }
+          } else if (widget.type == 2) {
+            // todo
+            /* var result =
+                await HttpManage.returnChangeBindAddress( itemId);
+            if (result.status) {
+              Navigator.of(context).pop(true);
+            } else {
+              CommonUtils.showToast("${result.errMsg}");
+            }*/
           } else {
             bool result = await NavigatorUtils.navigatorRouter(
                 context,
