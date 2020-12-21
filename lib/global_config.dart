@@ -92,7 +92,7 @@ class GlobalConfig {
   static bool displayThirdLoginInformation = false;
 
   /// 渠道类型
-  static String get chanelType => getChanelType(chanelType: 0);
+  static String get chanelType => getChanelType(chanelType: 1);
 
   /// [chanelType] 渠道类型
   ///

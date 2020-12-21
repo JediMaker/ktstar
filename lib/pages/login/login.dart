@@ -375,56 +375,61 @@ class _LoginPageState extends State<LoginPage> {
                 height: 180,
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
-                  child: new Text.rich(
-                    TextSpan(
-                      children: [
+                  child: Column(
+
+                    children: [
+                      new Text.rich(
                         TextSpan(
-                            text:
-                                "请你务必审慎阅读、充分理解\“服务协议\”和\“隐私政策\”各条款，包括但不限于：为了向你提供购物、内容分享等服务，我们需要收集你的设备信息、操作日志等个人信息。你可以在“设置”中查看、变更、删除个人信息并管理你的授权。你可阅读"),
-                        WidgetSpan(
-                          child: GestureDetector(
-                            onTap: () {
-                              NavigatorUtils.navigatorRouter(
-                                  context,
-                                  WebViewPage(
-                                    initialUrl: APi.AGREEMENT_SERVICES_URL,
-                                    showActions: false,
-                                    title: "服务协议",
-                                  ));
-                            },
-                            child: Text(
-                              "《服务协议》",
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: ScreenUtil().setSp(42)),
+                          children: [
+                            TextSpan(
+                                text:
+                                    "请你务必审慎阅读、充分理解\“服务协议\”和\“隐私政策\”各条款，包括但不限于：为了向你提供购物、内容分享等服务，我们需要收集你的设备信息、操作日志等个人信息。你可以在“设置”中查看、变更、删除个人信息并管理你的授权。你可阅读"),
+                            WidgetSpan(
+                              child: GestureDetector(
+                                onTap: () {
+                                  NavigatorUtils.navigatorRouter(
+                                      context,
+                                      WebViewPage(
+                                        initialUrl: APi.AGREEMENT_SERVICES_URL,
+                                        showActions: false,
+                                        title: "服务协议",
+                                      ));
+                                },
+                                child: Text(
+                                  "《服务协议》",
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        //text: "《服务协议》",style: TextStyle(color: Colors.blueAccent)
-                        TextSpan(text: "和"),
-                        WidgetSpan(
-                          child: GestureDetector(
-                            onTap: () {
-                              NavigatorUtils.navigatorRouter(
-                                  context,
-                                  WebViewPage(
-                                    initialUrl: APi.AGREEMENT_PRIVACY_URL,
-                                    showActions: false,
-                                    title: "隐私政策",
-                                  ));
-                            },
-                            child: Text(
-                              "《隐私政策》",
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: ScreenUtil().setSp(42)),
+                            //text: "《服务协议》",style: TextStyle(color: Colors.blueAccent)
+                            TextSpan(text: "和"),
+                            WidgetSpan(
+                              child: GestureDetector(
+                                onTap: () {
+                                  NavigatorUtils.navigatorRouter(
+                                      context,
+                                      WebViewPage(
+                                        initialUrl: APi.AGREEMENT_PRIVACY_URL,
+                                        showActions: false,
+                                        title: "隐私政策",
+                                      ));
+                                },
+                                child: Text(
+                                  "《隐私政策》",
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                ),
+                              ),
                             ),
-                          ),
+                            TextSpan(text: "了解详细信息。如你同意，请点击“同意”开始接受我们的服务。"),
+                          ],
                         ),
-                        TextSpan(text: "了解详细信息。如你同意，请点击“同意”开始接受我们的服务。"),
-                      ],
-                    ),
-                    style: TextStyle(fontSize: ScreenUtil().setSp(42)),
+                        style: TextStyle(fontSize: ScreenUtil().setSp(42)),
+                      ),
+                    ],
                   ),
                 ),
               ),

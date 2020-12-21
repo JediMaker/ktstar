@@ -146,7 +146,6 @@ class _AboutPageState extends State<AboutPage>
                 decoration: BoxDecoration(color: Colors.white),
                 child: InkWell(
                   onTap: () {
-                    launch("tel:15695657828");
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
