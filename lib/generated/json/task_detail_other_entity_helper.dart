@@ -43,6 +43,9 @@ taskDetailOtherDataFromJson(TaskDetailOtherData data, Map<String, dynamic> json)
 			data.descJson.add(new TaskDetailOtherDataDescJson().fromJson(v));
 		});
 	}
+	if (json['show_btn'] != null) {
+		data.showBtn = json['show_btn'];
+	}
 	return data;
 }
 
@@ -53,6 +56,7 @@ Map<String, dynamic> taskDetailOtherDataToJson(TaskDetailOtherData entity) {
 	if (entity.descJson != null) {
 		data['desc_json'] =  entity.descJson.map((v) => v.toJson()).toList();
 	}
+	data['show_btn'] = entity.showBtn;
 	return data;
 }
 

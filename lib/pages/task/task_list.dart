@@ -21,6 +21,7 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/user_info_entity.dart';
+import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
@@ -820,7 +821,7 @@ class _TaskListPageState extends State<TaskListPage>
                   appBarBackgroundColor: generator.dominantColor.color,
                 ));*/
             if (path.contains("czb365")) {
-             /* PaletteGenerator generator =
+              /* PaletteGenerator generator =
                   await PaletteGenerator.fromImageProvider(
                       Image.network("$icon").image);*/
               //platformType=渠道编码&platformCode=用户手92657653
@@ -838,8 +839,9 @@ class _TaskListPageState extends State<TaskListPage>
               /* NavigatorUtils.navigatorRouter(context, MyTestApp());
               return;*/
             }
-            if (name.contains('游戏')) {
+            if (name.contains('游戏') && GlobalConfig.isHuaweiUnderReview) {
               CommonUtils.showToast("敬请期待");
+              NavigatorUtils.navigatorRouter(context, ClassifyListPage());
               return;
             }
             Utils.launchUrl(path);
@@ -1808,14 +1810,14 @@ class _TaskListTabViewState extends State<TaskListTabView>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: ScrollableState());
-    if (mounted) {
-      setState(() {
-        try {
-          bus.emit("taskListChanged", 0);
-          taskList = widget.taskList;
-          userType = widget.userType;
-        } catch (e) {}
-      });
+    try {
+      taskList = widget.taskList;
+      userType = widget.userType;
+      //print("_initData  widget.taskList=${taskList.length}");
+      //print("_initData taskList=${taskList.length}");
+      //print("_initData userType=${widget.userType}");
+    } catch (e) {
+      print("_initData err=$e");
     }
 
     /*  if (taskList == null || taskList.length <= 0) {
@@ -1858,7 +1860,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                 return;
               }
             }
-            break;
+            break;[图片]
           case 1: //vip
             for (var taskListItem in taskListAll) {
               if (taskListItem.name == "VIP专区") {
@@ -1889,19 +1891,19 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   Widget buildTaskListTabView() {
     ///    组件创建完成的回调通知方法
+    ///解决首次数据加载失败问题
+    ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ///解决首次数据加载失败问题
       if (!CommonUtils.isEmpty(taskList)) {
         bus.emit("taskListChanged", 0);
         bus.emit("taskListChanged", taskList.length);
-        print('taskListChanged", taskList.length=${taskList.length}');
+        print('taskListChangedtaskList", taskList.length=${taskList.length}');
       } else {
         _initData();
-        /*  print(
-            "widget.taskType=${widget.taskType} has zero length data && taskList=$taskList");*/
+        print(
+            "widget.taskType=${widget.taskType} has zero length data && taskList=$taskList");
       }
     });
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2143,6 +2145,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                       NavigatorUtils.navigatorRouter(
                           context,
                           TaskSharePage(
+                            taskId: taskItem.id,
+                          ));
+                      break;
+                    case "4"://商品补贴任务
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          TaskDetailOtherPage(
                             taskId: taskItem.id,
                           ));
                       break;

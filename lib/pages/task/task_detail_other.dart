@@ -38,6 +38,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
   bool isFirstLoading = true;
   List<TaskDetailOtherDataDescJson> _descJsonList;
   String title = '';
+  bool showBtn = true;
 
   _initData() async {
     try {
@@ -49,6 +50,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
         setState(() {
           _descJsonList = result.data.descJson;
           title = result.data.title;
+          showBtn = result.data.showBtn;
         });
       } else {
         CommonUtils.showToast(result.errMsg);
@@ -159,7 +161,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
 
   Widget buildBtnLayout() {
     return Visibility(
-      visible: _descJsonList != null,
+      visible: _descJsonList != null && showBtn,
       child: Container(
         alignment: Alignment.center,
         height: ScreenUtil().setHeight(120),
