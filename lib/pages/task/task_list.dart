@@ -1009,8 +1009,8 @@ class _TaskListPageState extends State<TaskListPage>
                     bannerColorList[index],
                     bannerColorList[index],
                   ]);
-                  print(
-                      "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");
+                  /*print(
+                      "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
                   bannerIndex = index;
                 });
               }

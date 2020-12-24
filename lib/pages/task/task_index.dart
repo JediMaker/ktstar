@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
+import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,11 +35,12 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   List<NavigationIconView> _navigationViews;
   List<StatefulWidget> _pageList;
   StatefulWidget _currentPage;
+
 //默认索引
   int positionIndex = 0;
+
   @override
   void initState() {
-
     Utils.checkAppVersion(context);
     super.initState();
 
@@ -74,11 +77,13 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       ),
     );
   }
+
   void onPageChanged(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
+
   Scaffold buildHomeWidget() {
     _navigationViews = <NavigationIconView>[
       new NavigationIconView(
@@ -94,6 +99,24 @@ class _TaskIndexPageState extends State<TaskIndexPage>
           ),
           title: new Text(
             '首页',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this),
+      new NavigationIconView(
+          icon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xd04db27fc-c6f1-494e-9c48-ec4f7ff0a671',
+            width: ScreenUtil().setWidth(77),
+            height: ScreenUtil().setWidth(77),
+          ),
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+            'https://alipic.lanhuapp.com/xd9fd6b877-fa36-452e-8667-cb4eb297fcea',
+            width: ScreenUtil().setWidth(77),
+            height: ScreenUtil().setWidth(77),
+          ),
+          title: new Text(
+            '分类',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
@@ -118,9 +141,10 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       view.controller.addListener(_rebuild);
     }
 
-     _pageList = <StatefulWidget>[
+    _pageList = <StatefulWidget>[
 //      new HomePage(tabIndex: _homeTabIndex),
       TaskListPage(),
+      ClassifyListPage(),
       TaskMinePage(),
       /*   new NoticePage(),
       new MyPage()*/

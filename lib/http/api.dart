@@ -222,7 +222,7 @@ class APi {
       "/api/index.php?route=api/category/goods";
 
   ///首页分类商品列表
-  static const String CATEGORY = "/api/index.php?route=api/category";
+  static const String CATEGORY = "/category/tree";
 
   ///分类
 
