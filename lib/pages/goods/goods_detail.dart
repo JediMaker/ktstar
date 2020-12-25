@@ -46,6 +46,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
   var _originalPrice = '';
   var _queueCount = '0';
   var _btPrice = '';
+  var _showNum = '';
 
   Future _initData() async {
     try {
@@ -64,6 +65,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
               _queueCount = resultData.data.queueCount;
               _btPrice = resultData.data.btPrice;
               _detailImgs = resultData.data.detailImgs;
+              _showNum = resultData.data.minPower;
             } catch (e) {
               print(e);
               /* try {
@@ -286,14 +288,29 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                         width: 10,
                                       ),
                                       Expanded(
-                                        child: Text(
-                                          "目前该商品已有$_queueCount人正在参与排队",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(42),
-                                            color: Color(0xff222222),
-                                          ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "目前该商品已有$_queueCount人正在参与排队",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: ScreenUtil().setSp(42),
+                                                color: Color(0xff222222),
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(top: 4),
+                                              child: Text(
+                                                '助力满$_showNum有机会直接拿到补贴~',
+                                                style: TextStyle(
+                                                  color: Color(0xff999999),
+                                                  fontSize: ScreenUtil().setSp(36),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Visibility(

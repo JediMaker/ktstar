@@ -25,8 +25,9 @@ void main() {
 }
 
 class FreeQueuePersonalPage extends StatefulWidget {
-  FreeQueuePersonalPage({Key key}) : super(key: key);
+  FreeQueuePersonalPage({Key key, this.pageType = 0}) : super(key: key);
   final String title = "";
+  int pageType;
 
   @override
   _FreeQueuePersonalPageState createState() => _FreeQueuePersonalPageState();
@@ -413,6 +414,7 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
             context,
             FreeQueuePage(
               goodsId: goodsId,
+              pageType: 1,
             ));
       },
       child: Column(

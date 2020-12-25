@@ -15,6 +15,8 @@ class TaskDetailOtherData with JsonConvert<TaskDetailOtherData> {
 	String title;
 	@JSONField(name: "desc_json")
 	List<TaskDetailOtherDataDescJson> descJson;
+	@JSONField(name: "show_btn")
+	bool showBtn;
 }
 
 class TaskDetailOtherDataDescJson with JsonConvert<TaskDetailOtherDataDescJson> {

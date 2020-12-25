@@ -149,7 +149,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
       ),
     );
   }
-
+  String lastTimeDesc = '';
   buildItemLayout({IncomeListDataList listItem}) {
     String price = '';
     String type = '';
@@ -162,12 +162,15 @@ class _IncomeListPageState extends State<IncomeListPage> {
     String timeDesc = '';
     String desc = '';
     String iconName = '';
+    bool _showTimeDesc = true;
     try {
       price = listItem.price;
       status = listItem.status;
       rejectReason = listItem.rejectReason;
       createTime = listItem.createTime;
       timeDesc = listItem.timeDesc;
+      _showTimeDesc = lastTimeDesc != timeDesc;
+      lastTimeDesc = timeDesc;
       desc = listItem.desc;
       profitType = listItem.profitType;
       type = listItem.type;
@@ -247,108 +250,118 @@ class _IncomeListPageState extends State<IncomeListPage> {
       }*/
     }
 
-    return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(16)),
-      padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:
-              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-          border: Border.all(
-//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+    return Column(
+      children: [
+        Visibility(
+          visible: _showTimeDesc,
+          child: Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              child: Center(child: Text('$timeDesc'))),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+              horizontal: 16, vertical: ScreenUtil().setHeight(16)),
+          padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+          decoration: BoxDecoration(
               color: Colors.white,
-              width: 0.5)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+              border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                  color: Colors.white,
+                  width: 0.5)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Expanded(
-                child: Row(
-                  children: <Widget>[
-                    Image.asset(
-                      "static/images/$iconName",
-                      width: ScreenUtil().setWidth(60),
-                      height: ScreenUtil().setWidth(60),
-                    ),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(20),
-                    ),
-                    Text(
-                      statusText,
-                      style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                          fontSize: ScreenUtil().setSp(42)),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "$createTime",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(42),
-                        color: Color(0xff999999),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(30),
-          ),
-          Divider(
-            height: ScreenUtil().setHeight(1),
-            color: Color(0xFFdddddd),
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(47),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  alignment: WrapAlignment.start,
-                  runSpacing: 4,
-                  children: <Widget>[
-                    Text(
-                      //状态：
-                      "$desc",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(42),
-                        color: Color(0xFF666666),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.start,
-                alignment: WrapAlignment.start,
-                runSpacing: 4,
+              Row(
                 children: <Widget>[
-                  Text(
-                    //您于2020-23-12 14:32:10提交的任务截图被驳回，驳回原因为截图不符合
-                    //要求。请当天及时重新提交~：
-                    "$prefixText$price",
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(42),
-                      color: Color(0xFF222222),
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        Image.asset(
+                          "static/images/$iconName",
+                          width: ScreenUtil().setWidth(60),
+                          height: ScreenUtil().setWidth(60),
+                        ),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(20),
+                        ),
+                        Text(
+                          statusText,
+                          style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                              fontSize: ScreenUtil().setSp(42)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "$createTime",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(42),
+                            color: Color(0xff999999),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
+              SizedBox(
+                height: ScreenUtil().setHeight(30),
+              ),
+              Divider(
+                height: ScreenUtil().setHeight(1),
+                color: Color(0xFFdddddd),
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(47),
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      alignment: WrapAlignment.start,
+                      runSpacing: 4,
+                      children: <Widget>[
+                        Text(
+                          //状态：
+                          "$desc",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(42),
+                            color: Color(0xFF666666),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    alignment: WrapAlignment.start,
+                    runSpacing: 4,
+                    children: <Widget>[
+                      Text(
+                        //您于2020-23-12 14:32:10提交的任务截图被驳回，驳回原因为截图不符合
+                        //要求。请当天及时重新提交~：
+                        "$prefixText$price",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                          color: Color(0xFF222222),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

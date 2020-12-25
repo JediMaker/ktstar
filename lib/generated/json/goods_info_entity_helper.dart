@@ -86,21 +86,26 @@ goodsInfoDataFromJson(GoodsInfoData data, Map<String, dynamic> json) {
 		} catch (e) {
 		}
   }
+	if (json['min_power'] != null) {
+		data.minPower = json['min_power']?.toString();
+	}
+
   return data;
 }
 
 Map<String, dynamic> goodsInfoDataToJson(GoodsInfoData entity) {
-  final Map<String, dynamic> data = new Map<String, dynamic>();
-  data['id'] = entity.id;
-  data['goods_name'] = entity.goodsName;
-  data['original_price'] = entity.originalPrice;
-  data['sale_price'] = entity.salePrice;
-  data['banner_imgs'] = entity.bannerImgs;
-  data['detail_imgs'] = entity.detailImgs;
-  data['queue_count'] = entity.queueCount;
-  data['bt_price'] = entity.btPrice;
-  if (entity.specInfo != null) {
-    data['spec_info'] = entity.specInfo.toJson();
-  }
-  return data;
+	final Map<String, dynamic> data = new Map<String, dynamic>();
+	data['id'] = entity.id;
+	data['goods_name'] = entity.goodsName;
+	data['original_price'] = entity.originalPrice;
+	data['sale_price'] = entity.salePrice;
+	data['banner_imgs'] = entity.bannerImgs;
+	data['detail_imgs'] = entity.detailImgs;
+	data['queue_count'] = entity.queueCount;
+	data['bt_price'] = entity.btPrice;
+	data['min_power'] = entity.minPower;
+	if (entity.specInfo != null) {
+		data['spec_info'] = entity.specInfo.toJson();
+	}
+	return data;
 }

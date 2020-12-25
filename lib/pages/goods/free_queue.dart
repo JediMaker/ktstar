@@ -5,12 +5,15 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_queue_entity.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/pages/task/task_index.dart';
+
+import 'goods_detail.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -23,9 +26,16 @@ void main() {
 }
 
 class FreeQueuePage extends StatefulWidget {
-  FreeQueuePage({Key key, this.goodsId}) : super(key: key);
+  FreeQueuePage({Key key, this.goodsId, this.pageType = 0}) : super(key: key);
   final String title = "";
   String goodsId;
+
+  /// 页面来源类型
+  ///
+  /// 0 默认
+  ///
+  /// 1 从个人中心跳转
+  int pageType;
 
   @override
   _FreeQueuePageState createState() => _FreeQueuePageState();
@@ -409,7 +419,15 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
                   NavigatorUtils.navigatorRouterReplaceMent(
                       context, FreeQueuePersonalPage());
                 } else {
-                  Navigator.of(context).pop();
+                  if (widget.pageType == 1) {
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        GoodsDetailPage(
+                          productId: widget.goodsId,
+                        ));
+                  } else {
+                    Navigator.of(context).pop();
+                  }
                 }
               },
               child: Container(

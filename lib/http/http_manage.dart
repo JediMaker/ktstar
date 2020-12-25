@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:star/generated/json/address_info_entity_helper.dart';
 import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
+import 'package:star/generated/json/category_bean_entity_helper.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/generated/json/goods_info_entity_helper.dart';
@@ -46,6 +47,7 @@ import 'package:star/http/interceptors/log_interceptor.dart';
 import 'package:star/http/interceptors/token_interceptor.dart';
 import 'package:star/models/address_info_entity.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
+import 'package:star/models/category_bean_entity.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
 import 'package:star/models/goods_info_entity.dart';
@@ -860,6 +862,10 @@ class HttpManage {
   ///
   ///[page] 	页码
   ///[pageSize] 	单页数据量
+  ///
+  ///
+  ///
+  ///
   ///
   ///
   /// 获取任务提交列表
@@ -1874,17 +1880,35 @@ class HttpManage {
 
 //
   ///获取商品列表
-  static Future<ResultBeanEntity> getGoodsList() async {
+  static Future<ResultBeanEntity> getGoodsList({cId = ''}) async {
     Map paramsMap = Map<String, dynamic>();
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['cid'] = "$cId";
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.GOODS_LIST,
+      queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
+  }
+
+  ///  商品分类列表
+  static Future<List<CategoryBeanData>> getCategoryList(category_id) async {
+    var formData = FormData();
+    formData.fields..add(MapEntry("parent_category_id", "$category_id "));
+
+    var response = await HttpManage.dio.post(
+      APi.CATEGORY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    print(response.data.toString());
+    CategoryBeanEntity dataBean = CategoryBeanEntity();
+    categoryBeanEntityFromJson(dataBean, extractData);
+    return dataBean.data;
   }
 }
