@@ -26,7 +26,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
       setState(() {
         try {
           leftListData = categoryList;
-          rightListData = leftListData[0].children;
+          rightListData = leftListData[selectedIndex].children;
         } catch (e) {}
       });
     }
@@ -173,7 +173,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
               return GestureDetector(
                 onTap: () {
                   if (category != null) {
-                    NavigatorUtils.navigatorRouter(context, GoodsListPage());
+                    NavigatorUtils.navigatorRouter(context, GoodsListPage(categoryId:category.id ,title: category.name,));
                   }
                 },
                 child: Container(
