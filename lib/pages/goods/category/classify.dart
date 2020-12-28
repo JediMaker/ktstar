@@ -91,7 +91,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
                       child: Text(
                         category == null ? '' : category.name,
                         style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
+                          fontSize: ScreenUtil().setSp(38),
                           color: _selected ? Colors.red : Color(0xff222222),
                         ),
                       ),
@@ -173,9 +173,15 @@ class _ClassifyListPageState extends State<ClassifyListPage>
               return GestureDetector(
                 onTap: () {
                   if (category != null) {
-                    NavigatorUtils.navigatorRouter(context, GoodsListPage(categoryId:category.id ,title: category.name,));
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        GoodsListPage(
+                          categoryId: category.id,
+                          title: category.name,
+                        ));
                   }
                 },
+                behavior: HitTestBehavior.opaque,
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
