@@ -1911,4 +1911,20 @@ class HttpManage {
     categoryBeanEntityFromJson(dataBean, extractData);
     return dataBean.data;
   }
+  //
+  ///申请成为微股东
+  static Future<ResultBeanEntity> applyToBecomeAMicroShareholder() async {
+    Map paramsMap = Map<String, dynamic>();
+//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['cid'] = "";
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.get(
+      APi.USER_PARTNER,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
 }
