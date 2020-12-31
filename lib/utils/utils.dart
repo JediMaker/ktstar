@@ -148,13 +148,6 @@ class Utils {
     _localVersion = packageInfo.version;
     String updateTime = GlobalConfig.prefs.getString('updateTime') ?? null;
 
-    if (GlobalConfig.isHuaweiUnderReview) {
-      if (checkDerictly) {
-        CommonUtils.showToast("当前已是最新版本");
-      }
-      return;
-    }
-
     /// 一天之内只提醒一次需要更新
     if (!checkDerictly) {
       if (updateTime != null &&
@@ -168,6 +161,18 @@ class Utils {
       if (versionInfo.status) {
         print(
             "_localVersion=$_localVersion；versionInfo。versionNo=${versionInfo.data.versionNo}");
+        if (versionInfo.data.whCheck) {
+          //华为应用市场上架审核中
+          GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+        } else {
+          GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+        }
+        if (GlobalConfig.isHuaweiUnderReview) {
+          if (checkDerictly) {
+            CommonUtils.showToast("当前已是最新版本");
+          }
+          return;
+        }
         bool needUpdate =
             isVersionGreatThanLocal(versionInfo.data.versionNo, _localVersion);
         if (!needUpdate) {
@@ -176,6 +181,8 @@ class Utils {
           }
           return;
         }
+        GlobalConfig.prefs
+            .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);
         if (needUpdate) {
           GlobalConfig.prefs.setBool('needUpdate', true);
           final bool wantsUpdate = await showDialog<bool>(

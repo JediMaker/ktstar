@@ -29,7 +29,6 @@ import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_detail_other.dart';
 import 'package:star/pages/task/task_gallery.dart';
-import 'package:star/pages/task/task_hall.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
@@ -37,7 +36,6 @@ import 'package:star/pages/task/task_share.dart';
 import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/my_webview.dart';
-import 'package:star/pages/goods/home_goods_list.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -45,15 +43,15 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/utils/utils.dart';
 
-class TaskListPage extends StatefulWidget {
-  TaskListPage({Key key}) : super(key: key);
-  final String title = "首页";
+class TaskHallPage extends StatefulWidget {
+  TaskHallPage({Key key}) : super(key: key);
+  final String title = "任务大厅";
 
   @override
-  _TaskListPageState createState() => _TaskListPageState();
+  _TaskHallPageState createState() => _TaskHallPageState();
 }
 
-class _TaskListPageState extends State<TaskListPage>
+class _TaskHallPageState extends State<TaskHallPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final dataKey = new GlobalKey();
   String taskCompletedNum = "";
@@ -159,7 +157,7 @@ class _TaskListPageState extends State<TaskListPage>
         });
       }
     });
-    bus.on("refreshHomeData", (data) {
+    bus.on("refreshData", (data) {
       _initData(isRefresh: true);
     });
     super.initState();
@@ -251,7 +249,7 @@ class _TaskListPageState extends State<TaskListPage>
           Image.network("${bannerItem.imgPath}").image);
       bannerColorList.add(generator.dominantColor.color);
     }
-    if (mounted) {
+   /* if (mounted) {
       setState(() {
         try {
           _gradientCorlor = LinearGradient(colors: [
@@ -262,7 +260,7 @@ class _TaskListPageState extends State<TaskListPage>
           print('change bannerColorList color err = $e');
         }
       });
-    }
+    }*/
     if (bannerList.length > 1) {
       _swiperController.startAutoplay();
     }
@@ -329,207 +327,116 @@ class _TaskListPageState extends State<TaskListPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      /* appBar: PreferredSize(
-        preferredSize: Size.fromHeight(56 + MediaQuery.of(context).padding.top),
-        child: AnimatedContainer(
-          width: double.maxFinite,
+    return Material(
+      child: Scaffold(
+        /* appBar: PreferredSize(
+          preferredSize: Size.fromHeight(56 + MediaQuery.of(context).padding.top),
+          child: AnimatedContainer(
+            width: double.maxFinite,
 //          height: 56 + ScreenUtil.statusBarHeight,
-          alignment: Alignment.center,
-          height: 56 + MediaQuery.of(context).padding.top,
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          duration: Duration(milliseconds: 300),
-          curve: Curves.ease,
-          decoration: BoxDecoration(
-            gradient: _gradientCorlor,
+            alignment: Alignment.center,
+            height: 56 + MediaQuery.of(context).padding.top,
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            duration: Duration(milliseconds: 300),
+            curve: Curves.ease,
+            decoration: BoxDecoration(
+              gradient: _gradientCorlor,
+            ),
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(54),
+                color: Colors.white,
+              ),
+            ),
           ),
-          child: Text(
+        ),*/
+        appBar: GradientAppBar(
+          title: Text(
             widget.title,
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(54),
-              color: Colors.white,
-            ),
+            style: TextStyle(fontSize: ScreenUtil().setSp(54)),
           ),
+          centerTitle: true,
+          elevation: 0,
+          brightness: Brightness.dark,
+          gradient: _gradientCorlor,
         ),
-      ),*/
-      appBar: GradientAppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(fontSize: ScreenUtil().setSp(54)),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        brightness: Brightness.dark,
-        gradient: _gradientCorlor,
-      ),
-      body: Builder(
-        builder: (context) {
-          return EasyRefresh.custom(
-            enableControlFinishLoad: false,
-            header: CustomHeader(
-                completeDuration: Duration(seconds: 2),
-                headerBuilder: (context,
-                    refreshState,
-                    pulledExtent,
-                    refreshTriggerPullDistance,
-                    refreshIndicatorExtent,
-                    axisDirection,
-                    float,
-                    completeDuration,
-                    enableInfiniteRefresh,
-                    success,
-                    noMore) {
-                  return Stack(
-                    children: <Widget>[
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          width: 30.0,
-                          height: 30.0,
-                          child: SpinKitCircle(
+        body: Builder(
+          builder: (context) {
+            return EasyRefresh.custom(
+              enableControlFinishLoad: false,
+              header: CustomHeader(
+                  completeDuration: Duration(seconds: 2),
+                  headerBuilder: (context,
+                      refreshState,
+                      pulledExtent,
+                      refreshTriggerPullDistance,
+                      refreshIndicatorExtent,
+                      axisDirection,
+                      float,
+                      completeDuration,
+                      enableInfiniteRefresh,
+                      success,
+                      noMore) {
+                    return Stack(
+                      children: <Widget>[
+                        Positioned(
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Container(
+                            width: 30.0,
+                            height: 30.0,
+                            child: SpinKitCircle(
+                              color: GlobalConfig.colorPrimary,
+                              size: 30.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+              firstRefreshWidget: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Center(
+                    child: SizedBox(
+                  height: 200.0,
+                  width: 300.0,
+                  child: Card(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: 50.0,
+                          height: 50.0,
+                          child: SpinKitFadingCube(
                             color: GlobalConfig.colorPrimary,
-                            size: 30.0,
+                            size: 25.0,
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
-            firstRefreshWidget: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Center(
-                  child: SizedBox(
-                height: 200.0,
-                width: 300.0,
-                child: Card(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        child: SpinKitFadingCube(
-                          color: GlobalConfig.colorPrimary,
-                          size: 25.0,
-                        ),
-                      ),
-                      Container(
-                        child: Text("正在加载。。。"),
-                      )
-                    ],
+                        Container(
+                          child: Text("正在加载。。。"),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )),
-            ),
-            slivers: <Widget>[
-              SliverToBoxAdapter(
-                child: Stack(
-                  children: <Widget>[
-                    buildBannerLayout(),
-//                    _buildHotspot(),
-                    itemsLayout(),
-                  ],
-                ),
+                )),
               ),
-              SliverToBoxAdapter(
-                  child: Visibility(
-                visible: goodsList.length > 0,
-                child: Container(
-                  margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(30), left: 16, right: 16),
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.circular(ScreenUtil().setWidth(32))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          NavigatorUtils.navigatorRouter(
-                              context, GoodsListPage());
-                        },
-                        child: Container(
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: ScreenUtil().setWidth(400),
-                                height: ScreenUtil().setHeight(60),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(),
-                              ),
-                              Container(
-                                child: Text(
-                                  "查看更多 >>",
-                                  style: TextStyle(
-                                    color: Color(0xff222222),
-                                    fontSize: ScreenUtil().setSp(38),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          margin: EdgeInsets.only(
-                            bottom: ScreenUtil().setHeight(30),
-                          ),
-                        ),
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(goodsList.length, (index) {
-                            HomeGoodsListGoodsList item;
-                            try {
-                              item = goodsList[index];
-                            } catch (e) {}
-                            return productItem(item: item);
-                          }),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )),
-              SliverToBoxAdapter(
-                child: Container(
-                  child: SizedBox(
-                    height: 8,
-                  ),
-                ),
-              ),
-              HomeGoodsListPage(),
-              SliverToBoxAdapter(
-                child: Container(
-                  child: SizedBox(
-                    height: 8,
-                  ),
-                ),
-              ),
-              //  SliverToBoxAdapter(child: taskCard2(context)),
-              // buildTaskWall(),
-            ],
-            onRefresh: () async {
+              slivers: <Widget>[
+                SliverToBoxAdapter(child: taskCard2(context)),
+              ],
+              onRefresh: () async {
 //              _initData();
-              if (!isFirstLoading) {
-                bus.emit("refreshHomeData");
-              }
-            },
-          );
-        },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+                if (!isFirstLoading) {
+                  bus.emit("refreshData");
+                }
+              },
+            );
+          },
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 
@@ -784,7 +691,6 @@ class _TaskListPageState extends State<TaskListPage>
     String appId = '';
     String path = '';
     String subtitle = '';
-    bool needShow = true;
     try {
       icon = item.icon;
       name = item.name;
@@ -794,21 +700,8 @@ class _TaskListPageState extends State<TaskListPage>
       subtitle = item.subtitle;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
     } catch (e) {}
-    if ((name.contains('游戏') || name.contains('赚钱') || name.contains('会员')) &&
-        GlobalConfig.isHuaweiUnderReview) {
-      needShow = false;
-    }
     return new InkWell(
         onTap: () async {
-          if (name.contains('赚钱')) {
-            if (!GlobalConfig.isHuaweiUnderReview) {
-              NavigatorUtils.navigatorRouter(context, TaskHallPage());
-            } else {
-              needShow = false;
-              CommonUtils.showToast("敬请期待");
-            }
-            return;
-          }
           if (type == 'anchor') {
             //滚动到指定位置
 //            _tabController.animateTo(2);
@@ -837,9 +730,7 @@ class _TaskListPageState extends State<TaskListPage>
             return;
           }
           if (type == 'toast') {
-            needShow = false;
             CommonUtils.showToast("敬请期待");
-            needShow = false;
             return;
           }
           if (type == 'link') {
@@ -873,59 +764,55 @@ class _TaskListPageState extends State<TaskListPage>
               return;*/
             }
             if (name.contains('游戏') && GlobalConfig.isHuaweiUnderReview) {
-              needShow = false;
               CommonUtils.showToast("敬请期待");
+              NavigatorUtils.navigatorRouter(context, ClassifyListPage());
               return;
             }
-
             Utils.launchUrl(path);
             return;
           }
         },
-        child: Visibility(
-          visible: needShow,
-          child: Container(
-            width: (ScreenUtil.screenWidth - 40) / 4,
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Container(
-                  margin: const EdgeInsets.only(bottom: 8.0),
-                  child: new CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.transparent,
-                    child: CachedNetworkImage(
-                      imageUrl: "$icon",
-                      width: ScreenUtil().setWidth(136),
-                      height: ScreenUtil().setWidth(136),
-                    ),
+        child: Container(
+          width: (ScreenUtil.screenWidth - 40) / 4,
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.only(bottom: 8.0),
+                child: new CircleAvatar(
+                  radius: 20.0,
+                  backgroundColor: Colors.transparent,
+                  child: CachedNetworkImage(
+                    imageUrl: "$icon",
+                    width: ScreenUtil().setWidth(136),
+                    height: ScreenUtil().setWidth(136),
                   ),
                 ),
-                new Container(
+              ),
+              new Container(
+                child: new Text(
+                  "$name",
+                  style: new TextStyle(
+                    fontSize: ScreenUtil().setSp(42),
+                    color: _itemsTextColor,
+                  ),
+                ),
+              ),
+              Visibility(
+                child: new Container(
+                  margin: const EdgeInsets.only(top: 4.0),
                   child: new Text(
-                    "$name",
+                    "$subtitle",
+                    textAlign: TextAlign.center,
                     style: new TextStyle(
-                      fontSize: ScreenUtil().setSp(42),
-                      color: _itemsTextColor,
+                      fontSize: ScreenUtil().setSp(32),
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff999999),
                     ),
                   ),
                 ),
-                Visibility(
-                  child: new Container(
-                    margin: const EdgeInsets.only(top: 4.0),
-                    child: new Text(
-                      "$subtitle",
-                      textAlign: TextAlign.center,
-                      style: new TextStyle(
-                        fontSize: ScreenUtil().setSp(32),
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff999999),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ));
   }
@@ -1824,7 +1711,7 @@ class TaskListTabView extends StatefulWidget {
 }
 
 class _TaskListTabViewState extends State<TaskListTabView>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
   String taskCompletedNum = "";
   String taskTotalNum = "";
@@ -1860,7 +1747,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
     /*  if (taskList == null || taskList.length <= 0) {
       _initData();
     }*/
-    /* bus.on("refreshHomeData", (data) {
+    /* bus.on("refreshData", (data) {
       _initData();
     });*/
   }
@@ -2434,7 +2321,4 @@ class _TaskListTabViewState extends State<TaskListTabView>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
