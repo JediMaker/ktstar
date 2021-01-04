@@ -794,7 +794,7 @@ class _TaskListPageState extends State<TaskListPage>
       subtitle = item.subtitle;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
     } catch (e) {}
-    if ((name.contains('游戏') || name.contains('赚钱') || name.contains('会员')) &&
+    if ((name.contains('游戏') || name.contains('赚钱') || name.contains('会员')|| name.contains('加油')) &&
         GlobalConfig.isHuaweiUnderReview) {
       needShow = false;
     }
