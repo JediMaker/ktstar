@@ -79,7 +79,9 @@ class _LoginPageState extends State<LoginPage> {
       if (versionInfo.data.whCheck) {
         //华为应用市场上架审核中
         GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
-      } else {}
+      } else {
+        GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+      }
       if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
         Future.delayed(Duration(milliseconds: 300), () {
           showPrivacyDialog(context);
@@ -376,7 +378,6 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
                   child: Column(
-
                     children: [
                       new Text.rich(
                         TextSpan(

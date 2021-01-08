@@ -81,6 +81,9 @@ class APi {
   ///校验支付密码
   static const String USER_CHECK_PASSWORD = "user/check-password";
 
+  ///申请成为微股东
+  static const String USER_PARTNER = "user/partner";
+
   ///获取当前版本信息
   static const String SITE_VERSION = "site/version";
 

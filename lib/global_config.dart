@@ -141,7 +141,7 @@ class GlobalConfig {
   static const TASKWALL_ADDRESS = 'https://c.buuyee.com/api/external';
 
   /// 代理的 ip 地址
-  static const localProxyIPAddress = '192.168.0.10';
+  static const localProxyIPAddress = '192.168.0.3';
 
   /// 微信appid
   static const String WECHAT_APPID = 'wx824cc9f48da9315c';
@@ -230,7 +230,7 @@ class GlobalConfig {
   }
 
   static bool isLogin() {
-    /* bool hasLogin =
+    /* bool hasLogin =任务大厅
         prefs.containsKey("hasLogin") ? prefs.getBool("hasLogin") : false;
     print("hasLogin===" +
         hasLogin.toString() +
