@@ -33,6 +33,7 @@ class PddGoodsInfoData with JsonConvert<PddGoodsInfoData> {
 	String weAppId;
 	@JSONField(name: "mobile_uri")
 	String mobileUri;
+	String url;
 	PddGoodsInfoDataCoupons coupons;
 }
 

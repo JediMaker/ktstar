@@ -61,6 +61,9 @@ pddGoodsInfoDataFromJson(PddGoodsInfoData data, Map<String, dynamic> json) {
 	if (json['mobile_uri'] != null) {
 		data.mobileUri = json['mobile_uri']?.toString();
 	}
+	if (json['url'] != null) {
+		data.url = json['url']?.toString();
+	}
 	if (json['coupons'] != null) {
 		try {
 			data.coupons = new PddGoodsInfoDataCoupons().fromJson(json['coupons']);
@@ -83,6 +86,7 @@ Map<String, dynamic> pddGoodsInfoDataToJson(PddGoodsInfoData entity) {
 	data['we_app_path'] = entity.weAppPath;
 	data['we_app_id'] = entity.weAppId;
 	data['mobile_uri'] = entity.mobileUri;
+	data['url'] = entity.url;
 	if (entity.coupons != null) {
 		data['coupons'] = entity.coupons.toJson();
 	}
