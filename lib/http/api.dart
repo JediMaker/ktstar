@@ -216,6 +216,11 @@ class APi {
   ///首页最新商品列表
   static const String GOODS_LIST = "goods/lists";
 
+  ///首页拼多多商品列表
+  static const String GOODS_PDD_GOODS_LIST = "goods/pin-goods-list";
+  ///拼多多商品详情
+  static const String GOODS_PDD_GOODS_Detail = "goods/pin-goods-detail";
+
   ///首页热门商品列表
   static const String HOME_SEARCH_PRODUCTS_LIST =
       "/api/index.php?route=api/search";

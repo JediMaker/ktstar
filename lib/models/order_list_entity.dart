@@ -35,6 +35,8 @@ class OrderListDataList with JsonConvert<OrderListDataList> {
   List<OrderListDataListGoodsList> goodsList;
   @JSONField(name: "face_money")
   String faceMoney;
+  @JSONField(name: "order_source")
+  String orderSource;
   String mobile;
   String phone;
 }
@@ -52,4 +54,8 @@ class OrderListDataListGoodsList with JsonConvert<OrderListDataListGoodsList> {
   String salePrice;
   @JSONField(name: "spec_item")
   String specItem;
+  @JSONField(name: "goods_source")
+  String goodsSource;
+  @JSONField(name: "pdd_goods_id")
+  String pddGoodsId;
 }

@@ -12,6 +12,16 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+import 'package:loading/indicator/ball_grid_pulse_indicator.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/indicator/ball_scale_indicator.dart';
+import 'package:loading/indicator/ball_scale_multiple_indicator.dart';
+import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
+import 'package:loading/indicator/line_scale_indicator.dart';
+import 'package:loading/indicator/line_scale_party_indicator.dart';
+import 'package:loading/indicator/line_scale_pulse_out_indicator.dart';
+import 'package:loading/indicator/pacman_indicator.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
@@ -43,6 +53,7 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loading/loading.dart';
 import 'package:star/utils/utils.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -329,6 +340,13 @@ class _TaskListPageState extends State<TaskListPage>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(iconList)) {
+      } else {
+        print("$context WidgetsBinding_initData");
+        _initData();
+      }
+    });
     return Scaffold(
       /* appBar: PreferredSize(
         preferredSize: Size.fromHeight(56 + MediaQuery.of(context).padding.top),
@@ -397,6 +415,37 @@ class _TaskListPageState extends State<TaskListPage>
                     ],
                   );
                 }),
+            footer: CustomFooter(
+                completeDuration: Duration(seconds: 2),
+                footerBuilder: (context,
+                    loadState,
+                    pulledExtent,
+                    loadTriggerPullDistance,
+                    loadIndicatorExtent,
+                    axisDirection,
+                    float,
+                    completeDuration,
+                    enableInfiniteLoad,
+                    success,
+                    noMore) {
+                  return Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          child: SpinKitCircle(
+                            color: GlobalConfig.colorPrimary,
+                            size: 30.0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
             firstRefreshWidget: Container(
               width: double.infinity,
               height: double.infinity,
@@ -435,6 +484,63 @@ class _TaskListPageState extends State<TaskListPage>
                   ],
                 ),
               ),
+
+              ///测试查看loading效果
+              /* SliverToBoxAdapter(
+                  child: Column(
+                children: [
+                  Loading(
+                    indicator: BallBeatIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: BallGridPulseIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: BallPulseIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: BallScaleIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: BallScaleMultipleIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: BallSpinFadeLoaderIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: LineScaleIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: LineScalePartyIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: LineScalePulseOutIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                  Loading(
+                    indicator: PacmanIndicator(),
+                    size: 100.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                ],
+              )),*/
               SliverToBoxAdapter(
                   child: Visibility(
                 visible: goodsList.length > 0,
@@ -525,6 +631,12 @@ class _TaskListPageState extends State<TaskListPage>
 //              _initData();
               if (!isFirstLoading) {
                 bus.emit("refreshHomeData");
+              }
+            },
+            onLoad: () async {
+//              _initData();
+              if (!isFirstLoading) {
+                bus.emit("loadMoreHomeData");
               }
             },
           );
@@ -794,7 +906,10 @@ class _TaskListPageState extends State<TaskListPage>
       subtitle = item.subtitle;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
     } catch (e) {}
-    if ((name.contains('游戏') || name.contains('赚钱') || name.contains('会员')|| name.contains('加油')) &&
+    if ((name.contains('游戏') ||
+            name.contains('赚钱') ||
+            name.contains('会员') ||
+            name.contains('加油')) &&
         GlobalConfig.isHuaweiUnderReview) {
       needShow = false;
     }
@@ -1174,6 +1289,13 @@ class _TaskListPageState extends State<TaskListPage>
               imageUrl: bannerData.imgPath,
               height: ScreenUtil().setHeight(623),
 //              width: ScreenUtil().setWidth(1125),
+              placeholder: (context, url) => Center(
+                child: Loading(
+                  indicator: BallSpinFadeLoaderIndicator(),
+                  size: 50.0,
+                  color: GlobalConfig.colorPrimary,
+                ),
+              ),
               fit: BoxFit.fill,
             ),
           );

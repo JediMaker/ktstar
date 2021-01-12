@@ -22,6 +22,8 @@ import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/generated/json/order_detail_entity_helper.dart';
 import 'package:star/generated/json/order_list_entity_helper.dart';
 import 'package:star/generated/json/pay_coupon_entity_helper.dart';
+import 'package:star/generated/json/pdd_goods_info_entity_helper.dart';
+import 'package:star/generated/json/pdd_goods_list_entity_helper.dart';
 import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
@@ -60,6 +62,8 @@ import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/pay_coupon_entity.dart';
+import 'package:star/models/pdd_goods_info_entity.dart';
+import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/models/poster_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/region_data_entity.dart';
@@ -1911,6 +1915,7 @@ class HttpManage {
     categoryBeanEntityFromJson(dataBean, extractData);
     return dataBean.data;
   }
+
   //
   ///申请成为微股东
   static Future<ResultBeanEntity> applyToBecomeAMicroShareholder() async {
@@ -1925,6 +1930,60 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///[listId] 	翻页时填写前页返回的list_id值
+  ///
+  ///
+  /// 获取拼多多商品列表
+  ///
+  static Future<PddGoodsListEntity> getPddGoodsList(page,
+      {pageSize, listId = ""}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+//    paramsMap["page_size"] = "$pageSize";
+    paramsMap["list_id"] = "$listId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.GOODS_PDD_GOODS_LIST,
+      queryParameters: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = PddGoodsListEntity();
+    pddGoodsListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[gId] 	页码
+  ///[goodsSign] 	单页数据量
+  ///[searchId] 	翻页时填写前页返回的list_id值
+  ///
+  ///
+  /// 获取拼多多商品详情
+  ///
+  static Future<PddGoodsInfoEntity> getPddGoodsInfo(
+      {gId, goodsSign, searchId = ""}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["g_id"] = "$gId";
+    paramsMap["goods_sign"] = "$goodsSign";
+    paramsMap["search_id"] = "$searchId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.get(
+      APi.GOODS_PDD_GOODS_Detail,
+      queryParameters: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = PddGoodsInfoEntity();
+    pddGoodsInfoEntityFromJson(entity, extractData);
     return entity;
   }
 }

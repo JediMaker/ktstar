@@ -95,6 +95,14 @@ dependencies:
   #  底部弹窗
   modal_bottom_sheet: ^1.0.0+1
 
+  #  友盟统计
+#  umeng_analytics_plugin: ^1.0.3
+#  umeng: ^0.0.3
+
+  loading: ^1.0.2
+  #  手机信息
+  device_info: ^1.0.0
+
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0
