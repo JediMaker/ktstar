@@ -81,6 +81,9 @@ class APi {
   ///校验支付密码
   static const String USER_CHECK_PASSWORD = "user/check-password";
 
+  ///申请成为微股东
+  static const String USER_PARTNER = "user/partner";
+
   ///获取当前版本信息
   static const String SITE_VERSION = "site/version";
 
@@ -212,6 +215,11 @@ class APi {
 
   ///首页最新商品列表
   static const String GOODS_LIST = "goods/lists";
+
+  ///首页拼多多商品列表
+  static const String GOODS_PDD_GOODS_LIST = "goods/pin-goods-list";
+  ///拼多多商品详情
+  static const String GOODS_PDD_GOODS_Detail = "goods/pin-goods-detail";
 
   ///首页热门商品列表
   static const String HOME_SEARCH_PRODUCTS_LIST =

@@ -73,6 +73,9 @@ class _TaskMinePageState extends State<TaskMinePage>
 
   ///微信账号绑定
   int isWeChatNoBinded = -1;
+
+  ///是否是微股东
+  int isItAMicroShareholder = -1;
   var _payPwdStatus = '1';
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
@@ -102,6 +105,7 @@ class _TaskMinePageState extends State<TaskMinePage>
           _pwdStatus = result.data.pwdStatus;
           _payPwdStatus = result.data.payPwdStatus;
           isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
+          isItAMicroShareholder = result.data.isPartner == "1" ? 1 : 0;
           switch (result.data.type) {
             case "0":
               isDiamonVip = false;
@@ -187,6 +191,15 @@ class _TaskMinePageState extends State<TaskMinePage>
 
   @override
   Widget build(BuildContext context) {
+    ///    组件创建完成的回调通知方法
+    ///解决首次数据加载失败问题
+    ///
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(headUrl)) {
+      } else {
+        _initUserData();
+      }
+    });
     return Scaffold(
         appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
@@ -290,6 +303,18 @@ class _TaskMinePageState extends State<TaskMinePage>
         bindWechatNoText = _weChatNo;
         break;
     }
+    var whetherMicroShareholder = "";
+    switch (isItAMicroShareholder) {
+      case 0:
+        whetherMicroShareholder = "申请";
+        break;
+      case 1:
+        whetherMicroShareholder = '已开通';
+        break;
+      default:
+        whetherMicroShareholder = "申请";
+        break;
+    }
     switch (_pwdStatus) {
       case "1":
         break;
@@ -310,6 +335,114 @@ class _TaskMinePageState extends State<TaskMinePage>
               width: 0.5)),
       child: Column(
         children: <Widget>[
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*  Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "微股东",
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () async {
+              if (isItAMicroShareholder != 1) {
+                //
+                showCupertinoDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        content: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Text(
+                              '自2021年1月1日起，实付消费金额达300元即可申请成为微股东，享受每日微股东分红权益',
+                              style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                                fontSize: ScreenUtil().setSp(42),
+                              ),
+                            )),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            child: Text(
+                              '取消',
+                              style: TextStyle(
+                                color: Color(0xff222222),
+                                fontSize: ScreenUtil().setSp(42),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            child: Text(
+                              '确定',
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                              ),
+                            ),
+                            onPressed: () async {
+                              var result = await HttpManage
+                                  .applyToBecomeAMicroShareholder();
+                              if (result.status) {
+                                CommonUtils.showToast("微股东申请开通成功！");
+                              } else {
+                                CommonUtils.showToast("${result.errMsg}");
+                              }
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              }
+            },
+            trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "$whetherMicroShareholder",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(38),
+                        color: isItAMicroShareholder != 1
+                            ? Color(0xffF93736)
+                            : Color(0xff999999)),
+                  ),
+                  constraints: BoxConstraints(
+                    maxWidth: ScreenUtil().setWidth(200),
+                  ),
+                ),
+                /*Text(
+                  "\t>",
+                  style: TextStyle(color: Color(0xff999999)),
+                ),*/
+                Visibility(
+                  visible: isItAMicroShareholder != 1,
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: ScreenUtil().setWidth(32),
+                    color: Color(0xff999999),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
+            ),
+          ),
           ListTile(
             title: Row(
               children: <Widget>[

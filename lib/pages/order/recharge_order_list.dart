@@ -14,6 +14,7 @@ import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/pages/goods/checkout_counter.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/goods/goods_detail.dart';
+import 'package:star/pages/goods/home_goods_detail.dart';
 import 'package:star/pages/order/order_detail.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
@@ -151,6 +152,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
     String phoneMoney = "";
     String totalMoney = "";
     String payMoney = ""; //
+    String orderSource = ""; //
 
     String orderNo = ""; //
     String btnTxt = ""; //
@@ -175,6 +177,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
     orderStatus = listItem.status;
     contactPhone = listItem.phone;
     goodsList = listItem.goodsList;
+    orderSource = listItem.orderSource;
     if (orderType == "1") {
       btnTxt = "再次充值";
       switch (orderStatus) {
@@ -191,6 +194,14 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
       }
     } else if (orderType == "2") {
       switch (orderStatus) {
+        case "-1":
+          orderStatusText = "已取消"; //chinaUnicom china_mobile china_telecom
+          showBtn = false;
+          break;
+        case "0":
+          orderStatusText = "未提交"; //chinaUnicom china_mobile china_telecom
+          showBtn = false;
+          break;
         case "1":
           orderStatusText = "待付款"; //chinaUnicom china_mobile china_telecom
           btnTxt = "去付款";
@@ -209,11 +220,32 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           orderStatusText = "已完成";
           showBtn = false;
           break;
+        case "9":
+          orderStatusText = "退款成功";
+          showBtn = false;
+          break;
       }
     }
     return GestureDetector(
       onTap: () {
+        if (orderSource == "2") {
+          //拼多多平台订单
+          if (CommonUtils.isEmpty(goodsList)) {
+            return;
+          }
+
+          NavigatorUtils.navigatorRouter(
+              context,
+              HomeGoodsDetailPage(
+                gId: goodsList[0].pddGoodsId,
+//                gId: id,
+//                goodsSign: goodsSign,
+//                searchId: searchId,
+              ));
+          return;
+        }
         if (orderType == "2") {
+          //自营商城订单
           NavigatorUtils.navigatorRouter(
               context,
               OrderDetailPage(

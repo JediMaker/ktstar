@@ -105,13 +105,13 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new NavigationIconView(
           icon: CachedNetworkImage(
             imageUrl:
-                'https://alipic.lanhuapp.com/xd04db27fc-c6f1-494e-9c48-ec4f7ff0a671',
+                'https://alipic.lanhuapp.com/xd4dc6c371-aa15-4f4a-b432-c5a9dee9f094',
             width: ScreenUtil().setWidth(77),
             height: ScreenUtil().setWidth(77),
           ),
           activeIcon: CachedNetworkImage(
             imageUrl:
-            'https://alipic.lanhuapp.com/xd9fd6b877-fa36-452e-8667-cb4eb297fcea',
+            'https://alipic.lanhuapp.com/xd541f75f2-6b1d-41c3-b79c-c667abb67fa3',
             width: ScreenUtil().setWidth(77),
             height: ScreenUtil().setWidth(77),
           ),

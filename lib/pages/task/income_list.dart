@@ -204,6 +204,10 @@ class _IncomeListPageState extends State<IncomeListPage> {
       }
     } else {
       switch (profitType) {
+        case "6":
+          iconName = "icon_profit_task.png";
+          statusText = "微股东分红奖励-成功";
+          break;
         case "5":
           iconName = "icon_profit_invite.png";
           statusText = "会员退款-成功";
@@ -234,6 +238,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
           break;
       }
       /*if (GlobalConfig.getUserInfo().type == 3) {
+
         switch (type) {
           case "1":
           case "2":
