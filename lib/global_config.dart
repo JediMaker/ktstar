@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluwx/fluwx.dart';
+
+//import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
@@ -11,8 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:star/models/login_entity.dart';
 
+//import 'package:umeng/umeng.dart';
+import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
 import 'generated/json/login_entity_helper.dart';
 import 'models/user_info_entity.dart';
+//import 'package:umeng/umeng.dart';
 
 // 提供五套可选主题色
 const _themes = <MaterialColor>[
@@ -180,6 +187,7 @@ class GlobalConfig {
 //      GlobalConfig.prefs.setString("uid", "123");
     }
     _initFluwx();
+    _initUmengAnalytics();
     HttpManage.init();
     _initJPushPlatformState();
     configLoading();
@@ -318,5 +326,65 @@ class GlobalConfig {
       ..textColor = Colors.yellow
       ..maskColor = Colors.blue.withOpacity(0.5)
       ..userInteractions = false;
+  }
+
+//初始化友盟统计
+  static _initUmengAnalytics() async {
+    await UmengAnalyticsPlugin.init(
+      androidKey: '5ff4055644bb94418a737f1b',
+      iosKey: '5ff405ea44bb94418a737fa3',
+      logEnabled: true,
+      channel: chanelType,
+//      encryptEnabled: true,
+    );
+    print("UmengAnalyticsPlugin.init");
+    /*print("初始化友盟开始");
+    await Umeng.init(
+      androidKey: '5ff4055644bb94418a737f1b',//5ff4055644bb94418a737f1b
+      iosKey: '5ff405ea44bb94418a737fa3',
+      onlineParamEnabled: true,
+      logEnabled: true,
+      channel: "ktxx",
+    );
+
+    if (!Platform.isAndroid) {
+      print("初始化友盟结束");
+      return;
+    }
+    //安卓系统特殊处理
+    String deviceId = await initAndroidDeviceId();
+    //上次是否是登录操作
+    bool lastSignIn = _prefs.getBool("last_is_sign_in");
+    if (lastSignIn) {
+      print("上次为登录操作，本次为注销操作");
+      Umeng.onProfileSignOff();
+      _prefs.setBool("last_is_sign_in", false);
+    } else {
+      print("上次为注销操作，本次为登录操作");
+      Umeng.onProfileSignIn(deviceId);
+      _prefs.setBool("last_is_sign_in", true);
+    }
+    print("初始化友盟结束");
+    var platformVersion = await Umeng.platformVersion;
+    print("platformVersion=$platformVersion");*/
+    /* print("初始化友盟开始");
+    try {
+      LcfarmFlutterUmeng.init(
+          iOSAppKey: "5ff405ea44bb94418a737fa3",
+          androidAppKey: "5ff4055644bb94418a737f1b",
+          channel: chanelType,
+          logEnable: true);
+    } catch (e) {
+      print("初始化友盟失败");
+    }
+    print("初始化友盟结束");*/
+  }
+
+  static Future<String> initAndroidDeviceId() async {
+    print("初始化设备id");
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+    print("初始化自定义设备结束，id为：" + androidDeviceInfo.androidId);
+    return androidDeviceInfo.androidId;
   }
 }

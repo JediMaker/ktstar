@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:star/global_config.dart';
+import 'package:star/pages/base_router/app_analysis.dart';
+import 'package:star/pages/base_router/myrouter.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/splash_page.dart';
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '可淘星选',
       navigatorKey: GlobalConfig.navigatorKey,
+      onGenerateRoute: MyRouters.generateRoute,
+      navigatorObservers: [AppAnalysis()],
       theme: ThemeData(
 //        primarySwatch: CommonUtils.createMaterialColor(Colors.white),
         // This makes the visual density adapt to the platform that you run

@@ -15,15 +15,12 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.5.1+9
+version: 2.5.0+8
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
-
-
-
     sdk: flutter
   flutter_localizations:
     sdk: flutter
@@ -96,9 +93,9 @@ dependencies:
   modal_bottom_sheet: ^1.0.0+1
 
   #  友盟统计
-#  umeng_analytics_plugin: ^1.0.3
+  umeng_analytics_plugin: ^1.0.3
 #  umeng: ^0.0.3
-
+#  lcfarm_flutter_umeng: ^0.1.9
   loading: ^1.0.2
   #  手机信息
   device_info: ^1.0.0

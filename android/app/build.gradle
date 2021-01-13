@@ -46,6 +46,7 @@ android {
                 JPUSH_PKGNAME : "com.ketao.star",
                 JPUSH_APPKEY : "b8b53a639c646141e54bf4df", // NOTE: JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                CHANNEL_NAME: "developer-default",
         ]
     }
     signingConfigs {
@@ -86,4 +87,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+//    implementation "com.umeng.umsdk:common:9.1.0" //（必选）
+    implementation "com.umeng.umsdk:asms:1.1.3" // asms包依赖(必选)
+    implementation "com.umeng.umsdk:crash:0.0.4" // native crash包依赖(必选)
 }
