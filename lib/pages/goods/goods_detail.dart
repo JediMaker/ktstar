@@ -20,6 +20,7 @@ import 'package:star/pages/goods/free_queue.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/goods_select_choice.dart';
+import 'package:star/pages/widget/my_fractionpaginationbuilder.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/models/goods_spec_info_entity.dart';
@@ -159,13 +160,14 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                               autoplay: true,
                               controller: SwiperController(),
                               pagination: new SwiperPagination(
-                                  alignment: Alignment.bottomRight,
-                                  builder: FractionPaginationBuilder(
-                                    activeColor: Colors.black,
-                                    color: Colors.black,
-                                    fontSize: ScreenUtil().setSp(20),
-                                    activeFontSize: ScreenUtil().setSp(20),
-                                  )),
+                                alignment: Alignment.bottomRight,
+                                builder: MyFractionPaginationBuilder(
+                                  activeColor: Colors.white,
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(28),
+                                  activeFontSize: ScreenUtil().setSp(28),
+                                ),
+                              ),
                             ),
                           ),
                           Divider(
@@ -289,14 +291,16 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                       ),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "目前该商品已有$_queueCount人正在参与排队",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
-                                                fontSize: ScreenUtil().setSp(42),
+                                                fontSize:
+                                                    ScreenUtil().setSp(42),
                                                 color: Color(0xff222222),
                                               ),
                                             ),
@@ -306,7 +310,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                                 '助力满$_showNum有机会直接拿到补贴~',
                                                 style: TextStyle(
                                                   color: Color(0xff999999),
-                                                  fontSize: ScreenUtil().setSp(36),
+                                                  fontSize:
+                                                      ScreenUtil().setSp(36),
                                                 ),
                                               ),
                                             ),
