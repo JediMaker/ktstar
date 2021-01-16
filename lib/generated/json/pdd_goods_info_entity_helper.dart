@@ -61,6 +61,21 @@ pddGoodsInfoDataFromJson(PddGoodsInfoData data, Map<String, dynamic> json) {
 	if (json['mobile_uri'] != null) {
 		data.mobileUri = json['mobile_uri']?.toString();
 	}
+	if (json['schema_url'] != null) {
+		data.schemaUrl = json['schema_url']?.toString();
+	}
+	if (json['desc_txt'] != null) {
+		data.descTxt = json['desc_txt']?.toString();
+	}
+	if (json['serv_txt'] != null) {
+		data.servTxt = json['serv_txt']?.toString();
+	}
+	if (json['lgst_txt'] != null) {
+		data.lgstTxt = json['lgst_txt']?.toString();
+	}
+	if (json['mall_name'] != null) {
+		data.mallName = json['mall_name']?.toString();
+	}
 	if (json['url'] != null) {
 		data.url = json['url']?.toString();
 	}
@@ -86,6 +101,11 @@ Map<String, dynamic> pddGoodsInfoDataToJson(PddGoodsInfoData entity) {
 	data['we_app_path'] = entity.weAppPath;
 	data['we_app_id'] = entity.weAppId;
 	data['mobile_uri'] = entity.mobileUri;
+	data['schema_url'] = entity.schemaUrl;
+	data['desc_txt'] = entity.descTxt;
+	data['serv_txt'] = entity.servTxt;
+	data['lgst_txt'] = entity.lgstTxt;
+	data['mall_name'] = entity.mallName;
 	data['url'] = entity.url;
 	if (entity.coupons != null) {
 		data['coupons'] = entity.coupons.toJson();

@@ -35,6 +35,8 @@ class PddGoodsListDataList with JsonConvert<PddGoodsListDataList> {
 	String goodsSign;
 	@JSONField(name: "search_id")
 	String searchId;
+	@JSONField(name: "sales_tip")
+	String salesTip;
 	PddGoodsListDataListCoupons coupons;
 }
 

@@ -33,6 +33,16 @@ class PddGoodsInfoData with JsonConvert<PddGoodsInfoData> {
 	String weAppId;
 	@JSONField(name: "mobile_uri")
 	String mobileUri;
+	@JSONField(name: "schema_url")
+	String schemaUrl;
+	@JSONField(name: "desc_txt")
+	String descTxt;
+	@JSONField(name: "serv_txt")
+	String servTxt;
+	@JSONField(name: "lgst_txt")
+	String lgstTxt;
+	@JSONField(name: "mall_name")
+	String mallName;
 	String url;
 	PddGoodsInfoDataCoupons coupons;
 }
