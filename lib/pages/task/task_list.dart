@@ -897,6 +897,7 @@ class _TaskListPageState extends State<TaskListPage>
     String path = '';
     String subtitle = '';
     bool needShow = true;
+    bool isUnderReview = false;
     try {
       icon = item.icon;
       name = item.name;
@@ -913,17 +914,49 @@ class _TaskListPageState extends State<TaskListPage>
         GlobalConfig.isHuaweiUnderReview) {
       needShow = false;
     }
+    if (Platform.isIOS) {
+      isUnderReview = GlobalConfig.prefs.getBool("isHuaweiUnderReview");
+    }
+
+    if ((name.contains('游戏') ||
+            name.contains('赚钱') ||
+            name.contains('会员') ||
+            name.contains('加油')) &&
+        GlobalConfig.isHuaweiUnderReview) {
+      needShow = false;
+    }
+    if ((name.contains('游戏') ||
+            name.contains('赚钱') ||
+            name.contains('会员') ||
+            name.contains('星选')) &&
+        isUnderReview) {
+      needShow = false;
+    }
+
     return new InkWell(
         onTap: () async {
-          if (name.contains('赚钱')) {
+          if (name.contains('赚钱') && Platform.isIOS) {
             if (!GlobalConfig.isHuaweiUnderReview) {
               NavigatorUtils.navigatorRouter(context, TaskHallPage());
-            } else {
-              needShow = false;
-              CommonUtils.showToast("敬请期待");
-            }
+            } else {}
             return;
           }
+          if (name.contains('美团')) {
+            if (isUnderReview) {
+              path = 'https://dpurl.cn/X9zNMqz';
+              Utils.launchUrl(path);
+              return;
+            }
+          }
+          if (name.contains('饿') && Platform.isIOS) {
+            if (isUnderReview) {
+              path =
+                  'https://sheng.bainianmao.com/app/index.php?i=550&c=entry&do=elm&m=bsht_tbk&type=1';
+              Utils.launchUrl(path);
+              return;
+            }
+          }
+
           if (type == 'anchor') {
             //滚动到指定位置
 //            _tabController.animateTo(2);
