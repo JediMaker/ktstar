@@ -123,6 +123,12 @@ pddGoodsInfoDataCouponsFromJson(PddGoodsInfoDataCoupons data, Map<String, dynami
 	if (json['coupon_total_quantity'] != null) {
 		data.couponTotalQuantity = json['coupon_total_quantity']?.toString();
 	}
+	if (json['coupon_start_time'] != null) {
+		data.couponStartTime = json['coupon_start_time']?.toString();
+	}
+	if (json['coupon_end_time'] != null) {
+		data.couponEndTime = json['coupon_end_time']?.toString();
+	}
 	return data;
 }
 
@@ -131,5 +137,7 @@ Map<String, dynamic> pddGoodsInfoDataCouponsToJson(PddGoodsInfoDataCoupons entit
 	data['coupon_discount'] = entity.couponDiscount;
 	data['coupon_remain_quantity'] = entity.couponRemainQuantity;
 	data['coupon_total_quantity'] = entity.couponTotalQuantity;
+	data['coupon_start_time'] = entity.couponStartTime;
+	data['coupon_end_time'] = entity.couponEndTime;
 	return data;
 }
