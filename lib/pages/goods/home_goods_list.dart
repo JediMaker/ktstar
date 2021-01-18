@@ -37,7 +37,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
   var listId;
 
   _initData() async {
-    /*var result = await HttpManage.getGoodsList(cId: widget.categoryId);
+    var result = await HttpManage.getGoodsList(cId: widget.categoryId);
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
@@ -60,8 +60,8 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
       }
     } else {
       CommonUtils.showToast(result.errMsg);
-    }*/
-    var result2 = await HttpManage.getPddGoodsList(page, listId: listId);
+    }
+    /*var result2 = await HttpManage.getPddGoodsList(page, listId: listId);
     if (result2.status) {
       if (mounted) {
         setState(() {
@@ -85,7 +85,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
       }
     } else {
       CommonUtils.showToast(result2.errMsg);
-    }
+    }*/
   }
 
   @override
@@ -114,13 +114,15 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     ///解决首次数据加载失败问题
     ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(pddGoodsList)) {
+      if (!CommonUtils.isEmpty(goodsList)) {
       } else {
         print("$context WidgetsBinding_initData");
-        _initData();
+        if (isFirstLoading) {
+          _initData();
+        }
       }
     });
-    return buildCenter2();
+    return buildCenter();
   }
 
   Widget buildCenter() {
@@ -265,12 +267,12 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                   child: Text.rich(
                     //"$goodsName",
                     TextSpan(children: [
-                      WidgetSpan(
+                     /* WidgetSpan(
                           child: CachedNetworkImage(
                         imageUrl: "https://img.pddpic.com/favicon.ico",
                         width: ScreenUtil().setWidth(48),
                         height: ScreenUtil().setWidth(48),
-                      )),
+                      )),*/
                       TextSpan(text: "$goodsName")
                     ]),
                     maxLines: 2,
@@ -352,27 +354,30 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: ScreenUtil().setWidth(8),
-                          right: ScreenUtil().setWidth(8),
-                          top: ScreenUtil().setWidth(8),
-                          bottom: ScreenUtil().setWidth(8),
-                        ),
-                        constraints: BoxConstraints(
-                          maxWidth: ScreenUtil().setWidth(160),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color(0xfff93736),
-                          borderRadius:
-                              BorderRadius.circular(ScreenUtil().setWidth(10)),
-                        ),
-                        child: Text(
-                          "券${(double.parse(originalPrice) / 10).toString()}元",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenUtil().setSp(32),
+                      Visibility(
+                        visible: false,
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: ScreenUtil().setWidth(8),
+                            right: ScreenUtil().setWidth(8),
+                            top: ScreenUtil().setWidth(8),
+                            bottom: ScreenUtil().setWidth(8),
+                          ),
+                          constraints: BoxConstraints(
+                            maxWidth: ScreenUtil().setWidth(160),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Color(0xfff93736),
+                            borderRadius: BorderRadius.circular(
+                                ScreenUtil().setWidth(10)),
+                          ),
+                          child: Text(
+                            "券${(double.parse(originalPrice) / 10).toString()}元",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(32),
+                            ),
                           ),
                         ),
                       ),

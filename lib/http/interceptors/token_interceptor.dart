@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/bus/my_event_bus.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http.dart';
@@ -145,6 +146,7 @@ class TokenInterceptors extends InterceptorsWrapper {
                 cancelToken: request.cancelToken,
                 options: request,
                 onReceiveProgress: request.onReceiveProgress);
+            bus.emit("refreshHomeData");
           } catch (e) {}
         } else {
           getAuthorization(request);

@@ -207,7 +207,6 @@ class _RechargeListPageState extends State<RechargeListPage> {
                 Visibility(
                   visible: Platform.isIOS,
                   child: GestureDetector(
-
                     child: Container(
                       //diamond
                       alignment: Alignment.center,
@@ -220,7 +219,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                         ]),
                       ),
                       child: Text(
-                        "由于相关规范，iOS功能暂不可用，请到公众号内或安卓端使用",
+                        "iOS暂未开放",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: ScreenUtil().setSp(42)),

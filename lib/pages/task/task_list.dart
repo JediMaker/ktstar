@@ -616,7 +616,7 @@ class _TaskListPageState extends State<TaskListPage>
                   ),
                 ),
               ),
-              //HomeGoodsListPage(),
+              HomeGoodsListPage(),
               SliverToBoxAdapter(
                 child: Container(
                   child: SizedBox(

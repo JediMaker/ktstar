@@ -68,6 +68,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
           },
         ),*/
         centerTitle: true,
+        brightness: Brightness.light,
         backgroundColor: GlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
