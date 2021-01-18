@@ -100,6 +100,8 @@ dependencies:
   #  手机信息
   device_info: ^1.0.0
 
+  search_page: ^1.4.0
+
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0

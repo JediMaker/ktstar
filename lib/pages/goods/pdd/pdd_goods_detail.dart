@@ -3,47 +3,43 @@ import 'dart:collection';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'dart:ui' as ui show window;
-
-import 'package:star/bus/my_event_bus.dart';
 import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_info_entity.dart';
+import 'package:star/models/goods_spec_info_entity.dart';
 import 'package:star/models/pdd_goods_info_entity.dart';
 import 'package:star/pages/goods/ensure_order.dart';
-import 'package:star/pages/goods/free_queue.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/goods_select_choice.dart';
+import 'package:star/pages/widget/my_fractionpaginationbuilder.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:star/models/goods_spec_info_entity.dart';
-import 'package:star/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../global_config.dart';
+import '../../../global_config.dart';
 
-class HomeGoodsDetailPage extends StatefulWidget {
+class PddGoodsDetailPage extends StatefulWidget {
   var productId;
   var gId;
   var goodsSign;
   var searchId;
 
-  HomeGoodsDetailPage(
-      {this.productId, this.gId, this.searchId, this.goodsSign});
+  PddGoodsDetailPage({this.productId, this.gId, this.searchId, this.goodsSign});
 
   @override
-  _HomeGoodsDetailPageState createState() => _HomeGoodsDetailPageState();
+  _PddGoodsDetailPageState createState() => _PddGoodsDetailPageState();
 }
 
-class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
+class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
@@ -51,14 +47,21 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
   PddGoodsInfoData pddDetailData;
   GoodsInfoEntity detailData;
   var _salePrice = '';
+  var _discountPrice = '';
   var _originalPrice = '';
   var _queueCount = '0';
   var _btPrice = '';
   var _saleTip = '';
   var _showNum = '';
   var _couponsAmount = '';
+  var _shopName = ''; //店铺名称
+  var _logisticsScore = ''; //物流评分
+  var _descriptiveScore = ''; //描述评分
+  var _serviceScore = ''; //服务评分
   var _mobileUri = '';
+  var _pddUri = ''; //直接拉起拼多多的url
   var _mobileH5Uri = '';
+  var _validPeriod = '';
 
   //var _couponsAmount = '';
 
@@ -83,10 +86,32 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
 //            _queueCount = resultData.data.queueCount;
 //            _btPrice = resultData.data.btPrice;
             _detailImgs = pddDetailData.gSlideshow;
+            if (!CommonUtils.isEmpty(_detailImgs)) {
+              _swiperImgs = _detailImgs.length > 5
+                  ? _detailImgs.sublist(0, 5)
+                  : _detailImgs;
+            }
             _mobileUri = pddDetailData.mobileUri;
             _mobileH5Uri = pddDetailData.url;
+            _pddUri = pddDetailData.schemaUrl;
             _saleTip = pddDetailData.salesTip;
-            _couponsAmount = pddDetailData.coupons.couponDiscount.toString();
+            _descriptiveScore = pddDetailData.descTxt;
+            _serviceScore = pddDetailData.servTxt;
+            _logisticsScore = pddDetailData.lgstTxt;
+            _shopName = pddDetailData.mallName;
+            try {
+              _couponsAmount = pddDetailData.coupons.couponDiscount.toString();
+            } catch (e) {}
+            if (CommonUtils.isEmpty(_couponsAmount)) {
+              _discountPrice = _salePrice;
+            } else {
+              _discountPrice =
+                  (double.parse(_salePrice) - double.parse(_couponsAmount))
+                      .toStringAsFixed(2);
+            }
+            _validPeriod =
+                "${pddDetailData.coupons.couponStartTime}-${pddDetailData.coupons.couponEndTime}";
+
             //_showNum = resultData.data.minPower;
           } catch (e) {
             print(e);
@@ -118,6 +143,7 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
   }
 
   var _detailImgs = List<String>();
+  var _swiperImgs = List<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +163,7 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                   SliverToBoxAdapter(
                     child: Container(
                       padding: EdgeInsets.only(
-                        bottom: ScreenUtil().setHeight(60),
+                        bottom: ScreenUtil().setHeight(30),
                       ),
                       child: Column(
                         children: <Widget>[
@@ -147,7 +173,7 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                               key: UniqueKey(),
                               itemHeight: ScreenUtil().setHeight(1231),
                               itemCount:
-                                  _detailImgs == null ? 0 : _detailImgs.length,
+                                  _swiperImgs == null ? 0 : _swiperImgs.length,
 /*
                               itemCount: detailData == null ||
                                       detailData.data == null ||
@@ -156,11 +182,11 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                                   : detailData.data.images.length,
 */
                               itemBuilder: (BuildContext context, int index) {
-                                return _detailImgs != null
+                                return _swiperImgs != null
                                     ? new CachedNetworkImage(
-                                        imageUrl: _detailImgs[index] == null
+                                        imageUrl: _swiperImgs[index] == null
                                             ? ""
-                                            : _detailImgs[index],
+                                            : _swiperImgs[index],
                                         fit: BoxFit.fill,
                                       )
                                     : Image.asset("static/images/c_error.jpg");
@@ -168,23 +194,22 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                               autoplay: true,
                               controller: SwiperController(),
                               pagination: new SwiperPagination(
-                                  alignment: Alignment.bottomRight,
-                                  builder: FractionPaginationBuilder(
-                                    activeColor: Colors.black,
-                                    color: Colors.black,
-                                    fontSize: ScreenUtil().setSp(20),
-                                    activeFontSize: ScreenUtil().setSp(20),
-                                  )),
+                                alignment: Alignment.bottomRight,
+                                builder: MyFractionPaginationBuilder(
+                                  activeColor: Colors.white,
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(28),
+                                  activeFontSize: ScreenUtil().setSp(28),
+                                ),
+                              ),
                             ),
                           ),
                           Divider(
                             height: 1,
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 16),
                             padding: EdgeInsets.symmetric(
-                                vertical: 18, horizontal: 16),
+                                vertical: 16, horizontal: 16),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.all(Radius.circular(
@@ -198,7 +223,7 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                                       margin: EdgeInsets.only(
                                           bottom: ScreenUtil().setHeight(8)),
                                       child: Text(
-                                        '拼团价 ',
+                                        '券后价 ',
                                         style: TextStyle(
                                           color: _txtRedColor,
                                           fontSize: ScreenUtil().setSp(42),
@@ -207,13 +232,13 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                                       ),
                                     ),
                                     PriceText(
-                                      text: '$_salePrice',
+                                      text: '$_discountPrice',
                                       textColor: _txtRedColor,
                                       fontSize: ScreenUtil().setSp(42),
                                       fontBigSize: ScreenUtil().setSp(56),
                                     ),
                                     SizedBox(
-                                      width: 16,
+                                      width: 6,
                                     ),
                                     Visibility(
                                       visible: _originalPrice != _salePrice,
@@ -278,17 +303,33 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   child: Wrap(
-                                    spacing: 10,
+                                    spacing: 0,
                                     children: <Widget>[
                                       Text.rich(
                                         //"",
                                         TextSpan(children: [
                                           WidgetSpan(
-                                              child: CachedNetworkImage(
-                                            width: ScreenUtil().setWidth(48),
-                                            height: ScreenUtil().setWidth(48),
-                                            imageUrl:
-                                                "https://img.pddpic.com/favicon.ico",
+                                              child: Container(
+                                            width: ScreenUtil().setWidth(75),
+                                            height: ScreenUtil().setWidth(42),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                    ScreenUtil().setWidth(10),
+                                                  ),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
+//                                                      "https://img.pddpic.com/favicon.ico",
+                                                  width:
+                                                      ScreenUtil().setWidth(75),
+                                                  height:
+                                                      ScreenUtil().setWidth(42),
+                                                ),
+                                              ),
+                                            ),
                                           )),
                                           TextSpan(
                                               text:
@@ -296,191 +337,374 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                                         ]),
                                         style: TextStyle(
                                           fontSize: ScreenUtil().setSp(42),
+                                          fontWeight: FontWeight.bold,
                                         ),
                                         textAlign: TextAlign.start,
                                       )
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: ScreenUtil().setHeight(57),
+                                ),
+                                Visibility(
+                                  visible: CommonUtils.isEmpty(_couponsAmount)
+                                      ? false
+                                      : true,
+                                  child: Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () async {
+                                          if (CommonUtils.isEmpty(_mobileUri)) {
+                                            return;
+                                          }
+                                          await launchPdd();
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            Container(
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    "https://alipic.lanhuapp.com/xd19448a68-5e62-4de5-9df9-fc6e45522e8d",
+                                                width:
+                                                    ScreenUtil().setWidth(1045),
+                                                height:
+                                                    ScreenUtil().setWidth(189),
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: double.maxFinite,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 16, vertical: 0),
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 18,
+                                              ),
+                                              decoration: BoxDecoration(
+//                                                image: DecorationImage(image: Image.network("https://alipic.lanhuapp.com/xdef91e85b-f090-41c2-b34c-35e198ba740e").image),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                    ScreenUtil().setWidth(30),
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Flexible(
+                                                    flex: 3,
+                                                    fit: FlexFit.tight,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .bottomLeft,
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 6),
+                                                            child: Text(
+                                                              "￥",
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                fontSize:
+                                                                    ScreenUtil()
+                                                                        .setSp(
+                                                                            42),
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  right: 10),
+                                                          child: Text(
+                                                            "$_couponsAmount",
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    ScreenUtil()
+                                                                        .setSp(
+                                                                            86),
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Text(
+                                                                  "优惠券",
+                                                                  maxLines: 1,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      fontSize: ScreenUtil()
+                                                                          .setSp(
+                                                                              42),
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                Visibility(
+                                                                  visible: !CommonUtils
+                                                                      .isEmpty(
+                                                                          _validPeriod),
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color(
+                                                                            0xffFF4344),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(ScreenUtil().setWidth(20))),
+                                                                    width: ScreenUtil()
+                                                                        .setWidth(
+                                                                            102),
+                                                                    height: ScreenUtil()
+                                                                        .setWidth(
+                                                                            35),
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    margin: EdgeInsets
+                                                                        .only(
+                                                                            left:
+                                                                                8),
+                                                                    child: Text(
+                                                                      "有效期",
+                                                                      maxLines:
+                                                                          1,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            ScreenUtil().setSp(24),
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Visibility(
+                                                              visible: !CommonUtils
+                                                                  .isEmpty(
+                                                                      _validPeriod),
+                                                              child: Container(
+                                                                margin: EdgeInsets
+                                                                    .only(
+                                                                        top: 4),
+                                                                child: Text(
+//                                                                '$_showNum天后过期_validPeriod',
+                                                                  '$_validPeriod',
+                                                                  maxLines: 1,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize: ScreenUtil()
+                                                                        .setSp(
+                                                                            28),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Flexible(
+                                                    flex: 1,
+                                                    fit: FlexFit.tight,
+                                                    child: Container(
+                                                      child: Center(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  color: Color(
+                                                                      0xffFF4344),
+                                                                  gradient:
+                                                                      LinearGradient(
+                                                                          colors: [
+                                                                        Color(
+                                                                            0xffFF6E6D),
+                                                                        Color(
+                                                                            0xffFF4344),
+                                                                      ]),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          ScreenUtil()
+                                                                              .setWidth(44))),
+                                                          width: ScreenUtil()
+                                                              .setWidth(213),
+                                                          height: ScreenUtil()
+                                                              .setWidth(87),
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Text(
+                                                            "立即领取",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  ScreenUtil()
+                                                                      .setSp(
+                                                                          36),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          Visibility(
-                            visible: CommonUtils.isEmpty(_couponsAmount)
-                                ? false
-                                : true,
-                            child: GestureDetector(
-                              onTap: () async {
-                                if (CommonUtils.isEmpty(_mobileUri)) {
-                                  return;
-                                }
-                                await launchPdd();
-                              },
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 0),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          "https://alipic.lanhuapp.com/xdef91e85b-f090-41c2-b34c-35e198ba740e",
-                                    ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      color: Colors.white,
+                      width: double.maxFinite,
+                      margin: EdgeInsets.only(
+                        bottom: ScreenUtil().setWidth(30),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(left: 16, right: 10),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    ScreenUtil().setWidth(30),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 0),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 18, horizontal: 16),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                                ScreenUtil().setWidth(30)))),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              right: ScreenUtil().setWidth(150),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  "$_couponsAmount元优惠券",
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontSize: ScreenUtil()
-                                                          .setSp(56),
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                /*Container(
-                                                  margin:
-                                                      EdgeInsets.only(top: 4),
-                                                  child: Text(
-                                                    '$_showNum天后过期',
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: ScreenUtil()
-                                                          .setSp(36),
-                                                    ),
-                                                  ),
-                                                ),*/
-                                              ],
-                                            ),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://img.pddpic.com/favicon.ico",
+                                  width: ScreenUtil().setWidth(138),
+                                  height: ScreenUtil().setWidth(138),
+                                  fit: BoxFit.fill,
+                                )),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "$_shopName",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(48),
+                                    color: Color(0xff222222),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      flex: 1,
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 4),
+                                        child: Text(
+                                          '宝贝描述：$_descriptiveScore',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: ScreenUtil().setSp(36),
+                                            color: Color(0xff999999),
                                           ),
                                         ),
-                                        Visibility(
-                                          visible: true,
-                                          child: Container(
-                                            width: ScreenUtil().setWidth(210),
-                                            child: Text(
-                                              "立即\n领取",
-                                              style: TextStyle(
-                                                fontSize:
-                                                    ScreenUtil().setSp(48),
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      flex: 1,
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 4),
+                                        child: Text(
+                                          '卖家服务：$_serviceScore',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: ScreenUtil().setSp(36),
+                                            color: Color(0xff999999),
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(57),
-                          ),
-                          Visibility(
-                            ///不展示商品详情
-                            ///
-                            visible: true,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 16),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                            width: ScreenUtil().setWidth(9),
-                                            height: ScreenUtil().setWidth(9),
-                                            child: CircleAvatar(
-                                                backgroundColor:
-                                                    Color(0xFFFF8800))),
-                                        SizedBox(
-                                          width: 10,
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      flex: 1,
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 4),
+                                        child: Text(
+                                          '物流评价：$_logisticsScore',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: ScreenUtil().setSp(36),
+                                            color: Color(0xff999999),
+                                          ),
                                         ),
-                                        Container(
-                                          width: ScreenUtil().setWidth(12),
-                                          height: ScreenUtil().setWidth(12),
-                                          child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFFF7270)),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: ScreenUtil().setWidth(16),
-                                          height: ScreenUtil().setWidth(16),
-                                          child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFFBEE3A)),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("商品详情"),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: ScreenUtil().setWidth(16),
-                                          height: ScreenUtil().setWidth(16),
-                                          child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFFBEE3A)),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: ScreenUtil().setWidth(12),
-                                          height: ScreenUtil().setWidth(12),
-                                          child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFFF7270)),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: ScreenUtil().setWidth(9),
-                                          height: ScreenUtil().setWidth(9),
-                                          child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFFF8800)),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -490,9 +714,99 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (content, index) {
-                        return CachedNetworkImage(
-                          imageUrl: _detailImgs[index],
-                          fit: BoxFit.fill,
+                        return Column(
+                          children: [
+                            Visibility(
+                              ///不展示商品详情
+                              ///
+                              visible: index == 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 16),
+                                color: Colors.white,
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                              width: ScreenUtil().setWidth(9),
+                                              height: ScreenUtil().setWidth(9),
+                                              child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Color(0xFFFF8800))),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: ScreenUtil().setWidth(12),
+                                            height: ScreenUtil().setWidth(12),
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xFFFF7270)),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: ScreenUtil().setWidth(16),
+                                            height: ScreenUtil().setWidth(16),
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xFFFBEE3A)),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text("商品详情"),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: ScreenUtil().setWidth(16),
+                                            height: ScreenUtil().setWidth(16),
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xFFFBEE3A)),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: ScreenUtil().setWidth(12),
+                                            height: ScreenUtil().setWidth(12),
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xFFFF7270)),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: ScreenUtil().setWidth(9),
+                                            height: ScreenUtil().setWidth(9),
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xFFFF8800)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              color: Colors.white,
+                              child: CachedNetworkImage(
+                                imageUrl: _detailImgs[index],
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
                         );
                       },
                       childCount: _detailImgs == null ? 0 : _detailImgs.length,
@@ -588,21 +902,20 @@ class _HomeGoodsDetailPageState extends State<HomeGoodsDetailPage>
 
   ///根据链接跳转拼多多
   Future launchPdd() async {
-    /* if (await canLaunch("pinduoduo://")) {
+    if (await canLaunch("pinduoduo://")) {
       try {
-        await launch(_mobileUri, forceSafariVC: false);
+        await launch(_pddUri, forceSafariVC: false);
       } catch (e) {}
     } else {
-
-    }*/
-    NavigatorUtils.navigatorRouter(
-        this.context,
-        WebViewPluginPage(
-          initialUrl: _mobileH5Uri,
-          showActions: true,
-          title: "拼多多",
-          appBarBackgroundColor: Colors.transparent,
-        ));
+      NavigatorUtils.navigatorRouter(
+          this.context,
+          WebViewPluginPage(
+            initialUrl: _mobileH5Uri,
+            showActions: true,
+            title: "拼多多",
+            appBarBackgroundColor: Colors.transparent,
+          ));
+    }
   }
 }
 

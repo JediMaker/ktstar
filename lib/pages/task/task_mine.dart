@@ -13,6 +13,7 @@ import 'package:star/pages/adress/my_adress.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/login/modify_password.dart';
+import 'package:star/pages/order/order_list.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/task/pay_result.dart';
@@ -1299,7 +1300,7 @@ class _TaskMinePageState extends State<TaskMinePage>
                         gravity: ToastGravity.BOTTOM);
                     return;*/
                     NavigatorUtils.navigatorRouter(
-                        context, RechargeOrderListPage());
+                        context, OrderListPage());
                   },
                   child: new Container(
                     child: new Column(

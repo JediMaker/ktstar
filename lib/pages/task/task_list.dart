@@ -34,12 +34,15 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
+import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
+import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_detail_other.dart';
 import 'package:star/pages/task/task_gallery.dart';
 import 'package:star/pages/task/task_hall.dart';
+import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
@@ -338,6 +341,112 @@ class _TaskListPageState extends State<TaskListPage>
     Color(0xFFB43733),
   ]);
 
+  // 默认值
+  String value;
+
+  // 最前面的组件
+  Widget leading;
+
+  // 搜索框后缀组件
+  Widget suffix;
+  List<Widget> actions;
+
+  // 提示文字
+  String hintText;
+
+  // 输入框点击
+  VoidCallback _onTap;
+
+  // 单独清除输入框内容
+  VoidCallback _onClear;
+
+  // 清除输入框内容并取消输入
+  VoidCallback _onCancel;
+
+  // 输入框内容改变
+  ValueChanged _onInputChanged;
+
+  // 点击键盘搜索
+  ValueChanged _onSearch;
+  bool _autoFocus;
+  String _hintText;
+  TextEditingController _controller;
+  FocusNode _focusNode;
+
+  Widget buildSearchBarLayout() {
+    return Container(
+      height: 50,
+      child: Row(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () {},
+              child: CachedNetworkImage(
+                width: ScreenUtil().setWidth(78),
+                height: ScreenUtil().setWidth(78),
+                imageUrl:
+                    "https://alipic.lanhuapp.com/xd815e5762-05d1-4721-993a-0b866db87c4d",
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
+              },
+              child: Container(
+                height: 40,
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  color: Colors.white,
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      width: ScreenUtil().setWidth(48),
+                      height: ScreenUtil().setWidth(48),
+                      imageUrl:
+                          "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4),
+                      child: Text(
+                        "搜索你想要的吧",
+                        style: TextStyle(
+                          color: Color(0xff666666),
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+              },
+              child: CachedNetworkImage(
+                width: ScreenUtil().setWidth(78),
+                height: ScreenUtil().setWidth(78),
+                imageUrl:
+                    "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -371,10 +480,15 @@ class _TaskListPageState extends State<TaskListPage>
         ),
       ),*/
       appBar: GradientAppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(fontSize: ScreenUtil().setSp(54)),
-        ),
+        title: buildSearchBarLayout(),
+        /* Row(
+          children: [
+            Text(
+              widget.title,
+              style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+            ),
+          ],
+        ),*/
         centerTitle: true,
         elevation: 0,
         brightness: Brightness.dark,
@@ -416,7 +530,7 @@ class _TaskListPageState extends State<TaskListPage>
                   );
                 }),
             footer: CustomFooter(
-                completeDuration: Duration(seconds: 2),
+                completeDuration: Duration(seconds: 1),
                 footerBuilder: (context,
                     loadState,
                     pulledExtent,
@@ -610,10 +724,61 @@ class _TaskListPageState extends State<TaskListPage>
                 ),
               )),
               SliverToBoxAdapter(
-                child: Container(
-                  child: SizedBox(
-                    height: 8,
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      child: SizedBox(
+                        height: 8,
+                      ),
+                    ),
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        NavigatorUtils.navigatorRouter(
+                            context, PddHomeIndexPage());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: ScreenUtil().setHeight(30),
+                            left: 16,
+                            right: 16),
+                        padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft:
+                                  Radius.circular(ScreenUtil().setWidth(32)),
+                              topRight:
+                                  Radius.circular(ScreenUtil().setWidth(32)),
+                            )),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil().setWidth(400),
+                              height: ScreenUtil().setHeight(60),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                            Container(
+                              child: Text(
+                                "查看更多 >>",
+                                style: TextStyle(
+                                  color: Color(0xff222222),
+                                  fontSize: ScreenUtil().setSp(38),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               HomeGoodsListPage(),
@@ -911,6 +1076,14 @@ class _TaskListPageState extends State<TaskListPage>
             name.contains('会员') ||
             name.contains('加油')) &&
         GlobalConfig.isHuaweiUnderReview) {
+      needShow = false;
+    }
+    if ((name.contains('游戏') ||
+            name.contains('赚钱') ||
+            name.contains('会员') ||
+            name.contains('加油')) &&
+        GlobalConfig.isHuaweiUnderReview &&
+        Platform.isIOS) {
       needShow = false;
     }
     return new InkWell(

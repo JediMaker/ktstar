@@ -11,35 +11,33 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/pages/widget/PriceText.dart';
-import 'package:star/pages/widget/dashed_rect.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-import '../../global_config.dart';
-import 'goods_detail.dart';
-import 'pdd/pdd_goods_detail.dart';
+import '../../../global_config.dart';
+import '../goods_detail.dart';
+import 'pdd_goods_detail.dart';
 
-class HomeGoodsListPage extends StatefulWidget {
-  HomeGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
+class PddGoodsListPage extends StatefulWidget {
+  PddGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
       : super(key: key);
   String title = "补贴商品";
   String categoryId;
 
   @override
-  _HomeGoodsListPageState createState() => _HomeGoodsListPageState();
+  _PddGoodsListPageState createState() => _PddGoodsListPageState();
 }
 
-class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
+class _PddGoodsListPageState extends State<PddGoodsListPage> {
   int page = 1;
   bool isFirstLoading = true;
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
   List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
-  bool _isfirst = true;
 
   _initData() async {
-    /*var result = await HttpManage.getGoodsList(cId: widget.categoryId);
+    var result = await HttpManage.getGoodsList(cId: widget.categoryId);
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
@@ -49,9 +47,6 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
             goodsList = entity.goodsList;
           } else {
             if (result == null ||
-
-
-
                 result.data == null ||
                 entity.goodsList == null ||
                 entity.goodsList.length == 0) {
@@ -65,7 +60,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
       }
     } else {
       CommonUtils.showToast(result.errMsg);
-    }*/
+    }
     var result2 = await HttpManage.getPddGoodsList(page, listId: listId);
     if (result2.status) {
       if (mounted) {
@@ -119,13 +114,9 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     ///解决首次数据加载失败问题
     ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(pddGoodsList)) {
+      if (!CommonUtils.isEmpty(goodsList)) {
       } else {
-        print("$context WidgetsBinding_initData");
-        if (_isfirst) {
-          _initData();
-          _isfirst = false;
-        }
+        _initData();
       }
     });
     return buildCenter2();
@@ -276,8 +267,8 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                       WidgetSpan(
                           child: CachedNetworkImage(
                         imageUrl: "https://img.pddpic.com/favicon.ico",
-                        width: ScreenUtil().setWidth(48),
-                        height: ScreenUtil().setWidth(48),
+                        width: ScreenUtil().setWidth(36),
+                        height: ScreenUtil().setWidth(36),
                       )),
                       TextSpan(text: "$goodsName")
                     ]),
@@ -410,9 +401,6 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
-    var _discountPrice = '';
-    var _saleTip = '';
-    var _shopName = '天猫';
     try {
       id = item.gId.toString();
       goodsName = item.gTitle;
@@ -421,18 +409,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
       salePrice = item.gGroupPrice.toString();
       goodsSign = item.goodsSign.toString();
       searchId = item.searchId.toString();
-      _saleTip = item.salesTip.toString();
-      _shopName = item.mallName.toString();
-
-      try {
-        couponAmount = item.coupons.couponDiscount.toString();
-      } catch (e) {}
-      if (CommonUtils.isEmpty(couponAmount)) {
-        _discountPrice = salePrice;
-      } else {
-        _discountPrice = (double.parse(salePrice) - double.parse(couponAmount))
-            .toStringAsFixed(2);
-      }
+      couponAmount = item.coupons.couponDiscount.toString();
 //      profit = '预估补贴￥${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
@@ -505,26 +482,12 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                   child: Text.rich(
                     //"$goodsName",
                     TextSpan(children: [
-                      /*WidgetSpan(
-                          child: Container(
-                        width: ScreenUtil().setWidth(75),
-                        height: ScreenUtil().setWidth(52),
-                        child: Center(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                ScreenUtil().setWidth(10),
-                              ),
-                            ),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
-                              width: ScreenUtil().setWidth(75),
-                              height: ScreenUtil().setWidth(42),
-                            ),
-                          ),
-                        ),
-                      )),*/
+                      WidgetSpan(
+                          child: CachedNetworkImage(
+                        imageUrl: "https://img.pddpic.com/favicon.ico",
+                        width: ScreenUtil().setWidth(36),
+                        height: ScreenUtil().setWidth(36),
+                      )),
                       TextSpan(text: " "),
                       TextSpan(text: "$goodsName")
                     ]),
@@ -534,36 +497,6 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                       fontSize: ScreenUtil().setSp(38),
                       color: Color(0xff222222),
                     ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Visibility(
-                          visible: !CommonUtils.isEmpty(_shopName),
-                          child: Container(
-                            child: Text(
-                              "$_shopName",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(28),
-                                color: Color(0xff999999),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "销量$_saleTip",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(28),
-                          color: Color(0xff999999),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
                 Visibility(
@@ -608,7 +541,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                         width: 5,
                       ),
                       PriceText(
-                        text: '$_discountPrice',
+                        text: '$salePrice',
                         textColor: _priceColor,
                         fontSize: ScreenUtil().setSp(32),
                         fontBigSize: ScreenUtil().setSp(42),
@@ -643,47 +576,27 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                       Visibility(
                         visible: !CommonUtils.isEmpty(couponAmount),
                         child: Container(
-                          height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(
                             left: ScreenUtil().setWidth(8),
                             right: ScreenUtil().setWidth(8),
+                            top: ScreenUtil().setWidth(8),
+                            bottom: ScreenUtil().setWidth(8),
                           ),
-                          margin: EdgeInsets.only(right: 6),
+                          constraints: BoxConstraints(
+                            maxWidth: ScreenUtil().setWidth(160),
+                          ),
                           decoration: BoxDecoration(
                             color: Color(0xfff93736),
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().setWidth(10)),
                           ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "券",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ScreenUtil().setSp(32),
-                                ),
-                              ),
-                              Container(
-                                height: ScreenUtil().setHeight(42),
-                                margin: EdgeInsets.symmetric(horizontal: 2),
-                                child: DashedRect(
-                                    color: Colors.white,
-                                    strokeWidth: 1,
-                                    gap: 1.0),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 2),
-                                child: Text(
-                                  "${couponAmount.toString()}元",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(32),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            "券${couponAmount.toString()}元",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(32),
+                            ),
                           ),
                         ),
                       ),

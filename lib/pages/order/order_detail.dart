@@ -870,7 +870,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        name,
+                        "$name",
                         style: TextStyle(
                           color: Color(0xff222222),
                           fontSize: ScreenUtil().setSp(48),
@@ -880,7 +880,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                         width: ScreenUtil().setWidth(30),
                       ),
                       Text(
-                        iphone,
+                        "$iphone",
                         style: TextStyle(
                           color: Color(0xff222222),
                           fontSize: ScreenUtil().setSp(48),

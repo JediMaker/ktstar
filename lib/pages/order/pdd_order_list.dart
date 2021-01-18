@@ -13,7 +13,8 @@ import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/pages/goods/checkout_counter.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
-import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
+import 'package:star/pages/goods/goods_detail.dart';
+import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_goods_detail.dart';
 import 'package:star/pages/order/order_detail.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
@@ -24,15 +25,15 @@ import 'package:star/pages/order/order_logistics_tracking.dart';
 
 import '../../global_config.dart';
 
-class RechargeOrderListPage extends StatefulWidget {
-  RechargeOrderListPage({Key key}) : super(key: key);
+class PddOrderListPage extends StatefulWidget {
+  PddOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
 
   @override
-  _RechargeOrderListPageState createState() => _RechargeOrderListPageState();
+  _PddOrderListPageState createState() => _PddOrderListPageState();
 }
 
-class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
+class _PddOrderListPageState extends State<PddOrderListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
@@ -80,7 +81,28 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+          ),
+          brightness: Brightness.light,
+          leading: IconButton(
+            icon: Image.asset(
+              "static/images/icon_ios_back.png",
+              width: ScreenUtil().setWidth(36),
+              height: ScreenUtil().setHeight(63),
+              fit: BoxFit.fill,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          centerTitle: true,
+          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          elevation: 0,
+        ),
         body: EasyRefresh.custom(
           topBouncing: false,
           bottomBouncing: false,
@@ -105,7 +127,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
               : null,
           slivers: <Widget>[buildCenter()],
         ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+    );
   }
 
   Widget buildCenter() {
@@ -142,32 +164,21 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
     bool showBtn = true;
     String orderType;
     String orderId;
-    String goodsId;
-    String goodsSign;
     List<OrderListDataListGoodsList> goodsList =
-        List<OrderListDataListGoodsList>();
-    try {
-      createTime = listItem.createTime;
-      phoneNumber = listItem.mobile;
-      phoneMoney = listItem.faceMoney;
-      totalMoney = listItem.totalPrice;
-      payMoney = listItem.payPrice;
-      orderNo = listItem.orderno;
-      orderType = listItem.orderType;
-      orderId = listItem.orderId;
-      orderStatus = listItem.status;
-      contactPhone = listItem.phone;
-      goodsList = listItem.goodsList;
-      try {
-        if (!CommonUtils.isEmpty(goodsList)) {
-          goodsSign = goodsList[0].goodsSign;
-          goodsId = goodsList[0].goodsId;
-        }
-      } catch (e) {}
-    } catch (e) {}
+    List<OrderListDataListGoodsList>();
+    createTime = listItem.createTime;
+    phoneNumber = listItem.mobile;
+    phoneMoney = listItem.faceMoney;
+    totalMoney = listItem.totalPrice;
+    payMoney = listItem.payPrice;
+    orderNo = listItem.orderno;
+    orderType = listItem.orderType;
+    orderId = listItem.orderId;
+    orderStatus = listItem.status;
+    contactPhone = listItem.phone;
+    goodsList = listItem.goodsList;
 //    orderSource = listItem.orderSource;
     if (orderType == "1") {
-      //话费订单
       btnTxt = "再次充值";
       switch (orderStatus) {
         case "1":
@@ -181,8 +192,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           orderStatusText = "充值中";
           break;
       }
-    } else if (orderType == "2" || orderType == "3") {
-      //自营商城订单
+    } else if (orderType == "2") {
       switch (orderStatus) {
         case "-1":
           orderStatusText = "已取消"; //chinaUnicom china_mobile china_telecom
@@ -216,13 +226,9 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           break;
       }
     }
-    if (orderType == "3") {
-      //拼多多订单
-      showBtn = false;
-    }
     return GestureDetector(
       onTap: () {
-        if (orderType == "3") {
+        if (orderSource == "2") {
           //拼多多平台订单
           if (CommonUtils.isEmpty(goodsList)) {
             return;
@@ -231,8 +237,9 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           NavigatorUtils.navigatorRouter(
               context,
               PddGoodsDetailPage(
+                gId: goodsList[0].pddGoodsId,
 //                gId: id,
-                goodsSign: goodsSign,
+//                goodsSign: goodsSign,
 //                searchId: searchId,
               ));
           return;
@@ -253,7 +260,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius:
-                BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+            BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
             border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 color: Colors.white,
@@ -297,12 +304,12 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                     return Column(
                       children: goodsList == null
                           ? Container(
-                              child: Text(''),
-                            )
+                        child: Text(''),
+                      )
                           : List.generate(goodsList.length, (index) {
-                              return buildRechargeItemRow(
-                                  phoneNumber, phoneMoney, goodsList[index]);
-                            }),
+                        return buildRechargeItemRow(
+                            phoneNumber, phoneMoney, goodsList[index]);
+                      }),
                     );
                     break;
                   case "2": //商品订单
@@ -401,20 +408,18 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                 children: <Widget>[
                   Expanded(
                     child: Visibility(
-//                      visible: orderType == "1",
+                      visible: orderType == "1",
                       child: Container(
                           child: Text(
-                        "订单编号：$orderNo",
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(32),
-                            color: Color(0xff666666)),
-                      )),
+                            "订单编号：$orderNo",
+                            style: TextStyle(
+                                fontSize: ScreenUtil().setSp(32),
+                                color: Color(0xff666666)),
+                          )),
                     ),
                   ),
                   Visibility(
-                    visible: orderType == "2" &&
-                        orderStatus != '1' &&
-                        orderStatus != '-1',
+                    visible: orderType == "2" && orderStatus != '1',
                     child: GestureDetector(
                       onTap: () async {
                         NavigatorUtils.navigatorRouter(
@@ -645,7 +650,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                           width: ScreenUtil().setWidth(243),
                           height: ScreenUtil().setWidth(243),
                           imageUrl:
-                              product.goodsImg == null ? "" : product.goodsImg,
+                          product.goodsImg == null ? "" : product.goodsImg,
                           /*   imageUrl: item.imageUrl,
                                   width: ScreenUtil().L(120),
                                   height: ScreenUtil().L(120),*/
@@ -656,39 +661,39 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                       ),
                       Expanded(
                           child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              product.goodsName == null
-                                  ? ""
-                                  : product.goodsName,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  product.goodsName == null
+                                      ? ""
+                                      : product.goodsName,
 //                                  item.wareName,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Color(0xff222222),
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                product.specItem == null
-                                    ? ""
-                                    : product.specItem,
-//                                  item.wareName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(38),
-                                  color: Color(0xff666666),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
                                 ),
-                              ),
-                              margin: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(18)),
-                            ),
-                            /*Wrap(
+                                Container(
+                                  child: Text(
+                                    product.specItem == null
+                                        ? ""
+                                        : product.specItem,
+//                                  item.wareName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(38),
+                                      color: Color(0xff666666),
+                                    ),
+                                  ),
+                                  margin: EdgeInsets.only(
+                                      top: ScreenUtil().setHeight(18)),
+                                ),
+                                /*Wrap(
                             children: product.option.map((op) {
                               return Container(
                                 child: Text(
@@ -698,58 +703,58 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
                               );
                             }).toList(),
                           ),*/
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: Row(
-//                            crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-//                              Expanded(child:,),
-                                    Flexible(
-                                      child: Text(
-                                        '',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(),
-                                      ),
-//                                flex: 2,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "￥${product.salePrice == null ? "" : product.salePrice}",
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(42),
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFF93736),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    'x${product.goodsNum}',
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(36),
-                                    ),
-                                  ),
+                                SizedBox(
+                                  height: 15,
                                 ),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                        child: Row(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget>[
+//                              Expanded(child:,),
+                                            Flexible(
+                                              child: Text(
+                                                '',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(),
+                                              ),
+//                                flex: 2,
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "￥${product.salePrice == null ? "" : product.salePrice}",
+                                              style: TextStyle(
+                                                fontSize: ScreenUtil().setSp(42),
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFFF93736),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        'x${product.goodsNum}',
+                                        style: TextStyle(
+                                          color: Color(0xff222222),
+                                          fontSize: ScreenUtil().setSp(36),
+                                        ),
+                                      ),
+                                    ),
 //                            Icon(
 //                              Icons.more_horiz,
 //                              size: 15,
 //                              color: Color(0xFF979896),
 //                            ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
-                      ))
+                          ))
                     ],
                   ),
                 ),
