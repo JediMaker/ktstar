@@ -81,6 +81,9 @@ pddGoodsListDataListFromJson(PddGoodsListDataList data, Map<String, dynamic> jso
 	if (json['sales_tip'] != null) {
 		data.salesTip = json['sales_tip']?.toString();
 	}
+	if (json['mall_name'] != null) {
+		data.mallName = json['mall_name']?.toString();
+	}
 	if (json['coupons'] != null) {
 		try {
 			data.coupons = new PddGoodsListDataListCoupons().fromJson(json['coupons']);
@@ -101,6 +104,7 @@ Map<String, dynamic> pddGoodsListDataListToJson(PddGoodsListDataList entity) {
 	data['goods_sign'] = entity.goodsSign;
 	data['search_id'] = entity.searchId;
 	data['sales_tip'] = entity.salesTip;
+	data['mall_name'] = entity.mallName;
 	if (entity.coupons != null) {
 		data['coupons'] = entity.coupons.toJson();
 	}
