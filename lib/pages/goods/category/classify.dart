@@ -7,6 +7,7 @@ import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/category_bean_entity.dart';
 import 'package:star/pages/goods/goods_list.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 // ignore: must_be_immutable
@@ -42,6 +43,12 @@ class _ClassifyListPageState extends State<ClassifyListPage>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(rightListData)) {
+      } else {
+        _initData(0);
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(

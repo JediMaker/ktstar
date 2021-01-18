@@ -191,6 +191,15 @@ class _TaskMinePageState extends State<TaskMinePage>
 
   @override
   Widget build(BuildContext context) {
+    ///    组件创建完成的回调通知方法
+    ///解决首次数据加载失败问题
+    ///
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(headUrl)) {
+      } else {
+        _initUserData();
+      }
+    });
     return Scaffold(
         appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),

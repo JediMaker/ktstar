@@ -87,6 +87,9 @@ orderListDataListFromJson(OrderListDataList data, Map<String, dynamic> json) {
 	if (json['face_money'] != null) {
 		data.faceMoney = json['face_money']?.toString();
 	}
+	if (json['order_source'] != null) {
+		data.orderSource = json['order_source']?.toString();
+	}
 	if (json['mobile'] != null) {
 		data.mobile = json['mobile']?.toString();
 	}
@@ -109,6 +112,7 @@ Map<String, dynamic> orderListDataListToJson(OrderListDataList entity) {
 		data['goods_list'] =  entity.goodsList.map((v) => v.toJson()).toList();
 	}
 	data['face_money'] = entity.faceMoney;
+	data['order_source'] = entity.orderSource;
 	data['mobile'] = entity.mobile;
 	data['phone'] = entity.phone;
 	return data;
@@ -139,6 +143,12 @@ orderListDataListGoodsListFromJson(OrderListDataListGoodsList data, Map<String, 
 	if (json['spec_item'] != null) {
 		data.specItem = json['spec_item']?.toString();
 	}
+	if (json['goods_source'] != null) {
+		data.goodsSource = json['goods_source']?.toString();
+	}
+	if (json['pdd_goods_id'] != null) {
+		data.pddGoodsId = json['pdd_goods_id']?.toString();
+	}
 	return data;
 }
 
@@ -150,5 +160,7 @@ Map<String, dynamic> orderListDataListGoodsListToJson(OrderListDataListGoodsList
 	data['goods_num'] = entity.goodsNum;
 	data['sale_price'] = entity.salePrice;
 	data['spec_item'] = entity.specItem;
+	data['goods_source'] = entity.goodsSource;
+	data['pdd_goods_id'] = entity.pddGoodsId;
 	return data;
 }

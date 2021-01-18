@@ -46,6 +46,7 @@ class WebViewPluginPage extends StatefulWidget {
 class _WebViewPluginPageState extends State<WebViewPluginPage> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   var _loadingVisiablity = true;
+  bool showToast = true;
 
   // On destroy stream
   StreamSubscription _onDestroy;
@@ -144,14 +145,42 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
         if (state.url.startsWith("weixin://") ||
             state.url.startsWith("alipays://") ||
             state.url.startsWith("alipay://") ||
+            state.url.startsWith("pinduoduo://") ||
             state.url.startsWith("androidamap://route") ||
             state.url.startsWith("http://ditu.amap.com")) {
           flutterWebViewPlugin.stopLoading(); //停止加载
           try {
             if (await canLaunch(state.url)) {
               await launch(state.url);
+              flutterWebViewPlugin.goBack();
             } else {
-              CommonUtils.showToast("未安装相应的客户端");
+              if (state.url.startsWith("pinduoduo://")) {
+                if (showToast) {
+                  showToast = false;
+                  CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                  /* Navigator.of(context).pop();
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      WebViewPluginPage(
+                        initialUrl: widget.pinduoduoAlternativeUrl,
+                        showActions: true,
+                        title: "拼多多",
+                        appBarBackgroundColor: Colors.transparent,
+                      ));*/
+                  /*flutterWebViewPlugin
+                      .reloadUrl(widget.pinduoduoAlternativeUrl);*/
+                  /*NavigatorUtils.navigatorRouterReplaceMent(
+                      context,
+                      WebViewPluginPage(
+                        initialUrl: widget.pinduoduoAlternativeUrl,
+                        showActions: true,
+                        title: "拼多多",
+                        appBarBackgroundColor: Colors.transparent,
+                      ));*/
+                }
+              } else {
+                CommonUtils.showToast("未安装相应的客户端");
+              }
             }
           } catch (e) {}
         }
