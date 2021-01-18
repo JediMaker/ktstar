@@ -120,10 +120,7 @@ Map<String, dynamic> orderListDataListToJson(OrderListDataList entity) {
 
 orderListDataListGoodsListFromJson(OrderListDataListGoodsList data, Map<String, dynamic> json) {
 	if (json['goods_id'] != null) {
-		try {
-			data.goodsId = json['goods_id']?.toInt();
-		} catch (e) {
-		}
+		data.goodsId = json['goods_id']?.toString();
 	}
 	if (json['goods_name'] != null) {
 		try {

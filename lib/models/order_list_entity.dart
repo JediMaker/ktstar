@@ -43,7 +43,7 @@ class OrderListDataList with JsonConvert<OrderListDataList> {
 
 class OrderListDataListGoodsList with JsonConvert<OrderListDataListGoodsList> {
   @JSONField(name: "goods_id")
-  int goodsId;
+  String goodsId;
   @JSONField(name: "goods_name")
   String goodsName;
   @JSONField(name: "goods_img")
