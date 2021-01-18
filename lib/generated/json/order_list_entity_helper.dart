@@ -149,6 +149,9 @@ orderListDataListGoodsListFromJson(OrderListDataListGoodsList data, Map<String, 
 	if (json['pdd_goods_id'] != null) {
 		data.pddGoodsId = json['pdd_goods_id']?.toString();
 	}
+	if (json['goods_sign'] != null) {
+		data.goodsSign = json['goods_sign']?.toString();
+	}
 	return data;
 }
 
@@ -162,5 +165,6 @@ Map<String, dynamic> orderListDataListGoodsListToJson(OrderListDataListGoodsList
 	data['spec_item'] = entity.specItem;
 	data['goods_source'] = entity.goodsSource;
 	data['pdd_goods_id'] = entity.pddGoodsId;
+	data['goods_sign'] = entity.goodsSign;
 	return data;
 }

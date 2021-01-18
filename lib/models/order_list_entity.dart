@@ -58,4 +58,6 @@ class OrderListDataListGoodsList with JsonConvert<OrderListDataListGoodsList> {
   String goodsSource;
   @JSONField(name: "pdd_goods_id")
   String pddGoodsId;
+  @JSONField(name: "goods_sign")
+  String goodsSign;
 }
