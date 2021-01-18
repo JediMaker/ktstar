@@ -616,7 +616,7 @@ class _TaskListPageState extends State<TaskListPage>
                   ),
                 ),
               ),
-              HomeGoodsListPage(),
+              //HomeGoodsListPage(),
               SliverToBoxAdapter(
                 child: Container(
                   child: SizedBox(
@@ -943,7 +943,7 @@ class _TaskListPageState extends State<TaskListPage>
           }
           if (name.contains('美团')) {
             if (isUnderReview) {
-              path = 'https://dpurl.cn/X9zNMqz';
+              path = 'http://dpurl.cn/cENLteO';
               Utils.launchUrl(path);
               return;
             }
