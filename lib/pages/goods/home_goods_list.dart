@@ -210,7 +210,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
         NavigatorUtils.navigatorRouter(
             context,
-            HomeGoodsDetailPage(
+            GoodsDetailPage(
               productId: id,
             ));
       },
