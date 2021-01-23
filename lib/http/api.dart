@@ -217,9 +217,21 @@ class APi {
   static const String GOODS_LIST = "goods/lists";
 
   ///首页拼多多商品列表
+  static const String GOODS_PDD_HOME = "goods/pin-index";
+
+  ///首页拼多多商品列表
   static const String GOODS_PDD_GOODS_LIST = "goods/pin-goods-list";
+
   ///拼多多商品详情
   static const String GOODS_PDD_GOODS_Detail = "goods/pin-goods-detail";
+
+  ///商品搜索
+  static const String GOODS_SEARCH = "goods/search";
+
+  ///商品搜索热词
+  static const String GOODS_HOT_WORDS = "goods/hot-words";
+  ///拼多多授权
+  static const String GOODS_PIN_AUTH = "goods/pin-auth";
 
   ///首页热门商品列表
   static const String HOME_SEARCH_PRODUCTS_LIST =

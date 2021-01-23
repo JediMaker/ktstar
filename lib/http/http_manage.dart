@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,11 +25,14 @@ import 'package:star/generated/json/order_list_entity_helper.dart';
 import 'package:star/generated/json/pay_coupon_entity_helper.dart';
 import 'package:star/generated/json/pdd_goods_info_entity_helper.dart';
 import 'package:star/generated/json/pdd_goods_list_entity_helper.dart';
+import 'package:star/generated/json/pdd_home_entity_helper.dart';
 import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
 import 'package:star/generated/json/region_data_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
+import 'package:star/generated/json/search_goods_list_entity_helper.dart';
+import 'package:star/generated/json/search_pdd_goods_list_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
@@ -64,9 +68,12 @@ import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/pay_coupon_entity.dart';
 import 'package:star/models/pdd_goods_info_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
+import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/models/poster_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/region_data_entity.dart';
+import 'package:star/models/search_goods_list_entity.dart';
+import 'package:star/models/search_pdd_goods_list_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
@@ -944,14 +951,17 @@ class HttpManage {
   ///
   ///[page] 	页码
   ///[pageSize] 	单页数据量
+  ///[orderSource] 	订单来源 1自营 ,2 拼多多
   ///
   ///
   /// 获取订单列表
   ///
-  static Future<OrderListEntity> getOrderList(page, pageSize) async {
+  static Future<OrderListEntity> getOrderList(
+      page, pageSize, orderSource) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
+    paramsMap["order_source"] = "$orderSource";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1934,19 +1944,127 @@ class HttpManage {
   }
 
   ///
+  /// 获取拼多多首页数据
+  ///
+  static Future<PddHomeEntity> getPddHomeData() async {
+    var response = await HttpManage.dio.get(
+      APi.GOODS_PDD_HOME,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = PddHomeEntity();
+    pddHomeEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 获取搜索热词
+  ///
+  static Future<ResultBeanEntity> getHotSearchWords() async {
+    var response = await HttpManage.dio.get(
+      APi.GOODS_HOT_WORDS,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+  ///
+  /// 获取拼多多授权
+  ///
+  static Future<ResultBeanEntity> getPddAuthorization() async {
+    var response = await HttpManage.dio.get(
+      APi.GOODS_PIN_AUTH,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///[searchType] 	搜索类型 1自营平台 2拼多多
+  ///[categoryId] 	分类Id
+  ///[type] 	分类Id
+  ///
+  ///
+  /// 获取商品搜索自营商品列表
+  ///
+  static Future<SearchGoodsListEntity> getSearchedGoodsList(
+    page, {
+    pageSize = 20,
+    keyword,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap["search_type"] = "1";
+    paramsMap["keyword"] = "$keyword";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.get(
+      APi.GOODS_SEARCH,
+      queryParameters: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = SearchGoodsListEntity();
+    searchGoodsListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///[pageSize] 	单页数据量
+  ///[searchType] 	搜索类型 1自营平台 2拼多多
+  ///[categoryId] 	分类Id
+  ///[type] 	分类Id
+  ///
+  ///
+  /// 获取商品搜索拼多多商品列表
+  ///
+  static Future<SearchPddGoodsListEntity> getSearchedPddGoodsList(
+    page, {
+    pageSize = 20,
+    keyword,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap["search_type"] = "2";
+    paramsMap["keyword"] = "$keyword";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.get(
+      APi.GOODS_SEARCH,
+      queryParameters: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = SearchPddGoodsListEntity();
+    searchPddGoodsListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///[page] 	页码
   ///[pageSize] 	单页数据量
   ///[listId] 	翻页时填写前页返回的list_id值
+  ///[categoryId] 	分类Id
+  ///[type] 	分类Id
   ///
   ///
   /// 获取拼多多商品列表
   ///
   static Future<PddGoodsListEntity> getPddGoodsList(page,
-      {pageSize, listId = ""}) async {
+      {pageSize, listId = "", categoryId, type}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
 //    paramsMap["page_size"] = "$pageSize";
     paramsMap["list_id"] = "$listId";
+    paramsMap["cat_id"] = "$categoryId";
+    paramsMap["type"] = "$type";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
