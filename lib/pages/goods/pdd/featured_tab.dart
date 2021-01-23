@@ -9,81 +9,52 @@ import 'package:fluwx/fluwx.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
+import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
+import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_hall.dart';
 import 'package:star/pages/widget/PriceText.dart';
+import 'package:star/pages/widget/dashed_rect.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/utils/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../global_config.dart';
 
 class FeaturedTabPage extends StatefulWidget {
+  PddHomeData pddHomeData;
+
   @override
   _FeaturedTabPageState createState() => _FeaturedTabPageState();
+
+  FeaturedTabPage({Key key, this.pddHomeData}) : super(key: key);
 }
 
 class _FeaturedTabPageState extends State<FeaturedTabPage>
     with AutomaticKeepAliveClientMixin {
-  final dataKey = new GlobalKey();
-  TabController _tabController;
-  var resultData;
-  var categroy = [
-    '百货',
-    '母婴',
-    '食品',
-    '女装',
-  ];
-  var slideshow;
-  var products;
-  var items;
-  var productsLatestList;
-  var _mFuture;
   bool isFirstLoading = true;
+  List<PddHomeDataBanner> _banner;
+  List<PddHomeDataAd> _ads;
+  PddHomeDataAd _buyTop;
+  PddHomeDataAd _buyLeft;
+  PddHomeDataAd _buyRight;
 
   int page = 1;
   EasyRefreshController _refreshController;
+  var _buyLeftUrl;
+  var _buyLeftImgUrl;
+  var _buyRightUrl;
+  var _buyRightImgUrl;
+  var _buyTopUrl;
+  var _buyTopImgUrl;
 
-  Future _initData() async {
-    /* List<ProductsBeanProduct> proListResult =
-        await HttpManage.getLatestProductList(page);
-    if (mounted) {
-      setState(() {
-        if (page == 1) {
-          productsLatestList = proListResult;
-        } else {
-          if (proListResult == null) {
-//              _refreshController.resetLoadState();
-            _refreshController.finishLoad(noMore: true);
-          } else {
-            productsLatestList += proListResult;
-          }
-        }
-      });
-    }*/
-    var result = await HttpManage.getHomeInfo();
-    if (mounted) {
-      setState(() {
-        try {
-          iconList = result.data.iconList;
-        } catch (e) {}
-      });
-    }
-  }
-
-  Future _initHomeData() async {
-    /* HomeResultBeanEntity result = await HttpManage.getHome();
-    if (mounted) {
-      setState(() {
-        widget.slideshow = result.data.slideshow;
-        widget.products = result.data.products;
-        widget.items = result.data.items;
-      });
-    }*/
-    var result2 = await HttpManage.getPddGoodsList(page, listId: listId);
+  Future _initPddGoodsListData() async {
+    var result2 =
+        await HttpManage.getPddGoodsList(page, listId: listId, categoryId: -1);
     if (result2.status) {
       if (mounted) {
         setState(() {
@@ -100,6 +71,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               //              _refreshController.resetLoadState();
             } else {
               pddGoodsList += result2.data.xList;
+              _refreshController.finishLoad(noMore: true);
             }
           }
           isFirstLoading = false;
@@ -112,10 +84,37 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
   @override
   void initState() {
-    _refreshController = EasyRefreshController();
-    _initData();
-    _initHomeData();
     super.initState();
+    _initPddGoodsListData();
+    _refreshController = EasyRefreshController();
+    try {
+      iconList = widget.pddHomeData.tools;
+      _banner = widget.pddHomeData.banner;
+      _ads = widget.pddHomeData.ads;
+
+      if (!CommonUtils.isEmpty(_ads)) {
+        _buyTop = _ads[0];
+        _buyTopUrl = _buyTop.url;
+        _buyTopImgUrl = _buyTop.img;
+        ;
+        if (_ads.length > 1) {
+          _buyLeft = _ads[1];
+          _buyLeftUrl = _buyLeft.url;
+          _buyLeftImgUrl = _buyLeft.img;
+        }
+        if (_ads.length > 2) {
+          _buyRight = _ads[2];
+          _buyRightUrl = _buyRight.url;
+          _buyRightImgUrl = _buyRight.img;
+        }
+      }
+    } catch (e) {}
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _refreshController.dispose();
   }
 
   @override
@@ -130,14 +129,19 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(pddGoodsList)) {
+      } else {
+        print("_initPddGoodsListData");
+        _initPddGoodsListData();
+      }
+    });
     return buildView();
   }
 
   ///精选tab根布局
   Widget buildView() {
     return Container(
-      width: double.maxFinite,
-      height: double.infinity,
       child: EasyRefresh.custom(
         header: MaterialHeader(),
         footer: MaterialFooter(),
@@ -149,8 +153,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
           _initData();*/
         },
         onLoad: () {
-          /*  page++;
-          _initData();*/
+          page++;
+          _initPddGoodsListData();
         },
         topBouncing: false,
         bottomBouncing: false,
@@ -167,35 +171,78 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
   ///拼多多专区首页轮播
   Widget buildSwiper() {
-    return new Container(
-      margin: const EdgeInsets.only(top: 8.0, bottom: 5.0, left: 16, right: 16),
-      color: Colors.transparent,
-      height: ScreenUtil().setHeight(468),
-      child: Padding(
-        padding: const EdgeInsets.all(0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          child: Swiper(
-            itemBuilder: (BuildContext context, int index) {
-              return new ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        "https://alipic.lanhuapp.com/xd1e01d251-cd6d-4b84-8f5c-f622146922bc",
-                    fit: BoxFit.cover,
-                  ));
-            },
-            indicatorLayout: PageIndicatorLayout.COLOR,
-            autoplay: true,
-            itemCount: 1,
-            pagination: SwiperPagination(
-                builder: DotSwiperPaginationBuilder(
-                    //自定义指示器颜色
-                    color: Colors.white,
-                    size: 8.0,
-                    activeColor: Color(0xffF32E43),
-                    activeSize: 10.0)),
+    return Visibility(
+      visible: !CommonUtils.isEmpty(_banner),
+      child: new Container(
+        margin:
+            const EdgeInsets.only(top: 8.0, bottom: 5.0, left: 16, right: 16),
+        color: Colors.transparent,
+        height: ScreenUtil().setHeight(468),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              child: Swiper(
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () async {
+                      var _bannerUrl = _banner[index].url;
+
+                      ///跳转对应链接
+                      if (CommonUtils.isEmpty(_bannerUrl)) {
+                        return;
+                      }
+                      if (_bannerUrl.toString().startsWith("pinduoduo")) {
+                        if (await canLaunch(_bannerUrl)) {
+                          await launch(_bannerUrl);
+                        } else {
+                          if (_bannerUrl.startsWith("pinduoduo://")) {
+                            CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                          } else {}
+                          return;
+                        }
+                      }
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          WebViewPluginPage(
+                            initialUrl: "$_bannerUrl",
+                            showActions: true,
+                            title: "拼多多",
+                            appBarBackgroundColor: Colors.white,
+                          ));
+
+                      ///
+                    },
+                    child: new ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        child: CachedNetworkImage(
+                          imageUrl: "${_banner[index].img}",
+                          errorWidget: (context, url, d) {
+                            return Center(child: Text("图片加载失败"));
+                          },
+
+/*
+                          imageUrl:
+                              "https://alipic.lanhuapp.com/xd1e01d251-cd6d-4b84-8f5c-f622146922bc",
+*/
+                          fit: BoxFit.cover,
+                        )),
+                  );
+                },
+                indicatorLayout: PageIndicatorLayout.COLOR,
+                autoplay: true,
+                itemCount: CommonUtils.isEmpty(_banner) ? 0 : _banner.length,
+                pagination: SwiperPagination(
+                    builder: DotSwiperPaginationBuilder(
+                        //自定义指示器颜色
+                        color: Colors.white,
+                        size: 2.0,
+                        activeColor: Color(0xffF32E43),
+                        activeSize: 3.0)),
 //        control: new SwiperControl(color: GlobalConfig.colorPrimary),
+              ),
+            ),
           ),
         ),
       ),
@@ -227,7 +274,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     );
   }
 
-  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
+  List<PddHomeDataTool> iconList = List<PddHomeDataTool>();
 
   ///icon 操作列表
   Widget buildItemsLayout() {
@@ -257,7 +304,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: 16,
           children: iconList.asMap().keys.map((index) {
-            HomeIconListIconList item;
+            PddHomeDataTool item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -268,7 +315,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     );
   }
 
-  Widget iconItem(Color _itemsTextColor, {HomeIconListIconList item}) {
+  Widget iconItem(Color _itemsTextColor, {PddHomeDataTool item}) {
     String icon = '';
     String name = '';
     String type = '';
@@ -280,99 +327,30 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       icon = item.icon;
       name = item.name;
       type = item.type;
-      appId = item.appId;
-      path = item.path;
-      subtitle = item.subtitle;
+      path = item.link;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
     } catch (e) {}
-    if ((name.contains('游戏') ||
-            name.contains('赚钱') ||
-            name.contains('会员') ||
-            name.contains('加油')) &&
-        GlobalConfig.isHuaweiUnderReview) {
-      needShow = false;
-    }
     return new InkWell(
         onTap: () async {
-          if (name.contains('赚钱')) {
-            if (!GlobalConfig.isHuaweiUnderReview) {
-              NavigatorUtils.navigatorRouter(context, TaskHallPage());
-            } else {
-              needShow = false;
-              CommonUtils.showToast("敬请期待");
-            }
-            return;
-          }
-          if (type == 'anchor') {
-            //滚动到指定位置
-//            _tabController.animateTo(2);
-            List<String> items = path.split("_");
-            String indexString = items[items.length - 1];
-//            print("indexString=$indexString");
-            try {
-              int index = int.parse(indexString);
-              _tabController.animateTo(index);
-              Scrollable.ensureVisible(dataKey.currentContext);
-            } catch (e) {
-              print(e);
-            }
-            return;
-          }
-          if (type == 'webapp') {
-            launchWeChatMiniProgram(username: appId, path: path);
-            return;
-          }
-          if (type == 'app') {
-            switch (path) {
-              case "recharge":
-                NavigatorUtils.navigatorRouter(context, RechargeListPage());
-                break;
-            }
-            return;
-          }
-          if (type == 'toast') {
-            needShow = false;
-            CommonUtils.showToast("敬请期待");
-            needShow = false;
-            return;
-          }
-          if (type == 'link') {
-            /*PaletteGenerator generator =
-                await PaletteGenerator.fromImageProvider(
-                    Image.network("$icon").image);
+          if (path == 'goods') {
+            ///跳转对应拼多多商品列表
             NavigatorUtils.navigatorRouter(
                 context,
-                WebViewPage(
-                  initialUrl: path,
-                  showActions: true,
-                  appBarBackgroundColor: generator.dominantColor.color,
-                ));*/
-            if (path.contains("czb365")) {
-              /* PaletteGenerator generator =
-                  await PaletteGenerator.fromImageProvider(
-                      Image.network("$icon").image);*/
-              //platformType=渠道编码&platformCode=用户手92657653
-              /*path =
-                  "https://st.czb365.com/v3_prod/"; */ //?platformType=98653913&authCode=040af220c0f
-              NavigatorUtils.navigatorRouter(
-                  context,
-                  WebViewPluginPage(
-                    initialUrl: path,
-                    showActions: true,
-                    title: "优惠加油",
-                    appBarBackgroundColor: Colors.white,
-                  ));
-              return;
-              /* NavigatorUtils.navigatorRouter(context, MyTestApp());
-              return;*/
-            }
-            if (name.contains('游戏') && GlobalConfig.isHuaweiUnderReview) {
-              needShow = false;
-              CommonUtils.showToast("敬请期待");
-              return;
-            }
+                PddGoodsListPage(
+                  showAppBar: true,
+                  title: name,
+                  type: type,
+                ));
 
-            Utils.launchUrl(path);
+            ///
+            return;
+          }
+          if (await canLaunch(path)) {
+            await launch(path);
+          } else {
+            if (path.startsWith("pinduoduo://")) {
+              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+            } else {}
             return;
           }
         },
@@ -429,34 +407,45 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
   Widget buildRowHot() {
     return SliverList(
       delegate: SliverChildBuilderDelegate((content, index) {
-        return Container(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          margin: EdgeInsets.only(bottom: 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              CachedNetworkImage(
-                imageUrl:
-                    "https://alipic.lanhuapp.com/xdf34d1da7-bae5-4ff5-9ea0-77890e1113e3",
-                width: ScreenUtil().setWidth(522),
-                height: ScreenUtil().setWidth(52),
-                fit: BoxFit.cover,
-              ),
-              Expanded(
-                child: Text(''),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Padding(
+        return GestureDetector(
+          onTap: () {
+            NavigatorUtils.navigatorRouter(
+                context,
+                PddGoodsListPage(
+                  categoryId: "-1",
+                  showAppBar: true,
+                  title: '精选',
+                ));
+          },
+          child: Container(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            margin: EdgeInsets.only(bottom: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                CachedNetworkImage(
+                  imageUrl:
+                      "https://alipic.lanhuapp.com/xdf34d1da7-bae5-4ff5-9ea0-77890e1113e3",
+                  width: ScreenUtil().setWidth(522),
+                  height: ScreenUtil().setWidth(52),
+                  fit: BoxFit.cover,
+                ),
+                Expanded(
+                  child: Text(''),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "更多>>",
                     textAlign: TextAlign.right,
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      color: Color(0xff999999),
+                      fontSize: ScreenUtil().setSp(38),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       }, childCount: 1),
@@ -477,8 +466,60 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               height: ScreenUtil().setWidth(102),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 16, top: 8),
+          buildBuyTopContainer(),
+          buildAdRowContainer(),
+        ],
+      ), //
+    );
+  }
+
+  Widget buildAdRowContainer() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Row(
+        children: [
+          buildBuyLeftWidget(),
+          buildBuyRightWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildBuyRightWidget() {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () async {
+          ///跳转对应链接
+          ///
+          if (CommonUtils.isEmpty(_buyRightUrl)) {
+            return;
+          }
+          if (_buyRightUrl.toString().startsWith("pinduoduo")) {
+            if (await canLaunch(_buyRightUrl)) {
+              await launch(_buyRightUrl);
+            } else {
+              if (_buyRightUrl.startsWith("pinduoduo://")) {
+                CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+              } else {}
+              return;
+            }
+          }
+          NavigatorUtils.navigatorRouter(
+              context,
+              WebViewPluginPage(
+                initialUrl: "$_buyRightUrl",
+                showActions: true,
+                title: "拼多多",
+                appBarBackgroundColor: Colors.white,
+              ));
+
+          ///
+        },
+        child: Visibility(
+          visible: !CommonUtils.isEmpty(
+            _buyRightImgUrl,
+          ),
+          child: Center(
             child: ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(
@@ -486,59 +527,119 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 ),
               ),
               child: CachedNetworkImage(
-                imageUrl:
-                    "https://alipic.lanhuapp.com/xde2865247-cea7-4904-a447-271f6c33d9e6",
+                imageUrl: "$_buyRightImgUrl",
                 fit: BoxFit.fitWidth,
-                width: ScreenUtil().setWidth(1029),
-                height: ScreenUtil().setWidth(414),
+                width: ScreenUtil().setWidth(492),
+                height: ScreenUtil().setWidth(600),
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          ScreenUtil().setWidth(20),
-                        ),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "https://alipic.lanhuapp.com/xd49882190-ee93-41ec-8bbb-beed7e7bb5d2",
-                        fit: BoxFit.fitWidth,
-                        width: ScreenUtil().setWidth(492),
-                        height: ScreenUtil().setWidth(600),
-                      ),
-                    ),
-                  ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildBuyLeftWidget() {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () async {
+          ///跳转对应链接
+          if (CommonUtils.isEmpty(_buyLeftUrl)) {
+            return;
+          }
+          if (_buyLeftUrl.toString().startsWith("pinduoduo")) {
+            if (await canLaunch(_buyLeftUrl)) {
+              await launch(_buyLeftUrl);
+            } else {
+              if (_buyLeftUrl.startsWith("pinduoduo://")) {
+                CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+              } else {}
+              return;
+            }
+          }
+          NavigatorUtils.navigatorRouter(
+              context,
+              WebViewPluginPage(
+                initialUrl: "$_buyLeftUrl",
+                showActions: true,
+                title: "拼多多",
+                appBarBackgroundColor: Colors.white,
+              ));
+
+          ///
+        },
+        child: Visibility(
+          visible: !CommonUtils.isEmpty(
+            _buyLeftImgUrl,
+          ),
+          child: Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  ScreenUtil().setWidth(20),
                 ),
-                Expanded(
-                  child: Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          ScreenUtil().setWidth(20),
-                        ),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "https://alipic.lanhuapp.com/xd3c98d579-dce5-4138-be36-bf50895aa4d4",
-                        fit: BoxFit.fitWidth,
-                        width: ScreenUtil().setWidth(492),
-                        height: ScreenUtil().setWidth(600),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              child: CachedNetworkImage(
+                imageUrl: "$_buyLeftImgUrl",
+                fit: BoxFit.fitWidth,
+                width: ScreenUtil().setWidth(492),
+                height: ScreenUtil().setWidth(600),
+              ),
             ),
           ),
-        ],
-      ), //
+        ),
+      ),
+    );
+  }
+
+  Widget buildBuyTopContainer() {
+    return GestureDetector(
+      onTap: () async {
+        ///跳转对应链接
+        if (CommonUtils.isEmpty(_buyTopUrl)) {
+          return;
+        }
+        if (_buyTopUrl.toString().startsWith("pinduoduo")) {
+          if (await canLaunch(_buyTopUrl)) {
+            await launch(_buyTopUrl);
+          } else {
+            if (_buyTopUrl.startsWith("pinduoduo://")) {
+              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+            } else {}
+            return;
+          }
+        }
+        NavigatorUtils.navigatorRouter(
+            context,
+            WebViewPluginPage(
+              initialUrl: "$_buyTopUrl",
+              showActions: true,
+              title: "拼多多",
+              appBarBackgroundColor: Colors.white,
+            ));
+      },
+      child: Visibility(
+        visible: !CommonUtils.isEmpty(
+          _buyTopImgUrl,
+        ),
+        child: Container(
+          margin: EdgeInsets.only(bottom: 16, top: 8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                ScreenUtil().setWidth(20),
+              ),
+            ),
+            child: CachedNetworkImage(
+//              imageUrl: "www.baidu.com",
+              imageUrl: "$_buyTopImgUrl",
+              fit: BoxFit.fitWidth,
+              width: ScreenUtil().setWidth(1029),
+              height: ScreenUtil().setWidth(414),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -555,7 +656,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,
-            itemCount: pddGoodsList.length,
+            itemCount:
+                CommonUtils.isEmpty(pddGoodsList) ? 0 : pddGoodsList.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
@@ -587,6 +689,9 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
+    var _discountPrice = '';
+    var _saleTip = '';
+    var _shopName = '';
     try {
       id = item.gId.toString();
       goodsName = item.gTitle;
@@ -595,7 +700,18 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       salePrice = item.gGroupPrice.toString();
       goodsSign = item.goodsSign.toString();
       searchId = item.searchId.toString();
-      couponAmount = item.coupons.couponDiscount.toString();
+      _saleTip = item.salesTip.toString();
+      _shopName = item.mallName.toString();
+
+      try {
+        couponAmount = item.coupons.couponDiscount.toString();
+      } catch (e) {}
+      if (CommonUtils.isEmpty(couponAmount)) {
+        _discountPrice = salePrice;
+      } else {
+        _discountPrice = (double.parse(salePrice) - double.parse(couponAmount))
+            .toStringAsFixed(2);
+      }
 //      profit = '预估补贴￥${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
@@ -648,8 +764,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                     child: CachedNetworkImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
-                      height: ScreenUtil().setWidth(480),
-                      width: ScreenUtil().setWidth(480),
+                      height: ScreenUtil().setWidth(523),
+                      width: ScreenUtil().setWidth(523),
                       fit: BoxFit.fill,
                       imageUrl: "$goodsImg",
                     ),
@@ -668,9 +784,9 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   child: Text.rich(
                     //"$goodsName",
                     TextSpan(children: [
-                      WidgetSpan(
+                      /*WidgetSpan(
                           child: Container(
-                        width: ScreenUtil().setWidth(48),
+                        width: ScreenUtil().setWidth(75),
                         height: ScreenUtil().setWidth(52),
                         child: Center(
                           child: ClipRRect(
@@ -680,13 +796,14 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                               ),
                             ),
                             child: CachedNetworkImage(
-                              imageUrl: "https://img.pddpic.com/favicon.ico",
-                              width: ScreenUtil().setWidth(42),
+                              imageUrl:
+                                  "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
+                              width: ScreenUtil().setWidth(75),
                               height: ScreenUtil().setWidth(42),
                             ),
                           ),
                         ),
-                      )),
+                      )),*/
                       TextSpan(text: " "),
                       TextSpan(text: "$goodsName")
                     ]),
@@ -696,6 +813,36 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                       fontSize: ScreenUtil().setSp(38),
                       color: Color(0xff222222),
                     ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Visibility(
+                          visible: !CommonUtils.isEmpty(_shopName),
+                          child: Container(
+                            child: Text(
+                              "$_shopName",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(28),
+                                color: Color(0xff999999),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "销量$_saleTip",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(28),
+                          color: Color(0xff999999),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Visibility(
@@ -740,7 +887,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                         width: 5,
                       ),
                       PriceText(
-                        text: '$salePrice',
+                        text: '$_discountPrice',
                         textColor: _priceColor,
                         fontSize: ScreenUtil().setSp(32),
                         fontBigSize: ScreenUtil().setSp(42),
@@ -775,27 +922,47 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                       Visibility(
                         visible: !CommonUtils.isEmpty(couponAmount),
                         child: Container(
+                          height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(
                             left: ScreenUtil().setWidth(8),
                             right: ScreenUtil().setWidth(8),
-                            top: ScreenUtil().setWidth(8),
-                            bottom: ScreenUtil().setWidth(8),
                           ),
-                          constraints: BoxConstraints(
-                            maxWidth: ScreenUtil().setWidth(160),
-                          ),
+                          margin: EdgeInsets.only(right: 6),
                           decoration: BoxDecoration(
                             color: Color(0xfff93736),
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().setWidth(10)),
                           ),
-                          child: Text(
-                            "券${couponAmount.toString()}元",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: ScreenUtil().setSp(32),
-                            ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "券",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(32),
+                                ),
+                              ),
+                              Container(
+                                height: ScreenUtil().setHeight(42),
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                child: DashedRect(
+                                    color: Colors.white,
+                                    strokeWidth: 1,
+                                    gap: 1.0),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                child: Text(
+                                  "${couponAmount.toString()}元",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(32),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

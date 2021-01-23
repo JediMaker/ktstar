@@ -1,15 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
+import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/pages/goods/pdd/featured_tab.dart';
+import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/task/task_message.dart';
+import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:star/pages/widget/round_tab_indicator.dart';
 
 class PddHomeIndexPage extends StatefulWidget {
   PddHomeIndexPage({Key key}) : super(key: key);
@@ -23,24 +28,30 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
-  var categroy = [
-    '百货',
-    '母婴',
-    '食品',
-    '女装',
-    '',
-  ];
-  var slideshow;
-  var products;
-  var items;
-  var _mFuture;
   bool isFirstLoading = true;
+  List<PddHomeDataCat> cats;
+  PddHomeData _homeData;
+  var _tabViews;
+  var _tabs;
+  int _selectedTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(
-        vsync: this, length: categroy == null ? 0 : categroy.length);
+    _initData();
+    _tabController =
+        new TabController(vsync: this, length: cats == null ? 0 : cats.length);
+    _tabController.addListener(() {
+      if (mounted) {
+        setState(() {
+          if (_tabController.index == _tabController.animation.value) {
+            _selectedTabIndex = _tabController.index;
+          }
+        });
+      }
+    });
+    _tabs = buildTabs();
+    _tabViews = buildTabViews();
   }
 
   @override
@@ -58,17 +69,14 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
           Align(
             alignment: Alignment.centerLeft,
             child: GestureDetector(
-              onTap: () {},
-              child: IconButton(
-                icon: Image.asset(
-                  "static/images/icon_ios_back.png",
-                  width: ScreenUtil().setWidth(36),
-                  height: ScreenUtil().setHeight(63),
-                  fit: BoxFit.fill,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Image.asset(
+                "static/images/icon_ios_back_white.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
               ),
 /*
               child: CachedNetworkImage(
@@ -86,7 +94,7 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
                 NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
               },
               child: Container(
-                height: 40,
+                height: ScreenUtil().setHeight(100),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -140,12 +148,38 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
 //分类页签
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
-    if (categroy != null) {
-      for (var classify in categroy) {
-        tabs.add(Tab(
-          text: classify,
+    if (!CommonUtils.isEmpty(cats)) {
+      for (var index = 0; index < cats.length; index++) {
+        var classify = cats[index];
+        tabs.add(Container(
+          height: 36,
+          child: Tab(
+            child: Text(
+              "${classify.catName}",
+              style: TextStyle(
+                fontSize: _selectedTabIndex == index
+                    ? ScreenUtil().setSp(42)
+                    : ScreenUtil().setSp(36),
+                fontWeight: _selectedTabIndex == index
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
+          ),
         ));
       }
+    } else {
+      /*tabs.add(Container(
+        height: 36,
+        child: Tab(
+          child: Text(
+            "",
+            style: TextStyle(
+              fontSize: ScreenUtil().setSp(36),
+            ),
+          ),
+        ),
+      ));*/
     }
     return tabs;
   }
@@ -153,78 +187,120 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
 //分类下对应页面
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
-    if (categroy != null) {
-      for (var classify in categroy) {
-        /*if ('精选' == classify.name) {
-          tabViews.add(FeaturedTabPage(
-            products: products,
-            items: items,
-            slideshow: slideshow,
-          ));
+
+    if (!CommonUtils.isEmpty(cats)) {
+      for (var index = 0; index < cats.length; index++) {
+        var classify = cats[index];
+        if ('精选' == classify.catName) {
+          tabViews.add(
+            FeaturedTabPage(pddHomeData: _homeData),
+          );
         } else {
-          tabViews.add(HomeCategoryGoodsPage(
-            category_id: classify.categoryId,
+          tabViews.add(PddGoodsListPage(
+            categoryId: classify.catId,
+            tabIndex: index,
           ));
-        }*/
-        tabViews.add(FeaturedTabPage());
+        }
       }
+    } else {
+//      tabViews.add(Text(""));
     }
     return tabViews;
   }
 
 //初始化精选tab数据
   Future _initData() async {
-    /*HomeResultBeanEntity result = await HttpManage.getHome();
-    if (mounted) {
-      setState(() {
-        resultData = result;
-        categroy = resultData.data.categroy;
-        slideshow = resultData.data.slideshow;
-        products = resultData.data.products;
-        items = resultData.data.items;
-        HomeResultBeanDataCategroy homeTab = HomeResultBeanDataCategroy();
-        homeTab.name = '精选';
-        categroy.insert(0, homeTab);
-      });
-    }*/
+    try {
+      EasyLoading.show();
+    } catch (e) {}
+    PddHomeEntity result = await HttpManage.getPddHomeData();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          _homeData = result.data;
+          cats = _homeData.cats;
+          _tabController = new TabController(
+              vsync: this, length: cats == null ? 0 : cats.length);
+          _tabController.addListener(() {
+            if (mounted) {
+              setState(() {
+                if (_tabController.index == _tabController.animation.value) {
+                  _selectedTabIndex = _tabController.index;
+                  print("_selectedTabIndex=$_selectedTabIndex");
+                  _tabs = buildTabs();
+                }
+              });
+            }
+          });
+          _tabs = buildTabs();
+          _tabViews = buildTabViews();
+        });
+      }
+    } else {
+      CommonUtils.showToast("${result.errMsg}");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: buildSearchBarLayout(),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        brightness: Brightness.dark,
-        backgroundColor: Color(0xffF32E43),
-        bottom: TabBar(
-          labelColor: Colors.white,
-          controller: this._tabController,
-          indicatorColor: Colors.white,
-          isScrollable: true,
-          tabs: buildTabs(),
-        ),
-      ),
-      body: TabBarView(
-        controller: this._tabController,
-        children: buildTabViews(),
-        /* <Widget>[
-          RefreshIndicator(
-            onRefresh: () {
-              print(('onRefresh'));
-            },
-            child: Center(
-              child: FeaturedTabPage(prodproducts),
+    return FlutterEasyLoading(
+      child: Scaffold(
+        appBar: AppBar(
+          title: buildSearchBarLayout(),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          elevation: 0,
+          brightness: Brightness.dark,
+          backgroundColor: Color(0xffF32E43),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(36),
+            child: TabBar(
+              labelColor: Colors.white,
+              controller: this._tabController,
+              indicatorColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 2,
+              isScrollable: true,
+              indicator: RoundUnderlineTabIndicator(
+                  borderSide: BorderSide(
+                width: 3.5,
+                color: Colors.white,
+              )),
+              tabs: _tabs,
+              onTap: (index) {
+                setState(() {
+                  if (mounted) {
+                    setState(() {
+                      _selectedTabIndex = _tabController.index;
+                    });
+                  }
+                });
+              },
             ),
+          ),
+        ),
+        body: TabBarView(
+          controller: this._tabController,
+          children: _tabViews,
+          /* <Widget>[
+            RefreshIndicator(
+              onRefresh: () {
+                print(('onRefresh'));
+              },
+              child: Center(
+                child: FeaturedTabPage(prodproducts),
+              ),
 //              child: _buildTabNewsList(_newsKey, _newsList),
-          ),
-          Center(
-            child: Text('其他'),
-          ),
+            ),
+            Center(
+              child: Text('其他'),
+            ),
 //            _buildTabNewsList(_technologyKey, _technologyList),
-        ],*/
+          ],*/
+        ),
       ),
     );
   }
