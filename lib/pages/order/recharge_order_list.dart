@@ -25,21 +25,24 @@ import 'package:star/pages/order/order_logistics_tracking.dart';
 import '../../global_config.dart';
 
 class RechargeOrderListPage extends StatefulWidget {
-  RechargeOrderListPage({Key key}) : super(key: key);
+  RechargeOrderListPage({Key key, this.orderSource}) : super(key: key);
   final String title = "我的订单";
+  String orderSource = "1";
 
   @override
   _RechargeOrderListPageState createState() => _RechargeOrderListPageState();
 }
 
-class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
+class _RechargeOrderListPageState extends State<RechargeOrderListPage>
+    with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
   List<OrderListDataList> _orderList;
   String contactPhone = ""; //
   _initData() async {
-    OrderListEntity result = await HttpManage.getOrderList(page, 10);
+    OrderListEntity result =
+        await HttpManage.getOrderList(page, 10, widget.orderSource);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -80,31 +83,29 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         body: EasyRefresh.custom(
-          topBouncing: false,
-          bottomBouncing: false,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
-          enableControlFinishLoad: true,
-          enableControlFinishRefresh: true,
-          controller: _refreshController,
-          onRefresh: () {
-            page = 1;
-            _initData();
-            _refreshController.finishLoad(noMore: false);
-          },
-          onLoad: () {
-            if (!isFirstLoading) {
-              page++;
-              _initData();
-            }
-          },
-          emptyWidget: _orderList == null || _orderList.length == 0
-              ? NoDataPage()
-              : null,
-          slivers: <Widget>[buildCenter()],
-        ) // This trailing comma makes auto-formatting nicer for build methods.
+      topBouncing: false,
+      bottomBouncing: false,
+      header: MaterialHeader(),
+      footer: MaterialFooter(),
+      enableControlFinishLoad: true,
+      enableControlFinishRefresh: true,
+      controller: _refreshController,
+      onRefresh: () {
+        page = 1;
+        _initData();
+        _refreshController.finishLoad(noMore: false);
+      },
+      onLoad: () {
+        if (!isFirstLoading) {
+          page++;
+          _initData();
+        }
+      },
+      emptyWidget:
+          _orderList == null || _orderList.length == 0 ? NoDataPage() : null,
+      slivers: <Widget>[buildCenter()],
+    ) // This trailing comma makes auto-formatting nicer for build methods.
         );
   }
 
@@ -162,6 +163,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
         if (!CommonUtils.isEmpty(goodsList)) {
           goodsSign = goodsList[0].goodsSign;
           goodsId = goodsList[0].goodsId;
+          print("goodsSign=$goodsSign&&goodsId=$goodsId");
         }
       } catch (e) {}
     } catch (e) {}
@@ -227,11 +229,10 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
           if (CommonUtils.isEmpty(goodsList)) {
             return;
           }
-
           NavigatorUtils.navigatorRouter(
               context,
               PddGoodsDetailPage(
-//                gId: id,
+                gId: goodsId,
                 goodsSign: goodsSign,
 //                searchId: searchId,
               ));
@@ -843,4 +844,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

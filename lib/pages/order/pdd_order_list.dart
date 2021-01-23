@@ -25,6 +25,7 @@ import 'package:star/pages/order/order_logistics_tracking.dart';
 
 import '../../global_config.dart';
 
+///拼多多订单列表（已弃用）
 class PddOrderListPage extends StatefulWidget {
   PddOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
@@ -39,7 +40,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
   bool isFirstLoading = true;
   List<OrderListDataList> _orderList;
   String contactPhone = ""; //
-  _initData() async {
+  /*_initData() async {
     OrderListEntity result = await HttpManage.getOrderList(page, 10);
     if (result.status) {
       if (mounted) {
@@ -63,12 +64,12 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
     } else {
       CommonUtils.showToast(result.errMsg);
     }
-  }
+  }*/
 
   @override
   void initState() {
     _refreshController = EasyRefreshController();
-    _initData();
+//    _initData();
     super.initState();
   }
 
@@ -113,13 +114,13 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
           controller: _refreshController,
           onRefresh: () {
             page = 1;
-            _initData();
+//            _initData();
             _refreshController.finishLoad(noMore: false);
           },
           onLoad: () {
             if (!isFirstLoading) {
               page++;
-              _initData();
+//              _initData();
             }
           },
           emptyWidget: _orderList == null || _orderList.length == 0
@@ -127,7 +128,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
               : null,
           slivers: <Widget>[buildCenter()],
         ) // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        );
   }
 
   Widget buildCenter() {
@@ -165,7 +166,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
     String orderType;
     String orderId;
     List<OrderListDataListGoodsList> goodsList =
-    List<OrderListDataListGoodsList>();
+        List<OrderListDataListGoodsList>();
     createTime = listItem.createTime;
     phoneNumber = listItem.mobile;
     phoneMoney = listItem.faceMoney;
@@ -260,7 +261,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius:
-            BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+                BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
             border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 color: Colors.white,
@@ -304,12 +305,12 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                     return Column(
                       children: goodsList == null
                           ? Container(
-                        child: Text(''),
-                      )
+                              child: Text(''),
+                            )
                           : List.generate(goodsList.length, (index) {
-                        return buildRechargeItemRow(
-                            phoneNumber, phoneMoney, goodsList[index]);
-                      }),
+                              return buildRechargeItemRow(
+                                  phoneNumber, phoneMoney, goodsList[index]);
+                            }),
                     );
                     break;
                   case "2": //商品订单
@@ -411,11 +412,11 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                       visible: orderType == "1",
                       child: Container(
                           child: Text(
-                            "订单编号：$orderNo",
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(32),
-                                color: Color(0xff666666)),
-                          )),
+                        "订单编号：$orderNo",
+                        style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xff666666)),
+                      )),
                     ),
                   ),
                   Visibility(
@@ -614,7 +615,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                 barrierDismissible: false,
               );
               page = 1;
-              _initData();
+//              _initData();
               _refreshController.finishLoad(noMore: false);
             } else {
               CommonUtils.showToast("${result.errMsg}");
@@ -650,7 +651,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                           width: ScreenUtil().setWidth(243),
                           height: ScreenUtil().setWidth(243),
                           imageUrl:
-                          product.goodsImg == null ? "" : product.goodsImg,
+                              product.goodsImg == null ? "" : product.goodsImg,
                           /*   imageUrl: item.imageUrl,
                                   width: ScreenUtil().L(120),
                                   height: ScreenUtil().L(120),*/
@@ -661,39 +662,39 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                       ),
                       Expanded(
                           child: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  product.goodsName == null
-                                      ? ""
-                                      : product.goodsName,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              product.goodsName == null
+                                  ? ""
+                                  : product.goodsName,
 //                                  item.wareName,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Color(0xff222222),
-                                    fontSize: ScreenUtil().setSp(42),
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    product.specItem == null
-                                        ? ""
-                                        : product.specItem,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xff222222),
+                                fontSize: ScreenUtil().setSp(42),
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                product.specItem == null
+                                    ? ""
+                                    : product.specItem,
 //                                  item.wareName,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(38),
-                                      color: Color(0xff666666),
-                                    ),
-                                  ),
-                                  margin: EdgeInsets.only(
-                                      top: ScreenUtil().setHeight(18)),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(38),
+                                  color: Color(0xff666666),
                                 ),
-                                /*Wrap(
+                              ),
+                              margin: EdgeInsets.only(
+                                  top: ScreenUtil().setHeight(18)),
+                            ),
+                            /*Wrap(
                             children: product.option.map((op) {
                               return Container(
                                 child: Text(
@@ -703,58 +704,58 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                               );
                             }).toList(),
                           ),*/
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                        child: Row(
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                    child: Row(
 //                            crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
+                                  children: <Widget>[
 //                              Expanded(child:,),
-                                            Flexible(
-                                              child: Text(
-                                                '',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(),
-                                              ),
-//                                flex: 2,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              "￥${product.salePrice == null ? "" : product.salePrice}",
-                                              style: TextStyle(
-                                                fontSize: ScreenUtil().setSp(42),
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xFFF93736),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                    Container(
-                                      alignment: Alignment.centerRight,
+                                    Flexible(
                                       child: Text(
-                                        'x${product.goodsNum}',
-                                        style: TextStyle(
-                                          color: Color(0xff222222),
-                                          fontSize: ScreenUtil().setSp(36),
-                                        ),
+                                        '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(),
+                                      ),
+//                                flex: 2,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "￥${product.salePrice == null ? "" : product.salePrice}",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(42),
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFF93736),
                                       ),
                                     ),
+                                  ],
+                                )),
+                                Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'x${product.goodsNum}',
+                                    style: TextStyle(
+                                      color: Color(0xff222222),
+                                      fontSize: ScreenUtil().setSp(36),
+                                    ),
+                                  ),
+                                ),
 //                            Icon(
 //                              Icons.more_horiz,
 //                              size: 15,
 //                              color: Color(0xFF979896),
 //                            ),
-                                  ],
-                                ),
                               ],
                             ),
-                          ))
+                          ],
+                        ),
+                      ))
                     ],
                   ),
                 ),

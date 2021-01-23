@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
+import 'package:star/pages/widget/round_tab_indicator.dart';
 
 import '../../global_config.dart';
 
@@ -15,17 +16,29 @@ class OrderListPage extends StatefulWidget {
 class _OrderListPageState extends State<OrderListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
+  int _selectedTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _tabController = new TabController(
         vsync: this, length: orderType == null ? 0 : orderType.length);
+    _tabController.addListener(() {
+      if (mounted) {
+        setState(() {
+          if (_tabController.index == _tabController.animation.value) {
+            _selectedTabIndex = _tabController.index;
+          }
+        });
+        return;
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+    _tabController.dispose();
   }
 
   var orderType = [
@@ -37,14 +50,20 @@ class _OrderListPageState extends State<OrderListPage>
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
     if (orderType != null) {
-      for (var classify in orderType) {
+      for (var index = 0; index < orderType.length; index++) {
+        var classify = orderType[index];
         tabs.add(Container(
-          height: 20,
+          height: ScreenUtil().setHeight(60),
+          margin: EdgeInsets.only(bottom: 4),
           child: Tab(
             child: Text(
               "$classify",
               style: TextStyle(
-                fontSize: ScreenUtil().setSp(28),
+                fontSize: ScreenUtil().setSp(42),
+                color: _selectedTabIndex == index
+                    ? Color(0xff222222)
+                    : Color(0xffAFAFAF),
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -58,19 +77,10 @@ class _OrderListPageState extends State<OrderListPage>
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
     if (orderType != null) {
-      for (var classify in orderType) {
-        /*if ('精选' == classify.name) {
-          tabViews.add(FeaturedTabPage(
-            products: products,
-            items: items,
-            slideshow: slideshow,
-          ));
-        } else {
-          tabViews.add(HomeCategoryGoodsPage(
-            category_id: classify.categoryId,
-          ));
-        }*/
-        tabViews.add(RechargeOrderListPage());
+      for (var index = 0; index < orderType.length; index++) {
+        tabViews.add(RechargeOrderListPage(
+          orderSource: "${index + 1}",
+        ));
       }
     }
     return tabViews;
@@ -101,20 +111,41 @@ class _OrderListPageState extends State<OrderListPage>
         backgroundColor: Colors.white,
         elevation: 0,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(5),
-          child: TabBar(
-            controller: _tabController,
-            indicatorColor: Color(0xffF93736),
-            indicatorSize: TabBarIndicatorSize.label,
-            isScrollable: orderType.length > 4 ? true : false,
-            labelColor: Color(0xffF93736),
-            unselectedLabelColor: Colors.black,
-            tabs: buildTabs(),
+          preferredSize: Size.fromHeight(
+            ScreenUtil().setHeight(60),
+          ),
+          child: Container(
+            alignment: AlignmentDirectional.centerStart,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: TabBar(
+              controller: _tabController,
+              indicatorColor: Color(0xffF32E43),
+              indicatorSize: TabBarIndicatorSize.label,
+              isScrollable: orderType.length < 4 ? true : false,
+              labelColor: Color(0xffF32E43),
+              indicatorWeight: 2,
+              indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
+              unselectedLabelColor: Colors.black,
+              indicator: RoundUnderlineTabIndicator(
+                  borderSide: BorderSide(
+                width: 3.5,
+                color: Color(0xffF32E43),
+              )),
+              onTap: (index) {
+                setState(() {
+                  _selectedTabIndex = _tabController.index;
+                });
+              },
+              /*  indicator: BoxDecoration(
+
+              ),*/
+              tabs: buildTabs(),
+            ),
           ),
         ),
       ),
       body: TabBarView(
-        controller: this._tabController,
+        controller: _tabController,
         children: buildTabViews(),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
