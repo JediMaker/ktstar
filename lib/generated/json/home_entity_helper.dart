@@ -60,6 +60,12 @@ homeDataFromJson(HomeData data, Map<String, dynamic> json) {
 			data.iconList.add(new HomeIconListIconList().fromJson(v));
 		});
 	}
+	if (json['ad_list'] != null) {
+		data.adList = new List<HomeIconListIconList>();
+		(json['ad_list'] as List).forEach((v) {
+			data.adList.add(new HomeIconListIconList().fromJson(v));
+		});
+	}
 	if (json['user_level'] != null) {
 		data.userLevel = json['user_level']?.toString();
 	}
@@ -80,6 +86,9 @@ Map<String, dynamic> homeDataToJson(HomeData entity) {
 	}
 	if (entity.iconList != null) {
 		data['icon_list'] =  entity.iconList.map((v) => v.toJson()).toList();
+	}
+	if (entity.adList != null) {
+		data['ad_list'] =  entity.adList.map((v) => v.toJson()).toList();
 	}
 	data['user_level'] = entity.userLevel;
 	return data;

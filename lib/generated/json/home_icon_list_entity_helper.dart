@@ -34,6 +34,9 @@ homeIconListIconListFromJson(HomeIconListIconList data, Map<String, dynamic> jso
 	if (json['path'] != null) {
 		data.path = json['path']?.toString();
 	}
+	if (json['params'] != null) {
+		data.params = json['params']?.toString();
+	}
 	if (json['subtitle'] != null) {
 		data.subtitle = json['subtitle']?.toString();
 	}
@@ -47,6 +50,7 @@ Map<String, dynamic> homeIconListIconListToJson(HomeIconListIconList entity) {
 	data['type'] = entity.type;
 	data['app_id'] = entity.appId;
 	data['path'] = entity.path;
+	data['params'] = entity.params;
 	data['subtitle'] = entity.subtitle;
 	return data;
 }

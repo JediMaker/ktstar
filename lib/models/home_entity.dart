@@ -21,6 +21,8 @@ class HomeData with JsonConvert<HomeData> {
   List<HomeGoodsListGoodsList> goodsList;
   @JSONField(name: "icon_list")
   List<HomeIconListIconList> iconList;
+  @JSONField(name: "ad_list")
+  List<HomeIconListIconList> adList;
   @JSONField(name: "user_level")
   String userLevel;
 }
