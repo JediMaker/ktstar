@@ -12,6 +12,7 @@ class HomeIconListIconList with JsonConvert<HomeIconListIconList> {
 	String icon;
 	String name;
 	String type;
+	String uri;
 	@JSONField(name: "app_id")
 	String appId;
 	String path;
