@@ -1,4 +1,5 @@
 import 'package:star/models/pdd_home_entity.dart';
+import 'package:star/models/home_icon_list_entity.dart';
 
 pddHomeEntityFromJson(PddHomeEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
@@ -35,21 +36,21 @@ pddHomeDataFromJson(PddHomeData data, Map<String, dynamic> json) {
 		});
 	}
 	if (json['banner'] != null) {
-		data.banner = new List<PddHomeDataBanner>();
+		data.banner = new List<HomeIconListIconList>();
 		(json['banner'] as List).forEach((v) {
-			data.banner.add(new PddHomeDataBanner().fromJson(v));
+			data.banner.add(new HomeIconListIconList().fromJson(v));
 		});
 	}
 	if (json['tools'] != null) {
-		data.tools = new List<PddHomeDataTool>();
+		data.tools = new List<HomeIconListIconList>();
 		(json['tools'] as List).forEach((v) {
-			data.tools.add(new PddHomeDataTool().fromJson(v));
+			data.tools.add(new HomeIconListIconList().fromJson(v));
 		});
 	}
 	if (json['ads'] != null) {
-		data.ads = new List<PddHomeDataAd>();
+		data.ads = new List<HomeIconListIconList>();
 		(json['ads'] as List).forEach((v) {
-			data.ads.add(new PddHomeDataAd().fromJson(v));
+			data.ads.add(new HomeIconListIconList().fromJson(v));
 		});
 	}
 	return data;

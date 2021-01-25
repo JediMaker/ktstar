@@ -1,5 +1,6 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/models/home_icon_list_entity.dart';
 
 class PddHomeEntity with JsonConvert<PddHomeEntity> {
 	bool status;
@@ -12,9 +13,9 @@ class PddHomeEntity with JsonConvert<PddHomeEntity> {
 
 class PddHomeData with JsonConvert<PddHomeData> {
 	List<PddHomeDataCat> cats;
-	List<PddHomeDataBanner> banner;
-	List<PddHomeDataTool> tools;
-	List<PddHomeDataAd> ads;
+	List<HomeIconListIconList> banner;
+	List<HomeIconListIconList> tools;
+	List<HomeIconListIconList> ads;
 }
 
 class PddHomeDataCat with JsonConvert<PddHomeDataCat> {

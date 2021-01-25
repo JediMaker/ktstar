@@ -19,6 +19,12 @@ Map<String, dynamic> homeIconListEntityToJson(HomeIconListEntity entity) {
 }
 
 homeIconListIconListFromJson(HomeIconListIconList data, Map<String, dynamic> json) {
+	if (json['id'] != null) {
+		data.id = json['id']?.toString();
+	}
+	if (json['position'] != null) {
+		data.position = json['position']?.toString();
+	}
 	if (json['icon'] != null) {
 		data.icon = json['icon']?.toString();
 	}
@@ -40,11 +46,19 @@ homeIconListIconListFromJson(HomeIconListIconList data, Map<String, dynamic> jso
 	if (json['subtitle'] != null) {
 		data.subtitle = json['subtitle']?.toString();
 	}
+	if (json['img_path'] != null) {
+		data.imgPath = json['img_path']?.toString();
+	}
+	if (json['toast_info'] != null) {
+		data.toastInfo = json['toast_info']?.toString();
+	}
 	return data;
 }
 
 Map<String, dynamic> homeIconListIconListToJson(HomeIconListIconList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
+	data['id'] = entity.id;
+	data['position'] = entity.position;
 	data['icon'] = entity.icon;
 	data['name'] = entity.name;
 	data['type'] = entity.type;
@@ -52,5 +66,7 @@ Map<String, dynamic> homeIconListIconListToJson(HomeIconListIconList entity) {
 	data['path'] = entity.path;
 	data['params'] = entity.params;
 	data['subtitle'] = entity.subtitle;
+	data['img_path'] = entity.imgPath;
+	data['toast_info'] = entity.toastInfo;
 	return data;
 }

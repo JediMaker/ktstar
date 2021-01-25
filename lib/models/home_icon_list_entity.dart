@@ -7,6 +7,8 @@ class HomeIconListEntity with JsonConvert<HomeIconListEntity> {
 }
 
 class HomeIconListIconList with JsonConvert<HomeIconListIconList> {
+	String id;
+	String position;
 	String icon;
 	String name;
 	String type;
@@ -15,4 +17,8 @@ class HomeIconListIconList with JsonConvert<HomeIconListIconList> {
 	String path;
 	String params;
 	String subtitle;
+	@JSONField(name: "img_path")
+	String imgPath;
+	@JSONField(name: "toast_info")
+	String toastInfo;
 }
