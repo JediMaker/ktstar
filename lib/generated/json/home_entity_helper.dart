@@ -34,9 +34,9 @@ Map<String, dynamic> homeEntityToJson(HomeEntity entity) {
 
 homeDataFromJson(HomeData data, Map<String, dynamic> json) {
 	if (json['banner'] != null) {
-		data.banner = new List<HomeDataBanner>();
+		data.banner = new List<HomeIconListIconList>();
 		(json['banner'] as List).forEach((v) {
-			data.banner.add(new HomeDataBanner().fromJson(v));
+			data.banner.add(new HomeIconListIconList().fromJson(v));
 		});
 	}
 	if (json['task_list'] != null) {

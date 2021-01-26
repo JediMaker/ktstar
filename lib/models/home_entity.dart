@@ -13,7 +13,7 @@ class HomeEntity with JsonConvert<HomeEntity> {
 }
 
 class HomeData with JsonConvert<HomeData> {
-  List<HomeDataBanner> banner;
+  List<HomeIconListIconList> banner;
   @JSONField(name: "task_list")
   List<HomeDataTaskList> taskList;
   String links;
