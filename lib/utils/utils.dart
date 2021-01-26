@@ -245,7 +245,7 @@ class Utils {
       await launch(url, forceSafariVC: false);
     } else {
 //      throw 'Could not launch $url';
-      CommonUtils.showToast("链接打开失败！");
+      CommonUtils.showToast("未安装相关客户端！");
     }
   }
 }

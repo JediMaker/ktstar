@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
+import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
+import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
+import 'package:star/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
@@ -34,6 +37,9 @@ class RouteNames {
   static const String FansListPage = "fansListPage";
   static const String TaskMessagePage = "taskMessagePage";
   static const String TaskRecordListPage = "taskRecordListPage";
+  static const String PddHomeIndexPage = "pddHome";
+  static const String PddGoodsListPage = "pddList";
+  static const String PddGoodsDetailPage = "pddGoodsDetailPage";
 }
 
 class MyRouters {
@@ -114,6 +120,21 @@ class MyRouters {
         return MaterialPageRoute(
           settings: RouteSettings(name: RouteNames.TaskRecordListPage),
           builder: (context) => TaskRecordListPage(),
+        );
+      case RouteNames.PddHomeIndexPage:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RouteNames.PddHomeIndexPage),
+          builder: (context) => PddHomeIndexPage(),
+        );
+      case RouteNames.PddGoodsListPage:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RouteNames.PddGoodsListPage),
+          builder: (context) => PddGoodsListPage(),
+        );
+      case RouteNames.PddGoodsDetailPage:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: RouteNames.PddGoodsDetailPage),
+          builder: (context) => PddGoodsDetailPage(),
         );
       default:
         return MaterialPageRoute(

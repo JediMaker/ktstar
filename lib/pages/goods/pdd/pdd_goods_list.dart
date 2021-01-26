@@ -181,7 +181,7 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
             visible: widget.showAppBar,
             child: AppBar(
               title: Text(
-                widget.title,
+                "${widget.title}",
                 style: TextStyle(
                     color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
               ),

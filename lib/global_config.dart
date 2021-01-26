@@ -182,6 +182,9 @@ class GlobalConfig {
     if (!_prefs.containsKey("isHuaweiUnderReview")) {
       prefs.setBool("isHuaweiUnderReview", false);
     }
+    if (!_prefs.containsKey("searchList")) {
+      prefs.setStringList("searchList", List<String>());
+    }
 
     if (!isRelease) {
 //      GlobalConfig.prefs.setString("uid", "123");
@@ -208,6 +211,17 @@ class GlobalConfig {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     return entity.data;
+  }
+
+  /// 获取关键词历史搜索列表
+  static List<String> getSearchList() {
+    var list = GlobalConfig.prefs.getStringList("searchList");
+    return list == null ? List<String>() : list;
+  }
+
+  /// 保存关键词历史搜索列表
+  static setSearchList({List<String> searchList}) {
+    GlobalConfig.prefs.setStringList("searchList", searchList);
   }
 
   /// 获取用户信息

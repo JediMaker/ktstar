@@ -230,8 +230,12 @@ class APi {
 
   ///商品搜索热词
   static const String GOODS_HOT_WORDS = "goods/hot-words";
+
   ///拼多多授权
   static const String GOODS_PIN_AUTH = "goods/pin-auth";
+
+  ///拼多多商品分类
+  static const String SIT_CATS = "site/cats";
 
   ///首页热门商品列表
   static const String HOME_SEARCH_PRODUCTS_LIST =

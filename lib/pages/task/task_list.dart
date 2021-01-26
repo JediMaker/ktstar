@@ -34,9 +34,11 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
+import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
+import 'package:star/pages/task/invitation_poster.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_detail_other.dart';
@@ -52,12 +54,18 @@ import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/pages/goods/home_goods_list.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
+import 'package:star/pages/widget/persistent_header_builder.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading/loading.dart';
 import 'package:star/utils/utils.dart';
+import 'package:star/pages/widget/round_tab_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:star/models/home_pdd_category_entity.dart';
+import 'package:star/pages/widget/my_tab.dart';
 
 class TaskListPage extends StatefulWidget {
   TaskListPage({Key key}) : super(key: key);
@@ -86,6 +94,7 @@ class _TaskListPageState extends State<TaskListPage>
   bool _isMarqueeLoop = false;
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
   List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
+  List<HomeIconListIconList> adList = List<HomeIconListIconList>();
 
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
@@ -122,8 +131,53 @@ class _TaskListPageState extends State<TaskListPage>
     Container(),
     Container(),
   ];
+  Widget pddcategoryTabsView;
+  List<HomePddCategoryDataCat> cats;
 
   var _marqueeSwiperController = SwiperController();
+
+  var _tabs;
+  int _selectedTabIndex = 0;
+
+//分类页签
+  List<Widget> buildTabs() {
+    List<Widget> tabs = <Widget>[];
+    if (!CommonUtils.isEmpty(cats)) {
+      for (var index = 0; index < cats.length; index++) {
+        var classify = cats[index];
+        tabs.add(Container(
+          height: 36,
+          child: Tab(
+            iconMargin: EdgeInsets.all(0),
+            child: Text(
+              "${classify.catName}",
+              style: TextStyle(
+                  fontSize: ScreenUtil().setSp(42),
+                  fontWeight: FontWeight.bold,
+                  color: index == _selectedTabIndex
+                      ? Color(0xffCE0100)
+                      : Color(0xff222222)),
+            ),
+          ),
+        ));
+      }
+    } else {
+      /*tabs.add(Container(
+        height: 36,
+        child: Tab(
+          child: Text(
+            "",
+            style: TextStyle(
+              fontSize: ScreenUtil().setSp(36),
+            ),
+          ),
+        ),
+      ));*/
+    }
+    return tabs;
+  }
+
+  TabController _pddTabController;
 
   @override
   initState() {
@@ -132,6 +186,7 @@ class _TaskListPageState extends State<TaskListPage>
 //        print("拉起小程序isSuccessful:${res.isSuccessful}");
       }
     });
+    initPddTabbar();
     _tabController =
         TabController(length: _tabViews.length, vsync: ScrollableState());
     _tabController.addListener(() {
@@ -179,7 +234,76 @@ class _TaskListPageState extends State<TaskListPage>
     super.initState();
   }
 
+  initPddTabbar() {
+    _pddTabController =
+        new TabController(vsync: this, length: cats == null ? 0 : cats.length);
+    _pddTabController.addListener(() {
+      if (mounted) {
+        setState(() {
+          if (_pddTabController.index == _pddTabController.animation.value) {
+            _selectedTabIndex = _pddTabController.index;
+          }
+        });
+      }
+    });
+    _tabs = buildTabs();
+    pddcategoryTabsView = buildPddCategoryTabBar();
+  }
+
+  ///拼多多商品分类
+  Widget buildPddCategoryTabBar() {
+    return SliverPersistentHeader(
+        pinned: true,
+        delegate: PersistentHeaderBuilder(
+            max: 60,
+            min: 48,
+            builder: (ctx, offset) => Container(
+                  alignment: Alignment.center,
+                  color: Color(0xFFFAFAFA),
+//                  height: 26,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TabBar(
+                    labelColor: Color(0xff222222),
+                    controller: this._pddTabController,
+                    indicatorColor: Color(0xffCE0100),
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorWeight: 2,
+                    isScrollable: true,
+                    indicator: RoundUnderlineTabIndicator(
+                        borderSide: BorderSide(
+                      width: 0,
+                      color: Colors.white,
+                    )),
+                    tabs: _tabs,
+                    onTap: (index) {
+                      setState(() {
+                        if (mounted) {
+                          setState(() {
+                            _selectedTabIndex = _pddTabController.index;
+                            _tabs = buildTabs();
+                            pddcategoryTabsView = buildPddCategoryTabBar();
+                            bus.emit("changePddListViewData",
+                                cats[_selectedTabIndex].catId);
+                          });
+                        }
+                      });
+                    },
+                  ),
+                )));
+  }
+
   Future _initData({bool isRefresh = false}) async {
+    var categoryResult = await HttpManage.getHomePagePddProductCategory();
+    try {
+      if (categoryResult.status) {
+        if (mounted) {
+          setState(() {
+            cats = categoryResult.data.cats;
+            initPddTabbar();
+          });
+        }
+      }
+    } catch (e) {}
     var result = await HttpManage.getHomeInfo();
     if (mounted) {
       setState(() {
@@ -190,6 +314,7 @@ class _TaskListPageState extends State<TaskListPage>
           userType = entity.data.userLevel;
           goodsList = entity.data.goodsList;
           iconList = entity.data.iconList;
+          adList = entity.data.adList;
         } catch (e) {
           print('init data err=$e');
         }
@@ -378,25 +503,13 @@ class _TaskListPageState extends State<TaskListPage>
       height: 50,
       child: Row(
         children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () {},
-              child: CachedNetworkImage(
-                width: ScreenUtil().setWidth(78),
-                height: ScreenUtil().setWidth(78),
-                imageUrl:
-                    "https://alipic.lanhuapp.com/xd815e5762-05d1-4721-993a-0b866db87c4d",
-              ),
-            ),
-          ),
           Expanded(
             child: GestureDetector(
               onTap: () {
                 NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
               },
               child: Container(
-                height: 40,
+                height: ScreenUtil().setHeight(100),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -443,6 +556,167 @@ class _TaskListPageState extends State<TaskListPage>
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  ///广告占位
+  Widget buildAdRowContainer() {
+    return SliverToBoxAdapter(
+      child: Container(
+        margin: EdgeInsets.only(top: 8, left: 16, right: 16),
+        child: Row(
+          children: List.generate(
+              CommonUtils.isEmpty(adList) ? 0 : adList.length,
+              (index) => buildAdWidget(adList[index], index)),
+        ),
+      ),
+    );
+  }
+
+  ///广告单元
+  Widget buildAdWidget(HomeIconListIconList item, int index) {
+    String icon = '';
+    String name = '';
+    String type = '';
+    String appId = '';
+    String path = '';
+    String imgPath = '';
+    String subtitle = '';
+    String params = '';
+    String catId = '';
+    String pddType = '';
+    try {
+      icon = item.icon;
+      name = item.name;
+      type = item.type;
+      appId = item.appId;
+      path = !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      subtitle = item.subtitle;
+      params = item.params;
+      imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+      if (params.contains("&")) {}
+      List<String> pList = params.split("&");
+      for (var itemString in pList) {
+        List<String> itemList = itemString.split("=");
+        if (!CommonUtils.isEmpty(itemList)) {
+          switch (itemList[0]) {
+            case "cat_id":
+              catId = itemList[1];
+              break;
+            case "type":
+              pddType = itemList[1];
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return Expanded(
+      child: GestureDetector(
+        onTap: () async {
+          ///跳转对应链接
+          ///
+          ///
+          print(
+              "type=$type&&name=$name&&icon=$icon&&path=$path&&catId=$catId&&pddType=$pddType&&");
+          if (type == 'webapp') {
+            launchWeChatMiniProgram(username: appId, path: path);
+            return;
+          }
+          if (type == 'app') {
+            if (path == 'pdd_index') {
+              NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
+              return;
+            }
+            if (path == 'pdd_goods') {
+              NavigatorUtils.navigatorRouter(
+                  context,
+                  PddGoodsListPage(
+                    showAppBar: true,
+                    type: pddType,
+                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    categoryId: catId,
+                  ));
+              return;
+            }
+            switch (path) {
+              case "recharge":
+                NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                break;
+            }
+            return;
+          }
+          if (type == 'toast') {
+            CommonUtils.showToast("敬请期待");
+            return;
+          }
+          if (type == 'link') {
+            if (path.toString().startsWith("pinduoduo")) {
+              if (await canLaunch(path)) {
+                await launch(path);
+              } else {
+                if (path.startsWith("pinduoduo://")) {
+                  CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      WebViewPluginPage(
+                        initialUrl: "$path",
+                        showActions: true,
+                        title: "拼多多",
+                        appBarBackgroundColor: Colors.white,
+                      ));
+                } else {}
+                return;
+              }
+            }
+            if (path.contains("yangkeduo")) {
+              var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                  "pinduoduo://com.xunmeng.pinduoduo/");
+              if (await canLaunch(pddPath)) {
+                await launch(pddPath);
+              } else {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPluginPage(
+                      initialUrl: "$path",
+                      showActions: true,
+                      title: "拼多多",
+                      appBarBackgroundColor: Colors.white,
+                    ));
+                return;
+              }
+            }
+            Utils.launchUrl(path);
+            return;
+          }
+
+          ///
+        },
+        child: Visibility(
+          visible: !CommonUtils.isEmpty(
+            imgPath,
+          ),
+          child: Container(
+            alignment:
+                index % 2 == 0 ? Alignment.centerLeft : Alignment.centerRight,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  ScreenUtil().setWidth(30),
+                ),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: "$imgPath",
+                fit: BoxFit.fitWidth,
+                width: ScreenUtil().setWidth(502),
+                height: ScreenUtil().setWidth(322),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -594,10 +868,11 @@ class _TaskListPageState extends State<TaskListPage>
                   children: <Widget>[
                     buildBannerLayout(),
 //                    _buildHotspot(),
-                    itemsLayout(),
                   ],
                 ),
               ),
+              desLayout(),
+              itemsLayout(),
 
               ///测试查看loading效果
               /* SliverToBoxAdapter(
@@ -655,132 +930,10 @@ class _TaskListPageState extends State<TaskListPage>
                   ),
                 ],
               )),*/
-              SliverToBoxAdapter(
-                  child: Visibility(
-                visible: goodsList.length > 0,
-                child: Container(
-                  margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(30), left: 16, right: 16),
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.circular(ScreenUtil().setWidth(32))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          NavigatorUtils.navigatorRouter(
-                              context, GoodsListPage());
-                        },
-                        child: Container(
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: ScreenUtil().setWidth(400),
-                                height: ScreenUtil().setHeight(60),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(),
-                              ),
-                              Container(
-                                child: Text(
-                                  "查看更多 >>",
-                                  style: TextStyle(
-                                    color: Color(0xff222222),
-                                    fontSize: ScreenUtil().setSp(38),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          margin: EdgeInsets.only(
-                            bottom: ScreenUtil().setHeight(30),
-                          ),
-                        ),
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(goodsList.length, (index) {
-                            HomeGoodsListGoodsList item;
-                            try {
-                              item = goodsList[index];
-                            } catch (e) {}
-                            return productItem(item: item);
-                          }),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Container(
-                      child: SizedBox(
-                        height: 8,
-                      ),
-                    ),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        NavigatorUtils.navigatorRouter(
-                            context, PddHomeIndexPage());
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: ScreenUtil().setHeight(30),
-                            left: 16,
-                            right: 16),
-                        padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft:
-                                  Radius.circular(ScreenUtil().setWidth(32)),
-                              topRight:
-                                  Radius.circular(ScreenUtil().setWidth(32)),
-                            )),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: ScreenUtil().setWidth(400),
-                              height: ScreenUtil().setHeight(60),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "https://alipic.lanhuapp.com/xdbbcb7de5-5b59-4744-b66d-16c6bde34360",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(),
-                            ),
-                            Container(
-                              child: Text(
-                                "查看更多 >>",
-                                style: TextStyle(
-                                  color: Color(0xff222222),
-                                  fontSize: ScreenUtil().setSp(38),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              buildGoodsListSliverToBoxAdapter(context),
+              buildApplyForMicroShareholders(),
+              buildAdRowContainer(),
+              pddcategoryTabsView,
               HomeGoodsListPage(),
               SliverToBoxAdapter(
                 child: Container(
@@ -807,6 +960,211 @@ class _TaskListPageState extends State<TaskListPage>
           );
         },
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  ///自营消费补贴商品列表
+  Widget buildGoodsListSliverToBoxAdapter(BuildContext context) {
+    return SliverToBoxAdapter(
+        child: Visibility(
+      visible: goodsList.length > 0,
+      child: Container(
+        margin: EdgeInsets.only(
+            top: ScreenUtil().setHeight(30), left: 16, right: 16),
+        padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            gradient: LinearGradient(colors: [
+              Color(0xffE7665C),
+              Color(0xffD54035),
+            ]),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(32))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                NavigatorUtils.navigatorRouter(context, GoodsListPage());
+              },
+              child: Container(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Stack(
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          Container(
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://alipic.lanhuapp.com/xde2fb8570-f7e3-47a5-9220-217c64821d87",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            width: ScreenUtil().setWidth(525),
+                            height: ScreenUtil().setHeight(93),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://alipic.lanhuapp.com/xd8efb617a-af45-4ef1-bf07-2dba466fe026",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: ScreenUtil().setWidth(162),
+                      height: ScreenUtil().setWidth(63),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Color(0xffFFEDD8),
+                          Color(0xffFEC7B7),
+                        ]),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(ScreenUtil().setWidth(32)),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "GO",
+                            style: TextStyle(
+                              color: Color(0xffC61513),
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
+                          CachedNetworkImage(
+                            imageUrl:
+                                "https://alipic.lanhuapp.com/xdb2ba7101-ff5b-42ae-a6e7-f890b3b83e91",
+                            fit: BoxFit.fill,
+                            width: ScreenUtil().setWidth(33),
+                            height: ScreenUtil().setWidth(33),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.only(
+                  bottom: ScreenUtil().setHeight(30),
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(goodsList.length, (index) {
+                  HomeGoodsListGoodsList item;
+                  try {
+                    item = goodsList[index];
+                  } catch (e) {}
+                  return productItem(item: item);
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+
+  ///申请微股东
+  Widget buildApplyForMicroShareholders() {
+    return SliverToBoxAdapter(
+      child: Column(
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              NavigatorUtils.navigatorRouter(context, InvitationPosterPage());
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+              height: ScreenUtil().setHeight(188),
+              decoration: BoxDecoration(
+//                            color: Colors.white,
+                  gradient: LinearGradient(colors: [
+                    Color(0xffA10011),
+                    Color(0xff590600),
+                  ]),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(ScreenUtil().setWidth(30)),
+                    topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                    bottomLeft: Radius.circular(ScreenUtil().setWidth(30)),
+                    bottomRight: Radius.circular(ScreenUtil().setWidth(30)),
+                  )),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(235),
+                    height: ScreenUtil().setWidth(235),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://alipic.lanhuapp.com/xd3342447e-ba65-4d86-91eb-edfe87de5ca3",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Text(
+                        "申请微股东 享受每日分红",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: ScreenUtil().setSp(46),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: ScreenUtil().setWidth(211),
+                    height: ScreenUtil().setWidth(77),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.only(right: 10, left: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Color(0xffE43E32),
+                        Color(0xffAB221B),
+                      ]),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(ScreenUtil().setWidth(39)),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "立即申请",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: ScreenUtil().setSp(32),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 3),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://alipic.lanhuapp.com/xd18562122-edcf-4b8a-8f6d-4528530150ea",
+                            fit: BoxFit.fill,
+                            width: ScreenUtil().setWidth(12),
+                            height: ScreenUtil().setWidth(21),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -872,18 +1230,18 @@ class _TaskListPageState extends State<TaskListPage>
     String goodsImg = '';
     String originalPrice = '';
     String salePrice = '';
-    double topMargin = 0;
+    double topMargin = 10;
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      if (goodsName.length < 8) {
+      /* if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
         topMargin = ScreenUtil().setHeight(10);
-      }
+      }*/
     } catch (e) {}
     return GestureDetector(
       onTap: () {
@@ -896,160 +1254,303 @@ class _TaskListPageState extends State<TaskListPage>
       },
       child: Container(
 //            color: Colors.blue ,商学院
-          width: ScreenUtil().setWidth(340),
-          margin: EdgeInsets.only(right: ScreenUtil().setWidth(30)),
-          constraints: BoxConstraints(
-            minHeight: ScreenUtil().setHeight(560),
-          ),
+          width: ScreenUtil().setWidth(331),
+          margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
+          constraints: BoxConstraints(),
           decoration: BoxDecoration(
-            color: Color(0xffFFF0E8),
+            color: Color(0xffFee2cd),
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
           ),
           child: Padding(
 //                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
-            padding: const EdgeInsets.all(0),
+            padding: EdgeInsets.all(ScreenUtil().setWidth(14)),
 //            child: InkWell(
 //              splashColor: Colors.yellow,
 
 //        onDoubleTap: () => showSnackBar(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(ScreenUtil().setWidth(10)),
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
 //                        fit: StackFit.expand,
-              children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(ScreenUtil().setWidth(30)),
-                      topLeft: Radius.circular(ScreenUtil().setWidth(30)),
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                        topLeft: Radius.circular(ScreenUtil().setWidth(30)),
+                      ),
                     ),
-                    child: CachedNetworkImage(
-                      fadeInDuration: Duration(milliseconds: 0),
-                      fadeOutDuration: Duration(milliseconds: 0),
-                      height: ScreenUtil().setWidth(340),
-                      width: ScreenUtil().setWidth(340),
-                      fit: BoxFit.fitWidth,
-                      imageUrl: "$goodsImg",
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(ScreenUtil().setWidth(10)),
+                        topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                      ),
+                      child: CachedNetworkImage(
+                        fadeInDuration: Duration(milliseconds: 0),
+                        fadeOutDuration: Duration(milliseconds: 0),
+                        height: ScreenUtil().setWidth(246),
+                        width: ScreenUtil().setWidth(305),
+                        fit: BoxFit.fill,
+                        imageUrl: "$goodsImg",
+                      ),
                     ),
                   ),
-                ),
 
 //                          SizedBox(
 //                            height: 10,
 //                          ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(20),
-                    vertical: ScreenUtil().setHeight(16),
-                  ),
-                  child: Text(
-                    "$goodsName",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(38),
-                      color: Color(0xff222222),
+                  Visibility(
+                    visible: false,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(20),
+                        vertical: ScreenUtil().setHeight(16),
+                      ),
+                      child: Text(
+                        "$goodsName",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(38),
+                          color: Color(0xff222222),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: topMargin),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 5,
+                  Container(
+                    height: ScreenUtil().setWidth(55),
+                    margin: EdgeInsets.only(top: topMargin, left: 4, right: 4),
+                    decoration: BoxDecoration(
+                      color: Color(0xffe8e8e8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(ScreenUtil().setWidth(28)),
                       ),
-                      PriceText(
-                        text: '$salePrice',
-                        textColor: _priceColor,
-                        fontSize: ScreenUtil().setSp(32),
-                        fontBigSize: ScreenUtil().setSp(42),
-//                          '27.5',
-                        /*style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
-                          color: _priceColor,
-                          fontWeight: FontWeight.bold,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        /* SizedBox(
+                          width: 5,
                         ),*/
-                      ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(20),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              bottom: ScreenUtil().setHeight(2)),
-                          child: Visibility(
-                            visible: salePrice != originalPrice,
-                            child: Text(
-                              "￥$originalPrice",
-                              overflow: TextOverflow.ellipsis,
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              bottom: ScreenUtil().setHeight(2),
+                            ),
+                            padding: EdgeInsets.only(
+                              left: ScreenUtil().setHeight(12),
+                            ),
+                            child: Visibility(
+                              visible: salePrice != originalPrice,
+                              child: Text(
+                                "￥$originalPrice",
+                                overflow: TextOverflow.ellipsis,
 //                            '${0}人评价',
 //                            '23234人评价',
 //                          product
-                              style: TextStyle(
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: ScreenUtil().setSp(32),
-                                  color: Color(0xFF979896)),
+                                style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: ScreenUtil().setSp(24),
+                                    color: Color(0xFFafafaf)),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      /* Icon(
-                          Icons.more_horiz,
-                          size: 15,
-                          color: Color(0xFF979896),
-                        ),*/
-                    ],
+                        SizedBox(
+                          width: ScreenUtil().setWidth(20),
+                        ),
+                        Container(
+                          height: ScreenUtil().setWidth(55),
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          decoration: BoxDecoration(
+                            color: Color(0xffE32024),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(28)),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                child: PriceText(
+                                  text: '$salePrice',
+                                  textColor: Colors.white,
+                                  fontSize: ScreenUtil().setSp(32),
+                                  fontBigSize: ScreenUtil().setSp(32),
+                                  fontWeight: FontWeight.normal,
+                                  /*style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(42),
+                                    color: _priceColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),*/
+                                ),
+                                margin: EdgeInsets.symmetric(horizontal: 4),
+                              ),
+                              CachedNetworkImage(
+                                fadeInDuration: Duration(milliseconds: 0),
+                                fadeOutDuration: Duration(milliseconds: 0),
+                                fit: BoxFit.fitWidth,
+                                height: ScreenUtil().setWidth(26),
+                                width: ScreenUtil().setWidth(26),
+                                imageUrl:
+                                    "https://alipic.lanhuapp.com/xd00b6d1cd-b672-41f7-89ea-806d7c3aef94",
+                              ),
+                            ],
+                          ),
+                        ),
+                        /* Icon(
+                            Icons.more_horiz,
+                            size: 15,
+                            color: Color(0xFF979896),
+                          ),*/
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 8,
-                )
+                  SizedBox(
+                    height: 8,
+                  )
 //                          descStack(product),
 //                          ratingStack(product.rating),
 //                          Container( child: imageStack(product.image),),
-              ],
+                ],
+              ),
             ),
           )),
+    );
+  }
+
+  var _desTextColor = Color(0xffCE0100);
+
+  ///描述信息
+  Widget desLayout() {
+    return SliverToBoxAdapter(
+      child: Container(
+        margin: EdgeInsets.only(left: 16, top: 8),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl:
+                            "https://alipic.lanhuapp.com/xd269728c1-1bf9-4bfe-9b86-06af0fabca98",
+                        width: ScreenUtil().setWidth(42),
+                        height: ScreenUtil().setWidth(42),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 4),
+                        child: Text(
+                          "可淘自营品牌",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(28),
+                            color: _desTextColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl:
+                            "https://alipic.lanhuapp.com/xd3a1dc3af-ad52-48db-bac9-d65d055bda2e",
+                        width: ScreenUtil().setWidth(42),
+                        height: ScreenUtil().setWidth(42),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 4),
+                        child: Text(
+                          "7天无忧退换货",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(28),
+                            color: _desTextColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl:
+                            "https://alipic.lanhuapp.com/xd4b9bfe6d-b3c3-4e21-9489-3d377e6774eb",
+                        width: ScreenUtil().setWidth(42),
+                        height: ScreenUtil().setWidth(42),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 4),
+                        child: Text(
+                          "48小时快速退款",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(28),
+                            color: _desTextColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   ///icon 操作列表
   Widget itemsLayout() {
     Color _itemsTextColor = Color(0xff222222);
-    return Container(
-      padding: EdgeInsets.only(
-        top: 16,
-        bottom: 16,
-      ),
-      margin: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: ScreenUtil().setHeight(655),
-      ),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:
-              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(28))),
-          border: Border.all(
+    return SliverToBoxAdapter(
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 16,
+          bottom: 16,
+        ),
+        margin: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 8,
+//          top: ScreenUtil().setHeight(655),
+        ),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+                BorderRadius.all(Radius.circular(ScreenUtil().setWidth(28))),
+            border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-              color: Colors.white,
-              width: 0.5)),
-      child: new Wrap(
+                color: Colors.white,
+                width: 0.5)),
+        child: new Wrap(
 //        mainAxisAlignment: MainAxisAlignment.center,
 //        crossAxisAlignment: CrossAxisAlignment.center,
-        runSpacing: 16,
-        children: iconList.asMap().keys.map((index) {
-          HomeIconListIconList item;
-          try {
-            item = iconList[index];
-          } catch (e) {}
-          return iconItem(_itemsTextColor, item: item);
-        }).toList(),
+          runSpacing: 16,
+          children: iconList.asMap().keys.map((index) {
+            HomeIconListIconList item;
+            try {
+              item = iconList[index];
+            } catch (e) {}
+            return iconItem(_itemsTextColor, item: item);
+          }).toList(),
+        ),
       ),
     );
   }
@@ -1061,6 +1562,9 @@ class _TaskListPageState extends State<TaskListPage>
     String appId = '';
     String path = '';
     String subtitle = '';
+    String params = '';
+    String catId = '';
+    String pddType = '';
     bool needShow = true;
     try {
       icon = item.icon;
@@ -1069,8 +1573,26 @@ class _TaskListPageState extends State<TaskListPage>
       appId = item.appId;
       path = item.path;
       subtitle = item.subtitle;
+      params = item.params;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
-    } catch (e) {}
+      if (params.contains("&")) {}
+      List<String> pList = params.split("&");
+      for (var itemString in pList) {
+        List<String> itemList = itemString.split("=");
+        if (!CommonUtils.isEmpty(itemList)) {
+          switch (itemList[0]) {
+            case "cat_id":
+              catId = itemList[1];
+              break;
+            case "type":
+              pddType = itemList[1];
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
     if ((name.contains('游戏') ||
             name.contains('赚钱') ||
             name.contains('会员') ||
@@ -1097,6 +1619,7 @@ class _TaskListPageState extends State<TaskListPage>
             }
             return;
           }
+
           if (type == 'anchor') {
             //滚动到指定位置
 //            _tabController.animateTo(2);
@@ -1117,6 +1640,21 @@ class _TaskListPageState extends State<TaskListPage>
             return;
           }
           if (type == 'app') {
+            if (path == 'pdd_index') {
+              NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
+              return;
+            }
+            if (path == 'pdd_goods') {
+              NavigatorUtils.navigatorRouter(
+                  context,
+                  PddGoodsListPage(
+                    showAppBar: true,
+                    type: pddType,
+                    title: name,
+                    categoryId: catId,
+                  ));
+              return;
+            }
             switch (path) {
               case "recharge":
                 NavigatorUtils.navigatorRouter(context, RechargeListPage());
@@ -1165,6 +1703,23 @@ class _TaskListPageState extends State<TaskListPage>
               CommonUtils.showToast("敬请期待");
               return;
             }
+            if (path.contains("yangkeduo")) {
+              var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                  "pinduoduo://com.xunmeng.pinduoduo/");
+              if (await canLaunch(pddPath)) {
+                await launch(pddPath);
+              } else {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPluginPage(
+                      initialUrl: "$path",
+                      showActions: true,
+                      title: "拼多多",
+                      appBarBackgroundColor: Colors.white,
+                    ));
+                return;
+              }
+            }
 
             Utils.launchUrl(path);
             return;
@@ -1173,7 +1728,7 @@ class _TaskListPageState extends State<TaskListPage>
         child: Visibility(
           visible: needShow,
           child: Container(
-            width: (ScreenUtil.screenWidth - 40) / 4,
+            width: (ScreenUtil.screenWidth - 40) / 5,
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -1303,176 +1858,223 @@ class _TaskListPageState extends State<TaskListPage>
     );
   }
 
+  ///轮播区域
   Widget buildBannerLayout() {
     return Container(
-      height: ScreenUtil().setHeight(741),
+      height: ScreenUtil().setHeight(566),
       width: double.maxFinite,
 //      width: ScreenUtil().setWidth(1125),
       /*  decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),*/
-      child: Swiper(
-        itemCount: bannerList == null ? 0 : bannerList.length,
-        /*itemWidth: ScreenUtil().setWidth(1125),
-        itemHeight: ScreenUtil().setHeight(623),
-        transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
-        //bannerList == null ? 0 : bannerList.length,
-        loop: _isLoop,
-        autoplay: false,
-        duration: 50,
-        autoplayDisableOnInteraction: true,
-        key: ValueKey(context),
-        controller: _swiperController,
-//          indicatorLayout: PageIndicatorLayout.COLOR,
-        onIndexChanged: (index) async {
-          if (!CommonUtils.isEmpty(bannerColorList)) {
-            if (!CommonUtils.isEmpty(bannerColorList[index]) &&
-                bannerColorList.length == bannerList.length) {
-              if (mounted) {
-                setState(() {
-                  _gradientCorlor = LinearGradient(colors: [
-                    bannerColorList[index],
-                    bannerColorList[index],
-                  ]);
-                  /*print(
-                      "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
-                  bannerIndex = index;
-                });
-              }
-              return;
-            }
-          }
-          PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
-              Image.network("${bannerList[index].imgPath}").image);
-          if (mounted) {
-            setState(() {
-              bannerIndex = index;
-              /*switch (bannerList[index].uri.toString().trim()) {
-                case "upgrade":
-                  _gradientCorlor = LinearGradient(colors: [
-                    Color(0xFF7E090F),
-                    Color(0xFF810A0C),
-                    Color(0xFF7D0A0F),
-                  ]);
-
-                  break;
-                case "recharge":
-                  _gradientCorlor = LinearGradient(colors: [
-                    Color(0xFF4A07C6),
-                    Color(0xFF4A07C6),
-                  ]);
-                  break;
-                case "upgrade_diamond":
-                  _gradientCorlor = LinearGradient(colors: [
-                    Color(0xFFB43733),
-                    Color(0xFFB43733),
-                    Color(0xFFB43733),
-                  ]);
-                  break;
-              }*/
-              try {
-                _gradientCorlor = LinearGradient(colors: [
-                  generator.dominantColor.color,
-                  generator.dominantColor.color,
-                ]);
-              } catch (e) {}
-              /*_gradientCorlor = LinearGradient(colors: [
-                generator.dominantColor.color,
-                generator.dominantColor.color,
-              ]);*/
-            });
-          }
-        },
-        /*pagination: SwiperPagination(
-            builder: DotSwiperPaginationBuilder(
-                //自定义指示器颜色
-                color: Colors.white,
-                size: 8.0,
-                activeColor: GlobalConfig.taskHeadColor,
-                activeSize: 10.0)),*/
-        itemBuilder: (context, index) {
-          var bannerData = bannerList[index];
-          return GestureDetector(
-            onTap: () async {
-              if (Platform.isIOS) {
-                CommonUtils.showIosPayDialog();
-                return;
-              }
-
-              switch (bannerList[bannerIndex].uri.toString().trim()) {
-                case "upgrade":
-                  NavigatorUtils.navigatorRouter(context, TaskOpenVipPage());
-/*
-                  NavigatorUtils.navigatorRouter(
-                      context, TaskOpenDiamondPage());
-*/
-                  break;
-                case "recharge":
-                  NavigatorUtils.navigatorRouter(context, RechargeListPage());
-                  break;
-                case "goods_list":
-                  NavigatorUtils.navigatorRouter(context, GoodsListPage());
-                  break;
-                case "upgrade_diamond":
-                  NavigatorUtils.navigatorRouter(
-                      context,
-                      TaskOpenVipPage(
-                        taskType: 2,
-                      ));
-                  break;
-              }
-              if (bannerList[bannerIndex].uri.toString().startsWith("http")) {
-                Utils.launchUrl(bannerList[bannerIndex].uri.toString());
-                /*bool isImage = false;
-                Response resust = await Dio().get(bannerList[bannerIndex].uri);
-                String contentType = resust.headers['content-type'].toString();
-                if (contentType.startsWith("[image/")) {
-                  isImage = true;
-                }
-                if (isImage) {
-                  NavigatorUtils.navigatorRouter(
-                      context,
-                      TaskGalleryPage(
-                        galleryItems: [bannerList[bannerIndex].uri.toString()],
-                      ));
-                  return;
-                }
-                */ /*print("contentType=$contentType");
-                print(
-                    "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
-                var hColor = GlobalConfig.taskHeadColor;
-                NavigatorUtils.navigatorRouter(
-                    context,
-                    WebViewPage(
-                      initialUrl: bannerList[bannerIndex].uri.toString(),
-                      showActions: true,
-                      title: "",
-                      appBarBackgroundColor: hColor,
-                    ));*/
-                /*try {
-                  PaletteGenerator generator =
-                      await PaletteGenerator.fromImageProvider(Image.network(
-                              "${bannerList[bannerIndex].uri.toString()}")
-                          .image);
-                  hColor = generator.dominantColor.color;
-                } catch (e) {}*/
-              }
-            },
-            child: CachedNetworkImage(
-              imageUrl: bannerData.imgPath,
-              height: ScreenUtil().setHeight(623),
-//              width: ScreenUtil().setWidth(1125),
-              placeholder: (context, url) => Center(
-                child: Loading(
-                  indicator: BallSpinFadeLoaderIndicator(),
-                  size: 50.0,
-                  color: GlobalConfig.colorPrimary,
-                ),
-              ),
-              fit: BoxFit.fill,
+      child: Stack(
+        children: [
+          ClipPath(
+            // 只裁切底部的方法
+            clipper: BottomClipper(),
+            child: Container(
+              decoration: BoxDecoration(gradient: _gradientCorlor),
             ),
-          );
-        },
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 6,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(ScreenUtil().setWidth(30)),
+              ),
+              child: Swiper(
+                itemCount: bannerList == null ? 0 : bannerList.length,
+                /*itemWidth: ScreenUtil().setWidth(1125),
+                itemHeight: ScreenUtil().setHeight(623),
+                transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
+                //bannerList == null ? 0 : bannerList.length,
+                loop: _isLoop,
+                autoplay: false,
+                duration: 50,
+                autoplayDisableOnInteraction: true,
+                key: ValueKey(context),
+                controller: _swiperController,
+//          indicatorLayout: PageIndicatorLayout.COLOR,
+                onIndexChanged: (index) async {
+                  if (!CommonUtils.isEmpty(bannerColorList)) {
+                    if (!CommonUtils.isEmpty(bannerColorList[index]) &&
+                        bannerColorList.length == bannerList.length) {
+                      if (mounted) {
+                        setState(() {
+                          _gradientCorlor = LinearGradient(colors: [
+                            bannerColorList[index],
+                            bannerColorList[index],
+                          ]);
+                          /*print(
+                              "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
+                          bannerIndex = index;
+                        });
+                      }
+                      return;
+                    }
+                  }
+                  PaletteGenerator generator =
+                      await PaletteGenerator.fromImageProvider(
+                          Image.network("${bannerList[index].imgPath}").image);
+                  if (mounted) {
+                    setState(() {
+                      bannerIndex = index;
+                      /*switch (bannerList[index].uri.toString().trim()) {
+                        case "upgrade":
+                          _gradientCorlor = LinearGradient(colors: [
+                            Color(0xFF7E090F),
+                            Color(0xFF810A0C),
+                            Color(0xFF7D0A0F),
+                          ]);
+
+                          break;
+                        case "recharge":
+                          _gradientCorlor = LinearGradient(colors: [
+                            Color(0xFF4A07C6),
+                            Color(0xFF4A07C6),
+                          ]);
+                          break;
+                        case "upgrade_diamond":
+                          _gradientCorlor = LinearGradient(colors: [
+                            Color(0xFFB43733),
+                            Color(0xFFB43733),
+                            Color(0xFFB43733),
+                          ]);
+                          break;
+                      }*/
+                      try {
+                        _gradientCorlor = LinearGradient(colors: [
+                          generator.dominantColor.color,
+                          generator.dominantColor.color,
+                        ]);
+                      } catch (e) {}
+                      /*_gradientCorlor = LinearGradient(colors: [
+                        generator.dominantColor.color,
+                        generator.dominantColor.color,
+                      ]);*/
+                    });
+                  }
+                },
+                /*pagination: SwiperPagination(
+                    builder: DotSwiperPaginationBuilder(
+                        //自定义指示器颜色
+                        color: Colors.white,
+                        size: 8.0,
+                        activeColor: GlobalConfig.taskHeadColor,
+                        activeSize: 10.0)),*/
+                itemBuilder: (context, index) {
+                  var bannerData = bannerList[index];
+                  return GestureDetector(
+                    onTap: () async {
+                      switch (bannerList[bannerIndex].uri.toString().trim()) {
+                        case "upgrade":
+                          NavigatorUtils.navigatorRouter(
+                              context, TaskOpenVipPage());
+/*
+                          NavigatorUtils.navigatorRouter(
+                              context, TaskOpenDiamondPage());
+*/
+                          break;
+                        case "recharge":
+                          NavigatorUtils.navigatorRouter(
+                              context, RechargeListPage());
+                          break;
+                        case "goods_list":
+                          NavigatorUtils.navigatorRouter(
+                              context, GoodsListPage());
+                          break;
+                        case "upgrade_diamond":
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              TaskOpenVipPage(
+                                taskType: 2,
+                              ));
+                          break;
+                      }
+                      if (bannerList[bannerIndex]
+                          .uri
+                          .toString()
+                          .startsWith("http")) {
+                        Utils.launchUrl(bannerList[bannerIndex].uri.toString());
+                        /*bool isImage = false;
+                        Response resust = await Dio().get(bannerList[bannerIndex].uri);
+                        String contentType = resust.headers['content-type'].toString();
+                        if (contentType.startsWith("[image/")) {
+                          isImage = true;
+                        }
+                        if (isImage) {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              TaskGalleryPage(
+                                galleryItems: [bannerList[bannerIndex].uri.toString()],
+                              ));
+                          return;
+                        }
+                        */ /*print("contentType=$contentType");
+                        print(
+                            "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
+                        var hColor = GlobalConfig.taskHeadColor;
+                        NavigatorUtils.navigatorRouter(
+                            context,
+                            WebViewPage(
+                              initialUrl: bannerList[bannerIndex].uri.toString(),
+                              showActions: true,
+                              title: "",
+                              appBarBackgroundColor: hColor,
+                            ));*/
+                        /*try {
+                          PaletteGenerator generator =
+                              await PaletteGenerator.fromImageProvider(Image.network(
+                                      "${bannerList[bannerIndex].uri.toString()}")
+                                  .image);
+                          hColor = generator.dominantColor.color;
+                        } catch (e) {}*/
+                      }
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: bannerData.imgPath,
+//              width: ScreenUtil().setWidth(1125),
+                      placeholder: (context, url) => Center(
+                        child: Loading(
+                          indicator: BallSpinFadeLoaderIndicator(),
+                          size: 50.0,
+                          color: GlobalConfig.colorPrimary,
+                        ),
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///邀请好友
+  ///
+  Widget buildLayoutForInvitingFriends() {
+    return SliverToBoxAdapter(
+      child: Container(
+        height: ScreenUtil().setWidth(158),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          gradient: LinearGradient(colors: [
+            Color(0xffA10011),
+            Color(0xff590600),
+          ]),
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              ScreenUtil().setWidth(30),
+            ),
+          ),
+        ),
       ),
     );
   }

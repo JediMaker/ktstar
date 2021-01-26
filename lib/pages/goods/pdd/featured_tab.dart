@@ -37,20 +37,13 @@ class FeaturedTabPage extends StatefulWidget {
 class _FeaturedTabPageState extends State<FeaturedTabPage>
     with AutomaticKeepAliveClientMixin {
   bool isFirstLoading = true;
-  List<PddHomeDataBanner> _banner;
-  List<PddHomeDataAd> _ads;
-  PddHomeDataAd _buyTop;
-  PddHomeDataAd _buyLeft;
-  PddHomeDataAd _buyRight;
-
+  List<HomeIconListIconList> _banner;
+  List<HomeIconListIconList> _ads;
+  HomeIconListIconList _buyTop;
+  HomeIconListIconList _buyLeft;
+  HomeIconListIconList _buyRight;
   int page = 1;
   EasyRefreshController _refreshController;
-  var _buyLeftUrl;
-  var _buyLeftImgUrl;
-  var _buyRightUrl;
-  var _buyRightImgUrl;
-  var _buyTopUrl;
-  var _buyTopImgUrl;
 
   Future _initPddGoodsListData() async {
     var result2 =
@@ -94,18 +87,11 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
       if (!CommonUtils.isEmpty(_ads)) {
         _buyTop = _ads[0];
-        _buyTopUrl = _buyTop.url;
-        _buyTopImgUrl = _buyTop.img;
-        ;
         if (_ads.length > 1) {
           _buyLeft = _ads[1];
-          _buyLeftUrl = _buyLeft.url;
-          _buyLeftImgUrl = _buyLeft.img;
         }
         if (_ads.length > 2) {
           _buyRight = _ads[2];
-          _buyRightUrl = _buyRight.url;
-          _buyRightImgUrl = _buyRight.img;
         }
       }
     } catch (e) {}
@@ -185,39 +171,129 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               borderRadius: BorderRadius.all(Radius.circular(12)),
               child: Swiper(
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () async {
-                      var _bannerUrl = _banner[index].url;
-
-                      ///跳转对应链接
-                      if (CommonUtils.isEmpty(_bannerUrl)) {
-                        return;
-                      }
-                      if (_bannerUrl.toString().startsWith("pinduoduo")) {
-                        if (await canLaunch(_bannerUrl)) {
-                          await launch(_bannerUrl);
-                        } else {
-                          if (_bannerUrl.startsWith("pinduoduo://")) {
-                            CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-                          } else {}
-                          return;
+                  var item = _banner[index];
+                  String icon = '';
+                  String name = '';
+                  String type = '';
+                  String appId = '';
+                  String path = '';
+                  String imgPath = '';
+                  String subtitle = '';
+                  String params = '';
+                  String catId = '';
+                  String pddType = '';
+                  try {
+                    icon = item.icon;
+                    name = item.name;
+                    type = item.type;
+                    appId = item.appId;
+                    path =
+                        !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+                    subtitle = item.subtitle;
+                    params = item.params;
+                    imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+                    if (params.contains("&")) {}
+                    List<String> pList = params.split("&");
+                    for (var itemString in pList) {
+                      List<String> itemList = itemString.split("=");
+                      if (!CommonUtils.isEmpty(itemList)) {
+                        switch (itemList[0]) {
+                          case "cat_id":
+                            catId = itemList[1];
+                            break;
+                          case "type":
+                            pddType = itemList[1];
+                            break;
                         }
                       }
-                      NavigatorUtils.navigatorRouter(
-                          context,
-                          WebViewPluginPage(
-                            initialUrl: "$_bannerUrl",
-                            showActions: true,
-                            title: "拼多多",
-                            appBarBackgroundColor: Colors.white,
-                          ));
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                  return GestureDetector(
+                    onTap: () async {
+                      ///跳转对应链接
+                      ///
+                      if (type == 'webapp') {
+                        launchWeChatMiniProgram(username: appId, path: path);
+                        return;
+                      }
+                      if (type == 'app') {
+                        if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
+                          return;
+                        }
+                        if (path == 'pdd_goods') {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              PddGoodsListPage(
+                                showAppBar: true,
+                                type: pddType,
+                                title:
+                                    CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                                categoryId: catId,
+                              ));
+                          return;
+                        }
+                        switch (path) {
+                          case "recharge":
+                            NavigatorUtils.navigatorRouter(
+                                context, RechargeListPage());
+                            break;
+                        }
+                        return;
+                      }
+                      if (type == 'toast') {
+                        CommonUtils.showToast("敬请期待");
+                        return;
+                      }
+                      if (type == 'link') {
+                        if (path.toString().startsWith("pinduoduo")) {
+                          if (await canLaunch(path)) {
+                            await launch(path);
+                          } else {
+                            if (path.startsWith("pinduoduo://")) {
+                              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  WebViewPluginPage(
+                                    initialUrl: "$path",
+                                    showActions: true,
+                                    title: "拼多多",
+                                    appBarBackgroundColor: Colors.white,
+                                  ));
+                            } else {}
+                            return;
+                          }
+                        }
+                        if (path.contains("yangkeduo")) {
+                          var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                              "pinduoduo://com.xunmeng.pinduoduo/");
+                          if (await canLaunch(pddPath)) {
+                            await launch(pddPath);
+                          } else {
+                            NavigatorUtils.navigatorRouter(
+                                context,
+                                WebViewPluginPage(
+                                  initialUrl: "$path",
+                                  showActions: true,
+                                  title: "拼多多",
+                                  appBarBackgroundColor: Colors.white,
+                                ));
+                            return;
+                          }
+                        }
+                        Utils.launchUrl(path);
+                        return;
+                      }
 
                       ///
                     },
                     child: new ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         child: CachedNetworkImage(
-                          imageUrl: "${_banner[index].img}",
+                          imageUrl: "${item.imgPath}",
                           errorWidget: (context, url, d) {
                             return Center(child: Text("图片加载失败"));
                           },
@@ -274,7 +350,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     );
   }
 
-  List<PddHomeDataTool> iconList = List<PddHomeDataTool>();
+  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
 
   ///icon 操作列表
   Widget buildItemsLayout() {
@@ -304,7 +380,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: 16,
           children: iconList.asMap().keys.map((index) {
-            PddHomeDataTool item;
+            HomeIconListIconList item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -315,44 +391,122 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     );
   }
 
-  Widget iconItem(Color _itemsTextColor, {PddHomeDataTool item}) {
+  Widget iconItem(Color _itemsTextColor, {HomeIconListIconList item}) {
     String icon = '';
     String name = '';
     String type = '';
     String appId = '';
     String path = '';
+    String imgPath = '';
     String subtitle = '';
+    String params = '';
+    String catId = '';
+    String pddType = '';
     bool needShow = true;
     try {
       icon = item.icon;
       name = item.name;
       type = item.type;
-      path = item.link;
+      appId = item.appId;
+      path = !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      subtitle = item.subtitle;
+      params = item.params;
+      imgPath = item.imgPath;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
-    } catch (e) {}
+      if (params.contains("&")) {}
+      List<String> pList = params.split("&");
+      for (var itemString in pList) {
+        List<String> itemList = itemString.split("=");
+        if (!CommonUtils.isEmpty(itemList)) {
+          switch (itemList[0]) {
+            case "cat_id":
+              catId = itemList[1];
+              break;
+            case "type":
+              pddType = itemList[1];
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
     return new InkWell(
         onTap: () async {
-          if (path == 'goods') {
-            ///跳转对应拼多多商品列表
-            NavigatorUtils.navigatorRouter(
-                context,
-                PddGoodsListPage(
-                  showAppBar: true,
-                  title: name,
-                  type: type,
-                ));
+          ///跳转对应链接
+          ///
+          if (type == 'webapp') {
+            launchWeChatMiniProgram(username: appId, path: path);
+            return;
+          }
+          if (type == 'app') {
+            if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
+              return;
+            }
+            if (path == 'pdd_goods') {
+              NavigatorUtils.navigatorRouter(
+                  context,
+                  PddGoodsListPage(
+                    showAppBar: true,
+                    type: pddType,
+                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    categoryId: catId,
+                  ));
+              return;
+            }
+            switch (path) {
+              case "recharge":
+                NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                break;
+            }
+            return;
+          }
+          if (type == 'toast') {
+            CommonUtils.showToast("敬请期待");
+            return;
+          }
+          if (type == 'link') {
+            if (path.toString().startsWith("pinduoduo")) {
+              if (await canLaunch(path)) {
+                await launch(path);
+              } else {
+                if (path.startsWith("pinduoduo://")) {
+                  CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      WebViewPluginPage(
+                        initialUrl: "$path",
+                        showActions: true,
+                        title: "拼多多",
+                        appBarBackgroundColor: Colors.white,
+                      ));
+                } else {}
+                return;
+              }
+            }
+            if (path.contains("yangkeduo")) {
+              var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                  "pinduoduo://com.xunmeng.pinduoduo/");
+              if (await canLaunch(pddPath)) {
+                await launch(pddPath);
+              } else {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPluginPage(
+                      initialUrl: "$path",
+                      showActions: true,
+                      title: "拼多多",
+                      appBarBackgroundColor: Colors.white,
+                    ));
+                return;
+              }
+            }
+            Utils.launchUrl(path);
+            return;
+          }
 
-            ///
-            return;
-          }
-          if (await canLaunch(path)) {
-            await launch(path);
-          } else {
-            if (path.startsWith("pinduoduo://")) {
-              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-            } else {}
-            return;
-          }
+          ///
         },
         child: Visibility(
           visible: needShow,
@@ -475,7 +629,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
   Widget buildAdRowContainer() {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
       child: Row(
         children: [
           buildBuyLeftWidget(),
@@ -486,40 +640,129 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
   }
 
   Widget buildBuyRightWidget() {
+    var item = _buyRight;
+    String icon = '';
+    String name = '';
+    String type = '';
+    String appId = '';
+    String path = '';
+    String imgPath = '';
+    String subtitle = '';
+    String params = '';
+    String catId = '';
+    String pddType = '';
+    try {
+      icon = item.icon;
+      name = item.name;
+      type = item.type;
+      appId = item.appId;
+      path = !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      subtitle = item.subtitle;
+      params = item.params;
+      imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+      if (params.contains("&")) {}
+      List<String> pList = params.split("&");
+      for (var itemString in pList) {
+        List<String> itemList = itemString.split("=");
+        if (!CommonUtils.isEmpty(itemList)) {
+          switch (itemList[0]) {
+            case "cat_id":
+              catId = itemList[1];
+              break;
+            case "type":
+              pddType = itemList[1];
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
     return Expanded(
       child: GestureDetector(
         onTap: () async {
           ///跳转对应链接
           ///
-          if (CommonUtils.isEmpty(_buyRightUrl)) {
+          if (type == 'webapp') {
+            launchWeChatMiniProgram(username: appId, path: path);
             return;
           }
-          if (_buyRightUrl.toString().startsWith("pinduoduo")) {
-            if (await canLaunch(_buyRightUrl)) {
-              await launch(_buyRightUrl);
-            } else {
-              if (_buyRightUrl.startsWith("pinduoduo://")) {
-                CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-              } else {}
+          if (type == 'app') {
+            if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
               return;
             }
+            if (path == 'pdd_goods') {
+              NavigatorUtils.navigatorRouter(
+                  context,
+                  PddGoodsListPage(
+                    showAppBar: true,
+                    type: pddType,
+                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    categoryId: catId,
+                  ));
+              return;
+            }
+            switch (path) {
+              case "recharge":
+                NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                break;
+            }
+            return;
           }
-          NavigatorUtils.navigatorRouter(
-              context,
-              WebViewPluginPage(
-                initialUrl: "$_buyRightUrl",
-                showActions: true,
-                title: "拼多多",
-                appBarBackgroundColor: Colors.white,
-              ));
+          if (type == 'toast') {
+            CommonUtils.showToast("敬请期待");
+            return;
+          }
+          if (type == 'link') {
+            if (path.toString().startsWith("pinduoduo")) {
+              if (await canLaunch(path)) {
+                await launch(path);
+              } else {
+                if (path.startsWith("pinduoduo://")) {
+                  CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      WebViewPluginPage(
+                        initialUrl: "$path",
+                        showActions: true,
+                        title: "拼多多",
+                        appBarBackgroundColor: Colors.white,
+                      ));
+                } else {}
+                return;
+              }
+            }
+            if (path.contains("yangkeduo")) {
+              var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                  "pinduoduo://com.xunmeng.pinduoduo/");
+              if (await canLaunch(pddPath)) {
+                await launch(pddPath);
+              } else {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPluginPage(
+                      initialUrl: "$path",
+                      showActions: true,
+                      title: "拼多多",
+                      appBarBackgroundColor: Colors.white,
+                    ));
+                return;
+              }
+            }
+            Utils.launchUrl(path);
+            return;
+          }
 
           ///
         },
         child: Visibility(
           visible: !CommonUtils.isEmpty(
-            _buyRightImgUrl,
+            imgPath,
           ),
-          child: Center(
+          child: Container(
+            alignment: Alignment.centerRight,
             child: ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(
@@ -527,7 +770,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 ),
               ),
               child: CachedNetworkImage(
-                imageUrl: "$_buyRightImgUrl",
+                imageUrl: "$imgPath",
                 fit: BoxFit.fitWidth,
                 width: ScreenUtil().setWidth(492),
                 height: ScreenUtil().setWidth(600),
@@ -540,39 +783,129 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
   }
 
   Widget buildBuyLeftWidget() {
+    var item = _buyLeft;
+    String icon = '';
+    String name = '';
+    String type = '';
+    String appId = '';
+    String path = '';
+    String imgPath = '';
+    String subtitle = '';
+    String params = '';
+    String catId = '';
+    String pddType = '';
+    try {
+      icon = item.icon;
+      name = item.name;
+      type = item.type;
+      appId = item.appId;
+      path = !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      subtitle = item.subtitle;
+      params = item.params;
+      imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+      if (params.contains("&")) {}
+      List<String> pList = params.split("&");
+      for (var itemString in pList) {
+        List<String> itemList = itemString.split("=");
+        if (!CommonUtils.isEmpty(itemList)) {
+          switch (itemList[0]) {
+            case "cat_id":
+              catId = itemList[1];
+              break;
+            case "type":
+              pddType = itemList[1];
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
     return Expanded(
       child: GestureDetector(
         onTap: () async {
           ///跳转对应链接
-          if (CommonUtils.isEmpty(_buyLeftUrl)) {
+          ///
+          if (type == 'webapp') {
+            launchWeChatMiniProgram(username: appId, path: path);
             return;
           }
-          if (_buyLeftUrl.toString().startsWith("pinduoduo")) {
-            if (await canLaunch(_buyLeftUrl)) {
-              await launch(_buyLeftUrl);
-            } else {
-              if (_buyLeftUrl.startsWith("pinduoduo://")) {
-                CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-              } else {}
+          if (type == 'app') {
+            if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
               return;
             }
+            if (path == 'pdd_goods') {
+              NavigatorUtils.navigatorRouter(
+                  context,
+                  PddGoodsListPage(
+                    showAppBar: true,
+                    type: pddType,
+                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    categoryId: catId,
+                  ));
+              return;
+            }
+            switch (path) {
+              case "recharge":
+                NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                break;
+            }
+            return;
           }
-          NavigatorUtils.navigatorRouter(
-              context,
-              WebViewPluginPage(
-                initialUrl: "$_buyLeftUrl",
-                showActions: true,
-                title: "拼多多",
-                appBarBackgroundColor: Colors.white,
-              ));
+          if (type == 'toast') {
+            CommonUtils.showToast("敬请期待");
+            return;
+          }
+          if (type == 'link') {
+            if (path.toString().startsWith("pinduoduo")) {
+              if (await canLaunch(path)) {
+                await launch(path);
+              } else {
+                if (path.startsWith("pinduoduo://")) {
+                  CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      WebViewPluginPage(
+                        initialUrl: "$path",
+                        showActions: true,
+                        title: "拼多多",
+                        appBarBackgroundColor: Colors.white,
+                      ));
+                } else {}
+                return;
+              }
+            }
+            if (path.contains("yangkeduo")) {
+              var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                  "pinduoduo://com.xunmeng.pinduoduo/");
+              if (await canLaunch(pddPath)) {
+                await launch(pddPath);
+              } else {
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPluginPage(
+                      initialUrl: "$path",
+                      showActions: true,
+                      title: "拼多多",
+                      appBarBackgroundColor: Colors.white,
+                    ));
+                return;
+              }
+            }
+            Utils.launchUrl(path);
+            return;
+          }
 
           ///
         },
         child: Visibility(
           visible: !CommonUtils.isEmpty(
-            _buyLeftImgUrl,
+            imgPath,
           ),
-          child: Center(
+          child: Container(
+            alignment: Alignment.centerLeft,
             child: ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(
@@ -580,7 +913,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 ),
               ),
               child: CachedNetworkImage(
-                imageUrl: "$_buyLeftImgUrl",
+                imageUrl: "$imgPath",
                 fit: BoxFit.fitWidth,
                 width: ScreenUtil().setWidth(492),
                 height: ScreenUtil().setWidth(600),
@@ -593,34 +926,127 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
   }
 
   Widget buildBuyTopContainer() {
+    var item = _buyTop;
+    String icon = '';
+    String name = '';
+    String type = '';
+    String appId = '';
+    String path = '';
+    String imgPath = '';
+    String subtitle = '';
+    String params = '';
+    String catId = '';
+    String pddType = '';
+    try {
+      icon = item.icon;
+      name = item.name;
+      type = item.type;
+      appId = item.appId;
+      path = !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      subtitle = item.subtitle;
+      params = item.params;
+      imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+      if (params.contains("&")) {}
+      List<String> pList = params.split("&");
+      for (var itemString in pList) {
+        List<String> itemList = itemString.split("=");
+        if (!CommonUtils.isEmpty(itemList)) {
+          switch (itemList[0]) {
+            case "cat_id":
+              catId = itemList[1];
+              break;
+            case "type":
+              pddType = itemList[1];
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+
     return GestureDetector(
       onTap: () async {
         ///跳转对应链接
-        if (CommonUtils.isEmpty(_buyTopUrl)) {
+        ///
+        if (type == 'webapp') {
+          launchWeChatMiniProgram(username: appId, path: path);
           return;
         }
-        if (_buyTopUrl.toString().startsWith("pinduoduo")) {
-          if (await canLaunch(_buyTopUrl)) {
-            await launch(_buyTopUrl);
-          } else {
-            if (_buyTopUrl.startsWith("pinduoduo://")) {
-              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-            } else {}
+        if (type == 'app') {
+          if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
             return;
           }
+          if (path == 'pdd_goods') {
+            NavigatorUtils.navigatorRouter(
+                context,
+                PddGoodsListPage(
+                  showAppBar: true,
+                  type: pddType,
+                  title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                  categoryId: catId,
+                ));
+            return;
+          }
+          switch (path) {
+            case "recharge":
+              NavigatorUtils.navigatorRouter(context, RechargeListPage());
+              break;
+          }
+          return;
         }
-        NavigatorUtils.navigatorRouter(
-            context,
-            WebViewPluginPage(
-              initialUrl: "$_buyTopUrl",
-              showActions: true,
-              title: "拼多多",
-              appBarBackgroundColor: Colors.white,
-            ));
+        if (type == 'toast') {
+          CommonUtils.showToast("敬请期待");
+          return;
+        }
+        if (type == 'link') {
+          if (path.toString().startsWith("pinduoduo")) {
+            if (await canLaunch(path)) {
+              await launch(path);
+            } else {
+              if (path.startsWith("pinduoduo://")) {
+                CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                NavigatorUtils.navigatorRouter(
+                    context,
+                    WebViewPluginPage(
+                      initialUrl: "$path",
+                      showActions: true,
+                      title: "拼多多",
+                      appBarBackgroundColor: Colors.white,
+                    ));
+              } else {}
+              return;
+            }
+          }
+          if (path.contains("yangkeduo")) {
+            var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                "pinduoduo://com.xunmeng.pinduoduo/");
+            if (await canLaunch(pddPath)) {
+              await launch(pddPath);
+            } else {
+              NavigatorUtils.navigatorRouter(
+                  context,
+                  WebViewPluginPage(
+                    initialUrl: "$path",
+                    showActions: true,
+                    title: "拼多多",
+                    appBarBackgroundColor: Colors.white,
+                  ));
+              return;
+            }
+          }
+
+          Utils.launchUrl(path);
+          return;
+        }
+
+        ///
       },
       child: Visibility(
         visible: !CommonUtils.isEmpty(
-          _buyTopImgUrl,
+          imgPath,
         ),
         child: Container(
           margin: EdgeInsets.only(bottom: 16, top: 8),
@@ -632,7 +1058,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
             ),
             child: CachedNetworkImage(
 //              imageUrl: "www.baidu.com",
-              imageUrl: "$_buyTopImgUrl",
+              imageUrl: "$imgPath",
               fit: BoxFit.fitWidth,
               width: ScreenUtil().setWidth(1029),
               height: ScreenUtil().setWidth(414),

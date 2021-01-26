@@ -16,6 +16,7 @@ import 'package:star/generated/json/goods_info_entity_helper.dart';
 import 'package:star/generated/json/goods_queue_entity_helper.dart';
 import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
+import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/logistics_info_entity_helper.dart';
@@ -60,6 +61,7 @@ import 'package:star/models/goods_info_entity.dart';
 import 'package:star/models/goods_queue_entity.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
 import 'package:star/models/home_entity.dart';
+import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/models/message_list_entity.dart';
@@ -1968,6 +1970,7 @@ class HttpManage {
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
+
   ///
   /// 获取拼多多授权
   ///
@@ -1978,6 +1981,20 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 获取首页拼多多商品分类
+  ///
+  ///
+  static Future<HomePddCategoryEntity> getHomePagePddProductCategory() async {
+    var response = await HttpManage.dio.get(
+      APi.SIT_CATS,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = HomePddCategoryEntity();
+    homePddCategoryEntityFromJson(entity, extractData);
     return entity;
   }
 

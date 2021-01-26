@@ -30,15 +30,17 @@ class HomeGoodsListPage extends StatefulWidget {
   _HomeGoodsListPageState createState() => _HomeGoodsListPageState();
 }
 
-class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
+class _HomeGoodsListPageState extends State<HomeGoodsListPage>
+    with AutomaticKeepAliveClientMixin {
   int page = 1;
   bool isFirstLoading = true;
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
   List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
+  var categoryId;
   bool _isfirst = true;
 
-  _initData() async {
+  _initData({categoryId}) async {
     /*var result = await HttpManage.getGoodsList(cId: widget.categoryId);
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
@@ -66,7 +68,8 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     } else {
       CommonUtils.showToast(result.errMsg);
     }*/
-    var result2 = await HttpManage.getPddGoodsList(page, listId: listId);
+    var result2 = await HttpManage.getPddGoodsList(page,
+        listId: listId, categoryId: this.categoryId);
     if (result2.status) {
       if (mounted) {
         setState(() {
@@ -96,6 +99,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
   @override
   void initState() {
     super.initState();
+    categoryId = widget.categoryId;
     _initData();
     bus.on("refreshHomeData", (arg) {
       page = 1;
@@ -105,6 +109,12 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     bus.on("loadMoreHomeData", (arg) {
       page++;
       _initData();
+    });
+    bus.on("changePddListViewData", (arg) {
+      page = 1;
+      listId = '';
+      categoryId = arg;
+      _initData(categoryId: arg);
     });
   }
 
@@ -187,7 +197,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     );
   }
 
-  var _priceColor = const Color(0xffe31735);
+  var _priceColor = const Color(0xffCE0100);
 
   Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';
@@ -611,7 +621,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                         text: '$_discountPrice',
                         textColor: _priceColor,
                         fontSize: ScreenUtil().setSp(32),
-                        fontBigSize: ScreenUtil().setSp(42),
+                        fontBigSize: ScreenUtil().setSp(48),
 //                          '27.5',
                         /*style: TextStyle(
                           fontSize: ScreenUtil().setSp(42),
@@ -634,7 +644,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
 //                          product
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
-                                  fontSize: ScreenUtil().setSp(32),
+                                  fontSize: ScreenUtil().setSp(24),
                                   color: Color(0xFF979896)),
                             ),
                           ),
@@ -650,7 +660,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                           ),
                           margin: EdgeInsets.only(right: 6),
                           decoration: BoxDecoration(
-                            color: Color(0xfff93736),
+                            color: _priceColor,
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().setWidth(10)),
                           ),
@@ -701,4 +711,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
           )),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
