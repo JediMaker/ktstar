@@ -35,6 +35,8 @@ import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/generated/json/wechat_payinfo_entity_helper.dart';
+import 'package:star/models/micro_shareholder_entity.dart';
+import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/generated/json/goods_info_entity_helper.dart';
 import 'package:star/models/home_icon_list_entity.dart';
@@ -53,6 +55,8 @@ import 'package:star/models/goods_queue_persional_entity.dart';
 import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/models/order_list_entity.dart';
 import 'package:star/generated/json/order_list_entity_helper.dart';
+import 'package:star/models/micro_shareholder_item_entity.dart';
+import 'package:star/generated/json/micro_shareholder_item_entity_helper.dart';
 import 'package:star/models/address_list_entity.dart';
 import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/models/home_goods_list_entity.dart';
@@ -165,7 +169,9 @@ class JsonConvert<T> {
 			return taskDetailOtherDataDescJsonFromJson(data as TaskDetailOtherDataDescJson, json) as T;			case WechatPayinfoEntity:
 			return wechatPayinfoEntityFromJson(data as WechatPayinfoEntity, json) as T;			case WechatPayinfoData:
 			return wechatPayinfoDataFromJson(data as WechatPayinfoData, json) as T;			case WechatPayinfoDataPayInfo:
-			return wechatPayinfoDataPayInfoFromJson(data as WechatPayinfoDataPayInfo, json) as T;			case GoodsInfoEntity:
+			return wechatPayinfoDataPayInfoFromJson(data as WechatPayinfoDataPayInfo, json) as T;			case MicroShareholderEntity:
+			return microShareholderEntityFromJson(data as MicroShareholderEntity, json) as T;			case MicroShareholderData:
+			return microShareholderDataFromJson(data as MicroShareholderData, json) as T;			case GoodsInfoEntity:
 			return goodsInfoEntityFromJson(data as GoodsInfoEntity, json) as T;			case GoodsInfoData:
 			return goodsInfoDataFromJson(data as GoodsInfoData, json) as T;			case HomeIconListEntity:
 			return homeIconListEntityFromJson(data as HomeIconListEntity, json) as T;			case HomeIconListIconList:
@@ -189,7 +195,10 @@ class JsonConvert<T> {
 			return orderListEntityFromJson(data as OrderListEntity, json) as T;			case OrderListData:
 			return orderListDataFromJson(data as OrderListData, json) as T;			case OrderListDataList:
 			return orderListDataListFromJson(data as OrderListDataList, json) as T;			case OrderListDataListGoodsList:
-			return orderListDataListGoodsListFromJson(data as OrderListDataListGoodsList, json) as T;			case AddressListEntity:
+			return orderListDataListGoodsListFromJson(data as OrderListDataListGoodsList, json) as T;			case MicroShareholderItemEntity:
+			return microShareholderItemEntityFromJson(data as MicroShareholderItemEntity, json) as T;			case MicroShareholderItemEstimate:
+			return microShareholderItemEstimateFromJson(data as MicroShareholderItemEstimate, json) as T;			case MicroShareholderItemInterests:
+			return microShareholderItemInterestsFromJson(data as MicroShareholderItemInterests, json) as T;			case AddressListEntity:
 			return addressListEntityFromJson(data as AddressListEntity, json) as T;			case AddressListData:
 			return addressListDataFromJson(data as AddressListData, json) as T;			case HomeGoodsListEntity:
 			return homeGoodsListEntityFromJson(data as HomeGoodsListEntity, json) as T;			case HomeGoodsListGoodsList:
@@ -317,7 +326,9 @@ class JsonConvert<T> {
 			return taskDetailOtherDataDescJsonToJson(data as TaskDetailOtherDataDescJson);			case WechatPayinfoEntity:
 			return wechatPayinfoEntityToJson(data as WechatPayinfoEntity);			case WechatPayinfoData:
 			return wechatPayinfoDataToJson(data as WechatPayinfoData);			case WechatPayinfoDataPayInfo:
-			return wechatPayinfoDataPayInfoToJson(data as WechatPayinfoDataPayInfo);			case GoodsInfoEntity:
+			return wechatPayinfoDataPayInfoToJson(data as WechatPayinfoDataPayInfo);			case MicroShareholderEntity:
+			return microShareholderEntityToJson(data as MicroShareholderEntity);			case MicroShareholderData:
+			return microShareholderDataToJson(data as MicroShareholderData);			case GoodsInfoEntity:
 			return goodsInfoEntityToJson(data as GoodsInfoEntity);			case GoodsInfoData:
 			return goodsInfoDataToJson(data as GoodsInfoData);			case HomeIconListEntity:
 			return homeIconListEntityToJson(data as HomeIconListEntity);			case HomeIconListIconList:
@@ -341,7 +352,10 @@ class JsonConvert<T> {
 			return orderListEntityToJson(data as OrderListEntity);			case OrderListData:
 			return orderListDataToJson(data as OrderListData);			case OrderListDataList:
 			return orderListDataListToJson(data as OrderListDataList);			case OrderListDataListGoodsList:
-			return orderListDataListGoodsListToJson(data as OrderListDataListGoodsList);			case AddressListEntity:
+			return orderListDataListGoodsListToJson(data as OrderListDataListGoodsList);			case MicroShareholderItemEntity:
+			return microShareholderItemEntityToJson(data as MicroShareholderItemEntity);			case MicroShareholderItemEstimate:
+			return microShareholderItemEstimateToJson(data as MicroShareholderItemEstimate);			case MicroShareholderItemInterests:
+			return microShareholderItemInterestsToJson(data as MicroShareholderItemInterests);			case AddressListEntity:
 			return addressListEntityToJson(data as AddressListEntity);			case AddressListData:
 			return addressListDataToJson(data as AddressListData);			case HomeGoodsListEntity:
 			return homeGoodsListEntityToJson(data as HomeGoodsListEntity);			case HomeGoodsListGoodsList:
@@ -469,7 +483,9 @@ class JsonConvert<T> {
 			return TaskDetailOtherDataDescJson().fromJson(json);			case 'WechatPayinfoEntity':
 			return WechatPayinfoEntity().fromJson(json);			case 'WechatPayinfoData':
 			return WechatPayinfoData().fromJson(json);			case 'WechatPayinfoDataPayInfo':
-			return WechatPayinfoDataPayInfo().fromJson(json);			case 'GoodsInfoEntity':
+			return WechatPayinfoDataPayInfo().fromJson(json);			case 'MicroShareholderEntity':
+			return MicroShareholderEntity().fromJson(json);			case 'MicroShareholderData':
+			return MicroShareholderData().fromJson(json);			case 'GoodsInfoEntity':
 			return GoodsInfoEntity().fromJson(json);			case 'GoodsInfoData':
 			return GoodsInfoData().fromJson(json);			case 'HomeIconListEntity':
 			return HomeIconListEntity().fromJson(json);			case 'HomeIconListIconList':
@@ -493,7 +509,10 @@ class JsonConvert<T> {
 			return OrderListEntity().fromJson(json);			case 'OrderListData':
 			return OrderListData().fromJson(json);			case 'OrderListDataList':
 			return OrderListDataList().fromJson(json);			case 'OrderListDataListGoodsList':
-			return OrderListDataListGoodsList().fromJson(json);			case 'AddressListEntity':
+			return OrderListDataListGoodsList().fromJson(json);			case 'MicroShareholderItemEntity':
+			return MicroShareholderItemEntity().fromJson(json);			case 'MicroShareholderItemEstimate':
+			return MicroShareholderItemEstimate().fromJson(json);			case 'MicroShareholderItemInterests':
+			return MicroShareholderItemInterests().fromJson(json);			case 'AddressListEntity':
 			return AddressListEntity().fromJson(json);			case 'AddressListData':
 			return AddressListData().fromJson(json);			case 'HomeGoodsListEntity':
 			return HomeGoodsListEntity().fromJson(json);			case 'HomeGoodsListGoodsList':
@@ -622,7 +641,9 @@ class JsonConvert<T> {
 			return List<TaskDetailOtherDataDescJson>();			case 'WechatPayinfoEntity':
 			return List<WechatPayinfoEntity>();			case 'WechatPayinfoData':
 			return List<WechatPayinfoData>();			case 'WechatPayinfoDataPayInfo':
-			return List<WechatPayinfoDataPayInfo>();			case 'GoodsInfoEntity':
+			return List<WechatPayinfoDataPayInfo>();			case 'MicroShareholderEntity':
+			return List<MicroShareholderEntity>();			case 'MicroShareholderData':
+			return List<MicroShareholderData>();			case 'GoodsInfoEntity':
 			return List<GoodsInfoEntity>();			case 'GoodsInfoData':
 			return List<GoodsInfoData>();			case 'HomeIconListEntity':
 			return List<HomeIconListEntity>();			case 'HomeIconListIconList':
@@ -646,7 +667,10 @@ class JsonConvert<T> {
 			return List<OrderListEntity>();			case 'OrderListData':
 			return List<OrderListData>();			case 'OrderListDataList':
 			return List<OrderListDataList>();			case 'OrderListDataListGoodsList':
-			return List<OrderListDataListGoodsList>();			case 'AddressListEntity':
+			return List<OrderListDataListGoodsList>();			case 'MicroShareholderItemEntity':
+			return List<MicroShareholderItemEntity>();			case 'MicroShareholderItemEstimate':
+			return List<MicroShareholderItemEstimate>();			case 'MicroShareholderItemInterests':
+			return List<MicroShareholderItemInterests>();			case 'AddressListEntity':
 			return List<AddressListEntity>();			case 'AddressListData':
 			return List<AddressListData>();			case 'HomeGoodsListEntity':
 			return List<HomeGoodsListEntity>();			case 'HomeGoodsListGoodsList':
