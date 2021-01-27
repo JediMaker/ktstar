@@ -41,4 +41,8 @@ class UserInfoData with JsonConvert<UserInfoData> {
   String payPwdStatus;
   @JSONField(name: "is_partner")
   String isPartner ;
+  @JSONField(name: "partner_time")
+  String partnerTime ;
+  @JSONField(name: "partner_expire_time")
+  String partnerExpireTime ;
 }
