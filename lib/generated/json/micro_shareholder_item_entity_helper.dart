@@ -5,7 +5,7 @@ microShareholderItemEntityFromJson(MicroShareholderItemEntity data, Map<String, 
 		data.annualIncome = json['annual_income']?.toString();
 	}
 	if (json['pay_price'] != null) {
-		data.payPrice = json['pay_price']?.toInt();
+		data.payPrice = json['pay_price']?.toString();
 	}
 	if (json['estimate'] != null) {
 		data.estimate = new MicroShareholderItemEstimate().fromJson(json['estimate']);
@@ -31,13 +31,13 @@ Map<String, dynamic> microShareholderItemEntityToJson(MicroShareholderItemEntity
 
 microShareholderItemEstimateFromJson(MicroShareholderItemEstimate data, Map<String, dynamic> json) {
 	if (json['yesterday'] != null) {
-		data.yesterday = json['yesterday']?.toInt();
+		data.yesterday = json['yesterday']?.toString();
 	}
 	if (json['week'] != null) {
-		data.week = json['week']?.toInt();
+		data.week = json['week']?.toString();
 	}
 	if (json['month'] != null) {
-		data.month = json['month']?.toInt();
+		data.month = json['month']?.toString();
 	}
 	return data;
 }
@@ -55,25 +55,25 @@ microShareholderItemInterestsFromJson(MicroShareholderItemInterests data, Map<St
 		data.bonusDescription = json['bonus_description']?.toString();
 	}
 	if (json['daily_money_rate'] != null) {
-		data.dailyMoneyRate = json['daily_money_rate']?.toInt();
+		data.dailyMoneyRate = json['daily_money_rate']?.toString();
 	}
 	if (json['bonus_coin'] != null) {
-		data.bonusCoin = json['bonus_coin']?.toInt();
+		data.bonusCoin = json['bonus_coin']?.toString();
 	}
 	if (json['recommend_description'] != null) {
 		data.recommendDescription = json['recommend_description']?.toString();
 	}
 	if (json['direct_bonus'] != null) {
-		data.directBonus = json['direct_bonus']?.toInt();
+		data.directBonus = json['direct_bonus']?.toString();
 	}
 	if (json['indirect_bonus'] != null) {
-		data.indirectBonus = json['indirect_bonus']?.toInt();
+		data.indirectBonus = json['indirect_bonus']?.toString();
 	}
 	if (json['direct_upgrade'] != null) {
-		data.directUpgrade = json['direct_upgrade']?.toInt();
+		data.directUpgrade = json['direct_upgrade']?.toString();
 	}
 	if (json['indirect_upgrade'] != null) {
-		data.indirectUpgrade = json['indirect_upgrade']?.toInt();
+		data.indirectUpgrade = json['indirect_upgrade']?.toString();
 	}
 	return data;
 }

@@ -5,32 +5,32 @@ class MicroShareholderItemEntity with JsonConvert<MicroShareholderItemEntity> {
 	@JSONField(name: "annual_income")
 	String annualIncome;
 	@JSONField(name: "pay_price")
-	int payPrice;
+	String payPrice;
 	MicroShareholderItemEstimate estimate;
 	MicroShareholderItemInterests interests;
 }
 
 class MicroShareholderItemEstimate with JsonConvert<MicroShareholderItemEstimate> {
-	int yesterday;
-	int week;
-	int month;
+	String yesterday;
+	String week;
+	String month;
 }
 
 class MicroShareholderItemInterests with JsonConvert<MicroShareholderItemInterests> {
 	@JSONField(name: "bonus_description")
 	String bonusDescription;
 	@JSONField(name: "daily_money_rate")
-	int dailyMoneyRate;
+	String dailyMoneyRate;
 	@JSONField(name: "bonus_coin")
-	int bonusCoin;
+	String bonusCoin;
 	@JSONField(name: "recommend_description")
 	String recommendDescription;
 	@JSONField(name: "direct_bonus")
-	int directBonus;
+	String directBonus;
 	@JSONField(name: "indirect_bonus")
-	int indirectBonus;
+	String indirectBonus;
 	@JSONField(name: "direct_upgrade")
-	int directUpgrade;
+	String directUpgrade;
 	@JSONField(name: "indirect_upgrade")
-	int indirectUpgrade;
+	String indirectUpgrade;
 }
