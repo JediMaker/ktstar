@@ -38,7 +38,7 @@ import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
-import 'package:star/pages/shareholders/equity.dart';
+import 'package:star/pages/shareholders/micro_equity.dart';
 import 'package:star/pages/task/invitation_poster.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
@@ -1082,7 +1082,7 @@ class _TaskListPageState extends State<TaskListPage>
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              NavigatorUtils.navigatorRouter(context, MicroEquityPage());
+              NavigatorUtils.navigatorRouter(context, MicroShareHolderEquityPage());
             },
             child: Container(
               margin: EdgeInsets.only(left: 16, right: 16, top: 10),
