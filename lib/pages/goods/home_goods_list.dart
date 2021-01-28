@@ -33,6 +33,7 @@ class HomeGoodsListPage extends StatefulWidget {
 class _HomeGoodsListPageState extends State<HomeGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
+  int count = 1;
   bool isFirstLoading = true;
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
   List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
@@ -132,9 +133,9 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
       if (!CommonUtils.isEmpty(pddGoodsList)) {
       } else {
         print("$context WidgetsBinding_initData");
-        if (_isfirst) {
+        if (count < 5) {
+          count++;
           _initData();
-          _isfirst = false;
         }
       }
     });
@@ -651,6 +652,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                         ),
                       ),
                       Visibility(
+                        //微股东权益 equity
                         visible: !CommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),

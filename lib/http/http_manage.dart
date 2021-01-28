@@ -21,6 +21,7 @@ import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/logistics_info_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
+import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/generated/json/order_detail_entity_helper.dart';
 import 'package:star/generated/json/order_list_entity_helper.dart';
 import 'package:star/generated/json/pay_coupon_entity_helper.dart';
@@ -65,6 +66,7 @@ import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/models/message_list_entity.dart';
+import 'package:star/models/micro_shareholder_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/pay_coupon_entity.dart';
@@ -1257,6 +1259,62 @@ class HttpManage {
   }
 
   ///
+  ///[payment] 	支付类型 1支付宝 2微信
+  ///
+  ///
+  ///[pay_type] 	升级类型 1VIP，3钻石
+  ///
+  ///[term] 期限（对应获取VIP价格接口返回值money_list->type）
+  ///
+  /// 获取微股东微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> getMicroShareholdersWechatPayInfo(
+      {pay_type, term}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["pay_type"] = "$pay_type";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_UPGRADE_HOLDER,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[payment] 	支付类型 1支付宝 2微信
+  ///
+  ///
+  ///[pay_type] 	升级类型 1VIP，3钻石
+  ///
+  ///[term] 期限（对应获取VIP价格接口返回值money_list->type）
+  ///
+  /// 获取微股东支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> getMicroShareholdersAliPayInfo(
+      {pay_type, term}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["pay_type"] = "$pay_type";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.PAY_UPGRADE_HOLDER,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
   ///[tel] 	充值手机号码
   ///
   ///[rechargeId] 充值id
@@ -2119,6 +2177,22 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = PddGoodsInfoEntity();
     pddGoodsInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  /// 获取微股东权益详情
+  ///
+  static Future<MicroShareholderEntity> getMicroShareHolderInfo() async {
+    Map paramsMap = Map<String, dynamic>();
+    var response = await HttpManage.dio.get(
+      APi.USER_HOLDER_EXPLAIN,
+      queryParameters: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = MicroShareholderEntity();
+    microShareholderEntityFromJson(entity, extractData);
     return entity;
   }
 }

@@ -129,6 +129,8 @@ class GlobalConfig {
   ///
   /// 2 商品支付
   ///
+  /// 3 微股东升级支付
+  ///
   static int payType = 0;
 
   /// 是否为首次进入app

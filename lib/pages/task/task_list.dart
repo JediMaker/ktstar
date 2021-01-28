@@ -38,6 +38,7 @@ import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
+import 'package:star/pages/shareholders/equity.dart';
 import 'package:star/pages/task/invitation_poster.dart';
 import 'package:star/pages/task/task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
@@ -83,7 +84,7 @@ class _TaskListPageState extends State<TaskListPage>
   int bannerIndex = 0;
   HomeEntity entity;
   TabController _tabController;
-  List<HomeDataBanner> bannerList;
+  List<HomeIconListIconList> bannerList;
   List<Color> bannerColorList;
   static List<HomeDataTaskListList> taskList;
   static List<HomeDataTaskListList> taskVipList;
@@ -637,7 +638,7 @@ class _TaskListPageState extends State<TaskListPage>
                   PddGoodsListPage(
                     showAppBar: true,
                     type: pddType,
-                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    title: CommonUtils.isEmpty(name) ? "精选" : name,
                     categoryId: catId,
                   ));
               return;
@@ -1081,7 +1082,7 @@ class _TaskListPageState extends State<TaskListPage>
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              NavigatorUtils.navigatorRouter(context, InvitationPosterPage());
+              NavigatorUtils.navigatorRouter(context, MicroEquityPage());
             },
             child: Container(
               margin: EdgeInsets.only(left: 16, right: 16, top: 10),
@@ -1968,8 +1969,147 @@ class _TaskListPageState extends State<TaskListPage>
                         activeSize: 10.0)),*/
                 itemBuilder: (context, index) {
                   var bannerData = bannerList[index];
+                  var item = bannerList[index];
+                  String icon = '';
+                  String name = '';
+                  String type = '';
+                  String appId = '';
+                  String path = '';
+                  String imgPath = '';
+                  String subtitle = '';
+                  String params = '';
+                  String catId = '';
+                  String pddType = '';
+                  try {
+                    icon = item.icon;
+                    name = item.name;
+                    type = item.type;
+                    appId = item.appId;
+                    path =
+                    !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+                    subtitle = item.subtitle;
+                    params = item.params;
+                    imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+                    if (params.contains("&")) {}
+                    List<String> pList = params.split("&");
+                    for (var itemString in pList) {
+                      List<String> itemList = itemString.split("=");
+                      if (!CommonUtils.isEmpty(itemList)) {
+                        switch (itemList[0]) {
+                          case "cat_id":
+                            catId = itemList[1];
+                            break;
+                          case "type":
+                            pddType = itemList[1];
+                            break;
+                        }
+                      }
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
                   return GestureDetector(
                     onTap: () async {
+                      ///跳转对应链接
+                      ///
+                      if (type == 'webapp') {
+                        launchWeChatMiniProgram(username: appId, path: path);
+                        return;
+                      }
+                      if (type == 'app') {
+                        if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
+                          return;
+                        }
+                        if (path == 'pdd_goods') {
+                          NavigatorUtils.navigatorRouter(
+                              context,
+                              PddGoodsListPage(
+                                showAppBar: true,
+                                type: pddType,
+                                title:
+                                CommonUtils.isEmpty(name) ? "精选" : name,
+                                categoryId: catId,
+                              ));
+                          return;
+                        }
+                        switch (path) {
+                          case "recharge":
+                            NavigatorUtils.navigatorRouter(
+                                context, RechargeListPage());
+                            break;
+                          case "upgrade":
+                            NavigatorUtils.navigatorRouter(
+                                context, TaskOpenVipPage());
+/*
+                          NavigatorUtils.navigatorRouter(
+                              context, TaskOpenDiamondPage());
+*/
+                            break;
+                          case "recharge":
+                            NavigatorUtils.navigatorRouter(
+                                context, RechargeListPage());
+                            break;
+                          case "goods_list":
+                            NavigatorUtils.navigatorRouter(
+                                context, GoodsListPage());
+                            break;
+                          case "upgrade_diamond":
+                            NavigatorUtils.navigatorRouter(
+                                context,
+                                TaskOpenVipPage(
+                                  taskType: 2,
+                                ));
+                            break;
+                        }
+                        return;
+                      }
+                      if (type == 'toast') {
+                        CommonUtils.showToast("敬请期待");
+                        return;
+                      }
+                      if (type == 'link') {
+                        if (path.toString().startsWith("pinduoduo")) {
+                          if (await canLaunch(path)) {
+                            await launch(path);
+                          } else {
+                            if (path.startsWith("pinduoduo://")) {
+                              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  WebViewPluginPage(
+                                    initialUrl: "$path",
+                                    showActions: true,
+                                    title: "拼多多",
+                                    appBarBackgroundColor: Colors.white,
+                                  ));
+                            } else {}
+                            return;
+                          }
+                        }
+                        if (path.contains("yangkeduo")) {
+                          var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                              "pinduoduo://com.xunmeng.pinduoduo/");
+                          if (await canLaunch(pddPath)) {
+                            await launch(pddPath);
+                          } else {
+                            NavigatorUtils.navigatorRouter(
+                                context,
+                                WebViewPluginPage(
+                                  initialUrl: "$path",
+                                  showActions: true,
+                                  title: "拼多多",
+                                  appBarBackgroundColor: Colors.white,
+                                ));
+                            return;
+                          }
+                        }
+                        Utils.launchUrl(path);
+                        return;
+                      }
+
+                      ///
                       switch (bannerList[bannerIndex].uri.toString().trim()) {
                         case "upgrade":
                           NavigatorUtils.navigatorRouter(
@@ -2727,7 +2867,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
   String taskTotalNum = "";
   int bannerIndex = 0;
   HomeEntity entity;
-  List<HomeDataBanner> bannerList;
+  List<HomeIconListIconList> bannerList;
   List<HomeDataTaskListList> taskList = List<HomeDataTaskListList>();
 
   List<HomeDataTaskList> taskListAll;

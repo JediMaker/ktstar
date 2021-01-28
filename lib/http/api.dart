@@ -84,11 +84,17 @@ class APi {
   ///申请成为微股东
   static const String USER_PARTNER = "user/partner";
 
+  ///微股东申请权益页
+  static const String USER_HOLDER_EXPLAIN = "user/holder-explain";
+
   ///获取当前版本信息
   static const String SITE_VERSION = "site/version";
 
   ///升级VIP用户
   static const String USER_UPGRADE_VIP = "pay/upgrade-pay";
+
+  ///开通/升级微股东
+  static const String PAY_UPGRADE_HOLDER = "pay/upgrade-holder";
 
   ///检测支付是否成功
   static const String PAY_CHECK_SUCCESS = "pay/check-success";

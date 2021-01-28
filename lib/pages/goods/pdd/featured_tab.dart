@@ -231,7 +231,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                                 showAppBar: true,
                                 type: pddType,
                                 title:
-                                    CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                                    CommonUtils.isEmpty(name) ? "精选" : name,
                                 categoryId: catId,
                               ));
                           return;
@@ -450,7 +450,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   PddGoodsListPage(
                     showAppBar: true,
                     type: pddType,
-                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    title: CommonUtils.isEmpty(name) ? "精选" : name,
                     categoryId: catId,
                   ));
               return;
@@ -699,7 +699,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   PddGoodsListPage(
                     showAppBar: true,
                     type: pddType,
-                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    title: CommonUtils.isEmpty(name) ? "精选" : name,
                     categoryId: catId,
                   ));
               return;
@@ -842,7 +842,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   PddGoodsListPage(
                     showAppBar: true,
                     type: pddType,
-                    title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                    title: CommonUtils.isEmpty(name) ? "精选" : name,
                     categoryId: catId,
                   ));
               return;
@@ -985,7 +985,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 PddGoodsListPage(
                   showAppBar: true,
                   type: pddType,
-                  title: CommonUtils.isEmpty(name) ? "优惠促销" : name,
+                  title: CommonUtils.isEmpty(name) ? "精选" : name,
                   categoryId: catId,
                 ));
             return;

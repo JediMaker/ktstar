@@ -17,8 +17,9 @@ class PayResultPage extends StatefulWidget {
   String payNo;
   int type;
 
-  PayResultPage({Key key, this.payNo = "", this.type = 0,this.title= "购买成功"}) : super(key: key);
-   String title ;
+  PayResultPage({Key key, this.payNo = "", this.type = 0, this.title = "购买成功"})
+      : super(key: key);
+  String title;
 
   @override
   _PayResultPageState createState() => _PayResultPageState();
@@ -168,38 +169,42 @@ class _PayResultPageState extends State<PayResultPage> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            if (widget.type == 0) {
-                              NavigatorUtils.navigatorRouter(
-                                  context, RechargeListPage());
-                            } else {
-                              NavigatorUtils.navigatorRouter(
-                                  context, RechargeOrderListPage());
-                            }
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
+                      Visibility(
+                        visible: widget.type != 2,
+                        child: Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (widget.type == 0) {
+                                NavigatorUtils.navigatorRouter(
+                                    context, RechargeListPage());
+                              } else {
+                                NavigatorUtils.navigatorRouter(
+                                    context, RechargeOrderListPage());
+                              }
+                            },
                             child: Container(
                               alignment: Alignment.center,
-                              height: ScreenUtil().setHeight(116),
-                              width: ScreenUtil().setWidth(308),
-                              decoration: BoxDecoration(
-                                  /*gradient: LinearGradient(colors: [
-                                      Color(0xFFFBA951),
-                                      Color(0xFFFFDCAC),
-                                    ]),*/
-                                  color: Color(0xffF93736),
-                                  border: Border.all(color: Color(0xffF93736)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(34))),
-                              child: Text(
-                                "${widget.type == 0 ? "去充值" : "查看订单"}",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ScreenUtil().setSp(42),
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: ScreenUtil().setHeight(116),
+                                width: ScreenUtil().setWidth(308),
+                                decoration: BoxDecoration(
+                                    /*gradient: LinearGradient(colors: [
+                                        Color(0xFFFBA951),
+                                        Color(0xFFFFDCAC),
+                                      ]),*/
+                                    color: Color(0xffF93736),
+                                    border:
+                                        Border.all(color: Color(0xffF93736)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(34))),
+                                child: Text(
+                                  "${widget.type == 0 ? "去充值" : "查看订单"}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
                                 ),
                               ),
                             ),

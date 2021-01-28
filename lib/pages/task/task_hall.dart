@@ -59,7 +59,7 @@ class _TaskHallPageState extends State<TaskHallPage>
   int bannerIndex = 0;
   HomeEntity entity;
   TabController _tabController;
-  List<HomeDataBanner> bannerList;
+  List<HomeIconListIconList> bannerList;
   List<Color> bannerColorList;
   static List<HomeDataTaskListList> taskList;
   static List<HomeDataTaskListList> taskVipList;
@@ -1717,7 +1717,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
   String taskTotalNum = "";
   int bannerIndex = 0;
   HomeEntity entity;
-  List<HomeDataBanner> bannerList;
+  List<HomeIconListIconList> bannerList;
   List<HomeDataTaskListList> taskList = List<HomeDataTaskListList>();
 
   List<HomeDataTaskList> taskListAll;
