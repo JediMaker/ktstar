@@ -23,8 +23,8 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
-class MicroEquityPage extends StatefulWidget {
-  MicroEquityPage({Key key, this.shareholderType = 1}) : super(key: key);
+class MicroShareHolderEquityPage extends StatefulWidget {
+  MicroShareHolderEquityPage({Key key, this.shareholderType = 1}) : super(key: key);
   final String title = "微股东权益";
 
   ///股东类型
@@ -32,10 +32,10 @@ class MicroEquityPage extends StatefulWidget {
   int shareholderType;
 
   @override
-  _MicroEquityPageState createState() => _MicroEquityPageState();
+  _MicroShareHolderEquityPageState createState() => _MicroShareHolderEquityPageState();
 }
 
-class _MicroEquityPageState extends State<MicroEquityPage> {
+class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage> {
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff666666);
   Color _layoutSelectedColor = Colors.white;
