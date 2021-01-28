@@ -12,7 +12,10 @@ searchPddGoodsListEntityFromJson(SearchPddGoodsListEntity data, Map<String, dyna
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new SearchPddGoodsListData().fromJson(json['data']);
+		try {
+			data.data = new SearchPddGoodsListData().fromJson(json['data']);
+		} catch (e) {
+		}
 	}
 	return data;
 }
