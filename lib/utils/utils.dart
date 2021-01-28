@@ -155,7 +155,7 @@ class Utils {
         return;
       }
     }
-
+    GlobalConfig.prefs.setBool('needUpdate', false);
     var versionInfo = await HttpManage.getVersionInfo();
     try {
       if (versionInfo.status) {
@@ -167,7 +167,7 @@ class Utils {
         } else {
           GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
-        if (GlobalConfig.isHuaweiUnderReview) {
+        if (GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
           if (checkDerictly) {
             CommonUtils.showToast("当前已是最新版本");
           }
@@ -181,8 +181,8 @@ class Utils {
           }
           return;
         }
-        GlobalConfig.prefs
-            .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);
+       /* GlobalConfig.prefs
+            .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);*/
         if (needUpdate) {
           GlobalConfig.prefs.setBool('needUpdate', true);
           final bool wantsUpdate = await showDialog<bool>(

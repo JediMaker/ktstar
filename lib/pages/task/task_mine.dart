@@ -903,8 +903,9 @@ class _TaskMinePageState extends State<TaskMinePage>
             ),
           ),
           Visibility(
-            //todo
-            visible: true,
+            visible: GlobalConfig.prefs.getBool('needUpdate') == null
+                ? false
+                : GlobalConfig.prefs.getBool('needUpdate'),
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 16),
               child: Divider(
@@ -913,45 +914,50 @@ class _TaskMinePageState extends State<TaskMinePage>
               ),
             ),
           ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                /* Image.asset(
-                  "static/images/icon_fans.png",
-                  width: ScreenUtil().setWidth(44),
-                  height: ScreenUtil().setWidth(71),
-                ),*/
-                Text(
-                  "检测更新",
-                  style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                      fontSize: ScreenUtil().setSp(38)),
-                ),
-              ],
-            ),
-            onTap: () {
-              Utils.checkAppVersion(context, checkDerictly: true);
-            },
-            trailing: Visibility(
-              visible: GlobalConfig.prefs.getBool('needUpdate') == null
-                  ? false
-                  : GlobalConfig.prefs.getBool('needUpdate'),
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
+          Visibility(
+            visible: GlobalConfig.prefs.getBool('needUpdate') == null
+                ? false
+                : GlobalConfig.prefs.getBool('needUpdate'),
+            child: ListTile(
+              title: Row(
                 children: <Widget>[
+                  /* Image.asset(
+                    "static/images/icon_fans.png",
+                    width: ScreenUtil().setWidth(44),
+                    height: ScreenUtil().setWidth(71),
+                  ),*/
                   Text(
-                    "有新版本可以更新",
+                    "检测更新",
                     style: TextStyle(
-                        color: Colors.blueAccent,
+//                color:  Color(0xFF222222) ,
                         fontSize: ScreenUtil().setSp(38)),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: ScreenUtil().setWidth(32),
-                    color: Color(0xff999999),
-                  ),
                 ],
+              ),
+              onTap: () {
+                Utils.checkAppVersion(context, checkDerictly: true);
+              },
+              trailing: Visibility(
+                visible: GlobalConfig.prefs.getBool('needUpdate') == null
+                    ? false
+                    : GlobalConfig.prefs.getBool('needUpdate'),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "有新版本可以更新",
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: ScreenUtil().setSp(38)),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: ScreenUtil().setWidth(32),
+                      color: Color(0xff999999),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
