@@ -221,18 +221,21 @@ class _MicroMinePageState extends State<MicroMinePage>
     return Scaffold(
         appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
-          gradient: LinearGradient(colors: [
-            Color(0xffD6B78E),
-            Color(0xffD6B78E),
-          ]),
-          brightness: Brightness.light,
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xffDC1312),
+                Color(0xffDC1312),
+              ]),
+          brightness: Brightness.dark,
           title: Text(
             "${widget.title}",
             /*style: TextStyle(
                 color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 fontSize: ScreenUtil().setSp(54)),*/
             style: TextStyle(
-                color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+                color: Colors.white, fontSize: ScreenUtil().setSp(54)),
           ),
           centerTitle: true,
           elevation: 0,
@@ -290,16 +293,24 @@ class _MicroMinePageState extends State<MicroMinePage>
                 // 只裁切底部的方法
                 clipper: BottomClipper(),
                 child: Container(
-                  color: Color(0xffD6B78E),
                   height: ScreenUtil().setWidth(755),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xffDC1312),
+                          Color(0xffFF6964),
+                        ]),
+                  ),
                 ),
               ),
               Column(
                 children: <Widget>[
 //                buildTopLayout(),
                   buildHeadLayout(),
-                  buildCardInfo(),
                   dividendComparisonLayout(),
+                  buildCardInfo(),
                   itemsLayout(),
                 ],
               ),
@@ -363,48 +374,6 @@ class _MicroMinePageState extends State<MicroMinePage>
               width: 0.5)),
       child: Column(
         children: <Widget>[
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                /*  Image.asset(
-                  "static/images/icon_fans.png",
-                  width: ScreenUtil().setWidth(44),
-                  height: ScreenUtil().setWidth(71),
-                ),*/
-                Text(
-                  "个人榜单",
-                  style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                      fontSize: ScreenUtil().setSp(38)),
-                ),
-              ],
-            ),
-            onTap: () {
-              NavigatorUtils.navigatorRouter(context, FreeQueuePersonalPage());
-            },
-            trailing: Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: <Widget>[
-                /*Text(
-                  "",
-                  style: TextStyle(color: Color(0xff999999)),
-                ),*/
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: ScreenUtil().setWidth(32),
-                  color: Color(0xff999999),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(
-              height: ScreenUtil().setHeight(1),
-              color: Color(0xFFefefef),
-            ),
-          ),
           ListTile(
             title: Row(
               children: <Widget>[
@@ -834,9 +803,12 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Visibility(
-            visible: GlobalConfig.prefs.getBool('needUpdate') == null
-                ? false
-                : GlobalConfig.prefs.getBool('needUpdate'),
+            visible:
+                GlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
+                        (GlobalConfig.prefs.getBool('isHuaweiUnderReview') &&
+                            Platform.isIOS)
+                    ? false
+                    : true,
             child: ListTile(
               title: Row(
                 children: <Widget>[
@@ -1081,27 +1053,28 @@ class _MicroMinePageState extends State<MicroMinePage>
 
   ///分红对比
   Widget dividendComparisonLayout() {
-    Color _itemsTextColor = Color(0xffAFAFAF);
-    Color _itemsAmountColor = Color(0xff222222);
+    Color _itemsTextColor = Color(0xffD6B78E);
+    Color _itemsAmountColor = Color(0xffFFFFFF);
     return Container(
-      height: ScreenUtil().setHeight(292),
+      height: ScreenUtil().setWidth(246),
       margin: EdgeInsets.only(
         left: 16,
         right: 16,
-        bottom: ScreenUtil().setWidth(30),
+        top: ScreenUtil().setWidth(30),
       ),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(
-              ScreenUtil().setWidth(28),
-            ),
+        color: Color(0xff623413),
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            ScreenUtil().setWidth(28),
           ),
-          border: Border.all(
+        ),
+        /*border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-              color: Colors.white,
-              width: 0.5)),
+            color: Colors.white,
+            width: 0.5),*/
+      ),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1121,7 +1094,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
+                        margin: const EdgeInsets.only(bottom: 6.0, right: 6),
                         child: new CircleAvatar(
                           radius: 20.0,
                           backgroundColor: Colors.transparent,
@@ -1137,6 +1110,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           new Container(
+                            margin: const EdgeInsets.only(
+                              bottom: 3.0,
+                            ),
                             child: new Text(
                               "今日应得分红",
                               style: new TextStyle(
@@ -1172,7 +1148,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
+                        margin: const EdgeInsets.only(bottom: 6.0, right: 6),
                         child: new CircleAvatar(
                           radius: 20.0,
                           backgroundColor: Colors.transparent,
@@ -1188,6 +1164,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           new Container(
+                            margin: const EdgeInsets.only(
+                              bottom: 3.0,
+                            ),
                             child: new Text("今日实际分红",
                                 style: new TextStyle(
                                     color: _itemsTextColor,
@@ -1529,13 +1508,14 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                      "可提现(元)",
+                                      "账户余额",
                                       style: TextStyle(
-                                          color: _cardTextColor,
+                                          color: Color(0xff623413),
+                                          fontWeight: FontWeight.bold,
                                           fontSize: ScreenUtil().setSp(36)),
                                     ),
                                     Icon(Icons.arrow_right,
-                                        color: _cardTextColor,
+                                        color: Color(0xff623413),
                                         size: ScreenUtil().setSp(42)),
                                   ],
                                 ),
@@ -1548,7 +1528,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        color: Color(0xffD6B78E),
+                                        color: Color(0xff623413),
                                         fontSize: ScreenUtil().setSp(81),
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -1607,7 +1587,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               height: ScreenUtil().setWidth(79),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: Color(0xffD6B78E),
+                                color: Color(0xff623413),
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(ScreenUtil().setWidth(51))),
                               ),
@@ -1615,8 +1595,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 "提现",
                                 style: TextStyle(
 //                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                                    color: Color(0xFF252525),
-                                    fontSize: ScreenUtil().setSp(38)),
+                                    color: Color(0xFFFFFFFF),
+                                    fontSize: ScreenUtil().setSp(36)),
                               ),
                             ),
                           ),
@@ -1625,7 +1605,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     ],
                   ),
                   decoration: BoxDecoration(
-                    color: Color(0xff252525),
+                    color: Color(0xffFFEDDF),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(
                         ScreenUtil().setWidth(30),
@@ -2020,7 +2000,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     fontSize: ScreenUtil().setSp(42)),*/
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    color: Color(0xFF222222),
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: ScreenUtil().setSp(42)),
               ),
@@ -2028,11 +2008,14 @@ class _MicroMinePageState extends State<MicroMinePage>
             SizedBox(
               width: ScreenUtil().setWidth(26),
             ),
-            Image.asset(
-              "static/images/${_getImgName(userType)}",
-              width: ScreenUtil().setWidth(185),
-              height: ScreenUtil().setHeight(67),
-              fit: BoxFit.fill,
+            Visibility(
+              visible: false,
+              child: Image.asset(
+                "static/images/${_getImgName(userType)}",
+                width: ScreenUtil().setWidth(185),
+                height: ScreenUtil().setHeight(67),
+                fit: BoxFit.fill,
+              ),
             ),
 //            Image.asset("", width:)
           ],
@@ -2040,8 +2023,7 @@ class _MicroMinePageState extends State<MicroMinePage>
       ),
       subtitle: Text(
         "邀请码：${_code == null ? '' : _code}",
-        style: TextStyle(
-            color: Color(0xFF222222), fontSize: ScreenUtil().setSp(42)),
+        style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(42)),
       ),
       trailing: GestureDetector(
         /* onTap: () async {
@@ -2080,23 +2062,23 @@ class _MicroMinePageState extends State<MicroMinePage>
             height: ScreenUtil().setWidth(83),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
+              /*gradient: LinearGradient(colors: [
                 Color(0xff252525),
                 Color(0xff414141),
-              ]),
+              ]),*/
               borderRadius:
                   BorderRadius.all(Radius.circular(ScreenUtil().setWidth(51))),
-              /*border: Border.all(
+              border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-//                    color: _headBgColor,
-                  width: 0.5),*/
+                  color: Color(0xffFFFFFF),
+                  width: 0.5),
             ),
             child: Text(
               "升级股东",
               style: TextStyle(
 //                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                  color: Color(0xffD6B78E),
-                  fontSize: ScreenUtil().setSp(38)),
+                  color: Color(0xffFFFFFF),
+                  fontSize: ScreenUtil().setSp(36)),
             ),
           ),
         ),

@@ -221,7 +221,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                         margin: EdgeInsets.only(
                                             bottom: ScreenUtil().setHeight(8)),
                                         child: Text(
-                                          "补贴：￥$_btPrice",
+                                          "分红金：￥$_btPrice",
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
                                           style: TextStyle(
                                             color: _txtRedColor,
@@ -253,87 +253,90 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              NavigatorUtils.navigatorRouter(
-                                  context,
-                                  FreeQueuePage(
-                                    goodsId: widget.productId,
-                                  ));
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 0),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 18, horizontal: 16),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          ScreenUtil().setWidth(30)))),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        child: Text(
-                                          "排队",
-                                          style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(38),
-                                            color: Color(0xff999999),
+                          Visibility(
+                            visible: false,
+                            child: GestureDetector(
+                              onTap: () {
+                                NavigatorUtils.navigatorRouter(
+                                    context,
+                                    FreeQueuePage(
+                                      goodsId: widget.productId,
+                                    ));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 0),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 18, horizontal: 16),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            ScreenUtil().setWidth(30)))),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Text(
+                                            "排队",
+                                            style: TextStyle(
+                                              fontSize: ScreenUtil().setSp(38),
+                                              color: Color(0xff999999),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "目前该商品已有$_queueCount人正在参与排队",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize:
-                                                    ScreenUtil().setSp(42),
-                                                color: Color(0xff222222),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(top: 4),
-                                              child: Text(
-                                                '助力满$_showNum有机会直接拿到补贴~',
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "目前该商品已有$_queueCount人正在参与排队",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                  color: Color(0xff999999),
                                                   fontSize:
-                                                      ScreenUtil().setSp(36),
+                                                      ScreenUtil().setSp(42),
+                                                  color: Color(0xff222222),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: true,
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              bottom:
-                                                  ScreenUtil().setHeight(8)),
-                                          child: Icon(
-                                            CupertinoIcons.forward,
-                                            color: Color(0xff999999),
-                                            size: ScreenUtil().setSp(38),
+                                              Container(
+                                                margin: EdgeInsets.only(top: 4),
+                                                child: Text(
+                                                  '助力满$_showNum有机会直接拿到补贴~',
+                                                  style: TextStyle(
+                                                    color: Color(0xff999999),
+                                                    fontSize:
+                                                        ScreenUtil().setSp(36),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        Visibility(
+                                          visible: true,
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                bottom:
+                                                    ScreenUtil().setHeight(8)),
+                                            child: Icon(
+                                              CupertinoIcons.forward,
+                                              color: Color(0xff999999),
+                                              size: ScreenUtil().setSp(38),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

@@ -57,13 +57,24 @@ class TokenInterceptors extends InterceptorsWrapper {
         }
       }
       if (entity.errCode.toString() == "303") {
-        CommonUtils.showToast("登陆过期，请重新登录！");
+        CommonUtils.showToast("token信息设置失败，，请登录！");
+        Future.delayed(Duration(seconds: 1)).then((onValue) {
+          var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+          NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+        });
       }
       if (entity.errCode.toString() == "304") {
         if (GlobalConfig.isLogin()) {
           GlobalConfig.prefs.remove("hasLogin");
           GlobalConfig.saveLoginStatus(false);
           CommonUtils.showToast("登陆状态已过期，请重新登录！");
+          Future.delayed(Duration(seconds: 1)).then((onValue) {
+            var context =
+                GlobalConfig.navigatorKey.currentState.overlay.context;
+            NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+          });
+        } else {
+          CommonUtils.showToast("token信息设置失败，，请登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) {
             var context =
                 GlobalConfig.navigatorKey.currentState.overlay.context;

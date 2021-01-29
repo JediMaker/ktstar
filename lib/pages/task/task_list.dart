@@ -1887,7 +1887,7 @@ class _TaskListPageState extends State<TaskListPage>
   ///轮播区域
   Widget buildBannerLayout() {
     return Container(
-      height: ScreenUtil().setHeight(566),
+      height: ScreenUtil().setWidth(466),
       width: double.maxFinite,
 //      width: ScreenUtil().setWidth(1125),
       /*  decoration: BoxDecoration(

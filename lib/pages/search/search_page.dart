@@ -598,17 +598,33 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text(""),
-            content: Text("确认清除所有搜索记录吗？"),
+            content: Text(
+              "确认清除所有搜索记录吗？",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(42),
+              ),
+            ),
             actions: <Widget>[
               CupertinoDialogAction(
-                child: Text("取消"),
+                child: Text(
+                  "取消",
+                  style: TextStyle(
+                    color: Color(0xff222222),
+                    fontSize: ScreenUtil().setSp(42),
+                  ),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                   print("取消");
                 },
               ),
               CupertinoDialogAction(
-                child: Text("确定"),
+                child: Text(
+                  "确定",
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(42),
+                  ),
+                ),
                 onPressed: () {
                   setState(() {
                     _hisArray = List<String>();

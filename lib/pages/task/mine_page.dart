@@ -33,12 +33,24 @@ class _MinePagePageState extends State<MinePagePage> {
     try {
       userInfoData = GlobalConfig.getUserInfo();
       if (!CommonUtils.isEmpty(userInfoData.isPartner)) {
-            setState(() {
-              _shareholderType = userInfoData.isPartner;
-            });
-          }
-    } catch (e) {
-    }
+        setState(() {
+          _shareholderType = userInfoData.isPartner;
+          /*var title = '';
+          title = _shareholderType == '1'
+              ? '见习股东'
+              : _shareholderType == '3'
+                  ? 'VIP股东'
+                  : '高级股东';
+          if (_shareholderType == '2') {
+            rootView = TaskMinePage();
+          } else {
+            rootView = MicroMinePage(
+              title: title,
+            );
+          }*/
+        });
+      }
+    } catch (e) {}
     var result = await HttpManage.getUserInfo();
     if (result.status) {
       setState(() {
@@ -48,9 +60,24 @@ class _MinePagePageState extends State<MinePagePage> {
       if (CommonUtils.isEmpty(userInfoData.isPartner)) {
         var result = await HttpManage.getUserInfo();
         if (result.status) {
-          setState(() {
-            _shareholderType = result.data.isPartner;
-          });
+          if (mounted) {
+            setState(() {
+              _shareholderType = result.data.isPartner;
+             /* var title = '';
+              title = _shareholderType == '1'
+                  ? '见习股东'
+                  : _shareholderType == '3'
+                      ? 'VIP股东'
+                      : '高级股东';
+              if (_shareholderType == '2') {
+                rootView = TaskMinePage();
+              } else {
+                rootView = MicroMinePage(
+                  title: title,
+                );
+              }*/
+            });
+          }
         } else {}
       }
     }

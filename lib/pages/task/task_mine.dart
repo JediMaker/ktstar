@@ -453,48 +453,6 @@ class _TaskMinePageState extends State<TaskMinePage>
                   height: ScreenUtil().setWidth(71),
                 ),*/
                 Text(
-                  "个人榜单",
-                  style: TextStyle(
-//                color:  Color(0xFF222222) ,
-                      fontSize: ScreenUtil().setSp(38)),
-                ),
-              ],
-            ),
-            onTap: () {
-              NavigatorUtils.navigatorRouter(context, FreeQueuePersonalPage());
-            },
-            trailing: Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: <Widget>[
-                /*Text(
-                  "",
-                  style: TextStyle(color: Color(0xff999999)),
-                ),*/
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: ScreenUtil().setWidth(32),
-                  color: Color(0xff999999),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(
-              height: ScreenUtil().setHeight(1),
-              color: Color(0xFFefefef),
-            ),
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                /*  Image.asset(
-                  "static/images/icon_fans.png",
-                  width: ScreenUtil().setWidth(44),
-                  height: ScreenUtil().setWidth(71),
-                ),*/
-                Text(
                   "收货地址",
                   style: TextStyle(
 //                color:  Color(0xFF222222) ,
@@ -915,9 +873,12 @@ class _TaskMinePageState extends State<TaskMinePage>
             ),
           ),
           Visibility(
-            visible: GlobalConfig.prefs.getBool('needUpdate') == null
-                ? false
-                : GlobalConfig.prefs.getBool('needUpdate'),
+            visible:
+                GlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
+                        (GlobalConfig.prefs.getBool('isHuaweiUnderReview') &&
+                            Platform.isIOS)
+                    ? false
+                    : true,
             child: ListTile(
               title: Row(
                 children: <Widget>[
@@ -1305,8 +1266,7 @@ class _TaskMinePageState extends State<TaskMinePage>
                         textColor: Colors.white,
                         gravity: ToastGravity.BOTTOM);
                     return;*/
-                    NavigatorUtils.navigatorRouter(
-                        context, OrderListPage());
+                    NavigatorUtils.navigatorRouter(context, OrderListPage());
                   },
                   child: new Container(
                     child: new Column(

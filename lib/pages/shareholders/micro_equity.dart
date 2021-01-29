@@ -1092,7 +1092,7 @@ class _MicroShareHolderEquityPageState
     switch (_currentIndex) {
       case 0:
         desc = '消费满$novitiatePrice元即可升级为见习股东';
-        idDesc = _shareholderType != "1" ? '您还未开通见习股东' : '见习股东将于$expireDate到期';
+        idDesc = _shareholderType != "1" ? '您还未开通见习股东' : '见习股东已开通';
         iconLinkUrl = primaryIconLinkUrl;
         _selectPrice = "$novitiatePrice";
 

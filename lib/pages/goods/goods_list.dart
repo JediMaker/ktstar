@@ -17,9 +17,9 @@ import '../../global_config.dart';
 import 'goods_detail.dart';
 
 class GoodsListPage extends StatefulWidget {
-  GoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
+  GoodsListPage({Key key, this.title = "分红商品", this.categoryId = ''})
       : super(key: key);
-  String title = "补贴商品";
+  String title = "分红商品";
   String categoryId;
 
   @override
@@ -168,14 +168,14 @@ class _GoodsListPageState extends State<GoodsListPage> {
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '预估补贴￥0';
+    String profit = '分红金￥0';
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '预估补贴￥${(item.btPrice)}';
+      profit = '分红金￥${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
