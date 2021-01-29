@@ -30,10 +30,18 @@ class _MinePagePageState extends State<MinePagePage> {
   String _shareholderType = '';
 
   _initData() async {
+    try {
+      userInfoData = GlobalConfig.getUserInfo();
+      if (!CommonUtils.isEmpty(userInfoData.isPartner)) {
+            setState(() {
+              _shareholderType = userInfoData.isPartner;
+            });
+          }
+    } catch (e) {
+    }
     var result = await HttpManage.getUserInfo();
     if (result.status) {
       setState(() {
-        print("_shareholderType=${result.data.isPartner}");
         _shareholderType = result.data.isPartner;
       });
     } else {
@@ -46,7 +54,6 @@ class _MinePagePageState extends State<MinePagePage> {
         } else {}
       }
     }
-    print("_shareholderType=$_shareholderType");
   }
 
   @override
@@ -75,8 +82,6 @@ class _MinePagePageState extends State<MinePagePage> {
         title: title,
       );
     }
-    print("_shareholderType=$_shareholderType");
-    print("rootView=$rootView");
     return rootView;
   }
 }

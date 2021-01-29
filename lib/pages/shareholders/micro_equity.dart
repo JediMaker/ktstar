@@ -149,6 +149,7 @@ class _MicroShareHolderEquityPageState
           CommonUtils.showToast("支付失败");
           break;
         case "2": //已成功
+          await HttpManage.getUserInfo();
           NavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
               PayResultPage(
