@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluwx/fluwx.dart';
+import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
@@ -230,8 +232,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                               PddGoodsListPage(
                                 showAppBar: true,
                                 type: pddType,
-                                title:
-                                    CommonUtils.isEmpty(name) ? "精选" : name,
+                                title: CommonUtils.isEmpty(name) ? "精选" : name,
                                 categoryId: catId,
                               ));
                           return;
@@ -268,7 +269,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                           }
                         }
                         if (path.contains("yangkeduo")) {
-                          var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                          var pddPath = path.replaceAll(
+                              "https://mobile.yangkeduo.com/",
                               "pinduoduo://com.xunmeng.pinduoduo/");
                           if (await canLaunch(pddPath)) {
                             await launch(pddPath);
@@ -294,6 +296,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         child: CachedNetworkImage(
                           imageUrl: "${item.imgPath}",
+                          placeholder: (context, url) => Center(
+                            child: Loading(
+                              indicator: BallSpinFadeLoaderIndicator(),
+                              size: 50.0,
+                              color: GlobalConfig.colorPrimary,
+                            ),
+                          ),
                           errorWidget: (context, url, d) {
                             return Center(child: Text("图片加载失败"));
                           },
@@ -772,6 +781,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               child: CachedNetworkImage(
                 imageUrl: "$imgPath",
                 fit: BoxFit.fitWidth,
+                placeholder: (context, url) => Center(
+                  child: Loading(
+                    indicator: BallSpinFadeLoaderIndicator(),
+                    size: 50.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                ),
                 width: ScreenUtil().setWidth(492),
                 height: ScreenUtil().setWidth(600),
               ),
@@ -1062,6 +1078,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               fit: BoxFit.fitWidth,
               width: ScreenUtil().setWidth(1029),
               height: ScreenUtil().setWidth(414),
+              placeholder: (context, url) => Center(
+                child: Loading(
+                  indicator: BallSpinFadeLoaderIndicator(),
+                  size: 50.0,
+                  color: GlobalConfig.colorPrimary,
+                ),
+              ),
             ),
           ),
         ),

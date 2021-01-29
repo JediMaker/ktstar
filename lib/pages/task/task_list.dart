@@ -1082,7 +1082,8 @@ class _TaskListPageState extends State<TaskListPage>
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              NavigatorUtils.navigatorRouter(context, MicroShareHolderEquityPage());
+              NavigatorUtils.navigatorRouter(
+                  context, MicroShareHolderEquityPage());
             },
             child: Container(
               margin: EdgeInsets.only(left: 16, right: 16, top: 10),
@@ -1778,6 +1779,7 @@ class _TaskListPageState extends State<TaskListPage>
                   ),
                 ),
                 Visibility(
+                  visible: false,
                   child: new Container(
                     margin: const EdgeInsets.only(top: 4.0),
                     child: new Text(
@@ -2009,7 +2011,7 @@ class _TaskListPageState extends State<TaskListPage>
                     type = item.type;
                     appId = item.appId;
                     path =
-                    !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+                        !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
                     subtitle = item.subtitle;
                     params = item.params;
                     imgPath = item.imgPath;
@@ -2051,8 +2053,7 @@ class _TaskListPageState extends State<TaskListPage>
                               PddGoodsListPage(
                                 showAppBar: true,
                                 type: pddType,
-                                title:
-                                CommonUtils.isEmpty(name) ? "精选" : name,
+                                title: CommonUtils.isEmpty(name) ? "精选" : name,
                                 categoryId: catId,
                               ));
                           return;
@@ -2112,7 +2113,8 @@ class _TaskListPageState extends State<TaskListPage>
                           }
                         }
                         if (path.contains("yangkeduo")) {
-                          var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                          var pddPath = path.replaceAll(
+                              "https://mobile.yangkeduo.com/",
                               "pinduoduo://com.xunmeng.pinduoduo/");
                           if (await canLaunch(pddPath)) {
                             await launch(pddPath);

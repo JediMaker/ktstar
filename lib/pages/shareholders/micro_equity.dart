@@ -257,18 +257,15 @@ class _MicroShareHolderEquityPageState
         btnTxt = _shareholderType != "1"
             ? '消费$novitiatePrice元/立即开通'
             : '消费$novitiatePrice元/立即续费';
-        _dividendRatio = "";
         break;
       case 1:
         btnTxt =
             _shareholderType != "3" ? '年费$vipPrice/立即开通' : '年费$vipPrice元/立即开通';
-        _dividendRatio = "";
         break;
       case 2:
         btnTxt = _shareholderType != "4"
             ? '年费$advancedPrice元/立即开通'
             : '年费$advancedPrice元/立即开通';
-        _dividendRatio = "";
         break;
     }
     //限时优惠图标
