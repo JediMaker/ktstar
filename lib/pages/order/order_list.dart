@@ -53,7 +53,7 @@ class _OrderListPageState extends State<OrderListPage>
       for (var index = 0; index < orderType.length; index++) {
         var classify = orderType[index];
         tabs.add(Container(
-          height: ScreenUtil().setHeight(60),
+          height: ScreenUtil().setWidth(80),
           margin: EdgeInsets.only(bottom: 4),
           child: Tab(
             child: Text(
@@ -112,7 +112,7 @@ class _OrderListPageState extends State<OrderListPage>
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
-            ScreenUtil().setHeight(60),
+            ScreenUtil().setWidth(80),
           ),
           child: Container(
             alignment: AlignmentDirectional.centerStart,

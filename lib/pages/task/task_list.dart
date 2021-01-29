@@ -510,7 +510,7 @@ class _TaskListPageState extends State<TaskListPage>
                 NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
               },
               child: Container(
-                height: ScreenUtil().setHeight(100),
+                height: ScreenUtil().setWidth(100),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(

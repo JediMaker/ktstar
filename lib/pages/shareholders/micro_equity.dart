@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -24,7 +25,8 @@ import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
 class MicroShareHolderEquityPage extends StatefulWidget {
-  MicroShareHolderEquityPage({Key key, this.shareholderType = 1}) : super(key: key);
+  MicroShareHolderEquityPage({Key key, this.shareholderType = 1})
+      : super(key: key);
   final String title = "微股东权益";
 
   ///股东类型
@@ -32,10 +34,12 @@ class MicroShareHolderEquityPage extends StatefulWidget {
   int shareholderType;
 
   @override
-  _MicroShareHolderEquityPageState createState() => _MicroShareHolderEquityPageState();
+  _MicroShareHolderEquityPageState createState() =>
+      _MicroShareHolderEquityPageState();
 }
 
-class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage> {
+class _MicroShareHolderEquityPageState
+    extends State<MicroShareHolderEquityPage> {
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff666666);
   Color _layoutSelectedColor = Colors.white;
@@ -274,6 +278,9 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
     ///小喇叭图标
     var lbIcon =
         'https://alipic.lanhuapp.com/xd92657a69-39df-48d4-bb44-ef8edacccde3';
+    if (Platform.isIOS && GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+      btnTxt = 'ios暂未开通';
+    }
     return Container(
       margin: EdgeInsets.only(
         top: ScreenUtil().setWidth(53),
@@ -368,8 +375,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                   Flexible(
                       child: GestureDetector(
                     onTap: () async {
-                      print("$_shareholderType");
-                      if (_shareholderType == "2") {
+                      if (_shareholderType == "2" && _currentIndex == 0) {
                         var result =
                             await HttpManage.applyToBecomeAMicroShareholder();
                         if (result.status) {
@@ -1317,6 +1323,10 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
   }
 
   _showSelectPayWayBottomSheet() {
+    if (Platform.isIOS && GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+      CommonUtils.showIosPayDialog();
+      return;
+    }
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,

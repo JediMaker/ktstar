@@ -9,6 +9,7 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
+import 'package:star/pages/task/mine_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/utils.dart';
@@ -111,7 +112,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
           ),
           activeIcon: CachedNetworkImage(
             imageUrl:
-            'https://alipic.lanhuapp.com/xd541f75f2-6b1d-41c3-b79c-c667abb67fa3',
+                'https://alipic.lanhuapp.com/xd541f75f2-6b1d-41c3-b79c-c667abb67fa3',
             width: ScreenUtil().setWidth(77),
             height: ScreenUtil().setWidth(77),
           ),
@@ -145,7 +146,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
 //      new HomePage(tabIndex: _homeTabIndex),
       TaskListPage(),
       ClassifyListPage(),
-      TaskMinePage(),
+      MinePagePage(),
       /*   new NoticePage(),
       new MyPage()*/
     ];

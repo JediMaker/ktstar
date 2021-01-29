@@ -225,7 +225,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
           ),
           Expanded(
             child: Container(
-              height: ScreenUtil().setHeight(100),
+              height: ScreenUtil().setWidth(100),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -330,7 +330,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
       for (var index = 0; index < channelType.length; index++) {
         var classify = channelType[index];
         tabs.add(Container(
-          height: ScreenUtil().setHeight(60),
+          height: ScreenUtil().setWidth(80),
           margin: EdgeInsets.only(bottom: 4),
           child: Tab(
             child: Text(
@@ -534,6 +534,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                 child: Text(
                   "取消",
                   style: TextStyle(
+                    color: Color(0xff222222),
                     fontSize: ScreenUtil().setSp(42),
                   ),
                 ),
@@ -552,6 +553,8 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                   ///请求拼多多授权
                   ///getPddAuthorization
                   ///
+                  ///
+                  Navigator.pop(context);
                   var result = await HttpManage.getPddAuthorization();
                   if (result.status) {
                     ///跳转拼多多app授权的url
@@ -561,7 +564,6 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                     var url = '';
                     pddUrl = result.data['schema_url'];
                     url = result.data['url'];
-
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
@@ -569,7 +571,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                         return;
                       }
                       NavigatorUtils.navigatorRouter(
-                          context,
+                          this.context,
                           WebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
@@ -582,7 +584,6 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                   } else {
                     CommonUtils.showToast(result.errMsg);
                   }
-                  Navigator.pop(context);
                 },
               ),
             ],
@@ -1240,7 +1241,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
           elevation: 0,
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(
-              ScreenUtil().setHeight(80),
+              ScreenUtil().setWidth(80),
             ),
             child: Container(
               alignment: AlignmentDirectional.centerStart,
