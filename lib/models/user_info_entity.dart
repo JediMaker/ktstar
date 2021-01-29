@@ -1,5 +1,6 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/models/user_holder_profit_entity.dart';
 
 class UserInfoEntity with JsonConvert<UserInfoEntity> {
   bool status;
@@ -45,4 +46,6 @@ class UserInfoData with JsonConvert<UserInfoData> {
   String partnerTime ;
   @JSONField(name: "partner_expire_time")
   String partnerExpireTime ;
+  @JSONField(name: "partner_bonus")
+  UserHolderProfitPartnerBonus partnerBonus;
 }
