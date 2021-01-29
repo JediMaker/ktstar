@@ -30,28 +30,20 @@ class _MinePagePageState extends State<MinePagePage> {
   String _shareholderType = '';
 
   _initData() async {
-    userInfoData = GlobalConfig.getUserInfo();
-    if (CommonUtils.isEmpty(userInfoData)) {
-      var result = await HttpManage.getUserInfo();
-      if (result.status) {
-        setState(() {
-          _shareholderType = result.data.isPartner;
-        });
-      } else {
-        if (CommonUtils.isEmpty(userInfoData.isPartner)) {
-          var result = await HttpManage.getUserInfo();
-          if (result.status) {
-            setState(() {
-              _shareholderType = result.data.isPartner;
-            });
-          } else {}
-        }
-      }
+    var result = await HttpManage.getUserInfo();
+    if (result.status) {
+      setState(() {
+        print("_shareholderType=${result.data.isPartner}");
+        _shareholderType = result.data.isPartner;
+      });
     } else {
-      if (!CommonUtils.isEmpty(userInfoData.isPartner)) {
-        setState(() {
-          _shareholderType = userInfoData.isPartner;
-        });
+      if (CommonUtils.isEmpty(userInfoData.isPartner)) {
+        var result = await HttpManage.getUserInfo();
+        if (result.status) {
+          setState(() {
+            _shareholderType = result.data.isPartner;
+          });
+        } else {}
       }
     }
     print("_shareholderType=$_shareholderType");
@@ -82,13 +74,9 @@ class _MinePagePageState extends State<MinePagePage> {
       rootView = MicroMinePage(
         title: title,
       );
-
-
-
-
     }
     print("_shareholderType=$_shareholderType");
-    print("title=$title");
+    print("rootView=$rootView");
     return rootView;
   }
 }
