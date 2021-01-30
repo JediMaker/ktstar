@@ -16,6 +16,7 @@ import 'package:star/models/goods_info_entity.dart';
 import 'package:star/models/goods_spec_info_entity.dart';
 import 'package:star/models/pdd_goods_info_entity.dart';
 import 'package:star/pages/goods/ensure_order.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/goods_select_choice.dart';
@@ -69,6 +70,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
     '急速退款',
     '退货运费险',
   ];
+  var _loginStatus = '2';
 
   //var _couponsAmount = '';
 
@@ -106,6 +108,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
             _serviceScore = pddDetailData.servTxt;
             _logisticsScore = pddDetailData.lgstTxt;
             _shopName = pddDetailData.mallName;
+            _loginStatus = pddDetailData.loginStatus;
             try {
               _couponsAmount = pddDetailData.coupons.couponDiscount.toString();
             } catch (e) {}
@@ -928,7 +931,15 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                               if (CommonUtils.isEmpty(_mobileUri)) {
                                 return;
                               }
-                              await launchPdd();
+                              if (_loginStatus == "0") {
+                                CommonUtils.showToast("尚未登陆，请登录！");
+                                NavigatorUtils.navigatorRouterAndRemoveUntil(
+                                    context, LoginPage());
+                                return;
+                              }
+                              if (_loginStatus == "1") {
+                                await launchPdd();
+                              }
                             },
                             child: Container(
                               height: ScreenUtil().setHeight(155),

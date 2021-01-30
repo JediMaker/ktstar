@@ -17,6 +17,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/pages/goods/ensure_order.dart';
 import 'package:star/pages/goods/free_queue.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/goods_select_choice.dart';
@@ -969,10 +970,16 @@ class _DetailWindowState extends State<DetailWindow>
                       opacity: canSubmit ? 1 : 0.4,
                       child: GestureDetector(
                         onTap: () async {
-                          if (canSubmit) {
-                            createBuyOrder();
-                            if (!mounted) return;
-                            Navigator.of(context).pop();
+                          if (GlobalConfig.hasLogin) {
+                            if (canSubmit) {
+                              createBuyOrder();
+                              if (!mounted) return;
+                              Navigator.of(context).pop();
+                            }
+                          } else {
+                            CommonUtils.showToast("尚未登陆，请登录！");
+                            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                                context, LoginPage());
                           }
                         },
                         child: Container(
