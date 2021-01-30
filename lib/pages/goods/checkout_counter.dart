@@ -268,6 +268,17 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                                 if (result.status) {
                                   _payInfo = result.data.payInfo;
                                   _payNo = result.data.payNo;
+                                  if (result.data.finish) {
+                                    NavigatorUtils
+                                        .navigatorRouterAndRemoveUntil(
+                                            context,
+                                            PayResultPage(
+                                              payNo: _payNo,
+                                              type: 1,
+                                              title: '支付成功',
+                                            ));
+                                    return;
+                                  }
                                   _checkPayStatus();
                                 } else {
                                   CommonUtils.showToast(result.errMsg);
@@ -576,6 +587,16 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
       EasyLoading.dismiss();
       if (result.status) {
         _payNo = result.data.payNo;
+        if (result.data.finish) {
+          NavigatorUtils.navigatorRouterAndRemoveUntil(
+              context,
+              PayResultPage(
+                payNo: _payNo,
+                type: 1,
+                title: '支付成功',
+              ));
+          return;
+        }
         callWxPay(result.data);
       } else {
         CommonUtils.showToast(result.errMsg);
@@ -594,6 +615,16 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
       if (result.status) {
         _payInfo = result.data.payInfo;
         _payNo = result.data.payNo;
+        if (result.data.finish) {
+          NavigatorUtils.navigatorRouterAndRemoveUntil(
+              context,
+              PayResultPage(
+                payNo: _payNo,
+                type: 1,
+                title: '支付成功',
+              ));
+          return;
+        }
         callAlipay();
       } else {
         CommonUtils.showToast(result.errMsg);

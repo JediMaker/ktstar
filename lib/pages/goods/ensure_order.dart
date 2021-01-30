@@ -36,6 +36,12 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
 
   List<OrderDetailDataGoodsList> goodsList;
 
+  var isCoupon = '2';
+
+  var _leftAmount = "0";
+  var _availableAmount = "0";
+  var _totalAmount = "0";
+
   /*OrderCheckoutEntity entity;
   OrderCheckoutDataAddress selectedAddress;*/
 
@@ -55,6 +61,12 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
           addressDetail = entityResult.data.address;
           iphone = entityResult.data.mobile;
           name = entityResult.data.consignee;
+          isCoupon = entityResult.data.isCoupon;
+          _totalAmount = entityResult.data.usableDeduct;
+          _availableAmount = entityResult.data.deductPrice;
+          _leftAmount =
+              (double.parse(_totalAmount) - double.parse(_availableAmount))
+                  .toStringAsFixed(2);
           if (!onlyChangeAddress) {
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
@@ -291,7 +303,8 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                                         color: Color(0xff666666),
                                       ),
                                     ),
-                                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(18)),
+                                    margin: EdgeInsets.only(
+                                        top: ScreenUtil().setHeight(18)),
                                   ),
                                   /* Wrap(
                                     children: product.option.map((op) {
@@ -375,21 +388,77 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                       margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
                       color: Colors.white,
                       padding: EdgeInsets.all(16),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "商品总额",
-                            style: TextStyle(
-                              color: Color(0xff999999),
-                              fontSize: ScreenUtil().setSp(36),
-                            ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                "商品总额",
+                                style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: ScreenUtil().setSp(36),
+                                ),
+                              ),
+                              Expanded(child: Text("")),
+                              Text(
+                                "￥$totalPrice",
+                                style: TextStyle(
+                                  color: Color(0xff222222),
+                                  fontSize: ScreenUtil().setSp(36),
+                                ),
+                              ),
+                            ],
                           ),
-                          Expanded(child: Text("")),
-                          Text(
-                            "￥$totalPrice",
-                            style: TextStyle(
-                              color: Color(0xff222222),
-                              fontSize: ScreenUtil().setSp(36),
+                          Visibility(
+                            visible: isCoupon == "1",
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: ScreenUtil().setWidth(30),
+                                    ),
+                                    color: Color(0xffd1d1d1),
+                                    height: ScreenUtil().setWidth(1),
+                                    width: ScreenUtil().setWidth(1029),
+                                  ),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "可用红包抵用$_availableAmount元",
+                                          style: TextStyle(
+                                            color: Color(0xff666666),
+                                            fontSize: ScreenUtil().setSp(36),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            top: ScreenUtil().setWidth(20),
+                                          ),
+                                          child: Text(
+                                            "抵用后可用红包金额$_leftAmount元",
+                                            style: TextStyle(
+                                              color: Color(0xffb9b9b9),
+                                              fontSize: ScreenUtil().setSp(28),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Expanded(child: Text("")),
+                                    Text(
+                                      "-￥$_availableAmount",
+                                      style: TextStyle(
+                                        color: Color(0xffCE0100),
+                                        fontSize: ScreenUtil().setSp(36),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -435,8 +504,8 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                     GestureDetector(
                       onTap: () async {
                         if (!CommonUtils.isEmpty(iphone)) {
-                          var result =
-                              await HttpManage.orderSubmit(widget.orderId);
+                          var result = await HttpManage.orderSubmit(
+                              widget.orderId, isCoupon);
                           if (result.status) {
                             Navigator.of(context).pop();
                             //跳转到结算台
