@@ -1764,8 +1764,8 @@ class _TaskListPageState extends State<TaskListPage>
                     backgroundColor: Colors.transparent,
                     child: CachedNetworkImage(
                       imageUrl: "$icon",
-                      width: ScreenUtil().setWidth(136),
-                      height: ScreenUtil().setWidth(136),
+                      width: ScreenUtil().setWidth(142),
+                      height: ScreenUtil().setWidth(142),
                     ),
                   ),
                 ),
@@ -1773,7 +1773,7 @@ class _TaskListPageState extends State<TaskListPage>
                   child: new Text(
                     "$name",
                     style: new TextStyle(
-                      fontSize: ScreenUtil().setSp(42),
+                      fontSize: ScreenUtil().setSp(38),
                       color: _itemsTextColor,
                     ),
                   ),
