@@ -886,7 +886,7 @@ class HttpManage {
   ///
   /// fasle 获取微股东收益列表
   ///
-  static Future<ShareholderIncomeListEntity> getHolderProfitList(page, pageSize,
+  static Future<IncomeListEntity> getHolderProfitList(page, pageSize,
       {profiType = 7}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -896,12 +896,12 @@ class HttpManage {
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
-      APi.USER_HOLDER_INCOME,
+      APi.USER_PROFIT_LIST,
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ShareholderIncomeListEntity();
-    shareholderIncomeListEntityFromJson(entity, extractData);
+    var entity = IncomeListEntity();
+    incomeListEntityFromJson(entity, extractData);
     return entity;
   }
 

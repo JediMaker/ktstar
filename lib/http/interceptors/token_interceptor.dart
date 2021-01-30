@@ -56,29 +56,35 @@ class TokenInterceptors extends InterceptorsWrapper {
           return response;
         }
       }
-      if (entity.errCode.toString() == "303") {
-        CommonUtils.showToast("token信息设置失败，，请登录！");
+      if (entity.errCode.toString() == "303" ||
+          entity.errCode.toString() == "306") {
+        CommonUtils.showToast("未获取到登录信息，，请登录！");
         Future.delayed(Duration(seconds: 1)).then((onValue) {
           var context = GlobalConfig.navigatorKey.currentState.overlay.context;
-          NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+          NavigatorUtils.navigatorRouter(context, LoginPage());
+          return;
         });
       }
       if (entity.errCode.toString() == "304") {
         if (GlobalConfig.isLogin()) {
           GlobalConfig.prefs.remove("hasLogin");
+          GlobalConfig.prefs.remove("token");
+          GlobalConfig.prefs.remove("loginData");
           GlobalConfig.saveLoginStatus(false);
           CommonUtils.showToast("登陆状态已过期，请重新登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) {
             var context =
                 GlobalConfig.navigatorKey.currentState.overlay.context;
-            NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+            NavigatorUtils.navigatorRouter(context, LoginPage());
+            return;
           });
         } else {
-          CommonUtils.showToast("token信息设置失败，，请登录！");
+          CommonUtils.showToast("未获取到登录信息，，请登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) {
             var context =
                 GlobalConfig.navigatorKey.currentState.overlay.context;
-            NavigatorUtils.navigatorRouterAndRemoveUntil(context, LoginPage());
+            NavigatorUtils.navigatorRouter(context, LoginPage());
+            return;
           });
         }
         /*Future.delayed(Duration(seconds: 0)).then((onValue) {

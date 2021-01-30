@@ -40,8 +40,9 @@ import '../../global_config.dart';
 
 ///微股东个人中心页面
 class MicroMinePage extends StatefulWidget {
-  MicroMinePage({Key key, this.title}) : super(key: key);
+  MicroMinePage({Key key, this.title, this.userInfoData}) : super(key: key);
   String title = "";
+  UserInfoData userInfoData;
 
   @override
   _MicroMinePageState createState() => _MicroMinePageState();
@@ -60,6 +61,7 @@ class _MicroMinePageState extends State<MicroMinePage>
   var _phoneHintText = '请输入您的手机号';
   var _cardBgImageName = '';
   var _isWithdrawal = '';
+  var _isFirst = true;
   var _pwdStatus = '';
   TextEditingController _dialogPhoneNumberController;
   TextEditingController _dialogNickNameController;
@@ -99,6 +101,7 @@ class _MicroMinePageState extends State<MicroMinePage>
   var _todayShouldBeScoredRed = '';
 
   var _todayActualDividend = '';
+  UserInfoData _data;
 
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
@@ -162,8 +165,54 @@ class _MicroMinePageState extends State<MicroMinePage>
     _dialogPhoneNumberController = new TextEditingController();
     _dialogNickNameController = new TextEditingController();
     _dialogWeChatNoController = new TextEditingController();
-    _initUserData();
     initWeChatResHandler();
+    try {
+      _data = widget.userInfoData;
+      headUrl = _data.avatar;
+      nickName = _data.username;
+      userType = _data.type;
+      _phoneNumber = _data.tel;
+      _totalAssetsAmount = _data.totalPrice;
+      _cashWithdrawal = _data.txPrice;
+      _availableCashAmount = _data.nowPrice;
+      isWeChatBinded = _data.bindThird;
+      _isWithdrawal = _data.isWithdrawal;
+      registerTime = _data.regDate;
+      _weChatNo = _data.wxNo;
+      _code = _data.code;
+      _dialogWeChatNo = _data.wxNo;
+      _pwdStatus = _data.pwdStatus;
+      _payPwdStatus = _data.payPwdStatus;
+      isWeChatNoBinded = !CommonUtils.isEmpty(_data.wxNo) ? 1 : 0;
+      isItAMicroShareholder = _data.isPartner == "1" ? 1 : 0;
+      switch (_data.type) {
+        case "0":
+          isDiamonVip = false;
+          _cardBgImageName = 'task_mine_card_bg.png';
+          break;
+        case "1":
+          isDiamonVip = false;
+          _headBgColor = Color(0xffcc9976);
+          _cardBgImageName = 'task_mine_card_bg_expirence.png';
+          break;
+        case "2":
+          isDiamonVip = true;
+          _cardBgImageName = 'task_mine_card_bg_vip.png';
+          break;
+        case "3":
+//              #F8D9BA
+          isDiamonVip = true;
+          _cardTextColor = Color(0xffF8D9BA);
+          _cardBgImageName = 'task_mine_card_bg_proxy.png';
+          break;
+        case "4":
+//              #F8D9BA
+          isDiamonVip = true;
+          _cardTextColor = Color(0xffF8D9BA);
+          _cardBgImageName = 'task_mine_card_bg_proxy.png';
+          break;
+      }
+    } catch (e) {}
     super.initState();
   }
 
@@ -213,12 +262,12 @@ class _MicroMinePageState extends State<MicroMinePage>
     ///    组件创建完成的回调通知方法
     ///解决首次数据加载失败问题
     ///
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(headUrl)) {
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
+     */ /* if (!CommonUtils.isEmpty(headUrl)) {
       } else {
         _initUserData();
-      }
-    });
+      }*/ /*
+    });*/
     return Scaffold(
         appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
@@ -897,6 +946,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                           ),
                           onPressed: () {
                             GlobalConfig.prefs.remove("hasLogin");
+                            GlobalConfig.prefs.remove("token");
+                            GlobalConfig.prefs.remove("loginData");
                             GlobalConfig.saveLoginStatus(false);
                             NavigatorUtils.navigatorRouterAndRemoveUntil(
                                 context, LoginPage());
@@ -1501,9 +1552,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: GestureDetector(
                           onTap: () {
                             NavigatorUtils.navigatorRouter(
-                                context,
-                                NewIncomeListPage(
-                                ));
+                                context, NewIncomeListPage());
                           },
                           child: Container(
                             padding: EdgeInsets.only(
@@ -1637,9 +1686,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: GestureDetector(
                           onTap: () {
                             NavigatorUtils.navigatorRouter(
-                                context,
-                                NewIncomeListPage(
-                                ));
+                                context, NewIncomeListPage());
                           },
                           child: Container(
                             padding: EdgeInsets.only(

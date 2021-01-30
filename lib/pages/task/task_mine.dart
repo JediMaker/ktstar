@@ -38,8 +38,9 @@ import 'income_list.dart';
 import 'invitation_poster.dart';
 
 class TaskMinePage extends StatefulWidget {
-  TaskMinePage({Key key}) : super(key: key);
+  TaskMinePage({Key key, this.userInfoData}) : super(key: key);
   final String title = "我的";
+  UserInfoData userInfoData;
 
   @override
   _TaskMinePageState createState() => _TaskMinePageState();
@@ -85,6 +86,7 @@ class _TaskMinePageState extends State<TaskMinePage>
   UserInfoEntity entity;
   Color _cardTextColor = Colors.white;
   Color _headBgColor = Color(0xffF93736);
+  UserInfoData _data;
 
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
@@ -145,8 +147,55 @@ class _TaskMinePageState extends State<TaskMinePage>
     _dialogPhoneNumberController = new TextEditingController();
     _dialogNickNameController = new TextEditingController();
     _dialogWeChatNoController = new TextEditingController();
-    _initUserData();
     initWeChatResHandler();
+    try {
+      _data = widget.userInfoData;
+      headUrl = _data.avatar;
+      nickName = _data.username;
+      userType = _data.type;
+      _phoneNumber = _data.tel;
+      _totalAssetsAmount = _data.totalPrice;
+      _cashWithdrawal = _data.txPrice;
+      _availableCashAmount = _data.nowPrice;
+      isWeChatBinded = _data.bindThird;
+      _isWithdrawal = _data.isWithdrawal;
+      registerTime = _data.regDate;
+      _weChatNo = _data.wxNo;
+      _code = _data.code;
+      _dialogWeChatNo = _data.wxNo;
+      _pwdStatus = _data.pwdStatus;
+      _payPwdStatus = _data.payPwdStatus;
+      isWeChatNoBinded = !CommonUtils.isEmpty(_data.wxNo) ? 1 : 0;
+      isItAMicroShareholder = _data.isPartner == "1" ? 1 : 0;
+      switch (_data.type) {
+        case "0":
+          isDiamonVip = false;
+          _cardBgImageName = 'task_mine_card_bg.png';
+          break;
+        case "1":
+          isDiamonVip = false;
+          _headBgColor = Color(0xffcc9976);
+          _cardBgImageName = 'task_mine_card_bg_expirence.png';
+          break;
+        case "2":
+          isDiamonVip = true;
+          _cardBgImageName = 'task_mine_card_bg_vip.png';
+          break;
+        case "3":
+//              #F8D9BA
+          isDiamonVip = true;
+          _cardTextColor = Color(0xffF8D9BA);
+          _cardBgImageName = 'task_mine_card_bg_proxy.png';
+          break;
+        case "4":
+//              #F8D9BA
+          isDiamonVip = true;
+          _cardTextColor = Color(0xffF8D9BA);
+          _cardBgImageName = 'task_mine_card_bg_proxy.png';
+          break;
+      }
+    } catch (e) {}
+
     super.initState();
   }
 
@@ -196,12 +245,12 @@ class _TaskMinePageState extends State<TaskMinePage>
     ///    组件创建完成的回调通知方法
     ///解决首次数据加载失败问题
     ///
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    /* WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!CommonUtils.isEmpty(headUrl)) {
       } else {
         _initUserData();
       }
-    });
+    });*/
     return Scaffold(
         appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
@@ -967,6 +1016,8 @@ class _TaskMinePageState extends State<TaskMinePage>
                           ),
                           onPressed: () {
                             GlobalConfig.prefs.remove("hasLogin");
+                            GlobalConfig.prefs.remove("token");
+                            GlobalConfig.prefs.remove("loginData");
                             GlobalConfig.saveLoginStatus(false);
                             NavigatorUtils.navigatorRouterAndRemoveUntil(
                                 context, LoginPage());
@@ -1473,11 +1524,10 @@ class _TaskMinePageState extends State<TaskMinePage>
                       child: GestureDetector(
                         onTap: () {
                           NavigatorUtils.navigatorRouter(
-                              context,
-                              NewIncomeListPage(
-                              ));
+                              context, NewIncomeListPage());
                         },
-                        child: Container(//
+                        child: Container(
+                          //
                           padding:
                               EdgeInsets.only(left: ScreenUtil().setWidth(60)),
                           child: Column(
@@ -1589,9 +1639,7 @@ class _TaskMinePageState extends State<TaskMinePage>
                       child: GestureDetector(
                         onTap: () {
                           NavigatorUtils.navigatorRouter(
-                              context,
-                              NewIncomeListPage(
-                              ));
+                              context, NewIncomeListPage());
                         },
                         child: Container(
                           padding:

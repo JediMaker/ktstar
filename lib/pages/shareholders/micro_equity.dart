@@ -297,213 +297,250 @@ class _MicroShareHolderEquityPageState
       btnTxt = 'ios暂未开通';
     }
 
-    return Container(
-      margin: EdgeInsets.only(
-        top: ScreenUtil().setWidth(53),
-      ),
-      child: Stack(
-        children: <Widget>[
-          ClipPath(
-            // 只裁切底部的方法
-            clipper: BottomClipper(),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color(0xff25272E),
-                  Color(0xff25272E),
-                ]),
-              ),
-              height: ScreenUtil().setHeight(550),
-            ),
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            top: ScreenUtil().setWidth(53),
           ),
-          Container(
-            width: ScreenUtil().setWidth(1065),
-            height: ScreenUtil().setWidth(378),
-            margin: EdgeInsets.only(
-              top: ScreenUtil().setHeight(274),
-              left: ScreenUtil().setWidth(30),
-              right: ScreenUtil().setWidth(30),
-            ),
-            decoration: BoxDecoration(
-              color: Color(0xff313235),
-              border: Border.all(
-                color: Color(0xffFFDC9C),
-                width: ScreenUtil().setWidth(2),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: ScreenUtil().setWidth(1065),
+                height: ScreenUtil().setWidth(378),
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(274),
+                  left: ScreenUtil().setWidth(30),
+                  right: ScreenUtil().setWidth(30),
+                ),
+                decoration: BoxDecoration(
+                  color: Color(0xff313235),
+                  border: Border.all(
+                    color: Color(0xffFFDC9C),
+                    width: ScreenUtil().setWidth(2),
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    ScreenUtil().setWidth(30),
+                  ),
+                ),
               ),
-              borderRadius: BorderRadius.circular(
-                ScreenUtil().setWidth(30),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              height: ScreenUtil().setHeight(573),
-              width: ScreenUtil().setWidth(1001),
-              margin: EdgeInsets.only(
-                top: ScreenUtil().setHeight(10),
-                left: ScreenUtil().setWidth(38),
-                right: ScreenUtil().setWidth(38),
-              ),
-              child: Swiper(
-                itemCount: 3,
-                autoplay: false,
-                loop: false,
+              Center(
+                child: Container(
+                  height: ScreenUtil().setHeight(573),
+                  width: ScreenUtil().setWidth(1001),
+                  margin: EdgeInsets.only(
+                    top: ScreenUtil().setHeight(10),
+                    left: ScreenUtil().setWidth(38),
+                    right: ScreenUtil().setWidth(38),
+                  ),
+                  child: Swiper(
+                    itemCount: 3,
+                    autoplay: false,
+                    loop: false,
 //                              viewportFraction: 0.86,
 //                              scale: 0.96,
-                index: _currentIndex,
-                control: SwiperControl(
-                  color: Color(0xE82C2D30),
-                ),
-                /*  pagination: new SwiperPagination(
-                    margin: new EdgeInsets.all(5.0)
-                ),*/
-                onIndexChanged: (index) {
-                  if (mounted) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  }
-                },
-                itemBuilder: (context, index) {
-                  return buildShareHolderCard(index);
-                },
-              ),
-            ),
-          ),
-          ClipPath(
-//            clipper: TopPartClipper(),
-            child: Container(
-              width: ScreenUtil().setWidth(1065),
-              height: ScreenUtil().setWidth(316),
-              margin: EdgeInsets.only(
-                top: ScreenUtil().setHeight(346),
-                left: ScreenUtil().setWidth(30),
-                right: ScreenUtil().setWidth(30),
-              ),
-              decoration: BoxDecoration(
-//                color: Colors.green,
-                color: Color(0xff313235),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(
-                    ScreenUtil().setWidth(30),
-                  ),
-                  bottomRight: Radius.circular(
-                    ScreenUtil().setWidth(30),
-                  ),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Flexible(
-                      child: GestureDetector(
-                    onTap: () async {
-                      if (_shareholderType == "2" && _currentIndex == 0) {
-                        var result =
-                            await HttpManage.applyToBecomeAMicroShareholder();
-                        if (result.status) {
-                          CommonUtils.showToast("微股东申请开通成功！");
-                        } else {
-                          showOpenMicroShareholderDialog();
-                        }
-                        return;
-                      } else {
-                        if (_opacity == 1) {
-                          _showSelectPayWayBottomSheet();
-                        }
+                    index: _currentIndex,
+                    control: SwiperControl(
+                      color: Color(0xE82C2D30),
+                    ),
+                    /*  pagination: new SwiperPagination(
+                        margin: new EdgeInsets.all(5.0)
+                    ),*/
+                    onIndexChanged: (index) {
+                      if (mounted) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
                       }
                     },
-                    child: Container(
-                      child: Center(
-                        child: Stack(
-                          children: [
-                            Opacity(
-                              opacity: _opacity,
-                              child: Container(
-                                width: ScreenUtil().setWidth(739),
-                                height: ScreenUtil().setWidth(100),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    Color(0xffF3D6AA),
-                                    Color(0xffEDC182),
-                                  ]),
-                                  borderRadius: BorderRadius.circular(
-                                    ScreenUtil().setWidth(50),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "$btnTxt",
-                                    style: TextStyle(
-                                      color: Color(0xff313235),
-                                      fontSize: ScreenUtil().setSp(33),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
-                              visible: _showBtnIcon,
-                              child: Container(
-                                width: ScreenUtil().setWidth(739),
-                                height: ScreenUtil().setWidth(100),
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: Image.network(
-                                        "$xsIcon",
-                                        fit: BoxFit.fill,
-                                      ).image),
-                                  borderRadius: BorderRadius.circular(
-                                    ScreenUtil().setWidth(50),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    itemBuilder: (context, index) {
+                      return buildShareHolderCard(index);
+                    },
+                  ),
+                ),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(1065),
+                height: ScreenUtil().setWidth(316),
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(346),
+                  left: ScreenUtil().setWidth(30),
+                  right: ScreenUtil().setWidth(30),
+                ),
+                decoration: BoxDecoration(
+//                color: Colors.green,
+                  color: Color(0xff313235),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                      ScreenUtil().setWidth(30),
                     ),
-                  )),
-                  Container(
-                    width: ScreenUtil().setWidth(1065),
-                    height: ScreenUtil().setWidth(88),
-                    padding: EdgeInsets.only(left: 16),
-                    decoration: BoxDecoration(
-                      color: Color(0xff2C2D30),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(
-                          ScreenUtil().setWidth(30),
-                        ),
-                        bottomRight: Radius.circular(
-                          ScreenUtil().setWidth(30),
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl: "$lbIcon",
-                          width: ScreenUtil().setWidth(33),
-                          height: ScreenUtil().setWidth(33),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 4),
-                          child: Text(
-                            "开通可享受每日股东分红，分红比例为股东正常分红比例的$_dividendRatio",
-                            style: TextStyle(
-                                color: Color(0xff8F8274),
-                                fontSize: ScreenUtil().setSp(32)),
-                          ),
-                        ),
-                      ],
+                    bottomRight: Radius.circular(
+                      ScreenUtil().setWidth(30),
                     ),
                   ),
-                ],
+                  /*    image: DecorationImage(
+                      image: Image.network(
+                    "https://alipic.lanhuapp.com/xd52654c11-0f1f-43da-8f0d-43e6ffeddc89",
+                    fit: BoxFit.fill,
+                    width: ScreenUtil().setWidth(30000),
+                    height: ScreenUtil().setWidth(397),
+                  ).image),*/
+                ),
+                child: Column(
+                  children: [
+                    Flexible(
+                        child: GestureDetector(
+                      onTap: () async {
+                        if (_shareholderType == "2" && _currentIndex == 0) {
+                          var result =
+                              await HttpManage.applyToBecomeAMicroShareholder();
+                          if (result.status) {
+                            CommonUtils.showToast("微股东申请开通成功！");
+                          } else {
+                            showOpenMicroShareholderDialog();
+                          }
+                          return;
+                        } else {
+                          if (_opacity == 1) {
+                            _showSelectPayWayBottomSheet();
+                          }
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          /* CachedNetworkImage(
+                            imageUrl:
+                                'https://alipic.lanhuapp.com/xd52654c11-0f1f-43da-8f0d-43e6ffeddc89',
+                            width: ScreenUtil().setWidth(1255),
+                            height: ScreenUtil().setWidth(397),
+                            fit: BoxFit.fill,
+                          ),*/
+                          Container(
+                            child: Center(
+                              child: Stack(
+                                children: [
+                                  Opacity(
+                                    opacity: _opacity,
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(739),
+                                      height: ScreenUtil().setWidth(100),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(colors: [
+                                          Color(0xffF3D6AA),
+                                          Color(0xffEDC182),
+                                        ]),
+                                        borderRadius: BorderRadius.circular(
+                                          ScreenUtil().setWidth(50),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "$btnTxt",
+                                          style: TextStyle(
+                                            color: Color(0xff313235),
+                                            fontSize: ScreenUtil().setSp(33),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: _showBtnIcon,
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(739),
+                                      height: ScreenUtil().setWidth(100),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: Image.network(
+                                              "$xsIcon",
+                                              fit: BoxFit.fill,
+                                            ).image),
+                                        borderRadius: BorderRadius.circular(
+                                          ScreenUtil().setWidth(50),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: false,
+                            child: Positioned(
+//                              left: ScreenUtil().setWidth(30),
+//                              right: ScreenUtil().setWidth(30),
+                              child: ClipPath(
+                                clipper: TopPartClipper(),
+                                child: Container(
+                                  width: ScreenUtil().setWidth(1065),
+                                  height: ScreenUtil().setWidth(20),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffF5D8A9),
+                                    gradient: LinearGradient(colors: [
+                                      Color(0xffF5D8A9),
+                                      Color(0xffEEC48C),
+                                    ]),
+                                    border: Border(
+                                      top: BorderSide.none,
+                                      bottom: BorderSide.none,
+                                      left: BorderSide.none,
+                                      right: BorderSide.none,
+                                    ),
+                                  ),
+                                  margin: EdgeInsets.only(
+                                    left: ScreenUtil().setWidth(30),
+                                    right: ScreenUtil().setWidth(30),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+                    Container(
+                      width: ScreenUtil().setWidth(1065),
+                      height: ScreenUtil().setWidth(88),
+                      padding: EdgeInsets.only(left: 16),
+                      decoration: BoxDecoration(
+                        color: Color(0xff2C2D30),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(
+                            ScreenUtil().setWidth(30),
+                          ),
+                          bottomRight: Radius.circular(
+                            ScreenUtil().setWidth(30),
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: "$lbIcon",
+                            width: ScreenUtil().setWidth(33),
+                            height: ScreenUtil().setWidth(33),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 4),
+                            child: Text(
+                              "开通可享受每日股东分红，分红比例为股东正常分红比例的$_dividendRatio",
+                              style: TextStyle(
+                                  color: Color(0xff8F8274),
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -1109,15 +1146,19 @@ class _MicroShareHolderEquityPageState
 
   ///股东信息展示布局
   Widget buildShareHolderCard(index) {
-    var name = 'ID24465436';
-    var headUrl =
-        'https://alipic.lanhuapp.com/xd5ffa99dc-06a3-40db-a011-6fc1c32222a1';
+    var name = '';
+    var headUrl = '';
     var profit_day = '';
     var desc = '';
     var expireDate = '';
     var year_money = '';
     var b_year_money = '';
     var iconLinkUrl;
+    try {
+      name = userInfoData.username;
+      headUrl = userInfoData.avatar;
+      expireDate = userInfoData.partnerExpireTime;
+    } catch (e) {}
 
     ///股东身份信息描述
     var idDesc = '您还未开通见习股东';
@@ -1156,11 +1197,6 @@ class _MicroShareHolderEquityPageState
         break;
     }
 
-    try {
-      name = userInfoData.username;
-      headUrl = userInfoData.avatar;
-      expireDate = userInfoData.partnerExpireTime;
-    } catch (e) {}
     return Container(
       width: double.maxFinite,
       height: ScreenUtil().setHeight(473),

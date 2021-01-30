@@ -63,7 +63,7 @@ class _MinePagePageState extends State<MinePagePage> {
           if (mounted) {
             setState(() {
               _shareholderType = result.data.isPartner;
-             /* var title = '';
+              var title = '';
               title = _shareholderType == '1'
                   ? '见习股东'
                   : _shareholderType == '3'
@@ -75,7 +75,7 @@ class _MinePagePageState extends State<MinePagePage> {
                 rootView = MicroMinePage(
                   title: title,
                 );
-              }*/
+              }
             });
           }
         } else {}
@@ -86,6 +86,7 @@ class _MinePagePageState extends State<MinePagePage> {
   @override
   void initState() {
     super.initState();
+    userInfoData = GlobalConfig.getUserInfo();
     _initData();
   }
 
@@ -103,10 +104,13 @@ class _MinePagePageState extends State<MinePagePage> {
             ? 'VIP股东'
             : '高级股东';
     if (_shareholderType == '2') {
-      rootView = TaskMinePage();
+      rootView = TaskMinePage(
+        userInfoData: userInfoData,
+      );
     } else {
       rootView = MicroMinePage(
         title: title,
+        userInfoData: userInfoData,
       );
     }
     return rootView;

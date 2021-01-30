@@ -45,15 +45,16 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
       if (mounted) {
         setState(() {
           if (page == 1) {
-            _profitList = result.data;
+            _profitList = result.data.xList;
           } else {
             if (result == null ||
                 result.data == null ||
-                result.data.length == 0) {
+                result.data.xList == null ||
+                result.data.xList.length == 0) {
               //              _refreshController.resetLoadState();
               _refreshController.finishLoad(noMore: true);
             } else {
-              _profitList += result.data;
+              _profitList += result.data.xList;
             }
           }
           isFirstLoading = false;

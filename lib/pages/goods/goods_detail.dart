@@ -970,7 +970,7 @@ class _DetailWindowState extends State<DetailWindow>
                       opacity: canSubmit ? 1 : 0.4,
                       child: GestureDetector(
                         onTap: () async {
-                          if (GlobalConfig.hasLogin) {
+                          if (GlobalConfig.isLogin()) {
                             if (canSubmit) {
                               createBuyOrder();
                               if (!mounted) return;
@@ -978,7 +978,7 @@ class _DetailWindowState extends State<DetailWindow>
                             }
                           } else {
                             CommonUtils.showToast("尚未登陆，请登录！");
-                            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                            NavigatorUtils.navigatorRouter(
                                 context, LoginPage());
                           }
                         },
