@@ -450,14 +450,19 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "可淘星选直营",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(48),
-                                        color: Color(0xff222222),
-                                        fontWeight: FontWeight.w500,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        bottom: ScreenUtil().setWidth(32),
+                                      ),
+                                      child: Text(
+                                        "可淘星选直营",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(48),
+                                          color: Color(0xff222222),
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                     Row(

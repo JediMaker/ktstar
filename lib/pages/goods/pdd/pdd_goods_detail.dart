@@ -652,14 +652,19 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "$_shopName",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(48),
-                                        color: Color(0xff222222),
-                                        fontWeight: FontWeight.w500,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        bottom: ScreenUtil().setWidth(32),
+                                      ),
+                                      child: Text(
+                                        "$_shopName",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(48),
+                                          color: Color(0xff222222),
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                     Row(
