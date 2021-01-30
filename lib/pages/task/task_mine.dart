@@ -16,6 +16,7 @@ import 'package:star/pages/login/modify_password.dart';
 import 'package:star/pages/order/order_list.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_result.dart';
+import 'package:star/pages/task/new_income_list.dart';
 import 'package:star/pages/task/pay_result.dart';
 import 'package:star/pages/task/task_about.dart';
 import 'package:star/pages/task/task_message.dart';
@@ -1473,11 +1474,10 @@ class _TaskMinePageState extends State<TaskMinePage>
                         onTap: () {
                           NavigatorUtils.navigatorRouter(
                               context,
-                              IncomeListPage(
-                                pageType: 0,
+                              NewIncomeListPage(
                               ));
                         },
-                        child: Container(
+                        child: Container(//
                           padding:
                               EdgeInsets.only(left: ScreenUtil().setWidth(60)),
                           child: Column(
@@ -1590,8 +1590,7 @@ class _TaskMinePageState extends State<TaskMinePage>
                         onTap: () {
                           NavigatorUtils.navigatorRouter(
                               context,
-                              IncomeListPage(
-                                pageType: 1,
+                              NewIncomeListPage(
                               ));
                         },
                         child: Container(
@@ -1638,6 +1637,7 @@ class _TaskMinePageState extends State<TaskMinePage>
                               context,
                               IncomeListPage(
                                 pageType: 2,
+                                showAppBar: true,
                               ));
                         },
                         child: Container(

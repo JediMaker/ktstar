@@ -35,6 +35,7 @@ import 'package:star/generated/json/region_data_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/search_goods_list_entity_helper.dart';
 import 'package:star/generated/json/search_pdd_goods_list_entity_helper.dart';
+import 'package:star/generated/json/shareholder_income_list_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
@@ -78,6 +79,7 @@ import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/region_data_entity.dart';
 import 'package:star/models/search_goods_list_entity.dart';
 import 'package:star/models/search_pdd_goods_list_entity.dart';
+import 'package:star/models/shareholder_income_list_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
@@ -871,6 +873,35 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = IncomeListEntity();
     incomeListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[page] 	页码
+  ///
+  ///[pageSize] 	单页数据量
+  ///
+  ///[profiType] 	7个人分红 8好友分红 9邀请好友收益
+  ///
+  ///
+  /// fasle 获取微股东收益列表
+  ///
+  static Future<ShareholderIncomeListEntity> getHolderProfitList(page, pageSize,
+      {profiType = 7}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap["profit_type"] = "$profiType";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_HOLDER_INCOME,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShareholderIncomeListEntity();
+    shareholderIncomeListEntityFromJson(entity, extractData);
     return entity;
   }
 

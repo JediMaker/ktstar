@@ -20,6 +20,7 @@ import 'package:star/pages/shareholders/micro_equity.dart';
 import 'package:star/pages/task/fans_list.dart';
 import 'package:star/pages/task/income_list.dart';
 import 'package:star/pages/task/invitation_poster.dart';
+import 'package:star/pages/task/new_income_list.dart';
 import 'package:star/pages/task/pay_result.dart';
 import 'package:star/pages/task/task_about.dart';
 import 'package:star/pages/task/task_message.dart';
@@ -1501,8 +1502,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                           onTap: () {
                             NavigatorUtils.navigatorRouter(
                                 context,
-                                IncomeListPage(
-                                  pageType: 0,
+                                NewIncomeListPage(
                                 ));
                           },
                           child: Container(
@@ -1638,8 +1638,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                           onTap: () {
                             NavigatorUtils.navigatorRouter(
                                 context,
-                                IncomeListPage(
-                                  pageType: 1,
+                                NewIncomeListPage(
                                 ));
                           },
                           child: Container(
@@ -1686,6 +1685,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 context,
                                 IncomeListPage(
                                   pageType: 2,
+                                  showAppBar: true,
                                 ));
                           },
                           child: Container(

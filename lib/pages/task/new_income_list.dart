@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
+import 'package:star/pages/task/income_list.dart';
+import 'package:star/pages/task/shareholder_income_list.dart';
 import 'package:star/pages/widget/round_tab_indicator.dart';
 
 import '../../global_config.dart';
 
-class OrderListPage extends StatefulWidget {
-  OrderListPage({Key key}) : super(key: key);
-  final String title = "我的订单";
+class NewIncomeListPage extends StatefulWidget {
+  NewIncomeListPage({Key key}) : super(key: key);
+  final String title = "收益列表";
 
   @override
-  _OrderListPageState createState() => _OrderListPageState();
+  _NewIncomeListPageState createState() => _NewIncomeListPageState();
 }
 
-class _OrderListPageState extends State<OrderListPage>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _NewIncomeListPageState extends State<NewIncomeListPage>
+    with TickerProviderStateMixin {
   TabController _tabController;
   int _selectedTabIndex = 0;
 
@@ -42,8 +44,10 @@ class _OrderListPageState extends State<OrderListPage>
   }
 
   var orderType = [
-    '自营',
-    '拼多多',
+    '全部',
+    '个人分红',
+    '好友分红',
+    '邀请奖励',
   ];
 
 //订单类型
@@ -59,11 +63,13 @@ class _OrderListPageState extends State<OrderListPage>
             child: Text(
               "$classify",
               style: TextStyle(
-                fontSize: ScreenUtil().setSp(42),
+                fontSize: ScreenUtil().setSp(38),
                 color: _selectedTabIndex == index
                     ? Color(0xff222222)
                     : Color(0xffAFAFAF),
-                fontWeight: FontWeight.bold,
+                fontWeight: _selectedTabIndex == index
+                    ? FontWeight.bold
+                    : FontWeight.normal,
               ),
             ),
           ),
@@ -76,11 +82,19 @@ class _OrderListPageState extends State<OrderListPage>
 //分类下对应页面
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
+    int profitType = 6;
     if (orderType != null) {
       for (var index = 0; index < orderType.length; index++) {
-        tabViews.add(RechargeOrderListPage(
-          orderSource: "${index + 1}",
-        ));
+        if (index == 0) {
+          tabViews.add(IncomeListPage(
+            pageType: 0,
+          ));
+        } else {
+          tabViews.add(ShareHolderIncomeListPage(
+            pageType: 0,
+            profitType: profitType + index,
+          ));
+        }
       }
     }
     return tabViews;
@@ -150,7 +164,4 @@ class _OrderListPageState extends State<OrderListPage>
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

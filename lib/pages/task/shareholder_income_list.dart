@@ -8,20 +8,24 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 
-class IncomeListPage extends StatefulWidget {
+class ShareHolderIncomeListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
-  IncomeListPage({Key key, @required this.pageType, this.showAppBar = false})
-      : super(key: key);
-  String title = "";
+  var profitType;
   bool showAppBar;
 
+  ShareHolderIncomeListPage(
+      {Key key, this.pageType = 0, this.showAppBar = false, this.profitType})
+      : super(key: key);
+  String title = "";
+
   @override
-  _IncomeListPageState createState() => _IncomeListPageState();
+  _ShareHolderIncomeListPageState createState() =>
+      _ShareHolderIncomeListPageState();
 }
 
-class _IncomeListPageState extends State<IncomeListPage>
+class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -35,22 +39,21 @@ class _IncomeListPageState extends State<IncomeListPage>
   List<IncomeListDataList> _profitList;
 
   _initData() async {
-    IncomeListEntity result =
-        await HttpManage.getProfitList(page, 10, isWithdrawal: isWithdrawal);
+    var result = await HttpManage.getHolderProfitList(page, 10,
+        profiType: widget.profitType);
     if (result.status) {
       if (mounted) {
         setState(() {
           if (page == 1) {
-            _profitList = result.data.xList;
+            _profitList = result.data;
           } else {
             if (result == null ||
                 result.data == null ||
-                result.data.xList == null ||
-                result.data.xList.length == 0) {
+                result.data.length == 0) {
               //              _refreshController.resetLoadState();
               _refreshController.finishLoad(noMore: true);
             } else {
-              _profitList += result.data.xList;
+              _profitList += result.data;
             }
           }
           isFirstLoading = false;
@@ -185,7 +188,9 @@ class _IncomeListPageState extends State<IncomeListPage>
       desc = listItem.desc;
       profitType = listItem.profitType;
       type = listItem.type;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     if (isWithdrawal) {
       prefixText = '-';
       //type1支付宝提现 2 微信提现

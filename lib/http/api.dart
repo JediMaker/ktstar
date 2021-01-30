@@ -39,6 +39,9 @@ class APi {
   ///获取收益列表
   static const String USER_PROFIT_LIST = "user/profit-list";
 
+  ///获取收益列表
+  static const String USER_HOLDER_INCOME = "user/holder-income";
+
   ///获取消息列表
   static const String USER_MSG_LIST = "user/msg-list";
 
