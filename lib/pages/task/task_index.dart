@@ -88,15 +88,17 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   Scaffold buildHomeWidget() {
     _navigationViews = <NavigationIconView>[
       new NavigationIconView(
-          icon: Image.asset(
-            "static/images/home_unselect.png",
-            width: ScreenUtil().setWidth(89),
-            height: ScreenUtil().setWidth(89),
+          icon: CachedNetworkImage(
+            imageUrl:
+            'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
           ),
-          activeIcon: Image.asset(
-            "static/images/home_select.png",
-            width: ScreenUtil().setWidth(89),
-            height: ScreenUtil().setWidth(89),
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+            'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
           ),
           title: new Text(
             '首页',
@@ -106,15 +108,15 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new NavigationIconView(
           icon: CachedNetworkImage(
             imageUrl:
-                'https://alipic.lanhuapp.com/xd4dc6c371-aa15-4f4a-b432-c5a9dee9f094',
-            width: ScreenUtil().setWidth(77),
-            height: ScreenUtil().setWidth(77),
+                'https://alipic.lanhuapp.com/xda87fe7ad-f66f-4d6a-a344-5bfcd0664c21',
+            width: ScreenUtil().setWidth(75),
+            height: ScreenUtil().setWidth(75),
           ),
           activeIcon: CachedNetworkImage(
             imageUrl:
-                'https://alipic.lanhuapp.com/xd541f75f2-6b1d-41c3-b79c-c667abb67fa3',
-            width: ScreenUtil().setWidth(77),
-            height: ScreenUtil().setWidth(77),
+                'https://alipic.lanhuapp.com/xdb5e9695f-3ead-4ba1-b2df-3390f0abef31',
+            width: ScreenUtil().setWidth(75),
+            height: ScreenUtil().setWidth(75),
           ),
           title: new Text(
             '分类',
@@ -122,15 +124,17 @@ class _TaskIndexPageState extends State<TaskIndexPage>
           ),
           vsync: this),
       new NavigationIconView(
-          icon: Image.asset(
-            "static/images/mine_unselect.png",
-            width: ScreenUtil().setWidth(60),
-            height: ScreenUtil().setWidth(77),
+          icon: CachedNetworkImage(
+            imageUrl:
+            'https://alipic.lanhuapp.com/xdc5273bd2-20f1-4a0b-9ee8-4db8e81dd1c8',
+            width: ScreenUtil().setWidth(56),
+            height: ScreenUtil().setWidth(76),
           ),
-          activeIcon: Image.asset(
-            "static/images/mine_select.png",
-            width: ScreenUtil().setWidth(60),
-            height: ScreenUtil().setWidth(77),
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+            'https://alipic.lanhuapp.com/xd6b741c9c-ec84-4146-b72a-3705771a4bc5',
+            width: ScreenUtil().setWidth(56),
+            height: ScreenUtil().setWidth(76),
           ),
           title: new Text(
             '我的',
@@ -165,7 +169,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
                         navigationIconView.item)
                     .toList(),
                 currentIndex: _currentIndex,
-                fixedColor: Color(0xffF93736),
+                fixedColor: Color(0xffCE0100),
                 type: BottomNavigationBarType.fixed,
                 onTap: (int index) {
                   setState(() {
