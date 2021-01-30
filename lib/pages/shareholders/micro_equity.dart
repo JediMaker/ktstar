@@ -109,6 +109,11 @@ class _MicroShareHolderEquityPageState
       if (result.status) {
         setState(() {
           _shareholderType = result.data.isPartner;
+          _currentIndex = _shareholderType == '1'
+              ? 1
+              : _shareholderType == '3' || _shareholderType == '4'
+                  ? 2
+                  : 0;
         });
       } else {
         if (CommonUtils.isEmpty(userInfoData.isPartner)) {
@@ -116,6 +121,11 @@ class _MicroShareHolderEquityPageState
           if (result.status) {
             setState(() {
               _shareholderType = result.data.isPartner;
+              _currentIndex = _shareholderType == '1'
+                  ? 1
+                  : _shareholderType == '3' || _shareholderType == '4'
+                      ? 2
+                      : 0;
             });
           } else {}
         }
@@ -124,6 +134,11 @@ class _MicroShareHolderEquityPageState
       if (!CommonUtils.isEmpty(userInfoData.isPartner)) {
         setState(() {
           _shareholderType = userInfoData.isPartner;
+          _currentIndex = _shareholderType == '1'
+              ? 1
+              : _shareholderType == '3' || _shareholderType == '4'
+                  ? 2
+                  : 0;
         });
       }
     }
@@ -246,6 +261,8 @@ class _MicroShareHolderEquityPageState
 
   ///轮播卡片
   Widget buildSwiperCard() {
+    bool _showBtnIcon = true;
+    double _opacity = 1;
     try {
       var item = _dataList[_currentIndex];
       _dividendRatio = '${item.interests.dailyMoneyRate}%';
@@ -255,18 +272,18 @@ class _MicroShareHolderEquityPageState
     } catch (e) {}
     switch (_currentIndex) {
       case 0:
-        btnTxt = _shareholderType != "1"
-            ? '消费$novitiatePrice元/立即开通'
-            : '消费$novitiatePrice元/立即续费';
+        btnTxt = _shareholderType != "1" ? '消费$novitiatePrice元/立即开通' : '已开通';
+        _showBtnIcon = _shareholderType != "1";
+        _opacity = _shareholderType != "1" ? 1 : 0.6;
         break;
       case 1:
         btnTxt =
-            _shareholderType != "3" ? '年费$vipPrice/立即开通' : '年费$vipPrice元/立即开通';
+            _shareholderType != "3" ? '年费$vipPrice/立即开通' : '年费$vipPrice元/立即续费';
         break;
       case 2:
         btnTxt = _shareholderType != "4"
             ? '年费$advancedPrice元/立即开通'
-            : '年费$advancedPrice元/立即开通';
+            : '年费$advancedPrice元/立即续费';
         break;
     }
     //限时优惠图标
@@ -279,6 +296,7 @@ class _MicroShareHolderEquityPageState
     if (Platform.isIOS && GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
       btnTxt = 'ios暂未开通';
     }
+
     return Container(
       margin: EdgeInsets.only(
         top: ScreenUtil().setWidth(53),
@@ -333,6 +351,12 @@ class _MicroShareHolderEquityPageState
 //                              viewportFraction: 0.86,
 //                              scale: 0.96,
                 index: _currentIndex,
+                control: SwiperControl(
+                  color: Color(0xE82C2D30),
+                ),
+                /*  pagination: new SwiperPagination(
+                    margin: new EdgeInsets.all(5.0)
+                ),*/
                 onIndexChanged: (index) {
                   if (mounted) {
                     setState(() {
@@ -381,41 +405,61 @@ class _MicroShareHolderEquityPageState
                         } else {
                           showOpenMicroShareholderDialog();
                         }
-
                         return;
                       } else {
-                        _showSelectPayWayBottomSheet();
+                        if (_opacity == 1) {
+                          _showSelectPayWayBottomSheet();
+                        }
                       }
                     },
                     child: Container(
                       child: Center(
-                        child: Container(
-                          width: ScreenUtil().setWidth(739),
-                          height: ScreenUtil().setWidth(100),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: Image.network(
-                                  "$xsIcon",
-                                  fit: BoxFit.fill,
-                                ).image),
-                            gradient: LinearGradient(colors: [
-                              Color(0xffF3D6AA),
-                              Color(0xffEDC182),
-                            ]),
-                            borderRadius: BorderRadius.circular(
-                              ScreenUtil().setWidth(50),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "$btnTxt",
-                              style: TextStyle(
-                                color: Color(0xff313235),
-                                fontSize: ScreenUtil().setSp(33),
+                        child: Stack(
+                          children: [
+                            Opacity(
+                              opacity: _opacity,
+                              child: Container(
+                                width: ScreenUtil().setWidth(739),
+                                height: ScreenUtil().setWidth(100),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [
+                                    Color(0xffF3D6AA),
+                                    Color(0xffEDC182),
+                                  ]),
+                                  borderRadius: BorderRadius.circular(
+                                    ScreenUtil().setWidth(50),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "$btnTxt",
+                                    style: TextStyle(
+                                      color: Color(0xff313235),
+                                      fontSize: ScreenUtil().setSp(33),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            Visibility(
+                              visible: _showBtnIcon,
+                              child: Container(
+                                width: ScreenUtil().setWidth(739),
+                                height: ScreenUtil().setWidth(100),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: Image.network(
+                                        "$xsIcon",
+                                        fit: BoxFit.fill,
+                                      ).image),
+                                  borderRadius: BorderRadius.circular(
+                                    ScreenUtil().setWidth(50),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -1165,6 +1209,8 @@ class _MicroShareHolderEquityPageState
                         Container(
                           child: Text(
                             "$name",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Color(
                                   0xff512A08,

@@ -225,8 +225,8 @@ class _MicroMinePageState extends State<MicroMinePage>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color(0xffDC1312),
-                Color(0xffDC1312),
+                Color(0xffCE0100),
+                Color(0xffCE0100),
               ]),
           brightness: Brightness.dark,
           title: Text(
@@ -299,8 +299,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Color(0xffDC1312),
-                          Color(0xffFF6964),
+                          Color(0xffCE0100),
+                          Color(0xffD5433E),
                         ]),
                   ),
                 ),
@@ -1064,7 +1064,7 @@ class _MicroMinePageState extends State<MicroMinePage>
       ),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: Color(0xff623413),
+        color: Color(0xff2a2a2a),
         borderRadius: BorderRadius.all(
           Radius.circular(
             ScreenUtil().setWidth(28),
@@ -1083,11 +1083,11 @@ class _MicroMinePageState extends State<MicroMinePage>
             fit: FlexFit.tight,
             child: new InkWell(
                 onTap: () async {
-                  NavigatorUtils.navigatorRouter(
+                  /* NavigatorUtils.navigatorRouter(
                       context,
                       FansListPage(
                         isAgent: userType == "3",
-                      ));
+                      ));*/
                 },
                 child: new Container(
                   child: new Row(
@@ -1137,11 +1137,18 @@ class _MicroMinePageState extends State<MicroMinePage>
                   ),
                 )),
           ),
+          Center(
+            child: Container(
+              color: Color(0xff5A524D),
+              width: ScreenUtil().setWidth(1),
+              height: ScreenUtil().setWidth(57),
+            ),
+          ),
           new Flexible(
             fit: FlexFit.tight,
             child: new InkWell(
                 onTap: () {
-                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+//                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
                 },
                 child: new Container(
                   child: new Row(
@@ -1227,7 +1234,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
+                        margin: const EdgeInsets.only(bottom: 3.0),
                         child: new CircleAvatar(
                           radius: 20.0,
                           backgroundColor: Colors.transparent,
@@ -1263,7 +1270,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0),
+                        margin: const EdgeInsets.only(bottom: 3.0),
                         child: new CircleAvatar(
                           radius: 20.0,
                           backgroundColor: Colors.transparent,
@@ -1303,7 +1310,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         new Container(
-                          margin: const EdgeInsets.only(bottom: 6.0),
+                          margin: const EdgeInsets.only(bottom: 3.0),
                           child: new CircleAvatar(
                             radius: 20.0,
                             backgroundColor: Colors.transparent,
@@ -1345,7 +1352,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         new Container(
-                          margin: const EdgeInsets.only(bottom: 6.0),
+                          margin: const EdgeInsets.only(bottom: 3.0),
                           child: new CircleAvatar(
                             radius: 20.0,
                             backgroundColor: Colors.transparent,
@@ -1663,6 +1670,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                           ),
                         ),
                       ),
+                      Center(
+                        child: Container(
+                          color: Color(0xffd1d1d1),
+                          width: ScreenUtil().setWidth(1),
+                          height: ScreenUtil().setWidth(88),
+                        ),
+                      ),
                       Flexible(
                         flex: 1,
                         fit: FlexFit.tight,
@@ -1701,6 +1715,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    color: Color(0xffe6e6e6),
+                    width: ScreenUtil().setWidth(955),
+                    height: ScreenUtil().setWidth(1),
                   ),
                 ),
                 Container(
@@ -1749,6 +1770,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                           ],
                         ),
                       ), //
+                      Center(
+                        child: Container(
+                          color: Color(0xffd1d1d1),
+                          width: ScreenUtil().setWidth(1),
+                          height: ScreenUtil().setWidth(46),
+                        ),
+                      ),
                       Expanded(
                         child: Column(
                           children: [
@@ -1787,6 +1815,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                           ],
                         ),
                       ),
+                      Center(
+                        child: Container(
+                          color: Color(0xffd1d1d1),
+                          width: ScreenUtil().setWidth(1),
+                          height: ScreenUtil().setWidth(46),
+                        ),
+                      ),
                       Expanded(
                         child: Column(
                           children: [
@@ -1823,6 +1858,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          color: Color(0xffd1d1d1),
+                          width: ScreenUtil().setWidth(1),
+                          height: ScreenUtil().setWidth(46),
                         ),
                       ),
                       Expanded(
