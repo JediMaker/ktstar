@@ -15,6 +15,7 @@ class WechatPayinfoData with JsonConvert<WechatPayinfoData> {
 	String payNo;
 	@JSONField(name: "pay_info")
 	WechatPayinfoDataPayInfo payInfo;
+	bool finish;
 }
 
 class WechatPayinfoDataPayInfo with JsonConvert<WechatPayinfoDataPayInfo> {

@@ -37,6 +37,9 @@ wechatPayinfoDataFromJson(WechatPayinfoData data, Map<String, dynamic> json) {
 	if (json['pay_info'] != null) {
 		data.payInfo = new WechatPayinfoDataPayInfo().fromJson(json['pay_info']);
 	}
+	if (json['finish'] != null) {
+		data.finish = json['finish'];
+	}
 	return data;
 }
 
@@ -46,6 +49,7 @@ Map<String, dynamic> wechatPayinfoDataToJson(WechatPayinfoData entity) {
 	if (entity.payInfo != null) {
 		data['pay_info'] = entity.payInfo.toJson();
 	}
+	data['finish'] = entity.finish;
 	return data;
 }
 

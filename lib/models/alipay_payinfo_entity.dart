@@ -15,4 +15,5 @@ class AlipayPayinfoData with JsonConvert<AlipayPayinfoData> {
 	String payNo;
 	@JSONField(name: "pay_info")
 	String payInfo;
+	bool finish;
 }

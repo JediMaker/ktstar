@@ -37,6 +37,9 @@ alipayPayinfoDataFromJson(AlipayPayinfoData data, Map<String, dynamic> json) {
 	if (json['pay_info'] != null) {
 		data.payInfo = json['pay_info']?.toString();
 	}
+	if (json['finish'] != null) {
+		data.finish = json['finish'];
+	}
 	return data;
 }
 
@@ -44,5 +47,6 @@ Map<String, dynamic> alipayPayinfoDataToJson(AlipayPayinfoData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['pay_no'] = entity.payNo;
 	data['pay_info'] = entity.payInfo;
+	data['finish'] = entity.finish;
 	return data;
 }

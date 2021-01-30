@@ -83,6 +83,15 @@ orderDetailDataFromJson(OrderDetailData data, Map<String, dynamic> json) {
 	if (json['send_number'] != null) {
 		data.sendNumber = json['send_number']?.toString();
 	}
+	if (json['usable_deduct'] != null) {
+		data.usableDeduct = json['usable_deduct']?.toString();
+	}
+	if (json['is_coupon'] != null) {
+		data.isCoupon = json['is_coupon']?.toString();
+	}
+	if (json['deduct_price'] != null) {
+		data.deductPrice = json['deduct_price']?.toString();
+	}
 	if (json['user_info'] != null) {
 		data.userInfo = new OrderUserInfoUserInfo().fromJson(json['user_info']);
 	}
@@ -109,6 +118,9 @@ Map<String, dynamic> orderDetailDataToJson(OrderDetailData entity) {
 	data['confirm_time'] = entity.confirmTime;
 	data['send_name'] = entity.sendName;
 	data['send_number'] = entity.sendNumber;
+	data['usable_deduct'] = entity.usableDeduct;
+	data['is_coupon'] = entity.isCoupon;
+	data['deduct_price'] = entity.deductPrice;
 	if (entity.userInfo != null) {
 		data['user_info'] = entity.userInfo.toJson();
 	}
