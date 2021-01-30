@@ -933,7 +933,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                               }
                               if (_loginStatus == "0") {
                                 CommonUtils.showToast("尚未登陆，请登录！");
-                                NavigatorUtils.navigatorRouterAndRemoveUntil(
+                                NavigatorUtils.navigatorRouter(
                                     context, LoginPage());
                                 return;
                               }
