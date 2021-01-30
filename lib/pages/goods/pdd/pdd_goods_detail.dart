@@ -63,6 +63,13 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
   var _mobileH5Uri = '';
   var _validPeriod = '';
 
+  var _desList = [
+    '正品保障',
+    '破损包退',
+    '急速退款',
+    '退货运费险',
+  ];
+
   //var _couponsAmount = '';
 
   Future _initData() async {
@@ -619,94 +626,144 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                         bottom: ScreenUtil().setWidth(30),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(left: 16, right: 10),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    ScreenUtil().setWidth(30),
-                                  ),
-                                ),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      "https://img.pddpic.com/favicon.ico",
-                                  width: ScreenUtil().setWidth(138),
-                                  height: ScreenUtil().setWidth(138),
-                                  fit: BoxFit.fill,
-                                )),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "$_shopName",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(48),
-                                    color: Color(0xff222222),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Row(
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(left: 16, right: 10),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                        ScreenUtil().setWidth(30),
+                                      ),
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          "https://img.pddpic.com/favicon.ico",
+                                      width: ScreenUtil().setWidth(138),
+                                      height: ScreenUtil().setWidth(138),
+                                      fit: BoxFit.fill,
+                                    )),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Flexible(
-                                      fit: FlexFit.tight,
-                                      flex: 1,
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 4),
-                                        child: Text(
-                                          '宝贝描述：$_descriptiveScore',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(36),
-                                            color: Color(0xff999999),
-                                          ),
-                                        ),
+                                    Text(
+                                      "$_shopName",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(48),
+                                        color: Color(0xff222222),
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Flexible(
-                                      fit: FlexFit.tight,
-                                      flex: 1,
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 4),
-                                        child: Text(
-                                          '卖家服务：$_serviceScore',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(36),
-                                            color: Color(0xff999999),
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          fit: FlexFit.tight,
+                                          flex: 1,
+                                          child: Container(
+                                            margin: EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              '宝贝描述：$_descriptiveScore',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    ScreenUtil().setSp(24),
+                                                color: Color(0xff999999),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      fit: FlexFit.tight,
-                                      flex: 1,
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 4),
-                                        child: Text(
-                                          '物流评价：$_logisticsScore',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(36),
-                                            color: Color(0xff999999),
+                                        Flexible(
+                                          fit: FlexFit.tight,
+                                          flex: 1,
+                                          child: Container(
+                                            margin: EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              '卖家服务：$_serviceScore',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    ScreenUtil().setSp(24),
+                                                color: Color(0xff999999),
+                                              ),
+                                            ),
                                           ),
+                                        ),
+                                        Flexible(
+                                          fit: FlexFit.tight,
+                                          flex: 1,
+                                          child: Container(
+                                            margin: EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              '物流评价：$_logisticsScore',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    ScreenUtil().setSp(24),
+                                                color: Color(0xff999999),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            color: Color(0xfff6f6f6),
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setWidth(30),
+                            ),
+                            height: ScreenUtil().setWidth(3),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: ScreenUtil().setWidth(60),
+                            ),
+                            child: Row(
+                              children: List.generate(
+                                _desList.length,
+                                (index) => Expanded(
+                                    child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          'https://alipic.lanhuapp.com/xd14aa2fbd-3d5f-46b8-b7ea-fa9e23c97e41',
+                                      width: ScreenUtil().setWidth(30),
+                                      height: ScreenUtil().setWidth(30),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(20),
+                                      ),
+                                      child: Text(
+                                        "${_desList[index]}",
+                                        style: TextStyle(
+                                          color: Color(0xff999999),
+                                          fontSize: ScreenUtil().setSp(24),
                                         ),
                                       ),
                                     ),
                                   ],
-                                ),
-                              ],
+                                )),
+                              ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
