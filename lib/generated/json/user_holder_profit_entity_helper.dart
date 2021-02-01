@@ -34,6 +34,9 @@ userHolderProfitPartnerBonusFromJson(UserHolderProfitPartnerBonus data, Map<Stri
 	if (json['total'] != null) {
 		data.total = json['total']?.toString();
 	}
+	if (json['coin'] != null) {
+		data.coin = json['coin']?.toString();
+	}
 	return data;
 }
 
@@ -45,5 +48,6 @@ Map<String, dynamic> userHolderProfitPartnerBonusToJson(UserHolderProfitPartnerB
 	data['week'] = entity.week;
 	data['month'] = entity.month;
 	data['total'] = entity.total;
+	data['coin'] = entity.coin;
 	return data;
 }
