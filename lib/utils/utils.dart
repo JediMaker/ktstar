@@ -345,7 +345,7 @@ class TopPartClipper extends CustomClipper<Path> {
     // 路径
     var path = Path();
     // 设置路径的开始点
-//    path.moveTo(size.width/2, 0);
+    path.moveTo(size.width, 0);
 
     print("size.width=${size.width}&&size.height=${size.height}");
 //    path.lineTo(0, 0);
@@ -359,10 +359,10 @@ class TopPartClipper extends CustomClipper<Path> {
     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
         firstEndPont.dx, firstEndPont.dy);*/
 
-    path.lineTo(size.width / 2, size.height);
-//    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0);
     path.lineTo(0, 0);
+//    path.lineTo(size.width, size.height);
+    path.lineTo(size.width/2, size.height);
+    path.lineTo(size.width, 0);
     // 返回路径
     return path;
   }

@@ -369,7 +369,7 @@ class _MicroShareHolderEquityPageState
                 ),
                 decoration: BoxDecoration(
 //                color: Colors.green,
-                  color: Color(0xff313235),
+//                  color: Color(0xff313235),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(
                       ScreenUtil().setWidth(30),
@@ -416,6 +416,19 @@ class _MicroShareHolderEquityPageState
                             fit: BoxFit.fill,
                           ),*/
                           Container(
+                            margin:
+                                EdgeInsets.only(top: ScreenUtil().setWidth(1)),
+                            decoration: BoxDecoration(
+//                color: Colors.green,
+                              color: Color(0xff313235),
+                              /*    image: DecorationImage(
+                      image: Image.network(
+                    "https://alipic.lanhuapp.com/xd52654c11-0f1f-43da-8f0d-43e6ffeddc89",
+                    fit: BoxFit.fill,
+                    width: ScreenUtil().setWidth(30000),
+                    height: ScreenUtil().setWidth(397),
+                  ).image),*/
+                            ),
                             child: Center(
                               child: Stack(
                                 children: [
@@ -467,17 +480,18 @@ class _MicroShareHolderEquityPageState
                             ),
                           ),
                           Visibility(
-                            visible: false,
+//                            visible: false,
                             child: Positioned(
 //                              left: ScreenUtil().setWidth(30),
 //                              right: ScreenUtil().setWidth(30),
+
                               child: ClipPath(
                                 clipper: TopPartClipper(),
                                 child: Container(
                                   width: ScreenUtil().setWidth(1065),
                                   height: ScreenUtil().setWidth(20),
                                   decoration: BoxDecoration(
-                                    color: Color(0xffF5D8A9),
+//                                    color: Color(0xffF5D8A9),
                                     gradient: LinearGradient(colors: [
                                       Color(0xffF5D8A9),
                                       Color(0xffEEC48C),

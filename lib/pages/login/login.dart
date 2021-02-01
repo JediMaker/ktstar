@@ -150,6 +150,17 @@ class _LoginPageState extends State<LoginPage> {
             ),
             centerTitle: true,
             elevation: 0,
+            leading: IconButton(
+              icon: Image.asset(
+                "static/images/icon_ios_back_white.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
             backgroundColor: GlobalConfig.taskHeadColor,
           ),
           body: Container(
