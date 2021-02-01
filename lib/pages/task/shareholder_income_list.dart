@@ -37,8 +37,10 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
   List<IncomeListDataList> _profitList;
+  String lastTimeDesc = '';
 
   _initData() async {
+    lastTimeDesc = '';
     var result = await HttpManage.getHolderProfitList(page, 10,
         profiType: widget.profitType);
     if (result.status) {
@@ -155,6 +157,8 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             IncomeListDataList listItem = _profitList[index];
+            print("_profitList[index]=$index");
+            print("_profitList.length=${_profitList.length}");
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _profitList == null ? 0 : _profitList.length,
@@ -162,8 +166,6 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
       ),
     );
   }
-
-  String lastTimeDesc = '';
 
   buildItemLayout({IncomeListDataList listItem}) {
     String price = '';
@@ -184,8 +186,12 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
       rejectReason = listItem.rejectReason;
       createTime = listItem.createTime;
       timeDesc = listItem.timeDesc;
+      print("_profitList[index]timeDesc=$timeDesc");
       _showTimeDesc = lastTimeDesc != timeDesc;
+      print("_profitList[index]_showTimeDesc=$_showTimeDesc");
+      print("_profitList[index]lastTimeDesc1=$lastTimeDesc");
       lastTimeDesc = timeDesc;
+      print("_profitList[index]lastTimeDesc2=$lastTimeDesc");
       desc = listItem.desc;
       profitType = listItem.profitType;
       type = listItem.type;

@@ -2227,4 +2227,30 @@ class HttpManage {
     microShareholderEntityFromJson(entity, extractData);
     return entity;
   }
+
+  ///[page] 	页码
+  ///
+  ///[pageSize] 	单页数据量
+  ///
+  /// 获取微股东分红金明细
+  ///
+  static Future<IncomeListEntity> getMicroShareHolderCoinList(
+    page,
+    pageSize,
+  ) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.USER_HOLDER_COIN,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = IncomeListEntity();
+    incomeListEntityFromJson(entity, extractData);
+    return entity;
+  }
 }
