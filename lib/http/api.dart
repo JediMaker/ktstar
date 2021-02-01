@@ -90,6 +90,9 @@ class APi {
   ///微股东申请权益页
   static const String USER_HOLDER_EXPLAIN = "user/holder-explain";
 
+  ///微股东分红金明细列表
+  static const String USER_HOLDER_COIN = "user/holder-coin";
+
   ///获取当前版本信息
   static const String SITE_VERSION = "site/version";
 

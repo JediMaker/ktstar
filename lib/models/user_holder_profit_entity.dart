@@ -15,4 +15,5 @@ class UserHolderProfitPartnerBonus with JsonConvert<UserHolderProfitPartnerBonus
 	String week;
 	String month;
 	String total;
+	String coin;
 }

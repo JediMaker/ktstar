@@ -81,6 +81,18 @@ incomeListDataListFromJson(IncomeListDataList data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status']?.toString();
 	}
+	if (json['bonus'] != null) {
+		data.bonus = json['bonus']?.toString();
+	}
+	if (json['source'] != null) {
+		data.source = json['source']?.toString();
+	}
+	if (json['attach_id'] != null) {
+		data.attachId = json['attach_id']?.toString();
+	}
+	if (json['title'] != null) {
+		data.title = json['title']?.toString();
+	}
 	return data;
 }
 
@@ -94,5 +106,9 @@ Map<String, dynamic> incomeListDataListToJson(IncomeListDataList entity) {
 	data['profit_type'] = entity.profitType;
 	data['desc'] = entity.desc;
 	data['status'] = entity.status;
+	data['bonus'] = entity.bonus;
+	data['source'] = entity.source;
+	data['attach_id'] = entity.attachId;
+	data['title'] = entity.title;
 	return data;
 }

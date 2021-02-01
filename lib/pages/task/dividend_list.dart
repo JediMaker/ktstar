@@ -8,20 +8,23 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 
-class IncomeListPage extends StatefulWidget {
+class DividendListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
-  IncomeListPage({Key key, @required this.pageType, this.showAppBar = false})
-      : super(key: key);
-  String title = "";
+  var profitType;
   bool showAppBar;
 
+  DividendListPage(
+      {Key key, this.pageType = 0, this.showAppBar = true, this.profitType})
+      : super(key: key);
+  String title = "分红金明细";
+
   @override
-  _IncomeListPageState createState() => _IncomeListPageState();
+  _DividendListPageState createState() => _DividendListPageState();
 }
 
-class _IncomeListPageState extends State<IncomeListPage>
+class _DividendListPageState extends State<DividendListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -36,8 +39,10 @@ class _IncomeListPageState extends State<IncomeListPage>
 
   _initData() async {
     lastTimeDesc = '';
-    IncomeListEntity result =
-        await HttpManage.getProfitList(page, 10, isWithdrawal: isWithdrawal);
+    var result = await HttpManage.getMicroShareHolderCoinList(
+      page,
+      10,
+    );
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -64,7 +69,7 @@ class _IncomeListPageState extends State<IncomeListPage>
 
   @override
   void initState() {
-    switch (widget.pageType) {
+    /* switch (widget.pageType) {
       case 0:
       case 1:
         widget.title = "收益明细";
@@ -74,7 +79,7 @@ class _IncomeListPageState extends State<IncomeListPage>
         widget.title = "已提现记录";
         isWithdrawal = true;
         break;
-    }
+    }*/
     _refreshController = EasyRefreshController();
     _initData();
     super.initState();
@@ -174,9 +179,10 @@ class _IncomeListPageState extends State<IncomeListPage>
     String timeDesc = '';
     String desc = '';
     String iconName = '';
+    String title = '';
     bool _showTimeDesc = true;
     try {
-      price = listItem.price;
+      price = listItem.bonus;
       status = listItem.status;
       rejectReason = listItem.rejectReason;
       createTime = listItem.createTime;
@@ -186,97 +192,19 @@ class _IncomeListPageState extends State<IncomeListPage>
       desc = listItem.desc;
       profitType = listItem.profitType;
       type = listItem.type;
-    } catch (e) {}
-    if (isWithdrawal) {
-      prefixText = '-';
-      //type1支付宝提现 2 微信提现
-      switch (type) {
-        case "1":
-          iconName = "icon_profit_zfb.png";
-          statusText = "支付宝提现-";
-          break;
-        case "2":
-          iconName = "icon_profit_wx.png";
-          statusText = "微信提现-";
-          break;
-      }
-      switch (status) {
-        case "0": //未打款
-//          desc = "审核中，请耐心等候~";
-          statusText += "已提交";
-          break;
-        case "1": //已打款
-//          desc = "恭喜！收益已打款成功！";
-          statusText += "成功";
-          break;
-        case "3": //被驳回
-          desc = rejectReason;
-          statusText += "失败";
-          break;
-      }
-    } else {
-      switch (profitType) {
-        case "9":
-          iconName = "icon_profit_invite.png";
-          statusText = "邀请奖励-成功";
-          break;
-        case "8":
-          iconName = "icon_profit_invite.png";
-          statusText = "微股东好友分红-成功";
-          break;
-        case "7":
-          iconName = "icon_profit_invite.png";
-          statusText = "微股东个人分红-成功";
-          break;
-        case "6":
-          iconName = "icon_profit_invite.png";
-          statusText = "微股东分红奖励-成功";
-          break;
-        case "5":
-          iconName = "icon_profit_invite.png";
-          statusText = "会员退款-成功";
-          if (double.parse(price) < 0) {
-            prefixText = '';
-          }
-          break;
-        case "4":
-          iconName = "icon_profit_task.png";
-          statusText = "商品消费-成功";
-          prefixText = '';
-          break;
-        case "3":
-          iconName = "icon_profit_invite.png";
-          statusText = "消费补贴-成功";
-          break;
-        case "2":
-          iconName = "icon_profit_task.png";
-          statusText = "任务奖励-成功";
-          break;
-        case "0":
-          iconName = "icon_profit_task.png";
-          statusText = "活动奖励-成功";
-          break;
-        case "1":
-          iconName = "icon_profit_invite.png";
-          statusText = "邀请奖励-成功";
-          break;
-      }
-      /*if (GlobalConfig.getUserInfo().type == 3) {
-
-        switch (type) {
-          case "1":
-          case "2":
-            iconName = "icon_profit_task.png";
-            statusText = "任务奖励-成功";
-            break;
-          case "3":
-            iconName = "icon_profit_invite.png";
-            statusText = "邀请奖励-成功";
-            break;
-        }
-      } else {
-
-      }*/
+      statusText = listItem.title;
+    } catch (e) {
+      print(e);
+    }
+    switch (status) {
+      case "1": //已打款
+        prefixText = '+';
+        iconName = "icon_profit_invite.png";
+        break;
+      case "2": //已打款
+        prefixText = '-';
+        iconName = "icon_profit_task.png";
+        break;
     }
 
     return Column(

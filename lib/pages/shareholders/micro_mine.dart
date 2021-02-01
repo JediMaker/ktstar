@@ -17,6 +17,7 @@ import 'package:star/pages/order/order_list.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
+import 'package:star/pages/task/dividend_list.dart';
 import 'package:star/pages/task/fans_list.dart';
 import 'package:star/pages/task/income_list.dart';
 import 'package:star/pages/task/invitation_poster.dart';
@@ -103,6 +104,8 @@ class _MicroMinePageState extends State<MicroMinePage>
   var _todayActualDividend = '';
   UserInfoData _data;
 
+  var _currentDividend = '0';
+
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
     if (result.status) {
@@ -125,6 +128,11 @@ class _MicroMinePageState extends State<MicroMinePage>
           _payPwdStatus = result.data.payPwdStatus;
           isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
           isItAMicroShareholder = result.data.isPartner == "1" ? 1 : 0;
+          widget.title = result.data.isPartner == '1'
+              ? '见习股东'
+              : result.data.isPartner == '3'
+                  ? 'VIP股东'
+                  : '高级股东';
           _yesterdayProfit = result.data.partnerBonus.yesterday;
           _sevenDayProfit = result.data.partnerBonus.week;
           _monthProfit = result.data.partnerBonus.month;
@@ -166,54 +174,68 @@ class _MicroMinePageState extends State<MicroMinePage>
     _dialogNickNameController = new TextEditingController();
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
-    try {
-      _data = widget.userInfoData;
-      headUrl = _data.avatar;
-      nickName = _data.username;
-      userType = _data.type;
-      _phoneNumber = _data.tel;
-      _totalAssetsAmount = _data.totalPrice;
-      _cashWithdrawal = _data.txPrice;
-      _availableCashAmount = _data.nowPrice;
-      isWeChatBinded = _data.bindThird;
-      _isWithdrawal = _data.isWithdrawal;
-      registerTime = _data.regDate;
-      _weChatNo = _data.wxNo;
-      _code = _data.code;
-      _dialogWeChatNo = _data.wxNo;
-      _pwdStatus = _data.pwdStatus;
-      _payPwdStatus = _data.payPwdStatus;
-      isWeChatNoBinded = !CommonUtils.isEmpty(_data.wxNo) ? 1 : 0;
-      isItAMicroShareholder = _data.isPartner == "1" ? 1 : 0;
-      switch (_data.type) {
-        case "0":
-          isDiamonVip = false;
-          _cardBgImageName = 'task_mine_card_bg.png';
-          break;
-        case "1":
-          isDiamonVip = false;
-          _headBgColor = Color(0xffcc9976);
-          _cardBgImageName = 'task_mine_card_bg_expirence.png';
-          break;
-        case "2":
-          isDiamonVip = true;
-          _cardBgImageName = 'task_mine_card_bg_vip.png';
-          break;
-        case "3":
-//              #F8D9BA
-          isDiamonVip = true;
-          _cardTextColor = Color(0xffF8D9BA);
-          _cardBgImageName = 'task_mine_card_bg_proxy.png';
-          break;
-        case "4":
-//              #F8D9BA
-          isDiamonVip = true;
-          _cardTextColor = Color(0xffF8D9BA);
-          _cardBgImageName = 'task_mine_card_bg_proxy.png';
-          break;
-      }
-    } catch (e) {}
+    _initWidgetData();
     super.initState();
+  }
+
+  void _initWidgetData() {
+    if (mounted) {
+      setState(() {
+        try {
+          _data = widget.userInfoData;
+          headUrl = _data.avatar;
+          nickName = _data.username;
+          userType = _data.type;
+          _phoneNumber = _data.tel;
+          _totalAssetsAmount = _data.totalPrice;
+          _cashWithdrawal = _data.txPrice;
+          _availableCashAmount = _data.nowPrice;
+          isWeChatBinded = _data.bindThird;
+          _isWithdrawal = _data.isWithdrawal;
+          registerTime = _data.regDate;
+          _weChatNo = _data.wxNo;
+          _code = _data.code;
+          _dialogWeChatNo = _data.wxNo;
+          _pwdStatus = _data.pwdStatus;
+          _payPwdStatus = _data.payPwdStatus;
+          isWeChatNoBinded = !CommonUtils.isEmpty(_data.wxNo) ? 1 : 0;
+          isItAMicroShareholder = _data.isPartner == "1" ? 1 : 0;
+          _yesterdayProfit = _data.partnerBonus.yesterday;
+          _sevenDayProfit = _data.partnerBonus.week;
+          _monthProfit = _data.partnerBonus.month;
+          _totalProfit = _data.partnerBonus.total;
+          _todayShouldBeScoredRed = _data.partnerBonus.todayDeserve;
+          _todayActualDividend = _data.partnerBonus.todayPrice;
+          switch (_data.type) {
+            case "0":
+              isDiamonVip = false;
+              _cardBgImageName = 'task_mine_card_bg.png';
+              break;
+            case "1":
+              isDiamonVip = false;
+              _headBgColor = Color(0xffcc9976);
+              _cardBgImageName = 'task_mine_card_bg_expirence.png';
+              break;
+            case "2":
+              isDiamonVip = true;
+              _cardBgImageName = 'task_mine_card_bg_vip.png';
+              break;
+            case "3":
+              //              #F8D9BA
+              isDiamonVip = true;
+              _cardTextColor = Color(0xffF8D9BA);
+              _cardBgImageName = 'task_mine_card_bg_proxy.png';
+              break;
+            case "4":
+              //              #F8D9BA
+              isDiamonVip = true;
+              _cardTextColor = Color(0xffF8D9BA);
+              _cardBgImageName = 'task_mine_card_bg_proxy.png';
+              break;
+          }
+        } catch (e) {}
+      });
+    }
   }
 
   initWeChatResHandler() async {
@@ -343,7 +365,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                 // 只裁切底部的方法
                 clipper: BottomClipper(),
                 child: Container(
-                  height: ScreenUtil().setWidth(755),
+                  height: ScreenUtil().setWidth(865),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -949,7 +971,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             GlobalConfig.prefs.remove("token");
                             GlobalConfig.prefs.remove("loginData");
                             GlobalConfig.saveLoginStatus(false);
-                            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                            NavigatorUtils.navigatorRouter(
                                 context, LoginPage());
                           },
                         ),
@@ -1108,7 +1130,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     Color _itemsTextColor = Color(0xffD6B78E);
     Color _itemsAmountColor = Color(0xffFFFFFF);
     return Container(
-      height: ScreenUtil().setWidth(246),
+      height: ScreenUtil().setWidth(346),
       margin: EdgeInsets.only(
         left: 16,
         right: 16,
@@ -1127,123 +1149,192 @@ class _MicroMinePageState extends State<MicroMinePage>
             color: Colors.white,
             width: 0.5),*/
       ),
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Flexible(
-            fit: FlexFit.tight,
-            child: new InkWell(
-                onTap: () async {
-                  /* NavigatorUtils.navigatorRouter(
-                      context,
-                      FansListPage(
-                        isAgent: userType == "3",
-                      ));*/
-                },
-                child: new Container(
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0, right: 6),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor: Colors.transparent,
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'https://alipic.lanhuapp.com/xd9d064c12-dae4-4e4e-9b68-e15530e3738b',
-                            width: ScreenUtil().setWidth(96),
-                            height: ScreenUtil().setWidth(84),
-                          ),
+      child: Column(
+        children: [
+          Flexible(
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new Flexible(
+                  fit: FlexFit.tight,
+                  child: new InkWell(
+                      onTap: () async {
+                        /* NavigatorUtils.navigatorRouter(
+                            context,
+                            FansListPage(
+                              isAgent: userType == "3",
+                            ));*/
+                      },
+                      child: new Container(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              margin:
+                                  const EdgeInsets.only(bottom: 6.0, right: 6),
+                              child: new CircleAvatar(
+                                radius: 20.0,
+                                backgroundColor: Colors.transparent,
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      'https://alipic.lanhuapp.com/xd9d064c12-dae4-4e4e-9b68-e15530e3738b',
+                                  width: ScreenUtil().setWidth(96),
+                                  height: ScreenUtil().setWidth(84),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                new Container(
+                                  margin: const EdgeInsets.only(
+                                    bottom: 3.0,
+                                  ),
+                                  child: new Text(
+                                    "今日应得分红",
+                                    style: new TextStyle(
+                                      fontSize: ScreenUtil().setSp(38),
+                                      color: _itemsTextColor,
+                                    ),
+                                  ),
+                                ),
+                                new Container(
+                                  child: new Text(
+                                    "￥$_todayShouldBeScoredRed",
+                                    style: new TextStyle(
+                                      fontSize: ScreenUtil().setSp(42),
+                                      fontWeight: FontWeight.bold,
+                                      color: _itemsAmountColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 3.0,
-                            ),
-                            child: new Text(
-                              "今日应得分红",
-                              style: new TextStyle(
-                                fontSize: ScreenUtil().setSp(38),
-                                color: _itemsTextColor,
-                              ),
-                            ),
-                          ),
-                          new Container(
-                            child: new Text(
-                              "￥$_todayShouldBeScoredRed",
-                              style: new TextStyle(
-                                fontSize: ScreenUtil().setSp(42),
-                                fontWeight: FontWeight.bold,
-                                color: _itemsAmountColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                      )),
+                ),
+                Center(
+                  child: Container(
+                    color: Color(0xff5A524D),
+                    width: ScreenUtil().setWidth(1),
+                    height: ScreenUtil().setWidth(57),
                   ),
-                )),
-          ),
-          Center(
-            child: Container(
-              color: Color(0xff5A524D),
-              width: ScreenUtil().setWidth(1),
-              height: ScreenUtil().setWidth(57),
+                ),
+                new Flexible(
+                  fit: FlexFit.tight,
+                  child: new InkWell(
+                      onTap: () {
+//                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+                      },
+                      child: new Container(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              margin:
+                                  const EdgeInsets.only(bottom: 6.0, right: 6),
+                              child: new CircleAvatar(
+                                radius: 20.0,
+                                backgroundColor: Colors.transparent,
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      'https://alipic.lanhuapp.com/xdab2f2767-766c-481a-8f03-b799963ad02c',
+                                  width: ScreenUtil().setWidth(96),
+                                  height: ScreenUtil().setWidth(84),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                new Container(
+                                  margin: const EdgeInsets.only(
+                                    bottom: 3.0,
+                                  ),
+                                  child: new Text("今日实际分红",
+                                      style: new TextStyle(
+                                          color: _itemsTextColor,
+                                          fontSize: ScreenUtil().setSp(38))),
+                                ),
+                                new Container(
+                                  child: new Text("￥$_todayActualDividend",
+                                      style: new TextStyle(
+                                          color: _itemsAmountColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: ScreenUtil().setSp(42))),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+              ],
             ),
           ),
-          new Flexible(
-            fit: FlexFit.tight,
-            child: new InkWell(
-                onTap: () {
-//                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
-                },
-                child: new Container(
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 6.0, right: 6),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor: Colors.transparent,
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'https://alipic.lanhuapp.com/xdab2f2767-766c-481a-8f03-b799963ad02c',
-                            width: ScreenUtil().setWidth(96),
-                            height: ScreenUtil().setWidth(84),
-                          ),
+
+          ///分红金展示
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              NavigatorUtils.navigatorRouter(context, DividendListPage());
+            },
+            child: Container(
+              height: ScreenUtil().setWidth(100),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color(0xffE4C2A0),
+                  Color(0xffD9A573),
+                  Color(0xffDBB893),
+                ]),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(
+                    ScreenUtil().setWidth(28),
+                  ),
+                  bottomRight: Radius.circular(
+                    ScreenUtil().setWidth(28),
+                  ),
+                ),
+                /*border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+              color: Colors.white,
+              width: 0.5),*/
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Text(
+                        "当前分红金：$_currentDividend元",
+                        style: new TextStyle(
+                          color: Color(0xff3a3a3a),
+                          fontSize: ScreenUtil().setSp(42),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 3.0,
-                            ),
-                            child: new Text("今日实际分红",
-                                style: new TextStyle(
-                                    color: _itemsTextColor,
-                                    fontSize: ScreenUtil().setSp(38))),
-                          ),
-                          new Container(
-                            child: new Text("￥$_todayActualDividend",
-                                style: new TextStyle(
-                                    color: _itemsAmountColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: ScreenUtil().setSp(42))),
-                          ),
-                        ],
-                      )
-                    ],
+                      padding: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(51),
+                      ),
+                    ),
                   ),
-                )),
+                  Container(
+                    padding: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(51),
+                    ),
+                    child: CachedNetworkImage(
+                        width: ScreenUtil().setWidth(20),
+                        height: ScreenUtil().setWidth(35),
+                        imageUrl:
+                            "https://alipic.lanhuapp.com/xdf759159d-dc19-4470-9107-bae18bdaec20"),
+                  ),
+                ],
+              ),
+            ),
           ),
+
+          ///
         ],
       ),
     );
@@ -1566,12 +1657,12 @@ class _MicroMinePageState extends State<MicroMinePage>
                                     Text(
                                       "账户余额",
                                       style: TextStyle(
-                                          color: Color(0xff623413),
+                                          color: Color(0xff292929),
                                           fontWeight: FontWeight.bold,
                                           fontSize: ScreenUtil().setSp(36)),
                                     ),
                                     Icon(Icons.arrow_right,
-                                        color: Color(0xff623413),
+                                        color: Color(0xff292929),
                                         size: ScreenUtil().setSp(42)),
                                   ],
                                 ),
@@ -1584,7 +1675,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        color: Color(0xff623413),
+                                        color: Color(0xff292929),
                                         fontSize: ScreenUtil().setSp(81),
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -1643,7 +1734,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               height: ScreenUtil().setWidth(79),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: Color(0xff623413),
+                                color: Color(0xff2a2a2a),
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(ScreenUtil().setWidth(51))),
                               ),
