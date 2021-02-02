@@ -774,8 +774,10 @@ class _TaskListPageState extends State<TaskListPage>
         builder: (context) {
           return EasyRefresh.custom(
             enableControlFinishLoad: false,
+            topBouncing: false,
+            bottomBouncing: false,
             header: CustomHeader(
-                completeDuration: Duration(seconds: 2),
+//                completeDuration: Duration(seconds: 2),
                 headerBuilder: (context,
                     refreshState,
                     pulledExtent,
@@ -806,7 +808,7 @@ class _TaskListPageState extends State<TaskListPage>
                   );
                 }),
             footer: CustomFooter(
-                completeDuration: Duration(seconds: 1),
+//                completeDuration: Duration(seconds: 1),
                 footerBuilder: (context,
                     loadState,
                     pulledExtent,
@@ -827,10 +829,10 @@ class _TaskListPageState extends State<TaskListPage>
                         child: Container(
                           width: 30.0,
                           height: 30.0,
-                          child: SpinKitCircle(
+                         /* child: SpinKitCircle(
                             color: GlobalConfig.colorPrimary,
                             size: 30.0,
-                          ),
+                          ),*/
                         ),
                       ),
                     ],

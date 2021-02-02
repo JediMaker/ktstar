@@ -366,7 +366,7 @@ class _TaskHallPageState extends State<TaskHallPage>
             return EasyRefresh.custom(
               enableControlFinishLoad: false,
               header: CustomHeader(
-                  completeDuration: Duration(seconds: 2),
+//                  completeDuration: Duration(seconds: 2),
                   headerBuilder: (context,
                       refreshState,
                       pulledExtent,

@@ -278,7 +278,7 @@ class _TaskMinePageState extends State<TaskMinePage>
             _initUserData();
           },
           header: CustomHeader(
-              completeDuration: Duration(seconds: 2),
+//              completeDuration: Duration(seconds: 2),
               headerBuilder: (context,
                   refreshState,
                   pulledExtent,
@@ -1019,7 +1019,7 @@ class _TaskMinePageState extends State<TaskMinePage>
                             GlobalConfig.prefs.remove("token");
                             GlobalConfig.prefs.remove("loginData");
                             GlobalConfig.saveLoginStatus(false);
-                            NavigatorUtils.navigatorRouterAndRemoveUntil(
+                            NavigatorUtils.navigatorRouter(
                                 context, LoginPage());
                           },
                         ),

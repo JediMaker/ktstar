@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
@@ -46,6 +47,38 @@ class _TaskIndexPageState extends State<TaskIndexPage>
     super.initState();
 
     _currentIndex = widget.currentIndex;
+    bus.on("changBottomBar", (arg) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        /*if (index == 1) {
+                      if (!GlobalConfig.isLogin()) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginPage();
+                        }));
+                      } else {
+                        _navigationViews[_currentIndex].controller.reverse();
+                        _currentIndex = index;
+                        _navigationViews[_currentIndex].controller.forward();
+                        _currentPage = _pageList[_currentIndex];
+                      }
+                    } else {
+                      _navigationViews[_currentIndex].controller.reverse();
+                      _currentIndex = index;
+                      _navigationViews[_currentIndex].controller.forward();
+                      _currentPage = _pageList[_currentIndex];
+                    }*/
+        {
+          _navigationViews[_currentIndex].controller.reverse();
+          _currentIndex = 0;
+          _navigationViews[_currentIndex].controller.forward();
+          _currentPage = _pageList[_currentIndex];
+          _pageController.jumpToPage(_currentIndex);
+        }
+      });
+    });
   }
 
   DateTime _lastQuitTime;
@@ -90,13 +123,13 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new NavigationIconView(
           icon: CachedNetworkImage(
             imageUrl:
-            'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
           ),
           activeIcon: CachedNetworkImage(
             imageUrl:
-            'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
+                'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
           ),
@@ -126,13 +159,13 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       new NavigationIconView(
           icon: CachedNetworkImage(
             imageUrl:
-            'https://alipic.lanhuapp.com/xdc5273bd2-20f1-4a0b-9ee8-4db8e81dd1c8',
+                'https://alipic.lanhuapp.com/xdc5273bd2-20f1-4a0b-9ee8-4db8e81dd1c8',
             width: ScreenUtil().setWidth(56),
             height: ScreenUtil().setWidth(76),
           ),
           activeIcon: CachedNetworkImage(
             imageUrl:
-            'https://alipic.lanhuapp.com/xd6b741c9c-ec84-4146-b72a-3705771a4bc5',
+                'https://alipic.lanhuapp.com/xd6b741c9c-ec84-4146-b72a-3705771a4bc5',
             width: ScreenUtil().setWidth(56),
             height: ScreenUtil().setWidth(76),
           ),
