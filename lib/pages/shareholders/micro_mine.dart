@@ -133,12 +133,16 @@ class _MicroMinePageState extends State<MicroMinePage>
               : result.data.isPartner == '3'
                   ? 'VIP股东'
                   : '高级股东';
+          if (result.data.isPartner == '2') {
+            widget.title = '我的';
+          }
           _yesterdayProfit = result.data.partnerBonus.yesterday;
           _sevenDayProfit = result.data.partnerBonus.week;
           _monthProfit = result.data.partnerBonus.month;
           _totalProfit = result.data.partnerBonus.total;
           _todayShouldBeScoredRed = result.data.partnerBonus.todayDeserve;
           _todayActualDividend = result.data.partnerBonus.todayPrice;
+          _currentDividend = result.data.partnerBonus.coin;
           switch (result.data.type) {
             case "0":
               isDiamonVip = false;
@@ -206,6 +210,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           _totalProfit = _data.partnerBonus.total;
           _todayShouldBeScoredRed = _data.partnerBonus.todayDeserve;
           _todayActualDividend = _data.partnerBonus.todayPrice;
+          _currentDividend = _data.partnerBonus.coin;
           switch (_data.type) {
             case "0":
               isDiamonVip = false;
@@ -330,24 +335,24 @@ class _MicroMinePageState extends State<MicroMinePage>
                   enableInfiniteRefresh,
                   success,
                   noMore) {
-                return Stack(
-                  children: <Widget>[
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        width: 30.0,
-                        height: 30.0,
-                        child: SpinKitCircle(
-                          color: GlobalConfig.taskBtnTxtGreyColor,
-                          size: 30.0,
-                        ),
-                      ),
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    child: SpinKitCircle(
+                      color: GlobalConfig.taskBtnTxtGreyColor,
+                      size: 30.0,
                     ),
-                  ],
-                );
-              }),
+                  ),
+                ),
+              ],
+            );
+          }),
           slivers: <Widget>[
             buildContent(),
           ],
@@ -384,6 +389,21 @@ class _MicroMinePageState extends State<MicroMinePage>
                   dividendComparisonLayout(),
                   buildCardInfo(),
                   itemsLayout(),
+                  GestureDetector(
+                    onTap: () {
+                      NavigatorUtils.navigatorRouter(
+                          context, InvitationPosterPage());
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: ScreenUtil().setWidth(10)),
+                      child: CachedNetworkImage(
+                          width: ScreenUtil().setWidth(1058),
+                          height: ScreenUtil().setWidth(302),
+                          imageUrl:
+                              "https://alipic.lanhuapp.com/xd8c0b346a-86c3-4734-996d-2f9b553c9ffa"),
+                    ),
+                  )
                 ],
               ),
             ],
@@ -434,8 +454,10 @@ class _MicroMinePageState extends State<MicroMinePage>
         break;
     }
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+      margin: EdgeInsets.only(
+          left: GlobalConfig.LAYOUT_MARGIN,
+          right: GlobalConfig.LAYOUT_MARGIN,
+          bottom: ScreenUtil().setHeight(30)),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
@@ -482,7 +504,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -539,7 +562,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -596,7 +620,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -673,7 +698,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -723,7 +749,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: GlobalConfig.LAYOUT_MARGIN),
                   child: Divider(
                     height: ScreenUtil().setHeight(1),
                     color: Color(0xFFefefef),
@@ -767,7 +794,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -813,7 +841,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: GlobalConfig.LAYOUT_MARGIN),
                   child: Divider(
                     height: ScreenUtil().setHeight(1),
                     color: Color(0xFFefefef),
@@ -867,7 +896,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                 ? false
                 : GlobalConfig.prefs.getBool('needUpdate'),
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              margin:
+                  EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
               child: Divider(
                 height: ScreenUtil().setHeight(1),
                 color: Color(0xFFefefef),
@@ -925,7 +955,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -1004,7 +1035,11 @@ class _MicroMinePageState extends State<MicroMinePage>
             side: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
-          margin: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+          margin: EdgeInsets.only(
+              left: GlobalConfig.LAYOUT_MARGIN,
+              right: GlobalConfig.LAYOUT_MARGIN,
+              top: 10,
+              bottom: 10),
           child: Column(
             children: <Widget>[
               Container(
@@ -1132,8 +1167,8 @@ class _MicroMinePageState extends State<MicroMinePage>
     return Container(
       height: ScreenUtil().setWidth(346),
       margin: EdgeInsets.only(
-        left: 16,
-        right: 16,
+        left: GlobalConfig.LAYOUT_MARGIN,
+        right: GlobalConfig.LAYOUT_MARGIN,
         top: ScreenUtil().setWidth(30),
       ),
       alignment: Alignment.center,
@@ -1169,10 +1204,11 @@ class _MicroMinePageState extends State<MicroMinePage>
                       child: new Container(
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             new Container(
                               margin:
-                                  const EdgeInsets.only(bottom: 6.0, right: 6),
+                              EdgeInsets.only( right: ScreenUtil().setWidth(31),),
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
@@ -1186,6 +1222,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 new Container(
                                   margin: const EdgeInsets.only(
@@ -1194,7 +1231,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   child: new Text(
                                     "今日应得分红",
                                     style: new TextStyle(
-                                      fontSize: ScreenUtil().setSp(38),
+                                      fontSize: ScreenUtil().setSp(32),
                                       color: _itemsTextColor,
                                     ),
                                   ),
@@ -1231,10 +1268,11 @@ class _MicroMinePageState extends State<MicroMinePage>
                       child: new Container(
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             new Container(
                               margin:
-                                  const EdgeInsets.only(bottom: 6.0, right: 6),
+                                   EdgeInsets.only( right: ScreenUtil().setWidth(31),),
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
@@ -1248,6 +1286,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 new Container(
                                   margin: const EdgeInsets.only(
@@ -1256,7 +1295,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   child: new Text("今日实际分红",
                                       style: new TextStyle(
                                           color: _itemsTextColor,
-                                          fontSize: ScreenUtil().setSp(38))),
+                                          fontSize: ScreenUtil().setSp(32))),
                                 ),
                                 new Container(
                                   child: new Text("￥$_todayActualDividend",
@@ -1311,7 +1350,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         style: new TextStyle(
                           color: Color(0xff3a3a3a),
                           fontSize: ScreenUtil().setSp(42),
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                       padding: EdgeInsets.only(
@@ -1348,7 +1387,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     Color _itemsTextColor = Color(0xff666666);
     return Container(
       height: ScreenUtil().setHeight(292),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1501,7 +1540,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             backgroundColor: Colors.transparent,
                             child: CachedNetworkImage(
                               imageUrl:
-                                  "https://alipic.lanhuapp.com/xdd805161f-c175-4e03-902c-fb5c46c4cb06",
+                                  "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
                               width: ScreenUtil().setWidth(128),
                               height: ScreenUtil().setWidth(128),
                             ),
@@ -1576,7 +1615,10 @@ class _MicroMinePageState extends State<MicroMinePage>
         visible: !isDiamonVip,
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.only(top: 10, left: 16, right: 16),
+          margin: EdgeInsets.only(
+              top: 10,
+              left: GlobalConfig.LAYOUT_MARGIN,
+              right: GlobalConfig.LAYOUT_MARGIN),
           child: Stack(
             alignment: Alignment.topCenter,
             children: <Widget>[
@@ -1624,7 +1666,8 @@ class _MicroMinePageState extends State<MicroMinePage>
     return Card(
       elevation: 0,
       margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+          horizontal: GlobalConfig.LAYOUT_MARGIN,
+          vertical: ScreenUtil().setHeight(30)),
       child: Stack(
         children: <Widget>[
           Container(
@@ -1658,7 +1701,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                       "账户余额",
                                       style: TextStyle(
                                           color: Color(0xff292929),
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: ScreenUtil().setSp(36)),
                                     ),
                                     Icon(Icons.arrow_right,
@@ -1677,7 +1720,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                     style: TextStyle(
                                         color: Color(0xff292929),
                                         fontSize: ScreenUtil().setSp(81),
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ],
@@ -1800,7 +1843,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   style: TextStyle(
                                       color: Color(0xff222222),
                                       fontSize: ScreenUtil().setSp(42),
-                                      fontWeight: FontWeight.bold),
+                                      ),
                                 ),
                               ],
                             ),
@@ -1845,7 +1888,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   style: TextStyle(
                                       color: Color(0xff222222),
                                       fontSize: ScreenUtil().setSp(42),
-                                      fontWeight: FontWeight.bold),
+                                      ),
                                 ),
                               ],
                             ),
@@ -1877,7 +1920,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               "昨日分红",
                               style: TextStyle(
                                 color: Color(0xffB9B9B9),
-                                fontSize: ScreenUtil().setSp(38),
+                                fontSize: ScreenUtil().setSp(32),
                               ),
                             ),
                             Container(
@@ -1886,22 +1929,28 @@ class _MicroMinePageState extends State<MicroMinePage>
                               ),
                               child: Text.rich(
                                 TextSpan(children: [
-                                  TextSpan(
-                                    text: "¥",
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(33),
+                                  WidgetSpan(
+                                    child: Visibility(
+                                      child: Text(
+                                        "¥",
+                                        style: TextStyle(
+                                          color: Color(0xff222222),
+                                          fontSize: ScreenUtil().setSp(32),
+                                        ),
+                                      ),
+                                      visible: _yesterdayProfit != '0',
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "$_yesterdayProfit",
+                                    text:
+                                        "${_yesterdayProfit == '0' ? '0.00' : '$_yesterdayProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Color(0xff222222),
-                                  fontSize: ScreenUtil().setSp(48),
+                                  fontSize: ScreenUtil().setSp(32),
                                 ),
                               ),
                             ),
@@ -1922,7 +1971,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               "近1周",
                               style: TextStyle(
                                 color: Color(0xffB9B9B9),
-                                fontSize: ScreenUtil().setSp(38),
+                                fontSize: ScreenUtil().setSp(32),
                               ),
                             ),
                             Container(
@@ -1931,22 +1980,28 @@ class _MicroMinePageState extends State<MicroMinePage>
                               ),
                               child: Text.rich(
                                 TextSpan(children: [
-                                  TextSpan(
-                                    text: "¥",
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(33),
+                                  WidgetSpan(
+                                    child: Visibility(
+                                      child: Text(
+                                        "¥",
+                                        style: TextStyle(
+                                          color: Color(0xff222222),
+                                          fontSize: ScreenUtil().setSp(32),
+                                        ),
+                                      ),
+                                      visible: _sevenDayProfit != '0',
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "$_sevenDayProfit",
+                                    text:
+                                        "${_sevenDayProfit == '0' ? '0.00' : '$_sevenDayProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Color(0xff222222),
-                                  fontSize: ScreenUtil().setSp(48),
+                                  fontSize: ScreenUtil().setSp(32),
                                 ),
                               ),
                             ),
@@ -1967,7 +2022,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               "近1月",
                               style: TextStyle(
                                 color: Color(0xffB9B9B9),
-                                fontSize: ScreenUtil().setSp(38),
+                                fontSize: ScreenUtil().setSp(32),
                               ),
                             ),
                             Container(
@@ -1976,22 +2031,28 @@ class _MicroMinePageState extends State<MicroMinePage>
                               ),
                               child: Text.rich(
                                 TextSpan(children: [
-                                  TextSpan(
-                                    text: "¥",
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(33),
+                                  WidgetSpan(
+                                    child: Visibility(
+                                      child: Text(
+                                        "¥",
+                                        style: TextStyle(
+                                          color: Color(0xff222222),
+                                          fontSize: ScreenUtil().setSp(32),
+                                        ),
+                                      ),
+                                      visible: _monthProfit != '0',
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "$_monthProfit",
+                                    text:
+                                        "${_monthProfit == '0' ? '0.00' : '$_monthProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Color(0xff222222),
-                                  fontSize: ScreenUtil().setSp(48),
+                                  fontSize: ScreenUtil().setSp(32),
                                 ),
                               ),
                             ),
@@ -2012,7 +2073,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               "总分红",
                               style: TextStyle(
                                 color: Color(0xffB9B9B9),
-                                fontSize: ScreenUtil().setSp(38),
+                                fontSize: ScreenUtil().setSp(32),
                               ),
                             ),
                             Container(
@@ -2021,22 +2082,28 @@ class _MicroMinePageState extends State<MicroMinePage>
                               ),
                               child: Text.rich(
                                 TextSpan(children: [
-                                  TextSpan(
-                                    text: "¥",
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(33),
+                                  WidgetSpan(
+                                    child: Visibility(
+                                      child: Text(
+                                        "¥",
+                                        style: TextStyle(
+                                          color: Color(0xff222222),
+                                          fontSize: ScreenUtil().setSp(32),
+                                        ),
+                                      ),
+                                      visible: _totalProfit != '0',
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "$_totalProfit",
+                                    text:
+                                        "${_totalProfit == '0' ? '0.00' : '$_totalProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Color(0xff222222),
-                                  fontSize: ScreenUtil().setSp(48),
+                                  fontSize: ScreenUtil().setSp(32),
                                 ),
                               ),
                             ),
@@ -2083,6 +2150,7 @@ class _MicroMinePageState extends State<MicroMinePage>
 
   Widget buildHeadLayout() {
     String text = "";
+    text = widget.title;
     switch (userType) {
       case "0":
         text = "普通会员";
@@ -2100,7 +2168,9 @@ class _MicroMinePageState extends State<MicroMinePage>
         text = "钻石会员";
         break;
     }
-    text = widget.title;
+    if (widget.title == '我的') {
+      text = "普通用户";
+    }
     return ListTile(
       onTap: () async {
         await NavigatorUtils.navigatorRouter(
@@ -2111,27 +2181,32 @@ class _MicroMinePageState extends State<MicroMinePage>
         width: ScreenUtil().setWidth(168),
         height: ScreenUtil().setWidth(168),
         child: Stack(
+          alignment: Alignment.bottomCenter,
           children: <Widget>[
-            headUrl == null
-                ? Visibility(
-                    visible: false,
-                    child: Image.asset(
-                      "static/images/task_default_head.png",
-                      width: ScreenUtil().setWidth(146),
-                      height: ScreenUtil().setWidth(146),
-                      fit: BoxFit.fill,
-                    ))
-                : ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: headUrl,
-                      width: ScreenUtil().setWidth(146),
-                      height: ScreenUtil().setWidth(146),
-                      fit: BoxFit.fill,
+            Container(
+              margin: EdgeInsets.only(
+                bottom: ScreenUtil().setWidth(25),
+              ),
+              child: headUrl == null
+                  ? Visibility(
+                      visible: false,
+                      child: Image.asset(
+                        "static/images/task_default_head.png",
+                        width: ScreenUtil().setWidth(158),
+                        height: ScreenUtil().setWidth(158),
+                        fit: BoxFit.fill,
+                      ))
+                  : ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: headUrl,
+                        width: ScreenUtil().setWidth(158),
+                        height: ScreenUtil().setWidth(158),
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
+            ),
             Visibility(
                 child: Container(
-              alignment: Alignment.bottomLeft,
               child: Container(
                   width: ScreenUtil().setWidth(164),
                   height: ScreenUtil().setWidth(56),
@@ -2154,7 +2229,11 @@ class _MicroMinePageState extends State<MicroMinePage>
                         width: ScreenUtil().setWidth(20),
                         height: ScreenUtil().setWidth(25),
                       ),
-                      Center(
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: ScreenUtil().setWidth(6),
+                          bottom: ScreenUtil().setWidth(6),
+                        ),
                         child: Text("$text",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -2251,7 +2330,7 @@ class _MicroMinePageState extends State<MicroMinePage>
               border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                   color: Color(0xffFFFFFF),
-                  width: 0.5),
+                  width: ScreenUtil().setWidth(2)),
             ),
             child: Text(
               "升级股东",
