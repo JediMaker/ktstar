@@ -137,10 +137,10 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height: ScreenUtil().setHeight(1231),
+                            height:  ScreenUtil.screenWidth,
                             child: Swiper(
                               key: UniqueKey(),
-                              itemHeight: ScreenUtil().setHeight(1231),
+                              itemHeight: ScreenUtil.screenWidth,
                               itemCount: detailData == null ||
                                       detailData.data == null ||
                                       detailData.data.bannerImgs == null
