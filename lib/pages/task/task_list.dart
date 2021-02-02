@@ -403,9 +403,10 @@ class _TaskListPageState extends State<TaskListPage>
         }
       });
     }
-    if (bannerList.length > 1) {
+    ///
+//    if (bannerList.length > 1) {
       _swiperController.startAutoplay();
-    }
+//    }
   }
 
   ///
@@ -1435,7 +1436,7 @@ class _TaskListPageState extends State<TaskListPage>
   Widget desLayout() {
     return SliverToBoxAdapter(
       child: Container(
-        margin: EdgeInsets.only(left: 16, top: 8),
+        margin: EdgeInsets.only(left: 16, top: 8, right: 16),
         child: Column(
           children: [
             Row(
@@ -1465,6 +1466,7 @@ class _TaskListPageState extends State<TaskListPage>
                 ),
                 Expanded(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CachedNetworkImage(
@@ -1489,6 +1491,7 @@ class _TaskListPageState extends State<TaskListPage>
                 Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CachedNetworkImage(
                         imageUrl:
