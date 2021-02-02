@@ -35,7 +35,7 @@ import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
-import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_home.dart';
+import 'package:star/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
