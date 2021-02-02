@@ -59,9 +59,10 @@ class TokenInterceptors extends InterceptorsWrapper {
       if (entity.errCode.toString() == "303" ||
           entity.errCode.toString() == "306") {
         CommonUtils.showToast("未获取到登录信息，，请登录！");
-        Future.delayed(Duration(seconds: 1)).then((onValue) {
+        Future.delayed(Duration(seconds: 1)).then((onValue) async {
           var context = GlobalConfig.navigatorKey.currentState.overlay.context;
-          NavigatorUtils.navigatorRouter(context, LoginPage());
+          await NavigatorUtils.navigatorRouter(context, LoginPage());
+          bus.emit("changBottomBar");
           return;
         });
       }
@@ -72,18 +73,20 @@ class TokenInterceptors extends InterceptorsWrapper {
           GlobalConfig.prefs.remove("loginData");
           GlobalConfig.saveLoginStatus(false);
           CommonUtils.showToast("登陆状态已过期，请重新登录！");
-          Future.delayed(Duration(seconds: 1)).then((onValue) {
+          Future.delayed(Duration(seconds: 1)).then((onValue) async {
             var context =
                 GlobalConfig.navigatorKey.currentState.overlay.context;
-            NavigatorUtils.navigatorRouter(context, LoginPage());
+            await NavigatorUtils.navigatorRouter(context, LoginPage());
+            bus.emit("changBottomBar");
             return;
           });
         } else {
           CommonUtils.showToast("未获取到登录信息，，请登录！");
-          Future.delayed(Duration(seconds: 1)).then((onValue) {
+          Future.delayed(Duration(seconds: 1)).then((onValue) async {
             var context =
                 GlobalConfig.navigatorKey.currentState.overlay.context;
-            NavigatorUtils.navigatorRouter(context, LoginPage());
+            await NavigatorUtils.navigatorRouter(context, LoginPage());
+            bus.emit("changBottomBar");
             return;
           });
         }
