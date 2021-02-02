@@ -15,7 +15,7 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/pages/widget/round_tab_indicator.dart';
-
+///拼多多首页
 class PddHomeIndexPage extends StatefulWidget {
   PddHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
