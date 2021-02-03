@@ -1712,31 +1712,35 @@ class _TaskListPageState extends State<TaskListPage>
     } catch (e) {
       print(e);
     }
-    if ((name.contains('游戏') ||
-            name.contains('赚钱') ||
-            name.contains('会员') ||
-            name.contains('加油')) &&
-        GlobalConfig.isHuaweiUnderReview) {
-      needShow = false;
+    if(!CommonUtils.isEmpty(name)){
+      if ((name.contains('游戏') ||
+          name.contains('赚钱') ||
+          name.contains('会员') ||
+          name.contains('加油')) &&
+          GlobalConfig.isHuaweiUnderReview) {
+        needShow = false;
+      }
+      if ((name.contains('游戏') ||
+          name.contains('赚钱') ||
+          name.contains('会员') ||
+          name.contains('加油')) &&
+          GlobalConfig.isHuaweiUnderReview) {
+        needShow = false;
+      }
+      if ((name.contains('游戏') ||
+          name.contains('赚钱') ||
+          name.contains('会员') ||
+          name.contains('星选')) &&
+          isUnderReview) {
+        needShow = false;
+      }
     }
+
     if (Platform.isIOS) {
       isUnderReview = GlobalConfig.prefs.getBool("isHuaweiUnderReview");
     }
 
-    if ((name.contains('游戏') ||
-            name.contains('赚钱') ||
-            name.contains('会员') ||
-            name.contains('加油')) &&
-        GlobalConfig.isHuaweiUnderReview) {
-      needShow = false;
-    }
-    if ((name.contains('游戏') ||
-            name.contains('赚钱') ||
-            name.contains('会员') ||
-            name.contains('星选')) &&
-        isUnderReview) {
-      needShow = false;
-    }
+
     return new InkWell(
         onTap: () async {
           if (name.contains('赚钱') && Platform.isIOS) {
