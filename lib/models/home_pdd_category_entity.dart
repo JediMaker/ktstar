@@ -19,4 +19,5 @@ class HomePddCategoryDataCat with JsonConvert<HomePddCategoryDataCat> {
 	int catId;
 	@JSONField(name: "cat_name")
 	String catName;
+	String subtitle;
 }

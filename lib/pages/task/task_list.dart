@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluwx/fluwx.dart';
@@ -34,6 +35,7 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
+import 'package:star/pages/goods/home_pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
@@ -151,14 +153,64 @@ class _TaskListPageState extends State<TaskListPage>
           height: 36,
           child: Tab(
             iconMargin: EdgeInsets.all(0),
-            child: Text(
-              "${classify.catName}",
-              style: TextStyle(
-                  fontSize: ScreenUtil().setSp(42),
-                  fontWeight: FontWeight.bold,
-                  color: index == _selectedTabIndex
-                      ? Color(0xffCE0100)
-                      : Color(0xff222222)),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "${classify.catName}",
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                          fontWeight: FontWeight.bold,
+                          color: index == _selectedTabIndex
+                              ? Color(0xffCE0100)
+                              : Color(0xff222222)),
+                    ),
+                    Visibility(
+                      visible: !CommonUtils.isEmpty("${classify.subtitle}"),
+                      child: Container(
+                        height: ScreenUtil().setWidth(46),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(14),
+                        ),
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(8),
+                        ),
+                        decoration: BoxDecoration(
+                          color: index == _selectedTabIndex
+                              ? Color(0xffCE0100)
+                              : Colors.transparent,
+                          borderRadius:
+                              BorderRadius.circular(ScreenUtil().setWidth(23)),
+                        ),
+                        child: Text(
+                          "${classify.subtitle}",
+                          style: TextStyle(
+                              fontSize: ScreenUtil().setSp(28),
+                              color: index == _selectedTabIndex
+                                  ? Color(0xffffffff)
+                                  : Color(0xffafafaf)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Visibility(
+                  visible: index != cats.length - 1,
+                  child: Center(
+                    child: Container(
+//                      color: Color(0xffCE0100),
+                      margin: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(60),
+                      ),
+                      color: Color(0xffb9b9b9),
+                      width: ScreenUtil().setWidth(1),
+                      height: ScreenUtil().setWidth(43),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ));
@@ -407,8 +459,8 @@ class _TaskListPageState extends State<TaskListPage>
 
     ///
     if (bannerList.length > 1) {
-    _swiperController.startAutoplay();
-    }else{
+      _swiperController.startAutoplay();
+    } else {
       _swiperController.stopAutoplay();
     }
   }
@@ -448,6 +500,7 @@ class _TaskListPageState extends State<TaskListPage>
     _marqueeSwiperController.stopAutoplay();
     _marqueeSwiperController.dispose();
     _tabController.dispose();
+    _pddTabController.dispose();
     _isLoop = false;
     _isMarqueeLoop = false;
     super.dispose();
@@ -948,7 +1001,7 @@ class _TaskListPageState extends State<TaskListPage>
               buildApplyForMicroShareholders(),
               buildAdRowContainer(),
               pddcategoryTabsView,
-              HomeGoodsListPage(),
+              HomePddGoodsListPage(),
               SliverToBoxAdapter(
                 child: Container(
                   child: SizedBox(
@@ -1071,6 +1124,7 @@ class _TaskListPageState extends State<TaskListPage>
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(33),
                                 height: ScreenUtil().setWidth(33),
+//                                color: Color(0xffce0100),
                               )
                             ],
                           ),
@@ -1524,11 +1578,12 @@ class _TaskListPageState extends State<TaskListPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl:
-                            "https://alipic.lanhuapp.com/xd3a1dc3af-ad52-48db-bac9-d65d055bda2e",
+                      SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+                        'static/images/icon_seven.svg',
                         width: ScreenUtil().setWidth(42),
                         height: ScreenUtil().setWidth(42),
+                        color: Color(0xffce0100),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 4),
@@ -1548,11 +1603,12 @@ class _TaskListPageState extends State<TaskListPage>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl:
-                            "https://alipic.lanhuapp.com/xd4b9bfe6d-b3c3-4e21-9489-3d377e6774eb",
+                      SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+                        'static/images/icon_return.svg',
                         width: ScreenUtil().setWidth(42),
                         height: ScreenUtil().setWidth(42),
+                        color: Color(0xffce0100),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 4),
@@ -1977,7 +2033,7 @@ class _TaskListPageState extends State<TaskListPage>
                 //bannerList == null ? 0 : bannerList.length,
                 loop: _isLoop,
                 autoplay: false,
-                duration: 50,
+                duration: 30,
                 autoplayDisableOnInteraction: true,
                 key: ValueKey(context),
                 controller: _swiperController,
@@ -2031,8 +2087,8 @@ class _TaskListPageState extends State<TaskListPage>
                       }*/
                       try {
                         _gradientCorlor = LinearGradient(colors: [
-                          generator.darkMutedColor.color,
-                          generator.darkMutedColor.color,
+                          generator.dominantColor.color,
+                          generator.dominantColor.color,
                         ]);
                       } catch (e) {}
                       /*_gradientCorlor = LinearGradient(colors: [

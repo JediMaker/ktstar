@@ -94,13 +94,15 @@ dependencies:
 
   #  友盟统计
   umeng_analytics_plugin: ^1.0.3
-#  umeng: ^0.0.3
-#  lcfarm_flutter_umeng: ^0.1.9
+  #  umeng: ^0.0.3
+  #  lcfarm_flutter_umeng: ^0.1.9
   loading: ^1.0.2
   #  手机信息
   device_info: ^1.0.0
 
   search_page: ^1.4.0
+  #  加载svg图片
+  flutter_svg: ^0.18.0
 
 dev_dependencies:
   json_model: #latest version

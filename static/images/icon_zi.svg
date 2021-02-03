@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: #ce0100;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        fill: #ce0100;
+        font-size: 28px;
+        font-family: PingFang SC Medium, PingFang SC;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="组_1318" data-name="组 1318" transform="translate(-47 -762.546)">
+    <g id="椭圆_196" data-name="椭圆 196" class="cls-1" transform="translate(47 762.546)">
+      <circle class="cls-3" cx="21" cy="21" r="21"/>
+      <circle class="cls-4" cx="21" cy="21" r="20"/>
+    </g>
+    <text id="自" class="cls-2" transform="translate(54 793.546)"><tspan x="0" y="0">自</tspan></text>
+  </g>
+</svg>

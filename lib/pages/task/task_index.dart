@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
@@ -121,35 +122,64 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   Scaffold buildHomeWidget() {
     _navigationViews = <NavigationIconView>[
       new NavigationIconView(
+          icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_home.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
+          ),
+/*
           icon: CachedNetworkImage(
             imageUrl:
-                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+                'https://alipic.lanhuapp.com/xde9009b67-5da3-4cb5-ae5e-0a6adaf47e9e',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
           ),
+*/
+          activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_home_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
+          ),
+/*
           activeIcon: CachedNetworkImage(
             imageUrl:
                 'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
           ),
+*/
           title: new Text(
             '首页',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
       new NavigationIconView(
+          icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
+          ),
+/*
           icon: CachedNetworkImage(
             imageUrl:
                 'https://alipic.lanhuapp.com/xda87fe7ad-f66f-4d6a-a344-5bfcd0664c21',
             width: ScreenUtil().setWidth(75),
             height: ScreenUtil().setWidth(75),
           ),
-          activeIcon: CachedNetworkImage(
-            imageUrl:
-                'https://alipic.lanhuapp.com/xdb5e9695f-3ead-4ba1-b2df-3390f0abef31',
-            width: ScreenUtil().setWidth(75),
-            height: ScreenUtil().setWidth(75),
+*/
+          activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
           ),
           title: new Text(
             '分类',
@@ -157,17 +187,19 @@ class _TaskIndexPageState extends State<TaskIndexPage>
           ),
           vsync: this),
       new NavigationIconView(
-          icon: CachedNetworkImage(
-            imageUrl:
-                'https://alipic.lanhuapp.com/xdc5273bd2-20f1-4a0b-9ee8-4db8e81dd1c8',
+          icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_mine.svg',
             width: ScreenUtil().setWidth(56),
             height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
           ),
-          activeIcon: CachedNetworkImage(
-            imageUrl:
-                'https://alipic.lanhuapp.com/xd6b741c9c-ec84-4146-b72a-3705771a4bc5',
+          activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_mine_sel.svg',
             width: ScreenUtil().setWidth(56),
             height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
           ),
           title: new Text(
             '我的',
