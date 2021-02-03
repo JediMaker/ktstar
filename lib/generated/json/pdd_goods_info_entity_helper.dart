@@ -76,6 +76,9 @@ pddGoodsInfoDataFromJson(PddGoodsInfoData data, Map<String, dynamic> json) {
 	if (json['mall_name'] != null) {
 		data.mallName = json['mall_name']?.toString();
 	}
+	if (json['g_bonus'] != null) {
+		data.gBonus = json['g_bonus']?.toString();
+	}
 	if (json['login_status'] != null) {
 		data.loginStatus = json['login_status']?.toString();
 	}
@@ -109,6 +112,7 @@ Map<String, dynamic> pddGoodsInfoDataToJson(PddGoodsInfoData entity) {
 	data['serv_txt'] = entity.servTxt;
 	data['lgst_txt'] = entity.lgstTxt;
 	data['mall_name'] = entity.mallName;
+	data['g_bonus'] = entity.gBonus;
 	data['login_status'] = entity.loginStatus;
 	data['url'] = entity.url;
 	if (entity.coupons != null) {

@@ -92,8 +92,14 @@ searchPddGoodsListDataListFromJson(SearchPddGoodsListDataList data, Map<String, 
 	if (json['mall_name'] != null) {
 		data.mallName = json['mall_name']?.toString();
 	}
+	if (json['g_bonus'] != null) {
+		data.gBonus = json['g_bonus']?.toString();
+	}
 	if (json['coupons'] != null) {
-		data.coupons = new SearchPddGoodsListDataListCoupons().fromJson(json['coupons']);
+		try {
+			data.coupons = new SearchPddGoodsListDataListCoupons().fromJson(json['coupons']);
+		} catch (e) {
+		}
 	}
 	return data;
 }
@@ -110,6 +116,7 @@ Map<String, dynamic> searchPddGoodsListDataListToJson(SearchPddGoodsListDataList
 	data['goods_sign'] = entity.goodsSign;
 	data['search_id'] = entity.searchId;
 	data['mall_name'] = entity.mallName;
+	data['g_bonus'] = entity.gBonus;
 	if (entity.coupons != null) {
 		data['coupons'] = entity.coupons.toJson();
 	}

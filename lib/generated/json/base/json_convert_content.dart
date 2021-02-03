@@ -65,8 +65,6 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
-import 'package:star/models/phone_charge_list_entity.dart';
-import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
 import 'package:star/models/message_list_entity.dart';
@@ -85,6 +83,8 @@ import 'package:star/models/address_info_entity.dart';
 import 'package:star/generated/json/address_info_entity_helper.dart';
 import 'package:star/models/fans_total_entity.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
+import 'package:star/models/phone_charge_list_entity.dart';
+import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/models/pdd_home_entity.dart';
@@ -209,10 +209,7 @@ class JsonConvert<T> {
 			return homeDataTaskListListFromJson(data as HomeDataTaskListList, json) as T;			case HomePddCategoryEntity:
 			return homePddCategoryEntityFromJson(data as HomePddCategoryEntity, json) as T;			case HomePddCategoryData:
 			return homePddCategoryDataFromJson(data as HomePddCategoryData, json) as T;			case HomePddCategoryDataCat:
-			return homePddCategoryDataCatFromJson(data as HomePddCategoryDataCat, json) as T;			case PhoneChargeListEntity:
-			return phoneChargeListEntityFromJson(data as PhoneChargeListEntity, json) as T;			case PhoneChargeListData:
-			return phoneChargeListDataFromJson(data as PhoneChargeListData, json) as T;			case PhoneChargeListDataList:
-			return phoneChargeListDataListFromJson(data as PhoneChargeListDataList, json) as T;			case TaskSubmitInfoEntity:
+			return homePddCategoryDataCatFromJson(data as HomePddCategoryDataCat, json) as T;			case TaskSubmitInfoEntity:
 			return taskSubmitInfoEntityFromJson(data as TaskSubmitInfoEntity, json) as T;			case TaskSubmitInfoData:
 			return taskSubmitInfoDataFromJson(data as TaskSubmitInfoData, json) as T;			case MessageListEntity:
 			return messageListEntityFromJson(data as MessageListEntity, json) as T;			case MessageListData:
@@ -236,7 +233,10 @@ class JsonConvert<T> {
 			return fansTotalEntityFromJson(data as FansTotalEntity, json) as T;			case FansTotalData:
 			return fansTotalDataFromJson(data as FansTotalData, json) as T;			case FansTotalDataAgentInfo:
 			return fansTotalDataAgentInfoFromJson(data as FansTotalDataAgentInfo, json) as T;			case FansTotalDataCountInfo:
-			return fansTotalDataCountInfoFromJson(data as FansTotalDataCountInfo, json) as T;			case UserInfoEntity:
+			return fansTotalDataCountInfoFromJson(data as FansTotalDataCountInfo, json) as T;			case PhoneChargeListEntity:
+			return phoneChargeListEntityFromJson(data as PhoneChargeListEntity, json) as T;			case PhoneChargeListData:
+			return phoneChargeListDataFromJson(data as PhoneChargeListData, json) as T;			case PhoneChargeListDataList:
+			return phoneChargeListDataListFromJson(data as PhoneChargeListDataList, json) as T;			case UserInfoEntity:
 			return userInfoEntityFromJson(data as UserInfoEntity, json) as T;			case UserInfoData:
 			return userInfoDataFromJson(data as UserInfoData, json) as T;			case PddHomeEntity:
 			return pddHomeEntityFromJson(data as PddHomeEntity, json) as T;			case PddHomeData:
@@ -369,10 +369,7 @@ class JsonConvert<T> {
 			return homeDataTaskListListToJson(data as HomeDataTaskListList);			case HomePddCategoryEntity:
 			return homePddCategoryEntityToJson(data as HomePddCategoryEntity);			case HomePddCategoryData:
 			return homePddCategoryDataToJson(data as HomePddCategoryData);			case HomePddCategoryDataCat:
-			return homePddCategoryDataCatToJson(data as HomePddCategoryDataCat);			case PhoneChargeListEntity:
-			return phoneChargeListEntityToJson(data as PhoneChargeListEntity);			case PhoneChargeListData:
-			return phoneChargeListDataToJson(data as PhoneChargeListData);			case PhoneChargeListDataList:
-			return phoneChargeListDataListToJson(data as PhoneChargeListDataList);			case TaskSubmitInfoEntity:
+			return homePddCategoryDataCatToJson(data as HomePddCategoryDataCat);			case TaskSubmitInfoEntity:
 			return taskSubmitInfoEntityToJson(data as TaskSubmitInfoEntity);			case TaskSubmitInfoData:
 			return taskSubmitInfoDataToJson(data as TaskSubmitInfoData);			case MessageListEntity:
 			return messageListEntityToJson(data as MessageListEntity);			case MessageListData:
@@ -396,7 +393,10 @@ class JsonConvert<T> {
 			return fansTotalEntityToJson(data as FansTotalEntity);			case FansTotalData:
 			return fansTotalDataToJson(data as FansTotalData);			case FansTotalDataAgentInfo:
 			return fansTotalDataAgentInfoToJson(data as FansTotalDataAgentInfo);			case FansTotalDataCountInfo:
-			return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);			case UserInfoEntity:
+			return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);			case PhoneChargeListEntity:
+			return phoneChargeListEntityToJson(data as PhoneChargeListEntity);			case PhoneChargeListData:
+			return phoneChargeListDataToJson(data as PhoneChargeListData);			case PhoneChargeListDataList:
+			return phoneChargeListDataListToJson(data as PhoneChargeListDataList);			case UserInfoEntity:
 			return userInfoEntityToJson(data as UserInfoEntity);			case UserInfoData:
 			return userInfoDataToJson(data as UserInfoData);			case PddHomeEntity:
 			return pddHomeEntityToJson(data as PddHomeEntity);			case PddHomeData:
@@ -529,10 +529,7 @@ class JsonConvert<T> {
 			return HomeDataTaskListList().fromJson(json);			case 'HomePddCategoryEntity':
 			return HomePddCategoryEntity().fromJson(json);			case 'HomePddCategoryData':
 			return HomePddCategoryData().fromJson(json);			case 'HomePddCategoryDataCat':
-			return HomePddCategoryDataCat().fromJson(json);			case 'PhoneChargeListEntity':
-			return PhoneChargeListEntity().fromJson(json);			case 'PhoneChargeListData':
-			return PhoneChargeListData().fromJson(json);			case 'PhoneChargeListDataList':
-			return PhoneChargeListDataList().fromJson(json);			case 'TaskSubmitInfoEntity':
+			return HomePddCategoryDataCat().fromJson(json);			case 'TaskSubmitInfoEntity':
 			return TaskSubmitInfoEntity().fromJson(json);			case 'TaskSubmitInfoData':
 			return TaskSubmitInfoData().fromJson(json);			case 'MessageListEntity':
 			return MessageListEntity().fromJson(json);			case 'MessageListData':
@@ -556,7 +553,10 @@ class JsonConvert<T> {
 			return FansTotalEntity().fromJson(json);			case 'FansTotalData':
 			return FansTotalData().fromJson(json);			case 'FansTotalDataAgentInfo':
 			return FansTotalDataAgentInfo().fromJson(json);			case 'FansTotalDataCountInfo':
-			return FansTotalDataCountInfo().fromJson(json);			case 'UserInfoEntity':
+			return FansTotalDataCountInfo().fromJson(json);			case 'PhoneChargeListEntity':
+			return PhoneChargeListEntity().fromJson(json);			case 'PhoneChargeListData':
+			return PhoneChargeListData().fromJson(json);			case 'PhoneChargeListDataList':
+			return PhoneChargeListDataList().fromJson(json);			case 'UserInfoEntity':
 			return UserInfoEntity().fromJson(json);			case 'UserInfoData':
 			return UserInfoData().fromJson(json);			case 'PddHomeEntity':
 			return PddHomeEntity().fromJson(json);			case 'PddHomeData':
@@ -690,10 +690,7 @@ class JsonConvert<T> {
 			return List<HomeDataTaskListList>();			case 'HomePddCategoryEntity':
 			return List<HomePddCategoryEntity>();			case 'HomePddCategoryData':
 			return List<HomePddCategoryData>();			case 'HomePddCategoryDataCat':
-			return List<HomePddCategoryDataCat>();			case 'PhoneChargeListEntity':
-			return List<PhoneChargeListEntity>();			case 'PhoneChargeListData':
-			return List<PhoneChargeListData>();			case 'PhoneChargeListDataList':
-			return List<PhoneChargeListDataList>();			case 'TaskSubmitInfoEntity':
+			return List<HomePddCategoryDataCat>();			case 'TaskSubmitInfoEntity':
 			return List<TaskSubmitInfoEntity>();			case 'TaskSubmitInfoData':
 			return List<TaskSubmitInfoData>();			case 'MessageListEntity':
 			return List<MessageListEntity>();			case 'MessageListData':
@@ -717,7 +714,10 @@ class JsonConvert<T> {
 			return List<FansTotalEntity>();			case 'FansTotalData':
 			return List<FansTotalData>();			case 'FansTotalDataAgentInfo':
 			return List<FansTotalDataAgentInfo>();			case 'FansTotalDataCountInfo':
-			return List<FansTotalDataCountInfo>();			case 'UserInfoEntity':
+			return List<FansTotalDataCountInfo>();			case 'PhoneChargeListEntity':
+			return List<PhoneChargeListEntity>();			case 'PhoneChargeListData':
+			return List<PhoneChargeListData>();			case 'PhoneChargeListDataList':
+			return List<PhoneChargeListDataList>();			case 'UserInfoEntity':
 			return List<UserInfoEntity>();			case 'UserInfoData':
 			return List<UserInfoData>();			case 'PddHomeEntity':
 			return List<PddHomeEntity>();			case 'PddHomeData':

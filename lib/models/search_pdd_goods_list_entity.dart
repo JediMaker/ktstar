@@ -41,6 +41,8 @@ class SearchPddGoodsListDataList with JsonConvert<SearchPddGoodsListDataList> {
 	String searchId;
 	@JSONField(name: "mall_name")
 	String mallName;
+	@JSONField(name: "g_bonus")
+	String gBonus;
 	SearchPddGoodsListDataListCoupons coupons;
 }
 

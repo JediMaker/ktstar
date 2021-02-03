@@ -43,6 +43,8 @@ class PddGoodsInfoData with JsonConvert<PddGoodsInfoData> {
   String lgstTxt;
   @JSONField(name: "mall_name")
   String mallName;
+  @JSONField(name: "g_bonus")
+  String gBonus;
   @JSONField(name: "login_status")
   String loginStatus;
   String url;
