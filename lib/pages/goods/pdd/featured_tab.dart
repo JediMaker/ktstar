@@ -274,6 +274,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                               "pinduoduo://com.xunmeng.pinduoduo/");
                           if (await canLaunch(pddPath)) {
                             await launch(pddPath);
+                            return;
                           } else {
                             NavigatorUtils.navigatorRouter(
                                 context,
@@ -499,6 +500,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   "pinduoduo://com.xunmeng.pinduoduo/");
               if (await canLaunch(pddPath)) {
                 await launch(pddPath);
+                return;
               } else {
                 NavigatorUtils.navigatorRouter(
                     context,
@@ -748,6 +750,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   "pinduoduo://com.xunmeng.pinduoduo/");
               if (await canLaunch(pddPath)) {
                 await launch(pddPath);
+                return;
               } else {
                 NavigatorUtils.navigatorRouter(
                     context,
@@ -898,6 +901,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   "pinduoduo://com.xunmeng.pinduoduo/");
               if (await canLaunch(pddPath)) {
                 await launch(pddPath);
+                return;
               } else {
                 NavigatorUtils.navigatorRouter(
                     context,
@@ -1041,6 +1045,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 "pinduoduo://com.xunmeng.pinduoduo/");
             if (await canLaunch(pddPath)) {
               await launch(pddPath);
+              return;
             } else {
               NavigatorUtils.navigatorRouter(
                   context,
@@ -1125,7 +1130,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     );
   }
 
-  var _priceColor = const Color(0xffe31735);
+  var _priceColor = const Color(0xffF93736);
 
   Widget productItem2({PddGoodsListDataList item}) {
     String id = '';
@@ -1141,6 +1146,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     var _discountPrice = '';
     var _saleTip = '';
     var _shopName = '';
+    var _gBonus = '';
     try {
       id = item.gId.toString();
       goodsName = item.gTitle;
@@ -1151,6 +1157,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       searchId = item.searchId.toString();
       _saleTip = item.salesTip.toString();
       _shopName = item.mallName.toString();
+      _gBonus = item.gBonus.toString();
 
       try {
         couponAmount = item.coupons.couponDiscount.toString();
@@ -1224,6 +1231,31 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 //                          SizedBox(
 //                            height: 10,
 //                          ),
+                Visibility(
+                  visible: !CommonUtils.isEmpty(_gBonus),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                    color:_priceColor,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Visibility(
+                            child: Container(
+                              child: Text(
+                                "预估分红金：¥$_gBonus",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(28),
+                                  color: Color(0xffffffff),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.only(
                     left: ScreenUtil().setWidth(20),
@@ -1321,7 +1353,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(28),
-                        color: Color(0xffF93736),
+                        color: _priceColor,
                       ),
                     ),
                   ),
@@ -1378,7 +1410,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                           ),
                           margin: EdgeInsets.only(right: 6),
                           decoration: BoxDecoration(
-                            color: Color(0xfff93736),
+                            color: _priceColor,
                             borderRadius: BorderRadius.circular(
                                 ScreenUtil().setWidth(10)),
                           ),

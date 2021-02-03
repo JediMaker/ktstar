@@ -325,7 +325,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(28),
-                      color: Color(0xffF93736),
+                      color: _priceColor,
                     ),
                   ),
                 ),
@@ -382,7 +382,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                           maxWidth: ScreenUtil().setWidth(160),
                         ),
                         decoration: BoxDecoration(
-                          color: Color(0xfff93736),
+                          color: _priceColor,
                           borderRadius:
                               BorderRadius.circular(ScreenUtil().setWidth(10)),
                         ),
@@ -423,7 +423,8 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
     String searchId = ''; //
     var _discountPrice = '';
     var _saleTip = '';
-    var _shopName = '天猫';
+    var _shopName = '';
+    var _gBonus = '';
     try {
       id = item.gId.toString();
       goodsName = item.gTitle;
@@ -434,6 +435,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
       searchId = item.searchId.toString();
       _saleTip = item.salesTip.toString();
       _shopName = item.mallName.toString();
+      _gBonus = item.gBonus.toString();
 
       try {
         couponAmount = item.coupons.couponDiscount.toString();
@@ -507,6 +509,31 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
 //                          SizedBox(
 //                            height: 10,
 //                          ),
+                Visibility(
+                  visible: !CommonUtils.isEmpty(_gBonus),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                    color: _priceColor,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Visibility(
+                            child: Container(
+                              child: Text(
+                                "预估分红金：¥$_gBonus",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(28),
+                                  color: Color(0xffffffff),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.only(
                     left: ScreenUtil().setWidth(20),
