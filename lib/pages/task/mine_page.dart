@@ -104,7 +104,8 @@ class _MinePagePageState extends State<MinePagePage> {
             ? 'VIP股东'
             : '高级股东';
     if (_shareholderType == '2') {
-      rootView = TaskMinePage(
+      rootView = MicroMinePage(
+        title: '我的',
         userInfoData: userInfoData,
       );
     } else {

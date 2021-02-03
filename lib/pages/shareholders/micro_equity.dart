@@ -55,7 +55,7 @@ class _MicroShareHolderEquityPageState
   ///
   ///  2 不是微股东
   ///
-  ///  3 vip股东
+  ///  3 股东
   ///
   ///  4 高级股东
   String _shareholderType = '';
@@ -288,7 +288,7 @@ class _MicroShareHolderEquityPageState
     }
     //限时优惠图标
     var xsIcon =
-        'https://alipic.lanhuapp.com/xd06086d65-2b72-4ce4-a227-2c0d16818ed8';
+        'https://alipic.lanhuapp.com/xd130d769b-1304-4f90-a3af-55000ac90eb7';
 
     ///小喇叭图标
     var lbIcon =
@@ -307,7 +307,7 @@ class _MicroShareHolderEquityPageState
             children: <Widget>[
               Container(
                 width: ScreenUtil().setWidth(1065),
-                height: ScreenUtil().setWidth(378),
+                height: ScreenUtil().setWidth(338),
                 margin: EdgeInsets.only(
                   top: ScreenUtil().setHeight(274),
                   left: ScreenUtil().setWidth(30),
@@ -326,7 +326,7 @@ class _MicroShareHolderEquityPageState
               ),
               Center(
                 child: Container(
-                  height: ScreenUtil().setHeight(573),
+                  height: ScreenUtil().setWidth(314),
                   width: ScreenUtil().setWidth(1001),
                   margin: EdgeInsets.only(
                     top: ScreenUtil().setHeight(10),
@@ -337,19 +337,23 @@ class _MicroShareHolderEquityPageState
                     itemCount: 3,
                     autoplay: false,
                     loop: false,
+
 //                              viewportFraction: 0.86,
 //                              scale: 0.96,
                     index: _currentIndex,
-                    control: SwiperControl(
+                    /*control: SwiperControl(
                       color: Color(0xE82C2D30),
-                    ),
+                    ),*/
                     /*  pagination: new SwiperPagination(
                         margin: new EdgeInsets.all(5.0)
                     ),*/
+                    key: UniqueKey(),
                     onIndexChanged: (index) {
                       if (mounted) {
                         setState(() {
-                          _currentIndex = index;
+                          if (_currentIndex != index) {
+                            _currentIndex = index;
+                          }
                         });
                       }
                     },
@@ -363,7 +367,7 @@ class _MicroShareHolderEquityPageState
                 width: ScreenUtil().setWidth(1065),
                 height: ScreenUtil().setWidth(316),
                 margin: EdgeInsets.only(
-                  top: ScreenUtil().setHeight(346),
+                  top: ScreenUtil().setHeight(316),
                   left: ScreenUtil().setWidth(30),
                   right: ScreenUtil().setWidth(30),
                 ),
@@ -390,22 +394,6 @@ class _MicroShareHolderEquityPageState
                   children: [
                     Flexible(
                         child: GestureDetector(
-                      onTap: () async {
-                        if (_shareholderType == "2" && _currentIndex == 0) {
-                          var result =
-                              await HttpManage.applyToBecomeAMicroShareholder();
-                          if (result.status) {
-                            CommonUtils.showToast("微股东申请开通成功！");
-                          } else {
-                            showOpenMicroShareholderDialog();
-                          }
-                          return;
-                        } else {
-                          if (_opacity == 1) {
-                            _showSelectPayWayBottomSheet();
-                          }
-                        }
-                      },
                       child: Stack(
                         children: [
                           /* CachedNetworkImage(
@@ -430,52 +418,71 @@ class _MicroShareHolderEquityPageState
                   ).image),*/
                             ),
                             child: Center(
-                              child: Stack(
-                                children: [
-                                  Opacity(
-                                    opacity: _opacity,
-                                    child: Container(
-                                      width: ScreenUtil().setWidth(739),
-                                      height: ScreenUtil().setWidth(100),
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(colors: [
-                                          Color(0xffF3D6AA),
-                                          Color(0xffEDC182),
-                                        ]),
-                                        borderRadius: BorderRadius.circular(
-                                          ScreenUtil().setWidth(50),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (_shareholderType == "2" &&
+                                      _currentIndex == 0) {
+                                    var result = await HttpManage
+                                        .applyToBecomeAMicroShareholder();
+                                    if (result.status) {
+                                      CommonUtils.showToast("微股东申请开通成功！");
+                                    } else {
+                                      showOpenMicroShareholderDialog();
+                                    }
+                                    return;
+                                  } else {
+                                    if (_opacity == 1) {
+                                      _showSelectPayWayBottomSheet();
+                                    }
+                                  }
+                                },
+                                child: Stack(
+                                  children: [
+                                    Opacity(
+                                      opacity: _opacity,
+                                      child: Container(
+                                        width: ScreenUtil().setWidth(982),
+                                        height: ScreenUtil().setWidth(120),
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(colors: [
+                                            Color(0xffF3D6AA),
+                                            Color(0xffEDC182),
+                                          ]),
+                                          borderRadius: BorderRadius.circular(
+                                            ScreenUtil().setWidth(60),
+                                          ),
                                         ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "$btnTxt",
-                                          style: TextStyle(
-                                            color: Color(0xff313235),
-                                            fontSize: ScreenUtil().setSp(33),
+                                        child: Center(
+                                          child: Text(
+                                            "$btnTxt",
+                                            style: TextStyle(
+                                              color: Color(0xff313235),
+                                              fontSize: ScreenUtil().setSp(33),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Visibility(
-                                    visible: _showBtnIcon,
-                                    child: Container(
-                                      width: ScreenUtil().setWidth(739),
-                                      height: ScreenUtil().setWidth(100),
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: Image.network(
-                                              "$xsIcon",
+                                    Visibility(
+                                      visible: _showBtnIcon,
+                                      child: Container(
+                                        width: ScreenUtil().setWidth(982),
+                                        height: ScreenUtil().setWidth(120),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
                                               fit: BoxFit.fill,
-                                            ).image),
-                                        borderRadius: BorderRadius.circular(
-                                          ScreenUtil().setWidth(50),
+                                              image: Image.network(
+                                                "$xsIcon",
+                                                fit: BoxFit.fill,
+                                              ).image),
+                                          borderRadius: BorderRadius.circular(
+                                            ScreenUtil().setWidth(50),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -514,38 +521,41 @@ class _MicroShareHolderEquityPageState
                         ],
                       ),
                     )),
-                    Container(
-                      width: ScreenUtil().setWidth(1065),
-                      height: ScreenUtil().setWidth(88),
-                      padding: EdgeInsets.only(left: 16),
-                      decoration: BoxDecoration(
-                        color: Color(0xff2C2D30),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(
-                            ScreenUtil().setWidth(30),
-                          ),
-                          bottomRight: Radius.circular(
-                            ScreenUtil().setWidth(30),
-                          ),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: "$lbIcon",
-                            width: ScreenUtil().setWidth(33),
-                            height: ScreenUtil().setWidth(33),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 4),
-                            child: Text(
-                              "开通可享受每日股东分红，分红比例为股东正常分红比例的$_dividendRatio",
-                              style: TextStyle(
-                                  color: Color(0xff8F8274),
-                                  fontSize: ScreenUtil().setSp(32)),
+                    Visibility(
+                      visible: false,
+                      child: Container(
+                        width: ScreenUtil().setWidth(1065),
+                        height: ScreenUtil().setWidth(88),
+                        padding: EdgeInsets.only(left: 16),
+                        decoration: BoxDecoration(
+                          color: Color(0xff2C2D30),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(
+                              ScreenUtil().setWidth(30),
+                            ),
+                            bottomRight: Radius.circular(
+                              ScreenUtil().setWidth(30),
                             ),
                           ),
-                        ],
+                        ),
+                        child: Row(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: "$lbIcon",
+                              width: ScreenUtil().setWidth(33),
+                              height: ScreenUtil().setWidth(33),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 4),
+                              child: Text(
+                                "开通可享受每日股东分红，分红比例为股东正常分红比例的$_dividendRatio",
+                                style: TextStyle(
+                                    color: Color(0xff8F8274),
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -605,6 +615,12 @@ class _MicroShareHolderEquityPageState
         });
   }
 
+  var nameList = [
+    '见习股东',
+    '股东',
+    '高级股东',
+  ];
+
   ///微股东预估年收益
   Widget buildBenefitCenter() {
     switch (_currentIndex) {
@@ -612,7 +628,7 @@ class _MicroShareHolderEquityPageState
         _shareholderTypeName = '见习';
         break;
       case 1:
-        _shareholderTypeName = 'VIP';
+        _shareholderTypeName = '';
         break;
       case 2:
         _shareholderTypeName = '高级';
@@ -623,23 +639,83 @@ class _MicroShareHolderEquityPageState
       var item = _dataList[_currentIndex];
       _shareholderYearProfit = '${item.annualIncome}';
     } catch (e) {}
-    return Center(
-      child: Text.rich(
-        TextSpan(children: [
-          TextSpan(text: "开通$_shareholderTypeName股东，人均年收入"),
-          TextSpan(
-            text: "¥$_shareholderYearProfit",
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(48),
-              color: Color(0xffF3CA83),
+    return Container(
+      height: ScreenUtil().setWidth(64),
+      width: ScreenUtil().setWidth(535),
+      margin: EdgeInsets.only(
+        top: ScreenUtil().setWidth(30),
+      ),
+      decoration: BoxDecoration(
+//        color: Color(0xff313235),
+        border: Border.all(
+          color: Color(0xffA09988),
+          width: ScreenUtil().setWidth(1),
+        ),
+        borderRadius: BorderRadius.circular(
+          ScreenUtil().setWidth(20),
+        ),
+      ),
+      child: Wrap(
+        children: List.generate(
+          nameList.length,
+          (index) => GestureDetector(
+            onTap: () {
+              if (mounted) {
+                setState(() {
+                  if (_currentIndex != index) {
+                    _currentIndex = index;
+                  }
+                });
+              }
+            },
+            child: Container(
+              height: ScreenUtil().setWidth(64),
+              padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(30),
+                vertical: ScreenUtil().setWidth(8),
+              ),
+              decoration: BoxDecoration(
+                color: _currentIndex == index
+                    ? Color(0xffCAAC74)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().setWidth(20),
+                ),
+              ),
+              child: Text(
+                "${nameList[index]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(34),
+                  color: _currentIndex == index
+                      ? Color(0xff25272E)
+                      : Color(0xffA09988), //#A09988
+                ),
+              ),
             ),
           ),
-          TextSpan(text: "起"),
-        ]),
-        style: TextStyle(
-          fontSize: ScreenUtil().setSp(34),
-          color: Color(0xffA09988),
-        ),
+        ) /*[
+          Center(
+            child: Text.rich(
+              TextSpan(children: [
+                TextSpan(text: "开通$_shareholderTypeName股东，人均年收入"),
+                TextSpan(
+                  text: "¥$_shareholderYearProfit",
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(48),
+                    color: Color(0xffF3CA83),
+                  ),
+                ),
+                TextSpan(text: "起"),
+              ]),
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(34),
+                color: Color(0xffA09988),
+              ),
+            ),
+          ),
+        ]*/
+        ,
       ),
     );
   }
@@ -836,7 +912,7 @@ class _MicroShareHolderEquityPageState
                   '${_dataList[_currentIndex].interests.directUpgrade}';
               profitTitle = _currentIndex == 1 ? '推荐好友升级奖励' : '间推分红奖励';
               profitDesc = _currentIndex == 1
-                  ? '推荐好友升级VIP股东或者高级股东，奖励均为20元'
+                  ? '推荐好友升级股东或者高级股东，奖励均为20元'
                   : "下下级股东分红金额的5%(实际分红金额的5%)";
               iconDesc =
                   _currentIndex == 1 ? '￥$directUpgrade' : '$indirectBonus%';
@@ -845,14 +921,14 @@ class _MicroShareHolderEquityPageState
               var directUpgrade =
                   '${_dataList[_currentIndex].interests.directUpgrade}';
               profitTitle = '直推好友升级奖励';
-              profitDesc = "推荐好友升级VIP股东或者高级股东，奖励充值金额的$directUpgrade%";
+              profitDesc = "推荐好友升级股东或者高级股东，奖励充值金额的$directUpgrade%";
               iconDesc = '$directUpgrade%';
               break;
             case 3:
               var indirectUpgrade =
                   '${_dataList[_currentIndex].interests.indirectUpgrade}';
               profitTitle = '间推好友升级奖励';
-              profitDesc = "下下级升级VIP股东或者高级股东，奖励充值金额的$indirectUpgrade%";
+              profitDesc = "下下级升级股东或者高级股东，奖励充值金额的$indirectUpgrade%";
               iconDesc = '$indirectUpgrade%';
               break;
           }
@@ -1187,7 +1263,7 @@ class _MicroShareHolderEquityPageState
 
     ///vip
     var vipIconLinkUrl =
-        'https://alipic.lanhuapp.com/xda814ff8b-d2ca-4c6c-9b82-f4d59b51ca00';
+        'https://alipic.lanhuapp.com/xd195c52f3-7d0c-4b72-8169-3eeec3937bc4';
     switch (_currentIndex) {
       case 0:
         desc = '消费满$novitiatePrice元即可升级为见习股东';
@@ -1197,9 +1273,8 @@ class _MicroShareHolderEquityPageState
 
         break;
       case 1:
-        desc = '缴纳年费$vipPrice元即可开通为vip股东';
-        idDesc =
-            _shareholderType != "3" ? '您还未开通vip股东' : 'VIP股东将于$expireDate到期';
+        desc = '缴纳年费$vipPrice元即可开通为股东';
+        idDesc = _shareholderType != "3" ? '您还未开通股东' : '股东将于$expireDate到期';
         iconLinkUrl = vipIconLinkUrl;
         _selectPrice = "$vipPrice";
         break;
@@ -1213,7 +1288,7 @@ class _MicroShareHolderEquityPageState
 
     return Container(
       width: double.maxFinite,
-      height: ScreenUtil().setHeight(473),
+      height: ScreenUtil().setWidth(314),
       decoration: BoxDecoration(
         /*image: DecorationImage(
             fit: BoxFit.fill,
@@ -1225,8 +1300,13 @@ class _MicroShareHolderEquityPageState
           Color(0xffF5D8A9),
           Color(0xffEEC48C),
         ]),
-        borderRadius: BorderRadius.circular(
-          ScreenUtil().setWidth(30),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(
+            ScreenUtil().setWidth(30),
+          ),
+          topRight: Radius.circular(
+            ScreenUtil().setWidth(30),
+          ),
         ),
       ),
       child: Column(
@@ -1234,9 +1314,9 @@ class _MicroShareHolderEquityPageState
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 10,
+              left:ScreenUtil().setWidth(30),
+              right: ScreenUtil().setWidth(30),
+              top:ScreenUtil().setWidth(19),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1244,8 +1324,8 @@ class _MicroShareHolderEquityPageState
                 ClipOval(
                   child: CachedNetworkImage(
                     imageUrl: "$headUrl",
-                    width: ScreenUtil().setWidth(158),
-                    height: ScreenUtil().setWidth(158),
+                    width: ScreenUtil().setWidth(168),
+                    height: ScreenUtil().setWidth(168),
                   ),
                 ),
                 Expanded(
@@ -1265,8 +1345,8 @@ class _MicroShareHolderEquityPageState
                                 color: Color(
                                   0xff512A08,
                                 ),
-                                fontWeight: FontWeight.bold,
-                                fontSize: ScreenUtil().setSp(54)),
+                                fontWeight: FontWeight.w600,
+                                fontSize: ScreenUtil().setSp(42)),
                           ),
                         ),
                         Container(
@@ -1279,7 +1359,7 @@ class _MicroShareHolderEquityPageState
                                 color: Color(
                                   0xffA58053,
                                 ),
-                                fontSize: ScreenUtil().setSp(32)),
+                                fontSize: ScreenUtil().setSp(30)),
                           ),
                         ),
                       ],
@@ -1289,8 +1369,8 @@ class _MicroShareHolderEquityPageState
                 Container(
                   child: CachedNetworkImage(
                     imageUrl: "$iconLinkUrl",
-                    width: ScreenUtil().setWidth(279),
-                    height: ScreenUtil().setWidth(140),
+                    width: ScreenUtil().setWidth(281),
+                    height: ScreenUtil().setWidth(149),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -1322,7 +1402,7 @@ class _MicroShareHolderEquityPageState
                       color: Color(
                         0xff512A08,
                       ),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       fontSize: ScreenUtil().setSp(42)),
                 ),
               ),

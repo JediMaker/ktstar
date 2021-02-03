@@ -5,6 +5,7 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluwx/fluwx.dart';
 
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
@@ -53,6 +54,8 @@ class GlobalConfig {
   static var token;
 
   static SharedPreferences _prefs;
+
+  static var LAYOUT_MARGIN = ScreenUtil().setWidth(30);
 
   ///全局context
 

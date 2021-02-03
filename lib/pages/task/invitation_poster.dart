@@ -104,22 +104,23 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: ScreenUtil().setWidth(32),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Flexible(
-                      fit: FlexFit.tight, flex: 9, child: buildBannerLayout()),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 2,
-                    child: Container(
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: ScreenUtil().setWidth(32),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    buildBannerLayout(),
+                    Container(
                       alignment: Alignment.center,
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setWidth(135),
+                        bottom: ScreenUtil().setWidth(181),
+                      ),
                       child: Container(
                         width: ScreenUtil().setWidth(793),
-                        height: ScreenUtil().setHeight(126),
+                        height: ScreenUtil().setWidth(126),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(
@@ -132,8 +133,8 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  Clipboard.setData(ClipboardData(
-                                      text: "可淘星选:$_linkUrl"));
+                                  Clipboard.setData(
+                                      ClipboardData(text: "可淘星选:$_linkUrl"));
                                   CommonUtils.showToast("已复制文本");
                                 },
                                 child: Container(
@@ -203,8 +204,8 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],
@@ -231,7 +232,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
 
   Widget buildBannerLayout() {
     return Container(
-      height: ScreenUtil().setHeight(623),
+      height: ScreenUtil().setWidth(1570),
       width: double.maxFinite,
 //      width: ScreenUtil().setWidth(1125),
       /*  decoration: BoxDecoration(

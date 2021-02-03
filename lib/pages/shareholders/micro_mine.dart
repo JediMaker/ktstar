@@ -1207,8 +1207,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             new Container(
-                              margin:
-                              EdgeInsets.only( right: ScreenUtil().setWidth(31),),
+                              margin: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(31),
+                              ),
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
@@ -1271,8 +1272,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             new Container(
-                              margin:
-                                   EdgeInsets.only( right: ScreenUtil().setWidth(31),),
+                              margin: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(31),
+                              ),
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
@@ -1841,9 +1843,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 Text(
                                   "${_totalAssetsAmount == null ? '0' : '$_totalAssetsAmount'}",
                                   style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(42),
-                                      ),
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
                                 ),
                               ],
                             ),
@@ -1886,9 +1888,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 Text(
                                   "${_cashWithdrawal == null ? '0' : '$_cashWithdrawal'}",
                                   style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(42),
-                                      ),
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
                                 ),
                               ],
                             ),
@@ -2171,177 +2173,194 @@ class _MicroMinePageState extends State<MicroMinePage>
     if (widget.title == '我的') {
       text = "普通用户";
     }
-    return ListTile(
-      onTap: () async {
-        await NavigatorUtils.navigatorRouter(
-            context, MicroShareHolderEquityPage());
-        _initUserData();
-      },
-      leading: Container(
-        width: ScreenUtil().setWidth(168),
-        height: ScreenUtil().setWidth(168),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(
+    return Stack(
+      children: [
+        Container(
+          width: ScreenUtil().setWidth(168),
+          height: ScreenUtil().setWidth(200),
+          margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              Positioned(
                 bottom: ScreenUtil().setWidth(25),
-              ),
-              child: headUrl == null
-                  ? Visibility(
-                      visible: false,
-                      child: Image.asset(
-                        "static/images/task_default_head.png",
-                        width: ScreenUtil().setWidth(158),
-                        height: ScreenUtil().setWidth(158),
-                        fit: BoxFit.fill,
-                      ))
-                  : ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: headUrl,
-                        width: ScreenUtil().setWidth(158),
-                        height: ScreenUtil().setWidth(158),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-            ),
-            Visibility(
                 child: Container(
-              child: Container(
-                  width: ScreenUtil().setWidth(164),
-                  height: ScreenUtil().setWidth(56),
+                  /* margin: EdgeInsets.only(
+                      bottom: ScreenUtil().setWidth(25),
+                    ),*/
+                  child: headUrl == null
+                      ? Visibility(
+                          visible: false,
+                          child: Image.asset(
+                            "static/images/task_default_head.png",
+                            width: ScreenUtil().setWidth(158),
+                            height: ScreenUtil().setWidth(158),
+                            fit: BoxFit.fill,
+                          ))
+                      : ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: "$headUrl",
+                            fit: BoxFit.fill,
+                            width: ScreenUtil().setWidth(158),
+                            height: ScreenUtil().setWidth(158),
+                          ),
+                        ),
+                ),
+              ),
+              Positioned(
+                child: Visibility(
+//              visible: false,
+                    child: Container(
+                  child: Container(
+                      width: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setWidth(56),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(ScreenUtil().setWidth(28))),
+                        gradient: LinearGradient(colors: [
+                          Color(0xff505050),
+                          Color(0xff222222),
+                        ]),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl:
+                                'https://alipic.lanhuapp.com/xd85fc7a67-0912-4f32-91c3-f907fdc9284d',
+                            width: ScreenUtil().setWidth(20),
+                            height: ScreenUtil().setWidth(25),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: ScreenUtil().setWidth(6),
+                              bottom: ScreenUtil().setWidth(6),
+                            ),
+                            child: Text("$text",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: _cardTextColor,
+                                  fontSize: ScreenUtil().setSp(28),
+                                )),
+                          ),
+                        ],
+                      )),
+                )),
+              )
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: ScreenUtil().setWidth(188),
+          ),
+          child: ListTile(
+            onTap: () async {
+              await NavigatorUtils.navigatorRouter(
+                  context, MicroShareHolderEquityPage());
+              _initUserData();
+            },
+            title: Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "${nickName == null ? '' : nickName}",
+                      /*style: TextStyle(
+                          color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(42)),*/
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: ScreenUtil().setSp(42)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(26),
+                  ),
+                  Visibility(
+                    visible: false,
+                    child: Image.asset(
+                      "static/images/${_getImgName(userType)}",
+                      width: ScreenUtil().setWidth(185),
+                      height: ScreenUtil().setHeight(67),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+//            Image.asset("", width:)
+                ],
+              ),
+            ),
+            subtitle: Text(
+              "邀请码：${_code == null ? '' : _code}",
+              style: TextStyle(
+                  color: Colors.white, fontSize: ScreenUtil().setSp(42)),
+            ),
+            trailing: GestureDetector(
+              /* onTap: () async {
+                */ /* Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }));*/ /*
+                try {
+                  if (CommonUtils.isEmpty(availableCashAmount) ||
+                      int.parse(availableCashAmount.toString()) <= 0) {
+                    return;
+                  }
+                } catch (e) {
+                  return;
+                }
+                var result = await HttpManage.withdrawalApplication(
+                    "2",
+                    availableCashAmount == null ? "1" : availableCashAmount,
+                    "",
+                    "");
+                if (result.status) {
+                  */ /* Fluttertoast.showToast(
+                      msg: "提现申请已提交",
+                      textColor: Colors.white,
+                      backgroundColor: Colors.grey);*/ /*
+                  _initUserData();
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "${result.errMsg}",
+                      textColor: Colors.white,
+                      backgroundColor: Colors.grey);
+                }
+              },*/
+              child: Visibility(
+                child: Container(
+                  width: ScreenUtil().setWidth(236),
+                  height: ScreenUtil().setWidth(83),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
+                    /*gradient: LinearGradient(colors: [
+                      Color(0xff252525),
+                      Color(0xff414141),
+                    ]),*/
                     borderRadius: BorderRadius.all(
-                        Radius.circular(ScreenUtil().setWidth(28))),
-                    gradient: LinearGradient(colors: [
-                      Color(0xff505050),
-                      Color(0xff222222),
-                    ]),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl:
-                            'https://alipic.lanhuapp.com/xd85fc7a67-0912-4f32-91c3-f907fdc9284d',
-                        width: ScreenUtil().setWidth(20),
-                        height: ScreenUtil().setWidth(25),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          left: ScreenUtil().setWidth(6),
-                          bottom: ScreenUtil().setWidth(6),
-                        ),
-                        child: Text("$text",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: _cardTextColor,
-                              fontSize: ScreenUtil().setSp(28),
-                            )),
-                      ),
-                    ],
-                  )),
-            ))
-          ],
-        ),
-      ),
-      title: Container(
-        child: Row(
-          children: <Widget>[
-            Container(
-              child: Text(
-                "${nickName == null ? '' : nickName}",
-                /*style: TextStyle(
-                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: ScreenUtil().setSp(42)),*/
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: ScreenUtil().setSp(42)),
-              ),
-            ),
-            SizedBox(
-              width: ScreenUtil().setWidth(26),
-            ),
-            Visibility(
-              visible: false,
-              child: Image.asset(
-                "static/images/${_getImgName(userType)}",
-                width: ScreenUtil().setWidth(185),
-                height: ScreenUtil().setHeight(67),
-                fit: BoxFit.fill,
-              ),
-            ),
-//            Image.asset("", width:)
-          ],
-        ),
-      ),
-      subtitle: Text(
-        "邀请码：${_code == null ? '' : _code}",
-        style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(42)),
-      ),
-      trailing: GestureDetector(
-        /* onTap: () async {
-          */ /* Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return LoginPage();
-          }));*/ /*
-          try {
-            if (CommonUtils.isEmpty(availableCashAmount) ||
-                int.parse(availableCashAmount.toString()) <= 0) {
-              return;
-            }
-          } catch (e) {
-            return;
-          }
-          var result = await HttpManage.withdrawalApplication(
-              "2",
-              availableCashAmount == null ? "1" : availableCashAmount,
-              "",
-              "");
-          if (result.status) {
-            */ /* Fluttertoast.showToast(
-                msg: "提现申请已提交",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);*/ /*
-            _initUserData();
-          } else {
-            Fluttertoast.showToast(
-                msg: "${result.errMsg}",
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);
-          }
-        },*/
-        child: Visibility(
-          child: Container(
-            width: ScreenUtil().setWidth(236),
-            height: ScreenUtil().setWidth(83),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              /*gradient: LinearGradient(colors: [
-                Color(0xff252525),
-                Color(0xff414141),
-              ]),*/
-              borderRadius:
-                  BorderRadius.all(Radius.circular(ScreenUtil().setWidth(51))),
-              border: Border.all(
+                        Radius.circular(ScreenUtil().setWidth(51))),
+                    border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                  color: Color(0xffFFFFFF),
-                  width: ScreenUtil().setWidth(2)),
-            ),
-            child: Text(
-              "升级股东",
-              style: TextStyle(
+                        color: Color(0xffFFFFFF),
+                        width: ScreenUtil().setWidth(2)),
+                  ),
+                  child: Text(
+                    "升级股东",
+                    style: TextStyle(
 //                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                  color: Color(0xffFFFFFF),
-                  fontSize: ScreenUtil().setSp(36)),
+                        color: Color(0xffFFFFFF),
+                        fontSize: ScreenUtil().setSp(36)),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 

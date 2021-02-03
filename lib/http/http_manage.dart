@@ -2246,7 +2246,7 @@ class HttpManage {
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_HOLDER_COIN,
-      data: paramsMap,
+      data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = IncomeListEntity();
