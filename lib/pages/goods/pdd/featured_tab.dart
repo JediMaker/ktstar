@@ -163,7 +163,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       visible: !CommonUtils.isEmpty(_banner),
       child: new Container(
         margin:
-            const EdgeInsets.only(top: 8.0, bottom: 5.0, left: 16, right: 16),
+             EdgeInsets.only(top: GlobalConfig.LAYOUT_MARGIN, bottom: 5.0, left: GlobalConfig.LAYOUT_MARGIN, right: GlobalConfig.LAYOUT_MARGIN),
         color: Colors.transparent,
         height: ScreenUtil().setHeight(468),
         child: Center(
@@ -388,7 +388,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
         child: new Wrap(
 //        mainAxisAlignment: MainAxisAlignment.center,
 //        crossAxisAlignment: CrossAxisAlignment.center,
-          runSpacing: 16,
+          runSpacing: GlobalConfig.LAYOUT_MARGIN,
           children: iconList.asMap().keys.map((index) {
             HomeIconListIconList item;
             try {
@@ -583,7 +583,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 ));
           },
           child: Container(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.only(left: GlobalConfig.LAYOUT_MARGIN, right: GlobalConfig.LAYOUT_MARGIN),
             margin: EdgeInsets.only(bottom: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,

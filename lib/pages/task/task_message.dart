@@ -109,7 +109,8 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
               _initData();
             }
           },
-          emptyWidget: _msgList== null||_msgList.length==0 ? NoDataPage() : null,
+          emptyWidget:
+              _msgList == null || _msgList.length == 0 ? NoDataPage() : null,
           slivers: <Widget>[buildCenter()],
         ) // This trailing comma makes auto-formatting nicer for build methods.
         );
@@ -148,7 +149,8 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: 16, vertical: ScreenUtil().setHeight(16)),
+          horizontal: GlobalConfig.LAYOUT_MARGIN,
+          vertical: ScreenUtil().setHeight(16)),
       padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -218,7 +220,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
           ),
           Divider(
             height: ScreenUtil().setHeight(1),
-            color: Color(0xFFdddddd),
+            color: Color(0xFFefefef),
           ),
           SizedBox(
             height: ScreenUtil().setHeight(47),

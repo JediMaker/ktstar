@@ -296,11 +296,31 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
           visible: _showTimeDesc,
           child: Container(
               margin: EdgeInsets.only(top: 10, bottom: 10),
-              child: Center(child: Text('$timeDesc'))),
+              child: Center(
+                  child: Container(
+                height: ScreenUtil().setWidth(53),
+                width: ScreenUtil().setWidth(201),
+                decoration: BoxDecoration(
+                  color: Color(0xffdedede),
+                  borderRadius: BorderRadius.circular(
+                    ScreenUtil().setSp(10),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '$timeDesc',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenUtil().setSp(32),
+                    ),
+                  ),
+                ),
+              ))),
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: 16, vertical: ScreenUtil().setHeight(16)),
+              horizontal: GlobalConfig.LAYOUT_MARGIN,
+              vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -356,7 +376,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
               ),
               Divider(
                 height: ScreenUtil().setHeight(1),
-                color: Color(0xFFdddddd),
+                color: Color(0xFFefefef),
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(47),

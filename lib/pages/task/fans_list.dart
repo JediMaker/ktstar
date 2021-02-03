@@ -238,7 +238,8 @@ class _FansListPageState extends State<FansListPage>
               Flexible(
                 child: Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+                      horizontal: GlobalConfig.LAYOUT_MARGIN,
+                      vertical: ScreenUtil().setHeight(30)),
                   padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -321,7 +322,8 @@ class _FansListPageState extends State<FansListPage>
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(
-                horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+                horizontal: GlobalConfig.LAYOUT_MARGIN,
+                vertical: ScreenUtil().setHeight(30)),
             height: ScreenUtil().setHeight(295),
             padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
             alignment: Alignment.centerLeft,
