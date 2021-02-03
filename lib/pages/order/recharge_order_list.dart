@@ -41,6 +41,9 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
   List<OrderListDataList> _orderList;
   String contactPhone = ""; //
   _initData() async {
+    if (widget.orderSource == '-1') {
+      return;
+    }
     OrderListEntity result =
         await HttpManage.getOrderList(page, 10, widget.orderSource);
     if (result.status) {
@@ -249,7 +252,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: GlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
+            horizontal: GlobalConfig.LAYOUT_MARGIN,
+            vertical: ScreenUtil().setHeight(16)),
         padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -635,7 +639,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
@@ -658,7 +662,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                       Expanded(
                           child: Container(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
@@ -700,7 +704,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                             }).toList(),
                           ),*/
                             SizedBox(
-                              height: 15,
+                              height: ScreenUtil().setWidth(16),
                             ),
                             Row(
                               children: <Widget>[

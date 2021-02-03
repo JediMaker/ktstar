@@ -42,8 +42,12 @@ class _OrderListPageState extends State<OrderListPage>
   }
 
   var orderType = [
+    '全部',
     '自营',
     '拼多多',
+    '美团',
+    '饿了么',
+    '话费充值',
   ];
 
 //订单类型
@@ -78,8 +82,16 @@ class _OrderListPageState extends State<OrderListPage>
     List<Widget> tabViews = <Widget>[];
     if (orderType != null) {
       for (var index = 0; index < orderType.length; index++) {
+        print("orderType.name=${orderType[index]}&&index=$index");
+        var orderSource = "${index}";
+        if (orderType[index] == '话费充值') {
+          orderSource = "4";
+        }
+        if (orderType[index] == '饿了么') {
+          orderSource = "-1";
+        }
         tabViews.add(RechargeOrderListPage(
-          orderSource: "${index + 1}",
+          orderSource: orderSource,
         ));
       }
     }
@@ -120,8 +132,8 @@ class _OrderListPageState extends State<OrderListPage>
             child: TabBar(
               controller: _tabController,
               indicatorColor: Color(0xffF32E43),
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: orderType.length < 4 ? true : false,
+              indicatorSize: TabBarIndicatorSize.tab,
+              isScrollable: true,
               labelColor: Color(0xffF32E43),
               indicatorWeight: 2,
               indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
