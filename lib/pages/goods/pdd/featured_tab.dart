@@ -372,8 +372,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
           bottom: 16,
         ),
         margin: EdgeInsets.only(
-          left: 16,
-          right: 16,
+          left: GlobalConfig.LAYOUT_MARGIN,
+          right: GlobalConfig.LAYOUT_MARGIN,
           top: ScreenUtil().setHeight(0),
         ),
         alignment: Alignment.center,
@@ -640,7 +640,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
   Widget buildAdRowContainer() {
     return Container(
-      margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
+      margin: EdgeInsets.only(bottom: 16, left: GlobalConfig.LAYOUT_MARGIN, right: GlobalConfig.LAYOUT_MARGIN,),
       child: Row(
         children: [
           buildBuyLeftWidget(),
@@ -1106,7 +1106,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: 16),
+          margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN,),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,
@@ -1139,7 +1139,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '预估补贴￥0';
+    String profit = '分红金￥0';
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
@@ -1196,7 +1196,7 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
           ),*/
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
           ),
           child: Padding(
 //                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
@@ -1210,51 +1210,55 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               crossAxisAlignment: CrossAxisAlignment.start,
 //                        fit: StackFit.expand,
               children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(ScreenUtil().setWidth(10)),
-                      topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                Stack(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                          topLeft: Radius.circular(ScreenUtil().setWidth(30)),
+                        ),
+                        child: CachedNetworkImage(
+                          fadeInDuration: Duration(milliseconds: 0),
+                          fadeOutDuration: Duration(milliseconds: 0),
+                          height: ScreenUtil().setWidth(523),
+                          width: ScreenUtil().setWidth(523),
+                          fit: BoxFit.fill,
+                          imageUrl: "$goodsImg",
+                        ),
+                      ),
                     ),
-                    child: CachedNetworkImage(
-                      fadeInDuration: Duration(milliseconds: 0),
-                      fadeOutDuration: Duration(milliseconds: 0),
-                      height: ScreenUtil().setWidth(523),
-                      width: ScreenUtil().setWidth(523),
-                      fit: BoxFit.fill,
-                      imageUrl: "$goodsImg",
-                    ),
-                  ),
-                ),
-
-//                          SizedBox(
-//                            height: 10,
-//                          ),
-                Visibility(
-                  visible: !CommonUtils.isEmpty(_gBonus),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                    color:_priceColor,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Visibility(
-                            child: Container(
-                              child: Text(
-                                "预估分红金：¥$_gBonus",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(28),
-                                  color: Color(0xffffffff),
+                    Visibility(
+                      visible: !CommonUtils.isEmpty(_gBonus),
+                      child: Container(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setSp(492),
+                        ),
+                        color: _priceColor,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Visibility(
+                                child: Container(
+                                  child: Text(
+                                    "预估分红金：¥$_gBonus",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(28),
+                                      color: Color(0xffffffff),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
                 Container(
                   padding: EdgeInsets.only(
@@ -1285,7 +1289,6 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                           ),
                         ),
                       )),*/
-                      TextSpan(text: " "),
                       TextSpan(text: "$goodsName")
                     ]),
                     maxLines: 2,

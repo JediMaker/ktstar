@@ -717,14 +717,14 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '预估补贴￥0';
+    String profit = '分红金￥0';
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '预估补贴￥${(item.btPrice)}';
+      profit = '分红金￥${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
@@ -948,7 +948,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '预估补贴￥0';
+    String profit = '分红金￥0';
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
@@ -1019,52 +1019,60 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
               crossAxisAlignment: CrossAxisAlignment.start,
 //                        fit: StackFit.expand,
               children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(ScreenUtil().setWidth(10)),
-                      topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                Stack(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(ScreenUtil().setWidth(10)),
+                          topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                        ),
+                        child: CachedNetworkImage(
+                          fadeInDuration: Duration(milliseconds: 0),
+                          fadeOutDuration: Duration(milliseconds: 0),
+                          height: ScreenUtil().setWidth(523),
+                          width: ScreenUtil().setWidth(523),
+                          fit: BoxFit.fill,
+                          imageUrl: "$goodsImg",
+                        ),
+                      ),
                     ),
-                    child: CachedNetworkImage(
-                      fadeInDuration: Duration(milliseconds: 0),
-                      fadeOutDuration: Duration(milliseconds: 0),
-                      height: ScreenUtil().setWidth(523),
-                      width: ScreenUtil().setWidth(523),
-                      fit: BoxFit.fill,
-                      imageUrl: "$goodsImg",
+                    Visibility(
+                      visible: !CommonUtils.isEmpty(_gBonus),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setSp(492),
+                        ),
+                        color: _priceColor,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Visibility(
+                                child: Container(
+                                  child: Text(
+                                    "预估分红金：¥$_gBonus",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(28),
+                                      color: Color(0xffffffff),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
 
 //                          SizedBox(
 //                            height: 10,
 //                          ),
-                Visibility(
-                  visible: !CommonUtils.isEmpty(_gBonus),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                    color: _priceColor,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Visibility(
-                            child: Container(
-                              child: Text(
-                                "预估分红金：¥$_gBonus",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(28),
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 Container(
                   padding: EdgeInsets.only(
                     left: ScreenUtil().setWidth(20),

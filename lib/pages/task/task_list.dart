@@ -67,6 +67,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/pages/widget/my_tab.dart';
+
 ///首页
 class TaskListPage extends StatefulWidget {
   TaskListPage({Key key}) : super(key: key);
@@ -403,10 +404,13 @@ class _TaskListPageState extends State<TaskListPage>
         }
       });
     }
+
     ///
-//    if (bannerList.length > 1) {
-      _swiperController.startAutoplay();
-//    }
+    if (bannerList.length > 1) {
+    _swiperController.startAutoplay();
+    }else{
+      _swiperController.stopAutoplay();
+    }
   }
 
   ///
@@ -513,28 +517,30 @@ class _TaskListPageState extends State<TaskListPage>
               child: Container(
                 height: ScreenUtil().setWidth(100),
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(
+                    horizontal: GlobalConfig.LAYOUT_MARGIN),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(100)),
                   color: Colors.white,
                 ),
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.only(right: ScreenUtil().setWidth(35)),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CachedNetworkImage(
-                      width: ScreenUtil().setWidth(48),
-                      height: ScreenUtil().setWidth(48),
+                      width: ScreenUtil().setWidth(36),
+                      height: ScreenUtil().setWidth(36),
                       imageUrl:
                           "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 4),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(10)),
                       child: Text(
                         "搜索你想要的吧",
                         style: TextStyle(
                           color: Color(0xff666666),
-                          fontSize: ScreenUtil().setSp(42),
+                          fontSize: ScreenUtil().setSp(36),
                         ),
                       ),
                     ),
@@ -566,7 +572,10 @@ class _TaskListPageState extends State<TaskListPage>
   Widget buildAdRowContainer() {
     return SliverToBoxAdapter(
       child: Container(
-        margin: EdgeInsets.only(top: 8, left: 16, right: 16),
+        margin: EdgeInsets.only(
+            top: 8,
+            left: GlobalConfig.LAYOUT_MARGIN,
+            right: GlobalConfig.LAYOUT_MARGIN),
         child: Row(
           children: List.generate(
               CommonUtils.isEmpty(adList) ? 0 : adList.length,
@@ -679,6 +688,7 @@ class _TaskListPageState extends State<TaskListPage>
                   "pinduoduo://com.xunmeng.pinduoduo/");
               if (await canLaunch(pddPath)) {
                 await launch(pddPath);
+                return;
               } else {
                 NavigatorUtils.navigatorRouter(
                     context,
@@ -789,24 +799,24 @@ class _TaskListPageState extends State<TaskListPage>
                     enableInfiniteRefresh,
                     success,
                     noMore) {
-                  return Stack(
-                    children: <Widget>[
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          width: 30.0,
-                          height: 30.0,
-                          child: SpinKitCircle(
-                            color: GlobalConfig.colorPrimary,
-                            size: 30.0,
-                          ),
-                        ),
+              return Stack(
+                children: <Widget>[
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      width: 30.0,
+                      height: 30.0,
+                      child: SpinKitCircle(
+                        color: GlobalConfig.colorPrimary,
+                        size: 30.0,
                       ),
-                    ],
-                  );
-                }),
+                    ),
+                  ),
+                ],
+              );
+            }),
             footer: CustomFooter(
 //                completeDuration: Duration(seconds: 1),
                 footerBuilder: (context,
@@ -820,24 +830,24 @@ class _TaskListPageState extends State<TaskListPage>
                     enableInfiniteLoad,
                     success,
                     noMore) {
-                  return Stack(
-                    children: <Widget>[
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          width: 30.0,
-                          height: 30.0,
-                         /* child: SpinKitCircle(
+              return Stack(
+                children: <Widget>[
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      width: 30.0,
+                      height: 30.0,
+                      /* child: SpinKitCircle(
                             color: GlobalConfig.colorPrimary,
                             size: 30.0,
                           ),*/
-                        ),
-                      ),
-                    ],
-                  );
-                }),
+                    ),
+                  ),
+                ],
+              );
+            }),
             firstRefreshWidget: Container(
               width: double.infinity,
               height: double.infinity,
@@ -973,8 +983,11 @@ class _TaskListPageState extends State<TaskListPage>
         child: Visibility(
       visible: goodsList.length > 0,
       child: Container(
+        height: ScreenUtil().setWidth(604),
         margin: EdgeInsets.only(
-            top: ScreenUtil().setHeight(30), left: 16, right: 16),
+            top: ScreenUtil().setHeight(30),
+            left: GlobalConfig.LAYOUT_MARGIN,
+            right: GlobalConfig.LAYOUT_MARGIN),
         padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -984,92 +997,110 @@ class _TaskListPageState extends State<TaskListPage>
             ]),
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(32))),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+//          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                NavigatorUtils.navigatorRouter(context, GoodsListPage());
-              },
-              child: Container(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Stack(
-                        alignment: Alignment.centerLeft,
-                        children: [
-                          Container(
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://alipic.lanhuapp.com/xde2fb8570-f7e3-47a5-9220-217c64821d87",
-                              fit: BoxFit.fill,
-                            ),
+            Stack(
+              children: [
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    NavigatorUtils.navigatorRouter(context, GoodsListPage());
+                  },
+                  child: Container(
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Container(
+                                width: ScreenUtil().setWidth(844),
+                                height: ScreenUtil().setWidth(152),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://alipic.lanhuapp.com/xde2fb8570-f7e3-47a5-9220-217c64821d87",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Container(
+                                width: ScreenUtil().setWidth(525),
+                                height: ScreenUtil().setWidth(93),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://alipic.lanhuapp.com/xd2f96e526-c4b7-42d1-b4a9-813e1976d2e0",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
                           ),
-                          Container(
-                            width: ScreenUtil().setWidth(525),
-                            height: ScreenUtil().setHeight(93),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://alipic.lanhuapp.com/xd8efb617a-af45-4ef1-bf07-2dba466fe026",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: ScreenUtil().setWidth(162),
-                      height: ScreenUtil().setWidth(63),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                          Color(0xffFFEDD8),
-                          Color(0xffFEC7B7),
-                        ]),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(ScreenUtil().setWidth(32)),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "GO",
-                            style: TextStyle(
-                              color: Color(0xffC61513),
-                              fontSize: ScreenUtil().setSp(42),
+                        Container(
+                          width: ScreenUtil().setWidth(162),
+                          height: ScreenUtil().setWidth(63),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xffFFEDD8),
+                                  Color(0xffFEC7B7),
+                                ]),
+                            border: Border.all(
+                              color: Color(0xffF8A699),
+                              width: ScreenUtil().setWidth(3),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(32)),
                             ),
                           ),
-                          CachedNetworkImage(
-                            imageUrl:
-                                "https://alipic.lanhuapp.com/xdb2ba7101-ff5b-42ae-a6e7-f890b3b83e91",
-                            fit: BoxFit.fill,
-                            width: ScreenUtil().setWidth(33),
-                            height: ScreenUtil().setWidth(33),
-                          )
-                        ],
-                      ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "GO",
+                                style: TextStyle(
+                                  color: Color(0xffC61513),
+                                  fontSize: ScreenUtil().setSp(42),
+                                ),
+                              ),
+                              CachedNetworkImage(
+                                imageUrl:
+                                    "https://alipic.lanhuapp.com/xdb2ba7101-ff5b-42ae-a6e7-f890b3b83e91",
+                                fit: BoxFit.fill,
+                                width: ScreenUtil().setWidth(33),
+                                height: ScreenUtil().setWidth(33),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                    margin: EdgeInsets.only(
+                      bottom: ScreenUtil().setHeight(30),
+                    ),
+                  ),
                 ),
-                margin: EdgeInsets.only(
-                  bottom: ScreenUtil().setHeight(30),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: ScreenUtil().setWidth(140),
+                  ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: List.generate(goodsList.length, (index) {
+                        HomeGoodsListGoodsList item;
+                        try {
+                          item = goodsList[index];
+                        } catch (e) {}
+                        return productItem(item: item);
+                      }),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: List.generate(goodsList.length, (index) {
-                  HomeGoodsListGoodsList item;
-                  try {
-                    item = goodsList[index];
-                  } catch (e) {}
-                  return productItem(item: item);
-                }),
-              ),
+              ],
             ),
           ],
         ),
@@ -1080,7 +1111,8 @@ class _TaskListPageState extends State<TaskListPage>
   ///申请微股东
   Widget buildApplyForMicroShareholders() {
     return SliverToBoxAdapter(
-      child: Column(
+      child: Stack(
+//        alignment: Alignment.centerLeft,
         children: [
           GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -1089,8 +1121,15 @@ class _TaskListPageState extends State<TaskListPage>
                   context, MicroShareHolderEquityPage());
             },
             child: Container(
-              margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-              height: ScreenUtil().setHeight(188),
+              margin: EdgeInsets.only(
+                  left: GlobalConfig.LAYOUT_MARGIN,
+                  right: GlobalConfig.LAYOUT_MARGIN,
+                  top: 10),
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(211),
+                right: GlobalConfig.LAYOUT_MARGIN,
+              ),
+              height: ScreenUtil().setWidth(158),
               decoration: BoxDecoration(
 //                            color: Colors.white,
                   gradient: LinearGradient(colors: [
@@ -1106,15 +1145,6 @@ class _TaskListPageState extends State<TaskListPage>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Container(
-                    width: ScreenUtil().setWidth(235),
-                    height: ScreenUtil().setWidth(235),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://alipic.lanhuapp.com/xd3342447e-ba65-4d86-91eb-edfe87de5ca3",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
                   Expanded(
                     child: Container(
                       child: Text(
@@ -1132,10 +1162,13 @@ class _TaskListPageState extends State<TaskListPage>
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     margin: EdgeInsets.only(right: 10, left: 8),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Color(0xffE43E32),
-                        Color(0xffAB221B),
-                      ]),
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xffE43E32),
+                            Color(0xffAB221B),
+                          ]),
                       borderRadius: BorderRadius.all(
                         Radius.circular(ScreenUtil().setWidth(39)),
                       ),
@@ -1168,6 +1201,19 @@ class _TaskListPageState extends State<TaskListPage>
               ),
             ),
           ),
+          Container(
+            width: ScreenUtil().setWidth(207),
+            height: ScreenUtil().setWidth(207),
+            margin: EdgeInsets.only(
+                left: ScreenUtil().setWidth(40),
+                right: GlobalConfig.LAYOUT_MARGIN,
+                top: ScreenUtil().setWidth(10)),
+            child: CachedNetworkImage(
+              imageUrl:
+                  "https://alipic.lanhuapp.com/xd3342447e-ba65-4d86-91eb-edfe87de5ca3",
+              fit: BoxFit.fill,
+            ),
+          ),
         ],
       ),
     );
@@ -1192,7 +1238,9 @@ class _TaskListPageState extends State<TaskListPage>
             SliverToBoxAdapter(
                 child: Container(
               margin: EdgeInsets.only(
-                  top: ScreenUtil().setHeight(30), left: 16, right: 16),
+                  top: ScreenUtil().setHeight(30),
+                  left: GlobalConfig.LAYOUT_MARGIN,
+                  right: GlobalConfig.LAYOUT_MARGIN),
               padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -1264,7 +1312,7 @@ class _TaskListPageState extends State<TaskListPage>
           constraints: BoxConstraints(),
           decoration: BoxDecoration(
             color: Color(0xffFee2cd),
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(20)),
           ),
           child: Padding(
 //                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
@@ -1274,6 +1322,7 @@ class _TaskListPageState extends State<TaskListPage>
 
 //        onDoubleTap: () => showSnackBar(),
             child: Container(
+              width: ScreenUtil().setWidth(305),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(
@@ -1438,7 +1487,11 @@ class _TaskListPageState extends State<TaskListPage>
   Widget desLayout() {
     return SliverToBoxAdapter(
       child: Container(
-        margin: EdgeInsets.only(left: 16, top: 8, right: 16),
+        margin: EdgeInsets.only(
+          left: ScreenUtil().setWidth(47),
+          top: 8,
+          right: ScreenUtil().setWidth(47),
+        ),
         child: Column(
           children: [
             Row(
@@ -1532,8 +1585,8 @@ class _TaskListPageState extends State<TaskListPage>
           bottom: 16,
         ),
         margin: EdgeInsets.only(
-          left: 16,
-          right: 16,
+          left: GlobalConfig.LAYOUT_MARGIN,
+          right: GlobalConfig.LAYOUT_MARGIN,
           top: 8,
 //          top: ScreenUtil().setHeight(655),
         ),
@@ -1554,6 +1607,7 @@ class _TaskListPageState extends State<TaskListPage>
             HomeIconListIconList item;
             try {
               item = iconList[index];
+              print(" iconList[index]=${index}");
             } catch (e) {}
             return iconItem(_itemsTextColor, item: item);
           }).toList(),
@@ -1582,6 +1636,7 @@ class _TaskListPageState extends State<TaskListPage>
       path = item.path;
       subtitle = item.subtitle;
       params = item.params;
+      print(" iconList[index]  name=${name}");
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
       if (params.contains("&")) {}
       List<String> pList = params.split("&");
@@ -1738,6 +1793,7 @@ class _TaskListPageState extends State<TaskListPage>
                   "pinduoduo://com.xunmeng.pinduoduo/");
               if (await canLaunch(pddPath)) {
                 await launch(pddPath);
+                return;
               } else {
                 NavigatorUtils.navigatorRouter(
                     context,
@@ -1764,14 +1820,10 @@ class _TaskListPageState extends State<TaskListPage>
               children: <Widget>[
                 new Container(
                   margin: const EdgeInsets.only(bottom: 8.0),
-                  child: new CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.transparent,
-                    child: CachedNetworkImage(
-                      imageUrl: "$icon",
-                      width: ScreenUtil().setWidth(142),
-                      height: ScreenUtil().setWidth(142),
-                    ),
+                  child: CachedNetworkImage(
+                    imageUrl: "$icon",
+                    width: ScreenUtil().setWidth(155),
+                    height: ScreenUtil().setWidth(155),
                   ),
                 ),
                 new Container(
@@ -1909,8 +1961,8 @@ class _TaskListPageState extends State<TaskListPage>
           ),
           Container(
             margin: EdgeInsets.only(
-              left: 16,
-              right: 16,
+              left: GlobalConfig.LAYOUT_MARGIN,
+              right: GlobalConfig.LAYOUT_MARGIN,
               top: 6,
             ),
             child: ClipRRect(
@@ -1979,8 +2031,8 @@ class _TaskListPageState extends State<TaskListPage>
                       }*/
                       try {
                         _gradientCorlor = LinearGradient(colors: [
-                          generator.dominantColor.color,
-                          generator.dominantColor.color,
+                          generator.darkMutedColor.color,
+                          generator.darkMutedColor.color,
                         ]);
                       } catch (e) {}
                       /*_gradientCorlor = LinearGradient(colors: [
@@ -2123,6 +2175,7 @@ class _TaskListPageState extends State<TaskListPage>
                               "pinduoduo://com.xunmeng.pinduoduo/");
                           if (await canLaunch(pddPath)) {
                             await launch(pddPath);
+                            return;
                           } else {
                             NavigatorUtils.navigatorRouter(
                                 context,
@@ -2274,7 +2327,9 @@ class _TaskListPageState extends State<TaskListPage>
         },
         child: Container(
           height: ScreenUtil().setHeight(550),
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          margin: EdgeInsets.symmetric(
+              horizontal: GlobalConfig.LAYOUT_MARGIN,
+              vertical: GlobalConfig.LAYOUT_MARGIN),
           alignment: Alignment.center,
           child: CachedNetworkImage(
             imageUrl:
@@ -2708,7 +2763,9 @@ class _TaskListPageState extends State<TaskListPage>
     return Card(
       elevation: 0,
       margin: EdgeInsets.only(
-          left: 16, right: 16, top: ScreenUtil().setHeight(655)),
+          left: GlobalConfig.LAYOUT_MARGIN,
+          right: GlobalConfig.LAYOUT_MARGIN,
+          top: ScreenUtil().setHeight(655)),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),
@@ -2792,8 +2849,10 @@ class _TaskListPageState extends State<TaskListPage>
   Widget taskCard2(context) {
     return Card(
       elevation: 0,
-      margin:
-          EdgeInsets.only(left: 16, right: 16, top: ScreenUtil().setHeight(32)),
+      margin: EdgeInsets.only(
+          left: GlobalConfig.LAYOUT_MARGIN,
+          right: GlobalConfig.LAYOUT_MARGIN,
+          top: ScreenUtil().setHeight(32)),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16.0)),
       ),
