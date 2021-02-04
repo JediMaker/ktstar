@@ -18,8 +18,11 @@ class HomeIconListIconList with JsonConvert<HomeIconListIconList> {
 	String path;
 	String params;
 	String subtitle;
+	String flag;
 	@JSONField(name: "img_path")
 	String imgPath;
 	@JSONField(name: "toast_info")
 	String toastInfo;
+	@JSONField(name: "need_login")
+	bool needLogin;
 }

@@ -49,11 +49,17 @@ homeIconListIconListFromJson(HomeIconListIconList data, Map<String, dynamic> jso
 	if (json['subtitle'] != null) {
 		data.subtitle = json['subtitle']?.toString();
 	}
+	if (json['flag'] != null) {
+		data.flag = json['flag']?.toString();
+	}
 	if (json['img_path'] != null) {
 		data.imgPath = json['img_path']?.toString();
 	}
 	if (json['toast_info'] != null) {
 		data.toastInfo = json['toast_info']?.toString();
+	}
+	if (json['need_login'] != null) {
+		data.needLogin = json['need_login'];
 	}
 	return data;
 }
@@ -70,7 +76,9 @@ Map<String, dynamic> homeIconListIconListToJson(HomeIconListIconList entity) {
 	data['path'] = entity.path;
 	data['params'] = entity.params;
 	data['subtitle'] = entity.subtitle;
+	data['flag'] = entity.flag;
 	data['img_path'] = entity.imgPath;
 	data['toast_info'] = entity.toastInfo;
+	data['need_login'] = entity.needLogin;
 	return data;
 }
