@@ -39,6 +39,7 @@ class OrderListDataList with JsonConvert<OrderListDataList> {
   String orderSource;
   String mobile;
   String phone;
+  String coin;
 }
 
 class OrderListDataListGoodsList with JsonConvert<OrderListDataListGoodsList> {

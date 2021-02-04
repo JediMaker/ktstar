@@ -17,6 +17,7 @@ import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
 import 'package:star/pages/order/order_detail.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
+import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -148,6 +149,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
     String orderId;
     String goodsId;
     String goodsSign;
+    String coin;
     List<OrderListDataListGoodsList> goodsList =
         List<OrderListDataListGoodsList>();
     try {
@@ -161,6 +163,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
       orderId = listItem.orderId;
       orderStatus = listItem.status;
       contactPhone = listItem.phone;
+      coin = listItem.coin;
       goodsList = listItem.goodsList;
       try {
         if (!CommonUtils.isEmpty(goodsList)) {
@@ -286,7 +289,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                     orderStatusText,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(36),
-                      color: Color(0xffFD8B4E),
+                      color: Color(0xff222222),
                     ),
                   ),
                 ),
@@ -325,57 +328,56 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
               children: <Widget>[
                 Text(
                   //状态：
-                  "总价",
+                  "分红金 ",
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(42),
+                    fontSize: ScreenUtil().setSp(32),
                     color: Color(0xFF999999),
                   ),
                 ),
-                Text(
-                  //状态：
-                  " ￥ ",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(30),
-                    color: Color(0xFF999999),
-                  ),
-                ),
-                Text(
-                  //状态：
-                  "$totalMoney",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(42),
-                    color: Color(0xFF999999),
-                  ),
+                PriceText(
+                  text: "$coin",
+                  textColor: Color(0xFF999999),
+                  fontSize: ScreenUtil().setSp(32),
+                  fontBigSize: ScreenUtil().setSp(42),
+                  fontWeight: FontWeight.normal,
                 ),
                 SizedBox(
                   width: ScreenUtil().setWidth(29),
                 ),
                 Text(
                   //状态：
-                  "实付款",
+                  "总价 ",
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(42),
+                    fontSize: ScreenUtil().setSp(32),
+                    color: Color(0xFF999999),
                   ),
+                ),
+                PriceText(
+                  text: "$totalMoney",
+                  textColor: Color(0xFF999999),
+                  fontSize: ScreenUtil().setSp(32),
+                  fontBigSize: ScreenUtil().setSp(42),
+                  fontWeight: FontWeight.normal,
+                ),
+                SizedBox(
+                  width: ScreenUtil().setWidth(29),
                 ),
                 Text(
                   //状态：
-                  " ￥ ",
+                  "实付款 ",
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(30),
+                    fontSize: ScreenUtil().setSp(32),
                   ),
                 ),
-                Text(
-                  //状态：
-                  "$payMoney",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(42),
-                  ),
+                PriceText(
+                  text: "$payMoney",
+                  textColor: Color(0xff222222),
+                  fontSize: ScreenUtil().setSp(32),
+                  fontBigSize: ScreenUtil().setSp(42),
+                  fontWeight: FontWeight.normal,
                 ),
               ],
             ),
@@ -638,7 +640,9 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
               GestureDetector(
                 child: Container(
                   color: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(10), ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: ScreenUtil().setWidth(10),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -663,38 +667,34 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                       ),
                       Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                product.goodsName == null
-                                    ? ""
-                                    : product.goodsName,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            product.goodsName == null ? "" : product.goodsName,
 //                                  item.wareName,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Color(0xff222222),
-                                  fontSize: ScreenUtil().setSp(42),
-                                ),
-                              ),
-                              Container(
-                                child: Text(
-                                  product.specItem == null
-                                      ? ""
-                                      : product.specItem,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Color(0xff222222),
+                              fontSize: ScreenUtil().setSp(42),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              product.specItem == null ? "" : product.specItem,
 //                                  item.wareName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(38),
-                                    color: Color(0xff666666),
-                                  ),
-                                ),
-                                margin: EdgeInsets.only(
-                                    top: ScreenUtil().setHeight(18)),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(38),
+                                color: Color(0xff666666),
                               ),
-                              /*Wrap(
+                            ),
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(18)),
+                          ),
+                          /*Wrap(
                               children: product.option.map((op) {
                                 return Container(
                                   child: Text(
@@ -704,57 +704,57 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                                 );
                               }).toList(),
                             ),*/
-                             /* SizedBox(
+                          /* SizedBox(
                                 height: ScreenUtil().setWidth(16),
                               ),*/
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                      child: Row(
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Row(
 //                            crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
+                                children: <Widget>[
 //                              Expanded(child:,),
-                                      Flexible(
-                                        child: Text(
-                                          '',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(),
-                                        ),
-//                                flex: 2,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "￥${product.salePrice == null ? "" : product.salePrice}",
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(42),
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFFF93736),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                                  Container(
-                                    alignment: Alignment.centerRight,
+                                  Flexible(
                                     child: Text(
-                                      'x${product.goodsNum}',
-                                      style: TextStyle(
-                                        color: Color(0xff222222),
-                                        fontSize: ScreenUtil().setSp(36),
-                                      ),
+                                      '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(),
+                                    ),
+//                                flex: 2,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "￥${product.salePrice == null ? "" : product.salePrice}",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(42),
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFF93736),
                                     ),
                                   ),
+                                ],
+                              )),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'x${product.goodsNum}',
+                                  style: TextStyle(
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(36),
+                                  ),
+                                ),
+                              ),
 //                            Icon(
 //                              Icons.more_horiz,
 //                              size: 15,
 //                              color: Color(0xFF979896),
 //                            ),
-                                ],
-                              ),
                             ],
-                          ))
+                          ),
+                        ],
+                      ))
                     ],
                   ),
                 ),

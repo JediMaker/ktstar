@@ -1002,6 +1002,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             GlobalConfig.prefs.remove("token");
                             GlobalConfig.prefs.remove("loginData");
                             GlobalConfig.saveLoginStatus(false);
+                            Navigator.pop(context);
                             NavigatorUtils.navigatorRouter(
                                 context, LoginPage());
                           },

@@ -84,7 +84,7 @@ class GlobalConfig {
 
   static List<MaterialColor> get themes => _themes;
 
-  static const Color taskHeadColor = Color(0xFFFD8B4E);
+  static const Color taskHeadColor = Color(0xffCE0100);
   static const Color taskNomalHeadColor = Color(0xFFFAFAFA);
   static Color taskHeadDisableColor = Color(0xFFFFBB97);
   static Color taskBtnBgColor = Color(0xFFFFECDE);

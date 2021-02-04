@@ -96,6 +96,9 @@ orderListDataListFromJson(OrderListDataList data, Map<String, dynamic> json) {
 	if (json['phone'] != null) {
 		data.phone = json['phone']?.toString();
 	}
+	if (json['coin'] != null) {
+		data.coin = json['coin']?.toString();
+	}
 	return data;
 }
 
@@ -115,6 +118,7 @@ Map<String, dynamic> orderListDataListToJson(OrderListDataList entity) {
 	data['order_source'] = entity.orderSource;
 	data['mobile'] = entity.mobile;
 	data['phone'] = entity.phone;
+	data['coin'] = entity.coin;
 	return data;
 }
 
