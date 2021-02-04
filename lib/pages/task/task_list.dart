@@ -38,6 +38,7 @@ import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/goods/home_pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_home.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
@@ -150,12 +151,18 @@ class _TaskListPageState extends State<TaskListPage>
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         tabs.add(Container(
-          height: 36,
-          child: Tab(
-            iconMargin: EdgeInsets.all(0),
-            child: Row(
-              children: [
-                Column(
+          height: 48,
+          width: ScreenUtil().setWidth(227),
+          padding:  EdgeInsets.only(
+            top: ScreenUtil().setWidth(20),
+          ),
+          alignment:Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
                   children: [
                     Text(
                       "${classify.catName}",
@@ -170,12 +177,13 @@ class _TaskListPageState extends State<TaskListPage>
                       visible: !CommonUtils.isEmpty("${classify.subtitle}"),
                       child: Container(
                         height: ScreenUtil().setWidth(46),
+                        width: ScreenUtil().setWidth(150),
                         alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(
+                        /* padding: EdgeInsets.symmetric(
                           horizontal: ScreenUtil().setWidth(14),
-                        ),
+                        ),*/
                         margin: EdgeInsets.only(
-                          top: ScreenUtil().setWidth(8),
+                          top: ScreenUtil().setWidth(6),
                         ),
                         decoration: BoxDecoration(
                           color: index == _selectedTabIndex
@@ -186,6 +194,8 @@ class _TaskListPageState extends State<TaskListPage>
                         ),
                         child: Text(
                           "${classify.subtitle}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: ScreenUtil().setSp(28),
                               color: index == _selectedTabIndex
@@ -196,22 +206,22 @@ class _TaskListPageState extends State<TaskListPage>
                     ),
                   ],
                 ),
-                Visibility(
-                  visible: index != cats.length - 1,
-                  child: Center(
-                    child: Container(
+              ),
+              Visibility(
+                visible: index != cats.length - 1,
+                child: Center(
+                  child: Container(
 //                      color: Color(0xffCE0100),
-                      margin: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(60),
-                      ),
-                      color: Color(0xffb9b9b9),
-                      width: ScreenUtil().setWidth(1),
-                      height: ScreenUtil().setWidth(43),
-                    ),
+                    margin: EdgeInsets.only(
+//                        left: ScreenUtil().setWidth(30),
+                        ),
+                    color: Color(0xffb9b9b9),
+                    width: ScreenUtil().setWidth(1),
+                    height: ScreenUtil().setWidth(43),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ));
       }
@@ -313,9 +323,10 @@ class _TaskListPageState extends State<TaskListPage>
             min: 48,
             builder: (ctx, offset) => Container(
                   alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: GlobalConfig.LAYOUT_MARGIN),
                   color: Color(0xFFFAFAFA),
 //                  height: 26,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: TabBar(
                     labelColor: Color(0xff222222),
                     controller: this._pddTabController,
@@ -328,6 +339,7 @@ class _TaskListPageState extends State<TaskListPage>
                       width: 0,
                       color: Colors.white,
                     )),
+                    labelPadding: EdgeInsets.all(0),
                     tabs: _tabs,
                     onTap: (index) {
                       setState(() {
@@ -650,8 +662,10 @@ class _TaskListPageState extends State<TaskListPage>
     String params = '';
     String catId = '';
     String pddType = '';
+    bool needLogin = false;
     try {
       icon = item.icon;
+
       name = item.name;
       type = item.type;
       appId = item.appId;
@@ -659,7 +673,7 @@ class _TaskListPageState extends State<TaskListPage>
       subtitle = item.subtitle;
       params = item.params;
       imgPath = item.imgPath;
-//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+      needLogin = item.needLogin;
       if (params.contains("&")) {}
       List<String> pList = params.split("&");
       for (var itemString in pList) {
@@ -684,8 +698,16 @@ class _TaskListPageState extends State<TaskListPage>
           ///跳转对应链接
           ///
           ///
-          print(
-              "type=$type&&name=$name&&icon=$icon&&path=$path&&catId=$catId&&pddType=$pddType&&");
+          /// 判断功能是否需要登录
+          if (needLogin) {
+            CommonUtils.showToast("未获取到登录信息，，请登录！");
+            await NavigatorUtils.navigatorRouter(context, LoginPage());
+            bus.emit("changBottomBar");
+            return;
+          }
+
+          ///
+
           if (type == 'webapp') {
             launchWeChatMiniProgram(username: appId, path: path);
             return;
@@ -791,7 +813,6 @@ class _TaskListPageState extends State<TaskListPage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!CommonUtils.isEmpty(iconList)) {
       } else {
-        print("$context WidgetsBinding_initData");
         _initData();
       }
     });
@@ -1090,7 +1111,6 @@ class _TaskListPageState extends State<TaskListPage>
                         Container(
                           width: ScreenUtil().setWidth(162),
                           height: ScreenUtil().setWidth(63),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 begin: Alignment.topCenter,
@@ -1115,6 +1135,7 @@ class _TaskListPageState extends State<TaskListPage>
                                 "GO",
                                 style: TextStyle(
                                   color: Color(0xffC61513),
+                                  fontWeight: FontWeight.w600,
                                   fontSize: ScreenUtil().setSp(42),
                                 ),
                               ),
@@ -1406,7 +1427,7 @@ class _TaskListPageState extends State<TaskListPage>
                         fadeOutDuration: Duration(milliseconds: 0),
                         height: ScreenUtil().setWidth(246),
                         width: ScreenUtil().setWidth(305),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitWidth,
                         imageUrl: "$goodsImg",
                       ),
                     ),
@@ -1663,7 +1684,6 @@ class _TaskListPageState extends State<TaskListPage>
             HomeIconListIconList item;
             try {
               item = iconList[index];
-              print(" iconList[index]=${index}");
             } catch (e) {}
             return iconItem(_itemsTextColor, item: item);
           }).toList(),
@@ -1684,6 +1704,7 @@ class _TaskListPageState extends State<TaskListPage>
     String pddType = '';
     bool needShow = true;
     bool isUnderReview = false;
+    bool needLogin = false;
     try {
       icon = item.icon;
       name = item.name;
@@ -1692,7 +1713,7 @@ class _TaskListPageState extends State<TaskListPage>
       path = item.path;
       subtitle = item.subtitle;
       params = item.params;
-      print(" iconList[index]  name=${name}");
+      needLogin = item.needLogin;
 //      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
       if (params.contains("&")) {}
       List<String> pList = params.split("&");
@@ -1712,25 +1733,25 @@ class _TaskListPageState extends State<TaskListPage>
     } catch (e) {
       print(e);
     }
-    if(!CommonUtils.isEmpty(name)){
+    if (!CommonUtils.isEmpty(name)) {
       if ((name.contains('游戏') ||
-          name.contains('赚钱') ||
-          name.contains('会员') ||
-          name.contains('加油')) &&
+              name.contains('赚钱') ||
+              name.contains('会员') ||
+              name.contains('加油')) &&
           GlobalConfig.isHuaweiUnderReview) {
         needShow = false;
       }
       if ((name.contains('游戏') ||
-          name.contains('赚钱') ||
-          name.contains('会员') ||
-          name.contains('加油')) &&
+              name.contains('赚钱') ||
+              name.contains('会员') ||
+              name.contains('加油')) &&
           GlobalConfig.isHuaweiUnderReview) {
         needShow = false;
       }
       if ((name.contains('游戏') ||
-          name.contains('赚钱') ||
-          name.contains('会员') ||
-          name.contains('星选')) &&
+              name.contains('赚钱') ||
+              name.contains('会员') ||
+              name.contains('星选')) &&
           isUnderReview) {
         needShow = false;
       }
@@ -1740,9 +1761,16 @@ class _TaskListPageState extends State<TaskListPage>
       isUnderReview = GlobalConfig.prefs.getBool("isHuaweiUnderReview");
     }
 
-
     return new InkWell(
         onTap: () async {
+          /// 判断功能是否需要登录
+          if (needLogin) {
+            CommonUtils.showToast("未获取到登录信息，，请登录！");
+            NavigatorUtils.navigatorRouter(context, LoginPage());
+            return;
+          }
+
+          ///
           if (name.contains('赚钱') && Platform.isIOS) {
             if (!GlobalConfig.isHuaweiUnderReview) {
               NavigatorUtils.navigatorRouter(context, TaskHallPage());
