@@ -1232,10 +1232,11 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                     Visibility(
                       visible: !CommonUtils.isEmpty(_gBonus),
                       child: Container(
+                        height: ScreenUtil().setWidth(60),
                         padding:
-                        EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                        EdgeInsets.symmetric(horizontal: 6,),
                         margin: EdgeInsets.only(
-                          top: ScreenUtil().setSp(492),
+                          top: ScreenUtil().setSp(463),
                         ),
                         color: _priceColor,
                         child: Row(
