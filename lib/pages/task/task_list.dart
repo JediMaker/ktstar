@@ -626,7 +626,7 @@ class _TaskListPageState extends State<TaskListPage>
     return SliverToBoxAdapter(
       child: Container(
         margin: EdgeInsets.only(
-            top: 8,
+//            top: 8,
             left: GlobalConfig.LAYOUT_MARGIN,
             right: GlobalConfig.LAYOUT_MARGIN),
         child: Row(
@@ -776,7 +776,7 @@ class _TaskListPageState extends State<TaskListPage>
               child: CachedNetworkImage(
                 imageUrl: "$imgPath",
                 fit: BoxFit.fitWidth,
-                width: ScreenUtil().setWidth(502),
+                width: ScreenUtil().setWidth(522),
                 height: ScreenUtil().setWidth(322),
               ),
             ),
