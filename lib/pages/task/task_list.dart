@@ -151,7 +151,7 @@ class _TaskListPageState extends State<TaskListPage>
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         tabs.add(Container(
-          height: 48,
+          height: ScreenUtil().setWidth(150),
           width: ScreenUtil().setWidth(227),
           padding:  EdgeInsets.only(
             top: ScreenUtil().setWidth(20),
@@ -319,8 +319,8 @@ class _TaskListPageState extends State<TaskListPage>
     return SliverPersistentHeader(
         pinned: true,
         delegate: PersistentHeaderBuilder(
-            max: 60,
-            min: 48,
+            max: ScreenUtil().setWidth(180),
+            min: ScreenUtil().setWidth(150),
             builder: (ctx, offset) => Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(
