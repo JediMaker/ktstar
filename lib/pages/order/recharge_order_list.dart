@@ -384,7 +384,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
             ),
             Divider(
               height: ScreenUtil().setHeight(1),
-              color: Color(0xFFdddddd),
+              color: Color(0xFFefefef),
             ),
             SizedBox(
               height: ScreenUtil().setHeight(37),
@@ -632,11 +632,13 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
         itemBuilder: (context, index) {
           OrderListDataListGoodsList product = goodsList[index];
           return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               GestureDetector(
                 child: Container(
                   color: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(10), ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -660,101 +662,99 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                         width: 10,
                       ),
                       Expanded(
-                          child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              product.goodsName == null
-                                  ? ""
-                                  : product.goodsName,
-//                                  item.wareName,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Color(0xff222222),
-                                fontSize: ScreenUtil().setSp(42),
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                product.specItem == null
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                product.goodsName == null
                                     ? ""
-                                    : product.specItem,
+                                    : product.goodsName,
 //                                  item.wareName,
-                                maxLines: 1,
+                                maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(38),
-                                  color: Color(0xff666666),
+                                  color: Color(0xff222222),
+                                  fontSize: ScreenUtil().setSp(42),
                                 ),
                               ),
-                              margin: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(18)),
-                            ),
-                            /*Wrap(
-                            children: product.option.map((op) {
-                              return Container(
+                              Container(
                                 child: Text(
-                                  "${op.value} ",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              );
-                            }).toList(),
-                          ),*/
-                            SizedBox(
-                              height: ScreenUtil().setWidth(16),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: Row(
-//                            crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-//                              Expanded(child:,),
-                                    Flexible(
-                                      child: Text(
-                                        '',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(),
-                                      ),
-//                                flex: 2,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "￥${product.salePrice == null ? "" : product.salePrice}",
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(42),
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFF93736),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    'x${product.goodsNum}',
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: ScreenUtil().setSp(36),
-                                    ),
+                                  product.specItem == null
+                                      ? ""
+                                      : product.specItem,
+//                                  item.wareName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(38),
+                                    color: Color(0xff666666),
                                   ),
                                 ),
+                                margin: EdgeInsets.only(
+                                    top: ScreenUtil().setHeight(18)),
+                              ),
+                              /*Wrap(
+                              children: product.option.map((op) {
+                                return Container(
+                                  child: Text(
+                                    "${op.value} ",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                );
+                              }).toList(),
+                            ),*/
+                             /* SizedBox(
+                                height: ScreenUtil().setWidth(16),
+                              ),*/
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      child: Row(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+//                              Expanded(child:,),
+                                      Flexible(
+                                        child: Text(
+                                          '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(),
+                                        ),
+//                                flex: 2,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "￥${product.salePrice == null ? "" : product.salePrice}",
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(42),
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFF93736),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      'x${product.goodsNum}',
+                                      style: TextStyle(
+                                        color: Color(0xff222222),
+                                        fontSize: ScreenUtil().setSp(36),
+                                      ),
+                                    ),
+                                  ),
 //                            Icon(
 //                              Icons.more_horiz,
 //                              size: 15,
 //                              color: Color(0xFF979896),
 //                            ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ))
+                                ],
+                              ),
+                            ],
+                          ))
                     ],
                   ),
                 ),
