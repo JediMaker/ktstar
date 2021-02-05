@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
     scrollController.jumpTo(scrollController.position.minScrollExtent);
   }
 
-  _initData() async {
+  _initVersionData() async {
     var versionInfo = await HttpManage.getVersionInfo();
     if (versionInfo.status) {
       switch (versionInfo.data.wxLogin) {
@@ -92,35 +92,45 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    _initData();
+    _initVersionData();
     GlobalConfig.isBindWechat = false;
+    GlobalConfig.payType = -1;
     fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
         .listen((res) async {
-      if (res is fluwx.WeChatAuthResponse) {
-        _result = "state :${res.state} \n code:${res.code}";
-        print("微信授权结果：" + _result);
-        print("微信授权code" + res.code.toString());
-        if (CommonUtils.isEmpty(res.code)) {
-          CommonUtils.showToast("微信授权获取失败，请重新授权！");
-        } else {
-          /* Fluttertoast.showToast(
+      if (res.isSuccessful && GlobalConfig.payType == -1) {
+        if (res is fluwx.WeChatAuthResponse) {
+          _result = "state :${res.state} \n code:${res.code}";
+          print("微信授权结果：" + _result);
+          print("微信授权code" + res.code.toString());
+          if (CommonUtils.isEmpty(res.code)) {
+            CommonUtils.showToast("微信授权获取失败，请重新授权！");
+          } else {
+            /* Fluttertoast.showToast(
               msg: "微信授权获取成功，正在登录！",
               textColor: Colors.white,
               backgroundColor: Colors.grey);*/
-          if (GlobalConfig.isBindWechat) {
-            return;
-          }
-          var result = await HttpManage.wechatLogin(res.code);
-          if (result.status) {
-            CommonUtils.showToast("登陆成功");
-            NavigatorUtils.navigatorRouterAndRemoveUntil(
-                context, TaskIndexPage());
-          } else {
-            CommonUtils.showToast(result.errMsg);
+            if (GlobalConfig.isBindWechat) {
+              return;
+            }
+            var result = await HttpManage.wechatLogin(res.code);
+            if (result.status) {
+              CommonUtils.showToast("登陆成功");
+              var mContext;
+              if (!CommonUtils.isEmpty(context)) {
+                mContext = context;
+              } else {
+                mContext = GlobalConfig.navigatorKey.currentState.overlay.context;
+              }
+              NavigatorUtils.navigatorRouterAndRemoveUntil(
+                  mContext, TaskIndexPage());
+            } else {
+//            CommonUtils.showToast(result.errMsg);
+            }
           }
         }
       }
+
     });
 
     super.initState();

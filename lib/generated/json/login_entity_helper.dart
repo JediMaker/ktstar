@@ -5,7 +5,10 @@ loginEntityFromJson(LoginEntity data, Map<String, dynamic> json) {
 		data.status = json['status'];
 	}
 	if (json['err_code'] != null) {
-		data.errCode = json['err_code']?.toInt();
+		try {
+			data.errCode = json['err_code']?.toInt();
+		} catch (e) {
+		}
 	}
 	if (json['err_msg'] != null) {
 		data.errMsg = json['err_msg'];

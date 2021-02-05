@@ -698,14 +698,6 @@ class _TaskListPageState extends State<TaskListPage>
           ///跳转对应链接
           ///
           ///
-          /// 判断功能是否需要登录
-          if (needLogin) {
-            CommonUtils.showToast("未获取到登录信息，，请登录！");
-            await NavigatorUtils.navigatorRouter(context, LoginPage());
-            bus.emit("changBottomBar");
-            return;
-          }
-
           ///
 
           if (type == 'webapp') {
@@ -861,7 +853,7 @@ class _TaskListPageState extends State<TaskListPage>
             topBouncing: false,
             bottomBouncing: false,
             header: CustomHeader(
-//                completeDuration: Duration(seconds: 2),
+                completeDuration: Duration(milliseconds: 1000),
                 headerBuilder: (context,
                     refreshState,
                     pulledExtent,

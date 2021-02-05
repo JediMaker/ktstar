@@ -364,7 +364,7 @@ class _MicroMinePageState extends State<MicroMinePage>
             _initUserData();
           },
           header: CustomHeader(
-//              completeDuration: Duration(seconds: 2),
+              completeDuration: Duration(milliseconds: 1000),
               headerBuilder: (context,
                   refreshState,
                   pulledExtent,

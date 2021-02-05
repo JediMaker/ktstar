@@ -97,8 +97,10 @@ class _MinePagePageState extends State<MinePagePage> {
 
   @override
   Widget build(BuildContext context) {
-    var title = '';
-    rootView = MicroMinePage();
+    var title = '我的';
+    rootView = MicroMinePage(
+      title: title,
+    );
     return rootView;
   }
 }

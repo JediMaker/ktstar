@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
+import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
@@ -13,7 +14,9 @@ import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/task/mine_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/utils/common_utils.dart';
+import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
@@ -42,9 +45,153 @@ class _TaskIndexPageState extends State<TaskIndexPage>
 //默认索引
   int positionIndex = 0;
 
+  _initVersionData() async {
+    var versionInfo = await HttpManage.getVersionInfo();
+    if (versionInfo.status) {
+      switch (versionInfo.data.wxLogin) {
+        case "1": //不显示
+          GlobalConfig.displayThirdLoginInformation = false;
+
+          if (mounted) {
+            setState(() {});
+          }
+          break;
+
+        case "2": //显示
+          GlobalConfig.displayThirdLoginInformation = true;
+          if (mounted) {
+            setState(() {});
+          }
+          break;
+      }
+      if (versionInfo.data.whCheck) {
+        //华为应用市场上架审核中
+        GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+      } else {
+        GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+      }
+      if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
+        Future.delayed(Duration(milliseconds: 30), () {
+          showPrivacyDialog(context);
+        });
+      }
+    }
+  }
+
+  ///展示隐私弹窗
+  ///
+  showPrivacyDialog(context) {
+    return NavigatorUtils.showGSYDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: AlertDialog(
+              title: Center(child: new Text('服务协议和隐私政策')), //
+              content: Container(
+                padding: EdgeInsets.all(0),
+                height: 180,
+                alignment: Alignment.center,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      new Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text:
+                                    "请你务必审慎阅读、充分理解\“服务协议\”和\“隐私政策\”各条款，包括但不限于：为了向你提供购物、内容分享等服务，我们需要收集你的设备信息、操作日志等个人信息。你可以在“设置”中查看、变更、删除个人信息并管理你的授权。你可阅读"),
+                            WidgetSpan(
+                              child: GestureDetector(
+                                onTap: () {
+                                  NavigatorUtils.navigatorRouter(
+                                      context,
+                                      WebViewPage(
+                                        initialUrl: APi.AGREEMENT_SERVICES_URL,
+                                        showActions: false,
+                                        title: "服务协议",
+                                      ));
+                                },
+                                child: Text(
+                                  "《服务协议》",
+                                  style: TextStyle(
+                                      color: GlobalConfig.taskHeadColor,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                ),
+                              ),
+                            ),
+                            //text: "《服务协议》",style: TextStyle(color: Colors.blueAccent)
+                            TextSpan(text: "和"),
+                            WidgetSpan(
+                              child: GestureDetector(
+                                onTap: () {
+                                  NavigatorUtils.navigatorRouter(
+                                      context,
+                                      WebViewPage(
+                                        initialUrl: APi.AGREEMENT_PRIVACY_URL,
+                                        showActions: false,
+                                        title: "隐私政策",
+                                      ));
+                                },
+                                child: Text(
+                                  "《隐私政策》",
+                                  style: TextStyle(
+                                      color: GlobalConfig.taskHeadColor,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                ),
+                              ),
+                            ),
+                            TextSpan(text: "了解详细信息。如你同意，请点击“同意”开始接受我们的服务。"),
+                          ],
+                        ),
+                        style: TextStyle(fontSize: ScreenUtil().setSp(42)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                new FlatButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      await SystemChannels.platform
+                          .invokeMethod('SystemNavigator.pop');
+                    },
+                    child: new Text(
+                      '暂不使用',
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                          color: Colors.black54),
+                    )),
+                Container(
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: new FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        GlobalConfig.prefs.setBool("isAgreePrivacy", true);
+                      },
+                      child: new Text(
+                        '同意',
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      )),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   void initState() {
     Utils.checkAppVersion(context);
+    _initVersionData();
     super.initState();
 
     _currentIndex = widget.currentIndex;
