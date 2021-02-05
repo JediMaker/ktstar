@@ -172,13 +172,47 @@ class _MicroMinePageState extends State<MicroMinePage>
     }
   }
 
+  _clearWidgetData() {
+    if (mounted) {
+      setState(() {
+        try {
+          widget.title = "我的";
+          headUrl = '';
+          nickName = '';
+          userType = '';
+          _phoneNumber = '';
+          _totalAssetsAmount = '0';
+          _cashWithdrawal = '0';
+          _availableCashAmount = '0';
+          isWeChatBinded = 0;
+          _isWithdrawal = '';
+          registerTime = '';
+          _weChatNo = '';
+          _code = '';
+          _dialogWeChatNo = '';
+          _pwdStatus = '';
+          _payPwdStatus = '';
+          isWeChatNoBinded = 0;
+          isItAMicroShareholder = 0;
+          _yesterdayProfit = '0';
+          _sevenDayProfit = '0';
+          _monthProfit = '0';
+          _totalProfit = '0';
+          _todayShouldBeScoredRed = '0';
+          _todayActualDividend = '0';
+          _currentDividend = '0';
+        } catch (e) {}
+      });
+    }
+  }
+
   @override
   void initState() {
     _dialogPhoneNumberController = new TextEditingController();
     _dialogNickNameController = new TextEditingController();
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
-    _initWidgetData();
+    _initUserData();
     super.initState();
   }
 
@@ -284,17 +318,24 @@ class _MicroMinePageState extends State<MicroMinePage>
     super.dispose();
   }
 
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
     ///    组件创建完成的回调通知方法
     ///解决首次数据加载失败问题
     ///
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-     */ /* if (!CommonUtils.isEmpty(headUrl)) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(nickName)) {
       } else {
-        _initUserData();
-      }*/ /*
-    });*/
+        if (GlobalConfig.isLogin() && count == 0) {
+          _initUserData();
+          count++;
+        } else if (!GlobalConfig.isLogin()) {
+          _clearWidgetData();
+        }
+      }
+    });
     return Scaffold(
         appBar: GradientAppBar(
 //          gradient: buildBackgroundLinearGradient(),
@@ -1002,6 +1043,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             GlobalConfig.prefs.remove("token");
                             GlobalConfig.prefs.remove("loginData");
                             GlobalConfig.saveLoginStatus(false);
+                            _clearWidgetData();
                             Navigator.pop(context);
                             NavigatorUtils.navigatorRouter(
                                 context, LoginPage());
@@ -2154,23 +2196,6 @@ class _MicroMinePageState extends State<MicroMinePage>
   Widget buildHeadLayout() {
     String text = "";
     text = widget.title;
-    switch (userType) {
-      case "0":
-        text = "普通会员";
-        break;
-      case "1":
-        text = "体验会员";
-        break;
-      case "2":
-        text = "vip会员";
-        break;
-      case "3":
-        text = "代理";
-        break;
-      case "4":
-        text = "钻石会员";
-        break;
-    }
     if (widget.title == '我的') {
       text = "普通用户";
     }

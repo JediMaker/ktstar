@@ -671,8 +671,8 @@ class _MicroShareHolderEquityPageState
             child: Container(
               height: ScreenUtil().setWidth(64),
               padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setWidth(30),
-                vertical: ScreenUtil().setWidth(8),
+                horizontal: ScreenUtil().setWidth(31),
+                vertical: ScreenUtil().setWidth(6),
               ),
               decoration: BoxDecoration(
                 color: _currentIndex == index
@@ -1391,7 +1391,7 @@ class _MicroShareHolderEquityPageState
             child: Container(
               margin: EdgeInsets.symmetric(
                 horizontal: ScreenUtil().setWidth(50),
-                vertical: ScreenUtil().setHeight(30),
+                vertical: ScreenUtil().setHeight(20),
               ),
               child: Container(
                 child: Text(

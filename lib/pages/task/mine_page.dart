@@ -87,7 +87,7 @@ class _MinePagePageState extends State<MinePagePage> {
   void initState() {
     super.initState();
     userInfoData = GlobalConfig.getUserInfo();
-    _initData();
+//    _initData();
   }
 
   @override
@@ -98,22 +98,7 @@ class _MinePagePageState extends State<MinePagePage> {
   @override
   Widget build(BuildContext context) {
     var title = '';
-    title = _shareholderType == '1'
-        ? '见习股东'
-        : _shareholderType == '3'
-            ? 'VIP股东'
-            : '高级股东';
-    if (_shareholderType == '2') {
-      rootView = MicroMinePage(
-        title: '我的',
-        userInfoData: userInfoData,
-      );
-    } else {
-      rootView = MicroMinePage(
-        title: title,
-        userInfoData: userInfoData,
-      );
-    }
+    rootView = MicroMinePage();
     return rootView;
   }
 }
