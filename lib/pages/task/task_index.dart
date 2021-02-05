@@ -10,6 +10,7 @@ import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
+import 'package:star/pages/goods/category/new_classify.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/task/mine_page.dart';
@@ -361,7 +362,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
     _pageList = <StatefulWidget>[
 //      new HomePage(tabIndex: _homeTabIndex),
       TaskListPage(),
-      ClassifyListPage(),
+      NewClassifyListPage(),
       MinePagePage(),
       /*   new NoticePage(),
       new MyPage()*/
