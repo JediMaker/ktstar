@@ -167,7 +167,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                   ),
                 ),
                 Visibility(
-                  visible: !Platform.isIOS,
+                  visible: true,
                   child: GestureDetector(
                     onTap: () async {
                       if (!CommonUtils.isPhoneLegal(_phoneController.text)) {
@@ -205,7 +205,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                   ),
                 ),
                 Visibility(
-                  visible: Platform.isIOS,
+                  visible: false,
                   child: GestureDetector(
                     child: Container(
                       //diamond
