@@ -349,7 +349,7 @@ class _TaskListPageState extends State<TaskListPage>
                             _tabs = buildTabs();
                             pddcategoryTabsView = buildPddCategoryTabBar();
                             bus.emit("changePddListViewData",
-                                cats[_selectedTabIndex].catId);
+                                cats[_selectedTabIndex].type);
                           });
                         }
                       });

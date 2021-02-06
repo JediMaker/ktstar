@@ -39,6 +39,7 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
   List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
   var categoryId;
+  var type;
   bool _isfirst = true;
 
   _initData({categoryId}) async {
@@ -70,7 +71,7 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
       CommonUtils.showToast(result.errMsg);
     }*/
     var result2 = await HttpManage.getPddGoodsList(page,
-        listId: listId, categoryId: this.categoryId);
+        listId: listId, type: type);
     if (result2.status) {
       if (mounted) {
         setState(() {
@@ -115,6 +116,7 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
       page = 1;
       listId = '';
       categoryId = arg;
+      type = arg;
       _initData(categoryId: arg);
     });
   }
@@ -511,8 +513,9 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
                       visible: !CommonUtils.isEmpty(_gBonus),
                       child: Container(
                         height: ScreenUtil().setWidth(60),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 6,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6,
+                        ),
                         margin: EdgeInsets.only(
                           top: ScreenUtil().setSp(463),
                         ),
