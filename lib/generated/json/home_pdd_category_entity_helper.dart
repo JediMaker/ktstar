@@ -55,6 +55,9 @@ homePddCategoryDataCatFromJson(HomePddCategoryDataCat data, Map<String, dynamic>
 	if (json['subtitle'] != null) {
 		data.subtitle = json['subtitle']?.toString();
 	}
+	if (json['type'] != null) {
+		data.type = json['type']?.toString();
+	}
 	return data;
 }
 
@@ -63,5 +66,6 @@ Map<String, dynamic> homePddCategoryDataCatToJson(HomePddCategoryDataCat entity)
 	data['cat_id'] = entity.catId;
 	data['cat_name'] = entity.catName;
 	data['subtitle'] = entity.subtitle;
+	data['type'] = entity.type;
 	return data;
 }
