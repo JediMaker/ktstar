@@ -188,6 +188,15 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
             Navigator.of(context).pop();
           },
         ),*/
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(
+            ScreenUtil().setWidth(1),
+          ),
+          child: Divider(
+            height: ScreenUtil().setHeight(1),
+            color: Color(0xFFefefef),
+          ),
+        ),
         centerTitle: true,
         brightness: Brightness.light,
         backgroundColor: Colors.white,
@@ -217,12 +226,35 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                     selected: _selected,
                     selectedTileColor: Colors.white,
                     title: Center(
-                      child: Text(
-                        category == null ? '' : category.name,
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(38),
-                          color: _selected ? Colors.red : Color(0xff222222),
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            category == null ? '' : category.name,
+                            style: TextStyle(
+                              fontSize: _selected
+                                  ? ScreenUtil().setSp(42)
+                                  : ScreenUtil().setSp(38),
+                              color: Color(0xff222222),
+                              fontWeight: _selected
+                                  ? FontWeight.w600
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                          Container(
+                            width: ScreenUtil().setWidth(20),
+                            height: ScreenUtil().setWidth(10),
+                            margin: EdgeInsets.only(
+                              top: ScreenUtil().setWidth(10),
+                            ),
+                            decoration: BoxDecoration(
+                              color: _selected
+                                  ? Color(0xffce0010)
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(
+                                  ScreenUtil().setWidth(5)),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     onTap: () {
@@ -252,9 +284,9 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                       var scrollOffset = totalItemHeight;
                       setState(() {
                         _rightScrollController.animateTo(scrollOffset,
-                            duration: new Duration(milliseconds: 300),
+                            duration: new Duration(milliseconds: 200),
                             curve: Curves.ease);
-                        Future.delayed(Duration(milliseconds: 360))
+                        Future.delayed(Duration(milliseconds: 500))
                             .then((value) => resetSelectIndex(index));
                       });
                     },
@@ -317,6 +349,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(42),
                     color: Color(0xff222222),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
