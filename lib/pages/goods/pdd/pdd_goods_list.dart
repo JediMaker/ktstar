@@ -12,6 +12,7 @@ import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/dashed_rect.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
@@ -76,6 +77,13 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
     } else {
       CommonUtils.showToast(result.errMsg);
     }*/
+    if (!GlobalConfig.isLogin()) {
+      CommonUtils.showToast("未获取到登录信息，，请登录！");
+      Future.delayed(Duration(seconds: 1), () {
+        NavigatorUtils.navigatorRouter(context, LoginPage());
+      });
+      return;
+    }
     var authResult = await HttpManage.getPddAuth();
     if (authResult.errCode.toString() == "50001" ||
         authResult.errCode.toString() == "60001") {

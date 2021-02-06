@@ -10,6 +10,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/pages/goods/pdd/featured_tab.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
@@ -290,6 +291,13 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
 
 //初始化精选tab数据
   Future _initData() async {
+    if (!GlobalConfig.isLogin()) {
+      CommonUtils.showToast("未获取到登录信息，，请登录！");
+      Future.delayed(Duration(seconds: 1), () {
+        NavigatorUtils.navigatorRouter(context, LoginPage());
+      });
+      return;
+    }
     var authResult = await HttpManage.getPddAuth();
     if (authResult.errCode.toString() == "50001" ||
         authResult.errCode.toString() == "60001") {

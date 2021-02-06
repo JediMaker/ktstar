@@ -376,24 +376,24 @@ class _MicroMinePageState extends State<MicroMinePage>
                   enableInfiniteRefresh,
                   success,
                   noMore) {
-            return Stack(
-              children: <Widget>[
-                Positioned(
-                  bottom: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: Container(
-                    width: 30.0,
-                    height: 30.0,
-                    child: SpinKitCircle(
-                      color: GlobalConfig.taskBtnTxtGreyColor,
-                      size: 30.0,
+                return Stack(
+                  children: <Widget>[
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        width: 30.0,
+                        height: 30.0,
+                        child: SpinKitCircle(
+                          color: GlobalConfig.taskBtnTxtGreyColor,
+                          size: 30.0,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          }),
+                  ],
+                );
+              }),
           slivers: <Widget>[
             buildContent(),
           ],
@@ -2199,6 +2199,9 @@ class _MicroMinePageState extends State<MicroMinePage>
     if (widget.title == '我的') {
       text = "普通用户";
     }
+    if (!GlobalConfig.isLogin()) {
+      nickName = "登陆/注册";
+    }
     return Stack(
       children: [
         Container(
@@ -2284,6 +2287,10 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           child: ListTile(
             onTap: () async {
+              if (!GlobalConfig.isLogin()) {
+                NavigatorUtils.navigatorRouter(context, LoginPage());
+                return;
+              }
               await NavigatorUtils.navigatorRouter(
                   context, MicroShareHolderEquityPage());
               _initUserData();

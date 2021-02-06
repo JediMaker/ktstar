@@ -13,6 +13,7 @@ import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
+import 'package:star/pages/login/login.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/dashed_rect.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
@@ -149,6 +150,13 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
         widget.items = result.data.items;
       });
     }*/
+    if (!GlobalConfig.isLogin()) {
+      CommonUtils.showToast("未获取到登录信息，，请登录！");
+      Future.delayed(Duration(seconds: 1), () {
+        NavigatorUtils.navigatorRouter(context, LoginPage());
+      });
+      return;
+    }
     try {
       EasyLoading.show();
     } catch (e) {}
