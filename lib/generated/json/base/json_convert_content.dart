@@ -77,6 +77,8 @@ import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/models/region_data_entity.dart';
 import 'package:star/generated/json/region_data_entity_helper.dart';
+import 'package:star/models/pdd_category_list_entity.dart';
+import 'package:star/generated/json/pdd_category_list_entity_helper.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/models/task_detail_entity.dart';
@@ -225,7 +227,9 @@ class JsonConvert<T> {
 			return regionDataEntityFromJson(data as RegionDataEntity, json) as T;			case RegionDataData:
 			return regionDataDataFromJson(data as RegionDataData, json) as T;			case RegionDataDatachild:
 			return regionDataDatachildFromJson(data as RegionDataDatachild, json) as T;			case RegionDataDatachildchild:
-			return regionDataDatachildchildFromJson(data as RegionDataDatachildchild, json) as T;			case FansListEntity:
+			return regionDataDatachildchildFromJson(data as RegionDataDatachildchild, json) as T;			case PddCategoryListEntity:
+			return pddCategoryListEntityFromJson(data as PddCategoryListEntity, json) as T;			case PddCategoryListData:
+			return pddCategoryListDataFromJson(data as PddCategoryListData, json) as T;			case FansListEntity:
 			return fansListEntityFromJson(data as FansListEntity, json) as T;			case FansListData:
 			return fansListDataFromJson(data as FansListData, json) as T;			case FansListDataList:
 			return fansListDataListFromJson(data as FansListDataList, json) as T;			case TaskDetailEntity:
@@ -385,7 +389,9 @@ class JsonConvert<T> {
 			return regionDataEntityToJson(data as RegionDataEntity);			case RegionDataData:
 			return regionDataDataToJson(data as RegionDataData);			case RegionDataDatachild:
 			return regionDataDatachildToJson(data as RegionDataDatachild);			case RegionDataDatachildchild:
-			return regionDataDatachildchildToJson(data as RegionDataDatachildchild);			case FansListEntity:
+			return regionDataDatachildchildToJson(data as RegionDataDatachildchild);			case PddCategoryListEntity:
+			return pddCategoryListEntityToJson(data as PddCategoryListEntity);			case PddCategoryListData:
+			return pddCategoryListDataToJson(data as PddCategoryListData);			case FansListEntity:
 			return fansListEntityToJson(data as FansListEntity);			case FansListData:
 			return fansListDataToJson(data as FansListData);			case FansListDataList:
 			return fansListDataListToJson(data as FansListDataList);			case TaskDetailEntity:
@@ -545,7 +551,9 @@ class JsonConvert<T> {
 			return RegionDataEntity().fromJson(json);			case 'RegionDataData':
 			return RegionDataData().fromJson(json);			case 'RegionDataDatachild':
 			return RegionDataDatachild().fromJson(json);			case 'RegionDataDatachildchild':
-			return RegionDataDatachildchild().fromJson(json);			case 'FansListEntity':
+			return RegionDataDatachildchild().fromJson(json);			case 'PddCategoryListEntity':
+			return PddCategoryListEntity().fromJson(json);			case 'PddCategoryListData':
+			return PddCategoryListData().fromJson(json);			case 'FansListEntity':
 			return FansListEntity().fromJson(json);			case 'FansListData':
 			return FansListData().fromJson(json);			case 'FansListDataList':
 			return FansListDataList().fromJson(json);			case 'TaskDetailEntity':
@@ -706,7 +714,9 @@ class JsonConvert<T> {
 			return List<RegionDataEntity>();			case 'RegionDataData':
 			return List<RegionDataData>();			case 'RegionDataDatachild':
 			return List<RegionDataDatachild>();			case 'RegionDataDatachildchild':
-			return List<RegionDataDatachildchild>();			case 'FansListEntity':
+			return List<RegionDataDatachildchild>();			case 'PddCategoryListEntity':
+			return List<PddCategoryListEntity>();			case 'PddCategoryListData':
+			return List<PddCategoryListData>();			case 'FansListEntity':
 			return List<FansListEntity>();			case 'FansListData':
 			return List<FansListData>();			case 'FansListDataList':
 			return List<FansListDataList>();			case 'TaskDetailEntity':
