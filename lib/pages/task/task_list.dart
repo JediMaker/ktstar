@@ -349,7 +349,7 @@ class _TaskListPageState extends State<TaskListPage>
                             _tabs = buildTabs();
                             pddcategoryTabsView = buildPddCategoryTabBar();
                             bus.emit("changePddListViewData",
-                                cats[_selectedTabIndex].type);
+                                cats[_selectedTabIndex]);
                           });
                         }
                       });
@@ -1035,7 +1035,7 @@ class _TaskListPageState extends State<TaskListPage>
                           pddcategoryTabsView = buildPddCategoryTabBar();
                           _pddTabController.animateTo(_selectedTabIndex);
                           bus.emit("changePddListViewData",
-                              cats[_selectedTabIndex].type);
+                              cats[_selectedTabIndex]);
                         }
 
                       } else {
@@ -1046,7 +1046,7 @@ class _TaskListPageState extends State<TaskListPage>
                           pddcategoryTabsView = buildPddCategoryTabBar();
                           _pddTabController.animateTo(_selectedTabIndex);
                           bus.emit("changePddListViewData",
-                              cats[_selectedTabIndex].type);
+                              cats[_selectedTabIndex]);
                         }
                       }
                     });

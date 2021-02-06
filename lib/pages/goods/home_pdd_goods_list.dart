@@ -9,6 +9,7 @@ import 'package:star/bus/my_event_bus.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
+import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/dashed_rect.dart';
@@ -42,7 +43,7 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
   var type;
   bool _isfirst = true;
 
-  _initData({categoryId}) async {
+  _initData() async {
     /*var result = await HttpManage.getGoodsList(cId: widget.categoryId);
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
@@ -71,7 +72,7 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
       CommonUtils.showToast(result.errMsg);
     }*/
     var result2 = await HttpManage.getPddGoodsList(page,
-        listId: listId, type: type);
+        listId: listId, type: type, categoryId: categoryId);
     if (result2.status) {
       if (mounted) {
         setState(() {
@@ -115,9 +116,9 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
     bus.on("changePddListViewData", (arg) {
       page = 1;
       listId = '';
-      categoryId = arg;
-      type = arg;
-      _initData(categoryId: arg);
+      categoryId = arg.catId.toString();
+      type = arg.type;
+      _initData();
     });
   }
 
