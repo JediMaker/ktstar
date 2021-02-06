@@ -62,11 +62,17 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
                     color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
               ),
               leading: IconButton(
-                icon: Image.asset(
-                  "static/images/icon_ios_back.png",
-                  width: ScreenUtil().setWidth(36),
+                icon: Container(
+                  width: ScreenUtil().setWidth(63),
                   height: ScreenUtil().setHeight(63),
-                  fit: BoxFit.fill,
+                  child: Center(
+                    child: Image.asset(
+                      "static/images/icon_ios_back.png",
+                      width: ScreenUtil().setWidth(36),
+                      height: ScreenUtil().setHeight(63),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();

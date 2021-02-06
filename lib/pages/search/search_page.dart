@@ -207,11 +207,17 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
+              child: Container(
+                width: ScreenUtil().setWidth(63),
                 height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
+                child: Center(
+                  child: Image.asset(
+                    "static/images/icon_ios_back.png",
+                    width: ScreenUtil().setWidth(36),
+                    height: ScreenUtil().setHeight(63),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
 /*
               child: CachedNetworkImage(

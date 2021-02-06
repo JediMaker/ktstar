@@ -117,11 +117,17 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
             ),
           ),
           leading: IconButton(
-            icon: Image.asset(
-              "static/images/icon_ios_back.png",
-              width: ScreenUtil().setWidth(36),
+            icon: Container(
+              width: ScreenUtil().setWidth(63),
               height: ScreenUtil().setHeight(63),
-              fit: BoxFit.fill,
+              child: Center(
+                child: Image.asset(
+                  "static/images/icon_ios_back.png",
+                  width: ScreenUtil().setWidth(36),
+                  height: ScreenUtil().setHeight(63),
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
             onPressed: () {
               Navigator.of(context).pop();
