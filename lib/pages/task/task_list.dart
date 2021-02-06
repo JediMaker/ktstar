@@ -153,10 +153,10 @@ class _TaskListPageState extends State<TaskListPage>
         tabs.add(Container(
           height: ScreenUtil().setWidth(150),
           width: ScreenUtil().setWidth(227),
-          padding:  EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: ScreenUtil().setWidth(20),
           ),
-          alignment:Alignment.center,
+          alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -800,6 +800,9 @@ class _TaskListPageState extends State<TaskListPage>
     );
   }
 
+//偏移量的值
+  double _offsetValue;
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -865,24 +868,24 @@ class _TaskListPageState extends State<TaskListPage>
                     enableInfiniteRefresh,
                     success,
                     noMore) {
-              return Stack(
-                children: <Widget>[
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      width: 30.0,
-                      height: 30.0,
-                      child: SpinKitCircle(
-                        color: GlobalConfig.colorPrimary,
-                        size: 30.0,
+                  return Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          child: SpinKitCircle(
+                            color: GlobalConfig.colorPrimary,
+                            size: 30.0,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            }),
+                    ],
+                  );
+                }),
             footer: CustomFooter(
 //                completeDuration: Duration(seconds: 1),
                 footerBuilder: (context,
@@ -1014,7 +1017,42 @@ class _TaskListPageState extends State<TaskListPage>
               buildApplyForMicroShareholders(),
               buildAdRowContainer(),
               pddcategoryTabsView,
-              HomePddGoodsListPage(),
+              SliverToBoxAdapter(
+                child: GestureDetector(
+                  child: HomePddGoodsListPage(),
+                  onHorizontalDragStart: (DragStartDetails details) {
+                  },
+                  onHorizontalDragUpdate: (DragUpdateDetails details) {
+                    _offsetValue = details.primaryDelta;
+                  },
+                  onHorizontalDragEnd: (DragEndDetails details) {
+                    setState(() {
+                      if (_offsetValue > 0) {
+                        //向左滑动
+                        if (_selectedTabIndex > 0) {
+                          _selectedTabIndex = _selectedTabIndex - 1;
+                          _tabs = buildTabs();
+                          pddcategoryTabsView = buildPddCategoryTabBar();
+                          _pddTabController.animateTo(_selectedTabIndex);
+                          bus.emit("changePddListViewData",
+                              cats[_selectedTabIndex].type);
+                        }
+
+                      } else {
+                        //向右滑动
+                        if (_selectedTabIndex < cats.length - 1) {
+                          _selectedTabIndex = _selectedTabIndex + 1;
+                          _tabs = buildTabs();
+                          pddcategoryTabsView = buildPddCategoryTabBar();
+                          _pddTabController.animateTo(_selectedTabIndex);
+                          bus.emit("changePddListViewData",
+                              cats[_selectedTabIndex].type);
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
               SliverToBoxAdapter(
                 child: Container(
                   child: SizedBox(
@@ -1689,11 +1727,13 @@ class _TaskListPageState extends State<TaskListPage>
     String name = '';
     String type = '';
     String appId = '';
+    String appPath = '';
     String path = '';
     String subtitle = '';
     String params = '';
     String catId = '';
     String pddType = '';
+    String flag = '';
     bool needShow = true;
     bool isUnderReview = false;
     bool needLogin = false;
@@ -1702,6 +1742,8 @@ class _TaskListPageState extends State<TaskListPage>
       name = item.name;
       type = item.type;
       appId = item.appId;
+      appPath = item.appPath;
+      flag = item.flag;
       path = item.path;
       subtitle = item.subtitle;
       params = item.params;
@@ -1801,6 +1843,12 @@ class _TaskListPageState extends State<TaskListPage>
             return;
           }
           if (type == 'webapp') {
+            if (flag == 'mei') {
+              if (await canLaunch(appPath)) {
+                await launch(appPath);
+                return;
+              }
+            }
             launchWeChatMiniProgram(username: appId, path: path);
             return;
           }

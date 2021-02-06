@@ -173,28 +173,26 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
   }
 
   Widget buildCenter2() {
-    return SliverToBoxAdapter(
-      child: Center(
-        child: Container(
-          width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+    return Center(
+      child: Container(
+        width: double.maxFinite,
+        margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
 //          height: double.infinity,
-          child: new StaggeredGridView.countBuilder(
-            crossAxisCount: 2,
-            itemCount: pddGoodsList.length,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              PddGoodsListDataList item;
-              try {
-                item = pddGoodsList[index];
-              } catch (e) {}
-              return productItem2(item: item);
-            },
-            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-            mainAxisSpacing: ScreenUtil().setWidth(20),
-            crossAxisSpacing: ScreenUtil().setWidth(20),
-          ),
+        child: new StaggeredGridView.countBuilder(
+          crossAxisCount: 2,
+          itemCount: pddGoodsList.length,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            PddGoodsListDataList item;
+            try {
+              item = pddGoodsList[index];
+            } catch (e) {}
+            return productItem2(item: item);
+          },
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+          mainAxisSpacing: ScreenUtil().setWidth(20),
+          crossAxisSpacing: ScreenUtil().setWidth(20),
         ),
       ),
     );
