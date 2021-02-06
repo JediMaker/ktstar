@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -13,9 +14,11 @@ import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/dashed_rect.dart';
+import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../global_config.dart';
 import '../goods_detail.dart';
@@ -73,6 +76,12 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
     } else {
       CommonUtils.showToast(result.errMsg);
     }*/
+    var authResult = await HttpManage.getPddAuth();
+    if (authResult.errCode.toString() == "50001" ||
+        authResult.errCode.toString() == "60001") {
+      showPddAuthorizationDialog();
+      return;
+    }
     if (isFirstLoading) {
       /* try {
         EasyLoading.show();
@@ -112,6 +121,81 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
     } catch (e) {}
   }
 
+  ///拼多多授权弹窗
+  showPddAuthorizationDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              "温馨提示",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(42),
+              ),
+            ),
+            content: Text("该功能需要获取拼多多授权,确认授权吗？"),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text(
+                  "取消",
+                  style: TextStyle(
+                    color: Color(0xff222222),
+                    fontSize: ScreenUtil().setSp(42),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(this.context);
+                },
+              ),
+              CupertinoDialogAction(
+                child: Text(
+                  "去授权",
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(42),
+                  ),
+                ),
+                onPressed: () async {
+                  ///请求拼多多授权
+                  ///getPddAuthorization
+                  ///
+                  ///
+                  Navigator.pop(context);
+                  var result = await HttpManage.getPddAuthorization();
+                  if (result.status) {
+                    ///跳转拼多多app授权的url
+                    var pddUrl = '';
+
+                    ///跳转拼多多h5页面授权的url
+                    var url = '';
+                    pddUrl = result.data['schema_url'];
+                    url = result.data['url'];
+                    if (await canLaunch(pddUrl)) {
+                      await launch(pddUrl);
+                    } else {
+                      if (CommonUtils.isEmpty(url)) {
+                        return;
+                      }
+                      NavigatorUtils.navigatorRouter(
+                          this.context,
+                          WebViewPluginPage(
+                            initialUrl: "$url",
+                            showActions: true,
+                            title: "拼多多",
+                            appBarBackgroundColor: Colors.white,
+                          ));
+                    }
+
+                    ///
+                  } else {
+                    CommonUtils.showToast(result.errMsg);
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
   @override
   void initState() {
     super.initState();

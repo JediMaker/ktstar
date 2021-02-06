@@ -237,6 +237,9 @@ class APi {
   ///拼多多商品详情
   static const String GOODS_PDD_GOODS_Detail = "goods/pin-goods-detail";
 
+  ///检验是否授权拼多多
+  static const String GOODS_IS_PIN_AUTH = "goods/is-pin-auth";
+
   ///商品搜索
   static const String GOODS_SEARCH = "goods/search";
 

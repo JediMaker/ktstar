@@ -339,8 +339,9 @@ class HttpManage {
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       GlobalConfig.prefs.setString("loginData", response.data.toString());
+      GlobalConfig.saveLoginStatus(entity.status);
     }
-    GlobalConfig.saveLoginStatus(entity.status);
+
     return entity;
   }
 
@@ -369,8 +370,9 @@ class HttpManage {
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       GlobalConfig.prefs.setString("loginData", response.data.toString());
+      GlobalConfig.saveLoginStatus(entity.status);
     }
-    GlobalConfig.saveLoginStatus(entity.status);
+
     return entity;
   }
 
@@ -397,8 +399,8 @@ class HttpManage {
     resultBeanEntityFromJson(entity, extractData);
     if (entity.status) {
       GlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
+      GlobalConfig.saveLoginStatus(entity.status);
     }
-    GlobalConfig.saveLoginStatus(entity.status);
     return entity;
   }
 
@@ -425,8 +427,8 @@ class HttpManage {
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       GlobalConfig.prefs.setString("loginData", response.data.toString());
+      GlobalConfig.saveLoginStatus(entity.status);
     }
-    GlobalConfig.saveLoginStatus(entity.status);
     return entity;
   }
 
@@ -2251,6 +2253,19 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = IncomeListEntity();
     incomeListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 获取拼多多是否授权
+  ///
+  static Future<ResultBeanEntity> getPddAuth() async {
+    var response = await HttpManage.dio.post(
+      APi.GOODS_IS_PIN_AUTH,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 }
