@@ -557,7 +557,7 @@ class _FansTabViewState extends State<FansTabView> {
       title: Container(
         child: Row(
           children: <Widget>[
-            Container(
+            Expanded(
               child: Text(
                 "${nickName == null ? '' : nickName}",
                 overflow: TextOverflow.ellipsis,
@@ -569,6 +569,7 @@ class _FansTabViewState extends State<FansTabView> {
                     color: Color(0xFF222222),
 //                    fontWeight: FontWeight.bold,
                     fontSize: ScreenUtil().setSp(38)),
+                maxLines: 1,
               ),
             ),
             SizedBox(

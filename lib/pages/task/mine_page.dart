@@ -73,7 +73,6 @@ class _MinePagePageState extends State<MinePagePage> {
                 rootView = TaskMinePage();
               } else {
                 rootView = MicroMinePage(
-                  title: title,
                 );
               }
             });
@@ -99,7 +98,7 @@ class _MinePagePageState extends State<MinePagePage> {
   Widget build(BuildContext context) {
     var title = '我的';
     rootView = MicroMinePage(
-      title: title,
+//      title: title,
     );
     return rootView;
   }
