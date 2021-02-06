@@ -19,6 +19,8 @@ class FansListData with JsonConvert<FansListData> {
 }
 
 class FansListDataList with JsonConvert<FansListDataList> {
+	@JSONField(name: "is_partner")
+	String isPartner;
 	@JSONField(name: "is_vip")
 	String isVip;
 	String avatar;

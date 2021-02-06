@@ -57,6 +57,9 @@ Map<String, dynamic> fansListDataToJson(FansListData entity) {
 }
 
 fansListDataListFromJson(FansListDataList data, Map<String, dynamic> json) {
+	if (json['is_partner'] != null) {
+		data.isPartner = json['is_partner']?.toString();
+	}
 	if (json['is_vip'] != null) {
 		data.isVip = json['is_vip']?.toString();
 	}
@@ -83,6 +86,7 @@ fansListDataListFromJson(FansListDataList data, Map<String, dynamic> json) {
 
 Map<String, dynamic> fansListDataListToJson(FansListDataList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
+	data['is_partner'] = entity.isPartner;
 	data['is_vip'] = entity.isVip;
 	data['avatar'] = entity.avatar;
 	data['username'] = entity.username;

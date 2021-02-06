@@ -121,6 +121,7 @@ Map<String, dynamic> fansTotalDataCountInfoToJson(FansTotalDataCountInfo entity)
 	data['total'] = entity.total;
 	data['vip'] = entity.vip;
 	data['experience'] = entity.experience;
+	data['noviciate'] = entity.noviciate;
 	data['ordinary'] = entity.ordinary;
 	data['diamond'] = entity.diamond;
 	return data;

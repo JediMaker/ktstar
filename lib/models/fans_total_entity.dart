@@ -29,6 +29,7 @@ class FansTotalDataCountInfo with JsonConvert<FansTotalDataCountInfo> {
 	int total;
 	int vip;
 	int experience;
+	int noviciate;
 	int ordinary;
 	int diamond;
 }
