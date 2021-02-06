@@ -811,14 +811,16 @@ class HttpManage {
   ///[page] 	页码
   ///[pageSize] 	单页数据量
   ///
-  ///
+  ///holderType 微股东类型
   /// 获取粉丝列表
   ///
-  static Future<FansListEntity> getFansList(page, pageSize, {type = ""}) async {
+  static Future<FansListEntity> getFansList(page, pageSize,
+      {type = "", holderType}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     paramsMap["type"] = "$type";
+    paramsMap["holder_type"] = "$holderType";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));

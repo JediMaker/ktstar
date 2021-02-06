@@ -53,7 +53,7 @@ class _FansListPageState extends State<FansListPage>
             _totalMembersNumber = result.data.countInfo.total.toString();
             _vipMembersNumber = result.data.countInfo.vip.toString();
             _experienceMembersNumber =
-                result.data.countInfo.experience.toString();
+                result.data.countInfo.noviciate.toString();
             _ordinaryMembersNumber = result.data.countInfo.ordinary.toString();
             _diamondMembersNumber = result.data.countInfo.diamond.toString();
             if (widget.isAgent) {
@@ -64,65 +64,38 @@ class _FansListPageState extends State<FansListPage>
             print(e);
           }
 
-          if (widget.isAgent) {
-            _tabValues = [
-              '全部($_totalMembersNumber)',
-              '钻石($_diamondMembersNumber)',
-              'vip($_vipMembersNumber)',
-              '体验($_experienceMembersNumber)',
-              '普通($_ordinaryMembersNumber)',
-            ];
-            _tabViews = [
-              FansTabView(
-                fansType: "",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "diamond",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "vip",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "experience",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "ordinary",
-                isAgent: widget.isAgent,
-              ),
-            ];
-          } else {
-            _tabValues = [
-              '全部($_totalMembersNumber)',
-              '钻石($_diamondMembersNumber)',
-              'vip($_vipMembersNumber)',
-              '普通($_ordinaryMembersNumber)',
-            ];
-            _tabViews = [
-              FansTabView(
-                fansType: "",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "diamond",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "vip",
-                isAgent: widget.isAgent,
-              ),
-              FansTabView(
-                fansType: "ordinary",
-                isAgent: widget.isAgent,
-              ),
-            ];
-          }
+          _tabValues = [
+            '全部($_totalMembersNumber)',
+            '高级($_diamondMembersNumber)',
+            '股东($_vipMembersNumber)',
+            '见习($_experienceMembersNumber)',
+            '普通($_ordinaryMembersNumber)',
+          ];
+          _tabViews = [
+            FansTabView(
+              fansType: "0",
+              isAgent: widget.isAgent,
+            ),
+            FansTabView(
+              fansType: "4",
+              isAgent: widget.isAgent,
+            ),
+            FansTabView(
+              fansType: "3",
+              isAgent: widget.isAgent,
+            ),
+            FansTabView(
+              fansType: "1",
+              isAgent: widget.isAgent,
+            ),
+            FansTabView(
+              fansType: "2",
+              isAgent: widget.isAgent,
+            ),
+          ];
 
           _tabController =
-              TabController(length: widget.isAgent ? 5 : 4, vsync: this);
+              TabController(length: 5, vsync: this);
         });
       }
     } else {}
@@ -137,12 +110,42 @@ class _FansListPageState extends State<FansListPage>
       '普通会员',
       '体验会员',
     ];*/
-    if (widget.isAgent) {
+//    if (widget.isAgent) {
+    _tabValues = [
+      '全部($_totalMembersNumber)',
+      '高级($_diamondMembersNumber)',
+      '股东($_vipMembersNumber)',
+      '见习($_experienceMembersNumber)',
+      '普通($_ordinaryMembersNumber)',
+    ];
+    _tabViews = [
+      FansTabView(
+        fansType: "0",
+        isAgent: widget.isAgent,
+      ),
+      FansTabView(
+        fansType: "4",
+        isAgent: widget.isAgent,
+      ),
+      FansTabView(
+        fansType: "3",
+        isAgent: widget.isAgent,
+      ),
+      FansTabView(
+        fansType: "1",
+        isAgent: widget.isAgent,
+      ),
+      FansTabView(
+        fansType: "2",
+        isAgent: widget.isAgent,
+      ),
+    ];
+//    }
+    /*else {
       _tabValues = [
         '全部($_totalMembersNumber)',
-        '钻石($_diamondMembersNumber)',
-        'vip($_vipMembersNumber)',
-        '体验($_experienceMembersNumber)',
+        '高级股东($_diamondMembersNumber)',
+        '股东($_vipMembersNumber)',
         '普通($_ordinaryMembersNumber)',
       ];
       _tabViews = [
@@ -159,43 +162,12 @@ class _FansListPageState extends State<FansListPage>
           isAgent: widget.isAgent,
         ),
         FansTabView(
-          fansType: "experience",
-          isAgent: widget.isAgent,
-        ),
-        FansTabView(
           fansType: "ordinary",
           isAgent: widget.isAgent,
         ),
       ];
-    } else {
-      _tabValues = [
-        '全部($_totalMembersNumber)',
-        '钻石($_diamondMembersNumber)',
-        'vip($_vipMembersNumber)',
-        '普通($_ordinaryMembersNumber)',
-      ];
-      _tabViews = [
-        FansTabView(
-          fansType: "",
-          isAgent: widget.isAgent,
-        ),
-        FansTabView(
-          fansType: "diamond",
-          isAgent: widget.isAgent,
-        ),
-        FansTabView(
-          fansType: "vip",
-          isAgent: widget.isAgent,
-        ),
-        FansTabView(
-          fansType: "ordinary",
-          isAgent: widget.isAgent,
-        ),
-      ];
-    }
-
-    _tabController = TabController(length: widget.isAgent ? 5 : 4, vsync: this);
-
+    }*/
+    _tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
 
@@ -443,7 +415,7 @@ class _FansTabViewState extends State<FansTabView> {
   List<FansListDataList> _fansList;
 
   _initData() async {
-    var result = await HttpManage.getFansList(page, 10, type: widget.fansType);
+    var result = await HttpManage.getFansList(page, 10, holderType: widget.fansType);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -532,6 +504,8 @@ class _FansTabViewState extends State<FansTabView> {
 
     ///账户类型 0普通用户 1体验用户 2VIP用户 3 钻石用户
     String userType;
+    //微股东类型
+    String shareHolderType;
     String completeTaskNum = '';
     String totalTaskNum = '';
     bool taskComplete = false;
@@ -554,6 +528,7 @@ class _FansTabViewState extends State<FansTabView> {
       nickName = listItem.username;
       bindTime = listItem.createdTime;
       userType = listItem.isVip;
+      shareHolderType = listItem.isPartner;
       completeTaskNum = listItem.completeCount;
       totalTaskNum = listItem.totalCount;
       taskComplete = listItem.completeStatus == "2";
@@ -614,7 +589,7 @@ class _FansTabViewState extends State<FansTabView> {
             width: ScreenUtil().setWidth(26),
           ),
           Visibility(
-            visible: widget.isAgent && userType != "0" && totalTaskNum != '0',
+            visible: false,
             child: Container(
               width: ScreenUtil().setWidth(98),
               height: ScreenUtil().setWidth(49),
@@ -640,10 +615,10 @@ class _FansTabViewState extends State<FansTabView> {
         ],
       ),
       trailing: GestureDetector(
-        child: Image.asset(
-          "static/images/${_getImgName(userType)}",
-          width: ScreenUtil().setWidth(185),
-          height: ScreenUtil().setHeight(67),
+        child: CachedNetworkImage(
+          imageUrl:"${_getImgName(shareHolderType)}",
+          width: ScreenUtil().setWidth(shareHolderType=='2'?119:137),
+          height: ScreenUtil().setWidth(shareHolderType=='2'?59:77),
           fit: BoxFit.fill,
         ),
       ),
@@ -651,15 +626,16 @@ class _FansTabViewState extends State<FansTabView> {
   }
 
   String _getImgName(_type) {
+//    账户类型 1见习股东 2普通用户 3vip股东 4高级股东
     switch (_type) {
-      case "0":
-        return "icon_nomal.png";
       case "1":
-        return "icon_experience.png";
+        return "https://alipic.lanhuapp.com/xd5002e038-9179-4c95-9a49-09e0d0e53590";
       case "2":
-        return "icon_vip.png";
+        return "https://alipic.lanhuapp.com/xd5fafac9d-1d56-49a0-b658-04a43e50582a";
+      case "3":
+        return "https://alipic.lanhuapp.com/xdf964acde-df69-493b-8547-ce8bf626e734";
       case "4":
-        return "icon_diamond.png";
+        return "https://alipic.lanhuapp.com/xd533cce7c-b6f4-47fc-9051-2c3d186e1df4";
     }
     return "";
   }
