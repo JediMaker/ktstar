@@ -1087,7 +1087,7 @@ class _TaskListPageState extends State<TaskListPage>
         child: Visibility(
       visible: goodsList.length > 0,
       child: Container(
-        height: ScreenUtil().setWidth(604),
+        height: ScreenUtil().setWidth(664),
         margin: EdgeInsets.only(
             top: ScreenUtil().setHeight(30),
             left: GlobalConfig.LAYOUT_MARGIN,
@@ -1455,9 +1455,9 @@ class _TaskListPageState extends State<TaskListPage>
                       child: CachedNetworkImage(
                         fadeInDuration: Duration(milliseconds: 0),
                         fadeOutDuration: Duration(milliseconds: 0),
-                        height: ScreenUtil().setWidth(246),
+                        height: ScreenUtil().setWidth(305),
                         width: ScreenUtil().setWidth(305),
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.fill,
                         imageUrl: "$goodsImg",
                       ),
                     ),
@@ -1509,7 +1509,7 @@ class _TaskListPageState extends State<TaskListPage>
                               left: ScreenUtil().setHeight(12),
                             ),
                             child: Visibility(
-                              visible: salePrice != originalPrice,
+//                              visible: salePrice != originalPrice,
                               child: Text(
                                 "￥$originalPrice",
                                 overflow: TextOverflow.ellipsis,

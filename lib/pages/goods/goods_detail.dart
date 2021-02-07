@@ -137,7 +137,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height:  ScreenUtil.screenWidth,
+                            height: ScreenUtil.screenWidth,
                             child: Swiper(
                               key: UniqueKey(),
                               itemHeight: ScreenUtil.screenWidth,
@@ -215,7 +215,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                       width: 6,
                                     ),
                                     Visibility(
-                                      visible: _originalPrice != _salePrice,
+//                                      visible: _originalPrice != _salePrice,
                                       child: Container(
                                         margin: EdgeInsets.only(
                                             bottom: ScreenUtil().setHeight(8)),
