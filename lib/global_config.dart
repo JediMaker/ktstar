@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:device_info/device_info.dart';
+//import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -199,6 +199,7 @@ class GlobalConfig {
     HttpManage.init();
     _initJPushPlatformState();
     configLoading();
+    //initAndroidDeviceId();
     Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
@@ -399,11 +400,23 @@ class GlobalConfig {
     print("初始化友盟结束");*/
   }
 
-  static Future<String> initAndroidDeviceId() async {
+ /* static Future<String> initAndroidDeviceId() async {
     print("初始化设备id");
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-    print("初始化自定义设备结束，id为：" + androidDeviceInfo.androidId);
+    print("初始化自定义设备结束，id 为：" + androidDeviceInfo.androidId);
+    print("初始化自定义设备结束，board 为：" + androidDeviceInfo.board);
+    print("初始化自定义设备结束，bootloader 为：" + androidDeviceInfo.bootloader);
+    print("初始化自定义设备结束，brand 为：" + androidDeviceInfo.brand);
+    print("初始化自定义设备结束，device 为：" + androidDeviceInfo.device);
+    print("初始化自定义设备结束，fingerprint 为：" + androidDeviceInfo.fingerprint);
+    print("初始化自定义设备结束，hardware 为：" + androidDeviceInfo.hardware);
+    print("初始化自定义设备结束，id 为：" + androidDeviceInfo.id);
+    print("初始化自定义设备结束，manufacturer 为：" + androidDeviceInfo.manufacturer);
+    print("初始化自定义设备结束，model 为：" + androidDeviceInfo.model);
+    print("初始化自定义设备结束，product 为：" + androidDeviceInfo.product);
+    print("初始化自定义设备结束，tags 为：" + androidDeviceInfo.tags);
+    print("初始化自定义设备结束，type 为：" + androidDeviceInfo.type);
     return androidDeviceInfo.androidId;
-  }
+  }*/
 }
