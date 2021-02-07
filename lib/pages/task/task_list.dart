@@ -1768,17 +1768,15 @@ class _TaskListPageState extends State<TaskListPage>
       print(e);
     }
     if (!CommonUtils.isEmpty(name)) {
-      if ((name.contains('游戏') ||
+      /*if ((name.contains('游戏') ||
               name.contains('赚钱') ||
-              name.contains('会员') ||
-              name.contains('加油')) &&
+              name.contains('会员') ) &&
           GlobalConfig.isHuaweiUnderReview) {
         needShow = false;
       }
       if ((name.contains('游戏') ||
               name.contains('赚钱') ||
-              name.contains('会员') ||
-              name.contains('加油')) &&
+              name.contains('会员') ) &&
           GlobalConfig.isHuaweiUnderReview) {
         needShow = false;
       }
@@ -1787,6 +1785,9 @@ class _TaskListPageState extends State<TaskListPage>
               name.contains('会员') ||
               name.contains('星选')) &&
           isUnderReview) {
+        needShow = false;
+      }*/
+      if (type == 'toast') {
         needShow = false;
       }
     }
