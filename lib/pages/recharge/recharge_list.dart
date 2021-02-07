@@ -151,25 +151,68 @@ class _RechargeListPageState extends State<RechargeListPage> {
                   height: ScreenUtil().setHeight(30),
                 ),
                 buildRechargeLayout(),
+                Visibility(
+                  visible: _couponData != null &&
+                      _couponData.money != null &&
+                      _couponData.condition != null,
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(37),
+                        bottom: ScreenUtil().setHeight(182)),
+                    child: Visibility(
+                      child: _couponData != null &&
+                              _couponData.money != null &&
+                              _couponData.condition != null
+                          ? Text(
+                              "* 您有一张${_couponData.money}元优惠券可用(满${_couponData.condition}元)",
+                              style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: ScreenUtil().setSp(32)),
+                            )
+                          : Text(""),
+                    ),
+                  ),
+                ),
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(37),
-                      bottom: ScreenUtil().setHeight(182)),
-                  child: Visibility(
-                    visible: _couponData != null &&
-                        _couponData.money != null &&
-                        _couponData.condition != null,
-                    child: _couponData != null &&
-                            _couponData.money != null &&
-                            _couponData.condition != null
-                        ? Text(
-                            "* 您有一张${_couponData.money}元优惠券可用(满${_couponData.condition}元)",
-                            style: TextStyle(
-                                color: Color(0xff999999),
-                                fontSize: ScreenUtil().setSp(32)),
-                          )
-                        : Text(""),
+                      top: ScreenUtil().setWidth(80),
+                  ),
+                  child: Text(
+                    "*由于需要进行账单核对，话费充值时段为：09:00~23:50",
+                    style: TextStyle(
+                        color: Color(0xff999999),
+                        fontSize: ScreenUtil().setSp(32)),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(
+                      top: ScreenUtil().setWidth(20),
+                      bottom: ScreenUtil().setWidth(182)
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "*充值成功可获得",
+                        style: TextStyle(
+                            color: Color(0xff999999),
+                            fontSize: ScreenUtil().setSp(32)),
+                      ),
+                      Text(
+                        "4%",
+                        style: TextStyle(
+                            color: GlobalConfig.taskHeadColor,
+                            fontSize: ScreenUtil().setSp(32)),
+                      ),
+                      Text(
+                        "分红金",
+                        style: TextStyle(
+                            color: Color(0xff999999),
+                            fontSize: ScreenUtil().setSp(32)),
+                      ),
+                    ],
                   ),
                 ),
                 Visibility(
