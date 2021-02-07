@@ -27,6 +27,8 @@ class GoodsInfoData with JsonConvert<GoodsInfoData> {
   String queueCount;
   @JSONField(name: "bt_price")
   String btPrice;
+  @JSONField(name: "is_coupon")
+  String isCoupon;
   @JSONField(name: "min_power")
   String minPower;
   @JSONField(name: "spec_info")

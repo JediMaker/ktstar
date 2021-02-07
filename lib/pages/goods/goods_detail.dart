@@ -49,6 +49,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
   var _queueCount = '0';
   var _btPrice = '';
   var _showNum = '';
+  var _isCoupon = '';
 
   var _desList = [
     '正品保障',
@@ -75,6 +76,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
               _btPrice = resultData.data.btPrice;
               _detailImgs = resultData.data.detailImgs;
               _showNum = resultData.data.minPower;
+              _isCoupon = resultData.data.isCoupon;
             } catch (e) {
               print(e);
               /* try {
@@ -252,6 +254,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                       ),
                                     ),
                                     Visibility(
+                                      visible: _isCoupon == '1',
                                       child: Align(
                                         alignment: Alignment.centerRight,
                                         child: Container(
