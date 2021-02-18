@@ -634,6 +634,41 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = VersionInfoEntity();
     versionInfoEntityFromJson(entity, extractData);
+    if (entity.status) {
+      switch (entity.data.wxLogin) {
+        case "1": //不显示
+          GlobalConfig.displayThirdLoginInformation = false;
+
+         /* if (mounted) {
+            setState(() {});
+          }*/
+          break;
+
+        case "2": //显示
+          GlobalConfig.displayThirdLoginInformation = true;
+        /*  if (mounted) {
+            setState(() {});
+          }*/
+          break;
+      }
+      if (entity.data.whCheck) {
+        //华为应用市场上架审核中
+        GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+      } else {
+        GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+      }
+      if (entity.data.iosCheck) {
+        //appStore上架审核中
+        GlobalConfig.prefs.setBool("isIosUnderReview", true);
+      } else {
+        GlobalConfig.prefs.setBool("isIosUnderReview", false);
+      }
+      /*if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
+        Future.delayed(Duration(milliseconds: 300), () {
+          showPrivacyDialog(context);
+        });
+      }*/
+    }
     return entity;
   }
 

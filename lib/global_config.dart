@@ -100,6 +100,9 @@ class GlobalConfig {
 
   /// ios是否展示第三方登录信息
   static bool displayThirdLoginInformation = false;
+  /// ios是否审核上架中
+  static bool get iosCheck =>
+      prefs.getBool("isIosUnderReview");
 
   /// 渠道类型
   static String get chanelType => getChanelType(chanelType: 1);

@@ -160,17 +160,25 @@ class Utils {
     try {
       if (versionInfo.status) {
         print(
-            "_localVersion=$_localVersion；versionInfo。versionNo=${versionInfo.data.versionNo}");
+            "_localVersion=$_localVersion；_localbuildNumber=${packageInfo.buildNumber}；versionInfo。versionNo=${versionInfo.data.versionNo}");
         if (versionInfo.data.whCheck) {
           //华为应用市场上架审核中
           GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
         } else {
           GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
+
+        ///华为审核中
         if (GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
           if (checkDerictly) {
+            ///直接检查更新时弹出
             CommonUtils.showToast("当前已是最新版本");
           }
+          return;
+        }
+
+        ///ios审核中
+        if (GlobalConfig.prefs.getBool("isIosUnderReview")) {
           return;
         }
         bool needUpdate =
@@ -361,7 +369,7 @@ class TopPartClipper extends CustomClipper<Path> {
 
     path.lineTo(0, 0);
 //    path.lineTo(size.width, size.height);
-    path.lineTo(size.width/2, size.height);
+    path.lineTo(size.width / 2, size.height);
     path.lineTo(size.width, 0);
     // 返回路径
     return path;

@@ -299,7 +299,7 @@ class _MicroShareHolderEquityPageState
     ///小喇叭图标
     var lbIcon =
         'https://alipic.lanhuapp.com/xd92657a69-39df-48d4-bb44-ef8edacccde3';
-    if (Platform.isIOS && GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+    if (Platform.isIOS && GlobalConfig.prefs.getBool("isIosUnderReview")) {
       btnTxt = 'ios暂未开通';
     }
 
@@ -1503,7 +1503,7 @@ class _MicroShareHolderEquityPageState
   }
 
   _showSelectPayWayBottomSheet() {
-    if (Platform.isIOS && GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+    if (Platform.isIOS && GlobalConfig.prefs.getBool("isIosUnderReview")) {
       CommonUtils.showIosPayDialog();
       return;
     }

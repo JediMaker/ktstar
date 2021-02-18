@@ -948,8 +948,8 @@ class _MicroMinePageState extends State<MicroMinePage>
           Visibility(
             visible:
             GlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
-                (GlobalConfig.prefs.getBool('isHuaweiUnderReview') &&
-                    Platform.isIOS)
+                GlobalConfig.prefs.getBool('isHuaweiUnderReview') ||
+                    Platform.isIOS
                 ? false
                 : true,
             child: ListTile(

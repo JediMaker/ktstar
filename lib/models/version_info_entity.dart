@@ -22,4 +22,6 @@ class VersionInfoData with JsonConvert<VersionInfoData> {
   String wxLogin;
   @JSONField(name: "wh_check")
   bool whCheck;
+  @JSONField(name: "ios_check")
+  bool iosCheck;
 }

@@ -49,6 +49,9 @@ versionInfoDataFromJson(VersionInfoData data, Map<String, dynamic> json) {
 	if (json['wh_check'] != null) {
 		data.whCheck = json['wh_check'];
 	}
+	if (json['ios_check'] != null) {
+		data.iosCheck = json['ios_check'];
+	}
 	return data;
 }
 
@@ -60,5 +63,6 @@ Map<String, dynamic> versionInfoDataToJson(VersionInfoData entity) {
 	data['ios_url'] = entity.iosUrl;
 	data['wx_login'] = entity.wxLogin;
 	data['wh_check'] = entity.whCheck;
+	data['ios_check'] = entity.iosCheck;
 	return data;
 }
