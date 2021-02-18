@@ -181,36 +181,62 @@ class KeTaoFeaturedUtils {
         if (KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
           return;
         }
-        bool needUpdate =
-            isVersionGreatThanLocal(versionInfo.data.versionNo, _localVersion);
+        bool needUpdate = false;
+        if (Platform.isIOS) {
+          needUpdate = isBuildNumberGreatThanLocal(
+              versionInfo.data.buildNumber, packageInfo.buildNumber);
+        }
+        if (Platform.isAndroid) {
+          needUpdate = isVersionGreatThanLocal(
+              versionInfo.data.versionNo, _localVersion);
+        }
         if (!needUpdate) {
           if (checkDerictly) {
             KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
           }
           return;
         }
-        /* GlobalConfig.prefs
+        /* KeTaoFeaturedGlobalConfig.prefs
             .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);*/
         if (needUpdate) {
           KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', true);
-          final bool wantsUpdate = await showDialog<bool>(
-            context: context,
-            builder: (BuildContext context) =>
-                _buildDialog(context, packageInfo, versionInfo),
-            barrierDismissible: false,
-          );
+
           if (Platform.isIOS) {
             url = versionInfo.data.iosUrl;
+            if (await canLaunch(url)) {
+              final bool wantsUpdate = await showDialog<bool>(
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildDialog(context, packageInfo, versionInfo),
+                barrierDismissible: false,
+              );
+              if (wantsUpdate != null && wantsUpdate) {
+                KeTaoFeaturedGlobalConfig.prefs.remove('updateTime');
+                KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
+                await launchUrl(url);
+              } else {
+                KeTaoFeaturedGlobalConfig.prefs
+                    .setString('updateTime', DateTime.now().toString());
+              }
+            } else {
+              return;
+            }
           } else {
             url = versionInfo.data.androidUrl;
-          }
-          if (wantsUpdate != null && wantsUpdate) {
-            KeTaoFeaturedGlobalConfig.prefs.remove('updateTime');
-            KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
-            await launchUrl(url);
-          } else {
-            KeTaoFeaturedGlobalConfig.prefs
-                .setString('updateTime', DateTime.now().toString());
+            final bool wantsUpdate = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext context) =>
+                  _buildDialog(context, packageInfo, versionInfo),
+              barrierDismissible: false,
+            );
+            if (wantsUpdate != null && wantsUpdate) {
+              KeTaoFeaturedGlobalConfig.prefs.remove('updateTime');
+              KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
+              await launchUrl(url);
+            } else {
+              KeTaoFeaturedGlobalConfig.prefs
+                  .setString('updateTime', DateTime.now().toString());
+            }
           }
         } else {
           KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', false);
@@ -243,6 +269,18 @@ class KeTaoFeaturedUtils {
         } else {
           return result;
         }
+      }
+    }
+    return result;
+  }
+
+  static bool isBuildNumberGreatThanLocal(
+      String buildNumberRemote, String buildNumberLocal) {
+    buildNumberRemote.compareTo(buildNumberRemote);
+    bool result = false;
+    if (!KeTaoFeaturedCommonUtils.isEmpty(buildNumberRemote)) {
+      if (int.parse(buildNumberRemote) > int.parse(buildNumberLocal)) {
+        result = true;
       }
     }
     return result;
