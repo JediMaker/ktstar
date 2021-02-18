@@ -181,8 +181,15 @@ class Utils {
         if (GlobalConfig.prefs.getBool("isIosUnderReview")) {
           return;
         }
-        bool needUpdate =
-            isVersionGreatThanLocal(versionInfo.data.versionNo, _localVersion);
+        bool needUpdate = false;
+        if (Platform.isIOS) {
+          needUpdate = isBuildNumberGreatThanLocal(
+              versionInfo.data.buildNumber, packageInfo.buildNumber);
+        }
+        if (Platform.isAndroid) {
+          needUpdate = isVersionGreatThanLocal(
+              versionInfo.data.versionNo, _localVersion);
+        }
         if (!needUpdate) {
           if (checkDerictly) {
             CommonUtils.showToast("当前已是最新版本");
@@ -193,24 +200,43 @@ class Utils {
             .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);*/
         if (needUpdate) {
           GlobalConfig.prefs.setBool('needUpdate', true);
-          final bool wantsUpdate = await showDialog<bool>(
-            context: context,
-            builder: (BuildContext context) =>
-                _buildDialog(context, packageInfo, versionInfo),
-            barrierDismissible: false,
-          );
+
           if (Platform.isIOS) {
             url = versionInfo.data.iosUrl;
+            if (await canLaunch(url)) {
+              final bool wantsUpdate = await showDialog<bool>(
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildDialog(context, packageInfo, versionInfo),
+                barrierDismissible: false,
+              );
+              if (wantsUpdate != null && wantsUpdate) {
+                GlobalConfig.prefs.remove('updateTime');
+                GlobalConfig.prefs.remove('needUpdate');
+                await launchUrl(url);
+              } else {
+                GlobalConfig.prefs
+                    .setString('updateTime', DateTime.now().toString());
+              }
+            } else {
+              return;
+            }
           } else {
             url = versionInfo.data.androidUrl;
-          }
-          if (wantsUpdate != null && wantsUpdate) {
-            GlobalConfig.prefs.remove('updateTime');
-            GlobalConfig.prefs.remove('needUpdate');
-            await launchUrl(url);
-          } else {
-            GlobalConfig.prefs
-                .setString('updateTime', DateTime.now().toString());
+            final bool wantsUpdate = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext context) =>
+                  _buildDialog(context, packageInfo, versionInfo),
+              barrierDismissible: false,
+            );
+            if (wantsUpdate != null && wantsUpdate) {
+              GlobalConfig.prefs.remove('updateTime');
+              GlobalConfig.prefs.remove('needUpdate');
+              await launchUrl(url);
+            } else {
+              GlobalConfig.prefs
+                  .setString('updateTime', DateTime.now().toString());
+            }
           }
         } else {
           GlobalConfig.prefs.setBool('needUpdate', false);
@@ -248,6 +274,18 @@ class Utils {
     return result;
   }
 
+  static bool isBuildNumberGreatThanLocal(
+      String buildNumberRemote, String buildNumberLocal) {
+    buildNumberRemote.compareTo(buildNumberRemote);
+    bool result = false;
+    if (!CommonUtils.isEmpty(buildNumberRemote)) {
+      if (int.parse(buildNumberRemote) > int.parse(buildNumberLocal)) {
+        result = true;
+      }
+    }
+    return result;
+  }
+
   static launchUrl(url) async {
     if (await canLaunch(url) != null) {
       await launch(url, forceSafariVC: false);
@@ -261,6 +299,9 @@ class Utils {
 Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
     VersionInfoEntity versionInfo) {
   final ThemeData theme = Theme.of(context);
+  var desc = Platform.isAndroid
+      ? {versionInfo.data.desc}
+      : {versionInfo.data.buildNumberDesc};
 
   /*final TextStyle dialogTextStyle =
       theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);*/
@@ -269,12 +310,23 @@ Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
     title: Text('v${versionInfo.data.versionNo}版本更新啦！'),
     content: Container(
       padding: EdgeInsets.symmetric(vertical: 8),
-      child: Text(
-        '${versionInfo.data.desc}',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$desc',
+            style: TextStyle(
+              color: Color(0xff222222),
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+        ],
       ),
     ),
     actions: <Widget>[
       CupertinoDialogAction(
+
+
         child: Text(
           '以后再说',
           style: TextStyle(

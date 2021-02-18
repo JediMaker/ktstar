@@ -49,8 +49,14 @@ versionInfoDataFromJson(VersionInfoData data, Map<String, dynamic> json) {
 	if (json['wh_check'] != null) {
 		data.whCheck = json['wh_check'];
 	}
-	if (json['ios_check'] != null) {
-		data.iosCheck = json['ios_check'];
+	if (json['pgsd_check'] != null) {
+		data.iosCheck = json['pgsd_check'];
+	}
+	if (json['build_number'] != null) {
+		data.buildNumber = json['build_number']?.toString();
+	}
+	if (json['build_number_desc'] != null) {
+		data.buildNumberDesc = json['build_number_desc']?.toString();
 	}
 	return data;
 }
@@ -63,6 +69,8 @@ Map<String, dynamic> versionInfoDataToJson(VersionInfoData entity) {
 	data['ios_url'] = entity.iosUrl;
 	data['wx_login'] = entity.wxLogin;
 	data['wh_check'] = entity.whCheck;
-	data['ios_check'] = entity.iosCheck;
+	data['pgsd_check'] = entity.iosCheck;
+	data['build_number'] = entity.buildNumber;
+	data['build_number_desc'] = entity.buildNumberDesc;
 	return data;
 }
