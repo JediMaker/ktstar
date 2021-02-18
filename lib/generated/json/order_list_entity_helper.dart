@@ -1,4 +1,4 @@
-import 'package:star/models/order_list_entity.dart';
+import 'package:star/ktxxmodels/order_list_entity.dart';
 
 orderListEntityFromJson(OrderListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

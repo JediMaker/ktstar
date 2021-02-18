@@ -1,4 +1,4 @@
-import 'package:star/models/fans_list_entity.dart';
+import 'package:star/ktxxmodels/fans_list_entity.dart';
 
 fansListEntityFromJson(FansListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

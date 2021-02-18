@@ -1,4 +1,4 @@
-import 'package:star/models/goods_spec_info_entity.dart';
+import 'package:star/ktxxmodels/goods_spec_info_entity.dart';
 
 goodsSpecInfoEntityFromJson(GoodsSpecInfoEntity data, Map<String, dynamic> json) {
 	if (json['spec_info'] != null) {

@@ -1,4 +1,4 @@
-import 'package:star/models/address_list_entity.dart';
+import 'package:star/ktxxmodels/address_list_entity.dart';
 
 addressListEntityFromJson(AddressListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

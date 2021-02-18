@@ -1,4 +1,4 @@
-import 'package:star/models/login_entity.dart';
+import 'package:star/ktxxmodels/login_entity.dart';
 
 loginEntityFromJson(LoginEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

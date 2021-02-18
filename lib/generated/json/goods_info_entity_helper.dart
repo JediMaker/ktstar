@@ -1,5 +1,5 @@
-import 'package:star/models/goods_info_entity.dart';
-import 'package:star/models/goods_spec_info_entity.dart';
+import 'package:star/ktxxmodels/goods_info_entity.dart';
+import 'package:star/ktxxmodels/goods_spec_info_entity.dart';
 
 goodsInfoEntityFromJson(GoodsInfoEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {

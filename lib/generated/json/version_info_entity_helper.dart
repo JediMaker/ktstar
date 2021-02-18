@@ -1,4 +1,4 @@
-import 'package:star/models/version_info_entity.dart';
+import 'package:star/ktxxmodels/version_info_entity.dart';
 
 versionInfoEntityFromJson(VersionInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

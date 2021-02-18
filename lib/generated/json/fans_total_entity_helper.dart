@@ -1,4 +1,4 @@
-import 'package:star/models/fans_total_entity.dart';
+import 'package:star/ktxxmodels/fans_total_entity.dart';
 
 fansTotalEntityFromJson(FansTotalEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {

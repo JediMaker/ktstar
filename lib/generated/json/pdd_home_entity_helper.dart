@@ -1,5 +1,5 @@
-import 'package:star/models/pdd_home_entity.dart';
-import 'package:star/models/home_icon_list_entity.dart';
+import 'package:star/ktxxmodels/pdd_home_entity.dart';
+import 'package:star/ktxxmodels/home_icon_list_entity.dart';
 
 pddHomeEntityFromJson(PddHomeEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

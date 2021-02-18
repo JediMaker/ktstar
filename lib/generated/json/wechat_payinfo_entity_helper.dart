@@ -1,4 +1,4 @@
-import 'package:star/models/wechat_payinfo_entity.dart';
+import 'package:star/ktxxmodels/wechat_payinfo_entity.dart';
 
 wechatPayinfoEntityFromJson(WechatPayinfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

@@ -1,5 +1,5 @@
-import 'package:star/models/micro_shareholder_entity.dart';
-import 'package:star/models/micro_shareholder_item_entity.dart';
+import 'package:star/ktxxmodels/micro_shareholder_entity.dart';
+import 'package:star/ktxxmodels/micro_shareholder_item_entity.dart';
 
 microShareholderEntityFromJson(MicroShareholderEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

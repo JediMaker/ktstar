@@ -1,5 +1,5 @@
-import 'package:star/models/shareholder_income_list_entity.dart';
-import 'package:star/models/income_list_entity.dart';
+import 'package:star/ktxxmodels/shareholder_income_list_entity.dart';
+import 'package:star/ktxxmodels/income_list_entity.dart';
 
 shareholderIncomeListEntityFromJson(ShareholderIncomeListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

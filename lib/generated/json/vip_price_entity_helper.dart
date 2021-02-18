@@ -1,5 +1,5 @@
-import 'package:star/models/vip_price_entity.dart';
-import 'package:star/models/vip_price_info_entity.dart';
+import 'package:star/ktxxmodels/vip_price_entity.dart';
+import 'package:star/ktxxmodels/vip_price_info_entity.dart';
 
 vipPriceEntityFromJson(VipPriceEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

@@ -1,4 +1,4 @@
-import 'package:star/models/result_bean_entity.dart';
+import 'package:star/ktxxmodels/result_bean_entity.dart';
 
 resultBeanEntityFromJson(ResultBeanEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

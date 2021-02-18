@@ -1,4 +1,4 @@
-import 'package:star/models/region_data_entity.dart';
+import 'package:star/ktxxmodels/region_data_entity.dart';
 
 regionDataEntityFromJson(RegionDataEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

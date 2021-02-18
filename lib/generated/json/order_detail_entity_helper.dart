@@ -1,5 +1,5 @@
-import 'package:star/models/order_detail_entity.dart';
-import 'package:star/models/order_user_info_entity.dart';
+import 'package:star/ktxxmodels/order_detail_entity.dart';
+import 'package:star/ktxxmodels/order_user_info_entity.dart';
 
 orderDetailEntityFromJson(OrderDetailEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

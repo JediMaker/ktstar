@@ -1,4 +1,4 @@
-import 'package:star/models/recharge_entity.dart';
+import 'package:star/ktxxmodels/recharge_entity.dart';
 
 rechargeEntityFromJson(RechargeEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

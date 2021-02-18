@@ -1,6 +1,6 @@
-import 'package:star/models/home_entity.dart';
-import 'package:star/models/home_goods_list_entity.dart';
-import 'package:star/models/home_icon_list_entity.dart';
+import 'package:star/ktxxmodels/home_entity.dart';
+import 'package:star/ktxxmodels/home_goods_list_entity.dart';
+import 'package:star/ktxxmodels/home_icon_list_entity.dart';
 
 homeEntityFromJson(HomeEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

@@ -1,5 +1,5 @@
-import 'package:star/models/user_info_entity.dart';
-import 'package:star/models/user_holder_profit_entity.dart';
+import 'package:star/ktxxmodels/user_info_entity.dart';
+import 'package:star/ktxxmodels/user_holder_profit_entity.dart';
 
 userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

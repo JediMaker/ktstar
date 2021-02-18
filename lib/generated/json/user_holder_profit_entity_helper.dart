@@ -1,4 +1,4 @@
-import 'package:star/models/user_holder_profit_entity.dart';
+import 'package:star/ktxxmodels/user_holder_profit_entity.dart';
 
 userHolderProfitEntityFromJson(UserHolderProfitEntity data, Map<String, dynamic> json) {
 	if (json['partner_bonus'] != null) {

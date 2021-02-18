@@ -1,4 +1,4 @@
-import 'package:star/models/message_list_entity.dart';
+import 'package:star/ktxxmodels/message_list_entity.dart';
 
 messageListEntityFromJson(MessageListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

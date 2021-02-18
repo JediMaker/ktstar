@@ -1,4 +1,4 @@
-import 'package:star/models/alipay_payinfo_entity.dart';
+import 'package:star/ktxxmodels/alipay_payinfo_entity.dart';
 
 alipayPayinfoEntityFromJson(AlipayPayinfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

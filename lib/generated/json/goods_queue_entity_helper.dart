@@ -1,4 +1,4 @@
-import 'package:star/models/goods_queue_entity.dart';
+import 'package:star/ktxxmodels/goods_queue_entity.dart';
 
 goodsQueueEntityFromJson(GoodsQueueEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

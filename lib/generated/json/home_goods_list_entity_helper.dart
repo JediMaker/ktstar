@@ -1,4 +1,4 @@
-import 'package:star/models/home_goods_list_entity.dart';
+import 'package:star/ktxxmodels/home_goods_list_entity.dart';
 
 homeGoodsListEntityFromJson(HomeGoodsListEntity data, Map<String, dynamic> json) {
 	if (json['goods_list'] != null) {

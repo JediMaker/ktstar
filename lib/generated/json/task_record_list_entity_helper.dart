@@ -1,4 +1,4 @@
-import 'package:star/models/task_record_list_entity.dart';
+import 'package:star/ktxxmodels/task_record_list_entity.dart';
 
 taskRecordListEntityFromJson(TaskRecordListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

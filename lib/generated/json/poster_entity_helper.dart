@@ -1,4 +1,4 @@
-import 'package:star/models/poster_entity.dart';
+import 'package:star/ktxxmodels/poster_entity.dart';
 
 posterEntityFromJson(PosterEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

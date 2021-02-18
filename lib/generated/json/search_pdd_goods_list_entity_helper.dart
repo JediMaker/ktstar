@@ -1,5 +1,5 @@
-import 'package:star/models/search_pdd_goods_list_entity.dart';
-import 'package:star/models/pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/search_pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/pdd_goods_list_entity.dart';
 
 searchPddGoodsListEntityFromJson(SearchPddGoodsListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

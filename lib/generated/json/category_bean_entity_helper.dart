@@ -1,4 +1,4 @@
-import 'package:star/models/category_bean_entity.dart';
+import 'package:star/ktxxmodels/category_bean_entity.dart';
 
 categoryBeanEntityFromJson(CategoryBeanEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

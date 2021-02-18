@@ -1,4 +1,4 @@
-import 'package:star/models/home_icon_list_entity.dart';
+import 'package:star/ktxxmodels/home_icon_list_entity.dart';
 
 homeIconListEntityFromJson(HomeIconListEntity data, Map<String, dynamic> json) {
 	if (json['icon_list'] != null) {

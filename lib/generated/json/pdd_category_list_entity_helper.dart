@@ -1,4 +1,4 @@
-import 'package:star/models/pdd_category_list_entity.dart';
+import 'package:star/ktxxmodels/pdd_category_list_entity.dart';
 
 pddCategoryListEntityFromJson(PddCategoryListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

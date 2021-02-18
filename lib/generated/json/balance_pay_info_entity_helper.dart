@@ -1,4 +1,4 @@
-import 'package:star/models/balance_pay_info_entity.dart';
+import 'package:star/ktxxmodels/balance_pay_info_entity.dart';
 
 balancePayInfoEntityFromJson(BalancePayInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

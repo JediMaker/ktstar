@@ -1,4 +1,4 @@
-import 'package:star/models/pdd_goods_info_entity.dart';
+import 'package:star/ktxxmodels/pdd_goods_info_entity.dart';
 
 pddGoodsInfoEntityFromJson(PddGoodsInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

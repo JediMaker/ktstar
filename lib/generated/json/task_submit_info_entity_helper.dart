@@ -1,4 +1,4 @@
-import 'package:star/models/task_submit_info_entity.dart';
+import 'package:star/ktxxmodels/task_submit_info_entity.dart';
 
 taskSubmitInfoEntityFromJson(TaskSubmitInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

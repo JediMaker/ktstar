@@ -1,4 +1,4 @@
-import 'package:star/models/phone_charge_list_entity.dart';
+import 'package:star/ktxxmodels/phone_charge_list_entity.dart';
 
 phoneChargeListEntityFromJson(PhoneChargeListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

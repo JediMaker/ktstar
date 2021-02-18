@@ -1,4 +1,4 @@
-import 'package:star/models/logistics_info_entity.dart';
+import 'package:star/ktxxmodels/logistics_info_entity.dart';
 
 logisticsInfoEntityFromJson(LogisticsInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

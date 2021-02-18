@@ -1,4 +1,4 @@
-import 'package:star/models/withdrawal_list_entity.dart';
+import 'package:star/ktxxmodels/withdrawal_list_entity.dart';
 
 withdrawalListEntityFromJson(WithdrawalListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

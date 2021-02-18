@@ -1,4 +1,4 @@
-import 'package:star/models/vip_price_info_entity.dart';
+import 'package:star/ktxxmodels/vip_price_info_entity.dart';
 
 vipPriceInfoEntityFromJson(VipPriceInfoEntity data, Map<String, dynamic> json) {
 	if (json['vip'] != null) {

@@ -1,4 +1,4 @@
-import 'package:star/models/pay_coupon_entity.dart';
+import 'package:star/ktxxmodels/pay_coupon_entity.dart';
 
 payCouponEntityFromJson(PayCouponEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

@@ -1,4 +1,4 @@
-import 'package:star/models/task_share_entity.dart';
+import 'package:star/ktxxmodels/task_share_entity.dart';
 
 taskShareEntityFromJson(TaskShareEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

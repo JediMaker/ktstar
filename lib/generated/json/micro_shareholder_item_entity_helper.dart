@@ -1,4 +1,4 @@
-import 'package:star/models/micro_shareholder_item_entity.dart';
+import 'package:star/ktxxmodels/micro_shareholder_item_entity.dart';
 
 microShareholderItemEntityFromJson(MicroShareholderItemEntity data, Map<String, dynamic> json) {
 	if (json['annual_income'] != null) {

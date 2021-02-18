@@ -1,4 +1,4 @@
-import 'package:star/models/task_detail_entity.dart';
+import 'package:star/ktxxmodels/task_detail_entity.dart';
 
 taskDetailEntityFromJson(TaskDetailEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

@@ -1,4 +1,4 @@
-import 'package:star/models/income_list_entity.dart';
+import 'package:star/ktxxmodels/income_list_entity.dart';
 
 incomeListEntityFromJson(IncomeListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {

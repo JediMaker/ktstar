@@ -1,4 +1,4 @@
-import 'package:star/models/home_pdd_category_entity.dart';
+import 'package:star/ktxxmodels/home_pdd_category_entity.dart';
 
 homePddCategoryEntityFromJson(HomePddCategoryEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
