@@ -10,8 +10,8 @@ class KeTaoFeaturedAPi {
 //      : "http://api.ketaoxx.com/";
 
 //  static const String BASE_URL = "https://task.ktkj.shop/";
-  static const int CONNECT_TIMEOUT = 10000;
-  static const int RECEIVE_TIMEOUT = 10000;
+  static const int CONNECT_TIMEOUT = 5000;
+  static const int RECEIVE_TIMEOUT = 5000;
 
   static const String INTERFACE_KEY = "6YHgt890Mgplu7054fg8k3g3dQ2CXmh4";
 
