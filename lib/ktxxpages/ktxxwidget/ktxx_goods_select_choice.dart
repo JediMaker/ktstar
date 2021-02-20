@@ -7,6 +7,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 /// @desp:
 /// @time 2019/10/30 14:44
 /// @author lizubing
+/// // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+//// for details. All rights reserved. Use of this source code is governed by a
+//// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsSelectChoiceChip extends StatefulWidget {
   final String text;
   final double height;
@@ -22,7 +25,24 @@ class KeTaoFeaturedGoodsSelectChoiceChip extends StatefulWidget {
   final BoxBorder selectBorder;
   final ValueChanged<bool> onSelected;
   final bool selected;
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   const KeTaoFeaturedGoodsSelectChoiceChip(
       {@required this.text,
       this.height = 25,
@@ -54,7 +74,11 @@ class _KeTaoFeaturedGoodsSelectChoiceChipState extends State<KeTaoFeaturedGoodsS
   @override
   Widget build(BuildContext context) {
     bool _select = widget.selected;
-
+    int SVG_ANGLETYPE_DEG = 2;
+    int SVG_ANGLETYPE_GRAD = 4;
+    int SVG_ANGLETYPE_RAD = 3;
+    int SVG_ANGLETYPE_UNKNOWN = 0;
+    int SVG_ANGLETYPE_UNSPECIFIED = 1;
     return GestureDetector(
       onTap: () {
         widget.onSelected(!_select);

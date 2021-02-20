@@ -8,16 +8,24 @@ import 'package:star/ktxxpages/ktxxwidget/ktxx_time_widget.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedForgetPayPasswordPage extends StatefulWidget {
   KeTaoFeaturedForgetPayPasswordPage({Key key, this.phoneNum }) : super(key: key);
   final String title = "";
   var phoneNum;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedForgetPayPasswordPageState createState() => _KeTaoFeaturedForgetPayPasswordPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPage> {
   TextEditingController _checkCodeController;
   TextEditingController _passwordController;
@@ -292,4 +300,25 @@ class _KeTaoFeaturedForgetPayPasswordPageState extends State<KeTaoFeaturedForget
       return false;
     }
   }
+}
+
+class ProfileMenu {
+  String title;
+  String subTitle;
+  IconData icon;
+  Color iconColor;
+  ProfileMenu({this.icon, this.title, this.iconColor, this.subTitle});
+}
+
+class Catg {
+  String name;
+  IconData icon;
+  int number;
+  Catg({this.icon, this.name, this.number});
+}
+
+class FurnitureCatg {
+  IconData icon;
+  bool elivation;
+  FurnitureCatg({this.icon, this.elivation});
 }

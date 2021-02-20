@@ -9,7 +9,9 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
   bool refreshCheckOutCounterPage;
 
@@ -21,7 +23,33 @@ class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
       this.password = ''})
       : super(key: key);
   final String title = "";
-
+  /*List<ProfileMenu> profileMenuList = [
+    ProfileMenu(
+      title: 'Address',
+      subTitle: 'Ensure your harvesting address',
+      iconColor: profile_info_address,
+      icon: Icons.location_on,
+    ),
+    ProfileMenu(
+      title: 'Privacy',
+      subTitle: 'System permission change',
+      iconColor: profile_info_privacy,
+      icon: Icons.lock,
+    ),
+    ProfileMenu(
+      title: 'General',
+      subTitle: 'Basic functional settings',
+      iconColor: profile_info_general,
+      icon: Icons.layers,
+    ),
+    ProfileMenu(
+      title: 'Notification',
+      subTitle: 'Take over the news in time',
+      iconColor: profile_info_notification,
+      icon: Icons.notifications,
+    ),
+  ];
+*/
   ///页面类型，
   ///
   /// 0，设置密码
@@ -34,11 +62,17 @@ class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
   bool isModifyType;
 
   var password;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedPayPasswordSettingPageState createState() => _KeTaoFeaturedPayPasswordSettingPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedPayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSettingPage> {
   var _titieText = "";
   var _descText = "";

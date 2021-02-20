@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 
 typedef void StopCount(bool b);
 typedef Future<bool> StartCountAction(BuildContext context);
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTimerWidget extends StatefulWidget {
   final int time;
   final StartCountAction startCountAction;
@@ -17,17 +19,30 @@ class KeTaoFeaturedTimerWidget extends StatefulWidget {
     return new _KeTaoFeaturedTimerWidgetState();
   }
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTimerWidgetState extends State<KeTaoFeaturedTimerWidget> {
   bool isPressed = false;
   Widget timer;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   void _startCount(bool b) {
     setState(() {
       isPressed = b;
     });
   }
-
+//  Positioned(
+//  bottom: 20.0,
+//  right: 10.0,
+//  child: CustomSideButton(
+//  icon: Icons.arrow_forward,
+//  fxn: () {},
+//  ),
+//  ),
   void _stopCount(bool b) {
     setState(() {
       isPressed = !b;
@@ -50,6 +65,19 @@ class _KeTaoFeaturedTimerWidgetState extends State<KeTaoFeaturedTimerWidget> {
               if (value) {_startCount(true)}
             });
       },
+//      Container(
+//        height: 110.0,
+//        decoration: BoxDecoration(
+//          borderRadius: BorderRadius.circular(20.0),
+//        ),
+//        child: ClipRRect(
+//          borderRadius: BorderRadius.circular(20.0),
+//          child: PNetworkImage(
+//            lampsImage[2]['image'],
+//            fit: BoxFit.cover,
+//          ),
+//        ),
+//      ),
       child: isPressed
           ? timer
           : Text(

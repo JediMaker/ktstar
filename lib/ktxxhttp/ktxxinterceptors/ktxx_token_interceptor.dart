@@ -5,11 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
-import 'package:star/generated/json/result_bean_entity_helper.dart';
+import 'package:star/generated/json/ktxx_result_bean_entity_helper.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/result_bean_entity.dart';
+import 'package:star/ktxxmodels/ktxx_result_bean_entity.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
@@ -19,6 +19,9 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
  * Created by guoshuyu
  * on 2019/3/23.
  */
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
   String _token;
 
@@ -48,7 +51,7 @@ class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
     try {
       var request = response.request;
       final extractData = json.decode(response.data) as Map<String, dynamic>;
-      var entity = ResultBeanEntity();
+      var entity = KeTaoFeaturedResultBeanEntity();
       resultBeanEntityFromJson(entity, extractData);
       if (entity.errCode.toString() == "308") {
         response = await getAuthorization(request);

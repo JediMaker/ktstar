@@ -7,7 +7,9 @@ import 'ktxxinterceptors/ktxx_header_interceptor.dart';
 import 'ktxxinterceptors/ktxx_log_interceptor.dart';
 import 'ktxxinterceptors/ktxx_response_interceptor.dart';
 import 'ktxx_result_data.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///http请求
 class KeTaoFeaturedMyHttp {
   static const CONTENT_TYPE_JSON = "application/generated.json";

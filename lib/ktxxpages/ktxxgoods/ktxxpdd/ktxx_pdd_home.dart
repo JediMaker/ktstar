@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/pdd_home_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_home_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_featured_tab.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_list.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
@@ -19,23 +19,86 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///拼多多首页
 class KeTaoFeaturedPddHomeIndexPage extends StatefulWidget {
   KeTaoFeaturedPddHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedPddHomeIndexPageState createState() => _KeTaoFeaturedPddHomeIndexPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
   bool isFirstLoading = true;
-  List<PddHomeDataCat> cats;
-  PddHomeData _homeData;
+  List<KeTaoFeaturedPddHomeDataCat> cats;
+  KeTaoFeaturedPddHomeData _homeData;
   var _tabViews;
   var _tabs;
   int _selectedTabIndex = 0;
@@ -307,7 +370,7 @@ class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeInde
     try {
       EasyLoading.show();
     } catch (e) {}
-    PddHomeEntity result = await KeTaoFeaturedHttpManage.getPddHomeData();
+    KeTaoFeaturedPddHomeEntity result = await KeTaoFeaturedHttpManage.getPddHomeData();
     try {
       EasyLoading.dismiss();
     } catch (e) {}

@@ -10,16 +10,16 @@ import 'package:fluwx/fluwx.dart';
 
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:star/generated/json/user_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_user_info_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
-import 'package:star/ktxxmodels/login_entity.dart';
+import 'package:star/ktxxmodels/ktxx_login_entity.dart';
 
 //import 'package:umeng/umeng.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
-import 'generated/json/login_entity_helper.dart';
-import 'ktxxmodels/user_info_entity.dart';
+import 'generated/json/ktxx_login_entity_helper.dart';
+import 'ktxxmodels/ktxx_user_info_entity.dart';
 //import 'package:umeng/umeng.dart';
 
 // 提供五套可选主题色
@@ -30,13 +30,24 @@ const _themes = <MaterialColor>[
   Colors.green,
   Colors.red,
 ];
-
+// if (announcements.length > 0) ...[
+//   AnnouncementSlider(news: announcements),
+//   const SizedBox(height: 16.0),
+// ],
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGlobalConfig {
   static bool dark = false;
   static ThemeData themeData = new ThemeData(
     primarySwatch: Colors.red,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   static ThemeData taskThemeData = new ThemeData(
     primarySwatch: MaterialColor(
       0xFFFF5E00,
@@ -56,7 +67,18 @@ class KeTaoFeaturedGlobalConfig {
   static SharedPreferences _prefs;
 
   static var LAYOUT_MARGIN = ScreenUtil().setWidth(30);
-
+  // CategoryItem(
+  //   icon: Icon(
+  //     FontAwesomeIcons.user,
+  //     color: Colors.indigo,
+  //   ),
+  //   title: "Profile",
+  //   onPressed: () {
+  //     (Provider.of<UserRepository>(context).user != null)
+  //         ? Navigator.pushNamed(context, "profile")
+  //         : Navigator.pushNamed(context, 'auth_home');
+  //   },
+  // ),
   ///全局context
 
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -79,7 +101,12 @@ class KeTaoFeaturedGlobalConfig {
 
   /// 渠道名称--小米
   static const String CHANEL_XIAOMI = "xiaomi";
-
+  // if (survey != null &&
+  //     user != null &&
+  //     !user.surveys.contains(survey?.id)) ...[
+  //   const SizedBox(height: 10.0),
+  //   SurveyWidget(survey: survey),
+  // ],
   static SharedPreferences get prefs => _prefs; // 可选的主题列表
 
   static List<MaterialColor> get themes => _themes;
@@ -214,10 +241,10 @@ class KeTaoFeaturedGlobalConfig {
   }
 
   /// 获取登陆成功后的数据
-  static LoginData getLoginInfo() {
+  static KeTaoFeaturedLoginData getLoginInfo() {
     final extractData =
         json.decode(prefs.getString("loginData")) as Map<String, dynamic>;
-    var entity = LoginEntity();
+    var entity = KeTaoFeaturedLoginEntity();
     loginEntityFromJson(entity, extractData);
     return entity.data;
   }
@@ -234,8 +261,8 @@ class KeTaoFeaturedGlobalConfig {
   }
 
   /// 获取用户信息
-  static UserInfoData getUserInfo() {
-    var entity = UserInfoEntity();
+  static KeTaoFeaturedUserInfoData getUserInfo() {
+    var entity = KeTaoFeaturedUserInfoEntity();
     try {
       userInfoEntityFromJson(entity,
           json.decode(prefs.getString("userInfo")) as Map<String, dynamic>);

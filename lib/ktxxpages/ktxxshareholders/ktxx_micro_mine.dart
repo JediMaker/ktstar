@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/user_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_user_info_entity.dart';
 import 'package:star/ktxxpages/ktxxadress/ktxx_my_adress.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_free_queue_persional.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
@@ -38,16 +38,79 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///微股东个人中心页面
 class KeTaoFeaturedMicroMinePage extends StatefulWidget {
   KeTaoFeaturedMicroMinePage({Key key,  this.userInfoData}) : super(key: key);
-  UserInfoData userInfoData;
-
+  KeTaoFeaturedUserInfoData userInfoData;
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedMicroMinePageState createState() => _KeTaoFeaturedMicroMinePageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
     with AutomaticKeepAliveClientMixin {
   var headUrl;
@@ -63,7 +126,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
   var _isWithdrawal = '';
   var _isFirst = true;
   var _pwdStatus = '';
-  var _title = '我的';
+  var _title = '个人中心';
   TextEditingController _dialogPhoneNumberController;
   TextEditingController _dialogNickNameController;
   TextEditingController _dialogWeChatNoController;
@@ -87,7 +150,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
   String userType;
-  UserInfoEntity entity;
+  KeTaoFeaturedUserInfoEntity entity;
   Color _cardTextColor = Color(0xffD6B78E);
   Color _headBgColor = Color(0xffF93736);
 
@@ -102,7 +165,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
   var _todayShouldBeScoredRed = '';
 
   var _todayActualDividend = '';
-  UserInfoData _data;
+  KeTaoFeaturedUserInfoData _data;
 
   var _currentDividend = '0';
 
@@ -134,7 +197,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
               ? 'VIP股东'
               : '高级股东';
           if (result.data.isPartner == '2') {
-            _title= '我的';
+            _title= '个人中心';
           }
           _yesterdayProfit = result.data.partnerBonus.yesterday;
           _sevenDayProfit = result.data.partnerBonus.week;
@@ -176,7 +239,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
     if (mounted) {
       setState(() {
         try {
-          _title = "我的";
+          _title = "个人中心";
           headUrl = '';
           nickName = '';
           userType = '';
@@ -948,7 +1011,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
           Visibility(
             visible:
             KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
-                KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') ||
+                !KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') ||
                     Platform.isIOS
                 ? false
                 : true,
@@ -2211,7 +2274,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
   Widget buildHeadLayout() {
     String text = "";
     text = _title;
-    if (_title== '我的') {
+    if (_title== '个人中心') {
       text = "普通用户";
     }
     if (!KeTaoFeaturedGlobalConfig.isLogin()) {

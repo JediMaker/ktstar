@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 const double _kTabHeight = 36.0;
 const double _kTextAndIconTabHeight = 36.0;
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMyTab extends StatelessWidget {
   /// Creates a material design [TabBar] tab.
   ///
@@ -12,7 +15,24 @@ class KeTaoFeaturedMyTab extends StatelessWidget {
     Key key,
     this.text,
     this.icon,
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
 
     this.iconMargin = const EdgeInsets.only(bottom: 10.0),
     this.child,
@@ -71,7 +91,11 @@ class KeTaoFeaturedMyTab extends StatelessWidget {
         ],
       );
     }
-
+    int SVG_ANGLETYPE_DEG = 2;
+    int SVG_ANGLETYPE_GRAD = 4;
+    int SVG_ANGLETYPE_RAD = 3;
+    int SVG_ANGLETYPE_UNKNOWN = 0;
+    int SVG_ANGLETYPE_UNSPECIFIED = 1;
     return SizedBox(
       height: height,
       child: Center(

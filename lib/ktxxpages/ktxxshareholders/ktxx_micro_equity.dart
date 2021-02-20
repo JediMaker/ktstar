@@ -10,10 +10,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/ktxxhttp/ktxx_api.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/micro_shareholder_item_entity.dart';
-import 'package:star/ktxxmodels/user_info_entity.dart';
-import 'package:star/ktxxmodels/vip_price_info_entity.dart';
-import 'package:star/ktxxmodels/wechat_payinfo_entity.dart';
+import 'package:star/ktxxmodels/ktxx_micro_shareholder_item_entity.dart';
+import 'package:star/ktxxmodels/ktxx_user_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_vip_price_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_wechat_payinfo_entity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_pay_result.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_index.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_my_webview.dart';
@@ -23,12 +23,73 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import '../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
   KeTaoFeaturedMicroShareHolderEquityPage({Key key, this.shareholderType = 1})
       : super(key: key);
   final String title = "微股东权益";
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   ///股东类型
   ///-1非股东 0 见习股东 ; 1 vip 股东 ，高级股东
   int shareholderType;
@@ -37,7 +98,9 @@ class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
   _KeTaoFeaturedMicroShareHolderEquityPageState createState() =>
       _KeTaoFeaturedMicroShareHolderEquityPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedMicroShareHolderEquityPageState
     extends State<KeTaoFeaturedMicroShareHolderEquityPage> {
   Color _textTopColor = Color(0xff0A7FFF);
@@ -59,8 +122,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
   ///
   ///  4 高级股东
   String _shareholderType = '';
-  VipPriceInfoVip _vipInfo;
-  VipPriceInfoDiamond _diamondInfo;
+  KeTaoFeaturedVipPriceInfoVip _vipInfo;
+  KeTaoFeaturedVipPriceInfoDiamond _diamondInfo;
 
   ///微股东类型名称
   var _shareholderTypeName = '';
@@ -82,7 +145,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
 
   ///万份分红金30日收益
   var _monthProfit = '0';
-  UserInfoData userInfoData;
+  KeTaoFeaturedUserInfoData userInfoData;
 
   _initWeChatResponseHandler() {
     KeTaoFeaturedGlobalConfig.payType = 3;
@@ -96,11 +159,11 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
     });
   }
 
-  MicroShareholderItemEntity grade1;
-  MicroShareholderItemEntity grade2;
-  MicroShareholderItemEntity grade3;
-  List<MicroShareholderItemEntity> _dataList =
-      List<MicroShareholderItemEntity>();
+  KeTaoFeaturedMicroShareholderItemEntity grade1;
+  KeTaoFeaturedMicroShareholderItemEntity grade2;
+  KeTaoFeaturedMicroShareholderItemEntity grade3;
+  List<KeTaoFeaturedMicroShareholderItemEntity> _dataList =
+      List<KeTaoFeaturedMicroShareholderItemEntity>();
 
   _initData() async {
     userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
@@ -1659,7 +1722,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
         });
   }
 
-  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
     /*  var h = H.HttpClient();
     h.badCertificateCallback = (cert, String host, int port) {
       return true;

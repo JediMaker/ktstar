@@ -26,12 +26,36 @@ void main() => runApp(MaterialApp(
 
 String selectedUrl =
     'https://ms.czb365.com/?platformType=92657653&platformCode=15695657828&t=1606702970.981 ';
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedWebViewPluginPage extends StatefulWidget {
   var initialUrl;
   var title;
   Color appBarBackgroundColor;
-  bool showActions;
+  bool showActions;int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
 
   KeTaoFeaturedWebViewPluginPage(
       {@required this.initialUrl,
@@ -42,7 +66,9 @@ class KeTaoFeaturedWebViewPluginPage extends StatefulWidget {
   @override
   _KeTaoFeaturedWebViewPluginPageState createState() => _KeTaoFeaturedWebViewPluginPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedWebViewPluginPageState extends State<KeTaoFeaturedWebViewPluginPage> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   var _loadingVisiablity = true;

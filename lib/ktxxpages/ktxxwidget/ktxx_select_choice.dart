@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 /// @desp:
 /// @time 2019/10/30 14:44
 /// @author lizubing
@@ -54,6 +56,43 @@ class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _KeTaoFeaturedSelectChoiceChipState();
   }
+ /* Align(
+  alignment: Alignment.center,
+  child: Container(
+  margin: EdgeInsets.symmetric(horizontal: 25.0),
+  child: Transform.rotate(
+  angle: pi / 4,
+  child: Container(
+  padding: EdgeInsets.all(10.0),
+  decoration: BoxDecoration(
+  boxShadow: [
+  if (item.elivation)
+  BoxShadow(
+  color: Color(0xFFD1DCFF),
+  blurRadius: 5.0, // has the effect of softening the shadow
+  spreadRadius:
+  -1.0, // has the effect of extending the shadow
+  offset: Offset(10.0, 10.0),
+  )
+  ],
+  color: item.elivation
+  ? profile_info_background
+      : profile_info_categories_background,
+  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+  ),
+  child: Transform.rotate(
+  angle: -pi / 4,
+  child: Icon(
+  item.icon,
+  size: 30.0,
+  color:
+  item.elivation ? Colors.white : furnitureCateDisableColor,
+  ),
+  ),
+  ),
+  ),
+  ),
+  );*/
 }
 
 class _KeTaoFeaturedSelectChoiceChipState extends State<KeTaoFeaturedSelectChoiceChip> {

@@ -7,7 +7,7 @@ import 'package:fluwx/fluwx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/goods_queue_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_queue_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_free_queue_persional.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
@@ -24,12 +24,73 @@ void main() {
     ),
   ));
 }
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
   KeTaoFeaturedFreeQueuePage({Key key, this.goodsId, this.pageType = 0}) : super(key: key);
   final String title = "";
   String goodsId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   /// 页面来源类型
   ///
   /// 0 默认
@@ -40,14 +101,16 @@ class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
   @override
   _KeTaoFeaturedFreeQueuePageState createState() => _KeTaoFeaturedFreeQueuePageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage> {
   var _headImageUrl = '';
   var _nickName = '';
   bool _hasSort = false;
-  List<GoodsQueueDataList> _queueList = List<GoodsQueueDataList>();
-  GoodsQueueDataGoodsInfo _goodsInfo;
-  GoodsQueueDataSignPackage _signPackage;
+  List<KeTaoFeaturedGoodsQueueDataList> _queueList = List<KeTaoFeaturedGoodsQueueDataList>();
+  KeTaoFeaturedGoodsQueueDataGoodsInfo _goodsInfo;
+  KeTaoFeaturedGoodsQueueDataSignPackage _signPackage;
 
   var _webUrl = '';
   var _shareTitle = '';
@@ -519,7 +582,7 @@ class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage>
     );
   }
 
-  Widget buildItem(index, GoodsQueueDataList item) {
+  Widget buildItem(index, KeTaoFeaturedGoodsQueueDataList item) {
     var _itemNickName = '';
     var _avatarUrl = '';
     var _dateJoin = '';

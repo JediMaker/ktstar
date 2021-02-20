@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedNavigatorUtils {
   static navigatorRouter(BuildContext context, Widget widget) {
     return Navigator.push(
@@ -10,7 +12,11 @@ class KeTaoFeaturedNavigatorUtils {
     return Navigator.pushReplacement(
         context, new MaterialPageRoute(builder: (context) => widget));
   }
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   static navigatorRouterAndRemoveUntil(BuildContext context, Widget widget) {
     //跳转并关闭当前页面
     return Navigator.pushAndRemoveUntil(
@@ -19,6 +25,25 @@ class KeTaoFeaturedNavigatorUtils {
       (route) => route == null,
     );
   }
+/*
+
+  Container buildLampsWithSlider() {
+    return Container(
+      //color: Colors.yellow,
+      height: 350,
+      child: Stack(
+        children: <Widget>[
+          buildLamps,
+          Positioned(
+            bottom: 40.0,
+            right: 50.0,
+            child: ItemNavigation(),
+          )
+        ],
+      ),
+    );
+  }
+*/
 
   ///弹出 dialog
   static Future<T> showGSYDialog<T>({
@@ -39,7 +64,17 @@ class KeTaoFeaturedNavigatorUtils {
         });
   }
 }
-
+/*final buildFurnitureCategories = Container(
+  height: 100.0,
+  //color: Colors.red,
+  child: ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: furnitureCategoriesList.length,
+    itemBuilder: (context, int index) => FurnitureCategory(
+      item: furnitureCategoriesList[index],
+    ),
+  ),
+);*/
 class MyCupertinoPageRoute extends CupertinoPageRoute {
   Widget widget;
 

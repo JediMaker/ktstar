@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_api.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/result_bean_entity.dart';
+import 'package:star/ktxxmodels/ktxx_result_bean_entity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_index.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_my_webview.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_time_widget.dart';
@@ -17,16 +17,79 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
-import 'package:star/ktxxmodels/login_entity.dart';
-
+import 'package:star/ktxxmodels/ktxx_login_entity.dart';
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedLoginPage extends StatefulWidget {
   KeTaoFeaturedLoginPage({Key key}) : super(key: key);
   String title = "登录";
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedLoginPageState createState() => _KeTaoFeaturedLoginPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
   var _description = '您好，\n请输入您的账号密码';
   TextEditingController _phoneController = new TextEditingController();
@@ -956,7 +1019,7 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
 
   Future<bool> smsSend(BuildContext context) async {
     if (KeTaoFeaturedCommonUtils.isPhoneLegal(phoneNumber)) {
-      ResultBeanEntity result = await KeTaoFeaturedHttpManage.sendVerificationCode(
+      KeTaoFeaturedResultBeanEntity result = await KeTaoFeaturedHttpManage.sendVerificationCode(
           phoneNumber,
           "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
 
@@ -974,7 +1037,7 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
   }
 
   Future<void> _login() async {
-    LoginEntity result = await KeTaoFeaturedHttpManage.login(phoneNumber, password);
+    KeTaoFeaturedLoginEntity result = await KeTaoFeaturedHttpManage.login(phoneNumber, password);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("登陆成功");
       KeTaoFeaturedGlobalConfig.saveLoginStatus(true);
@@ -985,7 +1048,7 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
   }
 
   Future<void> _fastLogin() async {
-    LoginEntity result = await KeTaoFeaturedHttpManage.quickLogin(phoneNumber, checkCode);
+    KeTaoFeaturedLoginEntity result = await KeTaoFeaturedHttpManage.quickLogin(phoneNumber, checkCode);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("登陆成功");
       KeTaoFeaturedGlobalConfig.saveLoginStatus(true);
@@ -996,7 +1059,7 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
   }
 
   Future<void> _register() async {
-    ResultBeanEntity result =
+    KeTaoFeaturedResultBeanEntity result =
         await KeTaoFeaturedHttpManage.register(phoneNumber, checkCode, password, inviteCode);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("注册成功，请登陆！");

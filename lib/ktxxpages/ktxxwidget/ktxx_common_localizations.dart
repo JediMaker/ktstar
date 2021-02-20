@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///语言(主要解决cupertino控件不能显示中文的问题)
 class KeTaoFeaturedCommonLocalizationsDelegate
     extends LocalizationsDelegate<CupertinoLocalizations> {
@@ -15,7 +17,24 @@ class KeTaoFeaturedCommonLocalizationsDelegate
     return SynchronousFuture<_DefaultCupertinoLocalizations>(
         _DefaultCupertinoLocalizations(locale.languageCode));
   }
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   @override
   bool shouldReload(KeTaoFeaturedCommonLocalizationsDelegate old) => false;
 }
@@ -34,7 +53,11 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
     '周六',
     '周日',
   ];
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   static const List<String> _shortMonths = <String>[
     '一月',
     '二月',

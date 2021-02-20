@@ -12,7 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskSubmissionPage extends StatefulWidget {
   KeTaoFeaturedTaskSubmissionPage(
       {Key key, @required this.taskId, this.pageType = 0, this.comId})
@@ -25,11 +27,30 @@ class KeTaoFeaturedTaskSubmissionPage extends StatefulWidget {
 
   /// 页面类型 0 朋友圈任务提交 1任务重新提交
   int pageType;
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   @override
   _KeTaoFeaturedTaskSubmissionPageState createState() => _KeTaoFeaturedTaskSubmissionPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
   PickedFile _imageFile;
   dynamic _pickImageError;
@@ -50,7 +71,11 @@ class _KeTaoFeaturedTaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmi
       });
     }
   }
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   String imgUrl;
 
   _initData() async {

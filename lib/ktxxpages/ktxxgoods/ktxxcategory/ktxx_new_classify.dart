@@ -5,29 +5,92 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/category_bean_entity.dart';
+import 'package:star/ktxxmodels/ktxx_category_bean_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_list.dart';
 import 'package:star/ktxxpages/ktxxsearch/ktxx_search_page.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_message.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 // ignore: must_be_immutable
 class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
   @override
   _KeTaoFeaturedNewClassifyListPageState createState() => _KeTaoFeaturedNewClassifyListPageState();
 }
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
     with AutomaticKeepAliveClientMixin {
-  List<CategoryBeanData> leftListData;
-  List<CategoryBeanData> rightListData;
+  List<KeTaoFeaturedCategoryBeanData> leftListData;
+  List<KeTaoFeaturedCategoryBeanData> rightListData;
   ScrollController _leftScrollController;
   ScrollController _rightScrollController;
   final dataKey = new GlobalKey();
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   Future _initData(id) async {
-    List<CategoryBeanData> categoryList = await KeTaoFeaturedHttpManage.getCategoryList(id);
+    List<KeTaoFeaturedCategoryBeanData> categoryList = await KeTaoFeaturedHttpManage.getCategoryList(id);
     if (mounted) {
       setState(() {
         try {
@@ -208,7 +271,7 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
             width: ScreenUtil().setWidth(270),
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                CategoryBeanData category;
+                KeTaoFeaturedCategoryBeanData category;
                 if (leftListData != null) {
                   category = leftListData[index];
                 }
@@ -322,7 +385,7 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
       scrollDirection: Axis.vertical,
       controller: _rightScrollController,
       itemBuilder: (BuildContext context, int index) {
-        CategoryBeanData category;
+        KeTaoFeaturedCategoryBeanData category;
         if (leftListData != null) {
           category = leftListData[index];
           rightListData = leftListData[index].children;
@@ -366,7 +429,7 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
                     mainAxisSpacing: 8,
                     childAspectRatio: 3 / 4),
                 itemBuilder: (BuildContext context, int index) {
-                  CategoryBeanData category;
+                  KeTaoFeaturedCategoryBeanData category;
 
                   if (rightListData != null) {
                     category = rightListData[index];
@@ -468,7 +531,7 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
               childAspectRatio: 3 / 4),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              CategoryBeanData category;
+              KeTaoFeaturedCategoryBeanData category;
               if (rightListData != null) {
                 category = rightListData[index];
               }

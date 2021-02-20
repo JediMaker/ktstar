@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 const double _kTabHeight = 40.0;
 const double _kTextAndIconTabHeight = 72.0;
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
   /// Create an underline style selected tab indicator.
   ///
@@ -27,6 +29,11 @@ class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
 
   @override
   Decoration lerpFrom(Decoration a, double t) {
+    int SVG_ANGLETYPE_DEG = 2;
+    int SVG_ANGLETYPE_GRAD = 4;
+    int SVG_ANGLETYPE_RAD = 3;
+    int SVG_ANGLETYPE_UNKNOWN = 0;
+    int SVG_ANGLETYPE_UNSPECIFIED = 1;
     if (a is UnderlineTabIndicator) {
       return UnderlineTabIndicator(
         borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
@@ -49,6 +56,24 @@ class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
 
   @override
   _UnderlinePainter createBoxPainter([ VoidCallback onChanged ]) {
+//    Container(
+//      height: 6.0,
+//      width: 6.0,
+//      decoration: BoxDecoration(
+//        color: furnitureCateDisableColor,
+//        shape: BoxShape.circle,
+//      ),
+//    ),
+//    SizedBox(
+//    width: 5.0,
+//    ),
+//    Container(
+//    height: 5.0,
+//    width: 20.0,
+//    decoration: BoxDecoration(
+//    color: Colors.blue[700],
+//    borderRadius: BorderRadius.circular(10.0)),
+//    ),
     return _UnderlinePainter(this, onChanged);
   }
 }

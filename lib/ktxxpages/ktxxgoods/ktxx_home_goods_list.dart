@@ -6,11 +6,11 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
-import 'package:star/generated/json/home_goods_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_home_goods_list_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/home_goods_list_entity.dart';
-import 'package:star/ktxxmodels/home_pdd_category_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_home_pdd_goods_list.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_price_text.dart';
@@ -23,23 +23,86 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
 import 'ktxx_goods_detail.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomeGoodsListPage extends StatefulWidget {
   KeTaoFeaturedHomeGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
       : super(key: key);
   String title = "补贴商品";
   String categoryId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedHomeGoodsListPageState createState() => _KeTaoFeaturedHomeGoodsListPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedHomeGoodsListPageState extends State<KeTaoFeaturedHomeGoodsListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
   int _selectedTabIndex = 0;
   Widget pddcategoryTabsView;
-  List<HomePddCategoryDataCat> cats;
+  List<KeTaoFeaturedHomePddCategoryDataCat> cats;
   var _tabs;
   var _tabViews;
 
@@ -223,7 +286,7 @@ class _KeTaoFeaturedHomeGoodsListPageState extends State<KeTaoFeaturedHomeGoodsL
 
   var _priceColor = const Color(0xffCE0100);
 
-  Widget productItem({HomeGoodsListGoodsList item}) {
+  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -433,7 +496,7 @@ class _KeTaoFeaturedHomeGoodsListPageState extends State<KeTaoFeaturedHomeGoodsL
     );
   }
 
-  Widget productItem2({PddGoodsListDataList item}) {
+  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';

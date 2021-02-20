@@ -9,9 +9,9 @@ import 'package:fluwx/fluwx.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/home_icon_list_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_list_entity.dart';
-import 'package:star/ktxxmodels/pdd_home_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_icon_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_home_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_list.dart';
 import 'package:star/ktxxpages/ktxxrecharge/ktxx_recharge_list.dart';
@@ -26,24 +26,87 @@ import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFeaturedTabPage extends StatefulWidget {
-  PddHomeData pddHomeData;
-
+  KeTaoFeaturedPddHomeData pddHomeData;
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedFeaturedTabPageState createState() => _KeTaoFeaturedFeaturedTabPageState();
 
   KeTaoFeaturedFeaturedTabPage({Key key, this.pddHomeData}) : super(key: key);
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabPage>
     with AutomaticKeepAliveClientMixin {
   bool isFirstLoading = true;
-  List<HomeIconListIconList> _banner;
-  List<HomeIconListIconList> _ads;
-  HomeIconListIconList _buyTop;
-  HomeIconListIconList _buyLeft;
-  HomeIconListIconList _buyRight;
+  List<KeTaoFeaturedHomeIconListIconList> _banner;
+  List<KeTaoFeaturedHomeIconListIconList> _ads;
+  KeTaoFeaturedHomeIconListIconList _buyTop;
+  KeTaoFeaturedHomeIconListIconList _buyLeft;
+  KeTaoFeaturedHomeIconListIconList _buyRight;
   int page = 1;
   EasyRefreshController _refreshController;
 
@@ -360,7 +423,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     );
   }
 
-  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
+  List<KeTaoFeaturedHomeIconListIconList> iconList = List<KeTaoFeaturedHomeIconListIconList>();
 
   ///icon 操作列表
   Widget buildItemsLayout() {
@@ -390,7 +453,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
           children: iconList.asMap().keys.map((index) {
-            HomeIconListIconList item;
+            KeTaoFeaturedHomeIconListIconList item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -401,7 +464,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     );
   }
 
-  Widget iconItem(Color _itemsTextColor, {HomeIconListIconList item}) {
+  Widget iconItem(Color _itemsTextColor, {KeTaoFeaturedHomeIconListIconList item}) {
     String icon = '';
     String name = '';
     String type = '';
@@ -1097,7 +1160,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     );
   }
 
-  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
+  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList = List<KeTaoFeaturedPddGoodsListDataList>();
   var listId;
 
   ///热销商品
@@ -1115,7 +1178,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              PddGoodsListDataList item;
+              KeTaoFeaturedPddGoodsListDataList item;
               try {
                 item = pddGoodsList[index];
               } catch (e) {}
@@ -1132,7 +1195,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
 
   var _priceColor = const Color(0xffF93736);
 
-  Widget productItem2({PddGoodsListDataList item}) {
+  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';

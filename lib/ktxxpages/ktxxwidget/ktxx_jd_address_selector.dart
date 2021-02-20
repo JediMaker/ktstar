@@ -9,8 +9,10 @@ import 'package:flutter/services.dart';
 import 'dart:ui' as ui show window;
 
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/region_data_entity.dart';
-
+import 'package:star/ktxxmodels/ktxx_region_data_entity.dart';
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
   final String title;
   final Function(String province, String city, String county, int provinceId,
@@ -22,7 +24,24 @@ class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
   final double itemTextFontSize;
 
   final TextStyle titleTextStyle;
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   KeTaoFeaturedJDAddressDialog(
       {Key key,
       @required this.onSelected,
@@ -37,7 +56,9 @@ class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
   @override
   createState() => _KeTaoFeaturedJDAddressDialogState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedJDAddressDialogState extends State<KeTaoFeaturedJDAddressDialog>
     with TickerProviderStateMixin {
   int _index = 0;
@@ -48,12 +69,16 @@ class _KeTaoFeaturedJDAddressDialogState extends State<KeTaoFeaturedJDAddressDia
   /// TabBar不能动态加载，所以初始化3个，其中两个文字置空，点击事件拦截住。
   List<Tab> myTabs = <Tab>[Tab(text: '请选择'), Tab(text: ''), Tab(text: '')];
 
-  List<RegionDataData> provinces = [];
-  List<RegionDataData> cities = [];
-  List<RegionDataData> counties = [];
-
+  List<KeTaoFeaturedRegionDataData> provinces = [];
+  List<KeTaoFeaturedRegionDataData> cities = [];
+  List<KeTaoFeaturedRegionDataData> counties = [];
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   /// 当前列表数据
-  List<RegionDataData> mList = [];
+  List<KeTaoFeaturedRegionDataData> mList = [];
 
   /// 三级联动选择的position
   var _positions = [0, 0, 0];

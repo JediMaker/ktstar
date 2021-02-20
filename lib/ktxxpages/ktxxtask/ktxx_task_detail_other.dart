@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/message_list_entity.dart';
-import 'package:star/ktxxmodels/task_detail_other_entity.dart';
+import 'package:star/ktxxmodels/ktxx_message_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_detail_other_entity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_gallery.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_other_submission.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
@@ -18,25 +18,50 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 
 import '../../ktxx_global_config.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
   String taskId;
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   KeTaoFeaturedTaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
       : super(key: key);
   final String title = "任务详情";
   int pageType;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedTaskDetailOtherPageState createState() => _KeTaoFeaturedTaskDetailOtherPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";
   int page = 1;
   bool isFirstLoading = true;
-  List<TaskDetailOtherDataDescJson> _descJsonList;
+  List<KeTaoFeaturedTaskDetailOtherDataDescJson> _descJsonList;
   String title = '';
   bool showBtn = true;
 
@@ -136,7 +161,7 @@ class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDeta
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      TaskDetailOtherDataDescJson listItem =
+                      KeTaoFeaturedTaskDetailOtherDataDescJson listItem =
                           _descJsonList[index];
                       return buildItemLayout(listItem: listItem, index: index);
                     },
@@ -347,7 +372,7 @@ class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDeta
     );
   }
 
-  buildItemLayout({TaskDetailOtherDataDescJson listItem, index}) {
+  buildItemLayout({KeTaoFeaturedTaskDetailOtherDataDescJson listItem, index}) {
     List<String> imgUrls = [];
     String stepIndexText = '${index + 1}';
     String stepDescText = '';

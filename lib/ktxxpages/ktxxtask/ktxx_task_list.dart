@@ -28,10 +28,10 @@ import 'package:star/ktxxbus/kt_my_event_bus.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/home_entity.dart';
-import 'package:star/ktxxmodels/home_goods_list_entity.dart';
-import 'package:star/ktxxmodels/home_icon_list_entity.dart';
-import 'package:star/ktxxmodels/user_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_icon_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_user_info_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxcategory/ktxx_classify.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_list.dart';
@@ -68,9 +68,11 @@ import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:star/ktxxmodels/home_pdd_category_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_my_tab.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///首页
 class KeTaoFeaturedTaskListPage extends StatefulWidget {
   KeTaoFeaturedTaskListPage({Key key}) : super(key: key);
@@ -79,28 +81,47 @@ class KeTaoFeaturedTaskListPage extends StatefulWidget {
   @override
   _KeTaoFeaturedTaskListPageState createState() => _KeTaoFeaturedTaskListPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final dataKey = new GlobalKey();
   String taskCompletedNum = "";
   String taskTotalNum = "";
   int bannerIndex = 0;
-  HomeEntity entity;
+  KeTaoFeaturedHomeEntity entity;
   TabController _tabController;
-  List<HomeIconListIconList> bannerList;
+  List<KeTaoFeaturedHomeIconListIconList> bannerList;
   List<Color> bannerColorList;
-  static List<HomeDataTaskListList> taskList;
-  static List<HomeDataTaskListList> taskVipList;
-  static List<HomeDataTaskListList> taskDiamondVipList;
-  List<HomeDataTaskList> taskListAll;
+  static List<KeTaoFeaturedHomeDataTaskListList> taskList;
+  static List<KeTaoFeaturedHomeDataTaskListList> taskVipList;
+  static List<KeTaoFeaturedHomeDataTaskListList> taskDiamondVipList;
+  List<KeTaoFeaturedHomeDataTaskList> taskListAll;
   SwiperController _swiperController;
   bool _isLoop = false;
   bool _isMarqueeLoop = false;
-  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
-  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
-  List<HomeIconListIconList> adList = List<HomeIconListIconList>();
-
+  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
+  List<KeTaoFeaturedHomeIconListIconList> iconList = List<KeTaoFeaturedHomeIconListIconList>();
+  List<KeTaoFeaturedHomeIconListIconList> adList = List<KeTaoFeaturedHomeIconListIconList>();
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
   var _tabIndexBeforeRefresh = 0;
@@ -137,13 +158,17 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     Container(),
   ];
   Widget pddcategoryTabsView;
-  List<HomePddCategoryDataCat> cats;
+  List<KeTaoFeaturedHomePddCategoryDataCat> cats;
 
   var _marqueeSwiperController = SwiperController();
 
   var _tabs;
   int _selectedTabIndex = 0;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
 //分类页签
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
@@ -480,7 +505,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   ///
   /// 确认账户信息是否绑定手机号以及微信授权
   static checkUserBind({bool isTaskWall = false}) async {
-    UserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    KeTaoFeaturedUserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await KeTaoFeaturedHttpManage.getUserInfo();
@@ -651,7 +676,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   }
 
   ///广告单元
-  Widget buildAdWidget(HomeIconListIconList item, int index) {
+  Widget buildAdWidget(KeTaoFeaturedHomeIconListIconList item, int index) {
     String icon = '';
     String name = '';
     String type = '';
@@ -1196,7 +1221,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: List.generate(goodsList.length, (index) {
-                        HomeGoodsListGoodsList item;
+                        KeTaoFeaturedHomeGoodsListGoodsList item;
                         try {
                           item = goodsList[index];
                         } catch (e) {}
@@ -1382,7 +1407,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
 
   var _priceColor = const Color(0xffe31735);
 
-  Widget productItem({HomeGoodsListGoodsList item}) {
+  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -1711,7 +1736,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: 16,
           children: iconList.asMap().keys.map((index) {
-            HomeIconListIconList item;
+            KeTaoFeaturedHomeIconListIconList item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -1722,7 +1747,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     );
   }
 
-  Widget iconItem(Color _itemsTextColor, {HomeIconListIconList item}) {
+  Widget iconItem(Color _itemsTextColor, {KeTaoFeaturedHomeIconListIconList item}) {
     String icon = '';
     String name = '';
     String type = '';
@@ -2481,7 +2506,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   }
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
-  Widget buildTaskItemLayout(context, HomeDataTaskListList taskItem, index) {
+  Widget buildTaskItemLayout(context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
     var bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgColor;
     var txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
     var category = '';
@@ -2685,7 +2710,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   }
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
-  Widget buildTaskItemLayout2(context, HomeDataTaskListList taskItem, index) {
+  Widget buildTaskItemLayout2(context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
     var bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgColor;
     var txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
     var category = '';
@@ -3067,7 +3092,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
 
 class TaskListTabView extends StatefulWidget {
   int taskType;
-  List<HomeDataTaskListList> taskList;
+  List<KeTaoFeaturedHomeDataTaskListList> taskList;
   String userType;
 
   @override
@@ -3084,11 +3109,11 @@ class _TaskListTabViewState extends State<TaskListTabView>
   String taskCompletedNum = "";
   String taskTotalNum = "";
   int bannerIndex = 0;
-  HomeEntity entity;
-  List<HomeIconListIconList> bannerList;
-  List<HomeDataTaskListList> taskList = List<HomeDataTaskListList>();
+  KeTaoFeaturedHomeEntity entity;
+  List<KeTaoFeaturedHomeIconListIconList> bannerList;
+  List<KeTaoFeaturedHomeDataTaskListList> taskList = List<KeTaoFeaturedHomeDataTaskListList>();
 
-  List<HomeDataTaskList> taskListAll;
+  List<KeTaoFeaturedHomeDataTaskList> taskListAll;
   String userType;
 
   ///是否是首个
@@ -3220,7 +3245,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   /// 确认账户信息是否绑定手机号以及微信授权
   checkUserBind({bool isTaskWall = false}) async {
-    UserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    KeTaoFeaturedUserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await KeTaoFeaturedHttpManage.getUserInfo();
@@ -3246,7 +3271,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
   }
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
-  Widget buildTaskItemLayout(context, HomeDataTaskListList taskItem, index) {
+  Widget buildTaskItemLayout(context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
     var bgColor = Color(0xffF32E43); // GlobalConfig.taskBtnBgColor;
     var txtColor = Colors.white; //GlobalConfig.taskBtnTxtColor;
     var category = '';

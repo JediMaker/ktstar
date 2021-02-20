@@ -5,20 +5,83 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/logistics_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_logistics_info_entity.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedOrderLogisticsTrackingPage extends StatefulWidget {
   KeTaoFeaturedOrderLogisticsTrackingPage({Key key, this.orderId}) : super(key: key);
   final String title = "物流跟踪";
   var orderId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedOrderLogisticsTrackingPageState createState() =>
       _KeTaoFeaturedOrderLogisticsTrackingPageState();
 }
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedOrderLogisticsTrackingPageState
     extends State<KeTaoFeaturedOrderLogisticsTrackingPage> {
   ///运单号
@@ -34,10 +97,10 @@ class _KeTaoFeaturedOrderLogisticsTrackingPageState
   var __deliveryStatusIconUrl;
   Color _activeColor = Color(0xff222222);
   Color _inactiveColor = Color(0xff999999);
-  List<LogisticsInfoDataExpressList> _deliveryList;
+  List<KeTaoFeaturedLogisticsInfoDataExpressList> _deliveryList;
 
-  List<LogisticsInfoDataExpressList> _expressList =
-      List<LogisticsInfoDataExpressList>();
+  List<KeTaoFeaturedLogisticsInfoDataExpressList> _expressList =
+      List<KeTaoFeaturedLogisticsInfoDataExpressList>();
 
   Future _initData({bool onlyChangeAddress = false}) async {
     EasyLoading.show();
@@ -57,12 +120,12 @@ class _KeTaoFeaturedOrderLogisticsTrackingPageState
               }
             }
             _expressList = result.data.expressList;
-            _deliveryList = List<LogisticsInfoDataExpressList>();
-            for (LogisticsInfoDataExpressList item in _expressList) {
+            _deliveryList = List<KeTaoFeaturedLogisticsInfoDataExpressList>();
+            for (KeTaoFeaturedLogisticsInfoDataExpressList item in _expressList) {
               if (!KeTaoFeaturedCommonUtils.isEmpty(item.xList)) {
                 for (var it = 0; it < item.xList.length; it++) {
-                  LogisticsInfoDataExpressList newItem =
-                      LogisticsInfoDataExpressList();
+                  KeTaoFeaturedLogisticsInfoDataExpressList newItem =
+                      KeTaoFeaturedLogisticsInfoDataExpressList();
                   newItem.time = item.xList[it].time;
                   newItem.desc = item.xList[it].subdesc;
                   newItem.type = item.type;
@@ -238,9 +301,9 @@ class _KeTaoFeaturedOrderLogisticsTrackingPageState
     String title = '';
     String time = '';
     String desc = '';
-    List<LogisticsInfoDataExpressListList> xList;
+    List<KeTaoFeaturedLogisticsInfoDataExpressListList> xList;
     try {
-      LogisticsInfoDataExpressList item = _deliveryList[index];
+      KeTaoFeaturedLogisticsInfoDataExpressList item = _deliveryList[index];
       logisticsStatus = item.type;
       title = item.title;
       time = item.time;
@@ -398,11 +461,11 @@ class _KeTaoFeaturedOrderLogisticsTrackingPageState
   }
 
   Widget buildChildTimelineTile(
-      List<LogisticsInfoDataExpressListList> xList, int index) {
+      List<KeTaoFeaturedLogisticsInfoDataExpressListList> xList, int index) {
     String time = '';
     String desc = '';
     try {
-      LogisticsInfoDataExpressListList item = xList[index];
+      KeTaoFeaturedLogisticsInfoDataExpressListList item = xList[index];
       time = item.time;
       desc = item.subdesc;
     } catch (e) {}

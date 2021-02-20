@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedDashedRect extends StatelessWidget {
   final Color color;
   final double strokeWidth;
@@ -8,7 +10,11 @@ class KeTaoFeaturedDashedRect extends StatelessWidget {
 
   KeTaoFeaturedDashedRect(
       {this.color = Colors.black, this.strokeWidth = 1.0, this.gap = 5.0});
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +28,24 @@ class KeTaoFeaturedDashedRect extends StatelessWidget {
     );
   }
 }
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
 class DashRectPainter extends CustomPainter {
   double strokeWidth;
   Color color;

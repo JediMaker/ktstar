@@ -6,31 +6,56 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/income_list_entity.dart';
-import 'package:star/ktxxmodels/task_record_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_income_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_record_list_entity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_other_submission.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_submission.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
   KeTaoFeaturedTaskRecordListPage({Key key}) : super(key: key);
   final String title = "任务提交记录";
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   @override
   _KeTaoFeaturedTaskRecordListPageState createState() => _KeTaoFeaturedTaskRecordListPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
   ///  任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<TaskRecordListDataList> _recordList;
-
+  List<KeTaoFeaturedTaskRecordListDataList> _recordList;
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   _initData() async {
-    TaskRecordListEntity result = await KeTaoFeaturedHttpManage.getTaskRecordList(page, 10);
+    KeTaoFeaturedTaskRecordListEntity result = await KeTaoFeaturedHttpManage.getTaskRecordList(page, 10);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -130,7 +155,7 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            TaskRecordListDataList listItem = _recordList[index];
+            KeTaoFeaturedTaskRecordListDataList listItem = _recordList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _recordList == null ? 0 : _recordList.length,
@@ -139,7 +164,7 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
     );
   }
 
-  buildItemLayout({TaskRecordListDataList listItem}) {
+  buildItemLayout({KeTaoFeaturedTaskRecordListDataList listItem}) {
     String title = "";
     String price = "";
     String status;

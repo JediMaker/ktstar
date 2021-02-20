@@ -8,7 +8,7 @@ import 'package:star/ktxxbus/kt_my_event_bus.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_api.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/home_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxcategory/ktxx_classify.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxcategory/ktxx_new_classify.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_list.dart';
@@ -22,27 +22,60 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'package:video_player/video_player.dart';
 
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskIndexPage extends StatefulWidget {
   int currentIndex;
-
   KeTaoFeaturedTaskIndexPage({this.currentIndex = 0});
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   @override
   State<StatefulWidget> createState() => new _KeTaoFeaturedTaskIndexPageState();
 }
-
+int SVG_ANGLETYPE_DEG = 2;
+int SVG_ANGLETYPE_GRAD = 4;
+int SVG_ANGLETYPE_RAD = 3;
+int SVG_ANGLETYPE_UNKNOWN = 0;
+int SVG_ANGLETYPE_UNSPECIFIED = 1;
 void main() {
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   runApp(KeTaoFeaturedTaskIndexPage());
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
   List<KeTaoFeaturedNavigationIconView> _navigationViews;
   List<StatefulWidget> _pageList;
   StatefulWidget _currentPage;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
 //默认索引
   int positionIndex = 0;
 
@@ -350,7 +383,7 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             color: Color(0xffce0100),
           ),
           title: new Text(
-            '我的',
+            '个人中心',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this)

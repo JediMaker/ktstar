@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/order_detail_entity.dart';
+import 'package:star/ktxxmodels/ktxx_order_detail_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_order_logistics_tracking.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxxreturn/ktxx_return_option.dart';
@@ -11,18 +11,81 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedOrderDetailPage extends StatefulWidget {
   KeTaoFeaturedOrderDetailPage({Key key, this.orderId}) : super(key: key);
   final String title = "订单详情";
   String orderId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedOrderDetailPageState createState() => _KeTaoFeaturedOrderDetailPageState();
 }
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailPage> {
-  OrderDetailEntity entity;
+  KeTaoFeaturedOrderDetailEntity entity;
   String orderStatus;
   String orderNum;
   String dateAdded;
@@ -43,7 +106,7 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
   String confirmTime;
   String sendName;
   String sendNumber;
-  List<OrderDetailDataGoodsList> goodsList;
+  List<KeTaoFeaturedOrderDetailDataGoodsList> goodsList;
 
   Future _initData({bool onlyChangeAddress = false}) async {
     EasyLoading.show();
@@ -645,7 +708,7 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
   Widget buildGoodsList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        OrderDetailDataGoodsList product = goodsList[index];
+        KeTaoFeaturedOrderDetailDataGoodsList product = goodsList[index];
         var itemTotalPrice = 0.0;
         try {
           itemTotalPrice =

@@ -10,20 +10,28 @@ import 'dart:io' as H;
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/wechat_payinfo_entity.dart';
-import 'package:star/ktxxmodels/vip_price_entity.dart';
+import 'package:star/ktxxmodels/ktxx_wechat_payinfo_entity.dart';
+import 'package:star/ktxxmodels/ktxx_vip_price_entity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_pay_result.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskOpenDiamondPage extends StatefulWidget {
   KeTaoFeaturedTaskOpenDiamondPage({Key key}) : super(key: key);
   final String title = "钻石会员权益";
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedTaskOpenDiamondPageState createState() => _KeTaoFeaturedTaskOpenDiamondPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> {
   String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
 
@@ -33,7 +41,24 @@ class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpen
   String oldPrice = "";
   String nowPrice = "";
   bool showOldPrice = false;
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   _initData() async {
     var result = await KeTaoFeaturedHttpManage.getVipPrice();
     if (result.status) {
@@ -449,7 +474,7 @@ class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpen
         });
   }
 
-  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
     /*  var h = H.HttpClient();
     h.badCertificateCallback = (cert, String host, int port) {
       return true;

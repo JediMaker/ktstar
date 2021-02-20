@@ -12,7 +12,9 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'ktxxpages/ktxxwidget/ktxx_common_localizations.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
 //
@@ -33,6 +35,9 @@ void main() {
     );
   };*/
 }
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -69,6 +74,26 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// _getRemoteConfig() async {
+//   if (remoteConfig == null) remoteConfig = await RemoteConfig.instance;
+//   final Map<String, dynamic> defaults = {
+//     "news": "[]",
+//     "survey": "",
+//   };
+//   await remoteConfig.setDefaults(defaults);
+//   await remoteConfig.fetch(expiration: const Duration(hours: 12));
+//   await remoteConfig.activateFetched();
+//   final String value = remoteConfig.getString('news');
+//   final String surval = remoteConfig.getString('survey');
+//   setState(() {
+//     announcements = List<Map<String, dynamic>>.from(json.decode(value))
+//         .map((data) => Announcement.fromMap(data))
+//         .toList();
+//     if(surval.isNotEmpty)
+//     survey =
+//         SurveyItem.fromMap(Map<String, dynamic>.from(json.decode(surval)));
+//   });
+// }
 ///过时的代码 已停用
 /*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);

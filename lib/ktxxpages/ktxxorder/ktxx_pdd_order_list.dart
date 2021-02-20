@@ -7,10 +7,10 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/message_list_entity.dart';
-import 'package:star/ktxxmodels/order_detail_entity.dart';
-import 'package:star/ktxxmodels/order_list_entity.dart';
-import 'package:star/ktxxmodels/phone_charge_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_message_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_order_detail_entity.dart';
+import 'package:star/ktxxmodels/ktxx_order_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_phone_charge_list_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_checkout_counter.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_free_queue_persional.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_detail.dart';
@@ -24,21 +24,84 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_order_logistics_tracking.dart';
 
 import '../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///拼多多订单列表（已弃用）
 class KeTaoFeaturedPddOrderListPage extends StatefulWidget {
   KeTaoFeaturedPddOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedPddOrderListPageState createState() => _KeTaoFeaturedPddOrderListPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<OrderListDataList> _orderList;
+  List<KeTaoFeaturedOrderListDataList> _orderList;
   String contactPhone = ""; //
   /*_initData() async {
     OrderListEntity result = await HttpManage.getOrderList(page, 10);
@@ -144,7 +207,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            OrderListDataList listItem = _orderList[index];
+            KeTaoFeaturedOrderListDataList listItem = _orderList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _orderList == null ? 0 : _orderList.length,
@@ -153,7 +216,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
     );
   }
 
-  buildItemLayout({OrderListDataList listItem}) {
+  buildItemLayout({KeTaoFeaturedOrderListDataList listItem}) {
     String createTime = "";
     String phoneNumber = "";
     String phoneMoney = "";
@@ -171,8 +234,8 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
     bool showBtn = true;
     String orderType;
     String orderId;
-    List<OrderListDataListGoodsList> goodsList =
-        List<OrderListDataListGoodsList>();
+    List<KeTaoFeaturedOrderListDataListGoodsList> goodsList =
+        List<KeTaoFeaturedOrderListDataListGoodsList>();
     createTime = listItem.createTime;
     phoneNumber = listItem.mobile;
     phoneMoney = listItem.faceMoney;
@@ -632,12 +695,12 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
     );
   }
 
-  Widget buildGoodsList(List<OrderListDataListGoodsList> goodsList) {
+  Widget buildGoodsList(List<KeTaoFeaturedOrderListDataListGoodsList> goodsList) {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          OrderListDataListGoodsList product = goodsList[index];
+          KeTaoFeaturedOrderListDataListGoodsList product = goodsList[index];
           return Column(
             children: <Widget>[
               GestureDetector(
@@ -773,7 +836,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
   }
 
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
-      OrderListDataListGoodsList goodsItem) {
+      KeTaoFeaturedOrderListDataListGoodsList goodsItem) {
     var imageUrl = '';
     var title = '';
     var saleMoney = '';

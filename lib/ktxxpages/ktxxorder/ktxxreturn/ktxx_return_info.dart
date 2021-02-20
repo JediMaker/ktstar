@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:star/ktxxmodels/order_detail_entity.dart';
+import 'package:star/ktxxmodels/ktxx_order_detail_entity.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../ktxx_global_config.dart';
@@ -12,23 +12,86 @@ import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_gallery.dart';
 import 'package:flutter/cupertino.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 ///退货详情
 class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
   KeTaoFeaturedReturnInfoPage({Key key, this.product}) : super(key: key);
   final String title = "退款详情";
-  OrderDetailDataGoodsList product;
+  KeTaoFeaturedOrderDetailDataGoodsList product;
 
   @override
   _KeTaoFeaturedReturnInfoPageState createState() => _KeTaoFeaturedReturnInfoPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
   var _topBoxBgColor = Color(0xffF32E43);
 
   var _requestDesc = '平台会在7个工作日内给您答复，如有疑问请咨询客服。';
   var _requestDescTitle = '请等待平台处理';
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   var _subDesc = '''平台同意，系统将退款给您。如若需要退换货物，请咨询客服退货地址，并请记录退货运单号。如平台拒绝，您可以去平台咨询客服。
   ''';
   var _subTitle = '您已成功发起退款/退货申请，请耐心等待商家处理';
@@ -724,7 +787,7 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
             )));
   }
 
-  OrderDetailDataGoodsList product;
+  KeTaoFeaturedOrderDetailDataGoodsList product;
 
   Container buildTopGoodsContainer() {
     return Container(

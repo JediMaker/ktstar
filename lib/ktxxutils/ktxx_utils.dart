@@ -12,12 +12,19 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_api.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/version_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_version_info_entity.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedUtils {
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   static double formatNum(double num, int postion) {
     /*if ((num.toString().length - num.toString().lastIndexOf(".") - 1) <
         postion) {
@@ -141,6 +148,7 @@ class KeTaoFeaturedUtils {
   static String url;
 
 //  https://www.jianshu.com/p/89f619c632dd
+///校验版本更新
   static checkAppVersion(BuildContext context,
       {bool checkDerictly = false}) async {
     /// 获取当前版本
@@ -169,6 +177,7 @@ class KeTaoFeaturedUtils {
         }
 
         ///华为审核中
+        ///
         if (KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
           if (checkDerictly) {
             ///直接检查更新时弹出
@@ -246,6 +255,29 @@ class KeTaoFeaturedUtils {
       print(e);
     }
   }
+   Map<String, Color> emumMap = const {
+    "Objective-C": Color(0xFF438EFF),
+    "Perl": Color(0xFF0298C3),
+    "Python": Color(0xFF0298C3),
+    "JavaScript": Color(0xFFF1E05A),
+    "PHP": Color(0xFF4F5D95),
+    "R": Color(0xFF188CE7),
+    "Lua": Color(0xFFC22D40),
+    "Scala": Color(0xFF020080),
+    "Swift": Color(0xFFFFAC45),
+    "Kotlin": Color(0xFFF18E33),
+    "Vue": Colors.black,
+    "Ruby": Color(0xFF701617),
+    "Shell": Color(0xFF89E051),
+    "TypeScript": Color(0xFF2B7489),
+    "C++": Color(0xFFF34B7D),
+    "CSS": Color(0xFF563C7C),
+    "Java": Color(0xFFB07219),
+    "C#": Color(0xFF178600),
+    "Go": Color(0xFF375EAB),
+    "Erlang": Color(0xFFB83998),
+    "C": Color(0xFF555555),
+  };
 
   static bool isVersionGreatThanLocal(
       String versionRemote, String clientVersion) {
@@ -297,7 +329,7 @@ class KeTaoFeaturedUtils {
 }
 
 Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
-    VersionInfoEntity versionInfo) {
+    KeTaoFeaturedVersionInfoEntity versionInfo) {
   final ThemeData theme = Theme.of(context);
 
   /*final TextStyle dialogTextStyle =

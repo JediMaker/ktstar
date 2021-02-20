@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/user_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_user_info_entity.dart';
 import 'package:star/ktxxpages/ktxxadress/ktxx_my_adress.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_free_queue_persional.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
@@ -36,16 +36,24 @@ import '../../ktxx_global_config.dart';
 import 'ktxx_fans_list.dart';
 import 'ktxx_income_list.dart';
 import 'ktxx_invitation_poster.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskMinePage extends StatefulWidget {
   KeTaoFeaturedTaskMinePage({Key key, this.userInfoData}) : super(key: key);
-  final String title = "我的";
-  UserInfoData userInfoData;
-
+  final String title = "个人中心";
+  KeTaoFeaturedUserInfoData userInfoData;
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedTaskMinePageState createState() => _KeTaoFeaturedTaskMinePageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
     with AutomaticKeepAliveClientMixin {
   var headUrl;
@@ -63,7 +71,24 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
   TextEditingController _dialogPhoneNumberController;
   TextEditingController _dialogNickNameController;
   TextEditingController _dialogWeChatNoController;
-
+//    Container(
+//height: 6.0,
+//width: 6.0,
+//decoration: BoxDecoration(
+//color: furnitureCateDisableColor,
+//shape: BoxShape.circle,
+//),
+//),
+//SizedBox(
+//width: 5.0,
+//),
+//Container(
+//height: 5.0,
+//width: 20.0,
+//decoration: BoxDecoration(
+//color: Colors.blue[700],
+//borderRadius: BorderRadius.circular(10.0)),
+//),
   var _totalAssetsAmount; //总资产金额
   var _availableCashAmount; // 可提现金额
   var _cashWithdrawal; //  已提现金额
@@ -83,10 +108,10 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
   String userType;
-  UserInfoEntity entity;
+  KeTaoFeaturedUserInfoEntity entity;
   Color _cardTextColor = Colors.white;
   Color _headBgColor = Color(0xffF93736);
-  UserInfoData _data;
+  KeTaoFeaturedUserInfoData _data;
 
   _initUserData() async {
     var result = await KeTaoFeaturedHttpManage.getUserInfo();
@@ -262,7 +287,7 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
           ]),
           brightness: Brightness.light,
           title: Text(
-            "我的",
+            "个人中心",
             /*style: TextStyle(
                 color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 fontSize: ScreenUtil().setSp(54)),*/

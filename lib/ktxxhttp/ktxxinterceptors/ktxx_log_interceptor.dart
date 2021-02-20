@@ -7,6 +7,9 @@ import 'package:star/ktxx_global_config.dart';
  * Created by guoshuyu
  * on 2019/3/23.
  */
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedLogsInterceptors extends InterceptorsWrapper {
   static List<Map> sHttpResponses = new List<Map>();
   static List<String> sResponsesHttpUrl = new List<String>();

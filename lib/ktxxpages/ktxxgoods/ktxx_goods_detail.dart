@@ -12,9 +12,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:ui' as ui show window;
 
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
-import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_goods_spec_info_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/goods_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_info_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_ensure_order.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_free_queue.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
@@ -24,26 +24,89 @@ import 'package:star/ktxxpages/ktxxwidget/ktxx_goods_select_choice.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_my_fractionpaginationbuilder.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
-import 'package:star/ktxxmodels/goods_spec_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_spec_info_entity.dart';
 
 import '../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsDetailPage extends StatefulWidget {
   var productId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   KeTaoFeaturedGoodsDetailPage({@required this.productId});
 
   @override
   _KeTaoFeaturedGoodsDetailPageState createState() => _KeTaoFeaturedGoodsDetailPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedGoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
   var _bgRedColor = const Color(0xffF32e43);
 
-  GoodsInfoEntity detailData;
+  KeTaoFeaturedGoodsInfoEntity detailData;
   var _salePrice = '';
   var _originalPrice = '';
   var _queueCount = '0';
@@ -63,7 +126,7 @@ class _KeTaoFeaturedGoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailP
       EasyLoading.show();
     } catch (e) {}
     try {
-      GoodsInfoEntity resultData =
+      KeTaoFeaturedGoodsInfoEntity resultData =
           await KeTaoFeaturedHttpManage.getProductDetails(widget.productId);
       if (resultData.status) {
         if (mounted) {
@@ -793,7 +856,7 @@ class _KeTaoFeaturedGoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailP
 //商品规格弹窗
 class DetailWindow extends StatefulWidget {
 //  GoodsDetailBeanEntity detailData; todo
-  GoodsInfoEntity detailData;
+  KeTaoFeaturedGoodsInfoEntity detailData;
   int type;
 
   DetailWindow({@required this.detailData, @required this.type});
@@ -811,7 +874,7 @@ class _DetailWindowState extends State<DetailWindow>
 
   ///选中的商品规格id
   var specId;
-  GoodsSpecInfoSpecInfo _specInfo;
+  KeTaoFeaturedGoodsSpecInfoSpecInfo _specInfo;
   var _defaultImgUrl = '';
   var _goodsName = '';
   var _goodsPrice = '';
@@ -1116,8 +1179,8 @@ class _DetailWindowState extends State<DetailWindow>
   }
 
   Widget buildSpecList() {
-    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
-        List<GoodsSpecInfoSpecInfoSpecItem>();
+    List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
     var _specPrice;
     try {
       _specItem = widget.detailData.data.specInfo.specItem;
@@ -1127,7 +1190,7 @@ class _DetailWindowState extends State<DetailWindow>
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          GoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
+          KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
           return Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.symmetric(
@@ -1202,7 +1265,7 @@ class _DetailWindowState extends State<DetailWindow>
   bool canSubmit = true;
 
   void checkSelectedData(
-      _specPrice, List<GoodsSpecInfoSpecInfoSpecItem> _specItem) {
+      _specPrice, List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem) {
     for (var index = 0; index < _specItem.length; index++) {
       if (!selectedMap.containsKey(index)) {
         for (var j = 0; j < _specItem[index].xList.length; j++) {
@@ -1218,8 +1281,8 @@ class _DetailWindowState extends State<DetailWindow>
     if (_specPrice.toString().contains(_indexTxt)) {
       try {
         canSubmit = true;
-        GoodsSpecInfoSpecInfoSpecPriceIds specInfo =
-            GoodsSpecInfoSpecInfoSpecPriceIds();
+        KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds specInfo =
+            KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds();
         goodsSpecInfoSpecInfoSpecPriceIdsFromJson(
             specInfo, _specPrice[_indexTxt]);
         _defaultImgUrl = specInfo.specImg;
@@ -1277,8 +1340,8 @@ class _DetailWindowState extends State<DetailWindow>
       _goodsPrice = widget.detailData.data.salePrice;
       _specInfo = widget.detailData.data.specInfo;
     } catch (e) {}
-    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
-        List<GoodsSpecInfoSpecInfoSpecItem>();
+    List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
     var _specPrice;
     try {
       _specItem = widget.detailData.data.specInfo.specItem;

@@ -8,13 +8,70 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/fans_list_entity.dart';
-import 'package:star/ktxxmodels/fans_total_entity.dart';
+import 'package:star/ktxxmodels/ktxx_fans_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_fans_total_entity.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFansListPage extends StatefulWidget {
   //是否代理商
   bool isAgent;
@@ -25,7 +82,9 @@ class KeTaoFeaturedFansListPage extends StatefulWidget {
   @override
   _KeTaoFeaturedFansListPageState createState() => _KeTaoFeaturedFansListPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedFansListPageState extends State<KeTaoFeaturedFansListPage>
     with TickerProviderStateMixin {
   ///粉丝类型  默认0全部  1vip会员 2普通会员 3体验会员
@@ -35,14 +94,18 @@ class _KeTaoFeaturedFansListPageState extends State<KeTaoFeaturedFansListPage>
   TabController _tabController;
   List<Widget> _tabViews;
   int _currentTabIndex = 0;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   ///会员总数量
   var _totalMembersNumber = "0";
   var _vipMembersNumber = "0";
   var _experienceMembersNumber = "0";
   var _ordinaryMembersNumber = "0";
   var _diamondMembersNumber = "0";
-  FansTotalDataAgentInfo _agentInfo;
+  KeTaoFeaturedFansTotalDataAgentInfo _agentInfo;
 
   _initFansTotalsData() async {
     var result = await KeTaoFeaturedHttpManage.getFansTotal();
@@ -412,7 +475,7 @@ class _FansTabViewState extends State<FansTabView> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<FansListDataList> _fansList;
+  List<KeTaoFeaturedFansListDataList> _fansList;
 
   _initData() async {
     var result = await KeTaoFeaturedHttpManage.getFansList(page, 10, holderType: widget.fansType);
@@ -487,7 +550,7 @@ class _FansTabViewState extends State<FansTabView> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            FansListDataList listItem = _fansList[index];
+            KeTaoFeaturedFansListDataList listItem = _fansList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _fansList == null ? 0 : _fansList.length,
@@ -496,7 +559,7 @@ class _FansTabViewState extends State<FansTabView> {
     );
   }
 
-  Widget buildItemLayout({FansListDataList listItem}) {
+  Widget buildItemLayout({KeTaoFeaturedFansListDataList listItem}) {
     String text = "";
     String headUrl;
     String nickName;

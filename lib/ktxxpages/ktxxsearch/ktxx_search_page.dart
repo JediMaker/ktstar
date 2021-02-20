@@ -7,10 +7,10 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:search_page/search_page.dart';
-import 'package:star/generated/json/home_goods_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_home_goods_list_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/home_goods_list_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
@@ -24,16 +24,79 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 /// This is a very simple class, used to
 /// demo the `SearchPage` package
 class Person {
   final String name, surname;
   final num age;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   Person(this.name, this.surname, this.age);
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedSearchGoodsPage extends StatefulWidget {
   KeTaoFeaturedSearchGoodsPage({Key key}) : super(key: key);
   final String title = "";
@@ -41,7 +104,9 @@ class KeTaoFeaturedSearchGoodsPage extends StatefulWidget {
   @override
   _KeTaoFeaturedSearchGoodsPageState createState() => _KeTaoFeaturedSearchGoodsPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
     with TickerProviderStateMixin {
   int _selectedTabIndex = 0;
@@ -688,7 +753,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     );
   }
 
-  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
+  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
 
   Widget buildSearchProductList() {
     if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
@@ -708,7 +773,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                HomeGoodsListGoodsList item;
+                KeTaoFeaturedHomeGoodsListGoodsList item;
                 try {
                   item = goodsList[index];
                 } catch (e) {}
@@ -724,7 +789,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     );
   }
 
-  Widget productItem({HomeGoodsListGoodsList item}) {
+  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -908,7 +973,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     );
   }
 
-  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
+  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList = List<KeTaoFeaturedPddGoodsListDataList>();
   var listId;
   bool _showSearchList = false;
 
@@ -935,7 +1000,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
-                    PddGoodsListDataList item;
+                    KeTaoFeaturedPddGoodsListDataList item;
                     try {
                       item = pddGoodsList[index];
                     } catch (e) {}
@@ -955,7 +1020,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
 
   var _priceColor = const Color(0xffF93736);
 
-  Widget productItem2({PddGoodsListDataList item}) {
+  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';

@@ -6,99 +6,99 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:star/generated/json/address_info_entity_helper.dart';
-import 'package:star/generated/json/address_list_entity_helper.dart';
-import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
-import 'package:star/generated/json/category_bean_entity_helper.dart';
-import 'package:star/generated/json/fans_list_entity_helper.dart';
-import 'package:star/generated/json/fans_total_entity_helper.dart';
-import 'package:star/generated/json/goods_info_entity_helper.dart';
-import 'package:star/generated/json/goods_queue_entity_helper.dart';
-import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
-import 'package:star/generated/json/home_entity_helper.dart';
-import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
-import 'package:star/generated/json/income_list_entity_helper.dart';
-import 'package:star/generated/json/login_entity_helper.dart';
-import 'package:star/generated/json/logistics_info_entity_helper.dart';
-import 'package:star/generated/json/message_list_entity_helper.dart';
-import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
-import 'package:star/generated/json/order_detail_entity_helper.dart';
-import 'package:star/generated/json/order_list_entity_helper.dart';
-import 'package:star/generated/json/pay_coupon_entity_helper.dart';
-import 'package:star/generated/json/pdd_goods_info_entity_helper.dart';
-import 'package:star/generated/json/pdd_goods_list_entity_helper.dart';
-import 'package:star/generated/json/pdd_home_entity_helper.dart';
-import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
-import 'package:star/generated/json/poster_entity_helper.dart';
-import 'package:star/generated/json/recharge_entity_helper.dart';
-import 'package:star/generated/json/region_data_entity_helper.dart';
-import 'package:star/generated/json/result_bean_entity_helper.dart';
-import 'package:star/generated/json/search_goods_list_entity_helper.dart';
-import 'package:star/generated/json/search_pdd_goods_list_entity_helper.dart';
-import 'package:star/generated/json/shareholder_income_list_entity_helper.dart';
-import 'package:star/generated/json/task_detail_entity_helper.dart';
-import 'package:star/generated/json/task_detail_other_entity_helper.dart';
-import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
-import 'package:star/generated/json/task_record_list_entity_helper.dart';
-import 'package:star/generated/json/task_share_entity_helper.dart';
-import 'package:star/generated/json/task_submit_info_entity_helper.dart';
-import 'package:star/generated/json/user_info_entity_helper.dart';
-import 'package:star/generated/json/version_info_entity_helper.dart';
-import 'package:star/generated/json/vip_price_entity_helper.dart';
-import 'package:star/generated/json/wechat_payinfo_entity_helper.dart';
-import 'package:star/generated/json/withdrawal_info_entity_helper.dart';
-import 'package:star/generated/json/withdrawal_user_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_address_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_address_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_alipay_payinfo_entity_helper.dart';
+import 'package:star/generated/json/ktxx_category_bean_entity_helper.dart';
+import 'package:star/generated/json/ktxx_fans_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_fans_total_entity_helper.dart';
+import 'package:star/generated/json/ktxx_goods_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_goods_queue_entity_helper.dart';
+import 'package:star/generated/json/ktxx_goods_queue_persional_entity_helper.dart';
+import 'package:star/generated/json/ktxx_home_entity_helper.dart';
+import 'package:star/generated/json/ktxx_home_pdd_category_entity_helper.dart';
+import 'package:star/generated/json/ktxx_income_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_login_entity_helper.dart';
+import 'package:star/generated/json/ktxx_logistics_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_message_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_micro_shareholder_entity_helper.dart';
+import 'package:star/generated/json/ktxx_order_detail_entity_helper.dart';
+import 'package:star/generated/json/ktxx_order_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_pay_coupon_entity_helper.dart';
+import 'package:star/generated/json/ktxx_pdd_goods_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_pdd_goods_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_pdd_home_entity_helper.dart';
+import 'package:star/generated/json/ktxx_phone_charge_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_poster_entity_helper.dart';
+import 'package:star/generated/json/ktxx_recharge_entity_helper.dart';
+import 'package:star/generated/json/ktxx_region_data_entity_helper.dart';
+import 'package:star/generated/json/ktxx_result_bean_entity_helper.dart';
+import 'package:star/generated/json/ktxx_search_goods_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_search_pdd_goods_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_shareholder_income_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_task_detail_entity_helper.dart';
+import 'package:star/generated/json/ktxx_task_detail_other_entity_helper.dart';
+import 'package:star/generated/json/ktxx_task_other_submit_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_task_record_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_task_share_entity_helper.dart';
+import 'package:star/generated/json/ktxx_task_submit_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_user_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_version_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_vip_price_entity_helper.dart';
+import 'package:star/generated/json/ktxx_wechat_payinfo_entity_helper.dart';
+import 'package:star/generated/json/ktxx_withdrawal_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_withdrawal_user_info_entity_helper.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_api.dart';
 import 'package:star/ktxxhttp/ktxxinterceptors/ktxx_error_interceptor.dart';
 import 'package:star/ktxxhttp/ktxxinterceptors/ktxx_header_interceptor.dart';
 import 'package:star/ktxxhttp/ktxxinterceptors/ktxx_log_interceptor.dart';
 import 'package:star/ktxxhttp/ktxxinterceptors/ktxx_token_interceptor.dart';
-import 'package:star/ktxxmodels/address_info_entity.dart';
-import 'package:star/ktxxmodels/alipay_payinfo_entity.dart';
-import 'package:star/ktxxmodels/category_bean_entity.dart';
-import 'package:star/ktxxmodels/fans_list_entity.dart';
-import 'package:star/ktxxmodels/fans_total_entity.dart';
-import 'package:star/ktxxmodels/goods_info_entity.dart';
-import 'package:star/ktxxmodels/goods_queue_entity.dart';
-import 'package:star/ktxxmodels/goods_queue_persional_entity.dart';
-import 'package:star/ktxxmodels/home_entity.dart';
-import 'package:star/ktxxmodels/home_pdd_category_entity.dart';
-import 'package:star/ktxxmodels/income_list_entity.dart';
-import 'package:star/ktxxmodels/logistics_info_entity.dart';
-import 'package:star/ktxxmodels/message_list_entity.dart';
-import 'package:star/ktxxmodels/micro_shareholder_entity.dart';
-import 'package:star/ktxxmodels/order_detail_entity.dart';
-import 'package:star/ktxxmodels/order_list_entity.dart';
-import 'package:star/ktxxmodels/pay_coupon_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_info_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_list_entity.dart';
-import 'package:star/ktxxmodels/pdd_home_entity.dart';
-import 'package:star/ktxxmodels/poster_entity.dart';
-import 'package:star/ktxxmodels/recharge_entity.dart';
-import 'package:star/ktxxmodels/region_data_entity.dart';
-import 'package:star/ktxxmodels/search_goods_list_entity.dart';
-import 'package:star/ktxxmodels/search_pdd_goods_list_entity.dart';
-import 'package:star/ktxxmodels/shareholder_income_list_entity.dart';
-import 'package:star/ktxxmodels/task_detail_entity.dart';
-import 'package:star/ktxxmodels/task_detail_other_entity.dart';
-import 'package:star/ktxxmodels/task_other_submit_info_entity.dart';
-import 'package:star/ktxxmodels/task_record_list_entity.dart';
-import 'package:star/ktxxmodels/task_share_entity.dart';
-import 'package:star/ktxxmodels/task_submit_info_entity.dart';
-import 'package:star/ktxxmodels/user_info_entity.dart';
-import 'package:star/ktxxmodels/wechat_payinfo_entity.dart';
-import 'package:star/ktxxmodels/withdrawal_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_address_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_alipay_payinfo_entity.dart';
+import 'package:star/ktxxmodels/ktxx_category_bean_entity.dart';
+import 'package:star/ktxxmodels/ktxx_fans_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_fans_total_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_queue_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_queue_persional_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
+import 'package:star/ktxxmodels/ktxx_income_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_logistics_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_message_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_micro_shareholder_entity.dart';
+import 'package:star/ktxxmodels/ktxx_order_detail_entity.dart';
+import 'package:star/ktxxmodels/ktxx_order_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pay_coupon_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_home_entity.dart';
+import 'package:star/ktxxmodels/ktxx_poster_entity.dart';
+import 'package:star/ktxxmodels/ktxx_recharge_entity.dart';
+import 'package:star/ktxxmodels/ktxx_region_data_entity.dart';
+import 'package:star/ktxxmodels/ktxx_search_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_search_pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_shareholder_income_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_detail_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_detail_other_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_other_submit_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_record_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_share_entity.dart';
+import 'package:star/ktxxmodels/ktxx_task_submit_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_user_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_wechat_payinfo_entity.dart';
+import 'package:star/ktxxmodels/ktxx_withdrawal_info_entity.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'ktxxinterceptors/ktxx_response_interceptor.dart';
-import 'package:star/ktxxmodels/result_bean_entity.dart';
-import 'package:star/ktxxmodels/login_entity.dart';
-import 'package:star/ktxxmodels/vip_price_entity.dart';
-import 'package:star/ktxxmodels/version_info_entity.dart';
-import 'package:star/ktxxmodels/phone_charge_list_entity.dart';
-import 'package:star/ktxxmodels/address_list_entity.dart';
-import 'package:star/ktxxmodels/withdrawal_user_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_result_bean_entity.dart';
+import 'package:star/ktxxmodels/ktxx_login_entity.dart';
+import 'package:star/ktxxmodels/ktxx_vip_price_entity.dart';
+import 'package:star/ktxxmodels/ktxx_version_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_phone_charge_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_address_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_withdrawal_user_info_entity.dart';
 import 'package:http_parser/http_parser.dart';
 
 void getHttp() async {
@@ -109,7 +109,9 @@ void getHttp() async {
     print(e);
   }
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHttpManage {
 //  prefs.setString("token", tokenBean.data.accessToken);
   static Dio dio = new Dio(BaseOptions(
@@ -176,7 +178,7 @@ class KeTaoFeaturedHttpManage {
   /// [type]    类型 1注册 2快速登录 3 其他，4设置密码
   ///
   /// 发送验证码
-  static Future<ResultBeanEntity> sendVerificationCode(
+  static Future<KeTaoFeaturedResultBeanEntity> sendVerificationCode(
       String phone, String type) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
@@ -191,7 +193,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var httpResult = ResultBeanEntity();
+    var httpResult = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(httpResult, extractData);
     return httpResult;
   }
@@ -202,7 +204,7 @@ class KeTaoFeaturedHttpManage {
   ///
   ///
   /// 发送修改支付密码验证码
-  static Future<ResultBeanEntity> sendPayPasswordModifyVerificationCode(
+  static Future<KeTaoFeaturedResultBeanEntity> sendPayPasswordModifyVerificationCode(
       String phone, String type) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
@@ -216,7 +218,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var httpResult = ResultBeanEntity();
+    var httpResult = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(httpResult, extractData);
     return httpResult;
   }
@@ -231,7 +233,7 @@ class KeTaoFeaturedHttpManage {
   /// [review_code]邀请码
   ///
   /// 注册
-  static Future<ResultBeanEntity> register(
+  static Future<KeTaoFeaturedResultBeanEntity> register(
       String phone, String smsCode, String password, String review_code) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
@@ -248,7 +250,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -262,7 +264,7 @@ class KeTaoFeaturedHttpManage {
   ///
   ///
   /// 修改密码
-  static Future<ResultBeanEntity> modifyPassword(
+  static Future<KeTaoFeaturedResultBeanEntity> modifyPassword(
       String phone, String smsCode, String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
@@ -278,7 +280,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -292,7 +294,7 @@ class KeTaoFeaturedHttpManage {
   ///
   ///
   /// 修改支付密码
-  static Future<ResultBeanEntity> modifyPayPassword(
+  static Future<KeTaoFeaturedResultBeanEntity> modifyPayPassword(
       String phone, String smsCode, String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
@@ -308,7 +310,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -321,7 +323,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 手机号验证码登录
   ///
-  static Future<LoginEntity> quickLogin(String phone, String smsCode) async {
+  static Future<KeTaoFeaturedLoginEntity> quickLogin(String phone, String smsCode) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["code"] = "$smsCode";
@@ -335,7 +337,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = LoginEntity();
+    var entity = KeTaoFeaturedLoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
@@ -352,7 +354,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 账号密码登录
   ///
-  static Future<LoginEntity> login(String phone, String password) async {
+  static Future<KeTaoFeaturedLoginEntity> login(String phone, String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["password"] = "$password";
@@ -366,7 +368,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = LoginEntity();
+    var entity = KeTaoFeaturedLoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
@@ -382,7 +384,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 快速登陆密码修改
   ///
-  static Future<ResultBeanEntity> changePassword(String password) async {
+  static Future<KeTaoFeaturedResultBeanEntity> changePassword(String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$password";
     paramsMap["uid"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
@@ -395,7 +397,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
@@ -410,7 +412,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 第三方登录
   ///
-  static Future<LoginEntity> wechatLogin(code) async {
+  static Future<KeTaoFeaturedLoginEntity> wechatLogin(code) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["code"] = "$code";
     paramsMap["register_id"] = "${KeTaoFeaturedGlobalConfig.getJpushRegistrationId()}";
@@ -423,7 +425,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = LoginEntity();
+    var entity = KeTaoFeaturedLoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
@@ -438,7 +440,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 绑定第三方
   ///
-  static Future<ResultBeanEntity> bindWechat(code) async {
+  static Future<KeTaoFeaturedResultBeanEntity> bindWechat(code) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["code"] = "$code";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -450,7 +452,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -460,7 +462,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 产生二维码
   ///
-  static Future<ResultBeanEntity> generateQRCode(String password) async {
+  static Future<KeTaoFeaturedResultBeanEntity> generateQRCode(String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["id"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -472,7 +474,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
@@ -484,7 +486,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取用户信息
   ///
-  static Future<UserInfoEntity> getUserInfo() async {
+  static Future<KeTaoFeaturedUserInfoEntity> getUserInfo() async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap["uid"] = "${GlobalConfig.prefs.getString("uid")}";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -494,7 +496,7 @@ class KeTaoFeaturedHttpManage {
       KeTaoFeaturedAPi.USER_INFO,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = UserInfoEntity();
+    var entity = KeTaoFeaturedUserInfoEntity();
     userInfoEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("userInfo", response.data.toString());
@@ -506,12 +508,12 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取邀请海报
   ///
-  static Future<PosterEntity> getInvitationPosters() async {
+  static Future<KeTaoFeaturedPosterEntity> getInvitationPosters() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.USER_SHARE,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = PosterEntity();
+    var entity = KeTaoFeaturedPosterEntity();
     posterEntityFromJson(entity, extractData);
     return entity;
   }
@@ -519,7 +521,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取首页信息
   ///
-  static Future<HomeEntity> getHomeInfo() async {
+  static Future<KeTaoFeaturedHomeEntity> getHomeInfo() async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap["token"] = "${GlobalConfig.getLoginInfo().token}";
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
@@ -533,7 +535,7 @@ class KeTaoFeaturedHttpManage {
 //    String jsonString = await rootBundle.loadString("static/files/data.json");
     final extractData = json.decode(response.data) as Map<String, dynamic>;
 //    final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = HomeEntity();
+    var entity = KeTaoFeaturedHomeEntity();
     homeEntityFromJson(entity, extractData);
     return entity;
   }
@@ -541,7 +543,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取充值列表
   ///
-  static Future<RechargeEntity> getRechargeList() async {
+  static Future<KeTaoFeaturedRechargeEntity> getRechargeList() async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap["token"] = "${GlobalConfig.getLoginInfo().token}";
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
@@ -555,7 +557,7 @@ class KeTaoFeaturedHttpManage {
 //    String jsonString = await rootBundle.loadString("static/files/data.json");
     final extractData = json.decode(response.data) as Map<String, dynamic>;
 //    final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = RechargeEntity();
+    var entity = KeTaoFeaturedRechargeEntity();
     rechargeEntityFromJson(entity, extractData);
     return entity;
   }
@@ -563,7 +565,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取vip价格信息
   ///
-  static Future<VipPriceEntity> getVipPrice() async {
+  static Future<KeTaoFeaturedVipPriceEntity> getVipPrice() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.SITE_VIP_PRICE,
     );
@@ -571,7 +573,7 @@ class KeTaoFeaturedHttpManage {
 //    String jsonString = await rootBundle.loadString("static/files/data.json");
     final extractData = json.decode(response.data) as Map<String, dynamic>;
 //    final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = VipPriceEntity();
+    var entity = KeTaoFeaturedVipPriceEntity();
     vipPriceEntityFromJson(entity, extractData);
     return entity;
   }
@@ -583,7 +585,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 绑定手机号码
   ///
-  static Future<ResultBeanEntity> bindPhone({tel, code = 12345}) async {
+  static Future<KeTaoFeaturedResultBeanEntity> bindPhone({tel, code = 12345}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
@@ -595,7 +597,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -607,7 +609,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 修改手机号码
   ///
-  static Future<ResultBeanEntity> modifyPhone({tel, code = 12345}) async {
+  static Future<KeTaoFeaturedResultBeanEntity> modifyPhone({tel, code = 12345}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
@@ -619,7 +621,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -627,12 +629,12 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取应用版本信息
   ///
-  static Future<VersionInfoEntity> getVersionInfo() async {
+  static Future<KeTaoFeaturedVersionInfoEntity> getVersionInfo() async {
     var response = await KeTaoFeaturedHttpManage.dio.post(
       KeTaoFeaturedAPi.SITE_VERSION,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = VersionInfoEntity();
+    var entity = KeTaoFeaturedVersionInfoEntity();
     versionInfoEntityFromJson(entity, extractData);
     if (entity.status) {
       switch (entity.data.wxLogin) {
@@ -679,7 +681,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 添加体验会员手机号码
   ///
-  static Future<ResultBeanEntity> addExperienceMemberPhone(
+  static Future<KeTaoFeaturedResultBeanEntity> addExperienceMemberPhone(
       {tel, code = 12345}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
@@ -692,7 +694,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -704,7 +706,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务提交
   ///
-  static Future<ResultBeanEntity> taskSubmit(taskId, imgId) async {
+  static Future<KeTaoFeaturedResultBeanEntity> taskSubmit(taskId, imgId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["img_id"] = "$imgId";
@@ -716,7 +718,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -728,7 +730,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务重新提交
   ///
-  static Future<ResultBeanEntity> taskReSubmit(comId, imgId, {remark}) async {
+  static Future<KeTaoFeaturedResultBeanEntity> taskReSubmit(comId, imgId, {remark}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["com_id"] = "$comId";
     paramsMap["img_id"] = "$imgId";
@@ -741,7 +743,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -752,7 +754,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务提交信息
   ///
-  static Future<TaskSubmitInfoEntity> getTaskSubmitInfo(taskId) async {
+  static Future<KeTaoFeaturedTaskSubmitInfoEntity> getTaskSubmitInfo(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -763,7 +765,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskSubmitInfoEntity();
+    var entity = KeTaoFeaturedTaskSubmitInfoEntity();
     taskSubmitInfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -775,7 +777,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务提交信息--其他任务类型
   ///
-  static Future<TaskOtherSubmitInfoEntity> getTaskOtherSubmitInfo(
+  static Future<KeTaoFeaturedTaskOtherSubmitInfoEntity> getTaskOtherSubmitInfo(
       taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
@@ -787,7 +789,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskOtherSubmitInfoEntity();
+    var entity = KeTaoFeaturedTaskOtherSubmitInfoEntity();
     taskOtherSubmitInfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -799,7 +801,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务重新提交信息
   ///
-  static Future<TaskSubmitInfoEntity> getTaskReSubmitInfo(taskId, comId) async {
+  static Future<KeTaoFeaturedTaskSubmitInfoEntity> getTaskReSubmitInfo(taskId, comId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["com_id"] = "$comId";
@@ -811,7 +813,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskSubmitInfoEntity();
+    var entity = KeTaoFeaturedTaskSubmitInfoEntity();
     taskSubmitInfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -824,7 +826,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务重新提交信息--其他任务类型
   ///
-  static Future<TaskOtherSubmitInfoEntity> getTaskOtherReSubmitInfo(
+  static Future<KeTaoFeaturedTaskOtherSubmitInfoEntity> getTaskOtherReSubmitInfo(
       taskId, comId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
@@ -837,7 +839,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskOtherSubmitInfoEntity();
+    var entity = KeTaoFeaturedTaskOtherSubmitInfoEntity();
     taskOtherSubmitInfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -849,7 +851,7 @@ class KeTaoFeaturedHttpManage {
   ///holderType 微股东类型
   /// 获取粉丝列表
   ///
-  static Future<FansListEntity> getFansList(page, pageSize,
+  static Future<KeTaoFeaturedFansListEntity> getFansList(page, pageSize,
       {type = "", holderType}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -864,7 +866,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = FansListEntity();
+    var entity = KeTaoFeaturedFansListEntity();
     fansListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -873,7 +875,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取粉丝数据汇总
   ///
-  static Future<FansTotalEntity> getFansTotal() async {
+  static Future<KeTaoFeaturedFansTotalEntity> getFansTotal() async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
@@ -883,7 +885,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = FansTotalEntity();
+    var entity = KeTaoFeaturedFansTotalEntity();
     fansTotalEntityFromJson(entity, extractData);
     return entity;
   }
@@ -897,7 +899,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// fasle 获取收益列表 true 获取提现列表
   ///
-  static Future<IncomeListEntity> getProfitList(page, pageSize,
+  static Future<KeTaoFeaturedIncomeListEntity> getProfitList(page, pageSize,
       {isWithdrawal = false}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -910,7 +912,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = IncomeListEntity();
+    var entity = KeTaoFeaturedIncomeListEntity();
     incomeListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -925,7 +927,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// fasle 获取微股东收益列表
   ///
-  static Future<IncomeListEntity> getHolderProfitList(page, pageSize,
+  static Future<KeTaoFeaturedIncomeListEntity> getHolderProfitList(page, pageSize,
       {profiType = 7}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -939,7 +941,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = IncomeListEntity();
+    var entity = KeTaoFeaturedIncomeListEntity();
     incomeListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -955,7 +957,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务提交列表
   ///
-  static Future<TaskRecordListEntity> getTaskRecordList(page, pageSize) async {
+  static Future<KeTaoFeaturedTaskRecordListEntity> getTaskRecordList(page, pageSize) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
@@ -967,7 +969,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskRecordListEntity();
+    var entity = KeTaoFeaturedTaskRecordListEntity();
     taskRecordListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -979,7 +981,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取消息列表
   ///
-  static Future<MessageListEntity> getMsgList(page, pageSize) async {
+  static Future<KeTaoFeaturedMessageListEntity> getMsgList(page, pageSize) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
@@ -991,7 +993,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = MessageListEntity();
+    var entity = KeTaoFeaturedMessageListEntity();
     messageListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1003,7 +1005,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取话费充值列表
   ///
-  static Future<PhoneChargeListEntity> getPhoneChargesList(
+  static Future<KeTaoFeaturedPhoneChargeListEntity> getPhoneChargesList(
       page, pageSize) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -1016,7 +1018,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = PhoneChargeListEntity();
+    var entity = KeTaoFeaturedPhoneChargeListEntity();
 
     phoneChargeListEntityFromJson(entity, extractData);
     return entity;
@@ -1030,7 +1032,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取订单列表
   ///
-  static Future<OrderListEntity> getOrderList(
+  static Future<KeTaoFeaturedOrderListEntity> getOrderList(
       page, pageSize, orderSource) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -1044,7 +1046,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = OrderListEntity();
+    var entity = KeTaoFeaturedOrderListEntity();
 
     orderListEntityFromJson(entity, extractData);
     return entity;
@@ -1057,7 +1059,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取提现列表
   ///
-  static Future<MessageListEntity> getWithdrawalList(page, pageSize) async {
+  static Future<KeTaoFeaturedMessageListEntity> getWithdrawalList(page, pageSize) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
@@ -1069,7 +1071,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = MessageListEntity();
+    var entity = KeTaoFeaturedMessageListEntity();
     messageListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1080,7 +1082,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务详情--朋友圈任务
   ///
-  static Future<TaskDetailEntity> getTaskDetail(taskId) async {
+  static Future<KeTaoFeaturedTaskDetailEntity> getTaskDetail(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1091,7 +1093,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskDetailEntity();
+    var entity = KeTaoFeaturedTaskDetailEntity();
     taskDetailEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1102,7 +1104,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务详情--非朋友圈任务
   ///
-  static Future<TaskDetailOtherEntity> getTaskDetailOther(taskId) async {
+  static Future<KeTaoFeaturedTaskDetailOtherEntity> getTaskDetailOther(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1113,7 +1115,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskDetailOtherEntity();
+    var entity = KeTaoFeaturedTaskDetailOtherEntity();
     taskDetailOtherEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1124,7 +1126,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务详情--微信链接分享
   ///
-  static Future<TaskShareEntity> getTaskDetailWechat(taskId) async {
+  static Future<KeTaoFeaturedTaskShareEntity> getTaskDetailWechat(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1135,7 +1137,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskShareEntity();
+    var entity = KeTaoFeaturedTaskShareEntity();
     taskShareEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1146,7 +1148,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务领取--朋友圈任务
   ///
-  static Future<TaskDetailEntity> taskReceive(taskId) async {
+  static Future<KeTaoFeaturedTaskDetailEntity> taskReceive(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1157,7 +1159,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskDetailEntity();
+    var entity = KeTaoFeaturedTaskDetailEntity();
     taskDetailEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1168,7 +1170,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务领取--非朋友圈任务
   ///
-  static Future<TaskDetailOtherEntity> taskReceiveOther(taskId) async {
+  static Future<KeTaoFeaturedTaskDetailOtherEntity> taskReceiveOther(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1179,7 +1181,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskDetailOtherEntity();
+    var entity = KeTaoFeaturedTaskDetailOtherEntity();
     taskDetailOtherEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1190,7 +1192,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务领取--微信链接分享
   ///
-  static Future<TaskShareEntity> taskReceiveWechat(taskId) async {
+  static Future<KeTaoFeaturedTaskShareEntity> taskReceiveWechat(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1201,7 +1203,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = TaskShareEntity();
+    var entity = KeTaoFeaturedTaskShareEntity();
     taskShareEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1212,7 +1214,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 检测支付是否成功
   ///
-  static Future<ResultBeanEntity> checkPayResult(payNo) async {
+  static Future<KeTaoFeaturedResultBeanEntity> checkPayResult(payNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["pay_no"] = "$payNo";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1223,7 +1225,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1234,7 +1236,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 绑定微信号
   ///
-  static Future<ResultBeanEntity> bindWeChatNo(weChatNo) async {
+  static Future<KeTaoFeaturedResultBeanEntity> bindWeChatNo(weChatNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["wx_no"] = "$weChatNo";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1245,7 +1247,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1256,7 +1258,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 修改微信号
   ///
-  static Future<ResultBeanEntity> modifyWeChatNo(weChatNo) async {
+  static Future<KeTaoFeaturedResultBeanEntity> modifyWeChatNo(weChatNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["wx_no"] = "$weChatNo";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1267,7 +1269,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1282,7 +1284,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getWechatPayInfo({pay_type, term}) async {
+  static Future<KeTaoFeaturedWechatPayinfoEntity> getWechatPayInfo({pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["pay_type"] = "$pay_type";
@@ -1295,7 +1297,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = WechatPayinfoEntity();
+    var entity = KeTaoFeaturedWechatPayinfoEntity();
     wechatPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1310,7 +1312,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取支付宝支付信息
   ///
-  static Future<AlipayPayinfoEntity> getAliPayInfo({pay_type, term}) async {
+  static Future<KeTaoFeaturedAlipayPayinfoEntity> getAliPayInfo({pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["pay_type"] = "$pay_type";
@@ -1323,7 +1325,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = AlipayPayinfoEntity();
+    var entity = KeTaoFeaturedAlipayPayinfoEntity();
     alipayPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1338,7 +1340,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微股东微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getMicroShareholdersWechatPayInfo(
+  static Future<KeTaoFeaturedWechatPayinfoEntity> getMicroShareholdersWechatPayInfo(
       {pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
@@ -1351,7 +1353,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = WechatPayinfoEntity();
+    var entity = KeTaoFeaturedWechatPayinfoEntity();
     wechatPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1366,7 +1368,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微股东支付宝支付信息
   ///
-  static Future<AlipayPayinfoEntity> getMicroShareholdersAliPayInfo(
+  static Future<KeTaoFeaturedAlipayPayinfoEntity> getMicroShareholdersAliPayInfo(
       {pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
@@ -1379,7 +1381,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = AlipayPayinfoEntity();
+    var entity = KeTaoFeaturedAlipayPayinfoEntity();
     alipayPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1391,7 +1393,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取话费充值微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getRechargeWeChatPayInfo(
+  static Future<KeTaoFeaturedWechatPayinfoEntity> getRechargeWeChatPayInfo(
       tel, rechargeId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
@@ -1405,7 +1407,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = WechatPayinfoEntity();
+    var entity = KeTaoFeaturedWechatPayinfoEntity();
     wechatPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1417,7 +1419,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取话费充值支付宝支付信息
   ///
-  static Future<AlipayPayinfoEntity> getRechargeAliPayInfo(
+  static Future<KeTaoFeaturedAlipayPayinfoEntity> getRechargeAliPayInfo(
       tel, rechargeId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
@@ -1431,7 +1433,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = AlipayPayinfoEntity();
+    var entity = KeTaoFeaturedAlipayPayinfoEntity();
     alipayPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1442,7 +1444,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品购买微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getGoodsPayWeChatPayInfo({orderId}) async {
+  static Future<KeTaoFeaturedWechatPayinfoEntity> getGoodsPayWeChatPayInfo({orderId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["order_id"] = "$orderId";
@@ -1454,7 +1456,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = WechatPayinfoEntity();
+    var entity = KeTaoFeaturedWechatPayinfoEntity();
     wechatPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1464,7 +1466,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品购买支付宝支付信息
   ///
-  static Future<AlipayPayinfoEntity> getGoodsPayAliPayInfo({orderId}) async {
+  static Future<KeTaoFeaturedAlipayPayinfoEntity> getGoodsPayAliPayInfo({orderId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["order_id"] = "$orderId";
@@ -1476,7 +1478,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = AlipayPayinfoEntity();
+    var entity = KeTaoFeaturedAlipayPayinfoEntity();
     alipayPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1486,7 +1488,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品购买余额支付信息
   ///
-  static Future<AlipayPayinfoEntity> getGoodsPayBalanceInfo(
+  static Future<KeTaoFeaturedAlipayPayinfoEntity> getGoodsPayBalanceInfo(
       {orderId, payPassword}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "3";
@@ -1500,7 +1502,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = AlipayPayinfoEntity();
+    var entity = KeTaoFeaturedAlipayPayinfoEntity();
     alipayPayinfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1511,7 +1513,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取话费充值优惠券信息
   ///
-  static Future<PayCouponEntity> getRechargeCoupon(payNo) async {
+  static Future<KeTaoFeaturedPayCouponEntity> getRechargeCoupon(payNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["pay_no"] = "$payNo";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1522,7 +1524,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = PayCouponEntity();
+    var entity = KeTaoFeaturedPayCouponEntity();
     payCouponEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1538,7 +1540,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 提现申请
   ///
-  static Future<ResultBeanEntity> withdrawalApplication(
+  static Future<KeTaoFeaturedResultBeanEntity> withdrawalApplication(
     type,
     txPrice,
     zfbName,
@@ -1557,7 +1559,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1568,7 +1570,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 上传图片
   ///
-  static Future<ResultBeanEntity> uploadImage(File image) async {
+  static Future<KeTaoFeaturedResultBeanEntity> uploadImage(File image) async {
     String imageId;
     String path = image.path;
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
@@ -1590,7 +1592,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1601,7 +1603,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 以字节数据上传图片
   ///
-  static Future<ResultBeanEntity> uploadImageWithBytes(
+  static Future<KeTaoFeaturedResultBeanEntity> uploadImageWithBytes(
       ByteData byteData) async {
     List<int> imageData = byteData.buffer.asUint8List();
     var name = 'ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis()}.jpg';
@@ -1623,7 +1625,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1631,7 +1633,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 刷新token
   ///
-  static Future<LoginEntity> referToken(RequestOptions request) async {
+  static Future<KeTaoFeaturedLoginEntity> referToken(RequestOptions request) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["refertoken"] = "${KeTaoFeaturedGlobalConfig.getLoginInfo().refertoken}";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1643,7 +1645,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = LoginEntity();
+    var entity = KeTaoFeaturedLoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
       KeTaoFeaturedGlobalConfig.prefs.setString("token", entity.data.token);
@@ -1654,31 +1656,31 @@ class KeTaoFeaturedHttpManage {
   }
 
   ///获取省市区区域数据
-  static Future<RegionDataEntity> getAddressAreaList() async {
+  static Future<KeTaoFeaturedRegionDataEntity> getAddressAreaList() async {
     var response = await KeTaoFeaturedHttpManage.dio.post(
       KeTaoFeaturedAPi.REGIONAL_ADDRESS_LIST,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
 
-    var entity = RegionDataEntity();
+    var entity = KeTaoFeaturedRegionDataEntity();
     regionDataEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///获取收货地址列表
-  static Future<AddressListEntity> getListOfAddresses() async {
+  static Future<KeTaoFeaturedAddressListEntity> getListOfAddresses() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.USER_ADDRESS,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
 
-    var entity = AddressListEntity();
+    var entity = KeTaoFeaturedAddressListEntity();
     addressListEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///修改收货地址
-  static Future<ResultBeanEntity> modifyShippingAddress(
+  static Future<KeTaoFeaturedResultBeanEntity> modifyShippingAddress(
       {String consignee,
       String mobile,
       province,
@@ -1707,13 +1709,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///添加收货地址
-  static Future<ResultBeanEntity> addShippingAddress(
+  static Future<KeTaoFeaturedResultBeanEntity> addShippingAddress(
       {String consignee,
       String mobile,
       province,
@@ -1740,13 +1742,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///删除收货地址
-  static Future<ResultBeanEntity> deleteShippingAddress(addressId) async {
+  static Future<KeTaoFeaturedResultBeanEntity> deleteShippingAddress(addressId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["addr_id"] = "$addressId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1757,13 +1759,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///收货地址详情
-  static Future<AddressInfoEntity> getShippingAddressDetail(addressId) async {
+  static Future<KeTaoFeaturedAddressInfoEntity> getShippingAddressDetail(addressId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["addr_id"] = "$addressId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1774,7 +1776,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = AddressInfoEntity();
+    var entity = KeTaoFeaturedAddressInfoEntity();
     addressInfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1785,7 +1787,7 @@ class KeTaoFeaturedHttpManage {
   static orderCheckoutX(String orderId) {}
 
   ///获取订单详情
-  static Future<OrderDetailEntity> orderDetail(orderId) async {
+  static Future<KeTaoFeaturedOrderDetailEntity> orderDetail(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["type"] = "all";
@@ -1798,13 +1800,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = OrderDetailEntity();
+    var entity = KeTaoFeaturedOrderDetailEntity();
     orderDetailEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///订单确认收货
-  static Future<ResultBeanEntity> orderConfirm(orderId) async {
+  static Future<KeTaoFeaturedResultBeanEntity> orderConfirm(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1815,13 +1817,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///提交订单
-  static Future<ResultBeanEntity> orderSubmit(orderId, needDeduct) async {
+  static Future<KeTaoFeaturedResultBeanEntity> orderSubmit(orderId, needDeduct) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["need_deduct"] = "$needDeduct";
@@ -1833,13 +1835,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///订单物流信息
-  static Future<LogisticsInfoEntity> getOrderLogisticsInfo(orderId) async {
+  static Future<KeTaoFeaturedLogisticsInfoEntity> getOrderLogisticsInfo(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1850,13 +1852,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    LogisticsInfoEntity entity = LogisticsInfoEntity();
+    KeTaoFeaturedLogisticsInfoEntity entity = KeTaoFeaturedLogisticsInfoEntity();
     logisticsInfoEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///获取商品详情
-  static Future<GoodsInfoEntity> getProductDetails(productId) async {
+  static Future<KeTaoFeaturedGoodsInfoEntity> getProductDetails(productId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$productId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1867,13 +1869,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = GoodsInfoEntity();
+    var entity = KeTaoFeaturedGoodsInfoEntity();
     goodsInfoEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///创建订单
-  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum,
+  static Future<KeTaoFeaturedResultBeanEntity> createOrder(String goodsId, goodsNum,
       {specId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$goodsId";
@@ -1887,13 +1889,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///订单切换收货地址
-  static Future<ResultBeanEntity> orderChangeBindAddress(
+  static Future<KeTaoFeaturedResultBeanEntity> orderChangeBindAddress(
       String orderId, addressId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
@@ -1906,13 +1908,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///商品排队列表
-  static Future<GoodsQueueEntity> getGoodsQueueList(String goodsId) async {
+  static Future<KeTaoFeaturedGoodsQueueEntity> getGoodsQueueList(String goodsId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$goodsId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1923,18 +1925,18 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = GoodsQueueEntity();
+    var entity = KeTaoFeaturedGoodsQueueEntity();
     goodsQueueEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///个人所有商品排队列表
-  static Future<GoodsQueuePersionalEntity> getGoodsQueuePersonalList() async {
+  static Future<KeTaoFeaturedGoodsQueuePersionalEntity> getGoodsQueuePersonalList() async {
     var response = await KeTaoFeaturedHttpManage.dio.post(
       KeTaoFeaturedAPi.QUEUE_MY,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = GoodsQueuePersionalEntity();
+    var entity = KeTaoFeaturedGoodsQueuePersionalEntity();
     goodsQueuePersionalEntityFromJson(entity, extractData);
     return entity;
   }
@@ -1946,7 +1948,7 @@ class KeTaoFeaturedHttpManage {
   ///
   ///
   ///
-  static Future<ResultBeanEntity> orderIsJoinQueue(
+  static Future<KeTaoFeaturedResultBeanEntity> orderIsJoinQueue(
       String orderId, String joinStatus) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
@@ -1959,36 +1961,36 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///获取提现用户信息
   ///
-  static Future<WithdrawalUserInfoEntity> getWithdrawalUserInfo() async {
+  static Future<KeTaoFeaturedWithdrawalUserInfoEntity> getWithdrawalUserInfo() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.USER_TX_USER,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = WithdrawalUserInfoEntity();
+    var entity = KeTaoFeaturedWithdrawalUserInfoEntity();
     withdrawalUserInfoEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///获取用户提现信息
   ///
-  static Future<WithdrawalInfoEntity> getWithdrawalInfo() async {
+  static Future<KeTaoFeaturedWithdrawalInfoEntity> getWithdrawalInfo() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.USER_TX_SUCCESS,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = WithdrawalInfoEntity();
+    var entity = KeTaoFeaturedWithdrawalInfoEntity();
     withdrawalInfoEntityFromJson(entity, extractData);
     return entity;
   }
 
-  static Future<ResultBeanEntity> setPayPassword(String currentPassword) async {
+  static Future<KeTaoFeaturedResultBeanEntity> setPayPassword(String currentPassword) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$currentPassword";
     paramsMap["re_password"] = "$currentPassword";
@@ -2000,13 +2002,13 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///修改余额支付密码
-  static Future<ResultBeanEntity> checkPayPassword(
+  static Future<KeTaoFeaturedResultBeanEntity> checkPayPassword(
       String currentPassword) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$currentPassword";
@@ -2018,14 +2020,14 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
 //
   ///获取商品列表
-  static Future<ResultBeanEntity> getGoodsList({cId = ''}) async {
+  static Future<KeTaoFeaturedResultBeanEntity> getGoodsList({cId = ''}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
@@ -2036,13 +2038,13 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
 
   ///  商品分类列表
-  static Future<List<CategoryBeanData>> getCategoryList(category_id) async {
+  static Future<List<KeTaoFeaturedCategoryBeanData>> getCategoryList(category_id) async {
     var formData = FormData();
     formData.fields..add(MapEntry("parent_category_id", "$category_id "));
 
@@ -2052,14 +2054,14 @@ class KeTaoFeaturedHttpManage {
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     print(response.data.toString());
-    CategoryBeanEntity dataBean = CategoryBeanEntity();
+    KeTaoFeaturedCategoryBeanEntity dataBean = KeTaoFeaturedCategoryBeanEntity();
     categoryBeanEntityFromJson(dataBean, extractData);
     return dataBean.data;
   }
 
   //
   ///申请成为微股东
-  static Future<ResultBeanEntity> applyToBecomeAMicroShareholder() async {
+  static Future<KeTaoFeaturedResultBeanEntity> applyToBecomeAMicroShareholder() async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "";
@@ -2069,7 +2071,7 @@ class KeTaoFeaturedHttpManage {
       KeTaoFeaturedAPi.USER_PARTNER,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2077,12 +2079,12 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取拼多多首页数据
   ///
-  static Future<PddHomeEntity> getPddHomeData() async {
+  static Future<KeTaoFeaturedPddHomeEntity> getPddHomeData() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.GOODS_PDD_HOME,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = PddHomeEntity();
+    var entity = KeTaoFeaturedPddHomeEntity();
     pddHomeEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2090,12 +2092,12 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取搜索热词
   ///
-  static Future<ResultBeanEntity> getHotSearchWords() async {
+  static Future<KeTaoFeaturedResultBeanEntity> getHotSearchWords() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.GOODS_HOT_WORDS,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2103,12 +2105,12 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取拼多多授权
   ///
-  static Future<ResultBeanEntity> getPddAuthorization() async {
+  static Future<KeTaoFeaturedResultBeanEntity> getPddAuthorization() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.GOODS_PIN_AUTH,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2117,12 +2119,12 @@ class KeTaoFeaturedHttpManage {
   /// 获取首页拼多多商品分类
   ///
   ///
-  static Future<HomePddCategoryEntity> getHomePagePddProductCategory() async {
+  static Future<KeTaoFeaturedHomePddCategoryEntity> getHomePagePddProductCategory() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.SIT_CATS,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = HomePddCategoryEntity();
+    var entity = KeTaoFeaturedHomePddCategoryEntity();
     homePddCategoryEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2137,7 +2139,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品搜索自营商品列表
   ///
-  static Future<SearchGoodsListEntity> getSearchedGoodsList(
+  static Future<KeTaoFeaturedSearchGoodsListEntity> getSearchedGoodsList(
     page, {
     pageSize = 20,
     keyword,
@@ -2155,7 +2157,7 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = SearchGoodsListEntity();
+    var entity = KeTaoFeaturedSearchGoodsListEntity();
     searchGoodsListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2170,7 +2172,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品搜索拼多多商品列表
   ///
-  static Future<SearchPddGoodsListEntity> getSearchedPddGoodsList(
+  static Future<KeTaoFeaturedSearchPddGoodsListEntity> getSearchedPddGoodsList(
     page, {
     pageSize = 20,
     keyword,
@@ -2188,7 +2190,7 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = SearchPddGoodsListEntity();
+    var entity = KeTaoFeaturedSearchPddGoodsListEntity();
     searchPddGoodsListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2203,7 +2205,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取拼多多商品列表
   ///
-  static Future<PddGoodsListEntity> getPddGoodsList(page,
+  static Future<KeTaoFeaturedPddGoodsListEntity> getPddGoodsList(page,
       {pageSize, listId = "", categoryId, type}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
@@ -2219,7 +2221,7 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = PddGoodsListEntity();
+    var entity = KeTaoFeaturedPddGoodsListEntity();
     pddGoodsListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2232,7 +2234,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取拼多多商品详情
   ///
-  static Future<PddGoodsInfoEntity> getPddGoodsInfo(
+  static Future<KeTaoFeaturedPddGoodsInfoEntity> getPddGoodsInfo(
       {gId, goodsSign, searchId = ""}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["g_id"] = "$gId";
@@ -2246,7 +2248,7 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = PddGoodsInfoEntity();
+    var entity = KeTaoFeaturedPddGoodsInfoEntity();
     pddGoodsInfoEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2255,14 +2257,14 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微股东权益详情
   ///
-  static Future<MicroShareholderEntity> getMicroShareHolderInfo() async {
+  static Future<KeTaoFeaturedMicroShareholderEntity> getMicroShareHolderInfo() async {
     Map paramsMap = Map<String, dynamic>();
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.USER_HOLDER_EXPLAIN,
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = MicroShareholderEntity();
+    var entity = KeTaoFeaturedMicroShareholderEntity();
     microShareholderEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2273,7 +2275,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微股东分红金明细
   ///
-  static Future<IncomeListEntity> getMicroShareHolderCoinList(
+  static Future<KeTaoFeaturedIncomeListEntity> getMicroShareHolderCoinList(
     page,
     pageSize,
   ) async {
@@ -2288,7 +2290,7 @@ class KeTaoFeaturedHttpManage {
       data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = IncomeListEntity();
+    var entity = KeTaoFeaturedIncomeListEntity();
     incomeListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2296,12 +2298,12 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取拼多多是否授权
   ///
-  static Future<ResultBeanEntity> getPddAuth() async {
+  static Future<KeTaoFeaturedResultBeanEntity> getPddAuth() async {
     var response = await KeTaoFeaturedHttpManage.dio.post(
       KeTaoFeaturedAPi.GOODS_IS_PIN_AUTH,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = ResultBeanEntity();
+    var entity = KeTaoFeaturedResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }

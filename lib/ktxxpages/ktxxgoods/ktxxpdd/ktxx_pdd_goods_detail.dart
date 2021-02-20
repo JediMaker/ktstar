@@ -10,11 +10,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
+import 'package:star/generated/json/ktxx_goods_spec_info_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/goods_info_entity.dart';
-import 'package:star/ktxxmodels/goods_spec_info_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_goods_spec_info_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_info_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_ensure_order.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_index.dart';
@@ -27,26 +27,89 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../ktxx_global_config.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPddGoodsDetailPage extends StatefulWidget {
   var productId;
   var gId;
   var goodsSign;
   var searchId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   KeTaoFeaturedPddGoodsDetailPage({this.productId, this.gId, this.searchId, this.goodsSign});
 
   @override
   _KeTaoFeaturedPddGoodsDetailPageState createState() => _KeTaoFeaturedPddGoodsDetailPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
   var _bgRedColor = const Color(0xffF32e43);
-  PddGoodsInfoData pddDetailData;
-  GoodsInfoEntity detailData;
+  KeTaoFeaturedPddGoodsInfoData pddDetailData;
+  KeTaoFeaturedGoodsInfoEntity detailData;
   var _salePrice = '';
   var _discountPrice = '';
   var _originalPrice = '';
@@ -78,7 +141,7 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
     try {
       EasyLoading.show();
     } catch (e) {}
-    PddGoodsInfoEntity pddResultData = await KeTaoFeaturedHttpManage.getPddGoodsInfo(
+    KeTaoFeaturedPddGoodsInfoEntity pddResultData = await KeTaoFeaturedHttpManage.getPddGoodsInfo(
         gId: widget.gId,
         goodsSign: widget.goodsSign,
         searchId: widget.searchId);
@@ -643,7 +706,7 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                                     ),
                                     child: CachedNetworkImage(
                                       imageUrl:
-                                          "https://img.pddpic.com/favicon.ico",
+                                          "https://www.pinduoduo.com/homeFavicon.ico",
                                       width: ScreenUtil().setWidth(138),
                                       height: ScreenUtil().setWidth(138),
                                       fit: BoxFit.fill,
@@ -1069,7 +1132,7 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
 //商品规格弹窗
 class DetailWindow extends StatefulWidget {
 //  GoodsDetailBeanEntity detailData; todo
-  GoodsInfoEntity detailData;
+  KeTaoFeaturedGoodsInfoEntity detailData;
   int type;
 
   DetailWindow({@required this.detailData, @required this.type});
@@ -1087,7 +1150,7 @@ class _DetailWindowState extends State<DetailWindow>
 
   ///选中的商品规格id
   var specId;
-  GoodsSpecInfoSpecInfo _specInfo;
+  KeTaoFeaturedGoodsSpecInfoSpecInfo _specInfo;
   var _defaultImgUrl = '';
   var _goodsName = '';
   var _goodsPrice = '';
@@ -1387,8 +1450,8 @@ class _DetailWindowState extends State<DetailWindow>
   }
 
   Widget buildSpecList() {
-    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
-        List<GoodsSpecInfoSpecInfoSpecItem>();
+    List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
     var _specPrice;
     try {
       _specItem = widget.detailData.data.specInfo.specItem;
@@ -1398,7 +1461,7 @@ class _DetailWindowState extends State<DetailWindow>
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          GoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
+          KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
           return Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.symmetric(
@@ -1473,7 +1536,7 @@ class _DetailWindowState extends State<DetailWindow>
   bool canSubmit = true;
 
   void checkSelectedData(
-      _specPrice, List<GoodsSpecInfoSpecInfoSpecItem> _specItem) {
+      _specPrice, List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem) {
     for (var index = 0; index < _specItem.length; index++) {
       if (!selectedMap.containsKey(index)) {
         for (var j = 0; j < _specItem[index].xList.length; j++) {
@@ -1489,8 +1552,8 @@ class _DetailWindowState extends State<DetailWindow>
     if (_specPrice.toString().contains(_indexTxt)) {
       try {
         canSubmit = true;
-        GoodsSpecInfoSpecInfoSpecPriceIds specInfo =
-            GoodsSpecInfoSpecInfoSpecPriceIds();
+        KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds specInfo =
+            KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds();
         goodsSpecInfoSpecInfoSpecPriceIdsFromJson(
             specInfo, _specPrice[_indexTxt]);
         _defaultImgUrl = specInfo.specImg;
@@ -1548,8 +1611,8 @@ class _DetailWindowState extends State<DetailWindow>
       _goodsPrice = widget.detailData.data.salePrice;
       _specInfo = widget.detailData.data.specInfo;
     } catch (e) {}
-    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
-        List<GoodsSpecInfoSpecInfoSpecItem>();
+    List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
     var _specPrice;
     try {
       _specItem = widget.detailData.data.specInfo.specItem;

@@ -7,11 +7,11 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
-import 'package:star/generated/json/home_goods_list_entity_helper.dart';
+import 'package:star/generated/json/ktxx_home_goods_list_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
-import 'package:star/ktxxmodels/home_goods_list_entity.dart';
-import 'package:star/ktxxmodels/home_pdd_category_entity.dart';
-import 'package:star/ktxxmodels/pdd_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
+import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
+import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_price_text.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_dashed_rect.dart';
@@ -23,24 +23,87 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../ktxx_global_config.dart';
 import 'ktxx_goods_detail.dart';
-
+//  return Column(
+//  mainAxisSize: MainAxisSize.min,
+//  children: <Widget>[
+//  Stack(
+//  overflow: Overflow.visible,
+//  children: <Widget>[
+//  GestureDetector(
+//  onTap: () {
+//  if (catg.name == listProfileCategories[0].name)
+//  Navigator.pushNamed(context, '/furniture');
+//  },
+//  child: Container(
+//  padding: EdgeInsets.all(10.0),
+//  decoration: BoxDecoration(
+//  shape: BoxShape.circle,
+//  color: profile_info_categories_background,
+//  ),
+//  child: Icon(
+//  catg.icon,
+//  // size: 20.0,
+//  ),
+//  ),
+//  ),
+//  catg.number > 0
+//  ? Positioned(
+//  right: -5.0,
+//  child: Container(
+//  padding: EdgeInsets.all(5.0),
+//  decoration: BoxDecoration(
+//  color: profile_info_background,
+//  shape: BoxShape.circle,
+//  ),
+//  child: Text(
+//  catg.number.toString(),
+//  style: TextStyle(
+//  color: Colors.white,
+//  fontSize: 10.0,
+//  ),
+//  ),
+//  ),
+//  )
+//      : SizedBox(),
+//  ],
+//  ),
+//  SizedBox(
+//  height: 10.0,
+//  ),
+//  Text(
+//  catg.name,
+//  style: TextStyle(
+//  fontSize: 13.0,
+//  ),
+//  )
+//  ],
+//  );
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomePddGoodsListPage extends StatefulWidget {
   KeTaoFeaturedHomePddGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
       : super(key: key);
   String title = "补贴商品";
   String categoryId;
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedHomePddGoodsListPageState createState() => _KeTaoFeaturedHomePddGoodsListPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePddGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   int count = 1;
   bool isFirstLoading = true;
-  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
-  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
+  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
+  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList = List<KeTaoFeaturedPddGoodsListDataList>();
   var listId;
   var categoryId;
   var type;
@@ -242,7 +305,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              HomeGoodsListGoodsList item;
+              KeTaoFeaturedHomeGoodsListGoodsList item;
               try {
                 item = goodsList[index];
               } catch (e) {}
@@ -269,7 +332,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            PddGoodsListDataList item;
+            KeTaoFeaturedPddGoodsListDataList item;
             try {
               item = pddGoodsList[index];
             } catch (e) {}
@@ -285,7 +348,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
 
   var _priceColor = const Color(0xffCE0100);
 
-  Widget productItem({HomeGoodsListGoodsList item}) {
+  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -495,7 +558,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
     );
   }
 
-  Widget productItem2({PddGoodsListDataList item}) {
+  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';

@@ -6,15 +6,23 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedWithdrawalResultPage extends StatefulWidget {
   KeTaoFeaturedWithdrawalResultPage({Key key}) : super(key: key);
   final String title = "";
-
+  int SVG_ANGLETYPE_DEG = 2;
+  int SVG_ANGLETYPE_GRAD = 4;
+  int SVG_ANGLETYPE_RAD = 3;
+  int SVG_ANGLETYPE_UNKNOWN = 0;
+  int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
   _KeTaoFeaturedWithdrawalResultPageState createState() => _KeTaoFeaturedWithdrawalResultPageState();
 }
-
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedWithdrawalResultPageState extends State<KeTaoFeaturedWithdrawalResultPage> {
   var _withdrawalPrice = '';
 
@@ -25,6 +33,22 @@ class _KeTaoFeaturedWithdrawalResultPageState extends State<KeTaoFeaturedWithdra
   var _withdrawalAccount = '';
 
   var _accountBalance = '';
+/*
+  List<ProfileMenu> lampList = [
+    ProfileMenu(title: 'Landscape', subTitle: '384'),
+    ProfileMenu(title: 'Discus Pendant', subTitle: '274'),
+    ProfileMenu(title: 'Mushroom Lamp', subTitle: '374'),
+    ProfileMenu(title: 'Titanic Pendant', subTitle: '562'),
+    ProfileMenu(title: 'Torn Lighting', subTitle: '105'),
+    ProfileMenu(title: 'Abduction Pendant', subTitle: '365'),
+  ];
+  const List profileItems = [
+    {'count': '846', 'name': 'Collect'},
+    {'count': '51', 'name': 'Attention'},
+    {'count': '267', 'name': 'Track'},
+    {'count': '39', 'name': 'Coupons'},
+  ];
+*/
 
   _initData() async {
     var result = await KeTaoFeaturedHttpManage.getWithdrawalInfo();
