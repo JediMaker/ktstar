@@ -1011,7 +1011,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
           Visibility(
             visible:
             KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
-                !KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') ||
+                KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') ||
                     Platform.isIOS
                 ? false
                 : true,
