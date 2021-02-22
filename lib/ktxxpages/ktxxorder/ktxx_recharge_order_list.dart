@@ -490,7 +490,9 @@ class _KeTaoFeaturedRechargeOrderListPageState
                           await KeTaoFeaturedHttpManage.chargeRefund(orderId);
                       if (result.status) {
                         KeTaoFeaturedCommonUtils.showToast("申请已提交");
+                        page = 1;
                         _initData();
+                        _refreshController.finishLoad(noMore: false);
                       } else {
                         KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
                       }
@@ -525,7 +527,9 @@ class _KeTaoFeaturedRechargeOrderListPageState
                           await KeTaoFeaturedHttpManage.chargeRetry(orderId);
                       if (result.status) {
                         KeTaoFeaturedCommonUtils.showToast("申请已提交");
+                        page = 1;
                         _initData();
+                        _refreshController.finishLoad(noMore: false);
                       } else {
                         KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
                       }
