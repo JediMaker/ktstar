@@ -268,7 +268,7 @@ class _KeTaoFeaturedRechargeOrderListPageState
             refundMsg = '退款已完成';
           } else if (refundStatus == "3") {
             orderStatusText = "话费退款";
-            var newMsgTxt="已拒绝,$refundMsg";
+            var newMsgTxt = "已拒绝,$refundMsg";
             refundMsg = newMsgTxt;
           }
 
@@ -489,6 +489,7 @@ class _KeTaoFeaturedRechargeOrderListPageState
                       var result =
                           await KeTaoFeaturedHttpManage.chargeRefund(orderId);
                       if (result.status) {
+                        KeTaoFeaturedCommonUtils.showToast("申请已提交");
                         _initData();
                       } else {
                         KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
@@ -523,6 +524,7 @@ class _KeTaoFeaturedRechargeOrderListPageState
                       var result =
                           await KeTaoFeaturedHttpManage.chargeRetry(orderId);
                       if (result.status) {
+                        KeTaoFeaturedCommonUtils.showToast("申请已提交");
                         _initData();
                       } else {
                         KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
