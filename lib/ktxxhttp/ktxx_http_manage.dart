@@ -147,7 +147,7 @@ class KeTaoFeaturedHttpManage {
     dio.interceptors.add(new KeTaoFeaturedTokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (KeTaoFeaturedGlobalConfig.isRelease) {
+    if (!KeTaoFeaturedGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
