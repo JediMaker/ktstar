@@ -127,6 +127,12 @@ class _KeTaoFeaturedHomePagePageState extends State<KeTaoFeaturedHomePagePage> {
           break;
       }
       if (Platform.isAndroid) {
+        if (mounted) {
+          setState(() {
+            rootView = KeTaoFeaturedTaskListPage();
+//            rootView = KeTaoFeaturedHomeIndexPage();
+          });
+        }
         if (versionInfo.data.whCheck) {
           //华为应用市场上架审核中
           KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
@@ -148,7 +154,7 @@ class _KeTaoFeaturedHomePagePageState extends State<KeTaoFeaturedHomePagePage> {
 //        });
         if (mounted) {
           setState(() {
-            if (!KeTaoFeaturedGlobalConfig.iosCheck) {
+            if (KeTaoFeaturedGlobalConfig.iosCheck) {
               rootView = KeTaoFeaturedHomeIndexPage();
             } else {
               rootView = KeTaoFeaturedTaskListPage();
