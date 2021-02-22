@@ -214,6 +214,18 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     'https://alipic.lanhuapp.com/xdfc53f58b-9934-42c6-9750-3335c149bceb', //母婴
     'https://alipic.lanhuapp.com/xd487dbe14-b368-4d68-a5b6-868db055b792', //更多
   ];
+  var iconNameList = [
+    '拼多多', //星选
+    '话费中心', //话费
+    '优惠加油', //加油
+    '美团红包', //美团
+    '饿了么', //饿了
+    '美食生鲜', //食品
+    '日用百货', //百货
+    '洗护美容', //美妆
+    '孕妈专区', //母婴
+    '更多优惠', //更多
+  ];
 
   var _tabs;
   int _selectedTabIndex = 0;
@@ -979,7 +991,8 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     try {
 //      icon = item.icon;
       icon = iconUrlList[index];
-      name = item.name;
+//      name = item.name;
+      name = iconNameList[index];
       type = item.type;
       appId = item.appId;
       appPath = item.appPath;
@@ -1064,8 +1077,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
           }
           if (name.contains('饿') && Platform.isIOS) {
             if (isUnderReview) {
-              path =
-                  'https://s.click.ele.me/Je507ru';
+              path = 'https://s.click.ele.me/Je507ru';
               KeTaoFeaturedUtils.launchUrl(path);
               return;
             }
@@ -1564,7 +1576,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
             top: ScreenUtil().setHeight(30),
             left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
             right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
-       /* padding: EdgeInsets.all(
+        /* padding: EdgeInsets.all(
           ScreenUtil().setWidth(32),
         ),*/
         decoration: BoxDecoration(
