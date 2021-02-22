@@ -90,6 +90,12 @@ orderListDataListFromJson(KeTaoFeaturedOrderListDataList data, Map<String, dynam
 	if (json['order_source'] != null) {
 		data.orderSource = json['order_source']?.toString();
 	}
+	if (json['refund_status'] != null) {
+		data.refundStatus = json['refund_status']?.toString();
+	}
+	if (json['refund_msg'] != null) {
+		data.refundMsg = json['refund_msg']?.toString();
+	}
 	if (json['mobile'] != null) {
 		data.mobile = json['mobile']?.toString();
 	}
@@ -116,6 +122,8 @@ Map<String, dynamic> orderListDataListToJson(KeTaoFeaturedOrderListDataList enti
 	}
 	data['face_money'] = entity.faceMoney;
 	data['order_source'] = entity.orderSource;
+	data['refund_msg'] = entity.refundMsg;
+	data['refund_status'] = entity.refundStatus;
 	data['mobile'] = entity.mobile;
 	data['phone'] = entity.phone;
 	data['coin'] = entity.coin;

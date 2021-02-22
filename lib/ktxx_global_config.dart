@@ -129,7 +129,7 @@ class KeTaoFeaturedGlobalConfig {
   static bool displayThirdLoginInformation = false;
   /// ios是否审核上架中
   static bool get iosCheck =>
-      prefs.getBool("isIosUnderReview");
+      prefs.containsKey("isIosUnderReview")? prefs.getBool("isIosUnderReview"):false;
 
   /// 渠道类型
   static String get chanelType => getChanelType(chanelType: 1);

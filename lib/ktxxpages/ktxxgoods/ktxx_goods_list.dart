@@ -15,6 +15,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
 import 'ktxx_goods_detail.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -74,7 +75,8 @@ import 'ktxx_goods_detail.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsListPage extends StatefulWidget {
-  KeTaoFeaturedGoodsListPage({Key key, this.title = "分红商品", this.categoryId = ''})
+  KeTaoFeaturedGoodsListPage(
+      {Key key, this.title = "分红商品", this.categoryId = ''})
       : super(key: key);
   String title = "分红商品";
   String categoryId;
@@ -83,22 +85,29 @@ class KeTaoFeaturedGoodsListPage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   @override
-  _KeTaoFeaturedGoodsListPageState createState() => _KeTaoFeaturedGoodsListPageState();
+  _KeTaoFeaturedGoodsListPageState createState() =>
+      _KeTaoFeaturedGoodsListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage> {
+class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
+    with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
+  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList =
+      List<KeTaoFeaturedHomeGoodsListGoodsList>();
 
   _initData() async {
-    var result = await KeTaoFeaturedHttpManage.getGoodsList(cId: widget.categoryId);
+    var result =
+        await KeTaoFeaturedHttpManage.getGoodsList(cId: widget.categoryId);
     if (result.status) {
-      KeTaoFeaturedHomeGoodsListEntity entity = KeTaoFeaturedHomeGoodsListEntity();
+      KeTaoFeaturedHomeGoodsListEntity entity =
+          KeTaoFeaturedHomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
       if (mounted) {
         setState(() {
@@ -194,8 +203,9 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
           _initData();
         }
       },
-      emptyWidget:
-          goodsList == null || goodsList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+      emptyWidget: goodsList == null || goodsList.length == 0
+          ? KeTaoFeaturedNoDataPage()
+          : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -413,4 +423,8 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
           )),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

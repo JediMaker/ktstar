@@ -24,6 +24,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_order_logistics_tracking.dart';
 
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -83,7 +84,8 @@ import '../../ktxx_global_config.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedRechargeOrderListPage extends StatefulWidget {
-  KeTaoFeaturedRechargeOrderListPage({Key key, this.orderSource}) : super(key: key);
+  KeTaoFeaturedRechargeOrderListPage({Key key, this.orderSource})
+      : super(key: key);
   final String title = "我的订单";
   String orderSource = "1";
   int SVG_ANGLETYPE_DEG = 2;
@@ -91,13 +93,17 @@ class KeTaoFeaturedRechargeOrderListPage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   @override
-  _KeTaoFeaturedRechargeOrderListPageState createState() => _KeTaoFeaturedRechargeOrderListPageState();
+  _KeTaoFeaturedRechargeOrderListPageState createState() =>
+      _KeTaoFeaturedRechargeOrderListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechargeOrderListPage>
+class _KeTaoFeaturedRechargeOrderListPageState
+    extends State<KeTaoFeaturedRechargeOrderListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
@@ -109,7 +115,8 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
       return;
     }
     KeTaoFeaturedOrderListEntity result =
-        await KeTaoFeaturedHttpManage.getOrderList(page, 10, widget.orderSource);
+        await KeTaoFeaturedHttpManage.getOrderList(
+            page, 10, widget.orderSource);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -169,8 +176,9 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
           _initData();
         }
       },
-      emptyWidget:
-          _orderList == null || _orderList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+      emptyWidget: _orderList == null || _orderList.length == 0
+          ? KeTaoFeaturedNoDataPage()
+          : null,
       slivers: <Widget>[buildCenter()],
     ) // This trailing comma makes auto-formatting nicer for build methods.
         );
@@ -205,6 +213,8 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
     Color btnTxtColor = Color(0xFF222222); //
     Color btnTxtBorderColor = Color(0xFF999999); //
     String orderStatus = "";
+    String refundStatus = "0";
+    String refundMsg = "";
     String orderStatusText = "";
     bool showContact = false;
     bool showBtn = true;
@@ -225,6 +235,8 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
       orderType = listItem.orderType;
       orderId = listItem.orderId;
       orderStatus = listItem.status;
+      refundStatus = listItem.refundStatus;
+      refundMsg = listItem.refundMsg;
       contactPhone = listItem.phone;
       coin = listItem.coin;
       goodsList = listItem.goodsList;
@@ -246,7 +258,20 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
           break;
         case "9":
           orderStatusText = "充值失败";
-          showContact = true;
+          if (refundStatus == "0") {
+            showContact = true;
+          } else if (refundStatus == "1") {
+            orderStatusText = "话费退款";
+            refundMsg = '退款审核中';
+          } else if (refundStatus == "2") {
+            orderStatusText = "话费退款";
+            refundMsg = '退款已完成';
+          } else if (refundStatus == "3") {
+            orderStatusText = "话费退款";
+            var newMsgTxt="已拒绝,$refundMsg";
+            refundMsg = newMsgTxt;
+          }
+
           break;
         case "0":
           orderStatusText = "充值中";
@@ -371,8 +396,8 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
                               child: Text(''),
                             )
                           : List.generate(goodsList.length, (index) {
-                              return buildRechargeItemRow(
-                                  phoneNumber, phoneMoney, goodsList[index]);
+                              return buildRechargeItemRow(phoneNumber,
+                                  phoneMoney, goodsList[index], refundMsg);
                             }),
                     );
                     break;
@@ -456,14 +481,84 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
             ),
             Visibility(
               visible: showContact,
-              child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "联系我们：$contactPhone",
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(42),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      var result =
+                          await KeTaoFeaturedHttpManage.chargeRefund(orderId);
+                      if (result.status) {
+                        _initData();
+                      } else {
+                        KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                      }
+                    },
+                    child: Container(
+                      width: ScreenUtil().setWidth(235),
+                      height: ScreenUtil().setHeight(77),
+                      margin: EdgeInsets.only(
+                        right: ScreenUtil().setWidth(20),
+                      ),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(39))),
+                          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                              color: btnTxtBorderColor,
+                              width: 0.5)),
+                      child: Text(
+                        //状态：
+                        "申请退款",
+                        style: TextStyle(
+                          color: btnTxtColor,
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
                     ),
-                  )),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      var result =
+                          await KeTaoFeaturedHttpManage.chargeRetry(orderId);
+                      if (result.status) {
+                        _initData();
+                      } else {
+                        KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                      }
+                    },
+                    child: Container(
+                      width: ScreenUtil().setWidth(235),
+                      height: ScreenUtil().setHeight(77),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(39))),
+                          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                              color: btnTxtBorderColor,
+                              width: 0.5)),
+                      child: Text(
+                        //状态：
+                        "重新充值",
+                        style: TextStyle(
+                          color: btnTxtColor,
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
+                    ),
+                  ),
+                  /*Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "联系我们：$contactPhone",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      )),*/
+                ],
+              ),
             ),
             Visibility(
               visible: !showContact,
@@ -528,10 +623,10 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
                         } else if (orderType == "2") {
                           switch (orderStatus) {
                             case "1":
-                              if (Platform.isIOS) {
+                              /* if (Platform.isIOS) {
                                 KeTaoFeaturedCommonUtils.showIosPayDialog();
                                 return;
-                              }
+                              }*/
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
                                   KeTaoFeaturedCheckOutCounterPage(
@@ -605,7 +700,8 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
             ),
           ),
           onPressed: () async {
-            var result = await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "2");
+            var result =
+                await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "2");
             /* if (!CommonUtils.isEmpty(result.errMsg)) {
               CommonUtils.showToast(result.errMsg);
             }*/
@@ -622,13 +718,15 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
             ),
           ),
           onPressed: () async {
-            var result = await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "1");
+            var result =
+                await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "1");
             if (!KeTaoFeaturedCommonUtils.isEmpty(result.errMsg)) {
               KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
             Navigator.pop(context, false);
             if (result.status) {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedFreeQueuePersonalPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedFreeQueuePersonalPage());
             }
           },
         ),
@@ -690,7 +788,8 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
     );
   }
 
-  Widget buildGoodsList(List<KeTaoFeaturedOrderListDataListGoodsList> goodsList) {
+  Widget buildGoodsList(
+      List<KeTaoFeaturedOrderListDataListGoodsList> goodsList) {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -829,7 +928,7 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
   }
 
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
-      KeTaoFeaturedOrderListDataListGoodsList goodsItem) {
+      KeTaoFeaturedOrderListDataListGoodsList goodsItem, String refundMsg) {
     var imageUrl = '';
     var title = '';
     var saleMoney = '';
@@ -889,6 +988,28 @@ class _KeTaoFeaturedRechargeOrderListPageState extends State<KeTaoFeaturedRechar
                     fontSize: ScreenUtil().setSp(30),
                     color: Color(0xFF999999),
                   ),
+                ),
+              ),
+              Visibility(
+                visible: !KeTaoFeaturedCommonUtils.isEmpty(refundMsg),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: ScreenUtil().setHeight(12),
+                    ),
+                    Container(
+                      child: Text(
+                        //状态：
+                        "退款描述：$refundMsg",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(30),
+                          color: Color(0xFF999999),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

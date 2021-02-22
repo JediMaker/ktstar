@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +13,9 @@ import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_home_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxcategory/ktxx_classify.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxcategory/ktxx_new_classify.dart';
+import 'package:star/ktxxpages/ktxxhomenew/ktxx_home_new_index.dart';
+import 'package:star/ktxxpages/ktxxhomenew/ktxx_home_page.dart';
+import 'package:star/ktxxpages/ktxxorder/ktxx_order_list.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_list.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_mine.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_mine_page.dart';
@@ -27,7 +32,9 @@ import 'package:video_player/video_player.dart';
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskIndexPage extends StatefulWidget {
   int currentIndex;
+
   KeTaoFeaturedTaskIndexPage({this.currentIndex = 0});
+
 //    Container(
 //height: 6.0,
 //width: 6.0,
@@ -49,11 +56,13 @@ class KeTaoFeaturedTaskIndexPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _KeTaoFeaturedTaskIndexPageState();
 }
+
 int SVG_ANGLETYPE_DEG = 2;
 int SVG_ANGLETYPE_GRAD = 4;
 int SVG_ANGLETYPE_RAD = 3;
 int SVG_ANGLETYPE_UNKNOWN = 0;
 int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
 void main() {
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
@@ -62,6 +71,7 @@ void main() {
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   runApp(KeTaoFeaturedTaskIndexPage());
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -76,41 +86,9 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
 //默认索引
   int positionIndex = 0;
-
-  _initVersionData() async {
-    var versionInfo = await KeTaoFeaturedHttpManage.getVersionInfo();
-    if (versionInfo.status) {
-      switch (versionInfo.data.wxLogin) {
-        case "1": //不显示
-          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = false;
-
-          if (mounted) {
-            setState(() {});
-          }
-          break;
-
-        case "2": //显示
-          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = true;
-          if (mounted) {
-            setState(() {});
-          }
-          break;
-      }
-      if (versionInfo.data.whCheck) {
-        //华为应用市场上架审核中
-        KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
-      } else {
-        KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
-      }
-      if (!KeTaoFeaturedGlobalConfig.isAgreePrivacy && KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
-        Future.delayed(Duration(milliseconds: 30), () {
-          showPrivacyDialog(context);
-        });
-      }
-    }
-  }
 
   ///展示隐私弹窗
   ///
@@ -144,7 +122,8 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                                   KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                       context,
                                       KeTaoFeaturedWebViewPage(
-                                        initialUrl: KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
+                                        initialUrl: KeTaoFeaturedAPi
+                                            .AGREEMENT_SERVICES_URL,
                                         showActions: false,
                                         title: "服务协议",
                                       ));
@@ -152,7 +131,8 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                                 child: Text(
                                   "《服务协议》",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                      color: KeTaoFeaturedGlobalConfig
+                                          .taskHeadColor,
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
@@ -165,7 +145,8 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                                   KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                       context,
                                       KeTaoFeaturedWebViewPage(
-                                        initialUrl: KeTaoFeaturedAPi.AGREEMENT_PRIVACY_URL,
+                                        initialUrl: KeTaoFeaturedAPi
+                                            .AGREEMENT_PRIVACY_URL,
                                         showActions: false,
                                         title: "隐私政策",
                                       ));
@@ -173,7 +154,8 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                                 child: Text(
                                   "《隐私政策》",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                      color: KeTaoFeaturedGlobalConfig
+                                          .taskHeadColor,
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
@@ -206,7 +188,8 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                   child: new FlatButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        KeTaoFeaturedGlobalConfig.prefs.setBool("isAgreePrivacy", true);
+                        KeTaoFeaturedGlobalConfig.prefs
+                            .setBool("isAgreePrivacy", true);
                       },
                       child: new Text(
                         '同意',
@@ -224,8 +207,8 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
 
   @override
   void initState() {
-    KeTaoFeaturedUtils.checkAppVersion(context);
-    _initVersionData();
+//    KeTaoFeaturedUtils.checkAppVersion(context);
+//    _initVersionData();
     super.initState();
 
     _currentIndex = widget.currentIndex;
@@ -270,6 +253,7 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         width: 1125, height: 2436, allowFontScaling: false);
+
     return KeyboardDismissOnTap(
       child: Scaffold(
         body: WillPopScope(
@@ -303,64 +287,69 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   Scaffold buildHomeWidget() {
     _navigationViews = <KeTaoFeaturedNavigationIconView>[
       new KeTaoFeaturedNavigationIconView(
-          icon: SvgPicture.asset(
+          /*  icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_home.svg',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
-          ),
-/*
+          ),*/
           icon: CachedNetworkImage(
             imageUrl:
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
-                'https://alipic.lanhuapp.com/xde9009b67-5da3-4cb5-ae5e-0a6adaf47e9e',
-            width: ScreenUtil().setWidth(74),
-            height: ScreenUtil().setWidth(76),
+//                'https://alipic.lanhuapp.com/xde9009b67-5da3-4cb5-ae5e-0a6adaf47e9e',
+                'https://alipic.lanhuapp.com/xdd80e7e5c-243b-411f-8454-9a48f25853d2',
+            width: ScreenUtil().setWidth(63),
+            height: ScreenUtil().setWidth(65),
           ),
-*/
-          activeIcon: SvgPicture.asset(
+          /*  activeIcon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_home_sel.svg',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
-          ),
-/*
+          ),*/
           activeIcon: CachedNetworkImage(
             imageUrl:
+                'https://alipic.lanhuapp.com/xde2a3868a-a068-45f6-ac12-81660cc87de6',
+/*
+            imageUrl:
                 'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
-            width: ScreenUtil().setWidth(74),
-            height: ScreenUtil().setWidth(76),
-          ),
 */
+            width: ScreenUtil().setWidth(63),
+            height: ScreenUtil().setWidth(65),
+          ),
           title: new Text(
             '首页',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
       new KeTaoFeaturedNavigationIconView(
-          icon: SvgPicture.asset(
+          /* icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_category.svg',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
-          ),
-/*
+          ),*/
           icon: CachedNetworkImage(
             imageUrl:
-                'https://alipic.lanhuapp.com/xda87fe7ad-f66f-4d6a-a344-5bfcd0664c21',
-            width: ScreenUtil().setWidth(75),
-            height: ScreenUtil().setWidth(75),
+                'https://alipic.lanhuapp.com/xd12d320c0-c1d3-419f-badd-8e4cd2059fc4',
+            width: ScreenUtil().setWidth(65),
+            height: ScreenUtil().setWidth(65),
           ),
-*/
-          activeIcon: SvgPicture.asset(
+          /*activeIcon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_category_sel.svg',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
+          ),*/
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xdc0651a96-9f94-404c-accc-7a96d4b0afdc',
+            width: ScreenUtil().setWidth(65),
+            height: ScreenUtil().setWidth(65),
           ),
           title: new Text(
             '分类',
@@ -368,7 +357,39 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
           ),
           vsync: this),
       new KeTaoFeaturedNavigationIconView(
-          icon: SvgPicture.asset(
+          /* icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
+          ),*/
+          icon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xd22d681ac-1152-4270-972e-06f8bddc8ff1',
+            width: ScreenUtil().setWidth(65),
+            height: ScreenUtil().setWidth(65),
+          ),
+          /*activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
+          ),*/
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xdbd0f90f1-6c3e-4e00-90ca-b3e0280c9aed',
+            width: ScreenUtil().setWidth(65),
+            height: ScreenUtil().setWidth(65),
+          ),
+          title: new Text(
+            '订单',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this),
+      new KeTaoFeaturedNavigationIconView(
+          /*icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_mine.svg',
             width: ScreenUtil().setWidth(56),
@@ -381,6 +402,25 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             width: ScreenUtil().setWidth(56),
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
+          ),*/
+          icon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xd170fdd91-f0f6-4126-a795-c27c5450f5b9',
+            width: ScreenUtil().setWidth(65),
+            height: ScreenUtil().setWidth(65),
+          ),
+          /*activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
+          ),*/
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xdbfc72cc5-8334-440b-ad19-76f4327a2d7a',
+            width: ScreenUtil().setWidth(65),
+            height: ScreenUtil().setWidth(65),
           ),
           title: new Text(
             '个人中心',
@@ -394,8 +434,11 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
 
     _pageList = <StatefulWidget>[
 //      new HomePage(tabIndex: _homeTabIndex),
-      KeTaoFeaturedTaskListPage(),
+      KeTaoFeaturedHomePagePage(),
       KeTaoFeaturedNewClassifyListPage(),
+      KeTaoFeaturedOrderListPage(
+        showBackBtnIcon: false,
+      ),
       KeTaoFeaturedMinePagePage(),
       /*   new NoticePage(),
       new MyPage()*/
@@ -510,5 +553,32 @@ class _VideoAppState extends State<VideoApp> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+}
+
+class KeTaoFeaturedHomeEmpty extends StatefulWidget {
+  @override
+  _KeTaoFeaturedHomeEmptyState createState() => _KeTaoFeaturedHomeEmptyState();
+}
+
+class _KeTaoFeaturedHomeEmptyState extends State<KeTaoFeaturedHomeEmpty>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

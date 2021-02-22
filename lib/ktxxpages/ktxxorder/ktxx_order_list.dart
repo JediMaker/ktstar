@@ -4,20 +4,26 @@ import 'package:star/ktxxpages/ktxxorder/ktxx_recharge_order_list.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_round_tab_indicator.dart';
 
 import '../../ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedOrderListPage extends StatefulWidget {
-  KeTaoFeaturedOrderListPage({Key key}) : super(key: key);
+  KeTaoFeaturedOrderListPage({Key key, this.showBackBtnIcon = true})
+      : super(key: key);
   final String title = "我的订单";
+  bool showBackBtnIcon;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   @override
-  _KeTaoFeaturedOrderListPageState createState() => _KeTaoFeaturedOrderListPageState();
+  _KeTaoFeaturedOrderListPageState createState() =>
+      _KeTaoFeaturedOrderListPageState();
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -171,22 +177,25 @@ class _KeTaoFeaturedOrderListPageState extends State<KeTaoFeaturedOrderListPage>
               color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
         ),
         brightness: Brightness.light,
-        leading: IconButton(
-          icon: Container(
-            width: ScreenUtil().setWidth(63),
-            height: ScreenUtil().setHeight(63),
-            child: Center(
-              child: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
-                height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
+        leading: Visibility(
+          visible: widget.showBackBtnIcon,
+          child: IconButton(
+            icon: Container(
+              width: ScreenUtil().setWidth(63),
+              height: ScreenUtil().setHeight(63),
+              child: Center(
+                child: Image.asset(
+                  "static/images/icon_ios_back.png",
+                  width: ScreenUtil().setWidth(36),
+                  height: ScreenUtil().setHeight(63),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
         ),
         centerTitle: true,
         backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,

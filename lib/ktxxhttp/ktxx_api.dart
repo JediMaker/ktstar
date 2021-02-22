@@ -320,6 +320,12 @@ class KeTaoFeaturedAPi {
   ///确定提交
   static const String ORDER_DETAIL = "order/info";
 
+  ///话费充值退款
+  static const String ORDER_HF_REFUND = "order/hf-refund";
+
+  ///话费重新充值
+  static const String ORDER_HF_REPAY = "order/hf-repay";
+
   ///订单详情
   static const String ORDER_HISTORY = "/api/index.php?route=api/order/history";
 

@@ -37,6 +37,10 @@ class KeTaoFeaturedOrderListDataList with JsonConvert<KeTaoFeaturedOrderListData
   String faceMoney;
   @JSONField(name: "order_source")
   String orderSource;
+  @JSONField(name: "refund_status")
+  String refundStatus;
+  @JSONField(name: "refund_msg")
+  String refundMsg;
   String mobile;
   String phone;
   String coin;

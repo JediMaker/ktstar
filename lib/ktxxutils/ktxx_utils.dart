@@ -176,20 +176,26 @@ class KeTaoFeaturedUtils {
           KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
 
-        ///华为审核中
-        ///
-        if (KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
-          if (checkDerictly) {
-            ///直接检查更新时弹出
-            KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
+
+        if (Platform.isAndroid) {
+          ///华为审核中
+          ///
+          if (KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+            if (checkDerictly) {
+              ///直接检查更新时弹出
+              KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
+            }
+            return;
           }
-          return;
+        }
+        if (Platform.isIOS) {
+          ///ios审核中
+          ///
+          if (KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
+            return;
+          }
         }
 
-        ///ios审核中
-        if (KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
-          return;
-        }
         bool needUpdate = false;
         if (Platform.isIOS) {
           needUpdate = isBuildNumberGreatThanLocal(
