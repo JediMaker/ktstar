@@ -772,12 +772,12 @@ class _KeTaoFeaturedRechargeOrderListPageState
             if (result.status) {
               Navigator.pop(context, false);
               KeTaoFeaturedCommonUtils.showToast("确认收货成功");
-              showDialog<bool>(
+              /*showDialog<bool>(
                 context: context,
                 builder: (BuildContext context) =>
                     _buildDialog(context, orderId),
                 barrierDismissible: false,
-              );
+              );*/
               page = 1;
               _initData();
               _refreshController.finishLoad(noMore: false);
