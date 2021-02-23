@@ -180,7 +180,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                       top: ScreenUtil().setWidth(80),
                   ),
                   child: Text(
-                    "*由于需要进行账单核对，话费充值时段为：09:00~23:50",
+                    "*由于需要进行账单核对，话费充值时段为：09:00~23:00",
                     style: TextStyle(
                         color: Color(0xff999999),
                         fontSize: ScreenUtil().setSp(32)),

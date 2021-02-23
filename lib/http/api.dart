@@ -333,6 +333,12 @@ class APi {
   ///订单确认收货
   static const String ORDER_ENSURE_RECEIVE = "order/confirm";
 
+  ///话费充值退款
+  static const String ORDER_HF_REFUND = "order/hf-refund";
+
+  ///话费重新充值
+  static const String ORDER_HF_REPAY = "order/hf-repay";
+
   ///各个状态订单
   static const String ORDER_DEL = "/api/index.php?route=api/order/del";
 

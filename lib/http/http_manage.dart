@@ -639,14 +639,14 @@ class HttpManage {
         case "1": //不显示
           GlobalConfig.displayThirdLoginInformation = false;
 
-         /* if (mounted) {
+          /* if (mounted) {
             setState(() {});
           }*/
           break;
 
         case "2": //显示
           GlobalConfig.displayThirdLoginInformation = true;
-        /*  if (mounted) {
+          /*  if (mounted) {
             setState(() {});
           }*/
           break;
@@ -2299,6 +2299,40 @@ class HttpManage {
   static Future<ResultBeanEntity> getPddAuth() async {
     var response = await HttpManage.dio.post(
       APi.GOODS_IS_PIN_AUTH,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///话费充值---申请退款
+  static Future<ResultBeanEntity> chargeRefund(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    var response = await HttpManage.dio.post(
+      APi.ORDER_HF_REFUND,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///话费充值---重新充值
+  static Future<ResultBeanEntity> chargeRetry(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    var response = await HttpManage.dio.post(
+      APi.ORDER_HF_REPAY,
+      data: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();

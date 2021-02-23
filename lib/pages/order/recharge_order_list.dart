@@ -142,6 +142,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
     Color btnTxtColor = Color(0xFF222222); //
     Color btnTxtBorderColor = Color(0xFF999999); //
     String orderStatus = "";
+    String refundStatus = "0";
+    String refundMsg = "";
     String orderStatusText = "";
     bool showContact = false;
     bool showBtn = true;
@@ -151,7 +153,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
     String goodsSign;
     String coin;
     List<OrderListDataListGoodsList> goodsList =
-        List<OrderListDataListGoodsList>();
+    List<OrderListDataListGoodsList>();
     try {
       createTime = listItem.createTime;
       phoneNumber = listItem.mobile;
@@ -162,6 +164,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
       orderType = listItem.orderType;
       orderId = listItem.orderId;
       orderStatus = listItem.status;
+      refundStatus = listItem.refundStatus;
+      refundMsg = listItem.refundMsg;
       contactPhone = listItem.phone;
       coin = listItem.coin;
       goodsList = listItem.goodsList;
@@ -183,7 +187,20 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
           break;
         case "9":
           orderStatusText = "充值失败";
-          showContact = true;
+          if (refundStatus == "0") {
+            showContact = true;
+          } else if (refundStatus == "1") {
+            orderStatusText = "话费退款";
+            refundMsg = '退款审核中';
+          } else if (refundStatus == "2") {
+            orderStatusText = "话费退款";
+            refundMsg = '退款已完成';
+          } else if (refundStatus == "3") {
+            orderStatusText = "话费退款";
+            var newMsgTxt = "已拒绝,$refundMsg";
+            refundMsg = newMsgTxt;
+          }
+
           break;
         case "0":
           orderStatusText = "充值中";
@@ -261,7 +278,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius:
-                BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+            BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
             border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 color: Colors.white,
@@ -305,12 +322,12 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                     return Column(
                       children: goodsList == null
                           ? Container(
-                              child: Text(''),
-                            )
+                        child: Text(''),
+                      )
                           : List.generate(goodsList.length, (index) {
-                              return buildRechargeItemRow(
-                                  phoneNumber, phoneMoney, goodsList[index]);
-                            }),
+                        return buildRechargeItemRow(phoneNumber,
+                            phoneMoney, goodsList[index], refundMsg);
+                      }),
                     );
                     break;
                   case "2": //商品订单
@@ -393,14 +410,90 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
             ),
             Visibility(
               visible: showContact,
-              child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "联系我们：$contactPhone",
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(42),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      var result =
+                      await HttpManage.chargeRefund(orderId);
+                      if (result.status) {
+                        CommonUtils.showToast("申请已提交");
+                        page = 1;
+                        _initData();
+                        _refreshController.finishLoad(noMore: false);
+                      } else {
+                        CommonUtils.showToast("${result.errMsg}");
+                      }
+                    },
+                    child: Container(
+                      width: ScreenUtil().setWidth(235),
+                      height: ScreenUtil().setHeight(77),
+                      margin: EdgeInsets.only(
+                        right: ScreenUtil().setWidth(20),
+                      ),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(39))),
+                          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                              color: btnTxtBorderColor,
+                              width: 0.5)),
+                      child: Text(
+                        //状态：
+                        "申请退款",
+                        style: TextStyle(
+                          color: btnTxtColor,
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
                     ),
-                  )),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      var result =
+                      await HttpManage.chargeRetry(orderId);
+                      if (result.status) {
+                        CommonUtils.showToast("申请已提交");
+                        page = 1;
+                        _initData();
+                        _refreshController.finishLoad(noMore: false);
+                      } else {
+                        CommonUtils.showToast("${result.errMsg}");
+                      }
+                    },
+                    child: Container(
+                      width: ScreenUtil().setWidth(235),
+                      height: ScreenUtil().setHeight(77),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(ScreenUtil().setWidth(39))),
+                          border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                              color: btnTxtBorderColor,
+                              width: 0.5)),
+                      child: Text(
+                        //状态：
+                        "重新充值",
+                        style: TextStyle(
+                          color: btnTxtColor,
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      ),
+                    ),
+                  ),
+                  /*Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "联系我们：$contactPhone",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                        ),
+                      )),*/
+                ],
+              ),
             ),
             Visibility(
               visible: !showContact,
@@ -411,11 +504,11 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
 //                      visible: orderType == "1",
                       child: Container(
                           child: Text(
-                        "订单编号：$orderNo",
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(32),
-                            color: Color(0xff666666)),
-                      )),
+                            "订单编号：$orderNo",
+                            style: TextStyle(
+                                fontSize: ScreenUtil().setSp(32),
+                                color: Color(0xff666666)),
+                          )),
                     ),
                   ),
                   Visibility(
@@ -465,10 +558,10 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                         } else if (orderType == "2") {
                           switch (orderStatus) {
                             case "1":
-                              if (Platform.isIOS) {
+                            /* if (Platform.isIOS) {
                                 CommonUtils.showIosPayDialog();
                                 return;
-                              }
+                              }*/
                               NavigatorUtils.navigatorRouter(
                                   context,
                                   CheckOutCounterPage(
@@ -609,12 +702,12 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
             if (result.status) {
               Navigator.pop(context, false);
               CommonUtils.showToast("确认收货成功");
-              showDialog<bool>(
+              /*showDialog<bool>(
                 context: context,
                 builder: (BuildContext context) =>
                     _buildDialog(context, orderId),
                 barrierDismissible: false,
-              );
+              );*/
               page = 1;
               _initData();
               _refreshController.finishLoad(noMore: false);
@@ -764,9 +857,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
         },
         itemCount: goodsList == null ? 0 : goodsList.length);
   }
-
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
-      OrderListDataListGoodsList goodsItem) {
+      OrderListDataListGoodsList goodsItem, String refundMsg) {
     var imageUrl = '';
     var title = '';
     var saleMoney = '';
@@ -826,6 +918,28 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                     fontSize: ScreenUtil().setSp(30),
                     color: Color(0xFF999999),
                   ),
+                ),
+              ),
+              Visibility(
+                visible: !CommonUtils.isEmpty(refundMsg),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: ScreenUtil().setHeight(12),
+                    ),
+                    Container(
+                      child: Text(
+                        //状态：
+                        "退款描述：$refundMsg",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(30),
+                          color: Color(0xFF999999),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

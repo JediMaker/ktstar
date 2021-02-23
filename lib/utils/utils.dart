@@ -167,20 +167,23 @@ class Utils {
         } else {
           GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
-
-        ///华为审核中
-        if (GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
-          if (checkDerictly) {
-            ///直接检查更新时弹出
-            CommonUtils.showToast("当前已是最新版本");
+        if (Platform.isAndroid) {
+          ///华为审核中
+          if (GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+            if (checkDerictly) {
+              ///直接检查更新时弹出
+              CommonUtils.showToast("当前已是最新版本");
+            }
+            return;
           }
-          return;
+        }
+        if (Platform.isIOS) {
+          ///ios审核中
+          if (GlobalConfig.prefs.getBool("isIosUnderReview")) {
+            return;
+          }
         }
 
-        ///ios审核中
-        if (GlobalConfig.prefs.getBool("isIosUnderReview")) {
-          return;
-        }
         bool needUpdate = false;
         if (Platform.isIOS) {
           needUpdate = isBuildNumberGreatThanLocal(
@@ -230,7 +233,7 @@ class Utils {
               barrierDismissible: false,
             );
             if (wantsUpdate != null && wantsUpdate) {
-              GlobalConfig.prefs.remove('updateTime');
+              GlobalConfig.prefs.remove('updateTime'); //饮鸠止渴
               GlobalConfig.prefs.remove('needUpdate');
               await launchUrl(url);
             } else {
@@ -247,6 +250,20 @@ class Utils {
     }
   }
 
+//
+//  static const _icomoon = 'icomoon';
+//  static const _kFontFam = 'MyFlutterApp';
+//
+//  static const IconData truck = const IconData(0xe800, fontFamily: _kFontFam);
+//  static const IconData chat = const IconData(0xe801, fontFamily: _kFontFam);
+//  static const IconData money = const IconData(0xe802, fontFamily: _kFontFam);
+//  static const IconData account_balance_wallet =
+//  const IconData(0xf008, fontFamily: _kFontFam);
+//
+//  static const IconData wallet = const IconData(0xe910, fontFamily: _icomoon);
+//  static const IconData delivery = const IconData(0xe904, fontFamily: _icomoon);
+//  static const IconData message = const IconData(0xe900, fontFamily: _icomoon);
+//  static const IconData service = const IconData(0xe90f, fontFamily: _icomoon);
   static bool isVersionGreatThanLocal(
       String versionRemote, String clientVersion) {
     versionRemote.compareTo(clientVersion);
@@ -325,8 +342,6 @@ Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
     ),
     actions: <Widget>[
       CupertinoDialogAction(
-
-
         child: Text(
           '以后再说',
           style: TextStyle(
