@@ -645,6 +645,7 @@ class _MicroShareHolderEquityPageState
       var item = _dataList[_currentIndex];
       _shareholderYearProfit = '${item.annualIncome}';
     } catch (e) {}
+
     return Container(
       height: ScreenUtil().setWidth(64),
       width: ScreenUtil().setWidth(535),
@@ -662,9 +663,9 @@ class _MicroShareHolderEquityPageState
         ),
       ),
       child: Wrap(
-        children: List.generate(
-          nameList.length,
-          (index) => GestureDetector(
+        children: List.generate(nameList.length, (index) {
+          var name = nameList[index];
+          return GestureDetector(
             onTap: () {
               if (mounted) {
                 setState(() {
@@ -689,7 +690,7 @@ class _MicroShareHolderEquityPageState
                 ),
               ),
               child: Text(
-                "${nameList[index]}",
+                "$name",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(34),
@@ -699,8 +700,8 @@ class _MicroShareHolderEquityPageState
                 ),
               ),
             ),
-          ),
-        ) /*[
+          );
+        }) /*[
           Center(
             child: Text.rich(
               TextSpan(children: [
@@ -1320,9 +1321,9 @@ class _MicroShareHolderEquityPageState
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-              left:ScreenUtil().setWidth(30),
+              left: ScreenUtil().setWidth(30),
               right: ScreenUtil().setWidth(30),
-              top:ScreenUtil().setWidth(19),
+              top: ScreenUtil().setWidth(19),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
