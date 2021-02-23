@@ -23,6 +23,7 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -90,6 +91,7 @@ class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   ///股东类型
   ///-1非股东 0 见习股东 ; 1 vip 股东 ，高级股东
   int shareholderType;
@@ -98,6 +100,7 @@ class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
   _KeTaoFeaturedMicroShareHolderEquityPageState createState() =>
       _KeTaoFeaturedMicroShareHolderEquityPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -362,7 +365,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
     ///小喇叭图标
     var lbIcon =
         'https://alipic.lanhuapp.com/xd92657a69-39df-48d4-bb44-ef8edacccde3';
-    if (Platform.isIOS && KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
+    if (Platform.isIOS &&
+        KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
       btnTxt = 'ios暂未开通';
     }
 
@@ -494,7 +498,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
                                     var result = await KeTaoFeaturedHttpManage
                                         .applyToBecomeAMicroShareholder();
                                     if (result.status) {
-                                      KeTaoFeaturedCommonUtils.showToast("微股东申请开通成功！");
+                                      KeTaoFeaturedCommonUtils.showToast(
+                                          "微股东申请开通成功！");
                                     } else {
                                       showOpenMicroShareholderDialog();
                                     }
@@ -725,14 +730,13 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
         ),
       ),
       child: Wrap(
-        children: List.generate(nameList.length, (index) {
-          var name = nameList[index];
-          return GestureDetector(
+        children: [
+          GestureDetector(
             onTap: () {
               if (mounted) {
                 setState(() {
-                  if (_currentIndex != index) {
-                    _currentIndex = index;
+                  if (_currentIndex != 0) {
+                    _currentIndex = 0;
                   }
                 });
               }
@@ -744,26 +748,95 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
                 vertical: ScreenUtil().setWidth(6),
               ),
               decoration: BoxDecoration(
-                color: _currentIndex == index
-                    ? Color(0xffCAAC74)
-                    : Colors.transparent,
+                color:
+                    _currentIndex == 0 ? Color(0xffCAAC74) : Colors.transparent,
                 borderRadius: BorderRadius.circular(
                   ScreenUtil().setWidth(20),
                 ),
               ),
               child: Text(
-                "$name",
+                "见习股东",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(34),
-                  color: _currentIndex == index
+                  color: _currentIndex == 0
                       ? Color(0xff25272E)
                       : Color(0xffA09988), //#A09988
                 ),
               ),
             ),
-          );
-        }) /*[
+          ),
+          GestureDetector(
+            onTap: () {
+              if (mounted) {
+                setState(() {
+                  if (_currentIndex != 1) {
+                    _currentIndex = 1;
+                  }
+                });
+              }
+            },
+            child: Container(
+              height: ScreenUtil().setWidth(64),
+              padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(31),
+                vertical: ScreenUtil().setWidth(6),
+              ),
+              decoration: BoxDecoration(
+                color:
+                _currentIndex == 1 ? Color(0xffCAAC74) : Colors.transparent,
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().setWidth(20),
+                ),
+              ),
+              child: Text(
+                "股东",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(34),
+                  color: _currentIndex == 1
+                      ? Color(0xff25272E)
+                      : Color(0xffA09988), //#A09988
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (mounted) {
+                setState(() {
+                  if (_currentIndex != 2) {
+                    _currentIndex = 2;
+                  }
+                });
+              }
+            },
+            child: Container(
+              height: ScreenUtil().setWidth(64),
+              padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(31),
+                vertical: ScreenUtil().setWidth(6),
+              ),
+              decoration: BoxDecoration(
+                color:
+                _currentIndex == 2 ? Color(0xffCAAC74) : Colors.transparent,
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().setWidth(20),
+                ),
+              ),
+              child: Text(
+                "高级股东",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(34),
+                  color: _currentIndex == 2
+                      ? Color(0xff25272E)
+                      : Color(0xffA09988), //#A09988
+                ),
+              ),
+            ),
+          ),
+        ] /*[
           Center(
             child: Text.rich(
               TextSpan(children: [
@@ -1383,9 +1456,9 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-              left:ScreenUtil().setWidth(30),
+              left: ScreenUtil().setWidth(30),
               right: ScreenUtil().setWidth(30),
-              top:ScreenUtil().setWidth(19),
+              top: ScreenUtil().setWidth(19),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1566,7 +1639,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
   }
 
   _showSelectPayWayBottomSheet() {
-    if (Platform.isIOS && KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
+    if (Platform.isIOS &&
+        KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
       KeTaoFeaturedCommonUtils.showIosPayDialog();
       return;
     }
@@ -1678,8 +1752,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
                             KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
-                          var result =
-                              await KeTaoFeaturedHttpManage.getMicroShareholdersAliPayInfo(
+                          var result = await KeTaoFeaturedHttpManage
+                              .getMicroShareholdersAliPayInfo(
                                   pay_type: _currentIndex + 1);
                           if (result.status) {
                             _payInfo = result.data.payInfo;
