@@ -275,6 +275,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
     _dialogNickNameController = new TextEditingController();
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
+    _clearWidgetData();
     _initUserData();
     super.initState();
   }
