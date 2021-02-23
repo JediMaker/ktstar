@@ -715,7 +715,6 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
     } catch (e) {}
     return Container(
       height: ScreenUtil().setWidth(64),
-      width: ScreenUtil().setWidth(535),
       margin: EdgeInsets.only(
         top: ScreenUtil().setWidth(30),
       ),
