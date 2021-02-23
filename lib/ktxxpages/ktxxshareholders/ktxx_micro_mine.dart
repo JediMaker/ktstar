@@ -392,6 +392,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
       if (!KeTaoFeaturedCommonUtils.isEmpty(nickName)) {
       } else {
         if (KeTaoFeaturedGlobalConfig.isLogin() && count == 0) {
+          _clearWidgetData();
           _initUserData();
           count++;
         } else if (!KeTaoFeaturedGlobalConfig.isLogin()) {
