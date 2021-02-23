@@ -14,7 +14,7 @@ import 'package:star/ktxxmodels/ktxx_phone_charge_list_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_checkout_counter.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_free_queue_persional.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_detail.dart';
-import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_goods_detail.dart';
+//import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_goods_detail.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_order_detail.dart';
 import 'package:star/ktxxpages/ktxxrecharge/ktxx_recharge_list.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_index.dart';
@@ -304,14 +304,14 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
             return;
           }
 
-          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        /*  KeTaoFeaturedNavigatorUtils.navigatorRouter(
               context,
               PddGoodsDetailPage(
                 gId: goodsList[0].pddGoodsId,
 //                gId: id,
 //                goodsSign: goodsSign,
 //                searchId: searchId,
-              ));
+              ));*/
           return;
         }
         if (orderType == "2") {
