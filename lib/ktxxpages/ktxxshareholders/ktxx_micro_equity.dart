@@ -725,9 +725,9 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
         ),
       ),
       child: Wrap(
-        children: List.generate(
-          nameList.length,
-          (index) => GestureDetector(
+        children: List.generate(nameList.length, (index) {
+          var name = nameList[index];
+          return GestureDetector(
             onTap: () {
               if (mounted) {
                 setState(() {
@@ -752,7 +752,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
                 ),
               ),
               child: Text(
-                "${nameList[index]}",
+                "$name",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(34),
@@ -762,8 +762,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
                 ),
               ),
             ),
-          ),
-        ) /*[
+          );
+        }) /*[
           Center(
             child: Text.rich(
               TextSpan(children: [
