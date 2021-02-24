@@ -271,8 +271,9 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                         visible: !CommonUtils.isEmpty(_btPrice),
                                         child: Container(
                                           margin: EdgeInsets.only(
-                                            left: ScreenUtil().setHeight(30),
-                                              bottom: ScreenUtil().setHeight(8)),
+                                              left: ScreenUtil().setHeight(30),
+                                              bottom:
+                                                  ScreenUtil().setHeight(8)),
                                           child: Text(
                                             "分红金：￥$_btPrice",
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
@@ -284,7 +285,6 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                         ),
                                       ),
                                     ),
-                                    
                                     Visibility(
                                       visible: !CommonUtils.isEmpty(_saleTip),
                                       child: Align(
@@ -367,7 +367,15 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                           if (CommonUtils.isEmpty(_mobileUri)) {
                                             return;
                                           }
-                                          await launchPdd();
+                                          if (_loginStatus == "0") {
+                                            CommonUtils.showToast("尚未登陆，请登录！");
+                                            NavigatorUtils.navigatorRouter(
+                                                context, LoginPage());
+                                            return;
+                                          }
+                                          if (_loginStatus == "1") {
+                                            await launchPdd();
+                                          }
                                         },
                                         child: Stack(
                                           alignment: Alignment.center,

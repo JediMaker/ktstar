@@ -212,6 +212,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     _dialogNickNameController = new TextEditingController();
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
+    _clearWidgetData();
     _initUserData();
     super.initState();
   }
