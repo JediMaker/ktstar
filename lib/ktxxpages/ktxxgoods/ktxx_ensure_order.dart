@@ -124,16 +124,23 @@ class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderP
           addressDetail = entityResult.data.address;
           iphone = entityResult.data.mobile;
           name = entityResult.data.consignee;
-          isCoupon = entityResult.data.isCoupon;
-          _totalAmount = entityResult.data.usableDeduct;
-          _availableAmount = entityResult.data.deductPrice;
-          _leftAmount =
-              (double.parse(_totalAmount) - double.parse(_availableAmount))
-                  .toStringAsFixed(2);
           if (!onlyChangeAddress) {
+            isCoupon = entityResult.data.isCoupon;
+            _totalAmount = entityResult.data.usableDeduct;
+            _availableAmount = entityResult.data.deductPrice;
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
+            if(double.parse(_totalAmount)>double.parse(totalPrice)){
+              _availableAmount=double.parse(totalPrice).toStringAsFixed(2);
+            }else{
+              _availableAmount=double.parse(_totalAmount).toStringAsFixed(2);
+            }
+            _leftAmount =
+                (double.parse(_totalAmount) - double.parse(_availableAmount))
+                    .toStringAsFixed(2);
+            payPrice= (double.parse(totalPrice) - double.parse(_availableAmount))
+                .toStringAsFixed(2);
           }
         });
       }
