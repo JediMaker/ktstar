@@ -259,9 +259,10 @@ class _KeTaoFeaturedCheckOutCounterPageState
   }
 
   showPayPasswordDialog(BuildContext context, orderId) {
-    var fieldHeight = Platform.isIOS ? 120 : 130;
-    var fieldWidth = Platform.isIOS ? 120 : 130;
-
+    /* var fieldHeight = Platform.isIOS ? 120 : 130;
+    var fieldWidth = Platform.isIOS ? 120 : 130;*/
+    var fieldHeight = 120;
+    var fieldWidth = 120;
     return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
@@ -345,7 +346,7 @@ class _KeTaoFeaturedCheckOutCounterPageState
                                   if (result.data.finish) {
                                     KeTaoFeaturedNavigatorUtils
                                         .navigatorRouterAndRemoveUntil(
-                                            context,
+                                            this.context,
                                             KeTaoFeaturedPayResultPage(
                                               payNo: _payNo,
                                               type: 1,
