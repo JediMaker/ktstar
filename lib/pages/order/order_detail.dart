@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/order_detail_entity.dart';
+import 'package:star/pages/goods/checkout_counter.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/order/order_logistics_tracking.dart';
 import 'package:star/pages/order/return/return_option.dart';
@@ -36,6 +37,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   var payment = "";
   var _payWayText = "--";
   var payPrice;
+  var deductPrice = "";
   var orderStatusText = '';
 
   String payTime;
@@ -64,6 +66,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
+            deductPrice = entityResult.data.deductPrice;
             orderNum = entityResult.data.orderno;
             payment = entityResult.data.payment;
             dateAdded = entityResult.data.createTime;
@@ -221,6 +224,45 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                 ),
                                 child: Text(
                                   '查看物流',
+                                  //Logistics物流跟踪 order_logistics_tracking
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: ScreenUtil().setSp(42)),
+                                )),
+                          )),
+                      Visibility(
+                          visible: orderStatus == '1',
+                          child: GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  CheckOutCounterPage(
+                                    orderId: widget.orderId,
+                                    orderMoney: payPrice,
+                                  ));
+                            },
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 6),
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                                  border: Border(
+                                    top: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    left: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    right: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                    bottom: BorderSide(
+                                        width: 0.5, color: Colors.black26),
+                                  ),
+                                ),
+                                child: Text(
+                                  '去付款',
                                   //Logistics物流跟踪 order_logistics_tracking
                                   style: TextStyle(
                                       color: Colors.black87,
@@ -792,63 +834,126 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               ),
             ),
             Visibility(
-              child: Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(
-                    horizontal: 16, vertical: ScreenUtil().setHeight(30)),
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text.rich(TextSpan(
-                          text: '小计：',
-                          style: TextStyle(fontSize: ScreenUtil().setSp(32)),
-                          children: [
-                            TextSpan(
-                              text: '￥$totalPrice',
-                              style: TextStyle(
-                                color: Color(0xFFF93736),
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text.rich(TextSpan(
+                              text: '小计：',
+                              style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                              children: [
+                                TextSpan(
+                                  text: '￥$totalPrice',
+                                  style: TextStyle(
+                                    color: Color(0xFFF93736),
+                                  ),
+                                ),
+                              ])),
+                        ),
+                        Visibility(
+                          visible: !GlobalConfig.isRelease, //todo 去除展示控制
+                          child: GestureDetector(
+                            onTap: () async {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  ReturnGoodsOptionPage(
+                                    product: product,
+                                  ));
+                            },
+                            child: Container(
+                              width: ScreenUtil().setWidth(235),
+                              height: ScreenUtil().setHeight(77),
+                              margin: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(16),
                               ),
-                            ),
-                          ])),
-                    ),
-                    Visibility(
-                      visible: !GlobalConfig.isRelease, //todo 去除展示控制
-                      child: GestureDetector(
-                        onTap: () async {
-                          NavigatorUtils.navigatorRouter(
-                              context,
-                              ReturnGoodsOptionPage(
-                                product: product,
-                              ));
-                        },
-                        child: Container(
-                          width: ScreenUtil().setWidth(235),
-                          height: ScreenUtil().setHeight(77),
-                          margin: EdgeInsets.only(
-                            right: ScreenUtil().setWidth(16),
-                          ),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(ScreenUtil().setWidth(39))),
-                              border: Border.all(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(ScreenUtil().setWidth(39))),
+                                  border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                                  color: Color(0xff999999),
-                                  width: 0.5)),
-                          child: Text(
-                            //状态：
-                            "退换",
-                            style: TextStyle(
-                              color: Color(0xff666666),
-                              fontSize: ScreenUtil().setSp(42),
+                                      color: Color(0xff999999),
+                                      width: 0.5)),
+                              child: Text(
+                                //状态：
+                                "退换",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(42),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16, ),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text.rich(TextSpan(
+                              text: '红包抵扣：',
+                              style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                              children: [
+                                TextSpan(
+                                  text: '-￥$deductPrice',
+                                  style: TextStyle(
+                                    color: Color(0xFFF93736),
+                                  ),
+                                ),
+                              ])),
+                        ),
+                        Visibility(
+                          visible: !GlobalConfig.isRelease, //todo 去除展示控制
+                          child: GestureDetector(
+                            onTap: () async {
+                              NavigatorUtils.navigatorRouter(
+                                  context,
+                                  ReturnGoodsOptionPage(
+                                    product: product,
+                                  ));
+                            },
+                            child: Container(
+                              width: ScreenUtil().setWidth(235),
+                              height: ScreenUtil().setHeight(77),
+                              margin: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(16),
+                              ),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(ScreenUtil().setWidth(39))),
+                                  border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                      color: Color(0xff999999),
+                                      width: 0.5)),
+                              child: Text(
+                                //状态：
+                                "退换",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(42),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(height: ScreenUtil().setWidth(30),color: Colors.white,)
+                ],
               ),
             ),
           ],

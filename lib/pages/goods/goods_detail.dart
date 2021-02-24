@@ -54,8 +54,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
   var _desList = [
     '正品保障',
     '破损包退',
-    '急速退款',
-    '退货运费险',
+    '极速退款',
+    '极速发货',
   ];
 
   Future _initData() async {
