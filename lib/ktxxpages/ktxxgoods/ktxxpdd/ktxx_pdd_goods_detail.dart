@@ -430,7 +430,15 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                                           if (KeTaoFeaturedCommonUtils.isEmpty(_mobileUri)) {
                                             return;
                                           }
-                                          await launchPdd();
+                                          if (_loginStatus == "0") {
+                                            KeTaoFeaturedCommonUtils.showToast("尚未登陆，请登录！");
+                                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                                context, KeTaoFeaturedLoginPage());
+                                            return;
+                                          }
+                                          if (_loginStatus == "1") {
+                                            await launchPdd();
+                                          }
                                         },
                                         child: Stack(
                                           alignment: Alignment.center,
