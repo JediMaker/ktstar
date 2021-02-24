@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxmodels/ktxx_order_user_info_entity.dart';
 
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -85,15 +88,19 @@ class KeTaoFeaturedCheckOutCounterPage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   KeTaoFeaturedCheckOutCounterPage({this.orderId, this.orderMoney});
 
   @override
-  _KeTaoFeaturedCheckOutCounterPageState createState() => _KeTaoFeaturedCheckOutCounterPageState();
+  _KeTaoFeaturedCheckOutCounterPageState createState() =>
+      _KeTaoFeaturedCheckOutCounterPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
+class _KeTaoFeaturedCheckOutCounterPageState
+    extends State<KeTaoFeaturedCheckOutCounterPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -210,7 +217,8 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
 
   Future _initData({bool onlyChangeAddress = false}) async {
     EasyLoading.show();
-    var entityResult = await KeTaoFeaturedHttpManage.orderDetail(widget.orderId);
+    var entityResult =
+        await KeTaoFeaturedHttpManage.orderDetail(widget.orderId);
     EasyLoading.dismiss();
     if (mounted) {
       setState(() {
@@ -251,6 +259,9 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
   }
 
   showPayPasswordDialog(BuildContext context, orderId) {
+    var fieldHeight = Platform.isIOS ? 120 : 130;
+    var fieldWidth = Platform.isIOS ? 120 : 130;
+
     return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
@@ -304,8 +315,8 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
                               shape: PinCodeFieldShape.box,
                               borderWidth: ScreenUtil().setWidth(1),
                               borderRadius: BorderRadius.circular(0),
-                              fieldHeight: ScreenUtil().setWidth(130),
-                              fieldWidth: ScreenUtil().setWidth(130),
+                              fieldHeight: ScreenUtil().setWidth(fieldHeight),
+                              fieldWidth: ScreenUtil().setWidth(fieldWidth),
                               activeColor: Colors.grey[400],
                               //Color(0xffeaeaea),
                               activeFillColor: Colors.white,
@@ -324,8 +335,8 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
                               Navigator.pop(context);
                               try {
                                 EasyLoading.show(status: "正在支付");
-                                var result =
-                                    await KeTaoFeaturedHttpManage.getGoodsPayBalanceInfo(
+                                var result = await KeTaoFeaturedHttpManage
+                                    .getGoodsPayBalanceInfo(
                                         orderId: orderId, payPassword: v);
                                 EasyLoading.dismiss();
                                 if (result.status) {
@@ -344,7 +355,8 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
                                   }
                                   _checkPayStatus();
                                 } else {
-                                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                  KeTaoFeaturedCommonUtils.showToast(
+                                      result.errMsg);
                                 }
                               } catch (e) {
                                 EasyLoading.dismiss();
@@ -651,8 +663,8 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
   invokeWxPay() async {
     try {
       EasyLoading.show();
-      var result =
-          await KeTaoFeaturedHttpManage.getGoodsPayWeChatPayInfo(orderId: widget.orderId);
+      var result = await KeTaoFeaturedHttpManage.getGoodsPayWeChatPayInfo(
+          orderId: widget.orderId);
       EasyLoading.dismiss();
       if (result.status) {
         _payNo = result.data.payNo;
@@ -678,8 +690,8 @@ class _KeTaoFeaturedCheckOutCounterPageState extends State<KeTaoFeaturedCheckOut
   invokeAlipay() async {
     try {
       EasyLoading.show();
-      var result =
-          await KeTaoFeaturedHttpManage.getGoodsPayAliPayInfo(orderId: widget.orderId);
+      var result = await KeTaoFeaturedHttpManage.getGoodsPayAliPayInfo(
+          orderId: widget.orderId);
       EasyLoading.dismiss();
       if (result.status) {
         _payInfo = result.data.payInfo;
