@@ -12,6 +12,7 @@ import 'package:star/ktxxpages/ktxxwidget/ktxx_price_text.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 
 import '../../ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -23,11 +24,14 @@ class KeTaoFeaturedEnsureOrderPage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   KeTaoFeaturedEnsureOrderPage({@required this.orderId});
 
   @override
-  _KeTaoFeaturedEnsureOrderPageState createState() => _KeTaoFeaturedEnsureOrderPageState();
+  _KeTaoFeaturedEnsureOrderPageState createState() =>
+      _KeTaoFeaturedEnsureOrderPageState();
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -86,7 +90,8 @@ class KeTaoFeaturedEnsureOrderPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
+class _KeTaoFeaturedEnsureOrderPageState
+    extends State<KeTaoFeaturedEnsureOrderPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   var entity;
@@ -104,6 +109,7 @@ class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderP
   var _leftAmount = "0";
   var _availableAmount = "0";
   var _totalAmount = "0";
+  bool showEnvelope = false;
 
   /*OrderCheckoutEntity entity;
   OrderCheckoutDataAddress selectedAddress;*/
@@ -113,7 +119,8 @@ class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderP
       EasyLoading.show();
     } catch (e) {}
     try {
-      var entityResult = await KeTaoFeaturedHttpManage.orderDetail(widget.orderId);
+      var entityResult =
+          await KeTaoFeaturedHttpManage.orderDetail(widget.orderId);
 /*
     OrderCheckoutEntity entityResult =
         await HttpManage.orderCheckout(widget.cartIdList);
@@ -131,16 +138,20 @@ class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderP
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
-            if(double.parse(_totalAmount)>double.parse(totalPrice)){
-              _availableAmount=double.parse(totalPrice).toStringAsFixed(2);
-            }else{
-              _availableAmount=double.parse(_totalAmount).toStringAsFixed(2);
+            if (double.parse(_totalAmount) > double.parse(totalPrice)) {
+              _availableAmount = double.parse(totalPrice).toStringAsFixed(2);
+            } else {
+              _availableAmount = double.parse(_totalAmount).toStringAsFixed(2);
             }
             _leftAmount =
                 (double.parse(_totalAmount) - double.parse(_availableAmount))
                     .toStringAsFixed(2);
-            payPrice= (double.parse(totalPrice) - double.parse(_availableAmount))
-                .toStringAsFixed(2);
+            payPrice =
+                (double.parse(totalPrice) - double.parse(_availableAmount))
+                    .toStringAsFixed(2);
+            if (double.parse(_availableAmount) > 0) {
+              showEnvelope = true;
+            }
           }
         });
       }
@@ -486,7 +497,7 @@ class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderP
                             ],
                           ),
                           Visibility(
-                            visible: isCoupon == "1",
+                            visible: isCoupon == "1" && showEnvelope,
                             child: Column(
                               children: [
                                 Center(
@@ -580,8 +591,9 @@ class _KeTaoFeaturedEnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderP
                     GestureDetector(
                       onTap: () async {
                         if (!KeTaoFeaturedCommonUtils.isEmpty(iphone)) {
-                          var result = await KeTaoFeaturedHttpManage.orderSubmit(
-                              widget.orderId, isCoupon);
+                          var result =
+                              await KeTaoFeaturedHttpManage.orderSubmit(
+                                  widget.orderId, isCoupon);
                           if (result.status) {
                             Navigator.of(context).pop();
                             //跳转到结算台

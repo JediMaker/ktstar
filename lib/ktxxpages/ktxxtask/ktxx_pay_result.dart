@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_pay_coupon_entity.dart';
+import 'package:star/ktxxpages/ktxxorder/ktxx_order_list.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_recharge_order_list.dart';
 import 'package:star/ktxxpages/ktxxrecharge/ktxx_recharge_list.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_index.dart';
@@ -242,7 +243,7 @@ class _KeTaoFeaturedPayResultPageState extends State<KeTaoFeaturedPayResultPage>
                                     context, KeTaoFeaturedRechargeListPage());
                               } else {
                                 KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                    context, KeTaoFeaturedRechargeOrderListPage());
+                                    context, KeTaoFeaturedOrderListPage());
                               }
                             },
                             child: Container(
