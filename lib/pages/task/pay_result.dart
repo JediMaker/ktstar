@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/pay_coupon_entity.dart';
+import 'package:star/pages/order/order_list.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
@@ -179,7 +180,7 @@ class _PayResultPageState extends State<PayResultPage> {
                                     context, RechargeListPage());
                               } else {
                                 NavigatorUtils.navigatorRouter(
-                                    context, RechargeOrderListPage());
+                                    context, OrderListPage());
                               }
                             },
                             child: Container(

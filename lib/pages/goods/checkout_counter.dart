@@ -241,8 +241,8 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                               shape: PinCodeFieldShape.box,
                               borderWidth: ScreenUtil().setWidth(1),
                               borderRadius: BorderRadius.circular(0),
-                              fieldHeight: ScreenUtil().setWidth(130),
-                              fieldWidth: ScreenUtil().setWidth(130),
+                              fieldHeight: ScreenUtil().setWidth(120),
+                              fieldWidth: ScreenUtil().setWidth(120),
                               activeColor: Colors.grey[400],
                               //Color(0xffeaeaea),
                               activeFillColor: Colors.white,
@@ -271,7 +271,7 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                                   if (result.data.finish) {
                                     NavigatorUtils
                                         .navigatorRouterAndRemoveUntil(
-                                            context,
+                                            this.context,
                                             PayResultPage(
                                               payNo: _payNo,
                                               type: 1,

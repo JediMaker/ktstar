@@ -41,6 +41,7 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
   var _leftAmount = "0";
   var _availableAmount = "0";
   var _totalAmount = "0";
+  bool showEnvelope = false;
 
   /*OrderCheckoutEntity entity;
   OrderCheckoutDataAddress selectedAddress;*/
@@ -68,16 +69,20 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
-            if(double.parse(_totalAmount)>double.parse(totalPrice)){
-              _availableAmount=double.parse(totalPrice).toStringAsFixed(2);
-            }else{
-              _availableAmount=double.parse(_totalAmount).toStringAsFixed(2);
+            if (double.parse(_totalAmount) > double.parse(totalPrice)) {
+              _availableAmount = double.parse(totalPrice).toStringAsFixed(2);
+            } else {
+              _availableAmount = double.parse(_totalAmount).toStringAsFixed(2);
             }
             _leftAmount =
                 (double.parse(_totalAmount) - double.parse(_availableAmount))
                     .toStringAsFixed(2);
-            payPrice= (double.parse(totalPrice) - double.parse(_availableAmount))
-                .toStringAsFixed(2);
+            payPrice =
+                (double.parse(totalPrice) - double.parse(_availableAmount))
+                    .toStringAsFixed(2);
+            if (double.parse(_availableAmount) > 0) {
+              showEnvelope = true;
+            }
           }
         });
       }
@@ -423,7 +428,7 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                             ],
                           ),
                           Visibility(
-                            visible: isCoupon == "1",
+                            visible: isCoupon == "1" && showEnvelope,
                             child: Column(
                               children: [
                                 Center(
