@@ -290,6 +290,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
         } catch (e) {}
       }
     });
+    _initCacheHomeData();
     _initData();
     _swiperController = new SwiperController();
     _marqueeSwiperController = SwiperController();
@@ -322,7 +323,22 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     });
     super.initState();
   }
-
+  _initCacheHomeData() {
+    var data = KeTaoFeaturedGlobalConfig.getHomeInfo();
+    if (KeTaoFeaturedCommonUtils.isEmpty(data)) {
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        bannerList = data.banner;
+        taskListAll = data.taskList;
+        userType = data.userLevel;
+        goodsList = data.goodsList;
+        iconList = data.iconList;
+        adList = data.adList;
+      });
+    }
+  }
   initPddTabbar() {
     _pddTabController =
         new TabController(vsync: this, length: cats == null ? 0 : cats.length);

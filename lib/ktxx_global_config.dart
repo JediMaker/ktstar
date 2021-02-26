@@ -10,10 +10,12 @@ import 'package:fluwx/fluwx.dart';
 
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:star/generated/json/ktxx_home_entity_helper.dart';
 import 'package:star/generated/json/ktxx_user_info_entity_helper.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:star/ktxxmodels/ktxx_home_entity.dart';
 import 'package:star/ktxxmodels/ktxx_login_entity.dart';
 
 //import 'package:umeng/umeng.dart';
@@ -30,6 +32,7 @@ const _themes = <MaterialColor>[
   Colors.green,
   Colors.red,
 ];
+
 // if (announcements.length > 0) ...[
 //   AnnouncementSlider(news: announcements),
 //   const SizedBox(height: 16.0),
@@ -67,6 +70,7 @@ class KeTaoFeaturedGlobalConfig {
   static SharedPreferences _prefs;
 
   static var LAYOUT_MARGIN = ScreenUtil().setWidth(30);
+
   // CategoryItem(
   //   icon: Icon(
   //     FontAwesomeIcons.user,
@@ -101,6 +105,7 @@ class KeTaoFeaturedGlobalConfig {
 
   /// 渠道名称--小米
   static const String CHANEL_XIAOMI = "xiaomi";
+
   // if (survey != null &&
   //     user != null &&
   //     !user.surveys.contains(survey?.id)) ...[
@@ -127,9 +132,11 @@ class KeTaoFeaturedGlobalConfig {
 
   /// ios是否展示第三方登录信息
   static bool displayThirdLoginInformation = false;
+
   /// ios是否审核上架中
-  static bool get iosCheck =>
-      prefs.containsKey("isIosUnderReview")? prefs.getBool("isIosUnderReview"):false;
+  static bool get iosCheck => prefs.containsKey("isIosUnderReview")
+      ? prefs.getBool("isIosUnderReview")
+      : false;
 
   /// 渠道类型
   static String get chanelType => getChanelType(chanelType: 1);
@@ -229,6 +236,7 @@ class KeTaoFeaturedGlobalConfig {
     KeTaoFeaturedHttpManage.init();
     _initJPushPlatformState();
     configLoading();
+    await KeTaoFeaturedHttpManage.getHomeInfo();
     //initAndroidDeviceId();
     Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
@@ -246,6 +254,15 @@ class KeTaoFeaturedGlobalConfig {
         json.decode(prefs.getString("loginData")) as Map<String, dynamic>;
     var entity = KeTaoFeaturedLoginEntity();
     loginEntityFromJson(entity, extractData);
+    return entity.data;
+  }
+
+  /// 获取首页的数据
+  static KeTaoFeaturedHomeData getHomeInfo() {
+    final extractData =
+        json.decode(prefs.getString("homeData")) as Map<String, dynamic>;
+    var entity = KeTaoFeaturedHomeEntity();
+    homeEntityFromJson(entity, extractData);
     return entity.data;
   }
 
@@ -430,7 +447,7 @@ class KeTaoFeaturedGlobalConfig {
     print("初始化友盟结束");*/
   }
 
- /* static Future<String> initAndroidDeviceId() async {
+/* static Future<String> initAndroidDeviceId() async {
     print("初始化设备id");
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;

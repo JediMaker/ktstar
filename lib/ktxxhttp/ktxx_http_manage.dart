@@ -562,6 +562,9 @@ class KeTaoFeaturedHttpManage {
 //    final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = KeTaoFeaturedHomeEntity();
     homeEntityFromJson(entity, extractData);
+    if (entity.status) {
+      KeTaoFeaturedGlobalConfig.prefs.setString("homeData", response.data.toString());
+    }
     return entity;
   }
 

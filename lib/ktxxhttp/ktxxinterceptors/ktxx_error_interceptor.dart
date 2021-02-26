@@ -39,20 +39,20 @@ class KeTaoFeaturedErrorInterceptors extends InterceptorsWrapper {
             case DioErrorType.CANCEL:
               return "Request Cancel";
             case DioErrorType.CONNECT_TIMEOUT:
-              KeTaoFeaturedCommonUtils.showToast("网络异常，网络连接超时！");
+//              KeTaoFeaturedCommonUtils.showToast("网络异常，网络连接超时！");
 
               break;
       //        return "CONNECT TIMEOUT";
             case DioErrorType.SEND_TIMEOUT:
-              KeTaoFeaturedCommonUtils.showToast("网络异常，数据发送超时！");
+//              KeTaoFeaturedCommonUtils.showToast("网络异常，数据发送超时！");
               break;
       //        return 'Send Time Out';
             case DioErrorType.RESPONSE:
-              KeTaoFeaturedCommonUtils.showToast("服务器异常，请稍后再试！");
+//              KeTaoFeaturedCommonUtils.showToast("服务器异常，请稍后再试！");
               return "Server Incorrect Status";
             case DioErrorType.RECEIVE_TIMEOUT:
       //        return "Receive Time Out";
-              KeTaoFeaturedCommonUtils.showToast("网络异常，数据接收超时！");
+//              KeTaoFeaturedCommonUtils.showToast("网络异常，数据接收超时！");
               break;
             case DioErrorType.DEFAULT:
               String msg = 'UnKnown';
