@@ -265,6 +265,8 @@ class _TaskListPageState extends State<TaskListPage>
         } catch (e) {}
       }
     });
+
+    _initCacheHomeData();
     _initData();
     _swiperController = new SwiperController();
     _marqueeSwiperController = SwiperController();
@@ -296,6 +298,23 @@ class _TaskListPageState extends State<TaskListPage>
       _initData(isRefresh: true);
     });
     super.initState();
+  }
+
+  _initCacheHomeData() {
+    var data = GlobalConfig.getHomeInfo();
+    if (CommonUtils.isEmpty(data)) {
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        bannerList = data.banner;
+        taskListAll = data.taskList;
+        userType = data.userLevel;
+        goodsList = data.goodsList;
+        iconList = data.iconList;
+        adList = data.adList;
+      });
+    }
   }
 
   initPddTabbar() {
@@ -1020,8 +1039,7 @@ class _TaskListPageState extends State<TaskListPage>
               SliverToBoxAdapter(
                 child: GestureDetector(
                   child: HomePddGoodsListPage(),
-                  onHorizontalDragStart: (DragStartDetails details) {
-                  },
+                  onHorizontalDragStart: (DragStartDetails details) {},
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
                     _offsetValue = details.primaryDelta;
                   },
@@ -1034,10 +1052,9 @@ class _TaskListPageState extends State<TaskListPage>
                           _tabs = buildTabs();
                           pddcategoryTabsView = buildPddCategoryTabBar();
                           _pddTabController.animateTo(_selectedTabIndex);
-                          bus.emit("changePddListViewData",
-                              cats[_selectedTabIndex]);
+                          bus.emit(
+                              "changePddListViewData", cats[_selectedTabIndex]);
                         }
-
                       } else {
                         //向右滑动
                         if (_selectedTabIndex < cats.length - 1) {
@@ -1045,8 +1062,8 @@ class _TaskListPageState extends State<TaskListPage>
                           _tabs = buildTabs();
                           pddcategoryTabsView = buildPddCategoryTabBar();
                           _pddTabController.animateTo(_selectedTabIndex);
-                          bus.emit("changePddListViewData",
-                              cats[_selectedTabIndex]);
+                          bus.emit(
+                              "changePddListViewData", cats[_selectedTabIndex]);
                         }
                       }
                     });

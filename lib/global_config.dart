@@ -10,10 +10,12 @@ import 'package:fluwx/fluwx.dart';
 
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:star/models/home_entity.dart';
 import 'package:star/models/login_entity.dart';
 
 //import 'package:umeng/umeng.dart';
@@ -100,12 +102,12 @@ class GlobalConfig {
 
   /// ios是否展示第三方登录信息
   static bool displayThirdLoginInformation = false;
+
   /// ios是否审核上架中
-  static bool get iosCheck =>
-      prefs.getBool("isIosUnderReview");
+  static bool get iosCheck => prefs.getBool("isIosUnderReview");
 
   /// 渠道类型
-  static String get chanelType => getChanelType(chanelType: 1);
+  static String get chanelType => getChanelType(chanelType: 0);
 
   /// [chanelType] 渠道类型
   ///
@@ -202,7 +204,9 @@ class GlobalConfig {
     HttpManage.init();
     _initJPushPlatformState();
     configLoading();
+    await HttpManage.getHomeInfo();
     //initAndroidDeviceId();
+
     Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
@@ -219,6 +223,15 @@ class GlobalConfig {
         json.decode(prefs.getString("loginData")) as Map<String, dynamic>;
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
+    return entity.data;
+  }
+
+  /// 获取首页的数据
+  static HomeData getHomeInfo() {
+    final extractData =
+        json.decode(prefs.getString("homeData")) as Map<String, dynamic>;
+    var entity = HomeEntity();
+    homeEntityFromJson(entity, extractData);
     return entity.data;
   }
 
@@ -403,7 +416,7 @@ class GlobalConfig {
     print("初始化友盟结束");*/
   }
 
- /* static Future<String> initAndroidDeviceId() async {
+/* static Future<String> initAndroidDeviceId() async {
     print("初始化设备id");
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;

@@ -535,6 +535,9 @@ class HttpManage {
 //    final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = HomeEntity();
     homeEntityFromJson(entity, extractData);
+    if (entity.status) {
+      GlobalConfig.prefs.setString("homeData", response.data.toString());
+    }
     return entity;
   }
 
