@@ -240,10 +240,22 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(80),
+                    top: ScreenUtil().setWidth(80),
                   ),
                   child: Text(
-                    "*由于需要进行账单核对，话费充值时段为：09:00~23:00",
+                    "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
+                    style: TextStyle(
+                        color: Color(0xff999999),
+                        fontSize: ScreenUtil().setSp(32)),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(
+                    top: ScreenUtil().setWidth(20),
+                  ),
+                  child: Text(
+                    "*话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过2小时未到的可以找人工客服处理。",
                     style: TextStyle(
                         color: Color(0xff999999),
                         fontSize: ScreenUtil().setSp(32)),
