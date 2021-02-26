@@ -98,9 +98,11 @@ dependencies:
   #  lcfarm_flutter_umeng: ^0.1.9
   loading: ^1.0.2
   #  手机信息
-#  device_info: ^1.0.0
+  #  device_info: ^1.0.0
 
   search_page: ^1.4.0
+  #  跑马灯
+  marquee: ^1.7.0
 
 dev_dependencies:
   json_model: #latest version
