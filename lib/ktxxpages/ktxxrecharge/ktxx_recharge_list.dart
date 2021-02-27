@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:marquee/marquee.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_recharge_entity.dart';
 import 'package:star/ktxxmodels/ktxx_wechat_payinfo_entity.dart';
@@ -15,6 +16,7 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -74,6 +76,7 @@ import '../../ktxx_global_config.dart';
 void main() {
   runApp(KeTaoFeaturedRechargeListPage());
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -82,12 +85,15 @@ class KeTaoFeaturedRechargeListPage extends StatefulWidget {
   final String title = "话费充值";
 
   @override
-  _KeTaoFeaturedRechargeListPageState createState() => _KeTaoFeaturedRechargeListPageState();
+  _KeTaoFeaturedRechargeListPageState createState() =>
+      _KeTaoFeaturedRechargeListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
+class _KeTaoFeaturedRechargeListPageState
+    extends State<KeTaoFeaturedRechargeListPage> {
   TextEditingController _phoneController = new TextEditingController();
   List<KeTaoFeaturedRechargeDataRechageList> _dataList;
   Color _textTopColor = Color(0xff0A7FFF);
@@ -104,6 +110,7 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   _initWeChatResponseHandler() {
     KeTaoFeaturedGlobalConfig.payType = 1;
     fluwx.weChatResponseEventHandler.listen((res) async {
@@ -166,6 +173,43 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
     dataList.add(RechargeData());*/
   }
 
+  Widget _buildComplexMarquee() {
+    return MediaQuery.removePadding(
+      context: context,
+      removeLeft: true,
+      removeRight: true,
+      child: Container(
+        height: ScreenUtil().setWidth(80),
+        margin: EdgeInsets.only(
+          bottom: ScreenUtil().setWidth(30),
+        ),
+        alignment: Alignment.centerLeft,
+        color: Color(0xffFFF0D1),
+        child: Marquee(
+          text: "话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过2小时未到的可以找人工客服处理。",
+          style: TextStyle(
+            fontSize: ScreenUtil().setSp(32),
+            color: Color(0xffDC6000),
+          ),
+          scrollAxis: Axis.horizontal,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          blankSpace: 20.0,
+          velocity: 40,
+          pauseAfterRound: Duration(seconds: 0),
+          showFadingOnlyWhenScrolling: true,
+          fadingEdgeStartFraction: 0.1,
+          fadingEdgeEndFraction: 0.1,
+          numberOfRounds: null,
+          startPadding: 10.0,
+          accelerationDuration: Duration(seconds: 0),
+          accelerationCurve: Curves.linear,
+          decelerationDuration: Duration(milliseconds: 0),
+          decelerationCurve: Curves.easeOut,
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -203,152 +247,164 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
           backgroundColor: Color(0xFF489FFF),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(48),
-              vertical: ScreenUtil().setHeight(30)),
+          padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(30)),
           child: Center(
             child: Column(
-              children: <Widget>[
-                buildphoneInputContainer(),
-                SizedBox(
-                  height: ScreenUtil().setHeight(30),
-                ),
-                buildRechargeLayout(),
-                Visibility(
-                  visible: _couponData != null &&
-                      _couponData.money != null &&
-                      _couponData.condition != null,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(
-                        top: ScreenUtil().setHeight(37),
-                        bottom: ScreenUtil().setHeight(182)),
-                    child: Visibility(
-                      child: _couponData != null &&
-                              _couponData.money != null &&
-                              _couponData.condition != null
-                          ? Text(
-                              "* 您有一张${_couponData.money}元优惠券可用(满${_couponData.condition}元)",
+              children: [
+                _buildComplexMarquee(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(48),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      buildphoneInputContainer(),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(30),
+                      ),
+                      buildRechargeLayout(),
+                      Visibility(
+                        visible: _couponData != null &&
+                            _couponData.money != null &&
+                            _couponData.condition != null,
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(
+                              top: ScreenUtil().setHeight(37),
+                              bottom: ScreenUtil().setHeight(182)),
+                          child: Visibility(
+                            child: _couponData != null &&
+                                    _couponData.money != null &&
+                                    _couponData.condition != null
+                                ? Text(
+                                    "* 您有一张${_couponData.money}元优惠券可用(满${_couponData.condition}元)",
+                                    style: TextStyle(
+                                        color: Color(0xff999999),
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  )
+                                : Text(""),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(80),
+                        ),
+                        child: Text(
+                          "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
+                          style: TextStyle(
+                              color: Color(0xff999999),
+                              fontSize: ScreenUtil().setSp(32)),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(20),
+                        ),
+                        child: Text(
+                          "*话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过2小时未到的可以找人工客服处理。",
+                          style: TextStyle(
+                              color: Color(0xff999999),
+                              fontSize: ScreenUtil().setSp(32)),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(20),
+                            bottom: ScreenUtil().setWidth(182)),
+                        child: Row(
+                          children: [
+                            Text(
+                              "*充值成功可获得",
                               style: TextStyle(
                                   color: Color(0xff999999),
                                   fontSize: ScreenUtil().setSp(32)),
-                            )
-                          : Text(""),
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(
-                    top: ScreenUtil().setWidth(80),
-                  ),
-                  child: Text(
-                    "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
-                    style: TextStyle(
-                        color: Color(0xff999999),
-                        fontSize: ScreenUtil().setSp(32)),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(
-                    top: ScreenUtil().setWidth(20),
-                  ),
-                  child: Text(
-                    "*话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过2小时未到的可以找人工客服处理。",
-                    style: TextStyle(
-                        color: Color(0xff999999),
-                        fontSize: ScreenUtil().setSp(32)),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(20),
-                      bottom: ScreenUtil().setWidth(182)
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        "*充值成功可获得",
-                        style: TextStyle(
-                            color: Color(0xff999999),
-                            fontSize: ScreenUtil().setSp(32)),
+                            ),
+                            Text(
+                              "4%",
+                              style: TextStyle(
+                                  color:
+                                      KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
+                            Text(
+                              "分红金",
+                              style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        "4%",
-                        style: TextStyle(
-                            color: KeTaoFeaturedGlobalConfig.taskHeadColor,
-                            fontSize: ScreenUtil().setSp(32)),
+                      Visibility(
+                        visible: true,
+                        child: GestureDetector(
+                          onTap: () async {
+                            if (!KeTaoFeaturedCommonUtils.isPhoneLegal(
+                                _phoneController.text)) {
+                              KeTaoFeaturedCommonUtils.showSimplePromptDialog(
+                                  context, "温馨提示", "请输入正确的手机号");
+                              return;
+                            }
+                            try {
+                              _selectedRechargeData = _dataList[_selectIndex];
+                            } catch (e) {
+                              print(e);
+                            }
+                            if (!KeTaoFeaturedCommonUtils.isEmpty(
+                                _selectedRechargeData)) {
+                              _showSelectPayWayBottomSheet(context);
+                            }
+                          },
+                          child: Container(
+                            //diamond
+                            height: ScreenUtil().setHeight(140),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(46)),
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF489FFF),
+                                Color(0xFF489FFF),
+                              ]),
+                            ),
+                            child: Text(
+                              "支付",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(42)),
+                            ),
+                          ),
+                        ),
                       ),
-                      Text(
-                        "分红金",
-                        style: TextStyle(
-                            color: Color(0xff999999),
-                            fontSize: ScreenUtil().setSp(32)),
+                      Visibility(
+                        visible: false,
+                        child: GestureDetector(
+                          child: Container(
+                            //diamond
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(46)),
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF489FFF),
+                                Color(0xFF489FFF),
+                              ]),
+                            ),
+                            child: Text(
+                              "iOS暂未开放",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(42)),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
-                  ),
-                ),
-                Visibility(
-                  visible: true,
-                  child: GestureDetector(
-                    onTap: () async {
-                      if (!KeTaoFeaturedCommonUtils.isPhoneLegal(_phoneController.text)) {
-                        KeTaoFeaturedCommonUtils.showSimplePromptDialog(
-                            context, "温馨提示", "请输入正确的手机号");
-                        return;
-                      }
-                      try {
-                        _selectedRechargeData = _dataList[_selectIndex];
-                      } catch (e) {
-                        print(e);
-                      }
-                      if (!KeTaoFeaturedCommonUtils.isEmpty(_selectedRechargeData)) {
-                        _showSelectPayWayBottomSheet(context);
-                      }
-                    },
-                    child: Container(
-                      //diamond
-                      height: ScreenUtil().setHeight(140),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(46)),
-                        gradient: LinearGradient(colors: [
-                          Color(0xFF489FFF),
-                          Color(0xFF489FFF),
-                        ]),
-                      ),
-                      child: Text(
-                        "支付",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenUtil().setSp(42)),
-                      ),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: false,
-                  child: GestureDetector(
-                    child: Container(
-                      //diamond
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(46)),
-                        gradient: LinearGradient(colors: [
-                          Color(0xFF489FFF),
-                          Color(0xFF489FFF),
-                        ]),
-                      ),
-                      child: Text(
-                        "iOS暂未开放",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenUtil().setSp(42)),
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -373,7 +429,8 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
         runSpacing: ScreenUtil().setWidth(20),
         children: _dataList != null
             ? _dataList.asMap().keys.map((valueIndex) {
-                KeTaoFeaturedRechargeDataRechageList dataItem = _dataList[valueIndex];
+                KeTaoFeaturedRechargeDataRechageList dataItem =
+                    _dataList[valueIndex];
 
                 try {
                   if (_selectIndex == -1 &&
@@ -572,9 +629,8 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
                     GestureDetector(
                       onTap: () async {
                         if (_payWay == 1) {
-                          var result =
-                              await KeTaoFeaturedHttpManage.getRechargeWeChatPayInfo(
-                                  _phoneController.text,
+                          var result = await KeTaoFeaturedHttpManage
+                              .getRechargeWeChatPayInfo(_phoneController.text,
                                   _selectedRechargeData.id);
                           if (result.status) {
                             _payNo = result.data.payNo;
@@ -583,8 +639,9 @@ class _KeTaoFeaturedRechargeListPageState extends State<KeTaoFeaturedRechargeLis
                             KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payWay == 2) {
-                          var result = await KeTaoFeaturedHttpManage.getRechargeAliPayInfo(
-                              _phoneController.text, _selectedRechargeData.id);
+                          var result = await KeTaoFeaturedHttpManage
+                              .getRechargeAliPayInfo(_phoneController.text,
+                                  _selectedRechargeData.id);
                           if (result.status) {
                             _payInfo = result.data.payInfo;
                             _payNo = result.data.payNo;

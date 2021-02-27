@@ -102,6 +102,9 @@ dependencies:
 
   search_page: ^1.4.0
 
+  #  跑马灯
+  marquee: ^1.7.0
+
 dev_dependencies:
   json_model: #latest version
   build_runner: ^1.0.0
