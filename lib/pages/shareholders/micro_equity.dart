@@ -747,6 +747,10 @@ class _MicroShareHolderEquityPageState
     var profitDesc = '';
     var desChildrenList;
     var childrenListSize = _currentIndex == 2 && index == 1 ? 4 : 2;
+    if (_currentIndex == 0) {
+      childrenListSize = 1;
+    }
+
     if (!CommonUtils.isEmpty(item)) {
       try {
         profitTitle = item.title;

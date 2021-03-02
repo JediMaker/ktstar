@@ -36,6 +36,7 @@ import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/search_goods_list_entity_helper.dart';
 import 'package:star/generated/json/search_pdd_goods_list_entity_helper.dart';
 import 'package:star/generated/json/shareholder_income_list_entity_helper.dart';
+import 'package:star/generated/json/shop_type_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
@@ -80,6 +81,7 @@ import 'package:star/models/region_data_entity.dart';
 import 'package:star/models/search_goods_list_entity.dart';
 import 'package:star/models/search_pdd_goods_list_entity.dart';
 import 'package:star/models/shareholder_income_list_entity.dart';
+import 'package:star/models/shop_type_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
@@ -1392,14 +1394,20 @@ class HttpManage {
   ///
   ///[rechargeId] 充值id
   ///
+  ///[rechargeType] 0 快充 1 慢充
+  ///
   /// 获取话费充值微信支付信息
   ///
   static Future<WechatPayinfoEntity> getRechargeWeChatPayInfo(
-      tel, rechargeId) async {
+    tel,
+    rechargeId,
+    rechargeType,
+  ) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
+    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1418,14 +1426,20 @@ class HttpManage {
   ///
   ///[rechargeId] 充值id
   ///
+  ///[rechargeType] 0 快充 1 慢充
+  ///
   /// 获取话费充值支付宝支付信息
   ///
   static Future<AlipayPayinfoEntity> getRechargeAliPayInfo(
-      tel, rechargeId) async {
+    tel,
+    rechargeId,
+    rechargeType,
+  ) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
+    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:marquee/marquee.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/recharge_entity.dart';
+import 'package:star/models/recharge_extra_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/widget/select_choice.dart';
@@ -32,15 +34,21 @@ class RechargeListPage extends StatefulWidget {
 class _RechargeListPageState extends State<RechargeListPage> {
   TextEditingController _phoneController = new TextEditingController();
   List<RechargeDataRechageList> _dataList;
+  List<RechargeDataRechageList> _rechargeList;
+  List<RechargeDataRechageList> _sRechargeList;
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff999999);
   Color _textSelectedColor = Colors.white;
   int _selectIndex = -1;
   int _payWay = 0;
+  int _rechargeWay = 0; //0 快速充值 1 普通充值
   FocusNode _phoneFocusNode = FocusNode();
   var _payNo;
   RechargeDataRechageList _selectedRechargeData;
   RechargeDatacouponList _couponData;
+  RechargeExtraRatio ratio;
+  var _fastRatio = '';
+  var _slowRatio = '';
 
   _initWeChatResponseHandler() {
     GlobalConfig.payType = 1;
@@ -88,7 +96,12 @@ class _RechargeListPageState extends State<RechargeListPage> {
     if (result.status) {
       if (mounted) {
         setState(() {
-          _dataList = result.data.rechageList;
+          _rechargeList = result.data.rechageList;
+          _sRechargeList = result.data.sRechageList;
+          ratio = result.data.ratio;
+          _fastRatio = ratio.fast;
+          _slowRatio = ratio.slow;
+          _dataList = _rechargeList;
           try {
             _couponData = result.data.couponList[0];
           } catch (e) {}
@@ -117,7 +130,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
         alignment: Alignment.centerLeft,
         color: Color(0xffFFF0D1),
         child: Marquee(
-          text: "话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过2小时未到的可以找人工客服处理。",
+          text: "话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过24小时未到的可以找人工客服处理。",
           style: TextStyle(
             fontSize: ScreenUtil().setSp(32),
             color: Color(0xffDC6000),
@@ -218,6 +231,139 @@ class _RechargeListPageState extends State<RechargeListPage> {
                         ),
                       ),
                       Container(
+                        width: double.maxFinite,
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.circular(ScreenUtil().setWidth(30)),
+                        ),
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(30),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.symmetric(
+                                vertical: ScreenUtil().setWidth(0),
+                                horizontal: ScreenUtil().setWidth(30),
+                              ),
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(39),
+                              ),
+                              child: Text(
+                                "充值方式",
+                                style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: ScreenUtil().setSp(42)),
+                              ),
+                            ),
+                            ListTile(
+                              onTap: () {
+                                setState(() {
+                                  _rechargeWay = 0;
+                                  _dataList = _rechargeList;
+                                });
+                              },
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: ScreenUtil().setWidth(0),
+                                horizontal: ScreenUtil().setWidth(30),
+                              ),
+                              title: Transform(
+                                transform:
+                                    Matrix4.translationValues(-20, -6, 0.0),
+                                child: Text(
+                                  "快速充值",
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: ScreenUtil().setSp(42)),
+                                ),
+                              ),
+                              subtitle: Transform(
+                                transform:
+                                    Matrix4.translationValues(-20, -6, 0.0),
+                                child: Text.rich(
+                                  TextSpan(children: [
+                                    TextSpan(text: '预计'),
+                                    TextSpan(
+                                      text: '2小时',
+                                      style: TextStyle(
+                                        color: Color(0xFFCE0100),
+                                      ),
+                                    ),
+                                    TextSpan(text: '内到账，如24小时内未到账，请联系客服。'),
+                                  ]),
+                                  style: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontSize: ScreenUtil().setSp(32),
+                                  ),
+                                ),
+                              ),
+                              leading: CachedNetworkImage(
+                                imageUrl: _rechargeWay == 0
+                                    ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
+                                    : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
+                                width: ScreenUtil().setWidth(60),
+                                height: ScreenUtil().setWidth(60),
+                              ),
+//                              contentPadding: EdgeInsets.all(0),
+                            ),
+                            ListTile(
+                              onTap: () {
+                                setState(() {
+                                  _rechargeWay = 1;
+                                  _dataList = _sRechargeList;
+                                });
+                              },
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: ScreenUtil().setWidth(0),
+                                horizontal: ScreenUtil().setWidth(30),
+                              ),
+                              title: Transform(
+                                transform:
+                                    Matrix4.translationValues(-20, -6, 0.0),
+                                child: Text(
+                                  "普通充值",
+                                  style: TextStyle(
+                                      color: Color(0xFF222222),
+                                      fontSize: ScreenUtil().setSp(42)),
+                                ),
+                              ),
+                              subtitle: Transform(
+                                transform:
+                                    Matrix4.translationValues(-20, -6, 0.0),
+                                child: Text.rich(
+                                  TextSpan(children: [
+                                    TextSpan(text: '预计'),
+                                    TextSpan(
+                                      text: '72小时',
+                                      style: TextStyle(
+                                        color: Color(0xFFCE0100),
+                                      ),
+                                    ),
+                                    TextSpan(text: '内到账，急用勿充。'),
+                                  ]),
+                                  style: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontSize: ScreenUtil().setSp(32),
+                                  ),
+                                ),
+                              ),
+                              leading: Container(
+                                child: CachedNetworkImage(
+                                  imageUrl: _rechargeWay == 1
+                                      ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
+                                      : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
+                                  width: ScreenUtil().setWidth(60),
+                                  height: ScreenUtil().setWidth(60),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.only(
                           top: ScreenUtil().setWidth(80),
@@ -243,7 +389,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                                   fontSize: ScreenUtil().setSp(32)),
                             ),
                             Text(
-                              "4%",
+                              "${_rechargeWay == 0 ? '$_fastRatio' : '$_slowRatio'}%",
                               style: TextStyle(
                                   color: GlobalConfig.taskHeadColor,
                                   fontSize: ScreenUtil().setSp(32)),
@@ -251,7 +397,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                             Text(
                               "分红金",
                               style: TextStyle(
-                                  color: Color(0xff999999),
+                                  color: GlobalConfig.taskHeadColor,
                                   fontSize: ScreenUtil().setSp(32)),
                             ),
                           ],
@@ -385,7 +531,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                       ),
                       Text(
                         //
-                        "售价${dataItem.useMoney}元",
+                        "${dataItem.coinDesc}",
                         style: TextStyle(
                             fontSize: ScreenUtil().setSp(32),
                             color: _selectIndex == valueIndex
@@ -548,7 +694,8 @@ class _RechargeListPageState extends State<RechargeListPage> {
                           var result =
                               await HttpManage.getRechargeWeChatPayInfo(
                                   _phoneController.text,
-                                  _selectedRechargeData.id);
+                                  _selectedRechargeData.id,
+                                  _rechargeWay);
                           if (result.status) {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
@@ -557,7 +704,9 @@ class _RechargeListPageState extends State<RechargeListPage> {
                           }
                         } else if (_payWay == 2) {
                           var result = await HttpManage.getRechargeAliPayInfo(
-                              _phoneController.text, _selectedRechargeData.id);
+                              _phoneController.text,
+                              _selectedRechargeData.id,
+                              _rechargeWay);
                           if (result.status) {
                             _payInfo = result.data.payInfo;
                             _payNo = result.data.payNo;
