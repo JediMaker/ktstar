@@ -92,6 +92,12 @@ userInfoDataFromJson(UserInfoData data, Map<String, dynamic> json) {
 	if (json['partner_expire_time'] != null) {
 		data.partnerExpireTime = json['partner_expire_time']?.toString();
 	}
+	if (json['store_status'] != null) {
+		data.storeStatus = json['store_status']?.toString();
+	}
+	if (json['store_reject_msg'] != null) {
+		data.storeRejectMsg = json['store_reject_msg']?.toString();
+	}
 	if (json['partner_bonus'] != null) {
 		data.partnerBonus = new UserHolderProfitPartnerBonus().fromJson(json['partner_bonus']);
 	}
@@ -120,6 +126,8 @@ Map<String, dynamic> userInfoDataToJson(UserInfoData entity) {
 	data['is_partner'] = entity.isPartner;
 	data['partner_time'] = entity.partnerTime;
 	data['partner_expire_time'] = entity.partnerExpireTime;
+	data['store_status'] = entity.storeStatus;
+	data['store_reject_msg'] = entity.storeRejectMsg;
 	if (entity.partnerBonus != null) {
 		data['partner_bonus'] = entity.partnerBonus.toJson();
 	}
