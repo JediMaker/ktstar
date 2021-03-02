@@ -2042,10 +2042,11 @@ class HttpManage {
 
 //
   ///获取商品列表
-  static Future<ResultBeanEntity> getGoodsList({cId = ''}) async {
+  static Future<ResultBeanEntity> getGoodsList({cId = '', type}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
+    paramsMap['type'] = "$type";
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(

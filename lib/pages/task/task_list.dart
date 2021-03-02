@@ -1125,7 +1125,11 @@ class _TaskListPageState extends State<TaskListPage>
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
-                    NavigatorUtils.navigatorRouter(context, GoodsListPage());
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        GoodsListPage(
+                          type: "hot",
+                        ));
                   },
                   child: Container(
                     child: Row(

@@ -17,10 +17,11 @@ import '../../global_config.dart';
 import 'goods_detail.dart';
 
 class GoodsListPage extends StatefulWidget {
-  GoodsListPage({Key key, this.title = "分红商品", this.categoryId = ''})
+  GoodsListPage({Key key, this.title = "分红商品", this.categoryId = '', this.type})
       : super(key: key);
   String title = "分红商品";
   String categoryId;
+  String type;
 
   @override
   _GoodsListPageState createState() => _GoodsListPageState();
@@ -33,7 +34,8 @@ class _GoodsListPageState extends State<GoodsListPage> {
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
 
   _initData() async {
-    var result = await HttpManage.getGoodsList(cId: widget.categoryId);
+    var result = await HttpManage.getGoodsList(
+        cId: widget.categoryId, type: widget.type);
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
