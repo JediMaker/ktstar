@@ -17,9 +17,9 @@ import '../../global_config.dart';
 import 'goods_detail.dart';
 
 class GoodsListPage extends StatefulWidget {
-  GoodsListPage({Key key, this.title = "分红商品", this.categoryId = '', this.type})
+  GoodsListPage({Key key, this.title = "今日爆款", this.categoryId = '', this.type})
       : super(key: key);
-  String title = "分红商品";
+  String title = "今日爆款";
   String categoryId;
   String type;
 
