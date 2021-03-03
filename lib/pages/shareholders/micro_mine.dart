@@ -106,6 +106,23 @@ class _MicroMinePageState extends State<MicroMinePage>
 
   var _currentDividend = '0';
 
+  ///商家入驻申请状态 todo 值修改
+  ///0 未申请
+  ///1 审核中
+  ///2 通过
+  ///3 拒绝
+  var applyStatus = '0';
+
+  ///申请驳回信息
+  var _rejectMsg = '';
+
+  ///商家店铺id
+  var _shopId = '';
+
+  var _textAccordingToApplyStatus = '商家入驻申请';
+
+  var _shareHolderBtnText = '升级股东';
+
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
     if (result.status) {
@@ -135,6 +152,17 @@ class _MicroMinePageState extends State<MicroMinePage>
               : '高级股东';
           if (result.data.isPartner == '2') {
             _title= '我的';
+          }
+          if (result.data.isPartner == '4') {
+            _shareHolderBtnText = '股东权益';
+          }
+          applyStatus = result.data.storeStatus;
+          _rejectMsg = result.data.storeRejectMsg;
+          _shopId = result.data.storeId;
+          if (applyStatus == '2') {
+            _textAccordingToApplyStatus = "商家后台";
+          } else {
+            _textAccordingToApplyStatus = '商家入驻申请';
           }
           _yesterdayProfit = result.data.partnerBonus.yesterday;
           _sevenDayProfit = result.data.partnerBonus.week;
@@ -2398,7 +2426,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         width: ScreenUtil().setWidth(2)),
                   ),
                   child: Text(
-                    "升级股东",
+                    "$_shareHolderBtnText",
                     style: TextStyle(
 //                  color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                         color: Color(0xffFFFFFF),
