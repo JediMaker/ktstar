@@ -229,11 +229,9 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       });
     });
     bus.on("changeBottomNavigatorBarWithCategoryId", (cid) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        /*if (index == 1) {
+      if (mounted) {
+        setState(() {
+          /*if (index == 1) {
                       if (!GlobalConfig.isLogin()) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
@@ -251,14 +249,15 @@ class _TaskIndexPageState extends State<TaskIndexPage>
                       _navigationViews[_currentIndex].controller.forward();
                       _currentPage = _pageList[_currentIndex];
                     }*/
-        {
-          _navigationViews[_currentIndex].controller.reverse();
-          _currentIndex = 1;
-          _navigationViews[_currentIndex].controller.forward();
-          _currentPage = _pageList[_currentIndex];
-          _pageController.jumpToPage(_currentIndex);
-        }
-      });
+          {
+            _navigationViews[_currentIndex].controller.reverse();
+            _currentIndex = 1;
+            _navigationViews[_currentIndex].controller.forward();
+            _currentPage = _pageList[_currentIndex];
+            _pageController.jumpToPage(_currentIndex);
+          }
+        });
+      }
       bus.emit("changeSelCategory", cid);
     });
   }
