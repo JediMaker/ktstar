@@ -255,10 +255,10 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             _navigationViews[_currentIndex].controller.forward();
             _currentPage = _pageList[_currentIndex];
             _pageController.jumpToPage(_currentIndex);
+            bus.emit("changeSelCategory", cid);
           }
         });
       }
-      bus.emit("changeSelCategory", cid);
     });
   }
 
