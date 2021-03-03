@@ -28,7 +28,7 @@ class ErrorInterceptors extends InterceptorsWrapper {
   onRequest(RequestOptions options) async {
     //没有网络
   }
-
+  DateTime _lastQuitTime;
   getFinalException(DioError dioError) {
     try {
       print("HandleError DioError:  $dioError");
@@ -57,7 +57,15 @@ class ErrorInterceptors extends InterceptorsWrapper {
               if (dioError.error != null) {
                 if (dioError.error is SocketException) {
                   msg = "网络连接异常";
-                  CommonUtils.showToast("网络连接异常！");
+                  if (_lastQuitTime == null ||
+                      DateTime.now().difference(_lastQuitTime).inSeconds > 5) {
+                    /*Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+                    CommonUtils.showToast("网络连接异常！");
+                    _lastQuitTime = DateTime.now();
+                    return false;
+                  } else {
+                  }
                 } else {
                   msg = dioError.message;
                 }
