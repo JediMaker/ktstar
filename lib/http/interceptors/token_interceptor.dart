@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:package_info/package_info.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/global_config.dart';
@@ -25,7 +27,15 @@ class TokenInterceptors extends InterceptorsWrapper {
   @override
   onRequest(RequestOptions options) async {
     try {
+      /// 获取当前版本
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
       options.headers["token"] = GlobalConfig.getLoginInfo().token;
+      if (Platform.isAndroid) {
+        options.headers["version"] = packageInfo.version;
+      }
+      if (Platform.isIOS) {
+        options.headers["version"] = packageInfo.buildNumber;
+      }
     } catch (e) {
       print(e);
     }
