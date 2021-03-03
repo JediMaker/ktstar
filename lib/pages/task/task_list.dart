@@ -1899,6 +1899,7 @@ class _TaskListPageState extends State<TaskListPage>
               return;
             }
             if (path == 'category') {
+              GlobalConfig.prefs.setString("cid", cId);
               bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
               return;
             }

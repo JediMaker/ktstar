@@ -93,6 +93,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
     });
 
     bus.on("changeSelCategory", (cid) {
+      print("busCid=$cid");
       selCid = cid;
       changeSelCategory(cid);
     });
@@ -100,6 +101,9 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
 
   changeSelCategory(cid) {
     print("cid=$cid");
+    if (CommonUtils.isEmpty(cid)) {
+      cid = GlobalConfig.prefs.getString("cid");
+    }
     for (var i = 0; i < leftListData.length; i++) {
       if (leftListData[i].id == cid) {
         selIndex = i;
