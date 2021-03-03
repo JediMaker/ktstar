@@ -99,7 +99,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
       }
       print("selIndex=$selIndex");
       if (selIndex != -1) {
-        resetSelectIndex(selIndex);
+        changeScrollOffset(selIndex);
       }
     });
   }
@@ -273,37 +273,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                       ),
                     ),
                     onTap: () {
-                      ///计算需要滚动的高度
-                      var totalItemHeight = 0.00;
-                      var totalTitleHeight =
-                          (index) * ScreenUtil().setWidth(100);
-                      totalItemHeight += totalTitleHeight;
-                      for (var i = 0; i < index; i++) {
-                        var rightList = leftListData[i].children;
-                        var len = rightList.length;
-                        var itemH = ScreenUtil().setWidth(360);
-                        var itemHWithSpace = ScreenUtil().setWidth(372);
-                        var itemHeight = 0.00;
-                        if (len % 3 == 0) {
-                          itemHeight = itemHWithSpace * len / 3;
-                        } else {
-                          if (len > 3) {
-                            var s = (len - len % 3) / 3; //
-                            itemHeight = itemHWithSpace * s + itemH;
-                          } else {
-                            itemHeight = itemH;
-                          }
-                        }
-                        totalItemHeight += itemHeight;
-                      }
-                      var scrollOffset = totalItemHeight;
-                      setState(() {
-                        _rightScrollController.animateTo(scrollOffset,
-                            duration: new Duration(milliseconds: 200),
-                            curve: Curves.ease);
-                        Future.delayed(Duration(milliseconds: 500))
-                            .then((value) => resetSelectIndex(index));
-                      });
+                      changeScrollOffset(index);
                     },
                   ),
                 );
@@ -322,6 +292,38 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
         ],
       ),
     );
+  }
+
+  changeScrollOffset(int index) {
+    ///计算需要滚动的高度
+    var totalItemHeight = 0.00;
+    var totalTitleHeight = (index) * ScreenUtil().setWidth(100);
+    totalItemHeight += totalTitleHeight;
+    for (var i = 0; i < index; i++) {
+      var rightList = leftListData[i].children;
+      var len = rightList.length;
+      var itemH = ScreenUtil().setWidth(360);
+      var itemHWithSpace = ScreenUtil().setWidth(372);
+      var itemHeight = 0.00;
+      if (len % 3 == 0) {
+        itemHeight = itemHWithSpace * len / 3;
+      } else {
+        if (len > 3) {
+          var s = (len - len % 3) / 3; //
+          itemHeight = itemHWithSpace * s + itemH;
+        } else {
+          itemHeight = itemH;
+        }
+      }
+      totalItemHeight += itemHeight;
+    }
+    var scrollOffset = totalItemHeight;
+    setState(() {
+      _rightScrollController.animateTo(scrollOffset,
+          duration: new Duration(milliseconds: 200), curve: Curves.ease);
+      Future.delayed(Duration(milliseconds: 500))
+          .then((value) => resetSelectIndex(index));
+    });
   }
 
   resetSelectIndex(int index) {
