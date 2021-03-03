@@ -316,7 +316,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(
-                              bottom: ScreenUtil().setHeight(6)),
+                              bottom: ScreenUtil().setHeight(0)),
                           child: Visibility(
                             visible: salePrice != originalPrice,
                             child: Text(
