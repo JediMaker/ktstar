@@ -1152,7 +1152,7 @@ class _TaskListPageState extends State<TaskListPage>
                                 height: ScreenUtil().setWidth(93),
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      "https://alipic.lanhuapp.com/xd2f96e526-c4b7-42d1-b4a9-813e1976d2e0",
+                                      "https://alipic.lanhuapp.com/xdde41acb8-afe5-4d8d-bd12-e9dc417c3894",
                                   fit: BoxFit.fill,
                                 ),
                               ),
