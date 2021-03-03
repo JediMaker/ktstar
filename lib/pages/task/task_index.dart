@@ -229,7 +229,6 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       });
     });
     bus.on("changeBottomNavigatorBarWithCategoryId", (cid) {
-      bus.emit("changeSelCategory", cid);
       if (!mounted) {
         return;
       }
@@ -260,6 +259,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
           _pageController.jumpToPage(_currentIndex);
         }
       });
+      bus.emit("changeSelCategory", cid);
     });
   }
 
