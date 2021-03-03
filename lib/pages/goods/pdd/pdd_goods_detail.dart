@@ -895,7 +895,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                   child: IconButton(
                     icon: CachedNetworkImage(
                       imageUrl:
-                          "https://alipic.lanhuapp.com/xded955fd8-b440-4233-863c-337b04b3e66b",
+                          "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
