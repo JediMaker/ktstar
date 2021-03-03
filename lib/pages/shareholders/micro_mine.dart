@@ -155,6 +155,8 @@ class _MicroMinePageState extends State<MicroMinePage>
           }
           if (result.data.isPartner == '4') {
             _shareHolderBtnText = '股东权益';
+          } else {
+            _shareHolderBtnText = '升级股东';
           }
           applyStatus = result.data.storeStatus;
           _rejectMsg = result.data.storeRejectMsg;
