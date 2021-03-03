@@ -34,6 +34,9 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
         try {
           leftListData = categoryList;
           rightListData = leftListData[selectedIndex].children;
+          if (selIndex == -1) {
+            changeSelCategory(selCid);
+          }
         } catch (e) {}
       });
     }
@@ -90,20 +93,26 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
     });
 
     bus.on("changeSelCategory", (cid) {
-      int selIndex = -1;
-      print("cid=$cid");
-      for (var i = 0; i < leftListData.length; i++) {
-        if (leftListData[i].id == cid) {
-          selIndex = i;
-        }
-      }
-      print("selIndex=$selIndex");
-      if (selIndex != -1) {
-        changeScrollOffset(selIndex);
-      }
+      selCid = cid;
+      changeSelCategory(cid);
     });
   }
 
+  changeSelCategory(cid) {
+    print("cid=$cid");
+    for (var i = 0; i < leftListData.length; i++) {
+      if (leftListData[i].id == cid) {
+        selIndex = i;
+      }
+    }
+    print("selIndex=$selIndex");
+    if (selIndex != -1) {
+      changeScrollOffset(selIndex);
+    }
+  }
+
+  int selIndex = -1;
+  String selCid = '';
   int selectedIndex = 0;
 
   Widget buildSearchBarLayout() {
