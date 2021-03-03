@@ -33,7 +33,7 @@ class TokenInterceptors extends InterceptorsWrapper {
         options.headers["version"] = packageInfo.version;
       }
       if (Platform.isIOS) {
-        options.headers["version"] = packageInfo.buildNumber;
+        options.headers["version"] = packageInfo.version;
       }
       options.headers["token"] = GlobalConfig.getLoginInfo().token;
     } catch (e) {

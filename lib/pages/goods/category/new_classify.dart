@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/category_bean_entity.dart';
@@ -85,6 +86,20 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
             selectedIndex = _needSelIndex;
           }
         });
+      }
+    });
+
+    bus.on("changeSelCategory", (cid) {
+      int selIndex = -1;
+      print("cid=$cid");
+      for (var i = 0; i < leftListData.length; i++) {
+        if (leftListData[i].id == cid) {
+          selIndex = i;
+        }
+      }
+      print("selIndex=$selIndex");
+      if (selIndex != -1) {
+        resetSelectIndex(selIndex);
       }
     });
   }

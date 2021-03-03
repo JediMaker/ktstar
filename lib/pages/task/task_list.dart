@@ -1752,7 +1752,12 @@ class _TaskListPageState extends State<TaskListPage>
     String path = '';
     String subtitle = '';
     String params = '';
+
+    ///拼多多分类id
     String catId = '';
+
+    ///自营分类id
+    String cId = '';
     String pddType = '';
     String flag = '';
     bool needShow = true;
@@ -1781,6 +1786,9 @@ class _TaskListPageState extends State<TaskListPage>
               break;
             case "type":
               pddType = itemList[1];
+              break;
+            case "cid":
+              cId = itemList[1];
               break;
           }
         }
@@ -1888,6 +1896,10 @@ class _TaskListPageState extends State<TaskListPage>
                     title: name,
                     categoryId: catId,
                   ));
+              return;
+            }
+            if (path == 'category') {
+              bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
               return;
             }
             switch (path) {
