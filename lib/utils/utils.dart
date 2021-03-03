@@ -186,8 +186,8 @@ class Utils {
 
         bool needUpdate = false;
         if (Platform.isIOS) {
-          needUpdate = isBuildNumberGreatThanLocal(
-              versionInfo.data.buildNumber, packageInfo.buildNumber);
+          needUpdate = isVersionGreatThanLocal(
+              versionInfo.data.buildNumber, _localVersion);
         }
         if (Platform.isAndroid) {
           needUpdate = isVersionGreatThanLocal(
@@ -291,7 +291,7 @@ class Utils {
     return result;
   }
 
-  static bool isBuildNumberGreatThanLocal(
+  static bool isIosBuildVersionGreatThanLocal(
       String buildNumberRemote, String buildNumberLocal) {
     buildNumberRemote.compareTo(buildNumberRemote);
     bool result = false;
