@@ -29,13 +29,13 @@ class TokenInterceptors extends InterceptorsWrapper {
     try {
       /// 获取当前版本
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      options.headers["token"] = GlobalConfig.getLoginInfo().token;
       if (Platform.isAndroid) {
         options.headers["version"] = packageInfo.version;
       }
       if (Platform.isIOS) {
         options.headers["version"] = packageInfo.buildNumber;
       }
+      options.headers["token"] = GlobalConfig.getLoginInfo().token;
     } catch (e) {
       print(e);
     }
