@@ -104,7 +104,12 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
 
   _initData() async {
     var result = await KeTaoFeaturedHttpManage.getGoodsList(
-        cId: widget.categoryId, type: widget.type);
+        cId: widget.categoryId,
+        type: widget.type,
+        page: page,
+        pageSize: 20,
+        firstId: '');
+
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
@@ -112,7 +117,7 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
         setState(() {
           if (page == 1) {
             goodsList = entity.goodsList;
-            _refreshController.finishLoad(noMore: true);
+            _refreshController.finishLoad(noMore: false);
           } else {
             if (result == null ||
                 result.data == null ||
@@ -136,7 +141,7 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
   void initState() {
     super.initState();
     _refreshController = EasyRefreshController();
-    _refreshController.finishLoad(noMore: true);
+//    _refreshController.finishLoad(noMore: true);
     _initData();
   }
 
@@ -214,7 +219,7 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: 16),
+          margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30)),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,

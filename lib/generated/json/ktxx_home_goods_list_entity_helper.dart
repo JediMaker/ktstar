@@ -2,9 +2,9 @@ import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
 
 homeGoodsListEntityFromJson(
     HomeGoodsListEntity data, Map<String, dynamic> json) {
-  if (json['goods_list'] != null) {
+  if (json['list'] != null) {
     data.goodsList = new List<HomeGoodsListGoodsList>();
-    (json['goods_list'] as List).forEach((v) {
+    (json['list'] as List).forEach((v) {
       data.goodsList.add(new HomeGoodsListGoodsList().fromJson(v));
     });
   }
@@ -14,7 +14,7 @@ homeGoodsListEntityFromJson(
 Map<String, dynamic> homeGoodsListEntityToJson(HomeGoodsListEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   if (entity.goodsList != null) {
-    data['goods_list'] = entity.goodsList.map((v) => v.toJson()).toList();
+    data['list'] = entity.goodsList.map((v) => v.toJson()).toList();
   }
   return data;
 }

@@ -1077,7 +1077,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     return new InkWell(
         onTap: () async {
           /// 判断功能是否需要登录
-          if (needLogin&&!name.contains('百货')) {
+          if (needLogin && !name.contains('百货')) {
             KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
             KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context, KeTaoFeaturedLoginPage());

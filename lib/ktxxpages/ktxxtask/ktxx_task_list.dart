@@ -1072,7 +1072,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
               pddcategoryTabsView,
               SliverToBoxAdapter(
                 child: GestureDetector(
-                  child: KeTaoFeaturedHomePddGoodsListPage(),
+                  child: KeTaoFeaturedHomeGoodsListPage(),
                   onHorizontalDragStart: (DragStartDetails details) {},
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
                     _offsetValue = details.primaryDelta;
