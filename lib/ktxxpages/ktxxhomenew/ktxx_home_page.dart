@@ -297,7 +297,7 @@ class _KeTaoFeaturedHomePagePageState extends State<KeTaoFeaturedHomePagePage> {
 
   @override
   Widget build(BuildContext context) {
-    var title = '个人中心';
+    var title = '我的';
     /*  WidgetsBinding.instance.addPostFrameCallback((_) {
       print(
           "KeTaoFeaturedGlobalConfig.iosCheck=${KeTaoFeaturedGlobalConfig.iosCheck}");

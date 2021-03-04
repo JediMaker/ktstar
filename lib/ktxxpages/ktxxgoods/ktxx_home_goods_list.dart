@@ -243,7 +243,7 @@ class _KeTaoFeaturedHomeGoodsListPageState
           _initData();
         }
       },
-      emptyWidget: goodsList == null || goodsList.length == 0 ? null : null,
+//      emptyWidget: goodsList == null || goodsList.length == 0 ? null : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -258,7 +258,7 @@ class _KeTaoFeaturedHomeGoodsListPageState
 //          height: double.infinity,
         child: new StaggeredGridView.countBuilder(
           crossAxisCount: 2,
-          itemCount: goodsList.length,
+          itemCount: goodsList == null ? 0 : goodsList.length,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {

@@ -488,7 +488,7 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             height: ScreenUtil().setWidth(65),
           ),
           title: new Text(
-            '个人中心',
+            '我的',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this)

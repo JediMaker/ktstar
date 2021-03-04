@@ -42,7 +42,7 @@ import 'ktxx_invitation_poster.dart';
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskMinePage extends StatefulWidget {
   KeTaoFeaturedTaskMinePage({Key key, this.userInfoData}) : super(key: key);
-  final String title = "个人中心";
+  final String title = "我的";
   UserInfoData userInfoData;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
@@ -291,7 +291,7 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
           ]),
           brightness: Brightness.light,
           title: Text(
-            "个人中心",
+            "我的",
             /*style: TextStyle(
                 color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 fontSize: ScreenUtil().setSp(54)),*/

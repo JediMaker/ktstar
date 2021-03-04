@@ -162,7 +162,7 @@ class _KeTaoFeaturedMinePagePageState extends State<KeTaoFeaturedMinePagePage> {
 
   @override
   Widget build(BuildContext context) {
-    var title = '个人中心';
+    var title = '我的';
     rootView = KeTaoFeaturedMicroMinePage(
 //      title: title,
         );

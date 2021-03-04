@@ -129,7 +129,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
   var _isWithdrawal = '';
   var _isFirst = true;
   var _pwdStatus = '';
-  var _title = '个人中心';
+  var _title = '我的';
   TextEditingController _dialogPhoneNumberController;
   TextEditingController _dialogNickNameController;
   TextEditingController _dialogWeChatNoController;
@@ -218,7 +218,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
                   ? 'VIP股东'
                   : '高级股东';
           if (result.data.isPartner == '2') {
-            _title = '个人中心';
+            _title = '我的';
           }
           if (result.data.isPartner == '4') {
             _shareHolderBtnText = '股东权益';
@@ -273,7 +273,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
     if (mounted) {
       setState(() {
         try {
-          _title = "个人中心";
+          _title = "我的";
           headUrl = '';
           nickName = '';
           userType = '';
@@ -2310,7 +2310,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
   Widget buildHeadLayout() {
     String text = "";
     text = _title;
-    if (_title == '个人中心') {
+    if (_title == '我的') {
       text = "普通用户";
     }
     if (!KeTaoFeaturedGlobalConfig.isLogin()) {
