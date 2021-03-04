@@ -76,11 +76,18 @@ import 'ktxx_goods_detail.dart';
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsListPage extends StatefulWidget {
   KeTaoFeaturedGoodsListPage(
-      {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
+      {Key key,
+      this.title = "今日爆款",
+      this.categoryId = '',
+      this.firstId = '',
+      this.type,
+      this.showAppBar = true})
       : super(key: key);
   String title = "今日爆款";
   String categoryId;
+  String firstId;
   String type;
+  bool showAppBar;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
@@ -108,7 +115,7 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
         type: widget.type,
         page: page,
         pageSize: 20,
-        firstId: '');
+        firstId: widget.firstId);
 
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
@@ -154,33 +161,39 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(
-              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-        ),
-        brightness: Brightness.light,
-        leading: IconButton(
-          icon: Container(
-            width: ScreenUtil().setWidth(63),
-            height: ScreenUtil().setHeight(63),
-            child: Center(
-              child: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
-                height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
-              ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(56),
+        child: Visibility(
+          visible: widget.showAppBar,
+          child: AppBar(
+            title: Text(
+              "${widget.title}",
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
+            brightness: Brightness.light,
+            leading: IconButton(
+              icon: Container(
+                width: ScreenUtil().setWidth(63),
+                height: ScreenUtil().setHeight(63),
+                child: Center(
+                  child: Image.asset(
+                    "static/images/icon_ios_back.png",
+                    width: ScreenUtil().setWidth(36),
+                    height: ScreenUtil().setHeight(63),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            centerTitle: true,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+            elevation: 0,
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
         ),
-        centerTitle: true,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
-        elevation: 0,
       ),
       body:
           buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.

@@ -9,6 +9,7 @@ import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
 import 'package:star/ktxxmodels/ktxx_pdd_home_entity.dart';
+import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_list.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_home_goods_list.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_featured_tab.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_list.dart';
@@ -278,8 +279,9 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
             KeTaoFeaturedHomeTabPage(pddHomeData: _homeData),
           );
         } else {
-          tabViews.add(KeTaoFeaturedHomeGoodsListPage(
+          tabViews.add(KeTaoFeaturedGoodsListPage(
             firstId: classify.catId.toString(),
+            showAppBar: false,
           ));
         }
       }
