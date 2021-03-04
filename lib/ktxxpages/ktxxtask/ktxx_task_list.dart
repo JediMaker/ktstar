@@ -360,8 +360,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     });
     _tabs = buildTabs();
     pddcategoryTabsView = buildPddCategoryTabBar();
-    bus.emit("changePddListViewData",
-        cats[_selectedTabIndex]);
+    bus.emit("changePddListViewData", cats[_selectedTabIndex]);
   }
 
   ///拼多多商品分类
@@ -1189,7 +1188,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                                 height: ScreenUtil().setWidth(93),
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                  "https://alipic.lanhuapp.com/xdde41acb8-afe5-4d8d-bd12-e9dc417c3894",
+                                      "https://alipic.lanhuapp.com/xdde41acb8-afe5-4d8d-bd12-e9dc417c3894",
                                   fit: BoxFit.fill,
                                 ),
                               ),
