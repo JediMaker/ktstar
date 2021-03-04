@@ -227,7 +227,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
     if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
-        if ('精选' == classify.catName) {
+        if (index == 0) {
           cats[index].catName = '首页';
         }
         tabs.add(Container(
