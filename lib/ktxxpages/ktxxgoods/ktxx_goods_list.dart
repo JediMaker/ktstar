@@ -76,9 +76,9 @@ import 'ktxx_goods_detail.dart';
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsListPage extends StatefulWidget {
   KeTaoFeaturedGoodsListPage(
-      {Key key, this.title = "分红商品", this.categoryId = '', this.type})
+      {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
       : super(key: key);
-  String title = "分红商品";
+  String title = "今日爆款";
   String categoryId;
   String type;
   int SVG_ANGLETYPE_DEG = 2;
