@@ -270,7 +270,6 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 //分类下对应页面
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
-
     if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
@@ -280,7 +279,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
           );
         } else {
           tabViews.add(KeTaoFeaturedHomeGoodsListPage(
-            categoryId: classify.catId.toString(),
+            firstId: classify.catId.toString(),
           ));
         }
       }

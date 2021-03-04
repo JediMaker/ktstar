@@ -92,10 +92,15 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class KeTaoFeaturedHomeGoodsListPage extends StatefulWidget {
   KeTaoFeaturedHomeGoodsListPage(
-      {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
+      {Key key,
+      this.title = "今日爆款",
+      this.categoryId = '',
+      this.firstId,
+      this.type})
       : super(key: key);
   String title = "今日爆款";
   String categoryId;
+  String firstId;
   String type;
 
   @override
@@ -150,7 +155,7 @@ class _KeTaoFeaturedHomeGoodsListPageState
   void initState() {
     super.initState();
     _refreshController = EasyRefreshController();
-    categoryId = widget.categoryId;
+    categoryId = widget.firstId;
     bus.on("refreshHomeData", (arg) {
       page = 1;
       _initData();
