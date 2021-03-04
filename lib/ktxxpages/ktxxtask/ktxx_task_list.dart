@@ -360,7 +360,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     });
     _tabs = buildTabs();
     pddcategoryTabsView = buildPddCategoryTabBar();
-    bus.emit("changePddListViewData", cats[_selectedTabIndex]);
+//    bus.emit("changePddListViewData", cats[_selectedTabIndex]);
   }
 
   ///拼多多商品分类
