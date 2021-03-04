@@ -9,6 +9,7 @@ import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
 import 'package:star/ktxxmodels/ktxx_pdd_home_entity.dart';
+import 'package:star/ktxxpages/ktxxgoods/ktxx_home_goods_list.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_featured_tab.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_list.dart';
 import 'package:star/ktxxpages/ktxxhomenew/ktxx_home_tab.dart';
@@ -113,8 +114,8 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
   void initState() {
     super.initState();
     _initData();
-    _tabController =
-        new TabController(vsync: this, length: cats == null ? 0 : cats.length+1);
+    _tabController = new TabController(
+        vsync: this, length: cats == null ? 0 : cats.length + 1);
     _tabController.addListener(() {
       if (mounted) {
         setState(() {
@@ -278,9 +279,8 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
             KeTaoFeaturedHomeTabPage(pddHomeData: _homeData),
           );
         } else {
-          tabViews.add(KeTaoFeaturedPddGoodsListPage(
+          tabViews.add(KeTaoFeaturedHomeGoodsListPage(
             categoryId: classify.catId.toString(),
-            tabIndex: index,
           ));
         }
       }
@@ -393,7 +393,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
           setState(() {
             cats = categoryResult.data.cats;
             _tabController = new TabController(
-                vsync: this, length: cats == null ? 0 : cats.length+1);
+                vsync: this, length: cats == null ? 0 : cats.length + 1);
             _tabController.addListener(() {
               if (mounted) {
                 setState(() {
