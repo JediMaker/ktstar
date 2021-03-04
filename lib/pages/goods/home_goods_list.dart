@@ -5,194 +5,97 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:star/bus/my_event_bus.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
-import 'package:star/models/home_pdd_category_entity.dart';
-import 'package:star/models/pdd_goods_list_entity.dart';
-import 'package:star/pages/goods/home_pdd_goods_list.dart';
 import 'package:star/pages/widget/PriceText.dart';
-import 'package:star/pages/widget/dashed_rect.dart';
 import 'package:star/pages/widget/no_data.dart';
-import 'package:star/pages/widget/persistent_header_builder.dart';
-import 'package:star/pages/widget/round_tab_indicator.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:star/bus/my_event_bus.dart';
 
 import '../../global_config.dart';
 import 'goods_detail.dart';
-import 'pdd/pdd_goods_detail.dart';
 
 class HomeGoodsListPage extends StatefulWidget {
-  HomeGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
+  HomeGoodsListPage(
+      {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
       : super(key: key);
-  String title = "补贴商品";
+  String title = "今日爆款";
   String categoryId;
+  String type;
 
   @override
   _HomeGoodsListPageState createState() => _HomeGoodsListPageState();
 }
 
-class _HomeGoodsListPageState extends State<HomeGoodsListPage>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  TabController _tabController;
-  int _selectedTabIndex = 0;
-  Widget pddcategoryTabsView;
-  List<HomePddCategoryDataCat> cats;
-  var _tabs;
-  var _tabViews;
+class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
+  int page = 1;
+  int count = 1;
+  EasyRefreshController _refreshController;
+  bool isFirstLoading = true;
+  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
+  var categoryId;
 
-  _initData({categoryId}) async {
-    var categoryResult = await HttpManage.getHomePagePddProductCategory();
-    try {
-      if (categoryResult.status) {
-        if (mounted) {
-          setState(() {
-            cats = categoryResult.data.cats;
-            initPddTabbar();
-          });
-        }
-      }
-    } catch (e) {}
-  }
-
-  initPddTabbar() {
-    _pddTabController =
-        new TabController(vsync: this, length: cats == null ? 0 : cats.length);
-    _pddTabController.addListener(() {
+  _initData() async {
+    var result = await HttpManage.getGoodsList(
+        cId: widget.categoryId,
+        type: widget.type,
+        page: page,
+        pageSize: 20,
+        firstId: categoryId);
+    if (result.status) {
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
+      homeGoodsListEntityFromJson(entity, result.data);
       if (mounted) {
         setState(() {
-          if (_pddTabController.index == _pddTabController.animation.value) {
-            _selectedTabIndex = _pddTabController.index;
+          if (page == 1) {
+            goodsList = entity.goodsList;
+            _refreshController.finishLoad(noMore: false);
+          } else {
+            if (result == null ||
+                result.data == null ||
+                entity.goodsList == null ||
+                entity.goodsList.length == 0) {
+              //              _refreshController.resetLoadState();
+              _refreshController.finishLoad(noMore: true);
+            } else {
+              goodsList += entity.goodsList;
+            }
           }
+          isFirstLoading = false;
         });
       }
-    });
-    _tabs = buildTabs();
-    pddcategoryTabsView = buildPddCategoryTabBar();
-    _tabViews = buildTabViews();
-  }
-
-  ///拼多多商品分类
-  Widget buildPddCategoryTabBar() {
-    return SliverPersistentHeader(
-        pinned: true,
-        delegate: PersistentHeaderBuilder(
-            max: 60,
-            min: 48,
-            builder: (ctx, offset) => Container(
-                  alignment: Alignment.center,
-                  color: Color(0xFFFAFAFA),
-//                  height: 26,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: TabBar(
-                    labelColor: Color(0xff222222),
-                    controller: this._pddTabController,
-                    indicatorColor: Color(0xffCE0100),
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorWeight: 2,
-                    isScrollable: true,
-                    indicator: RoundUnderlineTabIndicator(
-                        borderSide: BorderSide(
-                      width: 0,
-                      color: Colors.white,
-                    )),
-                    tabs: _tabs,
-                    onTap: (index) {
-                      setState(() {
-                        if (mounted) {
-                          setState(() {
-                            _selectedTabIndex = _pddTabController.index;
-                            _tabs = buildTabs();
-                            pddcategoryTabsView = buildPddCategoryTabBar();
-                            bus.emit("changePddListViewData",
-                                cats[_selectedTabIndex].catId);
-                          });
-                        }
-                      });
-                    },
-                  ),
-                )));
-  }
-
-//分类页签
-  List<Widget> buildTabs() {
-    List<Widget> tabs = <Widget>[];
-    if (!CommonUtils.isEmpty(cats)) {
-      for (var index = 0; index < cats.length; index++) {
-        var classify = cats[index];
-        tabs.add(Container(
-          height: 36,
-          child: Tab(
-            iconMargin: EdgeInsets.all(0),
-            child: Text(
-              "${classify.catName}",
-              style: TextStyle(
-                  fontSize: ScreenUtil().setSp(42),
-                  fontWeight: FontWeight.bold,
-                  color: index == _selectedTabIndex
-                      ? Color(0xffCE0100)
-                      : Color(0xff222222)),
-            ),
-          ),
-        ));
-      }
     } else {
-      /*tabs.add(Container(
-        height: 36,
-        child: Tab(
-          child: Text(
-            "",
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(36),
-            ),
-          ),
-        ),
-      ));*/
+      CommonUtils.showToast(result.errMsg);
     }
-    return tabs;
   }
-
-//分类下对应页面
-  List<Widget> buildTabViews() {
-    List<Widget> tabViews = <Widget>[];
-    if (!CommonUtils.isEmpty(cats)) {
-      for (var index = 0; index < cats.length; index++) {
-        var classify = cats[index];
-        tabViews.add(HomePddGoodsListPage(
-          categoryId: classify.catId.toString(),
-        ));
-      }
-    } else {
-      /*tabs.add(Container(
-        height: 36,
-        child: Tab(
-          child: Text(
-            "",
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(36),
-            ),
-          ),
-        ),
-      ));*/
-    }
-    return tabViews;
-  }
-
-  TabController _pddTabController;
 
   @override
   void initState() {
     super.initState();
-    initPddTabbar();
+    _refreshController = EasyRefreshController();
+    categoryId = widget.categoryId;
+    bus.on("refreshHomeData", (arg) {
+      page = 1;
+      _initData();
+    });
+    bus.on("loadMoreHomeData", (arg) {
+      page++;
+      _initData();
+    });
+    bus.on("changePddListViewData", (arg) {
+      page = 1;
+      categoryId = arg.catId.toString();
+      _initData();
+    });
     _initData();
   }
 
   @override
   void dispose() {
-    _pddTabController.dispose();
     super.dispose();
+    _refreshController.dispose();
   }
 
   @override
@@ -200,28 +103,105 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
     ///    组件创建完成的回调通知方法
     ///解决首次数据加载失败问题
     ///
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!CommonUtils.isEmpty(goodsList)) {
+      } else {
+        print("$context WidgetsBinding_initData");
+        if (count < 5) {
+          count++;
+          _initData();
+        }
+      }
+    });
     return buildCenter();
+    /*return Scaffold(
+//      appBar: AppBar(
+//        title: Text(
+//          widget.title,
+//          style: TextStyle(
+//              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
+//        ),
+//        brightness: Brightness.light,
+//        leading: IconButton(
+//          icon: Container(
+//            width: ScreenUtil().setWidth(63),
+//            height: ScreenUtil().setHeight(63),
+//            child: Center(
+//              child: Image.asset(
+//                "static/images/icon_ios_back.png",
+//                width: ScreenUtil().setWidth(36),
+//                height: ScreenUtil().setHeight(63),
+//                fit: BoxFit.fill,
+//              ),
+//            ),
+//          ),
+//          onPressed: () {
+//            Navigator.of(context).pop();
+//          },
+//        ),
+//        centerTitle: true,
+//        backgroundColor: GlobalConfig.taskNomalHeadColor,
+//        elevation: 0,
+//      ),
+      body:
+          buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.
+    );*/
+  }
+
+  EasyRefresh buildEasyRefresh() {
+    return EasyRefresh.custom(
+      topBouncing: false,
+      bottomBouncing: false,
+      header: MaterialHeader(),
+      footer: MaterialFooter(),
+      enableControlFinishLoad: true,
+      enableControlFinishRefresh: true,
+      controller: _refreshController,
+      onRefresh: () {
+        page = 1;
+        _initData();
+        _refreshController.finishLoad(noMore: false);
+      },
+      onLoad: () {
+        if (!isFirstLoading) {
+          page++;
+          _initData();
+        }
+      },
+      emptyWidget: goodsList == null || goodsList.length == 0 ? null : null,
+      slivers: <Widget>[buildCenter()],
+    );
   }
 
   Widget buildCenter() {
-    return SliverToBoxAdapter(
-      child: Scaffold(
-        body: Column(
-          children: [
-            pddcategoryTabsView,
-            Flexible(
-              child: TabBarView(
-                controller: _pddTabController,
-                children: _tabViews,
-              ),
-            ),
-          ],
-        ), // This trailing comma makes auto-formatting nicer for build methods.
+    return Center(
+      child: Container(
+        width: double.maxFinite,
+        margin: EdgeInsets.symmetric(
+          horizontal: ScreenUtil().setWidth(30),
+        ),
+//          height: double.infinity,
+        child: new StaggeredGridView.countBuilder(
+          crossAxisCount: 2,
+          itemCount: goodsList.length,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            HomeGoodsListGoodsList item;
+            try {
+              item = goodsList[index];
+            } catch (e) {}
+            return productItem(item: item);
+          },
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+          mainAxisSpacing: ScreenUtil().setWidth(20),
+          crossAxisSpacing: ScreenUtil().setWidth(20),
+        ),
       ),
     );
   }
 
-  var _priceColor = const Color(0xffCE0100);
+  var _priceColor = const Color(0xffe31735);
 
   Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';
@@ -250,7 +230,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
         NavigatorUtils.navigatorRouter(
             context,
-            PddGoodsDetailPage(
+            GoodsDetailPage(
               productId: id,
             ));
       },
@@ -304,17 +284,8 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                     right: ScreenUtil().setWidth(20),
                     top: ScreenUtil().setHeight(16),
                   ),
-                  child: Text.rich(
-                    //"$goodsName",
-                    TextSpan(children: [
-                      WidgetSpan(
-                          child: CachedNetworkImage(
-                        imageUrl: "https://img.pddpic.com/favicon.ico",
-                        width: ScreenUtil().setWidth(48),
-                        height: ScreenUtil().setWidth(48),
-                      )),
-                      TextSpan(text: "$goodsName")
-                    ]),
+                  child: Text(
+                    "$goodsName",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -348,7 +319,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(28),
-                      color: _priceColor,
+                      color: Color(0xffF93736),
                     ),
                   ),
                 ),
@@ -378,6 +349,8 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                       ),
                       Expanded(
                         child: Container(
+                          margin: EdgeInsets.only(
+                              bottom: ScreenUtil().setHeight(0)),
                           child: Visibility(
                             visible: salePrice != originalPrice,
                             child: Text(
@@ -394,365 +367,11 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: ScreenUtil().setWidth(8),
-                          right: ScreenUtil().setWidth(8),
-                          top: ScreenUtil().setWidth(8),
-                          bottom: ScreenUtil().setWidth(8),
-                        ),
-                        constraints: BoxConstraints(
-                          maxWidth: ScreenUtil().setWidth(160),
-                        ),
-                        decoration: BoxDecoration(
-                          color: _priceColor,
-                          borderRadius:
-                              BorderRadius.circular(ScreenUtil().setWidth(10)),
-                        ),
-                        child: Text(
-                          "券${(double.parse(originalPrice) / 10).toString()}元",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenUtil().setSp(32),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                )
-//                          descStack(product),
-//                          ratingStack(product.rating),
-//                          Container( child: imageStack(product.image),),
-              ],
-            ),
-          )),
-    );
-  }
-
-  Widget productItem2({PddGoodsListDataList item}) {
-    String id = '';
-    String goodsName = '';
-    String goodsImg = '';
-    String originalPrice = '';
-    String salePrice = '';
-    double topMargin = 0;
-    String profit = '分红金￥0';
-    String couponAmount = ''; //优惠券金额
-    String goodsSign = ''; //
-    String searchId = ''; //
-    var _discountPrice = '';
-    var _saleTip = '';
-    var _shopName = '';
-    var _gBonus = '';
-    try {
-      id = item.gId.toString();
-      goodsName = item.gTitle;
-      goodsImg = item.gThumbnail;
-      originalPrice = item.gNormalPrice.toString();
-      salePrice = item.gGroupPrice.toString();
-      goodsSign = item.goodsSign.toString();
-      searchId = item.searchId.toString();
-      _saleTip = item.salesTip.toString();
-      _shopName = item.mallName.toString();
-      _gBonus = item.gBonus.toString();
-
-      try {
-        couponAmount = item.coupons.couponDiscount.toString();
-      } catch (e) {}
-      if (CommonUtils.isEmpty(couponAmount)) {
-        _discountPrice = salePrice;
-      } else {
-        _discountPrice = (double.parse(salePrice) - double.parse(couponAmount))
-            .toStringAsFixed(2);
-      }
-//      profit = '预估补贴￥${(item.btPrice)}';
-      /*  if (goodsName.length < 8) {
-        topMargin = ScreenUtil().setHeight(70);
-      } else {
-        topMargin = ScreenUtil().setHeight(10);
-      }*/
-    } catch (e) {}
-
-    return GestureDetector(
-      onTap: () {
-//        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        NavigatorUtils.navigatorRouter(
-            context,
-            PddGoodsDetailPage(
-              gId: id,
-              goodsSign: goodsSign,
-              searchId: searchId,
-            ));
-      },
-      child: Container(
-//            color: Colors.blue ,商学院
-          width: ScreenUtil().setWidth(523),
-//          margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-          /*constraints: BoxConstraints(
-            minHeight: ScreenUtil().setHeight(560),
-          ),*/
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
-          ),
-          child: Padding(
-//                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
-            padding: const EdgeInsets.all(0),
-//            child: InkWell(
-//              splashColor: Colors.yellow,
-
-//        onDoubleTap: () => showSnackBar(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-//                        fit: StackFit.expand,
-              children: <Widget>[
-                Stack(
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(ScreenUtil().setWidth(30)),
-                          topLeft: Radius.circular(ScreenUtil().setWidth(30)),
-                        ),
-                        child: CachedNetworkImage(
-                          fadeInDuration: Duration(milliseconds: 0),
-                          fadeOutDuration: Duration(milliseconds: 0),
-                          height: ScreenUtil().setWidth(523),
-                          width: ScreenUtil().setWidth(523),
-                          fit: BoxFit.fill,
-                          imageUrl: "$goodsImg",
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: !CommonUtils.isEmpty(_gBonus),
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                        margin: EdgeInsets.only(
-                          top: ScreenUtil().setSp(492),
-                        ),
-                        color: _priceColor,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Visibility(
-                                child: Container(
-                                  child: Text(
-                                    "预估分红金：¥$_gBonus",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(28),
-                                      color: Color(0xffffffff),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Container(
-                  padding: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(20),
-                    right: ScreenUtil().setWidth(20),
-                    top: ScreenUtil().setHeight(16),
-                  ),
-                  child: Text.rich(
-                    //"$goodsName",
-                    TextSpan(children: [
-                      /*WidgetSpan(
-                          child: Container(
-                        width: ScreenUtil().setWidth(75),
-                        height: ScreenUtil().setWidth(52),
-                        child: Center(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                ScreenUtil().setWidth(10),
-                              ),
-                            ),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
-                              width: ScreenUtil().setWidth(75),
-                              height: ScreenUtil().setWidth(42),
-                            ),
-                          ),
-                        ),
-                      )),*/
-                      TextSpan(text: "$goodsName")
-                    ]),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(38),
-                      color: Color(0xff222222),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Visibility(
-                          visible: !CommonUtils.isEmpty(_shopName),
-                          child: Container(
-                            child: Text(
-                              "$_shopName",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(28),
-                                color: Color(0xff999999),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "销量$_saleTip",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(28),
-                          color: Color(0xff999999),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: false,
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: ScreenUtil().setWidth(8),
-                      right: ScreenUtil().setWidth(8),
-                      top: ScreenUtil().setWidth(8),
-                      bottom: ScreenUtil().setWidth(8),
-                    ),
-                    margin: EdgeInsets.only(
-                      left: ScreenUtil().setWidth(20),
-                      right: ScreenUtil().setWidth(20),
-                      top: ScreenUtil().setWidth(8),
-                      bottom: ScreenUtil().setWidth(8),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xffFFDDDC),
-                      borderRadius: BorderRadius.circular(
-                        ScreenUtil().setWidth(10),
-                      ),
-                    ),
-                    child: Text(
-                      "$profit",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(28),
-                        color: Color(0xffF93736),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: topMargin),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 5,
-                      ),
-                      PriceText(
-                        text: '$_discountPrice',
-                        textColor: _priceColor,
-                        fontSize: ScreenUtil().setSp(32),
-                        fontBigSize: ScreenUtil().setSp(48),
-//                          '27.5',
-                        /*style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
-                          color: _priceColor,
-                          fontWeight: FontWeight.bold,
+                      /* Icon(
+                          Icons.more_horiz,
+                          size: 15,
+                          color: Color(0xFF979896),
                         ),*/
-                      ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(20),
-                      ),
-                      Expanded(
-                        child: Container(
-                          child: Visibility(
-                            visible: salePrice != originalPrice,
-                            child: Text(
-                              "￥$originalPrice",
-                              overflow: TextOverflow.ellipsis,
-//                            '${0}人评价',
-//                            '23234人评价',
-//                          product
-                              style: TextStyle(
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: ScreenUtil().setSp(24),
-                                  color: Color(0xFF979896)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        //微股东权益 equity
-                        visible: !CommonUtils.isEmpty(couponAmount),
-                        child: Container(
-                          height: ScreenUtil().setHeight(52),
-                          padding: EdgeInsets.only(
-                            left: ScreenUtil().setWidth(8),
-                            right: ScreenUtil().setWidth(8),
-                          ),
-                          margin: EdgeInsets.only(right: 6),
-                          decoration: BoxDecoration(
-                            color: _priceColor,
-                            borderRadius: BorderRadius.circular(
-                                ScreenUtil().setWidth(10)),
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "券",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ScreenUtil().setSp(32),
-                                ),
-                              ),
-                              Container(
-                                height: ScreenUtil().setHeight(42),
-                                margin: EdgeInsets.symmetric(horizontal: 2),
-                                child: DashedRect(
-                                    color: Colors.white,
-                                    strokeWidth: 1,
-                                    gap: 1.0),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 2),
-                                child: Text(
-                                  "${couponAmount.toString()}元",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(32),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -767,7 +386,4 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage>
           )),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

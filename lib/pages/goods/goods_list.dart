@@ -35,7 +35,11 @@ class _GoodsListPageState extends State<GoodsListPage> {
 
   _initData() async {
     var result = await HttpManage.getGoodsList(
-        cId: widget.categoryId, type: widget.type);
+        cId: widget.categoryId,
+        type: widget.type,
+        page: page,
+        pageSize: 20,
+        firstId: '');
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
@@ -43,7 +47,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
         setState(() {
           if (page == 1) {
             goodsList = entity.goodsList;
-            _refreshController.finishLoad(noMore: true);
+            _refreshController.finishLoad(noMore: false);
           } else {
             if (result == null ||
                 result.data == null ||
@@ -67,7 +71,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
   void initState() {
     super.initState();
     _refreshController = EasyRefreshController();
-    _refreshController.finishLoad(noMore: true);
+//    _refreshController.finishLoad(noMore: true);
     _initData();
   }
 
@@ -144,7 +148,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: 16),
+          margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30)),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,

@@ -2042,16 +2042,20 @@ class HttpManage {
 
 //
   ///获取商品列表
-  static Future<ResultBeanEntity> getGoodsList({cId = '', type}) async {
+  static Future<ResultBeanEntity> getGoodsList(
+      {cId = '', type, page, pageSize, firstId}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
+    paramsMap['one_cid'] = "$firstId"; //一级分类
     paramsMap['type'] = "$type";
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
-    var response = await HttpManage.dio.get(
+    var response = await HttpManage.dio.post(
       APi.GOODS_LIST,
-      queryParameters: paramsMap,
+      data: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();

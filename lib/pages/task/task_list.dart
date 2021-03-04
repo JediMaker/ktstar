@@ -1038,7 +1038,7 @@ class _TaskListPageState extends State<TaskListPage>
               pddcategoryTabsView,
               SliverToBoxAdapter(
                 child: GestureDetector(
-                  child: HomePddGoodsListPage(),
+                  child: HomeGoodsListPage(),
                   onHorizontalDragStart: (DragStartDetails details) {},
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
                     _offsetValue = details.primaryDelta;
