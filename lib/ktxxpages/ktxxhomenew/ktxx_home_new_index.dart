@@ -114,7 +114,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
     super.initState();
     _initData();
     _tabController =
-        new TabController(vsync: this, length: cats == null ? 0 : cats.length);
+        new TabController(vsync: this, length: cats == null ? 0 : cats.length+1);
     _tabController.addListener(() {
       if (mounted) {
         setState(() {
@@ -393,7 +393,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
           setState(() {
             cats = categoryResult.data.cats;
             _tabController = new TabController(
-                vsync: this, length: cats == null ? 0 : cats.length);
+                vsync: this, length: cats == null ? 0 : cats.length+1);
             _tabController.addListener(() {
               if (mounted) {
                 setState(() {
