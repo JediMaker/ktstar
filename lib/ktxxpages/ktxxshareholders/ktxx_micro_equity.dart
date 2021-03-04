@@ -83,9 +83,11 @@ import '../../ktxx_global_config.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
-  KeTaoFeaturedMicroShareHolderEquityPage({Key key, this.shareholderType = 1})
+  KeTaoFeaturedMicroShareHolderEquityPage(
+      {Key key, this.shareholderType = 1, this.showBackBtnIcon = true})
       : super(key: key);
   final String title = "微股东权益";
+  bool showBackBtnIcon;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
@@ -276,22 +278,25 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
             style: TextStyle(
                 color: Colors.white, fontSize: ScreenUtil().setSp(54)),
           ),
-          leading: IconButton(
-            icon: Container(
-              width: ScreenUtil().setWidth(63),
-              height: ScreenUtil().setHeight(63),
-              child: Center(
-                child: Image.asset(
-                  "static/images/icon_ios_back_white.png",
-                  width: ScreenUtil().setWidth(36),
-                  height: ScreenUtil().setHeight(63),
-                  fit: BoxFit.fill,
+          leading: Visibility(
+            visible: widget.showBackBtnIcon,
+            child: IconButton(
+              icon: Container(
+                width: ScreenUtil().setWidth(63),
+                height: ScreenUtil().setHeight(63),
+                child: Center(
+                  child: Image.asset(
+                    "static/images/icon_ios_back_white.png",
+                    width: ScreenUtil().setWidth(36),
+                    height: ScreenUtil().setHeight(63),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
           centerTitle: true,
           elevation: 0,

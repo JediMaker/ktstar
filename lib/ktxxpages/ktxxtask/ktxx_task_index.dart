@@ -16,6 +16,7 @@ import 'package:star/ktxxpages/ktxxgoods/ktxxcategory/ktxx_new_classify.dart';
 import 'package:star/ktxxpages/ktxxhomenew/ktxx_home_new_index.dart';
 import 'package:star/ktxxpages/ktxxhomenew/ktxx_home_page.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_order_list.dart';
+import 'package:star/ktxxpages/ktxxshareholders/ktxx_micro_equity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_list.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_mine.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_mine_page.dart';
@@ -398,6 +399,38 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
           ),*/
           icon: CachedNetworkImage(
             imageUrl:
+                'https://alipic.lanhuapp.com/xd9b19f1ea-a898-448f-9c33-094dd805a370',
+            width: ScreenUtil().setWidth(68),
+            height: ScreenUtil().setWidth(75),
+          ),
+          /*activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
+          ),*/
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xdffaa3435-7356-45ac-a721-17c060b1c37d',
+            width: ScreenUtil().setWidth(68),
+            height: ScreenUtil().setWidth(75),
+          ),
+          title: new Text(
+            '权益',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this),
+      new KeTaoFeaturedNavigationIconView(
+          /* icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
+          ),*/
+          icon: CachedNetworkImage(
+            imageUrl:
                 'https://alipic.lanhuapp.com/xd22d681ac-1152-4270-972e-06f8bddc8ff1',
             width: ScreenUtil().setWidth(65),
             height: ScreenUtil().setWidth(65),
@@ -468,6 +501,9 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
 //      new HomePage(tabIndex: _homeTabIndex),
       KeTaoFeaturedHomePagePage(),
       KeTaoFeaturedNewClassifyListPage(),
+      KeTaoFeaturedMicroShareHolderEquityPage(
+        showBackBtnIcon: false,
+      ),
       KeTaoFeaturedOrderListPage(
         showBackBtnIcon: false,
       ),
