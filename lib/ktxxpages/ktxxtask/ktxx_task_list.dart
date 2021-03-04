@@ -325,6 +325,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     bus.on("refreshHomeData", (data) {
       _initData(isRefresh: true);
     });
+
     super.initState();
   }
 
@@ -359,6 +360,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     });
     _tabs = buildTabs();
     pddcategoryTabsView = buildPddCategoryTabBar();
+    bus.emit("changePddListViewData",
+        cats[_selectedTabIndex]);
   }
 
   ///拼多多商品分类
