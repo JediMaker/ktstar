@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
+import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
 import 'package:star/ktxxmodels/ktxx_pdd_home_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_featured_tab.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_goods_list.dart';
@@ -102,7 +103,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
   TabController _tabController;
   var resultData;
   bool isFirstLoading = true;
-  List<PddHomeDataCat> cats;
+  List<HomePddCategoryDataCat> cats;
   PddHomeData _homeData;
   var _tabViews;
   var _tabs;
@@ -225,11 +226,13 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
     if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
+      if (cats[0].catName != '首页') {
+        HomePddCategoryDataCat catzero = HomePddCategoryDataCat();
+        catzero.catName = '首页';
+        cats.insert(0, catzero);
+      }
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
-        if (index == 0) {
-          cats[index].catName = '首页';
-        }
         tabs.add(Container(
           height: 36,
           child: Tab(
@@ -276,7 +279,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
           );
         } else {
           tabViews.add(KeTaoFeaturedPddGoodsListPage(
-            categoryId: classify.catId,
+            categoryId: classify.catId.toString(),
             tabIndex: index,
           ));
         }
@@ -382,6 +385,32 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 /*    try {
       EasyLoading.show();
     } catch (e) {}*/
+    var categoryResult =
+        await KeTaoFeaturedHttpManage.getHomePagePddProductCategory();
+    try {
+      if (categoryResult.status) {
+        if (mounted) {
+          setState(() {
+            cats = categoryResult.data.cats;
+            _tabController = new TabController(
+                vsync: this, length: cats == null ? 0 : cats.length);
+            _tabController.addListener(() {
+              if (mounted) {
+                setState(() {
+                  if (_tabController.index == _tabController.animation.value) {
+                    _selectedTabIndex = _tabController.index;
+                    print("_selectedTabIndex=$_selectedTabIndex");
+                    _tabs = buildTabs();
+                  }
+                });
+              }
+            });
+            _tabs = buildTabs();
+            _tabViews = buildTabViews();
+          });
+        }
+      }
+    } catch (e) {}
     PddHomeEntity result = await KeTaoFeaturedHttpManage.getPddHomeData();
 /*    try {
       EasyLoading.dismiss();
@@ -390,22 +419,6 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
       if (mounted) {
         setState(() {
           _homeData = result.data;
-          cats = _homeData.cats;
-          _tabController = new TabController(
-              vsync: this, length: cats == null ? 0 : cats.length);
-          _tabController.addListener(() {
-            if (mounted) {
-              setState(() {
-                if (_tabController.index == _tabController.animation.value) {
-                  _selectedTabIndex = _tabController.index;
-                  print("_selectedTabIndex=$_selectedTabIndex");
-                  _tabs = buildTabs();
-                }
-              });
-            }
-          });
-          _tabs = buildTabs();
-          _tabViews = buildTabViews();
         });
       }
     } else {
