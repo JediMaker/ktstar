@@ -2,16 +2,16 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_vip_price_info_entity.dart';
 
-class KeTaoFeaturedVipPriceEntity with JsonConvert<KeTaoFeaturedVipPriceEntity> {
+class VipPriceEntity with JsonConvert<VipPriceEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	KeTaoFeaturedVipPriceInfoEntity data;
+	VipPriceInfoEntity data;
 }
 
-class KeTaoFeaturedVipPriceData with JsonConvert<KeTaoFeaturedVipPriceData> {
+class VipPriceData with JsonConvert<VipPriceData> {
 	@JSONField(name: "now_price")
 	int nowPrice;
 	@JSONField(name: "y_price")

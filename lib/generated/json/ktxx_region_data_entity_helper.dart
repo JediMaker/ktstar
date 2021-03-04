@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_region_data_entity.dart';
 
-regionDataEntityFromJson(KeTaoFeaturedRegionDataEntity data, Map<String, dynamic> json) {
+regionDataEntityFromJson(RegionDataEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -11,10 +11,10 @@ regionDataEntityFromJson(KeTaoFeaturedRegionDataEntity data, Map<String, dynamic
 		data.errMsg = json['err_msg'];
 	}
 	if (json['data'] != null) {
-		data.data = new List<KeTaoFeaturedRegionDataData>();
+		data.data = new List<RegionDataData>();
 		(json['data'] as List).forEach((v) {
 			try {
-				data.data.add(new KeTaoFeaturedRegionDataData().fromJson(v));
+				data.data.add(new RegionDataData().fromJson(v));
 			} catch (e) {
 			}
 		});
@@ -22,7 +22,7 @@ regionDataEntityFromJson(KeTaoFeaturedRegionDataEntity data, Map<String, dynamic
 	return data;
 }
 
-Map<String, dynamic> regionDataEntityToJson(KeTaoFeaturedRegionDataEntity entity) {
+Map<String, dynamic> regionDataEntityToJson(RegionDataEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -33,7 +33,7 @@ Map<String, dynamic> regionDataEntityToJson(KeTaoFeaturedRegionDataEntity entity
 	return data;
 }
 
-regionDataDataFromJson(KeTaoFeaturedRegionDataData data, Map<String, dynamic> json) {
+regionDataDataFromJson(RegionDataData data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id']?.toInt();
 	}
@@ -41,15 +41,15 @@ regionDataDataFromJson(KeTaoFeaturedRegionDataData data, Map<String, dynamic> js
 		data.value = json['value']?.toString();
 	}
 	if (json['children'] != null) {
-		data.children = new List<KeTaoFeaturedRegionDataData>();
+		data.children = new List<RegionDataData>();
 		(json['children'] as List).forEach((v) {
-			data.children.add(new KeTaoFeaturedRegionDataData().fromJson(v));
+			data.children.add(new RegionDataData().fromJson(v));
 		});
 	}
 	return data;
 }
 
-Map<String, dynamic> regionDataDataToJson(KeTaoFeaturedRegionDataData entity) {
+Map<String, dynamic> regionDataDataToJson(RegionDataData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['value'] = entity.value;
@@ -59,7 +59,7 @@ Map<String, dynamic> regionDataDataToJson(KeTaoFeaturedRegionDataData entity) {
 	return data;
 }
 
-regionDataDatachildFromJson(KeTaoFeaturedRegionDataDatachild data, Map<String, dynamic> json) {
+regionDataDatachildFromJson(RegionDataDatachild data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id']?.toInt();
 	}
@@ -67,15 +67,15 @@ regionDataDatachildFromJson(KeTaoFeaturedRegionDataDatachild data, Map<String, d
 		data.value = json['value']?.toString();
 	}
 	if (json['children'] != null) {
-		data.children = new List<KeTaoFeaturedRegionDataDatachildchild>();
+		data.children = new List<RegionDataDatachildchild>();
 		(json['children'] as List).forEach((v) {
-			data.children.add(new KeTaoFeaturedRegionDataDatachildchild().fromJson(v));
+			data.children.add(new RegionDataDatachildchild().fromJson(v));
 		});
 	}
 	return data;
 }
 
-Map<String, dynamic> regionDataDatachildToJson(KeTaoFeaturedRegionDataDatachild entity) {
+Map<String, dynamic> regionDataDatachildToJson(RegionDataDatachild entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['value'] = entity.value;
@@ -85,7 +85,7 @@ Map<String, dynamic> regionDataDatachildToJson(KeTaoFeaturedRegionDataDatachild 
 	return data;
 }
 
-regionDataDatachildchildFromJson(KeTaoFeaturedRegionDataDatachildchild data, Map<String, dynamic> json) {
+regionDataDatachildchildFromJson(RegionDataDatachildchild data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id']?.toInt();
 	}
@@ -95,7 +95,7 @@ regionDataDatachildchildFromJson(KeTaoFeaturedRegionDataDatachildchild data, Map
 	return data;
 }
 
-Map<String, dynamic> regionDataDatachildchildToJson(KeTaoFeaturedRegionDataDatachildchild entity) {
+Map<String, dynamic> regionDataDatachildchildToJson(RegionDataDatachildchild entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['value'] = entity.value;

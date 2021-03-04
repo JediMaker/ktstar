@@ -12,6 +12,7 @@ import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_gallery.dart';
 import 'package:flutter/cupertino.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -74,15 +75,18 @@ import 'package:flutter/cupertino.dart';
 class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
   KeTaoFeaturedReturnInfoPage({Key key, this.product}) : super(key: key);
   final String title = "退款详情";
-  KeTaoFeaturedOrderDetailDataGoodsList product;
+  OrderDetailDataGoodsList product;
 
   @override
-  _KeTaoFeaturedReturnInfoPageState createState() => _KeTaoFeaturedReturnInfoPageState();
+  _KeTaoFeaturedReturnInfoPageState createState() =>
+      _KeTaoFeaturedReturnInfoPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
+class _KeTaoFeaturedReturnInfoPageState
+    extends State<KeTaoFeaturedReturnInfoPage> {
   var _topBoxBgColor = Color(0xffF32E43);
 
   var _requestDesc = '平台会在7个工作日内给您答复，如有疑问请咨询客服。';
@@ -160,7 +164,8 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
         _requestDescTitle = '退款成功';
         _isReturnSuccess = true;
         break;
-      case _KeTaoFeaturedReturnInfoPageState._STATUS_SUCCESSFUL_REPLACEMENT: //换货成功
+      case _KeTaoFeaturedReturnInfoPageState
+          ._STATUS_SUCCESSFUL_REPLACEMENT: //换货成功
         _requestDesc = '2020年12月01日  17:39';
         _requestDescTitle = '退换成功';
         _isReturnSuccess = true;
@@ -233,7 +238,8 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
     return Visibility(
       visible: _returnOrderStatus ==
               _KeTaoFeaturedReturnInfoPageState._STATUS_AGREE_TO_RETURN ||
-          _returnOrderStatus == _KeTaoFeaturedReturnInfoPageState._STATUS_AGREE_TO_EXCHANGE,
+          _returnOrderStatus ==
+              _KeTaoFeaturedReturnInfoPageState._STATUS_AGREE_TO_EXCHANGE,
       child: Container(
         width: double.infinity,
         color: Colors.white,
@@ -618,7 +624,8 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
       );
       _imageFile = pickedFile;
       EasyLoading.show(status: "图片上传中...");
-      var entity = await KeTaoFeaturedHttpManage.uploadImage(File(_imageFile.path));
+      var entity =
+          await KeTaoFeaturedHttpManage.uploadImage(File(_imageFile.path));
       if (entity.status) {
         var imageId = entity.data["id"].toString();
 
@@ -713,7 +720,8 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
 
   Widget buildWaitReturnContainer() {
     return Visibility(
-        visible: _returnOrderStatus == _KeTaoFeaturedReturnInfoPageState._STATUS_WAIT,
+        visible: _returnOrderStatus ==
+            _KeTaoFeaturedReturnInfoPageState._STATUS_WAIT,
         child: Container(
             width: double.infinity,
             color: Colors.white,
@@ -787,7 +795,7 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
             )));
   }
 
-  KeTaoFeaturedOrderDetailDataGoodsList product;
+  OrderDetailDataGoodsList product;
 
   Container buildTopGoodsContainer() {
     return Container(
@@ -1051,9 +1059,8 @@ class _KeTaoFeaturedReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPag
           Visibility(
             visible: type == 3,
             child: GestureDetector(
-              onTap: (){
-                Clipboard.setData(ClipboardData(
-                    text: "$subTitle"));
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: "$subTitle"));
                 KeTaoFeaturedCommonUtils.showToast("已复制文本");
               },
               child: Container(

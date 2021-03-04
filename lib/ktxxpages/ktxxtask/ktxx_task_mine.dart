@@ -42,7 +42,7 @@ import 'ktxx_invitation_poster.dart';
 class KeTaoFeaturedTaskMinePage extends StatefulWidget {
   KeTaoFeaturedTaskMinePage({Key key, this.userInfoData}) : super(key: key);
   final String title = "个人中心";
-  KeTaoFeaturedUserInfoData userInfoData;
+  UserInfoData userInfoData;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
@@ -108,10 +108,10 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
   String userType;
-  KeTaoFeaturedUserInfoEntity entity;
+  UserInfoEntity entity;
   Color _cardTextColor = Colors.white;
   Color _headBgColor = Color(0xffF93736);
-  KeTaoFeaturedUserInfoData _data;
+  UserInfoData _data;
 
   _initUserData() async {
     var result = await KeTaoFeaturedHttpManage.getUserInfo();

@@ -102,8 +102,8 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
   TabController _tabController;
   var resultData;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedPddHomeDataCat> cats;
-  KeTaoFeaturedPddHomeData _homeData;
+  List<PddHomeDataCat> cats;
+  PddHomeData _homeData;
   var _tabViews;
   var _tabs;
   int _selectedTabIndex = 0;
@@ -382,8 +382,7 @@ class _KeTaoFeaturedHomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 /*    try {
       EasyLoading.show();
     } catch (e) {}*/
-    KeTaoFeaturedPddHomeEntity result =
-        await KeTaoFeaturedHttpManage.getPddHomeData();
+    PddHomeEntity result = await KeTaoFeaturedHttpManage.getPddHomeData();
 /*    try {
       EasyLoading.dismiss();
     } catch (e) {}*/

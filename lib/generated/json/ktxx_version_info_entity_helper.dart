@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_version_info_entity.dart';
 
-versionInfoEntityFromJson(KeTaoFeaturedVersionInfoEntity data, Map<String, dynamic> json) {
+versionInfoEntityFromJson(VersionInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ versionInfoEntityFromJson(KeTaoFeaturedVersionInfoEntity data, Map<String, dynam
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedVersionInfoData().fromJson(json['data']);
+			data.data = new VersionInfoData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> versionInfoEntityToJson(KeTaoFeaturedVersionInfoEntity entity) {
+Map<String, dynamic> versionInfoEntityToJson(VersionInfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,7 +30,7 @@ Map<String, dynamic> versionInfoEntityToJson(KeTaoFeaturedVersionInfoEntity enti
 	return data;
 }
 
-versionInfoDataFromJson(KeTaoFeaturedVersionInfoData data, Map<String, dynamic> json) {
+versionInfoDataFromJson(VersionInfoData data, Map<String, dynamic> json) {
 	if (json['version_no'] != null) {
 		data.versionNo = json['version_no']?.toString();
 	}
@@ -61,7 +61,7 @@ versionInfoDataFromJson(KeTaoFeaturedVersionInfoData data, Map<String, dynamic> 
 	return data;
 }
 
-Map<String, dynamic> versionInfoDataToJson(KeTaoFeaturedVersionInfoData entity) {
+Map<String, dynamic> versionInfoDataToJson(VersionInfoData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['version_no'] = entity.versionNo;
 	data['desc'] = entity.desc;

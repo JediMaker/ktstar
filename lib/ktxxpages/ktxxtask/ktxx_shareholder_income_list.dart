@@ -7,6 +7,7 @@ import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_income_list_entity.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -81,10 +82,12 @@ class KeTaoFeaturedShareHolderIncomeListPage extends StatefulWidget {
   _KeTaoFeaturedShareHolderIncomeListPageState createState() =>
       _KeTaoFeaturedShareHolderIncomeListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedShareHolderIncomeListPageState extends State<KeTaoFeaturedShareHolderIncomeListPage>
+class _KeTaoFeaturedShareHolderIncomeListPageState
+    extends State<KeTaoFeaturedShareHolderIncomeListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -93,13 +96,14 @@ class _KeTaoFeaturedShareHolderIncomeListPageState extends State<KeTaoFeaturedSh
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   ///提现类型 0微信 1支付宝
   String withdrawalType = "0";
   bool isWithdrawal = false;
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedIncomeListDataList> _profitList;
+  List<IncomeListDataList> _profitList;
   String lastTimeDesc = '';
 
   _initData() async {
@@ -225,7 +229,7 @@ class _KeTaoFeaturedShareHolderIncomeListPageState extends State<KeTaoFeaturedSh
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedIncomeListDataList listItem = _profitList[index];
+            IncomeListDataList listItem = _profitList[index];
             print("_profitList[index]=$index");
             print("_profitList.length=${_profitList.length}");
             return buildItemLayout(listItem: listItem);
@@ -236,7 +240,7 @@ class _KeTaoFeaturedShareHolderIncomeListPageState extends State<KeTaoFeaturedSh
     );
   }
 
-  buildItemLayout({KeTaoFeaturedIncomeListDataList listItem}) {
+  buildItemLayout({IncomeListDataList listItem}) {
     String price = '';
     String type = '';
     String profitType = '';

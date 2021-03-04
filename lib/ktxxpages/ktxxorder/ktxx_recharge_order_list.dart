@@ -108,15 +108,14 @@ class _KeTaoFeaturedRechargeOrderListPageState
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedOrderListDataList> _orderList;
+  List<OrderListDataList> _orderList;
   String contactPhone = ""; //
   _initData() async {
     if (widget.orderSource == '-1') {
       return;
     }
-    KeTaoFeaturedOrderListEntity result =
-        await KeTaoFeaturedHttpManage.getOrderList(
-            page, 10, widget.orderSource);
+    OrderListEntity result = await KeTaoFeaturedHttpManage.getOrderList(
+        page, 10, widget.orderSource);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -191,7 +190,7 @@ class _KeTaoFeaturedRechargeOrderListPageState
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedOrderListDataList listItem = _orderList[index];
+            OrderListDataList listItem = _orderList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _orderList == null ? 0 : _orderList.length,
@@ -200,7 +199,7 @@ class _KeTaoFeaturedRechargeOrderListPageState
     );
   }
 
-  buildItemLayout({KeTaoFeaturedOrderListDataList listItem}) {
+  buildItemLayout({OrderListDataList listItem}) {
     String createTime = "";
     String phoneNumber = "";
     String phoneMoney = "";
@@ -223,8 +222,8 @@ class _KeTaoFeaturedRechargeOrderListPageState
     String goodsId;
     String goodsSign;
     String coin;
-    List<KeTaoFeaturedOrderListDataListGoodsList> goodsList =
-        List<KeTaoFeaturedOrderListDataListGoodsList>();
+    List<OrderListDataListGoodsList> goodsList =
+        List<OrderListDataListGoodsList>();
     try {
       createTime = listItem.createTime;
       phoneNumber = listItem.mobile;
@@ -794,13 +793,12 @@ class _KeTaoFeaturedRechargeOrderListPageState
     );
   }
 
-  Widget buildGoodsList(
-      List<KeTaoFeaturedOrderListDataListGoodsList> goodsList) {
+  Widget buildGoodsList(List<OrderListDataListGoodsList> goodsList) {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          KeTaoFeaturedOrderListDataListGoodsList product = goodsList[index];
+          OrderListDataListGoodsList product = goodsList[index];
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -934,7 +932,7 @@ class _KeTaoFeaturedRechargeOrderListPageState
   }
 
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
-      KeTaoFeaturedOrderListDataListGoodsList goodsItem, String refundMsg) {
+      OrderListDataListGoodsList goodsItem, String refundMsg) {
     var imageUrl = '';
     var title = '';
     var saleMoney = '';

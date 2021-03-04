@@ -1,24 +1,24 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedIncomeListEntity with JsonConvert<KeTaoFeaturedIncomeListEntity> {
+class IncomeListEntity with JsonConvert<IncomeListEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedIncomeListData data;
+  IncomeListData data;
 }
 
-class KeTaoFeaturedIncomeListData with JsonConvert<KeTaoFeaturedIncomeListData> {
+class IncomeListData with JsonConvert<IncomeListData> {
   @JSONField(name: "list")
-  List<KeTaoFeaturedIncomeListDataList> xList;
+  List<IncomeListDataList> xList;
   int page;
   @JSONField(name: "page_size")
   int pageSize;
 }
 
-class KeTaoFeaturedIncomeListDataList with JsonConvert<KeTaoFeaturedIncomeListDataList> {
+class IncomeListDataList with JsonConvert<IncomeListDataList> {
   String type;
   String price;
   @JSONField(name: "create_time")

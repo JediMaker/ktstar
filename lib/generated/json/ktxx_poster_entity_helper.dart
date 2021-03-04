@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_poster_entity.dart';
 
-posterEntityFromJson(KeTaoFeaturedPosterEntity data, Map<String, dynamic> json) {
+posterEntityFromJson(PosterEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ posterEntityFromJson(KeTaoFeaturedPosterEntity data, Map<String, dynamic> json) 
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedPosterData().fromJson(json['data']);
+			data.data = new PosterData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> posterEntityToJson(KeTaoFeaturedPosterEntity entity) {
+Map<String, dynamic> posterEntityToJson(PosterEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,7 +30,7 @@ Map<String, dynamic> posterEntityToJson(KeTaoFeaturedPosterEntity entity) {
 	return data;
 }
 
-posterDataFromJson(KeTaoFeaturedPosterData data, Map<String, dynamic> json) {
+posterDataFromJson(PosterData data, Map<String, dynamic> json) {
 	if (json['code'] != null) {
 		data.code = json['code']?.toString();
 	}
@@ -43,7 +43,7 @@ posterDataFromJson(KeTaoFeaturedPosterData data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> posterDataToJson(KeTaoFeaturedPosterData entity) {
+Map<String, dynamic> posterDataToJson(PosterData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['code'] = entity.code;
 	data['imgs'] = entity.imgs;

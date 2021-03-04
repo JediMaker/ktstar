@@ -18,6 +18,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/ktxxmodels/ktxx_login_entity.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -87,6 +88,7 @@ class KeTaoFeaturedLoginPage extends StatefulWidget {
   @override
   _KeTaoFeaturedLoginPageState createState() => _KeTaoFeaturedLoginPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -145,7 +147,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
       } else {
         KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
       }
-      if (!KeTaoFeaturedGlobalConfig.isAgreePrivacy && KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
+      if (!KeTaoFeaturedGlobalConfig.isAgreePrivacy &&
+          KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
         Future.delayed(Duration(milliseconds: 300), () {
           showPrivacyDialog(context);
         });
@@ -183,7 +186,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
               if (!KeTaoFeaturedCommonUtils.isEmpty(context)) {
                 mContext = context;
               } else {
-                mContext = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+                mContext = KeTaoFeaturedGlobalConfig
+                    .navigatorKey.currentState.overlay.context;
               }
               KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
                   mContext, KeTaoFeaturedTaskIndexPage());
@@ -193,7 +197,6 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
           }
         }
       }
-
     });
 
     super.initState();
@@ -332,7 +335,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                                 KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                     context,
                                     KeTaoFeaturedWebViewPage(
-                                      initialUrl: KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
+                                      initialUrl: KeTaoFeaturedAPi
+                                          .AGREEMENT_SERVICES_URL,
                                       showActions: false,
                                       title: "服务协议",
                                     ));
@@ -340,7 +344,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                               child: Text(
                                 "《服务协议》",
                                 style: TextStyle(
-                                    color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                    color:
+                                        KeTaoFeaturedGlobalConfig.taskHeadColor,
                                     fontSize: ScreenUtil().setSp(32)),
                               ),
                             ),
@@ -349,7 +354,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                                 KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                     context,
                                     KeTaoFeaturedWebViewPage(
-                                      initialUrl: KeTaoFeaturedAPi.AGREEMENT_PRIVACY_URL,
+                                      initialUrl: KeTaoFeaturedAPi
+                                          .AGREEMENT_PRIVACY_URL,
                                       showActions: false,
                                       title: "隐私政策",
                                     ));
@@ -357,7 +363,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                               child: Text(
                                 "&《隐私政策》",
                                 style: TextStyle(
-                                    color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                    color:
+                                        KeTaoFeaturedGlobalConfig.taskHeadColor,
                                     fontSize: ScreenUtil().setSp(32)),
                               ),
                             ),
@@ -379,7 +386,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
   Widget buildWechatLoginContainer() {
     return Visibility(
       visible: Platform.isAndroid ||
-          (Platform.isIOS && KeTaoFeaturedGlobalConfig.displayThirdLoginInformation),
+          (Platform.isIOS &&
+              KeTaoFeaturedGlobalConfig.displayThirdLoginInformation),
       child: Container(
         margin: EdgeInsets.only(left: 24, right: 24, top: 40, bottom: 20),
         child: Column(
@@ -481,7 +489,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                                   KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                       context,
                                       KeTaoFeaturedWebViewPage(
-                                        initialUrl: KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
+                                        initialUrl: KeTaoFeaturedAPi
+                                            .AGREEMENT_SERVICES_URL,
                                         showActions: false,
                                         title: "服务协议",
                                       ));
@@ -502,7 +511,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                                   KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                       context,
                                       KeTaoFeaturedWebViewPage(
-                                        initialUrl: KeTaoFeaturedAPi.AGREEMENT_PRIVACY_URL,
+                                        initialUrl: KeTaoFeaturedAPi
+                                            .AGREEMENT_PRIVACY_URL,
                                         showActions: false,
                                         title: "隐私政策",
                                       ));
@@ -543,7 +553,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                   child: new FlatButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        KeTaoFeaturedGlobalConfig.prefs.setBool("isAgreePrivacy", true);
+                        KeTaoFeaturedGlobalConfig.prefs
+                            .setBool("isAgreePrivacy", true);
                       },
                       child: new Text(
                         '同意',
@@ -638,7 +649,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
                                   KeTaoFeaturedWebViewPage(
-                                    initialUrl: KeTaoFeaturedAPi.AGREEMENT_REGISTRATION_URL,
+                                    initialUrl: KeTaoFeaturedAPi
+                                        .AGREEMENT_REGISTRATION_URL,
                                     showActions: false,
                                     title: "注册协议",
                                   ));
@@ -646,7 +658,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                             child: Text(
                               "《注册协议》",
                               style: TextStyle(
-                                  color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                  color:
+                                      KeTaoFeaturedGlobalConfig.taskHeadColor,
                                   fontSize: ScreenUtil().setSp(32)),
                             ),
                           ),
@@ -655,7 +668,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
                                   KeTaoFeaturedWebViewPage(
-                                    initialUrl: KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
+                                    initialUrl:
+                                        KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
                                     showActions: false,
                                     title: "服务协议",
                                   ));
@@ -663,7 +677,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
                             child: Text(
                               "&《服务协议》",
                               style: TextStyle(
-                                  color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                  color:
+                                      KeTaoFeaturedGlobalConfig.taskHeadColor,
                                   fontSize: ScreenUtil().setSp(32)),
                             ),
                           ),
@@ -1019,9 +1034,10 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
 
   Future<bool> smsSend(BuildContext context) async {
     if (KeTaoFeaturedCommonUtils.isPhoneLegal(phoneNumber)) {
-      KeTaoFeaturedResultBeanEntity result = await KeTaoFeaturedHttpManage.sendVerificationCode(
-          phoneNumber,
-          "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
+      ResultBeanEntity result =
+          await KeTaoFeaturedHttpManage.sendVerificationCode(
+              phoneNumber,
+              "${pageType == 1 ? '1' : pageType == 2 ? "2" : "3"}");
 
       if (result.status) {
         KeTaoFeaturedCommonUtils.showToast("验证码已发送，请注意查收！");
@@ -1031,36 +1047,42 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
         return false;
       }
     } else {
-      KeTaoFeaturedCommonUtils.showSimplePromptDialog(context, "温馨提示", "请输入正确的手机号");
+      KeTaoFeaturedCommonUtils.showSimplePromptDialog(
+          context, "温馨提示", "请输入正确的手机号");
       return false;
     }
   }
 
   Future<void> _login() async {
-    KeTaoFeaturedLoginEntity result = await KeTaoFeaturedHttpManage.login(phoneNumber, password);
+    LoginEntity result =
+        await KeTaoFeaturedHttpManage.login(phoneNumber, password);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("登陆成功");
       KeTaoFeaturedGlobalConfig.saveLoginStatus(true);
-      KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(context, KeTaoFeaturedTaskIndexPage());
+      KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          context, KeTaoFeaturedTaskIndexPage());
     } else {
       KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
   Future<void> _fastLogin() async {
-    KeTaoFeaturedLoginEntity result = await KeTaoFeaturedHttpManage.quickLogin(phoneNumber, checkCode);
+    LoginEntity result =
+        await KeTaoFeaturedHttpManage.quickLogin(phoneNumber, checkCode);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("登陆成功");
       KeTaoFeaturedGlobalConfig.saveLoginStatus(true);
-      KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(context, KeTaoFeaturedTaskIndexPage());
+      KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          context, KeTaoFeaturedTaskIndexPage());
     } else {
       KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
   Future<void> _register() async {
-    KeTaoFeaturedResultBeanEntity result =
-        await KeTaoFeaturedHttpManage.register(phoneNumber, checkCode, password, inviteCode);
+    ResultBeanEntity result =
+        await KeTaoFeaturedHttpManage.register(
+            phoneNumber, checkCode, password, inviteCode);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("注册成功，请登陆！");
       if (mounted) {

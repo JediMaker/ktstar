@@ -48,14 +48,14 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedTaskRecordListDataList> _recordList;
+  List<TaskRecordListDataList> _recordList;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   _initData() async {
-    KeTaoFeaturedTaskRecordListEntity result = await KeTaoFeaturedHttpManage.getTaskRecordList(page, 10);
+    TaskRecordListEntity result = await KeTaoFeaturedHttpManage.getTaskRecordList(page, 10);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -155,7 +155,7 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedTaskRecordListDataList listItem = _recordList[index];
+            TaskRecordListDataList listItem = _recordList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _recordList == null ? 0 : _recordList.length,
@@ -164,7 +164,7 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
     );
   }
 
-  buildItemLayout({KeTaoFeaturedTaskRecordListDataList listItem}) {
+  buildItemLayout({TaskRecordListDataList listItem}) {
     String title = "";
     String price = "";
     String status;

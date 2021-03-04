@@ -12,6 +12,7 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 
 import '../../ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -25,8 +26,10 @@ class KeTaoFeaturedOrderDetailPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedOrderDetailPageState createState() => _KeTaoFeaturedOrderDetailPageState();
+  _KeTaoFeaturedOrderDetailPageState createState() =>
+      _KeTaoFeaturedOrderDetailPageState();
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -85,8 +88,9 @@ class KeTaoFeaturedOrderDetailPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailPage> {
-  KeTaoFeaturedOrderDetailEntity entity;
+class _KeTaoFeaturedOrderDetailPageState
+    extends State<KeTaoFeaturedOrderDetailPage> {
+  OrderDetailEntity entity;
   String orderStatus;
   String orderNum;
   String dateAdded;
@@ -108,11 +112,12 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
   String confirmTime;
   String sendName;
   String sendNumber;
-  List<KeTaoFeaturedOrderDetailDataGoodsList> goodsList;
+  List<OrderDetailDataGoodsList> goodsList;
 
   Future _initData({bool onlyChangeAddress = false}) async {
     EasyLoading.show();
-    var entityResult = await KeTaoFeaturedHttpManage.orderDetail(widget.orderId);
+    var entityResult =
+        await KeTaoFeaturedHttpManage.orderDetail(widget.orderId);
     EasyLoading.dismiss();
 /*
     OrderCheckoutEntity entityResult =
@@ -139,7 +144,8 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
             sendName = entityResult.data.sendName;
             sendNumber = entityResult.data.sendNumber;
             orderStatus = entityResult.data.status.toString();
-            if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList) && goodsList.length > 0) {
+            if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList) &&
+                goodsList.length > 0) {
               try {
                 defProductId = goodsList[0].goodsId;
               } catch (e) {}
@@ -312,7 +318,7 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                                      BorderRadius.all(Radius.circular(30)),
                                   border: Border(
                                     top: BorderSide(
                                         width: 0.5, color: Colors.black26),
@@ -750,7 +756,7 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
   Widget buildGoodsList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        KeTaoFeaturedOrderDetailDataGoodsList product = goodsList[index];
+        OrderDetailDataGoodsList product = goodsList[index];
         var itemTotalPrice = 0.0;
         try {
           itemTotalPrice =
@@ -909,7 +915,8 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                         Expanded(
                           child: Text.rich(TextSpan(
                               text: '小计：',
-                              style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                              style:
+                                  TextStyle(fontSize: ScreenUtil().setSp(32)),
                               children: [
                                 TextSpan(
                                   text: '￥$totalPrice',
@@ -920,7 +927,8 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                               ])),
                         ),
                         Visibility(
-                          visible: !KeTaoFeaturedGlobalConfig.isRelease, //todo 去除展示控制
+                          visible: !KeTaoFeaturedGlobalConfig
+                              .isRelease, //todo 去除展示控制
                           child: GestureDetector(
                             onTap: () async {
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
@@ -938,7 +946,8 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                      Radius.circular(ScreenUtil().setWidth(39))),
+                                      Radius.circular(
+                                          ScreenUtil().setWidth(39))),
                                   border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                                       color: Color(0xff999999),
@@ -960,14 +969,16 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                   Container(
                     color: Colors.white,
                     padding: EdgeInsets.symmetric(
-                        horizontal: 16, ),
+                      horizontal: 16,
+                    ),
                     alignment: Alignment.centerLeft,
                     child: Row(
                       children: [
                         Expanded(
                           child: Text.rich(TextSpan(
                               text: '红包抵扣：',
-                              style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                              style:
+                                  TextStyle(fontSize: ScreenUtil().setSp(32)),
                               children: [
                                 TextSpan(
                                   text: '-￥$deductPrice',
@@ -978,7 +989,8 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                               ])),
                         ),
                         Visibility(
-                          visible: !KeTaoFeaturedGlobalConfig.isRelease, //todo 去除展示控制
+                          visible: !KeTaoFeaturedGlobalConfig
+                              .isRelease, //todo 去除展示控制
                           child: GestureDetector(
                             onTap: () async {
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
@@ -996,7 +1008,8 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                      Radius.circular(ScreenUtil().setWidth(39))),
+                                      Radius.circular(
+                                          ScreenUtil().setWidth(39))),
                                   border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                                       color: Color(0xff999999),
@@ -1015,7 +1028,10 @@ class _KeTaoFeaturedOrderDetailPageState extends State<KeTaoFeaturedOrderDetailP
                       ],
                     ),
                   ),
-                  Container(height: ScreenUtil().setWidth(30),color: Colors.white,)
+                  Container(
+                    height: ScreenUtil().setWidth(30),
+                    color: Colors.white,
+                  )
                 ],
               ),
             ),

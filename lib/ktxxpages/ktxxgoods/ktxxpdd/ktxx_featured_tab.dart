@@ -26,6 +26,7 @@ import 'package:star/ktxxutils/ktxx_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -85,34 +86,37 @@ import '../../../ktxx_global_config.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFeaturedTabPage extends StatefulWidget {
-  KeTaoFeaturedPddHomeData pddHomeData;
+  PddHomeData pddHomeData;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedFeaturedTabPageState createState() => _KeTaoFeaturedFeaturedTabPageState();
+  _KeTaoFeaturedFeaturedTabPageState createState() =>
+      _KeTaoFeaturedFeaturedTabPageState();
 
   KeTaoFeaturedFeaturedTabPage({Key key, this.pddHomeData}) : super(key: key);
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabPage>
+class _KeTaoFeaturedFeaturedTabPageState
+    extends State<KeTaoFeaturedFeaturedTabPage>
     with AutomaticKeepAliveClientMixin {
   bool isFirstLoading = true;
-  List<KeTaoFeaturedHomeIconListIconList> _banner;
-  List<KeTaoFeaturedHomeIconListIconList> _ads;
-  KeTaoFeaturedHomeIconListIconList _buyTop;
-  KeTaoFeaturedHomeIconListIconList _buyLeft;
-  KeTaoFeaturedHomeIconListIconList _buyRight;
+  List<HomeIconListIconList> _banner;
+  List<HomeIconListIconList> _ads;
+  HomeIconListIconList _buyTop;
+  HomeIconListIconList _buyLeft;
+  HomeIconListIconList _buyRight;
   int page = 1;
   EasyRefreshController _refreshController;
 
   Future _initPddGoodsListData() async {
-    var result2 =
-        await KeTaoFeaturedHttpManage.getPddGoodsList(page, listId: listId, categoryId: -1);
+    var result2 = await KeTaoFeaturedHttpManage.getPddGoodsList(page,
+        listId: listId, categoryId: -1);
     if (result2.status) {
       if (mounted) {
         setState(() {
@@ -120,7 +124,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
           if (page == 1) {
             //下拉刷新
             pddGoodsList = result2.data.xList;
-            _showBottomLine=false;
+            _showBottomLine = false;
           } else {
             //加载更多
             if (result2 == null ||
@@ -131,7 +135,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
             } else {
               pddGoodsList += result2.data.xList;
               _refreshController.finishLoad(noMore: true);
-              _showBottomLine=true;
+              _showBottomLine = true;
             }
           }
           isFirstLoading = false;
@@ -228,8 +232,11 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     return Visibility(
       visible: !KeTaoFeaturedCommonUtils.isEmpty(_banner),
       child: new Container(
-        margin:
-             EdgeInsets.only(top: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, bottom: 5.0, left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
+        margin: EdgeInsets.only(
+            top: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+            bottom: 5.0,
+            left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+            right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
         color: Colors.transparent,
         height: ScreenUtil().setHeight(468),
         child: Center(
@@ -255,8 +262,9 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                     name = item.name;
                     type = item.type;
                     appId = item.appId;
-                    path =
-                        !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+                    path = !KeTaoFeaturedCommonUtils.isEmpty(item.path)
+                        ? item.path
+                        : item.uri;
                     subtitle = item.subtitle;
                     params = item.params;
                     imgPath = item.imgPath;
@@ -298,7 +306,9 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                               KeTaoFeaturedPddGoodsListPage(
                                 showAppBar: true,
                                 type: pddType,
-                                title: KeTaoFeaturedCommonUtils.isEmpty(name) ? "精选" : name,
+                                title: KeTaoFeaturedCommonUtils.isEmpty(name)
+                                    ? "精选"
+                                    : name,
                                 categoryId: catId,
                               ));
                           return;
@@ -321,7 +331,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                             await launch(path);
                           } else {
                             if (path.startsWith("pinduoduo://")) {
-                              KeTaoFeaturedCommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                              KeTaoFeaturedCommonUtils.showToast(
+                                  "亲，您还未安装拼多多客户端哦！");
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
                                   KeTaoFeaturedWebViewPluginPage(
@@ -384,7 +395,9 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                 },
                 indicatorLayout: PageIndicatorLayout.COLOR,
                 autoplay: true,
-                itemCount: KeTaoFeaturedCommonUtils.isEmpty(_banner) ? 0 : _banner.length,
+                itemCount: KeTaoFeaturedCommonUtils.isEmpty(_banner)
+                    ? 0
+                    : _banner.length,
                 pagination: SwiperPagination(
                     builder: DotSwiperPaginationBuilder(
                         //自定义指示器颜色
@@ -426,7 +439,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     );
   }
 
-  List<KeTaoFeaturedHomeIconListIconList> iconList = List<KeTaoFeaturedHomeIconListIconList>();
+  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
 
   ///icon 操作列表
   Widget buildItemsLayout() {
@@ -456,7 +469,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
           children: iconList.asMap().keys.map((index) {
-            KeTaoFeaturedHomeIconListIconList item;
+            HomeIconListIconList item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -467,7 +480,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     );
   }
 
-  Widget iconItem(Color _itemsTextColor, {KeTaoFeaturedHomeIconListIconList item}) {
+  Widget iconItem(Color _itemsTextColor, {HomeIconListIconList item}) {
     String icon = '';
     String name = '';
     String type = '';
@@ -484,7 +497,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
       name = item.name;
       type = item.type;
       appId = item.appId;
-      path = !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      path =
+          !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
       subtitle = item.subtitle;
       params = item.params;
       imgPath = item.imgPath;
@@ -533,7 +547,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
             }
             switch (path) {
               case "recharge":
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedRechargeListPage());
                 break;
             }
             return;
@@ -649,7 +664,9 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                 ));
           },
           child: Container(
-            padding: EdgeInsets.only(left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
+            padding: EdgeInsets.only(
+                left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+                right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             margin: EdgeInsets.only(bottom: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -706,7 +723,11 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
 
   Widget buildAdRowContainer() {
     return Container(
-      margin: EdgeInsets.only(bottom: 16, left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,),
+      margin: EdgeInsets.only(
+        bottom: 16,
+        left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+        right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+      ),
       child: Row(
         children: [
           buildBuyLeftWidget(),
@@ -733,7 +754,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
       name = item.name;
       type = item.type;
       appId = item.appId;
-      path = !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      path =
+          !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
       subtitle = item.subtitle;
       params = item.params;
       imgPath = item.imgPath;
@@ -783,7 +805,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
             }
             switch (path) {
               case "recharge":
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedRechargeListPage());
                 break;
             }
             return;
@@ -884,7 +907,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
       name = item.name;
       type = item.type;
       appId = item.appId;
-      path = !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      path =
+          !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
       subtitle = item.subtitle;
       params = item.params;
       imgPath = item.imgPath;
@@ -934,7 +958,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
             }
             switch (path) {
               case "recharge":
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedRechargeListPage());
                 break;
             }
             return;
@@ -1028,7 +1053,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
       name = item.name;
       type = item.type;
       appId = item.appId;
-      path = !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      path =
+          !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
       subtitle = item.subtitle;
       params = item.params;
       imgPath = item.imgPath;
@@ -1078,7 +1104,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
           }
           switch (path) {
             case "recharge":
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedRechargeListPage());
               break;
           }
           return;
@@ -1163,7 +1190,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
     );
   }
 
-  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList = List<KeTaoFeaturedPddGoodsListDataList>();
+  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
 
   ///热销商品
@@ -1172,16 +1199,19 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,),
+          margin: EdgeInsets.symmetric(
+            horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+          ),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,
-            itemCount:
-                KeTaoFeaturedCommonUtils.isEmpty(pddGoodsList) ? 0 : pddGoodsList.length,
+            itemCount: KeTaoFeaturedCommonUtils.isEmpty(pddGoodsList)
+                ? 0
+                : pddGoodsList.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              KeTaoFeaturedPddGoodsListDataList item;
+              PddGoodsListDataList item;
               try {
                 item = pddGoodsList[index];
               } catch (e) {}
@@ -1198,7 +1228,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
 
   var _priceColor = const Color(0xffF93736);
 
-  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
+  Widget productItem2({PddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -1299,8 +1329,9 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                       visible: !KeTaoFeaturedCommonUtils.isEmpty(_gBonus),
                       child: Container(
                         height: ScreenUtil().setWidth(60),
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 6,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6,
+                        ),
                         margin: EdgeInsets.only(
                           top: ScreenUtil().setSp(463),
                         ),
@@ -1471,7 +1502,8 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
                         ),
                       ),
                       Visibility(
-                        visible: !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
+                        visible:
+                            !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(

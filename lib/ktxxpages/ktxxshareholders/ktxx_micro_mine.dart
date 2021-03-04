@@ -99,7 +99,7 @@ import '../../ktxx_global_config.dart';
 ///微股东个人中心页面
 class KeTaoFeaturedMicroMinePage extends StatefulWidget {
   KeTaoFeaturedMicroMinePage({Key key,  this.userInfoData}) : super(key: key);
-  KeTaoFeaturedUserInfoData userInfoData;
+  UserInfoData userInfoData;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
@@ -150,7 +150,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
 
   ///账号类型 0普通用户 1体验用户 2VIP用户 3代理 4钻石会员
   String userType;
-  KeTaoFeaturedUserInfoEntity entity;
+  UserInfoEntity entity;
   Color _cardTextColor = Color(0xffD6B78E);
   Color _headBgColor = Color(0xffF93736);
 
@@ -165,7 +165,7 @@ class _KeTaoFeaturedMicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
   var _todayShouldBeScoredRed = '';
 
   var _todayActualDividend = '';
-  KeTaoFeaturedUserInfoData _data;
+  UserInfoData _data;
 
   var _currentDividend = '0';
 

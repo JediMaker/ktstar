@@ -69,16 +69,16 @@ class _KeTaoFeaturedJDAddressDialogState extends State<KeTaoFeaturedJDAddressDia
   /// TabBar不能动态加载，所以初始化3个，其中两个文字置空，点击事件拦截住。
   List<Tab> myTabs = <Tab>[Tab(text: '请选择'), Tab(text: ''), Tab(text: '')];
 
-  List<KeTaoFeaturedRegionDataData> provinces = [];
-  List<KeTaoFeaturedRegionDataData> cities = [];
-  List<KeTaoFeaturedRegionDataData> counties = [];
+  List<RegionDataData> provinces = [];
+  List<RegionDataData> cities = [];
+  List<RegionDataData> counties = [];
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   /// 当前列表数据
-  List<KeTaoFeaturedRegionDataData> mList = [];
+  List<RegionDataData> mList = [];
 
   /// 三级联动选择的position
   var _positions = [0, 0, 0];

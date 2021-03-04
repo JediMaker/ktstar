@@ -474,7 +474,7 @@ class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpen
         });
   }
 
-  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
     /*  var h = H.HttpClient();
     h.badCertificateCallback = (cert, String host, int port) {
       return true;

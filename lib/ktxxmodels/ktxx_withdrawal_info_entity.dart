@@ -1,21 +1,21 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedWithdrawalInfoEntity with JsonConvert<KeTaoFeaturedWithdrawalInfoEntity> {
+class WithdrawalInfoEntity with JsonConvert<WithdrawalInfoEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	KeTaoFeaturedWithdrawalInfoData data;
+	WithdrawalInfoData data;
 }
 
-class KeTaoFeaturedWithdrawalInfoData with JsonConvert<KeTaoFeaturedWithdrawalInfoData> {
-	KeTaoFeaturedWithdrawalInfoDataUser user;
-	KeTaoFeaturedWithdrawalInfoDataUseModel useModel;
+class WithdrawalInfoData with JsonConvert<WithdrawalInfoData> {
+	WithdrawalInfoDataUser user;
+	WithdrawalInfoDataUseModel useModel;
 }
 
-class KeTaoFeaturedWithdrawalInfoDataUser with JsonConvert<KeTaoFeaturedWithdrawalInfoDataUser> {
+class WithdrawalInfoDataUser with JsonConvert<WithdrawalInfoDataUser> {
 	@JSONField(name: "zfb_account")
 	String zfbAccount;
 	@JSONField(name: "zfb_name")
@@ -23,7 +23,7 @@ class KeTaoFeaturedWithdrawalInfoDataUser with JsonConvert<KeTaoFeaturedWithdraw
 	String price;
 }
 
-class KeTaoFeaturedWithdrawalInfoDataUseModel with JsonConvert<KeTaoFeaturedWithdrawalInfoDataUseModel> {
+class WithdrawalInfoDataUseModel with JsonConvert<WithdrawalInfoDataUseModel> {
 	String price;
 	@JSONField(name: "apply_price")
 	String applyPrice;

@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_task_share_entity.dart';
 
-taskShareEntityFromJson(KeTaoFeaturedTaskShareEntity data, Map<String, dynamic> json) {
+taskShareEntityFromJson(TaskShareEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ taskShareEntityFromJson(KeTaoFeaturedTaskShareEntity data, Map<String, dynamic> 
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedTaskShareData().fromJson(json['data']);
+			data.data = new TaskShareData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> taskShareEntityToJson(KeTaoFeaturedTaskShareEntity entity) {
+Map<String, dynamic> taskShareEntityToJson(TaskShareEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,7 +30,7 @@ Map<String, dynamic> taskShareEntityToJson(KeTaoFeaturedTaskShareEntity entity) 
 	return data;
 }
 
-taskShareDataFromJson(KeTaoFeaturedTaskShareData data, Map<String, dynamic> json) {
+taskShareDataFromJson(TaskShareData data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id']?.toString();
 	}
@@ -56,15 +56,15 @@ taskShareDataFromJson(KeTaoFeaturedTaskShareData data, Map<String, dynamic> json
 		data.avatar = json['avatar']?.toString();
 	}
 	if (json['share_info'] != null) {
-		data.shareInfo = new KeTaoFeaturedTaskShareDataShareInfo().fromJson(json['share_info']);
+		data.shareInfo = new TaskShareDataShareInfo().fromJson(json['share_info']);
 	}
 	if (json['footer_img'] != null) {
-		data.footerImg = new KeTaoFeaturedTaskShareDataFooterImg().fromJson(json['footer_img']);
+		data.footerImg = new TaskShareDataFooterImg().fromJson(json['footer_img']);
 	}
 	return data;
 }
 
-Map<String, dynamic> taskShareDataToJson(KeTaoFeaturedTaskShareData entity) {
+Map<String, dynamic> taskShareDataToJson(TaskShareData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['file_id'] = entity.fileId;
@@ -83,7 +83,7 @@ Map<String, dynamic> taskShareDataToJson(KeTaoFeaturedTaskShareData entity) {
 	return data;
 }
 
-taskShareDataShareInfoFromJson(KeTaoFeaturedTaskShareDataShareInfo data, Map<String, dynamic> json) {
+taskShareDataShareInfoFromJson(TaskShareDataShareInfo data, Map<String, dynamic> json) {
 	if (json['title'] != null) {
 		data.title = json['title']?.toString();
 	}
@@ -99,7 +99,7 @@ taskShareDataShareInfoFromJson(KeTaoFeaturedTaskShareDataShareInfo data, Map<Str
 	return data;
 }
 
-Map<String, dynamic> taskShareDataShareInfoToJson(KeTaoFeaturedTaskShareDataShareInfo entity) {
+Map<String, dynamic> taskShareDataShareInfoToJson(TaskShareDataShareInfo entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['title'] = entity.title;
 	data['icon'] = entity.icon;
@@ -108,7 +108,7 @@ Map<String, dynamic> taskShareDataShareInfoToJson(KeTaoFeaturedTaskShareDataShar
 	return data;
 }
 
-taskShareDataFooterImgFromJson(KeTaoFeaturedTaskShareDataFooterImg data, Map<String, dynamic> json) {
+taskShareDataFooterImgFromJson(TaskShareDataFooterImg data, Map<String, dynamic> json) {
 	if (json['image'] != null) {
 		data.image = json['image']?.toString();
 	}
@@ -118,7 +118,7 @@ taskShareDataFooterImgFromJson(KeTaoFeaturedTaskShareDataFooterImg data, Map<Str
 	return data;
 }
 
-Map<String, dynamic> taskShareDataFooterImgToJson(KeTaoFeaturedTaskShareDataFooterImg entity) {
+Map<String, dynamic> taskShareDataFooterImgToJson(TaskShareDataFooterImg entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['image'] = entity.image;
 	data['link'] = entity.link;

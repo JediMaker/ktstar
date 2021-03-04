@@ -1,7 +1,7 @@
 import 'package:star/ktxxmodels/ktxx_shop_type_entity.dart';
 
 shopTypeEntityFromJson(
-    KeTaoFeaturedShopTypeEntity data, Map<String, dynamic> json) {
+    ShopTypeEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -17,7 +17,7 @@ shopTypeEntityFromJson(
   return data;
 }
 
-Map<String, dynamic> shopTypeEntityToJson(KeTaoFeaturedShopTypeEntity entity) {
+Map<String, dynamic> shopTypeEntityToJson(ShopTypeEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;

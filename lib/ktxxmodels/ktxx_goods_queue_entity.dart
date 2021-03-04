@@ -1,31 +1,31 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedGoodsQueueEntity with JsonConvert<KeTaoFeaturedGoodsQueueEntity> {
+class GoodsQueueEntity with JsonConvert<GoodsQueueEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedGoodsQueueData data;
+  GoodsQueueData data;
 }
 
-class KeTaoFeaturedGoodsQueueData with JsonConvert<KeTaoFeaturedGoodsQueueData> {
+class GoodsQueueData with JsonConvert<GoodsQueueData> {
   @JSONField(name: "list")
-  List<KeTaoFeaturedGoodsQueueDataList> xList;
+  List<GoodsQueueDataList> xList;
   @JSONField(name: "user_info")
-  KeTaoFeaturedGoodsQueueDataUserInfo userInfo;
+  GoodsQueueDataUserInfo userInfo;
   @JSONField(name: "goods_info")
-  KeTaoFeaturedGoodsQueueDataGoodsInfo goodsInfo;
+  GoodsQueueDataGoodsInfo goodsInfo;
   @JSONField(name: "signPackage")
-  KeTaoFeaturedGoodsQueueDataSignPackage signPackage;
+  GoodsQueueDataSignPackage signPackage;
 }
 
-class KeTaoFeaturedGoodsQueueDataSignPackage with JsonConvert<KeTaoFeaturedGoodsQueueDataSignPackage> {
+class GoodsQueueDataSignPackage with JsonConvert<GoodsQueueDataSignPackage> {
   String url;
 }
 
-class KeTaoFeaturedGoodsQueueDataGoodsInfo with JsonConvert<KeTaoFeaturedGoodsQueueDataGoodsInfo> {
+class GoodsQueueDataGoodsInfo with JsonConvert<GoodsQueueDataGoodsInfo> {
   @JSONField(name: "g_name")
   String gName;
   @JSONField(name: "g_desc")
@@ -34,7 +34,7 @@ class KeTaoFeaturedGoodsQueueDataGoodsInfo with JsonConvert<KeTaoFeaturedGoodsQu
   String gImg;
 }
 
-class KeTaoFeaturedGoodsQueueDataList with JsonConvert<KeTaoFeaturedGoodsQueueDataList> {
+class GoodsQueueDataList with JsonConvert<GoodsQueueDataList> {
   String username;
   String avatar;
   @JSONField(name: "create_time")
@@ -46,7 +46,7 @@ class KeTaoFeaturedGoodsQueueDataList with JsonConvert<KeTaoFeaturedGoodsQueueDa
   bool isMy;
 }
 
-class KeTaoFeaturedGoodsQueueDataUserInfo with JsonConvert<KeTaoFeaturedGoodsQueueDataUserInfo> {
+class GoodsQueueDataUserInfo with JsonConvert<GoodsQueueDataUserInfo> {
   String username;
   String avatar;
   @JSONField(name: "power_num")

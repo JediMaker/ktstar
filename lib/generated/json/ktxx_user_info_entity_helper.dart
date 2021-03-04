@@ -1,7 +1,7 @@
 import 'package:star/ktxxmodels/ktxx_user_info_entity.dart';
 import 'package:star/ktxxmodels/ktxx_user_holder_profit_entity.dart';
 
-userInfoEntityFromJson(KeTaoFeaturedUserInfoEntity data, Map<String, dynamic> json) {
+userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -13,14 +13,14 @@ userInfoEntityFromJson(KeTaoFeaturedUserInfoEntity data, Map<String, dynamic> js
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedUserInfoData().fromJson(json['data']);
+			data.data = new UserInfoData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> userInfoEntityToJson(KeTaoFeaturedUserInfoEntity entity) {
+Map<String, dynamic> userInfoEntityToJson(UserInfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -31,7 +31,7 @@ Map<String, dynamic> userInfoEntityToJson(KeTaoFeaturedUserInfoEntity entity) {
 	return data;
 }
 
-userInfoDataFromJson(KeTaoFeaturedUserInfoData data, Map<String, dynamic> json) {
+userInfoDataFromJson(UserInfoData data, Map<String, dynamic> json) {
 	if (json['username'] != null) {
 		data.username = json['username']?.toString();
 	}
@@ -93,12 +93,12 @@ userInfoDataFromJson(KeTaoFeaturedUserInfoData data, Map<String, dynamic> json) 
 		data.partnerExpireTime = json['partner_expire_time']?.toString();
 	}
 	if (json['partner_bonus'] != null) {
-		data.partnerBonus = new KeTaoFeaturedUserHolderProfitPartnerBonus().fromJson(json['partner_bonus']);
+		data.partnerBonus = new UserHolderProfitPartnerBonus().fromJson(json['partner_bonus']);
 	}
 	return data;
 }
 
-Map<String, dynamic> userInfoDataToJson(KeTaoFeaturedUserInfoData entity) {
+Map<String, dynamic> userInfoDataToJson(UserInfoData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['username'] = entity.username;
 	data['avatar'] = entity.avatar;

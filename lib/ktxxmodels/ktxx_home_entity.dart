@@ -3,40 +3,40 @@ import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
 import 'package:star/ktxxmodels/ktxx_home_icon_list_entity.dart';
 
-class KeTaoFeaturedHomeEntity with JsonConvert<KeTaoFeaturedHomeEntity> {
+class HomeEntity with JsonConvert<HomeEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedHomeData data;
+  HomeData data;
 }
 
-class KeTaoFeaturedHomeData with JsonConvert<KeTaoFeaturedHomeData> {
-  List<KeTaoFeaturedHomeIconListIconList> banner;
+class HomeData with JsonConvert<HomeData> {
+  List<HomeIconListIconList> banner;
   @JSONField(name: "task_list")
-  List<KeTaoFeaturedHomeDataTaskList> taskList;
+  List<HomeDataTaskList> taskList;
   String links;
   @JSONField(name: "goods_list")
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList;
+  List<HomeGoodsListGoodsList> goodsList;
   @JSONField(name: "icon_list")
-  List<KeTaoFeaturedHomeIconListIconList> iconList;
+  List<HomeIconListIconList> iconList;
   @JSONField(name: "ad_list")
-  List<KeTaoFeaturedHomeIconListIconList> adList;
+  List<HomeIconListIconList> adList;
   @JSONField(name: "user_level")
   String userLevel;
 }
 
-class KeTaoFeaturedHomeDataBanner with JsonConvert<KeTaoFeaturedHomeDataBanner> {
+class HomeDataBanner with JsonConvert<HomeDataBanner> {
   String id;
   @JSONField(name: "img_path")
   String imgPath;
   dynamic uri;
 }
 
-class KeTaoFeaturedHomeDataTaskList with JsonConvert<KeTaoFeaturedHomeDataTaskList> {
+class HomeDataTaskList with JsonConvert<HomeDataTaskList> {
   @JSONField(name: "data")
-  List<KeTaoFeaturedHomeDataTaskListList> xList;
+  List<HomeDataTaskListList> xList;
   @JSONField(name: "task_total")
   String taskTotal;
   @JSONField(name: "use_task_total")
@@ -44,7 +44,7 @@ class KeTaoFeaturedHomeDataTaskList with JsonConvert<KeTaoFeaturedHomeDataTaskLi
   String name;
 }
 
-class KeTaoFeaturedHomeDataTaskListList with JsonConvert<KeTaoFeaturedHomeDataTaskListList> {
+class HomeDataTaskListList with JsonConvert<HomeDataTaskListList> {
   String id;
   @JSONField(name: "share_price")
   String sharePrice;

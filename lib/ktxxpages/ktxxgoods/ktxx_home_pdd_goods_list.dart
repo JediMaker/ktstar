@@ -23,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../ktxx_global_config.dart';
 import 'ktxx_goods_detail.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -82,7 +83,8 @@ import 'ktxx_goods_detail.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomePddGoodsListPage extends StatefulWidget {
-  KeTaoFeaturedHomePddGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
+  KeTaoFeaturedHomePddGoodsListPage(
+      {Key key, this.title = "补贴商品", this.categoryId = ''})
       : super(key: key);
   String title = "补贴商品";
   String categoryId;
@@ -92,18 +94,21 @@ class KeTaoFeaturedHomePddGoodsListPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedHomePddGoodsListPageState createState() => _KeTaoFeaturedHomePddGoodsListPageState();
+  _KeTaoFeaturedHomePddGoodsListPageState createState() =>
+      _KeTaoFeaturedHomePddGoodsListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePddGoodsListPage>
+class _KeTaoFeaturedHomePddGoodsListPageState
+    extends State<KeTaoFeaturedHomePddGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   int count = 1;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
-  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList = List<KeTaoFeaturedPddGoodsListDataList>();
+  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
+  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
   var categoryId;
   var type;
@@ -210,7 +215,8 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
                   ///
                   ///
                   Navigator.pop(context);
-                  var result = await KeTaoFeaturedHttpManage.getPddAuthorization();
+                  var result =
+                      await KeTaoFeaturedHttpManage.getPddAuthorization();
                   if (result.status) {
                     ///跳转拼多多app授权的url
                     var pddUrl = '';
@@ -305,7 +311,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              KeTaoFeaturedHomeGoodsListGoodsList item;
+              HomeGoodsListGoodsList item;
               try {
                 item = goodsList[index];
               } catch (e) {}
@@ -324,7 +330,8 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
     return Center(
       child: Container(
         width: double.maxFinite,
-        margin: EdgeInsets.symmetric(horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
+        margin: EdgeInsets.symmetric(
+            horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
 //          height: double.infinity,
         child: new StaggeredGridView.countBuilder(
           crossAxisCount: 2,
@@ -332,7 +339,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            KeTaoFeaturedPddGoodsListDataList item;
+            PddGoodsListDataList item;
             try {
               item = pddGoodsList[index];
             } catch (e) {}
@@ -348,7 +355,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
 
   var _priceColor = const Color(0xffCE0100);
 
-  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
+  Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -558,7 +565,7 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
     );
   }
 
-  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
+  Widget productItem2({PddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -834,7 +841,8 @@ class _KeTaoFeaturedHomePddGoodsListPageState extends State<KeTaoFeaturedHomePdd
                       ),
                       Visibility(
                         //微股东权益 equity
-                        visible: !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
+                        visible:
+                            !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(

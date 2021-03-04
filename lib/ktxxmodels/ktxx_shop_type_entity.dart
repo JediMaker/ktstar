@@ -1,8 +1,8 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedShopTypeEntity
-    with JsonConvert<KeTaoFeaturedShopTypeEntity> {
+class ShopTypeEntity
+    with JsonConvert<ShopTypeEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;

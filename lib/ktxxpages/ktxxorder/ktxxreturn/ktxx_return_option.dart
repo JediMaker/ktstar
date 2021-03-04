@@ -7,6 +7,7 @@ import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxmodels/ktxx_order_detail_entity.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxxreturn/ktxx_return_option_info.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -68,19 +69,22 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 class KeTaoFeaturedReturnGoodsOptionPage extends StatefulWidget {
   KeTaoFeaturedReturnGoodsOptionPage({Key key, this.product}) : super(key: key);
   final String title = "选择服务";
-  KeTaoFeaturedOrderDetailDataGoodsList product;
+  OrderDetailDataGoodsList product;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedReturnGoodsOptionPageState createState() => _KeTaoFeaturedReturnGoodsOptionPageState();
+  _KeTaoFeaturedReturnGoodsOptionPageState createState() =>
+      _KeTaoFeaturedReturnGoodsOptionPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedReturnGoodsOptionPageState extends State<KeTaoFeaturedReturnGoodsOptionPage> {
+class _KeTaoFeaturedReturnGoodsOptionPageState
+    extends State<KeTaoFeaturedReturnGoodsOptionPage> {
   @override
   void initState() {
     super.initState();
@@ -134,7 +138,7 @@ class _KeTaoFeaturedReturnGoodsOptionPageState extends State<KeTaoFeaturedReturn
     );
   }
 
-  KeTaoFeaturedOrderDetailDataGoodsList product;
+  OrderDetailDataGoodsList product;
 
   Container buildtopGoodsContainer() {
     return Container(

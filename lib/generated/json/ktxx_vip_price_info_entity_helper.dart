@@ -1,16 +1,16 @@
 import 'package:star/ktxxmodels/ktxx_vip_price_info_entity.dart';
 
-vipPriceInfoEntityFromJson(KeTaoFeaturedVipPriceInfoEntity data, Map<String, dynamic> json) {
+vipPriceInfoEntityFromJson(VipPriceInfoEntity data, Map<String, dynamic> json) {
 	if (json['vip'] != null) {
-		data.vip = new KeTaoFeaturedVipPriceInfoVip().fromJson(json['vip']);
+		data.vip = new VipPriceInfoVip().fromJson(json['vip']);
 	}
 	if (json['diamond'] != null) {
-		data.diamond = new KeTaoFeaturedVipPriceInfoDiamond().fromJson(json['diamond']);
+		data.diamond = new VipPriceInfoDiamond().fromJson(json['diamond']);
 	}
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoEntityToJson(KeTaoFeaturedVipPriceInfoEntity entity) {
+Map<String, dynamic> vipPriceInfoEntityToJson(VipPriceInfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.vip != null) {
 		data['vip'] = entity.vip.toJson();
@@ -21,7 +21,7 @@ Map<String, dynamic> vipPriceInfoEntityToJson(KeTaoFeaturedVipPriceInfoEntity en
 	return data;
 }
 
-vipPriceInfoVipFromJson(KeTaoFeaturedVipPriceInfoVip data, Map<String, dynamic> json) {
+vipPriceInfoVipFromJson(VipPriceInfoVip data, Map<String, dynamic> json) {
 	if (json['name'] != null) {
 		data.name = json['name']?.toString();
 	}
@@ -38,21 +38,21 @@ vipPriceInfoVipFromJson(KeTaoFeaturedVipPriceInfoVip data, Map<String, dynamic> 
 		data.bYearMoney = json['b_year_money']?.toString();
 	}
 	if (json['icon_desc'] != null) {
-		data.iconDesc = new List<KeTaoFeaturedVipPriceInfoVipIconDesc>();
+		data.iconDesc = new List<VipPriceInfoVipIconDesc>();
 		(json['icon_desc'] as List).forEach((v) {
-			data.iconDesc.add(new KeTaoFeaturedVipPriceInfoVipIconDesc().fromJson(v));
+			data.iconDesc.add(new VipPriceInfoVipIconDesc().fromJson(v));
 		});
 	}
 	if (json['money_list'] != null) {
-		data.moneyList = new List<KeTaoFeaturedVipPriceInfoVipMoneyList>();
+		data.moneyList = new List<VipPriceInfoVipMoneyList>();
 		(json['money_list'] as List).forEach((v) {
-			data.moneyList.add(new KeTaoFeaturedVipPriceInfoVipMoneyList().fromJson(v));
+			data.moneyList.add(new VipPriceInfoVipMoneyList().fromJson(v));
 		});
 	}
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoVipToJson(KeTaoFeaturedVipPriceInfoVip entity) {
+Map<String, dynamic> vipPriceInfoVipToJson(VipPriceInfoVip entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['name'] = entity.name;
 	data['profit_day'] = entity.profitDay;
@@ -68,7 +68,7 @@ Map<String, dynamic> vipPriceInfoVipToJson(KeTaoFeaturedVipPriceInfoVip entity) 
 	return data;
 }
 
-vipPriceInfoVipIconDescFromJson(KeTaoFeaturedVipPriceInfoVipIconDesc data, Map<String, dynamic> json) {
+vipPriceInfoVipIconDescFromJson(VipPriceInfoVipIconDesc data, Map<String, dynamic> json) {
 	if (json['icon'] != null) {
 		data.icon = json['icon']?.toString();
 	}
@@ -84,7 +84,7 @@ vipPriceInfoVipIconDescFromJson(KeTaoFeaturedVipPriceInfoVipIconDesc data, Map<S
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoVipIconDescToJson(KeTaoFeaturedVipPriceInfoVipIconDesc entity) {
+Map<String, dynamic> vipPriceInfoVipIconDescToJson(VipPriceInfoVipIconDesc entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['icon'] = entity.icon;
 	data['desc'] = entity.desc;
@@ -93,7 +93,7 @@ Map<String, dynamic> vipPriceInfoVipIconDescToJson(KeTaoFeaturedVipPriceInfoVipI
 	return data;
 }
 
-vipPriceInfoVipMoneyListFromJson(KeTaoFeaturedVipPriceInfoVipMoneyList data, Map<String, dynamic> json) {
+vipPriceInfoVipMoneyListFromJson(VipPriceInfoVipMoneyList data, Map<String, dynamic> json) {
 	if (json['type'] != null) {
 		data.type = json['type']?.toString();
 	}
@@ -118,7 +118,7 @@ vipPriceInfoVipMoneyListFromJson(KeTaoFeaturedVipPriceInfoVipMoneyList data, Map
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoVipMoneyListToJson(KeTaoFeaturedVipPriceInfoVipMoneyList entity) {
+Map<String, dynamic> vipPriceInfoVipMoneyListToJson(VipPriceInfoVipMoneyList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['type'] = entity.type;
 	data['desc'] = entity.desc;
@@ -130,7 +130,7 @@ Map<String, dynamic> vipPriceInfoVipMoneyListToJson(KeTaoFeaturedVipPriceInfoVip
 	return data;
 }
 
-vipPriceInfoDiamondFromJson(KeTaoFeaturedVipPriceInfoDiamond data, Map<String, dynamic> json) {
+vipPriceInfoDiamondFromJson(VipPriceInfoDiamond data, Map<String, dynamic> json) {
 	if (json['name'] != null) {
 		data.name = json['name']?.toString();
 	}
@@ -147,21 +147,21 @@ vipPriceInfoDiamondFromJson(KeTaoFeaturedVipPriceInfoDiamond data, Map<String, d
 		data.bYearMoney = json['b_year_money']?.toString();
 	}
 	if (json['icon_desc'] != null) {
-		data.iconDesc = new List<KeTaoFeaturedVipPriceInfoDiamondIconDesc>();
+		data.iconDesc = new List<VipPriceInfoDiamondIconDesc>();
 		(json['icon_desc'] as List).forEach((v) {
-			data.iconDesc.add(new KeTaoFeaturedVipPriceInfoDiamondIconDesc().fromJson(v));
+			data.iconDesc.add(new VipPriceInfoDiamondIconDesc().fromJson(v));
 		});
 	}
 	if (json['money_list'] != null) {
-		data.moneyList = new List<KeTaoFeaturedVipPriceInfoDiamondMoneyList>();
+		data.moneyList = new List<VipPriceInfoDiamondMoneyList>();
 		(json['money_list'] as List).forEach((v) {
-			data.moneyList.add(new KeTaoFeaturedVipPriceInfoDiamondMoneyList().fromJson(v));
+			data.moneyList.add(new VipPriceInfoDiamondMoneyList().fromJson(v));
 		});
 	}
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoDiamondToJson(KeTaoFeaturedVipPriceInfoDiamond entity) {
+Map<String, dynamic> vipPriceInfoDiamondToJson(VipPriceInfoDiamond entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['name'] = entity.name;
 	data['profit_day'] = entity.profitDay;
@@ -177,7 +177,7 @@ Map<String, dynamic> vipPriceInfoDiamondToJson(KeTaoFeaturedVipPriceInfoDiamond 
 	return data;
 }
 
-vipPriceInfoDiamondIconDescFromJson(KeTaoFeaturedVipPriceInfoDiamondIconDesc data, Map<String, dynamic> json) {
+vipPriceInfoDiamondIconDescFromJson(VipPriceInfoDiamondIconDesc data, Map<String, dynamic> json) {
 	if (json['icon'] != null) {
 		data.icon = json['icon']?.toString();
 	}
@@ -193,7 +193,7 @@ vipPriceInfoDiamondIconDescFromJson(KeTaoFeaturedVipPriceInfoDiamondIconDesc dat
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoDiamondIconDescToJson(KeTaoFeaturedVipPriceInfoDiamondIconDesc entity) {
+Map<String, dynamic> vipPriceInfoDiamondIconDescToJson(VipPriceInfoDiamondIconDesc entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['icon'] = entity.icon;
 	data['desc'] = entity.desc;
@@ -202,7 +202,7 @@ Map<String, dynamic> vipPriceInfoDiamondIconDescToJson(KeTaoFeaturedVipPriceInfo
 	return data;
 }
 
-vipPriceInfoDiamondMoneyListFromJson(KeTaoFeaturedVipPriceInfoDiamondMoneyList data, Map<String, dynamic> json) {
+vipPriceInfoDiamondMoneyListFromJson(VipPriceInfoDiamondMoneyList data, Map<String, dynamic> json) {
 	if (json['type'] != null) {
 		data.type = json['type']?.toString();
 	}
@@ -227,7 +227,7 @@ vipPriceInfoDiamondMoneyListFromJson(KeTaoFeaturedVipPriceInfoDiamondMoneyList d
 	return data;
 }
 
-Map<String, dynamic> vipPriceInfoDiamondMoneyListToJson(KeTaoFeaturedVipPriceInfoDiamondMoneyList entity) {
+Map<String, dynamic> vipPriceInfoDiamondMoneyListToJson(VipPriceInfoDiamondMoneyList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['type'] = entity.type;
 	data['desc'] = entity.desc;

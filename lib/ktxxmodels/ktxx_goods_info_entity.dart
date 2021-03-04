@@ -2,16 +2,16 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_goods_spec_info_entity.dart';
 
-class KeTaoFeaturedGoodsInfoEntity with JsonConvert<KeTaoFeaturedGoodsInfoEntity> {
+class GoodsInfoEntity with JsonConvert<GoodsInfoEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedGoodsInfoData data;
+  GoodsInfoData data;
 }
 
-class KeTaoFeaturedGoodsInfoData with JsonConvert<KeTaoFeaturedGoodsInfoData> {
+class GoodsInfoData with JsonConvert<GoodsInfoData> {
   String id;
   @JSONField(name: "goods_name")
   String goodsName;
@@ -32,5 +32,5 @@ class KeTaoFeaturedGoodsInfoData with JsonConvert<KeTaoFeaturedGoodsInfoData> {
   @JSONField(name: "min_power")
   String minPower;
   @JSONField(name: "spec_info")
-  KeTaoFeaturedGoodsSpecInfoSpecInfo specInfo;
+  GoodsSpecInfoSpecInfo specInfo;
 }

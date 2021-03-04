@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_task_record_list_entity.dart';
 
-taskRecordListEntityFromJson(KeTaoFeaturedTaskRecordListEntity data, Map<String, dynamic> json) {
+taskRecordListEntityFromJson(TaskRecordListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ taskRecordListEntityFromJson(KeTaoFeaturedTaskRecordListEntity data, Map<String,
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedTaskRecordListData().fromJson(json['data']);
+			data.data = new TaskRecordListData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> taskRecordListEntityToJson(KeTaoFeaturedTaskRecordListEntity entity) {
+Map<String, dynamic> taskRecordListEntityToJson(TaskRecordListEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,11 +30,11 @@ Map<String, dynamic> taskRecordListEntityToJson(KeTaoFeaturedTaskRecordListEntit
 	return data;
 }
 
-taskRecordListDataFromJson(KeTaoFeaturedTaskRecordListData data, Map<String, dynamic> json) {
+taskRecordListDataFromJson(TaskRecordListData data, Map<String, dynamic> json) {
 	if (json['list'] != null) {
-		data.xList = new List<KeTaoFeaturedTaskRecordListDataList>();
+		data.xList = new List<TaskRecordListDataList>();
 		(json['list'] as List).forEach((v) {
-			data.xList.add(new KeTaoFeaturedTaskRecordListDataList().fromJson(v));
+			data.xList.add(new TaskRecordListDataList().fromJson(v));
 		});
 	}
 	if (json['page'] != null) {
@@ -46,7 +46,7 @@ taskRecordListDataFromJson(KeTaoFeaturedTaskRecordListData data, Map<String, dyn
 	return data;
 }
 
-Map<String, dynamic> taskRecordListDataToJson(KeTaoFeaturedTaskRecordListData entity) {
+Map<String, dynamic> taskRecordListDataToJson(TaskRecordListData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.xList != null) {
 		data['list'] =  entity.xList.map((v) => v.toJson()).toList();
@@ -56,7 +56,7 @@ Map<String, dynamic> taskRecordListDataToJson(KeTaoFeaturedTaskRecordListData en
 	return data;
 }
 
-taskRecordListDataListFromJson(KeTaoFeaturedTaskRecordListDataList data, Map<String, dynamic> json) {
+taskRecordListDataListFromJson(TaskRecordListDataList data, Map<String, dynamic> json) {
 	if (json['title'] != null) {
 		data.title = json['title']?.toString();
 	}
@@ -90,7 +90,7 @@ taskRecordListDataListFromJson(KeTaoFeaturedTaskRecordListDataList data, Map<Str
 	return data;
 }
 
-Map<String, dynamic> taskRecordListDataListToJson(KeTaoFeaturedTaskRecordListDataList entity) {
+Map<String, dynamic> taskRecordListDataListToJson(TaskRecordListDataList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['title'] = entity.title;
 	data['price'] = entity.price;

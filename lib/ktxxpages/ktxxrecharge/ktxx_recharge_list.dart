@@ -97,9 +97,9 @@ class KeTaoFeaturedRechargeListPage extends StatefulWidget {
 class _KeTaoFeaturedRechargeListPageState
     extends State<KeTaoFeaturedRechargeListPage> {
   TextEditingController _phoneController = new TextEditingController();
-  List<KeTaoFeaturedRechargeDataRechageList> _dataList;
-  List<KeTaoFeaturedRechargeDataRechageList> _rechargeList;
-  List<KeTaoFeaturedRechargeDataRechageList> _sRechargeList;
+  List<RechargeDataRechageList> _dataList;
+  List<RechargeDataRechageList> _rechargeList;
+  List<RechargeDataRechageList> _sRechargeList;
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff999999);
   Color _textSelectedColor = Colors.white;
@@ -108,9 +108,9 @@ class _KeTaoFeaturedRechargeListPageState
   int _rechargeWay = 0; //0 快速充值 1 普通充值
   FocusNode _phoneFocusNode = FocusNode();
   var _payNo;
-  KeTaoFeaturedRechargeDataRechageList _selectedRechargeData;
-  KeTaoFeaturedRechargeDatacouponList _couponData;
-  KeTaoFeaturedRechargeExtraRatio ratio;
+  RechargeDataRechageList _selectedRechargeData;
+  RechargeDatacouponList _couponData;
+  RechargeExtraRatio ratio;
   var _fastRatio = '';
   var _slowRatio = '';
   int SVG_ANGLETYPE_DEG = 2;
@@ -564,7 +564,7 @@ class _KeTaoFeaturedRechargeListPageState
         runSpacing: ScreenUtil().setWidth(20),
         children: _dataList != null
             ? _dataList.asMap().keys.map((valueIndex) {
-                KeTaoFeaturedRechargeDataRechageList dataItem =
+                RechargeDataRechageList dataItem =
                     _dataList[valueIndex];
 
                 try {
@@ -818,7 +818,7 @@ class _KeTaoFeaturedRechargeListPageState
         });
   }
 
-  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
     fluwx
         .payWithWeChat(
       appId: wechatPayinfoData.payInfo.appid.toString(),

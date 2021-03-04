@@ -1,28 +1,28 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedRegionDataEntity with JsonConvert<KeTaoFeaturedRegionDataEntity> {
+class RegionDataEntity with JsonConvert<RegionDataEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	List<KeTaoFeaturedRegionDataData> data;
+	List<RegionDataData> data;
 }
 
-class KeTaoFeaturedRegionDataData with JsonConvert<KeTaoFeaturedRegionDataData> {
+class RegionDataData with JsonConvert<RegionDataData> {
 	int id;
 	String value;
-	List<KeTaoFeaturedRegionDataData> children;
+	List<RegionDataData> children;
 }
 
-class KeTaoFeaturedRegionDataDatachild with JsonConvert<KeTaoFeaturedRegionDataDatachild> {
+class RegionDataDatachild with JsonConvert<RegionDataDatachild> {
 	int id;
 	String value;
-	List<KeTaoFeaturedRegionDataDatachildchild> children;
+	List<RegionDataDatachildchild> children;
 }
 
-class KeTaoFeaturedRegionDataDatachildchild with JsonConvert<KeTaoFeaturedRegionDataDatachildchild> {
+class RegionDataDatachildchild with JsonConvert<RegionDataDatachildchild> {
 	int id;
 	String value;
 }

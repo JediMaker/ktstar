@@ -1,16 +1,16 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedPddGoodsInfoEntity with JsonConvert<KeTaoFeaturedPddGoodsInfoEntity> {
+class PddGoodsInfoEntity with JsonConvert<PddGoodsInfoEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedPddGoodsInfoData data;
+  PddGoodsInfoData data;
 }
 
-class KeTaoFeaturedPddGoodsInfoData with JsonConvert<KeTaoFeaturedPddGoodsInfoData> {
+class PddGoodsInfoData with JsonConvert<PddGoodsInfoData> {
   @JSONField(name: "g_id")
   int gId;
   @JSONField(name: "g_title")
@@ -48,10 +48,10 @@ class KeTaoFeaturedPddGoodsInfoData with JsonConvert<KeTaoFeaturedPddGoodsInfoDa
   @JSONField(name: "login_status")
   String loginStatus;
   String url;
-  KeTaoFeaturedPddGoodsInfoDataCoupons coupons;
+  PddGoodsInfoDataCoupons coupons;
 }
 
-class KeTaoFeaturedPddGoodsInfoDataCoupons with JsonConvert<KeTaoFeaturedPddGoodsInfoDataCoupons> {
+class PddGoodsInfoDataCoupons with JsonConvert<PddGoodsInfoDataCoupons> {
   @JSONField(name: "coupon_discount")
   String couponDiscount;
   @JSONField(name: "coupon_remain_quantity")

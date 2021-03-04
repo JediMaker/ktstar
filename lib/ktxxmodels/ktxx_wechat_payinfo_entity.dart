@@ -1,24 +1,24 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedWechatPayinfoEntity with JsonConvert<KeTaoFeaturedWechatPayinfoEntity> {
+class WechatPayinfoEntity with JsonConvert<WechatPayinfoEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	KeTaoFeaturedWechatPayinfoData data;
+	WechatPayinfoData data;
 }
 
-class KeTaoFeaturedWechatPayinfoData with JsonConvert<KeTaoFeaturedWechatPayinfoData> {
+class WechatPayinfoData with JsonConvert<WechatPayinfoData> {
 	@JSONField(name: "pay_no")
 	String payNo;
 	@JSONField(name: "pay_info")
-	KeTaoFeaturedWechatPayinfoDataPayInfo payInfo;
+	WechatPayinfoDataPayInfo payInfo;
 	bool finish;
 }
 
-class KeTaoFeaturedWechatPayinfoDataPayInfo with JsonConvert<KeTaoFeaturedWechatPayinfoDataPayInfo> {
+class WechatPayinfoDataPayInfo with JsonConvert<WechatPayinfoDataPayInfo> {
 	String appid;
 	String noncestr;
 	String package;

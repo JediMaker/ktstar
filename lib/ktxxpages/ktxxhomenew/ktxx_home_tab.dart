@@ -97,7 +97,7 @@ import 'package:star/ktxxbus/kt_my_event_bus.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomeTabPage extends StatefulWidget {
-  KeTaoFeaturedPddHomeData pddHomeData;
+  PddHomeData pddHomeData;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
@@ -117,34 +117,31 @@ class KeTaoFeaturedHomeTabPage extends StatefulWidget {
 class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     with AutomaticKeepAliveClientMixin {
   bool isFirstLoading = true;
-  List<KeTaoFeaturedHomeIconListIconList> _banner;
-  List<KeTaoFeaturedHomeIconListIconList> _ads;
-  KeTaoFeaturedHomeIconListIconList _buyTop;
-  KeTaoFeaturedHomeIconListIconList _buyLeft;
-  KeTaoFeaturedHomeIconListIconList _buyRight;
+  List<HomeIconListIconList> _banner;
+  List<HomeIconListIconList> _ads;
+  HomeIconListIconList _buyTop;
+  HomeIconListIconList _buyLeft;
+  HomeIconListIconList _buyRight;
   int page = 1;
   EasyRefreshController _refreshController;
 
   String taskCompletedNum = "";
   String taskTotalNum = "";
   int bannerIndex = 0;
-  KeTaoFeaturedHomeEntity entity;
+  HomeEntity entity;
   TabController _tabController;
-  List<KeTaoFeaturedHomeIconListIconList> bannerList;
+  List<HomeIconListIconList> bannerList;
   List<Color> bannerColorList;
-  static List<KeTaoFeaturedHomeDataTaskListList> taskList;
-  static List<KeTaoFeaturedHomeDataTaskListList> taskVipList;
-  static List<KeTaoFeaturedHomeDataTaskListList> taskDiamondVipList;
-  List<KeTaoFeaturedHomeDataTaskList> taskListAll;
+  static List<HomeDataTaskListList> taskList;
+  static List<HomeDataTaskListList> taskVipList;
+  static List<HomeDataTaskListList> taskDiamondVipList;
+  List<HomeDataTaskList> taskListAll;
   SwiperController _swiperController;
   bool _isLoop = false;
   bool _isMarqueeLoop = false;
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList =
-      List<KeTaoFeaturedHomeGoodsListGoodsList>();
-  List<KeTaoFeaturedHomeIconListIconList> iconList =
-      List<KeTaoFeaturedHomeIconListIconList>();
-  List<KeTaoFeaturedHomeIconListIconList> adList =
-      List<KeTaoFeaturedHomeIconListIconList>();
+  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
+  List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
+  List<HomeIconListIconList> adList = List<HomeIconListIconList>();
 
 //    Container(
 //height: 6.0,
@@ -199,7 +196,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     Container(),
   ];
   Widget pddcategoryTabsView;
-  List<KeTaoFeaturedHomePddCategoryDataCat> cats;
+  List<HomePddCategoryDataCat> cats;
 
   var _marqueeSwiperController = SwiperController();
   var iconUrlList = [
@@ -754,7 +751,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
           children: iconList.asMap().keys.map((index) {
-            KeTaoFeaturedHomeIconListIconList item;
+            HomeIconListIconList item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -961,7 +958,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
 //        crossAxisAlignment: CrossAxisAlignment.center,
           runSpacing: 16,
           children: iconList.asMap().keys.map((index) {
-            KeTaoFeaturedHomeIconListIconList item;
+            HomeIconListIconList item;
             try {
               item = iconList[index];
             } catch (e) {}
@@ -973,7 +970,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   }
 
   Widget iconItem(Color _itemsTextColor,
-      {KeTaoFeaturedHomeIconListIconList item, int index}) {
+      {HomeIconListIconList item, int index}) {
     String icon = '';
     String name = '';
     String type = '';
@@ -1280,7 +1277,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   }
 
   ///广告单元
-  Widget buildAdWidget(KeTaoFeaturedHomeIconListIconList item, int index) {
+  Widget buildAdWidget(HomeIconListIconList item, int index) {
     String icon = '';
     String name = '';
     String type = '';
@@ -1690,7 +1687,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: List.generate(goodsList.length, (index) {
-                        KeTaoFeaturedHomeGoodsListGoodsList item;
+                        HomeGoodsListGoodsList item;
                         try {
                           item = goodsList[index];
                         } catch (e) {}
@@ -1709,7 +1706,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
 
   var _priceColor = const Color(0xffCE0100);
 
-  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item, int index}) {
+  Widget productItem({HomeGoodsListGoodsList item, int index}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -2613,8 +2610,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     );
   }
 
-  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList =
-      List<KeTaoFeaturedPddGoodsListDataList>();
+  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
 
   ///热销商品
@@ -2635,7 +2631,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              KeTaoFeaturedPddGoodsListDataList item;
+              PddGoodsListDataList item;
               try {
                 item = pddGoodsList[index];
               } catch (e) {}
@@ -2652,7 +2648,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
 
 //  var _priceColor = const Color(0xffF93736);
 
-  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
+  Widget productItem2({PddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';

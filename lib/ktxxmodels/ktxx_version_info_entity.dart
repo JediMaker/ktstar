@@ -1,16 +1,16 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedVersionInfoEntity with JsonConvert<KeTaoFeaturedVersionInfoEntity> {
+class VersionInfoEntity with JsonConvert<VersionInfoEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedVersionInfoData data;
+  VersionInfoData data;
 }
 
-class KeTaoFeaturedVersionInfoData with JsonConvert<KeTaoFeaturedVersionInfoData> {
+class VersionInfoData with JsonConvert<VersionInfoData> {
   @JSONField(name: "version_no")
   String versionNo;
   String desc;

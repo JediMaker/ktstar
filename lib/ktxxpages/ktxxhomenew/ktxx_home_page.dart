@@ -88,7 +88,7 @@ class KeTaoFeaturedHomePagePage extends StatefulWidget {
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedHomePagePageState extends State<KeTaoFeaturedHomePagePage> {
-  KeTaoFeaturedUserInfoData userInfoData;
+  UserInfoData userInfoData;
   Widget rootView;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;

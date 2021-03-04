@@ -1,13 +1,13 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedOrderUserInfoEntity with JsonConvert<KeTaoFeaturedOrderUserInfoEntity> {
-	@JSONField(name: "user_info")
-	KeTaoFeaturedOrderUserInfoUserInfo userInfo;
+class OrderUserInfoEntity with JsonConvert<OrderUserInfoEntity> {
+  @JSONField(name: "user_info")
+  OrderUserInfoUserInfo userInfo;
 }
 
-class KeTaoFeaturedOrderUserInfoUserInfo with JsonConvert<KeTaoFeaturedOrderUserInfoUserInfo> {
-	String price;
-	@JSONField(name: "pay_pwd_flag")
-	bool payPwdFlag;
+class OrderUserInfoUserInfo with JsonConvert<OrderUserInfoUserInfo> {
+  String price;
+  @JSONField(name: "pay_pwd_flag")
+  bool payPwdFlag;
 }

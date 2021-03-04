@@ -249,19 +249,19 @@ class KeTaoFeaturedGlobalConfig {
   }
 
   /// 获取登陆成功后的数据
-  static KeTaoFeaturedLoginData getLoginInfo() {
+  static LoginData getLoginInfo() {
     final extractData =
         json.decode(prefs.getString("loginData")) as Map<String, dynamic>;
-    var entity = KeTaoFeaturedLoginEntity();
+    var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     return entity.data;
   }
 
   /// 获取首页的数据
-  static KeTaoFeaturedHomeData getHomeInfo() {
+  static HomeData getHomeInfo() {
     final extractData =
         json.decode(prefs.getString("homeData")) as Map<String, dynamic>;
-    var entity = KeTaoFeaturedHomeEntity();
+    var entity = HomeEntity();
     homeEntityFromJson(entity, extractData);
     return entity.data;
   }
@@ -278,8 +278,8 @@ class KeTaoFeaturedGlobalConfig {
   }
 
   /// 获取用户信息
-  static KeTaoFeaturedUserInfoData getUserInfo() {
-    var entity = KeTaoFeaturedUserInfoEntity();
+  static UserInfoData getUserInfo() {
+    var entity = UserInfoEntity();
     try {
       userInfoEntityFromJson(entity,
           json.decode(prefs.getString("userInfo")) as Map<String, dynamic>);

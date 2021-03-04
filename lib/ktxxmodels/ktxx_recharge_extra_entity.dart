@@ -1,15 +1,15 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedRechargeExtraEntity
-    with JsonConvert<KeTaoFeaturedRechargeExtraEntity> {
+class RechargeExtraEntity
+    with JsonConvert<RechargeExtraEntity> {
   @JSONField(name: "s_rechage_list")
-  List<KeTaoFeaturedRechargeExtraSRechageList> sRechageList;
-  KeTaoFeaturedRechargeExtraRatio ratio;
+  List<RechargeExtraSRechageList> sRechageList;
+  RechargeExtraRatio ratio;
 }
 
-class KeTaoFeaturedRechargeExtraSRechageList
-    with JsonConvert<KeTaoFeaturedRechargeExtraSRechageList> {
+class RechargeExtraSRechageList
+    with JsonConvert<RechargeExtraSRechageList> {
   String id;
   @JSONField(name: "face_money")
   String faceMoney;
@@ -23,8 +23,8 @@ class KeTaoFeaturedRechargeExtraSRechageList
   String coinDesc;
 }
 
-class KeTaoFeaturedRechargeExtraRatio
-    with JsonConvert<KeTaoFeaturedRechargeExtraRatio> {
+class RechargeExtraRatio
+    with JsonConvert<RechargeExtraRatio> {
   String fast;
   String slow;
 }

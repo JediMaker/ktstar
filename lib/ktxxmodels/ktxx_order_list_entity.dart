@@ -1,24 +1,24 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedOrderListEntity with JsonConvert<KeTaoFeaturedOrderListEntity> {
+class OrderListEntity with JsonConvert<OrderListEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedOrderListData data;
+  OrderListData data;
 }
 
-class KeTaoFeaturedOrderListData with JsonConvert<KeTaoFeaturedOrderListData> {
+class OrderListData with JsonConvert<OrderListData> {
   @JSONField(name: "list")
-  List<KeTaoFeaturedOrderListDataList> xList;
+  List<OrderListDataList> xList;
   int page;
   @JSONField(name: "page_size")
   int pageSize;
 }
 
-class KeTaoFeaturedOrderListDataList with JsonConvert<KeTaoFeaturedOrderListDataList> {
+class OrderListDataList with JsonConvert<OrderListDataList> {
   @JSONField(name: "order_type")
   String orderType;
   @JSONField(name: "order_id")
@@ -32,7 +32,7 @@ class KeTaoFeaturedOrderListDataList with JsonConvert<KeTaoFeaturedOrderListData
   @JSONField(name: "create_time")
   String createTime;
   @JSONField(name: "goods_list")
-  List<KeTaoFeaturedOrderListDataListGoodsList> goodsList;
+  List<OrderListDataListGoodsList> goodsList;
   @JSONField(name: "face_money")
   String faceMoney;
   @JSONField(name: "order_source")
@@ -46,7 +46,7 @@ class KeTaoFeaturedOrderListDataList with JsonConvert<KeTaoFeaturedOrderListData
   String coin;
 }
 
-class KeTaoFeaturedOrderListDataListGoodsList with JsonConvert<KeTaoFeaturedOrderListDataListGoodsList> {
+class OrderListDataListGoodsList with JsonConvert<OrderListDataListGoodsList> {
   @JSONField(name: "goods_id")
   String goodsId;
   @JSONField(name: "goods_name")

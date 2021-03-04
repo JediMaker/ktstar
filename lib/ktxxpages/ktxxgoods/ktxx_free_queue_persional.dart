@@ -23,6 +23,7 @@ void main() {
     ),
   ));
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -82,7 +83,8 @@ void main() {
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFreeQueuePersonalPage extends StatefulWidget {
-  KeTaoFeaturedFreeQueuePersonalPage({Key key, this.pageType = 0}) : super(key: key);
+  KeTaoFeaturedFreeQueuePersonalPage({Key key, this.pageType = 0})
+      : super(key: key);
   final String title = "";
   int pageType;
   int SVG_ANGLETYPE_DEG = 2;
@@ -91,13 +93,16 @@ class KeTaoFeaturedFreeQueuePersonalPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedFreeQueuePersonalPageState createState() => _KeTaoFeaturedFreeQueuePersonalPageState();
+  _KeTaoFeaturedFreeQueuePersonalPageState createState() =>
+      _KeTaoFeaturedFreeQueuePersonalPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedFreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPage> {
-  List<KeTaoFeaturedGoodsQueuePersionalData> _dataList = List<KeTaoFeaturedGoodsQueuePersionalData>();
+class _KeTaoFeaturedFreeQueuePersonalPageState
+    extends State<KeTaoFeaturedFreeQueuePersonalPage> {
+  List<GoodsQueuePersionalData> _dataList = List<GoodsQueuePersionalData>();
 
   var _emptyShow = false;
 
@@ -310,7 +315,8 @@ class _KeTaoFeaturedFreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQu
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedGoodsListPage());
+                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      context, KeTaoFeaturedGoodsListPage());
                 },
                 behavior: HitTestBehavior.opaque,
                 child: Column(
@@ -439,7 +445,7 @@ class _KeTaoFeaturedFreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQu
   var _shareDesc = '';
   var _shareThumbnail = '';
 
-  Widget buildItem(index, KeTaoFeaturedGoodsQueuePersionalData item) {
+  Widget buildItem(index, GoodsQueuePersionalData item) {
     var _itemNickName = '';
     var _dateJoin = '';
     var _queueStatus = '';
@@ -550,7 +556,9 @@ class _KeTaoFeaturedFreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQu
                     }
                     try {
                       EasyLoading.show();
-                      var result = await KeTaoFeaturedHttpManage.getGoodsQueueList(goodsId);
+                      var result =
+                          await KeTaoFeaturedHttpManage.getGoodsQueueList(
+                              goodsId);
                       EasyLoading.dismiss();
                       if (mounted) {
                         if (result.status) {
@@ -682,7 +690,8 @@ class _KeTaoFeaturedFreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQu
             child: new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _saveImagesWithPermission,
                 childWidget: new Container(
                   child: new Column(
@@ -718,7 +727,8 @@ class _KeTaoFeaturedFreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQu
             child: new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _copyText,
                 childWidget: new Container(
                   child: new Column(

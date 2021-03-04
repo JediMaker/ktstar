@@ -2,16 +2,16 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_order_user_info_entity.dart';
 
-class KeTaoFeaturedOrderDetailEntity with JsonConvert<KeTaoFeaturedOrderDetailEntity> {
+class OrderDetailEntity with JsonConvert<OrderDetailEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedOrderDetailData data;
+  OrderDetailData data;
 }
 
-class KeTaoFeaturedOrderDetailData with JsonConvert<KeTaoFeaturedOrderDetailData> {
+class OrderDetailData with JsonConvert<OrderDetailData> {
   int id;
   @JSONField(name: "pay_price")
   String payPrice;
@@ -22,7 +22,7 @@ class KeTaoFeaturedOrderDetailData with JsonConvert<KeTaoFeaturedOrderDetailData
   String mobile;
   String address;
   @JSONField(name: "goods_list")
-  List<KeTaoFeaturedOrderDetailDataGoodsList> goodsList;
+  List<OrderDetailDataGoodsList> goodsList;
   @JSONField(name: "total_price")
   String totalPrice;
   @JSONField(name: "create_time")
@@ -44,10 +44,10 @@ class KeTaoFeaturedOrderDetailData with JsonConvert<KeTaoFeaturedOrderDetailData
   @JSONField(name: "deduct_price")
   String deductPrice;
   @JSONField(name: "user_info")
-  KeTaoFeaturedOrderUserInfoUserInfo userInfo;
+  OrderUserInfoUserInfo userInfo;
 }
 
-class KeTaoFeaturedOrderDetailDataGoodsList with JsonConvert<KeTaoFeaturedOrderDetailDataGoodsList> {
+class OrderDetailDataGoodsList with JsonConvert<OrderDetailDataGoodsList> {
   @JSONField(name: "goods_id")
   String goodsId;
   @JSONField(name: "goods_name")

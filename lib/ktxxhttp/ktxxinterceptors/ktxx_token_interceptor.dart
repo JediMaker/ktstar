@@ -61,7 +61,7 @@ class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
     try {
       var request = response.request;
       final extractData = json.decode(response.data) as Map<String, dynamic>;
-      var entity = KeTaoFeaturedResultBeanEntity();
+      var entity = ResultBeanEntity();
       resultBeanEntityFromJson(entity, extractData);
       if (entity.errCode.toString() == "308") {
         response = await getAuthorization(request);

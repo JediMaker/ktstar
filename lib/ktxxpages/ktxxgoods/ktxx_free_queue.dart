@@ -24,6 +24,7 @@ void main() {
     ),
   ));
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -83,7 +84,8 @@ void main() {
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
-  KeTaoFeaturedFreeQueuePage({Key key, this.goodsId, this.pageType = 0}) : super(key: key);
+  KeTaoFeaturedFreeQueuePage({Key key, this.goodsId, this.pageType = 0})
+      : super(key: key);
   final String title = "";
   String goodsId;
   int SVG_ANGLETYPE_DEG = 2;
@@ -91,6 +93,7 @@ class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   /// 页面来源类型
   ///
   /// 0 默认
@@ -99,18 +102,21 @@ class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
   int pageType;
 
   @override
-  _KeTaoFeaturedFreeQueuePageState createState() => _KeTaoFeaturedFreeQueuePageState();
+  _KeTaoFeaturedFreeQueuePageState createState() =>
+      _KeTaoFeaturedFreeQueuePageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage> {
+class _KeTaoFeaturedFreeQueuePageState
+    extends State<KeTaoFeaturedFreeQueuePage> {
   var _headImageUrl = '';
   var _nickName = '';
   bool _hasSort = false;
-  List<KeTaoFeaturedGoodsQueueDataList> _queueList = List<KeTaoFeaturedGoodsQueueDataList>();
-  KeTaoFeaturedGoodsQueueDataGoodsInfo _goodsInfo;
-  KeTaoFeaturedGoodsQueueDataSignPackage _signPackage;
+  List<GoodsQueueDataList> _queueList = List<GoodsQueueDataList>();
+  GoodsQueueDataGoodsInfo _goodsInfo;
+  GoodsQueueDataSignPackage _signPackage;
 
   var _webUrl = '';
   var _shareTitle = '';
@@ -130,7 +136,8 @@ class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage>
     }
     try {
       EasyLoading.show();
-      var result = await KeTaoFeaturedHttpManage.getGoodsQueueList(widget.goodsId);
+      var result =
+          await KeTaoFeaturedHttpManage.getGoodsQueueList(widget.goodsId);
       if (mounted) {
         if (result.status) {
           setState(() {
@@ -582,7 +589,7 @@ class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage>
     );
   }
 
-  Widget buildItem(index, KeTaoFeaturedGoodsQueueDataList item) {
+  Widget buildItem(index, GoodsQueueDataList item) {
     var _itemNickName = '';
     var _avatarUrl = '';
     var _dateJoin = '';
@@ -693,7 +700,8 @@ class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage>
             child: new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _saveImagesWithPermission,
                 childWidget: new Container(
                   child: new Column(
@@ -729,7 +737,8 @@ class _KeTaoFeaturedFreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage>
             child: new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _copyText,
                 childWidget: new Container(
                   child: new Column(

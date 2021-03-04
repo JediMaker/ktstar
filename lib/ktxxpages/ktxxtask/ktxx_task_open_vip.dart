@@ -69,8 +69,8 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
 //color: Colors.blue[700],
 //borderRadius: BorderRadius.circular(10.0)),
 //),
-  KeTaoFeaturedVipPriceInfoVip _vipInfo;
-  KeTaoFeaturedVipPriceInfoDiamond _diamondInfo;
+  VipPriceInfoVip _vipInfo;
+  VipPriceInfoDiamond _diamondInfo;
 
   _initWeChatResponseHandler() {
     KeTaoFeaturedGlobalConfig.payType = 0;
@@ -700,9 +700,9 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
   Widget benefitsRow() {
     var vipRewards = '20';
     var diamondVipRewards = '79.9';
-    List<KeTaoFeaturedVipPriceInfoVipIconDesc> iconDesc = List<KeTaoFeaturedVipPriceInfoVipIconDesc>();
-    List<KeTaoFeaturedVipPriceInfoDiamondIconDesc> iconDesc1 =
-        List<KeTaoFeaturedVipPriceInfoDiamondIconDesc>();
+    List<VipPriceInfoVipIconDesc> iconDesc = List<VipPriceInfoVipIconDesc>();
+    List<VipPriceInfoDiamondIconDesc> iconDesc1 =
+        List<VipPriceInfoDiamondIconDesc>();
     try {
       if (_isDiamondVip) {
         iconDesc1 = _diamondInfo.iconDesc;
@@ -819,8 +819,8 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
   }
 
   Container benefitItem(
-      {KeTaoFeaturedVipPriceInfoVipIconDesc itemVip,
-      KeTaoFeaturedVipPriceInfoDiamondIconDesc itemDiamond,
+      {VipPriceInfoVipIconDesc itemVip,
+      VipPriceInfoDiamondIconDesc itemDiamond,
       int index}) {
     return new Container(
       width: MediaQuery.of(context).size.width / 3,
@@ -873,9 +873,9 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
 
   Container buildSetMealLayout() {
     //setMeal
-    List<KeTaoFeaturedVipPriceInfoDiamondMoneyList> moneyList1 =
-        List<KeTaoFeaturedVipPriceInfoDiamondMoneyList>();
-    List<KeTaoFeaturedVipPriceInfoVipMoneyList> moneyList = List<KeTaoFeaturedVipPriceInfoVipMoneyList>();
+    List<VipPriceInfoDiamondMoneyList> moneyList1 =
+        List<VipPriceInfoDiamondMoneyList>();
+    List<VipPriceInfoVipMoneyList> moneyList = List<VipPriceInfoVipMoneyList>();
     try {
       if (_isDiamondVip) {
         moneyList1 = _diamondInfo.moneyList;
@@ -922,8 +922,8 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
   }
 
   Widget buildVipSelectLayout(
-      {KeTaoFeaturedVipPriceInfoVipMoneyList itemVip,
-      KeTaoFeaturedVipPriceInfoDiamondMoneyList itemDiamond,
+      {VipPriceInfoVipMoneyList itemVip,
+      VipPriceInfoDiamondMoneyList itemDiamond,
       int index}) {
     String title = '';
     String yearPrice = '';
@@ -1198,7 +1198,7 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
         });
   }
 
-  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
     /*  var h = H.HttpClient();
     h.badCertificateCallback = (cert, String host, int port) {
       return true;

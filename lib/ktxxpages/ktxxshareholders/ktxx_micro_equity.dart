@@ -125,8 +125,8 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
   ///
   ///  4 高级股东
   String _shareholderType = '';
-  KeTaoFeaturedVipPriceInfoVip _vipInfo;
-  KeTaoFeaturedVipPriceInfoDiamond _diamondInfo;
+  VipPriceInfoVip _vipInfo;
+  VipPriceInfoDiamond _diamondInfo;
 
   ///微股东类型名称
   var _shareholderTypeName = '';
@@ -148,7 +148,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
 
   ///万份分红金30日收益
   var _monthProfit = '0';
-  KeTaoFeaturedUserInfoData userInfoData;
+  UserInfoData userInfoData;
 
   _initWeChatResponseHandler() {
     KeTaoFeaturedGlobalConfig.payType = 3;
@@ -162,11 +162,11 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
     });
   }
 
-  KeTaoFeaturedMicroShareholderItemEntity grade1;
-  KeTaoFeaturedMicroShareholderItemEntity grade2;
-  KeTaoFeaturedMicroShareholderItemEntity grade3;
-  List<KeTaoFeaturedMicroShareholderItemEntity> _dataList =
-      List<KeTaoFeaturedMicroShareholderItemEntity>();
+  MicroShareholderItemEntity grade1;
+  MicroShareholderItemEntity grade2;
+  MicroShareholderItemEntity grade3;
+  List<MicroShareholderItemEntity> _dataList =
+      List<MicroShareholderItemEntity>();
 
   _initData() async {
     userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
@@ -1799,7 +1799,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
         });
   }
 
-  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
     /*  var h = H.HttpClient();
     h.badCertificateCallback = (cert, String host, int port) {
       return true;

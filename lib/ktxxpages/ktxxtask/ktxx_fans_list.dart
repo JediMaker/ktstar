@@ -14,6 +14,7 @@ import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -80,8 +81,10 @@ class KeTaoFeaturedFansListPage extends StatefulWidget {
   final String title = "我的粉丝";
 
   @override
-  _KeTaoFeaturedFansListPageState createState() => _KeTaoFeaturedFansListPageState();
+  _KeTaoFeaturedFansListPageState createState() =>
+      _KeTaoFeaturedFansListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -99,13 +102,14 @@ class _KeTaoFeaturedFansListPageState extends State<KeTaoFeaturedFansListPage>
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   ///会员总数量
   var _totalMembersNumber = "0";
   var _vipMembersNumber = "0";
   var _experienceMembersNumber = "0";
   var _ordinaryMembersNumber = "0";
   var _diamondMembersNumber = "0";
-  KeTaoFeaturedFansTotalDataAgentInfo _agentInfo;
+  FansTotalDataAgentInfo _agentInfo;
 
   _initFansTotalsData() async {
     var result = await KeTaoFeaturedHttpManage.getFansTotal();
@@ -157,8 +161,7 @@ class _KeTaoFeaturedFansListPageState extends State<KeTaoFeaturedFansListPage>
             ),
           ];
 
-          _tabController =
-              TabController(length: 5, vsync: this);
+          _tabController = TabController(length: 5, vsync: this);
         });
       }
     } else {}
@@ -274,7 +277,8 @@ class _KeTaoFeaturedFansListPageState extends State<KeTaoFeaturedFansListPage>
           child: Column(
             children: <Widget>[
               Visibility(
-                  visible: !widget.isAgent && !KeTaoFeaturedCommonUtils.isEmpty(_agentInfo),
+                  visible: !widget.isAgent &&
+                      !KeTaoFeaturedCommonUtils.isEmpty(_agentInfo),
                   child: buildHeadLayout()),
               Flexible(
                 child: Container(
@@ -475,10 +479,11 @@ class _FansTabViewState extends State<FansTabView> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedFansListDataList> _fansList;
+  List<FansListDataList> _fansList;
 
   _initData() async {
-    var result = await KeTaoFeaturedHttpManage.getFansList(page, 10, holderType: widget.fansType);
+    var result = await KeTaoFeaturedHttpManage.getFansList(page, 10,
+        holderType: widget.fansType);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -537,8 +542,9 @@ class _FansTabViewState extends State<FansTabView> {
           _initData();
         }
       },
-      emptyWidget:
-          _fansList == null || _fansList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+      emptyWidget: _fansList == null || _fansList.length == 0
+          ? KeTaoFeaturedNoDataPage()
+          : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -550,7 +556,7 @@ class _FansTabViewState extends State<FansTabView> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedFansListDataList listItem = _fansList[index];
+            FansListDataList listItem = _fansList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _fansList == null ? 0 : _fansList.length,
@@ -559,7 +565,7 @@ class _FansTabViewState extends State<FansTabView> {
     );
   }
 
-  Widget buildItemLayout({KeTaoFeaturedFansListDataList listItem}) {
+  Widget buildItemLayout({FansListDataList listItem}) {
     String text = "";
     String headUrl;
     String nickName;
@@ -680,9 +686,9 @@ class _FansTabViewState extends State<FansTabView> {
       ),
       trailing: GestureDetector(
         child: CachedNetworkImage(
-          imageUrl:"${_getImgName(shareHolderType)}",
-          width: ScreenUtil().setWidth(shareHolderType=='2'?119:137),
-          height: ScreenUtil().setWidth(shareHolderType=='2'?59:77),
+          imageUrl: "${_getImgName(shareHolderType)}",
+          width: ScreenUtil().setWidth(shareHolderType == '2' ? 119 : 137),
+          height: ScreenUtil().setWidth(shareHolderType == '2' ? 59 : 77),
           fit: BoxFit.fill,
         ),
       ),

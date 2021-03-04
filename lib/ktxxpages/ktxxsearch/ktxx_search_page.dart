@@ -24,6 +24,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -94,6 +95,7 @@ class Person {
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   Person(this.name, this.surname, this.age);
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -102,13 +104,15 @@ class KeTaoFeaturedSearchGoodsPage extends StatefulWidget {
   final String title = "";
 
   @override
-  _KeTaoFeaturedSearchGoodsPageState createState() => _KeTaoFeaturedSearchGoodsPageState();
+  _KeTaoFeaturedSearchGoodsPageState createState() =>
+      _KeTaoFeaturedSearchGoodsPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
-    with TickerProviderStateMixin {
+class _KeTaoFeaturedSearchGoodsPageState
+    extends State<KeTaoFeaturedSearchGoodsPage> with TickerProviderStateMixin {
   int _selectedTabIndex = 0;
   TabController _tabController;
   TextEditingController _textEditingController;
@@ -156,8 +160,8 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     try {
       EasyLoading.show();
     } catch (e) {}
-    var result =
-        await KeTaoFeaturedHttpManage.getSearchedGoodsList(page, keyword: _searchWord);
+    var result = await KeTaoFeaturedHttpManage.getSearchedGoodsList(page,
+        keyword: _searchWord);
     try {
       EasyLoading.dismiss();
     } catch (e) {}
@@ -218,15 +222,16 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     if (!KeTaoFeaturedGlobalConfig.isLogin()) {
       KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            context, KeTaoFeaturedLoginPage());
       });
       return;
     }
     try {
       EasyLoading.show();
     } catch (e) {}
-    var result2 =
-        await KeTaoFeaturedHttpManage.getSearchedPddGoodsList(page, keyword: _searchWord);
+    var result2 = await KeTaoFeaturedHttpManage.getSearchedPddGoodsList(page,
+        keyword: _searchWord);
     try {
       EasyLoading.dismiss();
     } catch (e) {}
@@ -331,8 +336,10 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
                           if (mounted) {
                             setState(() {
                               _searchWord = value;
-                              if (KeTaoFeaturedCommonUtils.isEmpty(_searchWord)) {
-                                _hisArray = KeTaoFeaturedGlobalConfig.getSearchList();
+                              if (KeTaoFeaturedCommonUtils.isEmpty(
+                                  _searchWord)) {
+                                _hisArray =
+                                    KeTaoFeaturedGlobalConfig.getSearchList();
                                 _showSearchList = false;
                               }
                             });
@@ -520,7 +527,8 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     }
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: !_showSearchList && !KeTaoFeaturedCommonUtils.isEmpty(_hisArray),
+        visible:
+            !_showSearchList && !KeTaoFeaturedCommonUtils.isEmpty(_hisArray),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -634,7 +642,8 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
                   ///
                   ///
                   Navigator.pop(context);
-                  var result = await KeTaoFeaturedHttpManage.getPddAuthorization();
+                  var result =
+                      await KeTaoFeaturedHttpManage.getPddAuthorization();
                   if (result.status) {
                     ///跳转拼多多app授权的url
                     var pddUrl = '';
@@ -707,7 +716,8 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
                 onPressed: () {
                   setState(() {
                     _hisArray = List<String>();
-                    KeTaoFeaturedGlobalConfig.setSearchList(searchList: _hisArray);
+                    KeTaoFeaturedGlobalConfig.setSearchList(
+                        searchList: _hisArray);
                   });
                   Navigator.pop(context);
                 },
@@ -753,7 +763,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     );
   }
 
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
+  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
 
   Widget buildSearchProductList() {
     if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
@@ -769,11 +779,13 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
 //          height: double.infinity,
             child: new StaggeredGridView.countBuilder(
               crossAxisCount: 2,
-              itemCount: KeTaoFeaturedCommonUtils.isEmpty(goodsList) ? 0 : goodsList.length,
+              itemCount: KeTaoFeaturedCommonUtils.isEmpty(goodsList)
+                  ? 0
+                  : goodsList.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                KeTaoFeaturedHomeGoodsListGoodsList item;
+                HomeGoodsListGoodsList item;
                 try {
                   item = goodsList[index];
                 } catch (e) {}
@@ -789,7 +801,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     );
   }
 
-  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
+  Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -973,7 +985,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
     );
   }
 
-  List<KeTaoFeaturedPddGoodsListDataList> pddGoodsList = List<KeTaoFeaturedPddGoodsListDataList>();
+  List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
   bool _showSearchList = false;
 
@@ -1000,7 +1012,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
-                    KeTaoFeaturedPddGoodsListDataList item;
+                    PddGoodsListDataList item;
                     try {
                       item = pddGoodsList[index];
                     } catch (e) {}
@@ -1020,7 +1032,7 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
 
   var _priceColor = const Color(0xffF93736);
 
-  Widget productItem2({KeTaoFeaturedPddGoodsListDataList item}) {
+  Widget productItem2({PddGoodsListDataList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';
@@ -1297,7 +1309,8 @@ class _KeTaoFeaturedSearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsP
                         ),
                       ),
                       Visibility(
-                        visible: !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
+                        visible:
+                            !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(

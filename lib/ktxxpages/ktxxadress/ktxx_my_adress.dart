@@ -7,6 +7,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import '../../ktxx_global_config.dart';
 import 'ktxx_my_adress_edit.dart';
 import 'package:star/ktxxmodels/ktxx_address_list_entity.dart';
+
 ///
 /// 地址列表
 ///
@@ -32,8 +33,10 @@ class KeTaoFeaturedAddressListPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _KeTaoFeaturedAddressListPageState createState() => _KeTaoFeaturedAddressListPageState();
+  _KeTaoFeaturedAddressListPageState createState() =>
+      _KeTaoFeaturedAddressListPageState();
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -92,11 +95,12 @@ class KeTaoFeaturedAddressListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedAddressListPageState extends State<KeTaoFeaturedAddressListPage>
+class _KeTaoFeaturedAddressListPageState
+    extends State<KeTaoFeaturedAddressListPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  List<KeTaoFeaturedAddressListData> addresses;
+  List<AddressListData> addresses;
   String defaultAddressId;
   bool needRefresh = false;
 
@@ -113,7 +117,7 @@ class _KeTaoFeaturedAddressListPageState extends State<KeTaoFeaturedAddressListP
     }
   }
 
-  Widget _buildListTile(BuildContext context, KeTaoFeaturedAddressListData item) {
+  Widget _buildListTile(BuildContext context, AddressListData item) {
     var avatarName = '';
     var name = '';
     var phone = '';
@@ -142,8 +146,8 @@ class _KeTaoFeaturedAddressListPageState extends State<KeTaoFeaturedAddressListP
         dense: false,
         onTap: () async {
           if (widget.type == 0) {
-            var result =
-                await KeTaoFeaturedHttpManage.orderChangeBindAddress(widget.orderId, itemId);
+            var result = await KeTaoFeaturedHttpManage.orderChangeBindAddress(
+                widget.orderId, itemId);
             if (result.status) {
               Navigator.of(context).pop(true);
             } else {
@@ -387,7 +391,7 @@ class _KeTaoFeaturedAddressListPageState extends State<KeTaoFeaturedAddressListP
         padding: EdgeInsets.only(top: 8),
         child: ListView.builder(
           itemBuilder: ((BuildContext context, int index) {
-            KeTaoFeaturedAddressListData item;
+            AddressListData item;
             try {
               item = addresses[index];
             } catch (e) {}

@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_withdrawal_list_entity.dart';
 
-withdrawalListEntityFromJson(KeTaoFeaturedWithdrawalListEntity data, Map<String, dynamic> json) {
+withdrawalListEntityFromJson(WithdrawalListEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ withdrawalListEntityFromJson(KeTaoFeaturedWithdrawalListEntity data, Map<String,
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedWithdrawalListData().fromJson(json['data']);
+			data.data = new WithdrawalListData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> withdrawalListEntityToJson(KeTaoFeaturedWithdrawalListEntity entity) {
+Map<String, dynamic> withdrawalListEntityToJson(WithdrawalListEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,11 +30,11 @@ Map<String, dynamic> withdrawalListEntityToJson(KeTaoFeaturedWithdrawalListEntit
 	return data;
 }
 
-withdrawalListDataFromJson(KeTaoFeaturedWithdrawalListData data, Map<String, dynamic> json) {
+withdrawalListDataFromJson(WithdrawalListData data, Map<String, dynamic> json) {
 	if (json['list'] != null) {
-		data.xList = new List<KeTaoFeaturedWithdrawalListDataList>();
+		data.xList = new List<WithdrawalListDataList>();
 		(json['list'] as List).forEach((v) {
-			data.xList.add(new KeTaoFeaturedWithdrawalListDataList().fromJson(v));
+			data.xList.add(new WithdrawalListDataList().fromJson(v));
 		});
 	}
 	if (json['page'] != null) {
@@ -46,7 +46,7 @@ withdrawalListDataFromJson(KeTaoFeaturedWithdrawalListData data, Map<String, dyn
 	return data;
 }
 
-Map<String, dynamic> withdrawalListDataToJson(KeTaoFeaturedWithdrawalListData entity) {
+Map<String, dynamic> withdrawalListDataToJson(WithdrawalListData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.xList != null) {
 		data['list'] =  entity.xList.map((v) => v.toJson()).toList();
@@ -56,7 +56,7 @@ Map<String, dynamic> withdrawalListDataToJson(KeTaoFeaturedWithdrawalListData en
 	return data;
 }
 
-withdrawalListDataListFromJson(KeTaoFeaturedWithdrawalListDataList data, Map<String, dynamic> json) {
+withdrawalListDataListFromJson(WithdrawalListDataList data, Map<String, dynamic> json) {
 	if (json['price'] != null) {
 		data.price = json['price']?.toString();
 	}
@@ -78,7 +78,7 @@ withdrawalListDataListFromJson(KeTaoFeaturedWithdrawalListDataList data, Map<Str
 	return data;
 }
 
-Map<String, dynamic> withdrawalListDataListToJson(KeTaoFeaturedWithdrawalListDataList entity) {
+Map<String, dynamic> withdrawalListDataListToJson(WithdrawalListDataList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['price'] = entity.price;
 	data['type'] = entity.type;

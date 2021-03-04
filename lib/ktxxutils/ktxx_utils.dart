@@ -337,7 +337,7 @@ class KeTaoFeaturedUtils {
 }
 
 Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
-    KeTaoFeaturedVersionInfoEntity versionInfo) {
+    VersionInfoEntity versionInfo) {
   final ThemeData theme = Theme.of(context);
   var desc = Platform.isAndroid
       ? {versionInfo.data.desc}

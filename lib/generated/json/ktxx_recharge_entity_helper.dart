@@ -2,7 +2,7 @@ import 'package:star/ktxxmodels/ktxx_recharge_entity.dart';
 import 'package:star/ktxxmodels/ktxx_recharge_extra_entity.dart';
 
 rechargeEntityFromJson(
-    KeTaoFeaturedRechargeEntity data, Map<String, dynamic> json) {
+    RechargeEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -14,13 +14,13 @@ rechargeEntityFromJson(
   }
   if (json['data'] != null) {
     try {
-      data.data = new KeTaoFeaturedRechargeData().fromJson(json['data']);
+      data.data = new RechargeData().fromJson(json['data']);
     } catch (e) {}
   }
   return data;
 }
 
-Map<String, dynamic> rechargeEntityToJson(KeTaoFeaturedRechargeEntity entity) {
+Map<String, dynamic> rechargeEntityToJson(RechargeEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;
@@ -32,36 +32,36 @@ Map<String, dynamic> rechargeEntityToJson(KeTaoFeaturedRechargeEntity entity) {
 }
 
 rechargeDataFromJson(
-    KeTaoFeaturedRechargeData data, Map<String, dynamic> json) {
+    RechargeData data, Map<String, dynamic> json) {
   if (json['rechage_list'] != null) {
-    data.rechageList = new List<KeTaoFeaturedRechargeDataRechageList>();
+    data.rechageList = new List<RechargeDataRechageList>();
     (json['rechage_list'] as List).forEach((v) {
       data.rechageList
-          .add(new KeTaoFeaturedRechargeDataRechageList().fromJson(v));
+          .add(new RechargeDataRechageList().fromJson(v));
     });
   }
   if (json['coupon_list'] != null) {
-    data.couponList = new List<KeTaoFeaturedRechargeDatacouponList>();
+    data.couponList = new List<RechargeDatacouponList>();
     (json['coupon_list'] as List).forEach((v) {
       data.couponList
-          .add(new KeTaoFeaturedRechargeDatacouponList().fromJson(v));
+          .add(new RechargeDatacouponList().fromJson(v));
     });
   }
   if (json['s_rechage_list'] != null) {
-    data.sRechageList = new List<KeTaoFeaturedRechargeDataRechageList>();
+    data.sRechageList = new List<RechargeDataRechageList>();
     (json['s_rechage_list'] as List).forEach((v) {
       data.sRechageList
-          .add(new KeTaoFeaturedRechargeDataRechageList().fromJson(v));
+          .add(new RechargeDataRechageList().fromJson(v));
     });
   }
   if (json['ratio'] != null) {
-    data.ratio = new KeTaoFeaturedRechargeExtraRatio().fromJson(json['ratio']);
+    data.ratio = new RechargeExtraRatio().fromJson(json['ratio']);
   }
 
   return data;
 }
 
-Map<String, dynamic> rechargeDataToJson(KeTaoFeaturedRechargeData entity) {
+Map<String, dynamic> rechargeDataToJson(RechargeData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   if (entity.rechageList != null) {
     data['rechage_list'] = entity.rechageList.map((v) => v.toJson()).toList();
@@ -80,7 +80,7 @@ Map<String, dynamic> rechargeDataToJson(KeTaoFeaturedRechargeData entity) {
 }
 
 rechargeDataRechageListFromJson(
-    KeTaoFeaturedRechargeDataRechageList data, Map<String, dynamic> json) {
+    RechargeDataRechageList data, Map<String, dynamic> json) {
   if (json['id'] != null) {
     data.id = json['id']?.toInt();
   }
@@ -109,7 +109,7 @@ rechargeDataRechageListFromJson(
 }
 
 Map<String, dynamic> rechargeDataRechageListToJson(
-    KeTaoFeaturedRechargeDataRechageList entity) {
+    RechargeDataRechageList entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['id'] = entity.id;
   data['face_money'] = entity.faceMoney;
@@ -123,7 +123,7 @@ Map<String, dynamic> rechargeDataRechageListToJson(
 }
 
 rechargeDatacouponListFromJson(
-    KeTaoFeaturedRechargeDatacouponList data, Map<String, dynamic> json) {
+    RechargeDatacouponList data, Map<String, dynamic> json) {
   if (json['money'] != null) {
     data.money = json['money']?.toString();
   }
@@ -134,7 +134,7 @@ rechargeDatacouponListFromJson(
 }
 
 Map<String, dynamic> rechargeDatacouponListToJson(
-    KeTaoFeaturedRechargeDatacouponList entity) {
+    RechargeDatacouponList entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['money'] = entity.money;
   data['condition'] = entity.condition;

@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_task_detail_other_entity.dart';
 
-taskDetailOtherEntityFromJson(KeTaoFeaturedTaskDetailOtherEntity data, Map<String, dynamic> json) {
+taskDetailOtherEntityFromJson(TaskDetailOtherEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ taskDetailOtherEntityFromJson(KeTaoFeaturedTaskDetailOtherEntity data, Map<Strin
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedTaskDetailOtherData().fromJson(json['data']);
+			data.data = new TaskDetailOtherData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> taskDetailOtherEntityToJson(KeTaoFeaturedTaskDetailOtherEntity entity) {
+Map<String, dynamic> taskDetailOtherEntityToJson(TaskDetailOtherEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,7 +30,7 @@ Map<String, dynamic> taskDetailOtherEntityToJson(KeTaoFeaturedTaskDetailOtherEnt
 	return data;
 }
 
-taskDetailOtherDataFromJson(KeTaoFeaturedTaskDetailOtherData data, Map<String, dynamic> json) {
+taskDetailOtherDataFromJson(TaskDetailOtherData data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id']?.toString();
 	}
@@ -38,9 +38,9 @@ taskDetailOtherDataFromJson(KeTaoFeaturedTaskDetailOtherData data, Map<String, d
 		data.title = json['title']?.toString();
 	}
 	if (json['desc_json'] != null) {
-		data.descJson = new List<KeTaoFeaturedTaskDetailOtherDataDescJson>();
+		data.descJson = new List<TaskDetailOtherDataDescJson>();
 		(json['desc_json'] as List).forEach((v) {
-			data.descJson.add(new KeTaoFeaturedTaskDetailOtherDataDescJson().fromJson(v));
+			data.descJson.add(new TaskDetailOtherDataDescJson().fromJson(v));
 		});
 	}
 	if (json['show_btn'] != null) {
@@ -49,7 +49,7 @@ taskDetailOtherDataFromJson(KeTaoFeaturedTaskDetailOtherData data, Map<String, d
 	return data;
 }
 
-Map<String, dynamic> taskDetailOtherDataToJson(KeTaoFeaturedTaskDetailOtherData entity) {
+Map<String, dynamic> taskDetailOtherDataToJson(TaskDetailOtherData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['title'] = entity.title;
@@ -60,7 +60,7 @@ Map<String, dynamic> taskDetailOtherDataToJson(KeTaoFeaturedTaskDetailOtherData 
 	return data;
 }
 
-taskDetailOtherDataDescJsonFromJson(KeTaoFeaturedTaskDetailOtherDataDescJson data, Map<String, dynamic> json) {
+taskDetailOtherDataDescJsonFromJson(TaskDetailOtherDataDescJson data, Map<String, dynamic> json) {
 	if (json['text'] != null) {
 		data.text = json['text']?.toString();
 	}
@@ -70,7 +70,7 @@ taskDetailOtherDataDescJsonFromJson(KeTaoFeaturedTaskDetailOtherDataDescJson dat
 	return data;
 }
 
-Map<String, dynamic> taskDetailOtherDataDescJsonToJson(KeTaoFeaturedTaskDetailOtherDataDescJson entity) {
+Map<String, dynamic> taskDetailOtherDataDescJsonToJson(TaskDetailOtherDataDescJson entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['text'] = entity.text;
 	data['img'] = entity.img;

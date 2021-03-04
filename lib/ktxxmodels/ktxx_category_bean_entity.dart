@@ -1,7 +1,7 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedCategoryBeanEntity with JsonConvert<KeTaoFeaturedCategoryBeanEntity> {
+class CategoryBeanEntity with JsonConvert<CategoryBeanEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
@@ -10,7 +10,8 @@ class KeTaoFeaturedCategoryBeanEntity with JsonConvert<KeTaoFeaturedCategoryBean
   List<KeTaoFeaturedCategoryBeanData> data;
 }
 
-class KeTaoFeaturedCategoryBeanData with JsonConvert<KeTaoFeaturedCategoryBeanData> {
+class KeTaoFeaturedCategoryBeanData
+    with JsonConvert<KeTaoFeaturedCategoryBeanData> {
   @JSONField(name: "category_id")
   String categoryId;
   String id;
@@ -25,8 +26,8 @@ class KeTaoFeaturedCategoryBeanData with JsonConvert<KeTaoFeaturedCategoryBeanDa
   String sortNo;
   @JSONField(name: "img_url")
   String imgUrl;
-	String name;
-	List<KeTaoFeaturedCategoryBeanData> children;
+  String name;
+  List<KeTaoFeaturedCategoryBeanData> children;
   @JSONField(name: "language_id")
   String languageId;
   String description;

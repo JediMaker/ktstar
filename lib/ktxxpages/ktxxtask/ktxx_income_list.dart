@@ -7,6 +7,7 @@ import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_income_list_entity.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -69,22 +70,27 @@ class KeTaoFeaturedIncomeListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
-  KeTaoFeaturedIncomeListPage({Key key, @required this.pageType, this.showAppBar = false})
+  KeTaoFeaturedIncomeListPage(
+      {Key key, @required this.pageType, this.showAppBar = false})
       : super(key: key);
   String title = "";
-  bool showAppBar;int SVG_ANGLETYPE_DEG = 2;
+  bool showAppBar;
+  int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
 
   @override
-  _KeTaoFeaturedIncomeListPageState createState() => _KeTaoFeaturedIncomeListPageState();
+  _KeTaoFeaturedIncomeListPageState createState() =>
+      _KeTaoFeaturedIncomeListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedIncomeListPageState extends State<KeTaoFeaturedIncomeListPage>
+class _KeTaoFeaturedIncomeListPageState
+    extends State<KeTaoFeaturedIncomeListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -95,12 +101,13 @@ class _KeTaoFeaturedIncomeListPageState extends State<KeTaoFeaturedIncomeListPag
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedIncomeListDataList> _profitList;
+  List<IncomeListDataList> _profitList;
 
   _initData() async {
     lastTimeDesc = '';
-    KeTaoFeaturedIncomeListEntity result =
-        await KeTaoFeaturedHttpManage.getProfitList(page, 10, isWithdrawal: isWithdrawal);
+    IncomeListEntity result = await KeTaoFeaturedHttpManage.getProfitList(
+        page, 10,
+        isWithdrawal: isWithdrawal);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -220,7 +227,7 @@ class _KeTaoFeaturedIncomeListPageState extends State<KeTaoFeaturedIncomeListPag
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedIncomeListDataList listItem = _profitList[index];
+            IncomeListDataList listItem = _profitList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _profitList == null ? 0 : _profitList.length,
@@ -231,7 +238,7 @@ class _KeTaoFeaturedIncomeListPageState extends State<KeTaoFeaturedIncomeListPag
 
   String lastTimeDesc = '';
 
-  buildItemLayout({KeTaoFeaturedIncomeListDataList listItem}) {
+  buildItemLayout({IncomeListDataList listItem}) {
     String price = '';
     String type = '';
     String profitType = '';
@@ -377,7 +384,8 @@ class _KeTaoFeaturedIncomeListPageState extends State<KeTaoFeaturedIncomeListPag
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
+              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+              vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
               color: Colors.white,

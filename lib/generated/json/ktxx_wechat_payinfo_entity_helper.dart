@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_wechat_payinfo_entity.dart';
 
-wechatPayinfoEntityFromJson(KeTaoFeaturedWechatPayinfoEntity data, Map<String, dynamic> json) {
+wechatPayinfoEntityFromJson(WechatPayinfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ wechatPayinfoEntityFromJson(KeTaoFeaturedWechatPayinfoEntity data, Map<String, d
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedWechatPayinfoData().fromJson(json['data']);
+			data.data = new WechatPayinfoData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> wechatPayinfoEntityToJson(KeTaoFeaturedWechatPayinfoEntity entity) {
+Map<String, dynamic> wechatPayinfoEntityToJson(WechatPayinfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,12 +30,12 @@ Map<String, dynamic> wechatPayinfoEntityToJson(KeTaoFeaturedWechatPayinfoEntity 
 	return data;
 }
 
-wechatPayinfoDataFromJson(KeTaoFeaturedWechatPayinfoData data, Map<String, dynamic> json) {
+wechatPayinfoDataFromJson(WechatPayinfoData data, Map<String, dynamic> json) {
 	if (json['pay_no'] != null) {
 		data.payNo = json['pay_no']?.toString();
 	}
 	if (json['pay_info'] != null) {
-		data.payInfo = new KeTaoFeaturedWechatPayinfoDataPayInfo().fromJson(json['pay_info']);
+		data.payInfo = new WechatPayinfoDataPayInfo().fromJson(json['pay_info']);
 	}
 	if (json['finish'] != null) {
 		data.finish = json['finish'];
@@ -43,7 +43,7 @@ wechatPayinfoDataFromJson(KeTaoFeaturedWechatPayinfoData data, Map<String, dynam
 	return data;
 }
 
-Map<String, dynamic> wechatPayinfoDataToJson(KeTaoFeaturedWechatPayinfoData entity) {
+Map<String, dynamic> wechatPayinfoDataToJson(WechatPayinfoData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['pay_no'] = entity.payNo;
 	if (entity.payInfo != null) {
@@ -53,7 +53,7 @@ Map<String, dynamic> wechatPayinfoDataToJson(KeTaoFeaturedWechatPayinfoData enti
 	return data;
 }
 
-wechatPayinfoDataPayInfoFromJson(KeTaoFeaturedWechatPayinfoDataPayInfo data, Map<String, dynamic> json) {
+wechatPayinfoDataPayInfoFromJson(WechatPayinfoDataPayInfo data, Map<String, dynamic> json) {
 	if (json['appid'] != null) {
 		data.appid = json['appid']?.toString();
 	}
@@ -81,7 +81,7 @@ wechatPayinfoDataPayInfoFromJson(KeTaoFeaturedWechatPayinfoDataPayInfo data, Map
 	return data;
 }
 
-Map<String, dynamic> wechatPayinfoDataPayInfoToJson(KeTaoFeaturedWechatPayinfoDataPayInfo entity) {
+Map<String, dynamic> wechatPayinfoDataPayInfoToJson(WechatPayinfoDataPayInfo entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['appid'] = entity.appid;
 	data['noncestr'] = entity.noncestr;

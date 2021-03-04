@@ -113,8 +113,8 @@ class _KeTaoFeaturedPddGoodsDetailPageState
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
   var _bgRedColor = const Color(0xffF32e43);
-  KeTaoFeaturedPddGoodsInfoData pddDetailData;
-  KeTaoFeaturedGoodsInfoEntity detailData;
+  PddGoodsInfoData pddDetailData;
+  GoodsInfoEntity detailData;
   var _salePrice = '';
   var _discountPrice = '';
   var _originalPrice = '';
@@ -146,7 +146,7 @@ class _KeTaoFeaturedPddGoodsDetailPageState
     try {
       EasyLoading.show();
     } catch (e) {}
-    KeTaoFeaturedPddGoodsInfoEntity pddResultData =
+    PddGoodsInfoEntity pddResultData =
         await KeTaoFeaturedHttpManage.getPddGoodsInfo(
             gId: widget.gId,
             goodsSign: widget.goodsSign,
@@ -1159,7 +1159,7 @@ class _KeTaoFeaturedPddGoodsDetailPageState
 //商品规格弹窗
 class DetailWindow extends StatefulWidget {
 //  GoodsDetailBeanEntity detailData; todo
-  KeTaoFeaturedGoodsInfoEntity detailData;
+  GoodsInfoEntity detailData;
   int type;
 
   DetailWindow({@required this.detailData, @required this.type});
@@ -1177,7 +1177,7 @@ class _DetailWindowState extends State<DetailWindow>
 
   ///选中的商品规格id
   var specId;
-  KeTaoFeaturedGoodsSpecInfoSpecInfo _specInfo;
+  GoodsSpecInfoSpecInfo _specInfo;
   var _defaultImgUrl = '';
   var _goodsName = '';
   var _goodsPrice = '';
@@ -1477,8 +1477,8 @@ class _DetailWindowState extends State<DetailWindow>
   }
 
   Widget buildSpecList() {
-    List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem =
-        List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
+    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<GoodsSpecInfoSpecInfoSpecItem>();
     var _specPrice;
     try {
       _specItem = widget.detailData.data.specInfo.specItem;
@@ -1488,7 +1488,7 @@ class _DetailWindowState extends State<DetailWindow>
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
+          GoodsSpecInfoSpecInfoSpecItem opItem = _specItem[index];
           return Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.symmetric(
@@ -1563,7 +1563,7 @@ class _DetailWindowState extends State<DetailWindow>
   bool canSubmit = true;
 
   void checkSelectedData(
-      _specPrice, List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem) {
+      _specPrice, List<GoodsSpecInfoSpecInfoSpecItem> _specItem) {
     for (var index = 0; index < _specItem.length; index++) {
       if (!selectedMap.containsKey(index)) {
         for (var j = 0; j < _specItem[index].xList.length; j++) {
@@ -1579,8 +1579,8 @@ class _DetailWindowState extends State<DetailWindow>
     if (_specPrice.toString().contains(_indexTxt)) {
       try {
         canSubmit = true;
-        KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds specInfo =
-            KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds();
+        GoodsSpecInfoSpecInfoSpecPriceIds specInfo =
+            GoodsSpecInfoSpecInfoSpecPriceIds();
         goodsSpecInfoSpecInfoSpecPriceIdsFromJson(
             specInfo, _specPrice[_indexTxt]);
         _defaultImgUrl = specInfo.specImg;
@@ -1639,8 +1639,8 @@ class _DetailWindowState extends State<DetailWindow>
       _goodsPrice = widget.detailData.data.salePrice;
       _specInfo = widget.detailData.data.specInfo;
     } catch (e) {}
-    List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem> _specItem =
-        List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
+    List<GoodsSpecInfoSpecInfoSpecItem> _specItem =
+        List<GoodsSpecInfoSpecInfoSpecItem>();
     var _specPrice;
     try {
       _specItem = widget.detailData.data.specInfo.specItem;

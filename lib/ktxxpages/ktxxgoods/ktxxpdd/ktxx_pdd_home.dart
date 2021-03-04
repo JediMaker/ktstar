@@ -19,6 +19,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -87,18 +88,20 @@ class KeTaoFeaturedPddHomeIndexPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedPddHomeIndexPageState createState() => _KeTaoFeaturedPddHomeIndexPageState();
+  _KeTaoFeaturedPddHomeIndexPageState createState() =>
+      _KeTaoFeaturedPddHomeIndexPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
-    with TickerProviderStateMixin {
+class _KeTaoFeaturedPddHomeIndexPageState
+    extends State<KeTaoFeaturedPddHomeIndexPage> with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedPddHomeDataCat> cats;
-  KeTaoFeaturedPddHomeData _homeData;
+  List<PddHomeDataCat> cats;
+  PddHomeData _homeData;
   var _tabViews;
   var _tabs;
   int _selectedTabIndex = 0;
@@ -159,7 +162,8 @@ class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeInde
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setHeight(100),
@@ -198,7 +202,8 @@ class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeInde
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedTaskMessagePage());
               },
               child: CachedNetworkImage(
                 width: ScreenUtil().setWidth(78),
@@ -316,7 +321,8 @@ class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeInde
                   ///
                   ///
                   Navigator.pop(context);
-                  var result = await KeTaoFeaturedHttpManage.getPddAuthorization();
+                  var result =
+                      await KeTaoFeaturedHttpManage.getPddAuthorization();
                   if (result.status) {
                     ///跳转拼多多app授权的url
                     var pddUrl = '';
@@ -357,7 +363,8 @@ class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeInde
     if (!KeTaoFeaturedGlobalConfig.isLogin()) {
       KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            context, KeTaoFeaturedLoginPage());
       });
       return;
     }
@@ -370,7 +377,7 @@ class _KeTaoFeaturedPddHomeIndexPageState extends State<KeTaoFeaturedPddHomeInde
     try {
       EasyLoading.show();
     } catch (e) {}
-    KeTaoFeaturedPddHomeEntity result = await KeTaoFeaturedHttpManage.getPddHomeData();
+    PddHomeEntity result = await KeTaoFeaturedHttpManage.getPddHomeData();
     try {
       EasyLoading.dismiss();
     } catch (e) {}

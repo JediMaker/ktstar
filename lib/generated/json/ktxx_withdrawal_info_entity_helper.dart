@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_withdrawal_info_entity.dart';
 
-withdrawalInfoEntityFromJson(KeTaoFeaturedWithdrawalInfoEntity data, Map<String, dynamic> json) {
+withdrawalInfoEntityFromJson(WithdrawalInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ withdrawalInfoEntityFromJson(KeTaoFeaturedWithdrawalInfoEntity data, Map<String,
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedWithdrawalInfoData().fromJson(json['data']);
+			data.data = new WithdrawalInfoData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> withdrawalInfoEntityToJson(KeTaoFeaturedWithdrawalInfoEntity entity) {
+Map<String, dynamic> withdrawalInfoEntityToJson(WithdrawalInfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,17 +30,17 @@ Map<String, dynamic> withdrawalInfoEntityToJson(KeTaoFeaturedWithdrawalInfoEntit
 	return data;
 }
 
-withdrawalInfoDataFromJson(KeTaoFeaturedWithdrawalInfoData data, Map<String, dynamic> json) {
+withdrawalInfoDataFromJson(WithdrawalInfoData data, Map<String, dynamic> json) {
 	if (json['user'] != null) {
-		data.user = new KeTaoFeaturedWithdrawalInfoDataUser().fromJson(json['user']);
+		data.user = new WithdrawalInfoDataUser().fromJson(json['user']);
 	}
 	if (json['useModel'] != null) {
-		data.useModel = new KeTaoFeaturedWithdrawalInfoDataUseModel().fromJson(json['useModel']);
+		data.useModel = new WithdrawalInfoDataUseModel().fromJson(json['useModel']);
 	}
 	return data;
 }
 
-Map<String, dynamic> withdrawalInfoDataToJson(KeTaoFeaturedWithdrawalInfoData entity) {
+Map<String, dynamic> withdrawalInfoDataToJson(WithdrawalInfoData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.user != null) {
 		data['user'] = entity.user.toJson();
@@ -51,7 +51,7 @@ Map<String, dynamic> withdrawalInfoDataToJson(KeTaoFeaturedWithdrawalInfoData en
 	return data;
 }
 
-withdrawalInfoDataUserFromJson(KeTaoFeaturedWithdrawalInfoDataUser data, Map<String, dynamic> json) {
+withdrawalInfoDataUserFromJson(WithdrawalInfoDataUser data, Map<String, dynamic> json) {
 	if (json['zfb_account'] != null) {
 		data.zfbAccount = json['zfb_account']?.toString();
 	}
@@ -64,7 +64,7 @@ withdrawalInfoDataUserFromJson(KeTaoFeaturedWithdrawalInfoDataUser data, Map<Str
 	return data;
 }
 
-Map<String, dynamic> withdrawalInfoDataUserToJson(KeTaoFeaturedWithdrawalInfoDataUser entity) {
+Map<String, dynamic> withdrawalInfoDataUserToJson(WithdrawalInfoDataUser entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['zfb_account'] = entity.zfbAccount;
 	data['zfb_name'] = entity.zfbName;
@@ -72,7 +72,7 @@ Map<String, dynamic> withdrawalInfoDataUserToJson(KeTaoFeaturedWithdrawalInfoDat
 	return data;
 }
 
-withdrawalInfoDataUseModelFromJson(KeTaoFeaturedWithdrawalInfoDataUseModel data, Map<String, dynamic> json) {
+withdrawalInfoDataUseModelFromJson(WithdrawalInfoDataUseModel data, Map<String, dynamic> json) {
 	if (json['price'] != null) {
 		data.price = json['price']?.toString();
 	}
@@ -85,7 +85,7 @@ withdrawalInfoDataUseModelFromJson(KeTaoFeaturedWithdrawalInfoDataUseModel data,
 	return data;
 }
 
-Map<String, dynamic> withdrawalInfoDataUseModelToJson(KeTaoFeaturedWithdrawalInfoDataUseModel entity) {
+Map<String, dynamic> withdrawalInfoDataUseModelToJson(WithdrawalInfoDataUseModel entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['price'] = entity.price;
 	data['apply_price'] = entity.applyPrice;

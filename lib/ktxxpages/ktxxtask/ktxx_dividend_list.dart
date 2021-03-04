@@ -7,6 +7,7 @@ import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_income_list_entity.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -82,12 +83,15 @@ class KeTaoFeaturedDividendListPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedDividendListPageState createState() => _KeTaoFeaturedDividendListPageState();
+  _KeTaoFeaturedDividendListPageState createState() =>
+      _KeTaoFeaturedDividendListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedDividendListPageState extends State<KeTaoFeaturedDividendListPage>
+class _KeTaoFeaturedDividendListPageState
+    extends State<KeTaoFeaturedDividendListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -98,7 +102,7 @@ class _KeTaoFeaturedDividendListPageState extends State<KeTaoFeaturedDividendLis
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedIncomeListDataList> _profitList;
+  List<IncomeListDataList> _profitList;
 
   _initData() async {
     lastTimeDesc = '';
@@ -225,7 +229,7 @@ class _KeTaoFeaturedDividendListPageState extends State<KeTaoFeaturedDividendLis
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedIncomeListDataList listItem = _profitList[index];
+            IncomeListDataList listItem = _profitList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _profitList == null ? 0 : _profitList.length,
@@ -236,7 +240,7 @@ class _KeTaoFeaturedDividendListPageState extends State<KeTaoFeaturedDividendLis
 
   String lastTimeDesc = '';
 
-  buildItemLayout({KeTaoFeaturedIncomeListDataList listItem}) {
+  buildItemLayout({IncomeListDataList listItem}) {
     String price = '';
     String type = '';
     String profitType = '';
@@ -284,28 +288,29 @@ class _KeTaoFeaturedDividendListPageState extends State<KeTaoFeaturedDividendLis
               margin: EdgeInsets.only(top: 10, bottom: 10),
               child: Center(
                   child: Container(
-                    height: ScreenUtil().setWidth(53),
-                    width: ScreenUtil().setWidth(201),
-                    decoration: BoxDecoration(
-                      color: Color(0xffdedede),
-                      borderRadius: BorderRadius.circular(
-                        ScreenUtil().setSp(10),
-                      ),
+                height: ScreenUtil().setWidth(53),
+                width: ScreenUtil().setWidth(201),
+                decoration: BoxDecoration(
+                  color: Color(0xffdedede),
+                  borderRadius: BorderRadius.circular(
+                    ScreenUtil().setSp(10),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '$timeDesc',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenUtil().setSp(32),
                     ),
-                    child: Center(
-                      child: Text(
-                        '$timeDesc',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(32),
-                        ),
-                      ),
-                    ),
-                  ))),
+                  ),
+                ),
+              ))),
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
+              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+              vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
               color: Colors.white,

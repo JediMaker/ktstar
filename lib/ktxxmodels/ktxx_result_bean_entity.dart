@@ -1,7 +1,7 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedResultBeanEntity with JsonConvert<KeTaoFeaturedResultBeanEntity> {
+class ResultBeanEntity with JsonConvert<ResultBeanEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;

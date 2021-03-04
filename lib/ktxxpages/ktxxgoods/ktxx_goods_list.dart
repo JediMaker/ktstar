@@ -100,15 +100,13 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList =
-      List<KeTaoFeaturedHomeGoodsListGoodsList>();
+  List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
 
   _initData() async {
-    var result =
-        await KeTaoFeaturedHttpManage.getGoodsList(cId: widget.categoryId, type: widget.type);
+    var result = await KeTaoFeaturedHttpManage.getGoodsList(
+        cId: widget.categoryId, type: widget.type);
     if (result.status) {
-      KeTaoFeaturedHomeGoodsListEntity entity =
-          KeTaoFeaturedHomeGoodsListEntity();
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
       if (mounted) {
         setState(() {
@@ -224,7 +222,7 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              KeTaoFeaturedHomeGoodsListGoodsList item;
+              HomeGoodsListGoodsList item;
               try {
                 item = goodsList[index];
               } catch (e) {}
@@ -241,7 +239,7 @@ class _KeTaoFeaturedGoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
 
   var _priceColor = const Color(0xffe31735);
 
-  Widget productItem({KeTaoFeaturedHomeGoodsListGoodsList item}) {
+  Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';
     String goodsName = '';
     String goodsImg = '';

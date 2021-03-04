@@ -24,6 +24,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxpages/ktxxorder/ktxx_order_logistics_tracking.dart';
 
 import '../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -92,16 +93,19 @@ class KeTaoFeaturedPddOrderListPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedPddOrderListPageState createState() => _KeTaoFeaturedPddOrderListPageState();
+  _KeTaoFeaturedPddOrderListPageState createState() =>
+      _KeTaoFeaturedPddOrderListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderListPage> {
+class _KeTaoFeaturedPddOrderListPageState
+    extends State<KeTaoFeaturedPddOrderListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedOrderListDataList> _orderList;
+  List<OrderListDataList> _orderList;
   String contactPhone = ""; //
   /*_initData() async {
     OrderListEntity result = await HttpManage.getOrderList(page, 10);
@@ -207,7 +211,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedOrderListDataList listItem = _orderList[index];
+            OrderListDataList listItem = _orderList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _orderList == null ? 0 : _orderList.length,
@@ -216,7 +220,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
     );
   }
 
-  buildItemLayout({KeTaoFeaturedOrderListDataList listItem}) {
+  buildItemLayout({OrderListDataList listItem}) {
     String createTime = "";
     String phoneNumber = "";
     String phoneMoney = "";
@@ -234,8 +238,8 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
     bool showBtn = true;
     String orderType;
     String orderId;
-    List<KeTaoFeaturedOrderListDataListGoodsList> goodsList =
-        List<KeTaoFeaturedOrderListDataListGoodsList>();
+    List<OrderListDataListGoodsList> goodsList =
+        List<OrderListDataListGoodsList>();
     createTime = listItem.createTime;
     phoneNumber = listItem.mobile;
     phoneMoney = listItem.faceMoney;
@@ -304,7 +308,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
             return;
           }
 
-        /*  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+          /*  KeTaoFeaturedNavigatorUtils.navigatorRouter(
               context,
               PddGoodsDetailPage(
                 gId: goodsList[0].pddGoodsId,
@@ -610,7 +614,8 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
             ),
           ),
           onPressed: () async {
-            var result = await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "2");
+            var result =
+                await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "2");
             /* if (!CommonUtils.isEmpty(result.errMsg)) {
               CommonUtils.showToast(result.errMsg);
             }*/
@@ -627,13 +632,15 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
             ),
           ),
           onPressed: () async {
-            var result = await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "1");
+            var result =
+                await KeTaoFeaturedHttpManage.orderIsJoinQueue(orderId, "1");
             if (!KeTaoFeaturedCommonUtils.isEmpty(result.errMsg)) {
               KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
             Navigator.pop(context, false);
             if (result.status) {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedFreeQueuePersonalPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedFreeQueuePersonalPage());
             }
           },
         ),
@@ -695,12 +702,12 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
     );
   }
 
-  Widget buildGoodsList(List<KeTaoFeaturedOrderListDataListGoodsList> goodsList) {
+  Widget buildGoodsList(List<OrderListDataListGoodsList> goodsList) {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          KeTaoFeaturedOrderListDataListGoodsList product = goodsList[index];
+          OrderListDataListGoodsList product = goodsList[index];
           return Column(
             children: <Widget>[
               GestureDetector(
@@ -836,7 +843,7 @@ class _KeTaoFeaturedPddOrderListPageState extends State<KeTaoFeaturedPddOrderLis
   }
 
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
-      KeTaoFeaturedOrderListDataListGoodsList goodsItem) {
+      OrderListDataListGoodsList goodsItem) {
     var imageUrl = '';
     var title = '';
     var saleMoney = '';

@@ -2,28 +2,28 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_recharge_extra_entity.dart';
 
-class KeTaoFeaturedRechargeEntity
-    with JsonConvert<KeTaoFeaturedRechargeEntity> {
+class RechargeEntity
+    with JsonConvert<RechargeEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedRechargeData data;
+  RechargeData data;
 }
 
-class KeTaoFeaturedRechargeData with JsonConvert<KeTaoFeaturedRechargeData> {
+class RechargeData with JsonConvert<RechargeData> {
   @JSONField(name: "rechage_list")
-  List<KeTaoFeaturedRechargeDataRechageList> rechageList;
+  List<RechargeDataRechageList> rechageList;
   @JSONField(name: "coupon_list")
-  List<KeTaoFeaturedRechargeDatacouponList> couponList;
+  List<RechargeDatacouponList> couponList;
   @JSONField(name: "s_rechage_list")
-  List<KeTaoFeaturedRechargeDataRechageList> sRechageList;
-  KeTaoFeaturedRechargeExtraRatio ratio;
+  List<RechargeDataRechageList> sRechageList;
+  RechargeExtraRatio ratio;
 }
 
-class KeTaoFeaturedRechargeDataRechageList
-    with JsonConvert<KeTaoFeaturedRechargeDataRechageList> {
+class RechargeDataRechageList
+    with JsonConvert<RechargeDataRechageList> {
   int id;
   @JSONField(name: "face_money")
   String faceMoney;
@@ -39,8 +39,8 @@ class KeTaoFeaturedRechargeDataRechageList
   String coinDesc;
 }
 
-class KeTaoFeaturedRechargeDatacouponList
-    with JsonConvert<KeTaoFeaturedRechargeDatacouponList> {
+class RechargeDatacouponList
+    with JsonConvert<RechargeDatacouponList> {
   String money;
   String condition;
 }

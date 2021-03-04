@@ -1,22 +1,22 @@
 import 'package:star/ktxxmodels/ktxx_recharge_extra_entity.dart';
 
 rechargeExtraEntityFromJson(
-    KeTaoFeaturedRechargeExtraEntity data, Map<String, dynamic> json) {
+    RechargeExtraEntity data, Map<String, dynamic> json) {
   if (json['s_rechage_list'] != null) {
-    data.sRechageList = new List<KeTaoFeaturedRechargeExtraSRechageList>();
+    data.sRechageList = new List<RechargeExtraSRechageList>();
     (json['s_rechage_list'] as List).forEach((v) {
       data.sRechageList
-          .add(new KeTaoFeaturedRechargeExtraSRechageList().fromJson(v));
+          .add(new RechargeExtraSRechageList().fromJson(v));
     });
   }
   if (json['ratio'] != null) {
-    data.ratio = new KeTaoFeaturedRechargeExtraRatio().fromJson(json['ratio']);
+    data.ratio = new RechargeExtraRatio().fromJson(json['ratio']);
   }
   return data;
 }
 
 Map<String, dynamic> rechargeExtraEntityToJson(
-    KeTaoFeaturedRechargeExtraEntity entity) {
+    RechargeExtraEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   if (entity.sRechageList != null) {
     data['s_rechage_list'] =
@@ -29,7 +29,7 @@ Map<String, dynamic> rechargeExtraEntityToJson(
 }
 
 rechargeExtraSRechageListFromJson(
-    KeTaoFeaturedRechargeExtraSRechageList data, Map<String, dynamic> json) {
+    RechargeExtraSRechageList data, Map<String, dynamic> json) {
   if (json['id'] != null) {
     data.id = json['id']?.toString();
   }
@@ -55,7 +55,7 @@ rechargeExtraSRechageListFromJson(
 }
 
 Map<String, dynamic> rechargeExtraSRechageListToJson(
-    KeTaoFeaturedRechargeExtraSRechageList entity) {
+    RechargeExtraSRechageList entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['id'] = entity.id;
   data['face_money'] = entity.faceMoney;
@@ -68,7 +68,7 @@ Map<String, dynamic> rechargeExtraSRechageListToJson(
 }
 
 rechargeExtraRatioFromJson(
-    KeTaoFeaturedRechargeExtraRatio data, Map<String, dynamic> json) {
+    RechargeExtraRatio data, Map<String, dynamic> json) {
   if (json['fast'] != null) {
     data.fast = json['fast']?.toString();
   }
@@ -79,7 +79,7 @@ rechargeExtraRatioFromJson(
 }
 
 Map<String, dynamic> rechargeExtraRatioToJson(
-    KeTaoFeaturedRechargeExtraRatio entity) {
+    RechargeExtraRatio entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['fast'] = entity.fast;
   data['slow'] = entity.slow;

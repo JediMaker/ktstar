@@ -102,7 +102,7 @@ class _KeTaoFeaturedEnsureOrderPageState
   var totalPrice = "";
   var payPrice = "";
 
-  List<KeTaoFeaturedOrderDetailDataGoodsList> goodsList;
+  List<OrderDetailDataGoodsList> goodsList;
 
   var isCoupon = '2';
 

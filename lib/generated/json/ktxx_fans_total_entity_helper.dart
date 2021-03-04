@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_fans_total_entity.dart';
 
-fansTotalEntityFromJson(KeTaoFeaturedFansTotalEntity data, Map<String, dynamic> json) {
+fansTotalEntityFromJson(FansTotalEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -12,13 +12,13 @@ fansTotalEntityFromJson(KeTaoFeaturedFansTotalEntity data, Map<String, dynamic> 
   }
   if (json['data'] != null) {
     try {
-      data.data = new KeTaoFeaturedFansTotalData().fromJson(json['data']);
+      data.data = new FansTotalData().fromJson(json['data']);
     } catch (e) {}
   }
   return data;
 }
 
-Map<String, dynamic> fansTotalEntityToJson(KeTaoFeaturedFansTotalEntity entity) {
+Map<String, dynamic> fansTotalEntityToJson(FansTotalEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;
@@ -29,23 +29,23 @@ Map<String, dynamic> fansTotalEntityToJson(KeTaoFeaturedFansTotalEntity entity) 
   return data;
 }
 
-fansTotalDataFromJson(KeTaoFeaturedFansTotalData data, Map<String, dynamic> json) {
+fansTotalDataFromJson(FansTotalData data, Map<String, dynamic> json) {
   if (json['agent_info'] != null) {
     try {
       data.agentInfo =
-          new KeTaoFeaturedFansTotalDataAgentInfo().fromJson(json['agent_info']);
+          new FansTotalDataAgentInfo().fromJson(json['agent_info']);
     } catch (e) {}
   }
   if (json['count_info'] != null) {
     try {
       data.countInfo =
-          new KeTaoFeaturedFansTotalDataCountInfo().fromJson(json['count_info']);
+          new FansTotalDataCountInfo().fromJson(json['count_info']);
     } catch (e) {}
   }
   return data;
 }
 
-Map<String, dynamic> fansTotalDataToJson(KeTaoFeaturedFansTotalData entity) {
+Map<String, dynamic> fansTotalDataToJson(FansTotalData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   if (entity.agentInfo != null) {
     data['agent_info'] = entity.agentInfo.toJson();
@@ -57,7 +57,7 @@ Map<String, dynamic> fansTotalDataToJson(KeTaoFeaturedFansTotalData entity) {
 }
 
 fansTotalDataAgentInfoFromJson(
-    KeTaoFeaturedFansTotalDataAgentInfo data, Map<String, dynamic> json) {
+    FansTotalDataAgentInfo data, Map<String, dynamic> json) {
   if (json['avatar'] != null) {
     data.avatar = json['avatar']?.toString();
   }
@@ -74,7 +74,7 @@ fansTotalDataAgentInfoFromJson(
 }
 
 Map<String, dynamic> fansTotalDataAgentInfoToJson(
-    KeTaoFeaturedFansTotalDataAgentInfo entity) {
+    FansTotalDataAgentInfo entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['avatar'] = entity.avatar;
   data['username'] = entity.username;
@@ -84,7 +84,7 @@ Map<String, dynamic> fansTotalDataAgentInfoToJson(
 }
 
 fansTotalDataCountInfoFromJson(
-    KeTaoFeaturedFansTotalDataCountInfo data, Map<String, dynamic> json) {
+    FansTotalDataCountInfo data, Map<String, dynamic> json) {
   if (json['total'] != null) {
     try {
       data.total = json['total']?.toInt();
@@ -119,7 +119,7 @@ fansTotalDataCountInfoFromJson(
 }
 
 Map<String, dynamic> fansTotalDataCountInfoToJson(
-    KeTaoFeaturedFansTotalDataCountInfo entity) {
+    FansTotalDataCountInfo entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['total'] = entity.total;
   data['vip'] = entity.vip;

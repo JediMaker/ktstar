@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_task_other_submit_info_entity.dart';
 
-taskOtherSubmitInfoEntityFromJson(KeTaoFeaturedTaskOtherSubmitInfoEntity data, Map<String, dynamic> json) {
+taskOtherSubmitInfoEntityFromJson(TaskOtherSubmitInfoEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -12,14 +12,14 @@ taskOtherSubmitInfoEntityFromJson(KeTaoFeaturedTaskOtherSubmitInfoEntity data, M
 	}
 	if (json['data'] != null) {
 		try {
-			data.data = new KeTaoFeaturedTaskOtherSubmitInfoData().fromJson(json['data']);
+			data.data = new TaskOtherSubmitInfoData().fromJson(json['data']);
 		} catch (e) {
 		}
 	}
 	return data;
 }
 
-Map<String, dynamic> taskOtherSubmitInfoEntityToJson(KeTaoFeaturedTaskOtherSubmitInfoEntity entity) {
+Map<String, dynamic> taskOtherSubmitInfoEntityToJson(TaskOtherSubmitInfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;
@@ -30,7 +30,7 @@ Map<String, dynamic> taskOtherSubmitInfoEntityToJson(KeTaoFeaturedTaskOtherSubmi
 	return data;
 }
 
-taskOtherSubmitInfoDataFromJson(KeTaoFeaturedTaskOtherSubmitInfoData data, Map<String, dynamic> json) {
+taskOtherSubmitInfoDataFromJson(TaskOtherSubmitInfoData data, Map<String, dynamic> json) {
 	if (json['com_id'] != null) {
 		try {
 			data.comId = json['com_id']?.toString();
@@ -64,7 +64,7 @@ taskOtherSubmitInfoDataFromJson(KeTaoFeaturedTaskOtherSubmitInfoData data, Map<S
 	return data;
 }
 
-Map<String, dynamic> taskOtherSubmitInfoDataToJson(KeTaoFeaturedTaskOtherSubmitInfoData entity) {
+Map<String, dynamic> taskOtherSubmitInfoDataToJson(TaskOtherSubmitInfoData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['com_id'] = entity.comId;
 	data['img_id'] = entity.imgId;

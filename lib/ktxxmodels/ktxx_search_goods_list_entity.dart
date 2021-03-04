@@ -17,7 +17,7 @@ class KeTaoFeaturedSearchGoodsListData
   String total;
   int page;
   @JSONField(name: "list")
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList;
+  List<HomeGoodsListGoodsList> goodsList;
 }
 
 class KeTaoFeaturedSearchGoodsListDataList

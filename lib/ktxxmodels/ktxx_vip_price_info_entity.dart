@@ -1,12 +1,12 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedVipPriceInfoEntity with JsonConvert<KeTaoFeaturedVipPriceInfoEntity> {
-	KeTaoFeaturedVipPriceInfoVip vip;
-	KeTaoFeaturedVipPriceInfoDiamond diamond;
+class VipPriceInfoEntity with JsonConvert<VipPriceInfoEntity> {
+	VipPriceInfoVip vip;
+	VipPriceInfoDiamond diamond;
 }
 
-class KeTaoFeaturedVipPriceInfoVip with JsonConvert<KeTaoFeaturedVipPriceInfoVip> {
+class VipPriceInfoVip with JsonConvert<VipPriceInfoVip> {
 	String name;
 	@JSONField(name: "profit_day")
 	String profitDay;
@@ -16,19 +16,19 @@ class KeTaoFeaturedVipPriceInfoVip with JsonConvert<KeTaoFeaturedVipPriceInfoVip
 	@JSONField(name: "b_year_money")
 	String bYearMoney;
 	@JSONField(name: "icon_desc")
-	List<KeTaoFeaturedVipPriceInfoVipIconDesc> iconDesc;
+	List<VipPriceInfoVipIconDesc> iconDesc;
 	@JSONField(name: "money_list")
-	List<KeTaoFeaturedVipPriceInfoVipMoneyList> moneyList;
+	List<VipPriceInfoVipMoneyList> moneyList;
 }
 
-class KeTaoFeaturedVipPriceInfoVipIconDesc with JsonConvert<KeTaoFeaturedVipPriceInfoVipIconDesc> {
+class VipPriceInfoVipIconDesc with JsonConvert<VipPriceInfoVipIconDesc> {
 	String icon;
 	String desc;
 	String subdesc;
 	String ssubdesc;
 }
 
-class KeTaoFeaturedVipPriceInfoVipMoneyList with JsonConvert<KeTaoFeaturedVipPriceInfoVipMoneyList> {
+class VipPriceInfoVipMoneyList with JsonConvert<VipPriceInfoVipMoneyList> {
 	String type;
 	String desc;
 	String price;
@@ -41,7 +41,7 @@ class KeTaoFeaturedVipPriceInfoVipMoneyList with JsonConvert<KeTaoFeaturedVipPri
 	String originalPrice;
 }
 
-class KeTaoFeaturedVipPriceInfoDiamond with JsonConvert<KeTaoFeaturedVipPriceInfoDiamond> {
+class VipPriceInfoDiamond with JsonConvert<VipPriceInfoDiamond> {
 	String name;
 	@JSONField(name: "profit_day")
 	String profitDay;
@@ -51,19 +51,19 @@ class KeTaoFeaturedVipPriceInfoDiamond with JsonConvert<KeTaoFeaturedVipPriceInf
 	@JSONField(name: "b_year_money")
 	String bYearMoney;
 	@JSONField(name: "icon_desc")
-	List<KeTaoFeaturedVipPriceInfoDiamondIconDesc> iconDesc;
+	List<VipPriceInfoDiamondIconDesc> iconDesc;
 	@JSONField(name: "money_list")
-	List<KeTaoFeaturedVipPriceInfoDiamondMoneyList> moneyList;
+	List<VipPriceInfoDiamondMoneyList> moneyList;
 }
 
-class KeTaoFeaturedVipPriceInfoDiamondIconDesc with JsonConvert<KeTaoFeaturedVipPriceInfoDiamondIconDesc> {
+class VipPriceInfoDiamondIconDesc with JsonConvert<VipPriceInfoDiamondIconDesc> {
 	String icon;
 	String desc;
 	String subdesc;
 	String ssubdesc;
 }
 
-class KeTaoFeaturedVipPriceInfoDiamondMoneyList with JsonConvert<KeTaoFeaturedVipPriceInfoDiamondMoneyList> {
+class VipPriceInfoDiamondMoneyList with JsonConvert<VipPriceInfoDiamondMoneyList> {
 	String type;
 	String desc;
 	String price;

@@ -2,16 +2,16 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_user_holder_profit_entity.dart';
 
-class KeTaoFeaturedUserInfoEntity with JsonConvert<KeTaoFeaturedUserInfoEntity> {
+class UserInfoEntity with JsonConvert<UserInfoEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedUserInfoData data;
+  UserInfoData data;
 }
 
-class KeTaoFeaturedUserInfoData with JsonConvert<KeTaoFeaturedUserInfoData> {
+class UserInfoData with JsonConvert<UserInfoData> {
   String username;
   String avatar;
   String tel;
@@ -53,5 +53,5 @@ class KeTaoFeaturedUserInfoData with JsonConvert<KeTaoFeaturedUserInfoData> {
   @JSONField(name: "store_id")
   String storeId;
   @JSONField(name: "partner_bonus")
-  KeTaoFeaturedUserHolderProfitPartnerBonus partnerBonus;
+  UserHolderProfitPartnerBonus partnerBonus;
 }

@@ -9,6 +9,7 @@ import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 
 import '../../ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -34,25 +35,29 @@ class KeTaoFeaturedTaskMessagePage extends StatefulWidget {
 //borderRadius: BorderRadius.circular(10.0)),
 //),
   @override
-  _KeTaoFeaturedTaskMessagePageState createState() => _KeTaoFeaturedTaskMessagePageState();
+  _KeTaoFeaturedTaskMessagePageState createState() =>
+      _KeTaoFeaturedTaskMessagePageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedTaskMessagePageState extends State<KeTaoFeaturedTaskMessagePage> {
+class _KeTaoFeaturedTaskMessagePageState
+    extends State<KeTaoFeaturedTaskMessagePage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedMessageListDataList> _msgList;
+  List<MessageListDataList> _msgList;
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   _initData() async {
-    KeTaoFeaturedMessageListEntity result = await KeTaoFeaturedHttpManage.getMsgList(page, 10);
+    MessageListEntity result =
+        await KeTaoFeaturedHttpManage.getMsgList(page, 10);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -140,8 +145,9 @@ class _KeTaoFeaturedTaskMessagePageState extends State<KeTaoFeaturedTaskMessageP
               _initData();
             }
           },
-          emptyWidget:
-              _msgList == null || _msgList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+          emptyWidget: _msgList == null || _msgList.length == 0
+              ? KeTaoFeaturedNoDataPage()
+              : null,
           slivers: <Widget>[buildCenter()],
         ) // This trailing comma makes auto-formatting nicer for build methods.
         );
@@ -154,7 +160,7 @@ class _KeTaoFeaturedTaskMessagePageState extends State<KeTaoFeaturedTaskMessageP
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            KeTaoFeaturedMessageListDataList listItem = _msgList[index];
+            MessageListDataList listItem = _msgList[index];
             return buildItemLayout(listItem: listItem);
           },
           itemCount: _msgList == null ? 0 : _msgList.length,
@@ -163,7 +169,7 @@ class _KeTaoFeaturedTaskMessagePageState extends State<KeTaoFeaturedTaskMessageP
     );
   }
 
-  buildItemLayout({KeTaoFeaturedMessageListDataList listItem}) {
+  buildItemLayout({MessageListDataList listItem}) {
     String id = "";
     String title = "";
     String desc = "";

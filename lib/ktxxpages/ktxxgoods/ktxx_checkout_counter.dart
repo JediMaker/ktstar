@@ -109,7 +109,7 @@ class _KeTaoFeaturedCheckOutCounterPageState
 
   int _payway = 0;
   var _payNo;
-  KeTaoFeaturedOrderUserInfoUserInfo _oUserInfo;
+  OrderUserInfoUserInfo _oUserInfo;
   var _balance = '';
   var _payPrice = '';
   bool _hasPayPassword = true;
@@ -151,7 +151,7 @@ class _KeTaoFeaturedCheckOutCounterPageState
     }
   }
 
-  Future callWxPay(KeTaoFeaturedWechatPayinfoData wechatPayinfoData) async {
+  Future callWxPay(WechatPayinfoData wechatPayinfoData) async {
     /*  var h = H.HttpClient();
     h.badCertificateCallback = (cert, String host, int port) {
       return true;

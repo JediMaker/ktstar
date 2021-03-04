@@ -1,7 +1,7 @@
 import 'package:star/ktxxmodels/ktxx_goods_info_entity.dart';
 import 'package:star/ktxxmodels/ktxx_goods_spec_info_entity.dart';
 
-goodsInfoEntityFromJson(KeTaoFeaturedGoodsInfoEntity data, Map<String, dynamic> json) {
+goodsInfoEntityFromJson(GoodsInfoEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -13,13 +13,13 @@ goodsInfoEntityFromJson(KeTaoFeaturedGoodsInfoEntity data, Map<String, dynamic> 
   }
   if (json['data'] != null) {
     try {
-      data.data = new KeTaoFeaturedGoodsInfoData().fromJson(json['data']);
+      data.data = new GoodsInfoData().fromJson(json['data']);
     } catch (e) {}
   }
   return data;
 }
 
-Map<String, dynamic> goodsInfoEntityToJson(KeTaoFeaturedGoodsInfoEntity entity) {
+Map<String, dynamic> goodsInfoEntityToJson(GoodsInfoEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;
@@ -30,7 +30,7 @@ Map<String, dynamic> goodsInfoEntityToJson(KeTaoFeaturedGoodsInfoEntity entity) 
   return data;
 }
 
-goodsInfoDataFromJson(KeTaoFeaturedGoodsInfoData data, Map<String, dynamic> json) {
+goodsInfoDataFromJson(GoodsInfoData data, Map<String, dynamic> json) {
   if (json['id'] != null) {
     data.id = json['id']?.toString();
   }
@@ -39,24 +39,21 @@ goodsInfoDataFromJson(KeTaoFeaturedGoodsInfoData data, Map<String, dynamic> json
   }
   if (json['original_price'] != null) {
     try {
-			data.originalPrice = json['original_price']?.toString();
-		} catch (e) {
-		}
+      data.originalPrice = json['original_price']?.toString();
+    } catch (e) {}
   }
   if (json['sale_price'] != null) {
     try {
-			data.salePrice = json['sale_price']?.toString();
-		} catch (e) {
-		}
+      data.salePrice = json['sale_price']?.toString();
+    } catch (e) {}
   }
   if (json['banner_imgs'] != null) {
     try {
-			data.bannerImgs = json['banner_imgs']
-							?.map((v) => v?.toString())
-							?.toList()
-							?.cast<String>();
-		} catch (e) {
-		}
+      data.bannerImgs = json['banner_imgs']
+          ?.map((v) => v?.toString())
+          ?.toList()
+          ?.cast<String>();
+    } catch (e) {}
   }
   if (json['detail_imgs'] != null) {
     try {
@@ -64,43 +61,37 @@ goodsInfoDataFromJson(KeTaoFeaturedGoodsInfoData data, Map<String, dynamic> json
           ?.map((v) => v?.toString())
           ?.toList()
           ?.cast<String>();
-    } catch (e) {
-    }
+    } catch (e) {}
   }
   if (json['queue_count'] != null) {
     try {
-			data.queueCount = json['queue_count']?.toString();
-		} catch (e) {
-		}
+      data.queueCount = json['queue_count']?.toString();
+    } catch (e) {}
   }
   if (json['bt_price'] != null) {
     try {
-			data.btPrice = json['bt_price']?.toString();
-		} catch (e) {
-		}
+      data.btPrice = json['bt_price']?.toString();
+    } catch (e) {}
   }
   if (json['is_coupon'] != null) {
     try {
-			data.isCoupon = json['is_coupon']?.toString();
-		} catch (e) {
-		}
+      data.isCoupon = json['is_coupon']?.toString();
+    } catch (e) {}
   }
   if (json['min_power'] != null) {
     try {
-			data.minPower = json['min_power']?.toString();
-		} catch (e) {
-		}
+      data.minPower = json['min_power']?.toString();
+    } catch (e) {}
   }
   if (json['spec_info'] != null) {
     try {
-			data.specInfo = new KeTaoFeaturedGoodsSpecInfoSpecInfo().fromJson(json['spec_info']);
-		} catch (e) {
-		}
+      data.specInfo = new GoodsSpecInfoSpecInfo().fromJson(json['spec_info']);
+    } catch (e) {}
   }
   return data;
 }
 
-Map<String, dynamic> goodsInfoDataToJson(KeTaoFeaturedGoodsInfoData entity) {
+Map<String, dynamic> goodsInfoDataToJson(GoodsInfoData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['id'] = entity.id;
   data['goods_name'] = entity.goodsName;

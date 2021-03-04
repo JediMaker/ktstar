@@ -1,6 +1,6 @@
 import 'package:star/ktxxmodels/ktxx_result_bean_entity.dart';
 
-resultBeanEntityFromJson(KeTaoFeaturedResultBeanEntity data, Map<String, dynamic> json) {
+resultBeanEntityFromJson(ResultBeanEntity data, Map<String, dynamic> json) {
 	if (json['status'] != null) {
 		data.status = json['status'];
 	}
@@ -19,7 +19,7 @@ resultBeanEntityFromJson(KeTaoFeaturedResultBeanEntity data, Map<String, dynamic
 	return data;
 }
 
-Map<String, dynamic> resultBeanEntityToJson(KeTaoFeaturedResultBeanEntity entity) {
+Map<String, dynamic> resultBeanEntityToJson(ResultBeanEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['status'] = entity.status;
 	data['err_code'] = entity.errCode;

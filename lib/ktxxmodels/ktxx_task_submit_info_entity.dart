@@ -1,16 +1,16 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedTaskSubmitInfoEntity with JsonConvert<KeTaoFeaturedTaskSubmitInfoEntity> {
+class TaskSubmitInfoEntity with JsonConvert<TaskSubmitInfoEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	KeTaoFeaturedTaskSubmitInfoData data;
+	TaskSubmitInfoData data;
 }
 
-class KeTaoFeaturedTaskSubmitInfoData with JsonConvert<KeTaoFeaturedTaskSubmitInfoData> {
+class TaskSubmitInfoData with JsonConvert<TaskSubmitInfoData> {
 	@JSONField(name: "task_id")
 	String taskId;
 	String status;

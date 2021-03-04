@@ -1,12 +1,12 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedHomeGoodsListEntity with JsonConvert<KeTaoFeaturedHomeGoodsListEntity> {
+class HomeGoodsListEntity with JsonConvert<HomeGoodsListEntity> {
   @JSONField(name: "goods_list")
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList;
+  List<HomeGoodsListGoodsList> goodsList;
 }
 
-class KeTaoFeaturedHomeGoodsListGoodsList with JsonConvert<KeTaoFeaturedHomeGoodsListGoodsList> {
+class HomeGoodsListGoodsList with JsonConvert<HomeGoodsListGoodsList> {
   String id;
   @JSONField(name: "goods_name")
   String goodsName;

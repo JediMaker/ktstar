@@ -61,7 +61,7 @@ class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDeta
   String noticeType = "0";
   int page = 1;
   bool isFirstLoading = true;
-  List<KeTaoFeaturedTaskDetailOtherDataDescJson> _descJsonList;
+  List<TaskDetailOtherDataDescJson> _descJsonList;
   String title = '';
   bool showBtn = true;
 
@@ -161,7 +161,7 @@ class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDeta
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      KeTaoFeaturedTaskDetailOtherDataDescJson listItem =
+                      TaskDetailOtherDataDescJson listItem =
                           _descJsonList[index];
                       return buildItemLayout(listItem: listItem, index: index);
                     },
@@ -372,7 +372,7 @@ class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDeta
     );
   }
 
-  buildItemLayout({KeTaoFeaturedTaskDetailOtherDataDescJson listItem, index}) {
+  buildItemLayout({TaskDetailOtherDataDescJson listItem, index}) {
     List<String> imgUrls = [];
     String stepIndexText = '${index + 1}';
     String stepDescText = '';

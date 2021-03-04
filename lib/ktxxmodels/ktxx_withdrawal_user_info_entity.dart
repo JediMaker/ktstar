@@ -1,24 +1,24 @@
 import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 
-class KeTaoFeaturedWithdrawalUserInfoEntity with JsonConvert<KeTaoFeaturedWithdrawalUserInfoEntity> {
+class WithdrawalUserInfoEntity with JsonConvert<WithdrawalUserInfoEntity> {
 	bool status;
 	@JSONField(name: "err_code")
 	int errCode;
 	@JSONField(name: "err_msg")
 	dynamic errMsg;
-	KeTaoFeaturedWithdrawalUserInfoData data;
+	WithdrawalUserInfoData data;
 }
 
-class KeTaoFeaturedWithdrawalUserInfoData with JsonConvert<KeTaoFeaturedWithdrawalUserInfoData> {
-	KeTaoFeaturedWithdrawalUserInfoDataUser user;
+class WithdrawalUserInfoData with JsonConvert<WithdrawalUserInfoData> {
+	WithdrawalUserInfoDataUser user;
 	@JSONField(name: "start_flag")
 	bool startFlag;
 	@JSONField(name: "last_date")
 	String lastDate;
 }
 
-class KeTaoFeaturedWithdrawalUserInfoDataUser with JsonConvert<KeTaoFeaturedWithdrawalUserInfoDataUser> {
+class WithdrawalUserInfoDataUser with JsonConvert<WithdrawalUserInfoDataUser> {
 	@JSONField(name: "zfb_account")
 	String zfbAccount;
 	@JSONField(name: "zfb_name")
