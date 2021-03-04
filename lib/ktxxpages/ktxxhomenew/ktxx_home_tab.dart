@@ -10,6 +10,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
+import 'package:star/generated/json/ktxx_home_goods_list_entity_helper.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_home_entity.dart';
@@ -272,7 +273,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   FocusNode _focusNode;
 
   Future _initPddGoodsListData() async {
-    var result2 = await KeTaoFeaturedHttpManage.getPddGoodsList(page,
+    /*var result2 = await KeTaoFeaturedHttpManage.getPddGoodsList(page,
         listId: listId, categoryId: -1);
     if (result2.status) {
       if (mounted) {
@@ -298,6 +299,33 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
       }
     } else {
       KeTaoFeaturedCommonUtils.showToast(result2.errMsg);
+    }*/
+    var result = await KeTaoFeaturedHttpManage.getGoodsList(
+        cId: '', type: "hot", page: page, pageSize: 20, firstId: "");
+    if (result.status) {
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
+      homeGoodsListEntityFromJson(entity, result.data);
+      if (mounted) {
+        setState(() {
+          if (page == 1) {
+            goodsList = entity.goodsList;
+            _refreshController.finishLoad(noMore: false);
+          } else {
+            if (result == null ||
+                result.data == null ||
+                entity.goodsList == null ||
+                entity.goodsList.length == 0) {
+              //              _refreshController.resetLoadState();
+              _refreshController.finishLoad(noMore: true);
+            } else {
+              goodsList += entity.goodsList;
+            }
+          }
+          isFirstLoading = false;
+        });
+      }
+    } else {
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -1753,309 +1781,6 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
 
   var _priceColor = const Color(0xffCE0100);
 
-  Widget productItem({HomeGoodsListGoodsList item, int index}) {
-    String id = '';
-    String goodsName = '';
-    String goodsImg = '';
-    String originalPrice = '';
-    String salePrice = '';
-    double topMargin = 10;
-    try {
-      id = item.id;
-      goodsName = item.goodsName;
-      goodsImg = item.goodsImg;
-      originalPrice = item.originalPrice;
-      salePrice = item.salePrice;
-      /* if (goodsName.length < 8) {
-        topMargin = ScreenUtil().setHeight(70);
-      } else {
-        topMargin = ScreenUtil().setHeight(10);
-      }*/
-    } catch (e) {}
-    return GestureDetector(
-      onTap: () {
-//        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
-            context,
-            KeTaoFeaturedGoodsDetailPage(
-              productId: id,
-            ));
-      },
-      child: Container(
-//            color: Colors.blue ,商学院
-          width: ScreenUtil().setWidth(397),
-          margin: EdgeInsets.only(
-            left: index == 0 ? 0 : ScreenUtil().setWidth(30),
-          ),
-//          margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-          constraints: BoxConstraints(),
-          decoration: BoxDecoration(
-//            color: Color(0xffFee2cd),
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(20)),
-          ),
-          child: Padding(
-//                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
-            padding: EdgeInsets.all(ScreenUtil().setWidth(0)),
-//            child: InkWell(
-//              splashColor: Colors.yellow,
-
-//        onDoubleTap: () => showSnackBar(),
-            child: Container(
-              width: ScreenUtil().setWidth(397),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(ScreenUtil().setWidth(10)),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-//                        fit: StackFit.expand,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(ScreenUtil().setWidth(30)),
-                        topLeft: Radius.circular(ScreenUtil().setWidth(30)),
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(ScreenUtil().setWidth(10)),
-                        topLeft: Radius.circular(ScreenUtil().setWidth(10)),
-                      ),
-                      child: CachedNetworkImage(
-                        fadeInDuration: Duration(milliseconds: 0),
-                        fadeOutDuration: Duration(milliseconds: 0),
-                        height: ScreenUtil().setWidth(397),
-                        width: ScreenUtil().setWidth(397),
-//                        fit: BoxFit.fill,
-                        imageUrl: "$goodsImg",
-                      ),
-                    ),
-                  ),
-
-//                          SizedBox(
-//                            height: 10,
-//                          ),
-                  Visibility(
-                    visible: true,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(20),
-                        vertical: ScreenUtil().setHeight(16),
-                      ),
-                      child: Text(
-                        "$goodsName",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(38),
-                          color: Color(0xff222222),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-//                    margin: EdgeInsets.only(top: topMargin),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 5,
-                        ),
-                        KeTaoFeaturedPriceText(
-                          text: '$salePrice',
-                          textColor: _priceColor,
-                          fontSize: ScreenUtil().setSp(32),
-                          fontBigSize: ScreenUtil().setSp(42),
-//                          '27.5',
-                          /*style: TextStyle(
-                          fontSize: ScreenUtil().setSp(42),
-                          color: _priceColor,
-                          fontWeight: FontWeight.bold,
-                        ),*/
-                        ),
-                        SizedBox(
-                          width: ScreenUtil().setWidth(20),
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Visibility(
-                              visible: salePrice != originalPrice,
-                              child: Text(
-                                "￥$originalPrice",
-                                overflow: TextOverflow.ellipsis,
-//                            '${0}人评价',
-//                            '23234人评价',
-//                          product
-                                style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: ScreenUtil().setSp(32),
-                                    color: Color(0xFF979896)),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: false,
-                          child: Container(
-                            height: ScreenUtil().setHeight(52),
-                            padding: EdgeInsets.only(
-                              left: ScreenUtil().setWidth(8),
-                              right: ScreenUtil().setWidth(8),
-                            ),
-                            margin: EdgeInsets.only(right: 6),
-                            decoration: BoxDecoration(
-                              color: _priceColor,
-                              borderRadius: BorderRadius.circular(
-                                  ScreenUtil().setWidth(10)),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "券",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(32),
-                                  ),
-                                ),
-                                Container(
-                                  height: ScreenUtil().setHeight(42),
-                                  margin: EdgeInsets.symmetric(horizontal: 2),
-                                  child: KeTaoFeaturedDashedRect(
-                                      color: Colors.white,
-                                      strokeWidth: 1,
-                                      gap: 1.0),
-                                ),
-                                /*Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 2),
-                                  child: Text(
-                                    "${couponAmount.toString()}元",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: ScreenUtil().setSp(32),
-                                    ),
-                                  ),
-                                ),*/
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: false,
-                    child: Container(
-                      height: ScreenUtil().setWidth(55),
-                      margin:
-                          EdgeInsets.only(top: topMargin, left: 4, right: 4),
-                      decoration: BoxDecoration(
-                        color: Color(0xffe8e8e8),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(ScreenUtil().setWidth(28)),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          /* SizedBox(
-                            width: 5,
-                          ),*/
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                bottom: ScreenUtil().setHeight(2),
-                              ),
-                              padding: EdgeInsets.only(
-                                left: ScreenUtil().setHeight(12),
-                              ),
-                              child: Visibility(
-//                              visible: salePrice != originalPrice,
-                                child: Text(
-                                  "￥$originalPrice",
-                                  overflow: TextOverflow.ellipsis,
-//                            '${0}人评价',
-//                            '23234人评价',
-//                          product
-                                  style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: ScreenUtil().setSp(24),
-                                      color: Color(0xFFafafaf)),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: ScreenUtil().setWidth(20),
-                          ),
-                          Container(
-                            height: ScreenUtil().setWidth(55),
-                            padding: EdgeInsets.symmetric(horizontal: 2),
-                            decoration: BoxDecoration(
-                              color: Color(0xffE32024),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(ScreenUtil().setWidth(28)),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  child: KeTaoFeaturedPriceText(
-                                    text: '$salePrice',
-                                    textColor: Colors.white,
-                                    fontSize: ScreenUtil().setSp(32),
-                                    fontBigSize: ScreenUtil().setSp(32),
-                                    fontWeight: FontWeight.normal,
-                                    /*style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(42),
-                                      color: _priceColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),*/
-                                  ),
-                                  margin: EdgeInsets.symmetric(horizontal: 4),
-                                ),
-                                CachedNetworkImage(
-                                  fadeInDuration: Duration(milliseconds: 0),
-                                  fadeOutDuration: Duration(milliseconds: 0),
-                                  fit: BoxFit.fitWidth,
-                                  height: ScreenUtil().setWidth(26),
-                                  width: ScreenUtil().setWidth(26),
-                                  imageUrl:
-                                      "https://alipic.lanhuapp.com/xd00b6d1cd-b672-41f7-89ea-806d7c3aef94",
-                                ),
-                              ],
-                            ),
-                          ),
-                          /* Icon(
-                              Icons.more_horiz,
-                              size: 15,
-                              color: Color(0xFF979896),
-                            ),*/
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  )
-//                          descStack(product),
-//                          ratingStack(product.rating),
-//                          Container( child: imageStack(product.image),),
-                ],
-              ),
-            ),
-          )),
-    );
-  }
-
   var _desTextColor = Color(0xffCE0100);
 
   ///精选热销商品模块
@@ -2659,9 +2384,40 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
 
   List<PddGoodsListDataList> pddGoodsList = List<PddGoodsListDataList>();
   var listId;
+  var categoryId;
+
 
   ///热销商品
   Widget buildProductList() {
+    /*return SliverToBoxAdapter(
+      child: Center(
+        child: Container(
+          width: double.maxFinite,
+          margin: EdgeInsets.symmetric(
+            horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+          ),
+//          height: double.infinity,
+          child: new StaggeredGridView.countBuilder(
+            crossAxisCount: 2,
+            itemCount: KeTaoFeaturedCommonUtils.isEmpty(pddGoodsList)
+                ? 0
+                : pddGoodsList.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              PddGoodsListDataList item;
+              try {
+                item = pddGoodsList[index];
+              } catch (e) {}
+              return productItem2(item: item);
+            },
+            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+            mainAxisSpacing: ScreenUtil().setWidth(20),
+            crossAxisSpacing: ScreenUtil().setWidth(20),
+          ),
+        ),
+      ),
+    );*/
     return SliverToBoxAdapter(
       child: Center(
         child: Container(
@@ -3016,6 +2772,192 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                )
+//                          descStack(product),
+//                          ratingStack(product.rating),
+//                          Container( child: imageStack(product.image),),
+              ],
+            ),
+          )),
+    );
+  }
+
+//  var _priceColor = const Color(0xffe31735);
+
+  Widget productItem({HomeGoodsListGoodsList item, int index}) {
+    String id = '';
+    String goodsName = '';
+    String goodsImg = '';
+    String originalPrice = '';
+    String salePrice = '';
+    double topMargin = 0;
+    String profit = '分红金￥0';
+    try {
+      id = item.id;
+      goodsName = item.goodsName;
+      goodsImg = item.goodsImg;
+      originalPrice = item.originalPrice;
+      salePrice = item.salePrice;
+      profit = '分红金￥${(item.btPrice)}';
+      /*  if (goodsName.length < 8) {
+        topMargin = ScreenUtil().setHeight(70);
+      } else {
+        topMargin = ScreenUtil().setHeight(10);
+      }*/
+    } catch (e) {}
+
+    return GestureDetector(
+      onTap: () {
+//        launchWeChatMiniProgram(username: "gh_8ae370170974");
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            context,
+            KeTaoFeaturedGoodsDetailPage(
+              productId: id,
+            ));
+      },
+      child: Container(
+//            color: Colors.blue ,商学院
+          width: ScreenUtil().setWidth(523),
+//          margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
+          /*constraints: BoxConstraints(
+            minHeight: ScreenUtil().setHeight(560),
+          ),*/
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
+          ),
+          child: Padding(
+//                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
+            padding: const EdgeInsets.all(0),
+//            child: InkWell(
+//              splashColor: Colors.yellow,
+
+//        onDoubleTap: () => showSnackBar(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+//                        fit: StackFit.expand,
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(ScreenUtil().setWidth(10)),
+                      topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                    ),
+                    child: CachedNetworkImage(
+                      fadeInDuration: Duration(milliseconds: 0),
+                      fadeOutDuration: Duration(milliseconds: 0),
+                      height: ScreenUtil().setWidth(523),
+                      width: ScreenUtil().setWidth(523),
+                      fit: BoxFit.fill,
+                      imageUrl: "$goodsImg",
+                    ),
+                  ),
+                ),
+
+//                          SizedBox(
+//                            height: 10,
+//                          ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(20),
+                    right: ScreenUtil().setWidth(20),
+                    top: ScreenUtil().setHeight(16),
+                  ),
+                  child: Text(
+                    "$goodsName",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(38),
+                      color: Color(0xff222222),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(8),
+                    right: ScreenUtil().setWidth(8),
+                    top: ScreenUtil().setWidth(8),
+                    bottom: ScreenUtil().setWidth(8),
+                  ),
+                  margin: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(20),
+                    right: ScreenUtil().setWidth(20),
+                    top: ScreenUtil().setWidth(8),
+                    bottom: ScreenUtil().setWidth(8),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFDDDC),
+                    borderRadius: BorderRadius.circular(
+                      ScreenUtil().setWidth(10),
+                    ),
+                  ),
+                  child: Text(
+                    "$profit",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(28),
+                      color: Color(0xffF93736),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: topMargin),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 5,
+                      ),
+                      KeTaoFeaturedPriceText(
+                        text: '$salePrice',
+                        textColor: _priceColor,
+                        fontSize: ScreenUtil().setSp(32),
+                        fontBigSize: ScreenUtil().setSp(42),
+//                          '27.5',
+                        /*style: TextStyle(
+                          fontSize: ScreenUtil().setSp(42),
+                          color: _priceColor,
+                          fontWeight: FontWeight.bold,
+                        ),*/
+                      ),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(20),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              bottom: ScreenUtil().setHeight(0)),
+                          child: Visibility(
+                            visible: salePrice != originalPrice,
+                            child: Text(
+                              "￥$originalPrice",
+                              overflow: TextOverflow.ellipsis,
+//                            '${0}人评价',
+//                            '23234人评价',
+//                          product
+                              style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: ScreenUtil().setSp(32),
+                                  color: Color(0xFF979896)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      /* Icon(
+                          Icons.more_horiz,
+                          size: 15,
+                          color: Color(0xFF979896),
+                        ),*/
                     ],
                   ),
                 ),
