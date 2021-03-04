@@ -147,7 +147,7 @@ class KeTaoFeaturedHttpManage {
     dio.interceptors.add(new KeTaoFeaturedTokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (!KeTaoFeaturedGlobalConfig.isRelease) {
+    if (KeTaoFeaturedGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
@@ -563,7 +563,8 @@ class KeTaoFeaturedHttpManage {
     var entity = KeTaoFeaturedHomeEntity();
     homeEntityFromJson(entity, extractData);
     if (entity.status) {
-      KeTaoFeaturedGlobalConfig.prefs.setString("homeData", response.data.toString());
+      KeTaoFeaturedGlobalConfig.prefs
+          .setString("homeData", response.data.toString());
     }
     return entity;
   }
@@ -1466,14 +1467,20 @@ class KeTaoFeaturedHttpManage {
   ///
   ///[rechargeId] 充值id
   ///
+  ///[rechargeType] 0 快充 1 慢充
+  ///
   /// 获取话费充值微信支付信息
   ///
   static Future<KeTaoFeaturedWechatPayinfoEntity> getRechargeWeChatPayInfo(
-      tel, rechargeId) async {
+    tel,
+    rechargeId,
+    rechargeType,
+  ) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
+    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields
@@ -1493,14 +1500,20 @@ class KeTaoFeaturedHttpManage {
   ///
   ///[rechargeId] 充值id
   ///
+  ///[rechargeType] 0 快充 1 慢充
+  ///
   /// 获取话费充值支付宝支付信息
   ///
   static Future<KeTaoFeaturedAlipayPayinfoEntity> getRechargeAliPayInfo(
-      tel, rechargeId) async {
+    tel,
+    rechargeId,
+    rechargeType,
+  ) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
+    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields
@@ -2141,10 +2154,12 @@ class KeTaoFeaturedHttpManage {
 
 //
   ///获取商品列表
-  static Future<KeTaoFeaturedResultBeanEntity> getGoodsList({cId = ''}) async {
+  static Future<KeTaoFeaturedResultBeanEntity> getGoodsList(
+      {cId = '', type}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
+    paramsMap['type'] = "$type";
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields
       ..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));

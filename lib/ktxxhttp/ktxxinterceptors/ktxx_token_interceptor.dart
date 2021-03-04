@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:package_info/package_info.dart';
 import 'package:star/ktxxbus/kt_my_event_bus.dart';
 import 'package:star/generated/json/ktxx_result_bean_entity_helper.dart';
 import 'package:star/ktxx_global_config.dart';
@@ -28,6 +30,14 @@ class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
   @override
   onRequest(RequestOptions options) async {
     try {
+      /// 获取当前版本
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      if (Platform.isAndroid) {
+        options.headers["version"] = packageInfo.version;
+      }
+      if (Platform.isIOS) {
+        options.headers["version"] = packageInfo.version;
+      }
       options.headers["token"] = KeTaoFeaturedGlobalConfig.getLoginInfo().token;
     } catch (e) {
       print(e);
@@ -63,8 +73,10 @@ class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
           entity.errCode.toString() == "306") {
         KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
         Future.delayed(Duration(seconds: 1)).then((onValue) async {
-          var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
-          await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+          var context = KeTaoFeaturedGlobalConfig
+              .navigatorKey.currentState.overlay.context;
+          await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+              context, KeTaoFeaturedLoginPage());
           bus.emit("changBottomBar");
           return;
         });
@@ -77,18 +89,20 @@ class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
           KeTaoFeaturedGlobalConfig.saveLoginStatus(false);
           KeTaoFeaturedCommonUtils.showToast("登陆状态已过期，请重新登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) async {
-            var context =
-                KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
-            await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+            var context = KeTaoFeaturedGlobalConfig
+                .navigatorKey.currentState.overlay.context;
+            await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                context, KeTaoFeaturedLoginPage());
             bus.emit("changBottomBar");
             return;
           });
         } else {
           KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) async {
-            var context =
-                KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
-            await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+            var context = KeTaoFeaturedGlobalConfig
+                .navigatorKey.currentState.overlay.context;
+            await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                context, KeTaoFeaturedLoginPage());
             bus.emit("changBottomBar");
             return;
           });
@@ -149,7 +163,8 @@ class KeTaoFeaturedTokenInterceptors extends InterceptorsWrapper {
       var result = await KeTaoFeaturedHttpManage.referToken(request);
       if (!KeTaoFeaturedCommonUtils.isEmpty(result.data)) {
         if (result.status) {
-          request.headers["token"] = KeTaoFeaturedGlobalConfig.getLoginInfo().token;
+          request.headers["token"] =
+              KeTaoFeaturedGlobalConfig.getLoginInfo().token;
           try {
             if (request.data is FormData) {
               // https://github.com/flutterchina/dio/issues/482

@@ -1,4 +1,5 @@
 import 'package:star/ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -295,9 +296,10 @@ class KeTaoFeaturedAPi {
 */
 
   ///用户隐私协议
-  static String AGREEMENT_PRIVACY_URL = KeTaoFeaturedGlobalConfig.isHuaweiUnderReview
-      ? 'https://task.ktkj.shop/html/hw_ysxy.html'
-      : "https://task.ktkj.shop/yinsi.html";
+  static String AGREEMENT_PRIVACY_URL =
+      KeTaoFeaturedGlobalConfig.isHuaweiUnderReview
+          ? 'https://task.ktkj.shop/html/hw_ysxy.html'
+          : "https://task.ktkj.shop/yinsi.html";
 
   ///商品详情
   static const String PRODUCT = "/api/index.php?route=api/product";
@@ -320,12 +322,6 @@ class KeTaoFeaturedAPi {
   ///确定提交
   static const String ORDER_DETAIL = "order/info";
 
-  ///话费充值退款
-  static const String ORDER_HF_REFUND = "order/hf-refund";
-
-  ///话费重新充值
-  static const String ORDER_HF_REPAY = "order/hf-repay";
-
   ///订单详情
   static const String ORDER_HISTORY = "/api/index.php?route=api/order/history";
 
@@ -340,6 +336,12 @@ class KeTaoFeaturedAPi {
 
   ///订单确认收货
   static const String ORDER_ENSURE_RECEIVE = "order/confirm";
+
+  ///话费充值退款
+  static const String ORDER_HF_REFUND = "order/hf-refund";
+
+  ///话费重新充值
+  static const String ORDER_HF_REPAY = "order/hf-repay";
 
   ///各个状态订单
   static const String ORDER_DEL = "/api/index.php?route=api/order/del";

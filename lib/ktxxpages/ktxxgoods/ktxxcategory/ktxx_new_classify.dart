@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:star/ktxxbus/kt_my_event_bus.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_category_bean_entity.dart';
@@ -11,14 +12,17 @@ import 'package:star/ktxxpages/ktxxsearch/ktxx_search_page.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_message.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 // ignore: must_be_immutable
 class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
   @override
-  _KeTaoFeaturedNewClassifyListPageState createState() => _KeTaoFeaturedNewClassifyListPageState();
+  _KeTaoFeaturedNewClassifyListPageState createState() =>
+      _KeTaoFeaturedNewClassifyListPageState();
 }
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -77,7 +81,8 @@ class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
+class _KeTaoFeaturedNewClassifyListPageState
+    extends State<KeTaoFeaturedNewClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<KeTaoFeaturedCategoryBeanData> leftListData;
   List<KeTaoFeaturedCategoryBeanData> rightListData;
@@ -90,12 +95,16 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   Future _initData(id) async {
-    List<KeTaoFeaturedCategoryBeanData> categoryList = await KeTaoFeaturedHttpManage.getCategoryList(id);
+    List<KeTaoFeaturedCategoryBeanData> categoryList =
+        await KeTaoFeaturedHttpManage.getCategoryList(id);
     if (mounted) {
       setState(() {
         try {
           leftListData = categoryList;
           rightListData = leftListData[selectedIndex].children;
+          if (selIndex == -1) {
+            changeSelCategory(selCid);
+          }
         } catch (e) {}
       });
     }
@@ -150,8 +159,32 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
         });
       }
     });
+
+    bus.on("changeSelCategory", (cid) {
+      print("busCid=$cid");
+      selCid = cid;
+      changeSelCategory(cid);
+    });
   }
 
+  changeSelCategory(cid) {
+    print("cid=$cid");
+    if (KeTaoFeaturedCommonUtils.isEmpty(cid)) {
+      cid = KeTaoFeaturedGlobalConfig.prefs.getString("cid");
+    }
+    for (var i = 0; i < leftListData.length; i++) {
+      if (leftListData[i].id == cid) {
+        selIndex = i;
+      }
+    }
+    print("selIndex=$selIndex");
+    if (selIndex != -1) {
+      changeScrollOffset(selIndex);
+    }
+  }
+
+  int selIndex = -1;
+  String selCid = '';
   int selectedIndex = 0;
 
   Widget buildSearchBarLayout() {
@@ -162,7 +195,8 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setWidth(100),
@@ -209,7 +243,8 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
 //                NavigatorUtils.navigatorRouter(context, TaskMessagePage());
               },
               child: Container(
@@ -321,37 +356,7 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
                       ),
                     ),
                     onTap: () {
-                      ///计算需要滚动的高度
-                      var totalItemHeight = 0.00;
-                      var totalTitleHeight =
-                          (index) * ScreenUtil().setWidth(100);
-                      totalItemHeight += totalTitleHeight;
-                      for (var i = 0; i < index; i++) {
-                        var rightList = leftListData[i].children;
-                        var len = rightList.length;
-                        var itemH = ScreenUtil().setWidth(360);
-                        var itemHWithSpace = ScreenUtil().setWidth(372);
-                        var itemHeight = 0.00;
-                        if (len % 3 == 0) {
-                          itemHeight = itemHWithSpace * len / 3;
-                        } else {
-                          if (len > 3) {
-                            var s = (len - len % 3) / 3; //
-                            itemHeight = itemHWithSpace * s + itemH;
-                          } else {
-                            itemHeight = itemH;
-                          }
-                        }
-                        totalItemHeight += itemHeight;
-                      }
-                      var scrollOffset = totalItemHeight;
-                      setState(() {
-                        _rightScrollController.animateTo(scrollOffset,
-                            duration: new Duration(milliseconds: 200),
-                            curve: Curves.ease);
-                        Future.delayed(Duration(milliseconds: 500))
-                            .then((value) => resetSelectIndex(index));
-                      });
+                      changeScrollOffset(index);
                     },
                   ),
                 );
@@ -370,6 +375,38 @@ class _KeTaoFeaturedNewClassifyListPageState extends State<KeTaoFeaturedNewClass
         ],
       ),
     );
+  }
+
+  changeScrollOffset(int index) {
+    ///计算需要滚动的高度
+    var totalItemHeight = 0.00;
+    var totalTitleHeight = (index) * ScreenUtil().setWidth(100);
+    totalItemHeight += totalTitleHeight;
+    for (var i = 0; i < index; i++) {
+      var rightList = leftListData[i].children;
+      var len = rightList.length;
+      var itemH = ScreenUtil().setWidth(360);
+      var itemHWithSpace = ScreenUtil().setWidth(372);
+      var itemHeight = 0.00;
+      if (len % 3 == 0) {
+        itemHeight = itemHWithSpace * len / 3;
+      } else {
+        if (len > 3) {
+          var s = (len - len % 3) / 3; //
+          itemHeight = itemHWithSpace * s + itemH;
+        } else {
+          itemHeight = itemH;
+        }
+      }
+      totalItemHeight += itemHeight;
+    }
+    var scrollOffset = totalItemHeight;
+    setState(() {
+      _rightScrollController.animateTo(scrollOffset,
+          duration: new Duration(milliseconds: 200), curve: Curves.ease);
+      Future.delayed(Duration(milliseconds: 500))
+          .then((value) => resetSelectIndex(index));
+    });
   }
 
   resetSelectIndex(int index) {

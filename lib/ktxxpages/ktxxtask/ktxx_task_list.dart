@@ -70,6 +70,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:star/ktxxmodels/ktxx_home_pdd_category_entity.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_my_tab.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -79,8 +80,10 @@ class KeTaoFeaturedTaskListPage extends StatefulWidget {
   final String title = "首页";
 
   @override
-  _KeTaoFeaturedTaskListPageState createState() => _KeTaoFeaturedTaskListPageState();
+  _KeTaoFeaturedTaskListPageState createState() =>
+      _KeTaoFeaturedTaskListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -101,9 +104,12 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   SwiperController _swiperController;
   bool _isLoop = false;
   bool _isMarqueeLoop = false;
-  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList = List<KeTaoFeaturedHomeGoodsListGoodsList>();
-  List<KeTaoFeaturedHomeIconListIconList> iconList = List<KeTaoFeaturedHomeIconListIconList>();
-  List<KeTaoFeaturedHomeIconListIconList> adList = List<KeTaoFeaturedHomeIconListIconList>();
+  List<KeTaoFeaturedHomeGoodsListGoodsList> goodsList =
+      List<KeTaoFeaturedHomeGoodsListGoodsList>();
+  List<KeTaoFeaturedHomeIconListIconList> iconList =
+      List<KeTaoFeaturedHomeIconListIconList>();
+  List<KeTaoFeaturedHomeIconListIconList> adList =
+      List<KeTaoFeaturedHomeIconListIconList>();
 //    Container(
 //height: 6.0,
 //width: 6.0,
@@ -199,7 +205,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                               : Color(0xff222222)),
                     ),
                     Visibility(
-                      visible: !KeTaoFeaturedCommonUtils.isEmpty("${classify.subtitle}"),
+                      visible: !KeTaoFeaturedCommonUtils.isEmpty(
+                          "${classify.subtitle}"),
                       child: Container(
                         height: ScreenUtil().setWidth(46),
                         width: ScreenUtil().setWidth(150),
@@ -323,6 +330,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     });
     super.initState();
   }
+
   _initCacheHomeData() {
     var data = KeTaoFeaturedGlobalConfig.getHomeInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(data)) {
@@ -339,6 +347,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
       });
     }
   }
+
   initPddTabbar() {
     _pddTabController =
         new TabController(vsync: this, length: cats == null ? 0 : cats.length);
@@ -400,7 +409,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   }
 
   Future _initData({bool isRefresh = false}) async {
-    var categoryResult = await KeTaoFeaturedHttpManage.getHomePagePddProductCategory();
+    var categoryResult =
+        await KeTaoFeaturedHttpManage.getHomePagePddProductCategory();
     try {
       if (categoryResult.status) {
         if (mounted) {
@@ -521,7 +531,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   ///
   /// 确认账户信息是否绑定手机号以及微信授权
   static checkUserBind({bool isTaskWall = false}) async {
-    KeTaoFeaturedUserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    KeTaoFeaturedUserInfoData userInfoData =
+        KeTaoFeaturedGlobalConfig.getUserInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await KeTaoFeaturedHttpManage.getUserInfo();
@@ -618,7 +629,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setWidth(100),
@@ -659,7 +671,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedTaskMessagePage());
               },
               child: CachedNetworkImage(
                 width: ScreenUtil().setWidth(78),
@@ -710,7 +723,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
       name = item.name;
       type = item.type;
       appId = item.appId;
-      path = !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+      path =
+          !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
       subtitle = item.subtitle;
       params = item.params;
       imgPath = item.imgPath;
@@ -747,7 +761,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
           }
           if (type == 'app') {
             if (path == 'pdd_index') {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedPddHomeIndexPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedPddHomeIndexPage());
               return;
             }
             if (path == 'pdd_goods') {
@@ -763,7 +778,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
             }
             switch (path) {
               case "recharge":
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedRechargeListPage());
                 break;
             }
             return;
@@ -1061,8 +1077,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
               SliverToBoxAdapter(
                 child: GestureDetector(
                   child: KeTaoFeaturedHomePddGoodsListPage(),
-                  onHorizontalDragStart: (DragStartDetails details) {
-                  },
+                  onHorizontalDragStart: (DragStartDetails details) {},
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
                     _offsetValue = details.primaryDelta;
                   },
@@ -1075,10 +1090,9 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                           _tabs = buildTabs();
                           pddcategoryTabsView = buildPddCategoryTabBar();
                           _pddTabController.animateTo(_selectedTabIndex);
-                          bus.emit("changePddListViewData",
-                              cats[_selectedTabIndex]);
+                          bus.emit(
+                              "changePddListViewData", cats[_selectedTabIndex]);
                         }
-
                       } else {
                         //向右滑动
                         if (_selectedTabIndex < cats.length - 1) {
@@ -1086,8 +1100,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                           _tabs = buildTabs();
                           pddcategoryTabsView = buildPddCategoryTabBar();
                           _pddTabController.animateTo(_selectedTabIndex);
-                          bus.emit("changePddListViewData",
-                              cats[_selectedTabIndex]);
+                          bus.emit(
+                              "changePddListViewData", cats[_selectedTabIndex]);
                         }
                       }
                     });
@@ -1149,7 +1163,11 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedGoodsListPage());
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        context,
+                        KeTaoFeaturedGoodsListPage(
+                          type: "hot",
+                        ));
                   },
                   child: Container(
                     child: Row(
@@ -1763,7 +1781,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     );
   }
 
-  Widget iconItem(Color _itemsTextColor, {KeTaoFeaturedHomeIconListIconList item}) {
+  Widget iconItem(Color _itemsTextColor,
+      {KeTaoFeaturedHomeIconListIconList item}) {
     String icon = '';
     String name = '';
     String type = '';
@@ -1772,7 +1791,12 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     String path = '';
     String subtitle = '';
     String params = '';
+
+    ///拼多多分类id
     String catId = '';
+
+    ///自营分类id
+    String cId = '';
     String pddType = '';
     String flag = '';
     bool needShow = true;
@@ -1801,6 +1825,9 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
               break;
             case "type":
               pddType = itemList[1];
+              break;
+            case "cid":
+              cId = itemList[1];
               break;
           }
         }
@@ -1834,7 +1861,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     }
 
     if (Platform.isIOS) {
-      isUnderReview = KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview");
+      isUnderReview =
+          KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview");
     }
 
     return new InkWell(
@@ -1842,14 +1870,16 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
           /// 判断功能是否需要登录
           if (needLogin) {
             KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
-            KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                context, KeTaoFeaturedLoginPage());
             return;
           }
 
           ///
           if (name.contains('赚钱') && Platform.isIOS) {
             if (!KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskHallPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedTaskHallPage());
             } else {}
             return;
           }
@@ -1896,7 +1926,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
           }
           if (type == 'app') {
             if (path == 'pdd_index') {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedPddHomeIndexPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedPddHomeIndexPage());
               return;
             }
             if (path == 'pdd_goods') {
@@ -1910,9 +1941,15 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                   ));
               return;
             }
+            if (path == 'category') {
+              KeTaoFeaturedGlobalConfig.prefs.setString("cid", cId);
+              bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
+              return;
+            }
             switch (path) {
               case "recharge":
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedRechargeListPage());
                 break;
             }
             return;
@@ -1953,7 +1990,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
               /* NavigatorUtils.navigatorRouter(context, MyTestApp());
               return;*/
             }
-            if (name.contains('游戏') && KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
+            if (name.contains('游戏') &&
+                KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
               needShow = false;
               KeTaoFeaturedCommonUtils.showToast("敬请期待");
               return;
@@ -2100,7 +2138,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   Widget buildBannerLayout2() {
     return GestureDetector(
       onTap: () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskOpenDiamondPage());
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            context, KeTaoFeaturedTaskOpenDiamondPage());
       },
       child: Image.asset(
         "static/images/home_banner.png",
@@ -2154,7 +2193,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
 //          indicatorLayout: PageIndicatorLayout.COLOR,
                 onIndexChanged: (index) async {
                   if (!KeTaoFeaturedCommonUtils.isEmpty(bannerColorList)) {
-                    if (!KeTaoFeaturedCommonUtils.isEmpty(bannerColorList[index]) &&
+                    if (!KeTaoFeaturedCommonUtils.isEmpty(
+                            bannerColorList[index]) &&
                         bannerColorList.length == bannerList.length) {
                       if (mounted) {
                         setState(() {
@@ -2237,8 +2277,9 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                     name = item.name;
                     type = item.type;
                     appId = item.appId;
-                    path =
-                        !KeTaoFeaturedCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+                    path = !KeTaoFeaturedCommonUtils.isEmpty(item.path)
+                        ? item.path
+                        : item.uri;
                     subtitle = item.subtitle;
                     params = item.params;
                     imgPath = item.imgPath;
@@ -2280,7 +2321,9 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                               KeTaoFeaturedPddGoodsListPage(
                                 showAppBar: true,
                                 type: pddType,
-                                title: KeTaoFeaturedCommonUtils.isEmpty(name) ? "精选" : name,
+                                title: KeTaoFeaturedCommonUtils.isEmpty(name)
+                                    ? "精选"
+                                    : name,
                                 categoryId: catId,
                               ));
                           return;
@@ -2326,7 +2369,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                             await launch(path);
                           } else {
                             if (path.startsWith("pinduoduo://")) {
-                              KeTaoFeaturedCommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                              KeTaoFeaturedCommonUtils.showToast(
+                                  "亲，您还未安装拼多多客户端哦！");
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
                                   KeTaoFeaturedWebViewPluginPage(
@@ -2392,7 +2436,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                           .uri
                           .toString()
                           .startsWith("http")) {
-                        KeTaoFeaturedUtils.launchUrl(bannerList[bannerIndex].uri.toString());
+                        KeTaoFeaturedUtils.launchUrl(
+                            bannerList[bannerIndex].uri.toString());
                         /*bool isImage = false;
                         Response resust = await Dio().get(bannerList[bannerIndex].uri);
                         String contentType = resust.headers['content-type'].toString();
@@ -2522,7 +2567,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   }
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
-  Widget buildTaskItemLayout(context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
+  Widget buildTaskItemLayout(
+      context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
     var bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgColor;
     var txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
     var category = '';
@@ -2564,10 +2610,12 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                 });
             break;
           case 0: // 领任务
-            if (await checkUserBind(isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
+            if (await checkUserBind(
+                isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
               switch (category) {
                 case "1":
-                  var result = await KeTaoFeaturedHttpManage.taskReceive(taskItem.id);
+                  var result =
+                      await KeTaoFeaturedHttpManage.taskReceive(taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
@@ -2581,7 +2629,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                   }
                   break;
                 case "2":
-                  var result = await KeTaoFeaturedHttpManage.taskReceiveOther(taskItem.id);
+                  var result = await KeTaoFeaturedHttpManage.taskReceiveOther(
+                      taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
@@ -2726,7 +2775,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   }
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
-  Widget buildTaskItemLayout2(context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
+  Widget buildTaskItemLayout2(
+      context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
     var bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgColor;
     var txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
     var category = '';
@@ -2768,10 +2818,12 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                 });
             break;
           case 0: // 领任务
-            if (await checkUserBind(isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
+            if (await checkUserBind(
+                isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
               switch (category) {
                 case "1":
-                  var result = await KeTaoFeaturedHttpManage.taskReceive(taskItem.id);
+                  var result =
+                      await KeTaoFeaturedHttpManage.taskReceive(taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
@@ -2785,7 +2837,8 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                   }
                   break;
                 case "2":
-                  var result = await KeTaoFeaturedHttpManage.taskReceiveOther(taskItem.id);
+                  var result = await KeTaoFeaturedHttpManage.taskReceiveOther(
+                      taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
@@ -3127,7 +3180,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
   int bannerIndex = 0;
   KeTaoFeaturedHomeEntity entity;
   List<KeTaoFeaturedHomeIconListIconList> bannerList;
-  List<KeTaoFeaturedHomeDataTaskListList> taskList = List<KeTaoFeaturedHomeDataTaskListList>();
+  List<KeTaoFeaturedHomeDataTaskListList> taskList =
+      List<KeTaoFeaturedHomeDataTaskListList>();
 
   List<KeTaoFeaturedHomeDataTaskList> taskListAll;
   String userType;
@@ -3261,7 +3315,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   /// 确认账户信息是否绑定手机号以及微信授权
   checkUserBind({bool isTaskWall = false}) async {
-    KeTaoFeaturedUserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    KeTaoFeaturedUserInfoData userInfoData =
+        KeTaoFeaturedGlobalConfig.getUserInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await KeTaoFeaturedHttpManage.getUserInfo();
@@ -3287,7 +3342,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
   }
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
-  Widget buildTaskItemLayout(context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
+  Widget buildTaskItemLayout(
+      context, KeTaoFeaturedHomeDataTaskListList taskItem, index) {
     var bgColor = Color(0xffF32E43); // GlobalConfig.taskBtnBgColor;
     var txtColor = Colors.white; //GlobalConfig.taskBtnTxtColor;
     var category = '';
@@ -3387,7 +3443,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                           CommonUtils.showToast("您只能领取非朋友圈任务");
                           return;
                         }*/
-                        var result = await KeTaoFeaturedHttpManage.taskReceive(taskItem.id);
+                        var result = await KeTaoFeaturedHttpManage.taskReceive(
+                            taskItem.id);
                         if (result.status) {
                           var result = await Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
@@ -3402,7 +3459,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                         break;
                       case "2":
                         var result =
-                            await KeTaoFeaturedHttpManage.taskReceiveOther(taskItem.id);
+                            await KeTaoFeaturedHttpManage.taskReceiveOther(
+                                taskItem.id);
                         if (result.status) {
                           var result = await Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
@@ -3417,7 +3475,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                         break;
                       case "3":
                         var result =
-                            await KeTaoFeaturedHttpManage.taskReceiveWechat(taskItem.id);
+                            await KeTaoFeaturedHttpManage.taskReceiveWechat(
+                                taskItem.id);
                         if (result.status) {
                           var result = await Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {

@@ -27,6 +27,7 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../ktxx_global_config.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -95,15 +96,19 @@ class KeTaoFeaturedPddGoodsDetailPage extends StatefulWidget {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
-  KeTaoFeaturedPddGoodsDetailPage({this.productId, this.gId, this.searchId, this.goodsSign});
+  KeTaoFeaturedPddGoodsDetailPage(
+      {this.productId, this.gId, this.searchId, this.goodsSign});
 
   @override
-  _KeTaoFeaturedPddGoodsDetailPageState createState() => _KeTaoFeaturedPddGoodsDetailPageState();
+  _KeTaoFeaturedPddGoodsDetailPageState createState() =>
+      _KeTaoFeaturedPddGoodsDetailPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsDetailPage>
+class _KeTaoFeaturedPddGoodsDetailPageState
+    extends State<KeTaoFeaturedPddGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
@@ -141,10 +146,11 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
     try {
       EasyLoading.show();
     } catch (e) {}
-    KeTaoFeaturedPddGoodsInfoEntity pddResultData = await KeTaoFeaturedHttpManage.getPddGoodsInfo(
-        gId: widget.gId,
-        goodsSign: widget.goodsSign,
-        searchId: widget.searchId);
+    KeTaoFeaturedPddGoodsInfoEntity pddResultData =
+        await KeTaoFeaturedHttpManage.getPddGoodsInfo(
+            gId: widget.gId,
+            goodsSign: widget.goodsSign,
+            searchId: widget.searchId);
     try {
       EasyLoading.dismiss();
     } catch (e) {}
@@ -268,7 +274,8 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                               controller: SwiperController(),
                               pagination: new SwiperPagination(
                                 alignment: Alignment.bottomRight,
-                                builder: KeTaoFeaturedMyFractionPaginationBuilder(
+                                builder:
+                                    KeTaoFeaturedMyFractionPaginationBuilder(
                                   activeColor: Colors.white,
                                   color: Colors.white,
                                   fontSize: ScreenUtil().setSp(28),
@@ -331,11 +338,14 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                                     ),
                                     Expanded(
                                       child: Visibility(
-                                        visible: !KeTaoFeaturedCommonUtils.isEmpty(_btPrice),
+                                        visible:
+                                            !KeTaoFeaturedCommonUtils.isEmpty(
+                                                _btPrice),
                                         child: Container(
                                           margin: EdgeInsets.only(
-                                            left: ScreenUtil().setHeight(30),
-                                              bottom: ScreenUtil().setHeight(8)),
+                                              left: ScreenUtil().setHeight(30),
+                                              bottom:
+                                                  ScreenUtil().setHeight(8)),
                                           child: Text(
                                             "分红金：￥$_btPrice",
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
@@ -347,9 +357,10 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                                         ),
                                       ),
                                     ),
-                                    
                                     Visibility(
-                                      visible: !KeTaoFeaturedCommonUtils.isEmpty(_saleTip),
+                                      visible:
+                                          !KeTaoFeaturedCommonUtils.isEmpty(
+                                              _saleTip),
                                       child: Align(
                                         alignment: Alignment.centerRight,
                                         child: Container(
@@ -420,20 +431,24 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                                   height: ScreenUtil().setHeight(57),
                                 ),
                                 Visibility(
-                                  visible: KeTaoFeaturedCommonUtils.isEmpty(_couponsAmount)
+                                  visible: KeTaoFeaturedCommonUtils.isEmpty(
+                                          _couponsAmount)
                                       ? false
                                       : true,
                                   child: Column(
                                     children: [
                                       GestureDetector(
                                         onTap: () async {
-                                          if (KeTaoFeaturedCommonUtils.isEmpty(_mobileUri)) {
+                                          if (KeTaoFeaturedCommonUtils.isEmpty(
+                                              _mobileUri)) {
                                             return;
                                           }
                                           if (_loginStatus == "0") {
-                                            KeTaoFeaturedCommonUtils.showToast("尚未登陆，请登录！");
-                                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                                context, KeTaoFeaturedLoginPage());
+                                            KeTaoFeaturedCommonUtils.showToast(
+                                                "尚未登陆，请登录！");
+                                            KeTaoFeaturedNavigatorUtils
+                                                .navigatorRouter(context,
+                                                    KeTaoFeaturedLoginPage());
                                             return;
                                           }
                                           if (_loginStatus == "1") {
@@ -602,9 +617,10 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                                                               ],
                                                             ),
                                                             Visibility(
-                                                              visible: !KeTaoFeaturedCommonUtils
-                                                                  .isEmpty(
-                                                                      _validPeriod),
+                                                              visible:
+                                                                  !KeTaoFeaturedCommonUtils
+                                                                      .isEmpty(
+                                                                          _validPeriod),
                                                               child: Container(
                                                                 margin: EdgeInsets
                                                                     .only(
@@ -958,7 +974,7 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                   child: IconButton(
                     icon: CachedNetworkImage(
                       imageUrl:
-                          "https://alipic.lanhuapp.com/xded955fd8-b440-4233-863c-337b04b3e66b",
+                          "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -987,8 +1003,9 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                             ),
                             color: Colors.grey,
                             onPressed: () {
-                              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                                  this.context, KeTaoFeaturedTaskIndexPage());
+                              KeTaoFeaturedNavigatorUtils
+                                  .navigatorRouterAndRemoveUntil(this.context,
+                                      KeTaoFeaturedTaskIndexPage());
                             }),
                       ),
                       Expanded(
@@ -998,7 +1015,8 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                           padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
                           child: GestureDetector(
                             onTap: () async {
-                              if (KeTaoFeaturedCommonUtils.isEmpty(_mobileUri)) {
+                              if (KeTaoFeaturedCommonUtils.isEmpty(
+                                  _mobileUri)) {
                                 return;
                               }
                               if (_loginStatus == "0") {
@@ -1082,7 +1100,8 @@ class _KeTaoFeaturedPddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsD
                   ///
                   ///
                   Navigator.pop(context);
-                  var result = await KeTaoFeaturedHttpManage.getPddAuthorization();
+                  var result =
+                      await KeTaoFeaturedHttpManage.getPddAuthorization();
                   if (result.status) {
                     ///跳转拼多多app授权的url
                     var pddUrl = '';
@@ -1594,14 +1613,15 @@ class _DetailWindowState extends State<DetailWindow>
                 EasyLoading.dismiss();
               } catch (e) {}*/
     EasyLoading.show();
-    var result =
-        await KeTaoFeaturedHttpManage.createOrder(goodsId, goodsNum, specId: specId);
+    var result = await KeTaoFeaturedHttpManage.createOrder(goodsId, goodsNum,
+        specId: specId);
     EasyLoading.dismiss();
     if (result.status) {
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+      var context =
+          KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
       KeTaoFeaturedNavigatorUtils.navigatorRouter(
           context,
           KeTaoFeaturedEnsureOrderPage(

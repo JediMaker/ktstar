@@ -41,11 +41,17 @@ class KeTaoFeaturedUserInfoData with JsonConvert<KeTaoFeaturedUserInfoData> {
   @JSONField(name: "pay_pwd_status")
   String payPwdStatus;
   @JSONField(name: "is_partner")
-  String isPartner ;
+  String isPartner;
   @JSONField(name: "partner_time")
-  String partnerTime ;
+  String partnerTime;
   @JSONField(name: "partner_expire_time")
-  String partnerExpireTime ;
+  String partnerExpireTime;
+  @JSONField(name: "store_status")
+  String storeStatus;
+  @JSONField(name: "store_reject_msg")
+  String storeRejectMsg;
+  @JSONField(name: "store_id")
+  String storeId;
   @JSONField(name: "partner_bonus")
   KeTaoFeaturedUserHolderProfitPartnerBonus partnerBonus;
 }

@@ -783,7 +783,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
               ),
               decoration: BoxDecoration(
                 color:
-                _currentIndex == 1 ? Color(0xffCAAC74) : Colors.transparent,
+                    _currentIndex == 1 ? Color(0xffCAAC74) : Colors.transparent,
                 borderRadius: BorderRadius.circular(
                   ScreenUtil().setWidth(20),
                 ),
@@ -818,7 +818,7 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
               ),
               decoration: BoxDecoration(
                 color:
-                _currentIndex == 2 ? Color(0xffCAAC74) : Colors.transparent,
+                    _currentIndex == 2 ? Color(0xffCAAC74) : Colors.transparent,
                 borderRadius: BorderRadius.circular(
                   ScreenUtil().setWidth(20),
                 ),
@@ -882,6 +882,10 @@ class _KeTaoFeaturedMicroShareHolderEquityPageState
     var profitDesc = '';
     var desChildrenList;
     var childrenListSize = _currentIndex == 2 && index == 1 ? 4 : 2;
+    if (_currentIndex == 0) {
+      childrenListSize = 1;
+    }
+
     if (!KeTaoFeaturedCommonUtils.isEmpty(item)) {
       try {
         profitTitle = item.title;

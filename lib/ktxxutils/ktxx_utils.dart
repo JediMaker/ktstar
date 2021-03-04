@@ -16,6 +16,7 @@ import 'package:star/ktxxmodels/ktxx_version_info_entity.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -148,13 +149,14 @@ class KeTaoFeaturedUtils {
   static String url;
 
 //  https://www.jianshu.com/p/89f619c632dd
-///校验版本更新
+  ///校验版本更新
   static checkAppVersion(BuildContext context,
       {bool checkDerictly = false}) async {
     /// 获取当前版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _localVersion = packageInfo.version;
-    String updateTime = KeTaoFeaturedGlobalConfig.prefs.getString('updateTime') ?? null;
+    String updateTime =
+        KeTaoFeaturedGlobalConfig.prefs.getString('updateTime') ?? null;
 
     /// 一天之内只提醒一次需要更新
     if (!checkDerictly) {
@@ -175,7 +177,6 @@ class KeTaoFeaturedUtils {
         } else {
           KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
-
 
         if (Platform.isAndroid) {
           ///华为审核中
@@ -198,8 +199,8 @@ class KeTaoFeaturedUtils {
 
         bool needUpdate = false;
         if (Platform.isIOS) {
-          needUpdate = isBuildNumberGreatThanLocal(
-              versionInfo.data.buildNumber, packageInfo.buildNumber);
+          needUpdate = isVersionGreatThanLocal(
+              versionInfo.data.buildNumber, _localVersion);
         }
         if (Platform.isAndroid) {
           needUpdate = isVersionGreatThanLocal(
@@ -261,7 +262,8 @@ class KeTaoFeaturedUtils {
       print(e);
     }
   }
-   Map<String, Color> emumMap = const {
+
+  Map<String, Color> emumMap = const {
     "Objective-C": Color(0xFF438EFF),
     "Perl": Color(0xFF0298C3),
     "Python": Color(0xFF0298C3),
@@ -337,6 +339,9 @@ class KeTaoFeaturedUtils {
 Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
     KeTaoFeaturedVersionInfoEntity versionInfo) {
   final ThemeData theme = Theme.of(context);
+  var desc = Platform.isAndroid
+      ? {versionInfo.data.desc}
+      : {versionInfo.data.buildNumberDesc};
 
   /*final TextStyle dialogTextStyle =
       theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);*/
@@ -345,8 +350,17 @@ Widget _buildDialog(BuildContext context, PackageInfo packageInfo,
     title: Text('v${versionInfo.data.versionNo}版本更新啦！'),
     content: Container(
       padding: EdgeInsets.symmetric(vertical: 8),
-      child: Text(
-        '${versionInfo.data.desc}',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$desc',
+            style: TextStyle(
+              color: Color(0xff222222),
+              fontSize: ScreenUtil().setSp(42),
+            ),
+          ),
+        ],
       ),
     ),
     actions: <Widget>[

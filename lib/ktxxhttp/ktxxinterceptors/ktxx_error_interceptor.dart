@@ -31,46 +31,52 @@ class KeTaoFeaturedErrorInterceptors extends InterceptorsWrapper {
   onRequest(RequestOptions options) async {
     //没有网络
   }
-
+  DateTime _lastQuitTime;
   getFinalException(DioError dioError) {
     try {
       print("HandleError DioError:  $dioError");
       switch (dioError.type) {
-            case DioErrorType.CANCEL:
-              return "Request Cancel";
-            case DioErrorType.CONNECT_TIMEOUT:
+        case DioErrorType.CANCEL:
+          return "Request Cancel";
+        case DioErrorType.CONNECT_TIMEOUT:
 //              KeTaoFeaturedCommonUtils.showToast("网络异常，网络连接超时！");
 
-              break;
-      //        return "CONNECT TIMEOUT";
-            case DioErrorType.SEND_TIMEOUT:
+          break;
+        //        return "CONNECT TIMEOUT";
+        case DioErrorType.SEND_TIMEOUT:
 //              KeTaoFeaturedCommonUtils.showToast("网络异常，数据发送超时！");
-              break;
-      //        return 'Send Time Out';
-            case DioErrorType.RESPONSE:
+          break;
+        //        return 'Send Time Out';
+        case DioErrorType.RESPONSE:
 //              KeTaoFeaturedCommonUtils.showToast("服务器异常，请稍后再试！");
-              return "Server Incorrect Status";
-            case DioErrorType.RECEIVE_TIMEOUT:
-      //        return "Receive Time Out";
+          return "Server Incorrect Status";
+        case DioErrorType.RECEIVE_TIMEOUT:
+          //        return "Receive Time Out";
 //              KeTaoFeaturedCommonUtils.showToast("网络异常，数据接收超时！");
-              break;
-            case DioErrorType.DEFAULT:
-              String msg = 'UnKnown';
-      //        Log.v("Handle Error DEFAULT", dioError.error);
-              if (dioError.error != null) {
-                if (dioError.error is SocketException) {
-                  msg = "网络连接异常";
-                  KeTaoFeaturedCommonUtils.showToast("网络连接异常！");
-                } else {
-                  msg = dioError.message;
-                }
-              }
-              break;
+          break;
+        case DioErrorType.DEFAULT:
+          String msg = 'UnKnown';
+          //        Log.v("Handle Error DEFAULT", dioError.error);
+          if (dioError.error != null) {
+            if (dioError.error is SocketException) {
+              msg = "网络连接异常";
+              if (_lastQuitTime == null ||
+                  DateTime.now().difference(_lastQuitTime).inSeconds > 5) {
+                /*Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
+                KeTaoFeaturedCommonUtils.showToast("网络连接异常！");
+                _lastQuitTime = DateTime.now();
+                return false;
+              } else {}
+            } else {
+              msg = dioError.message;
+            }
           }
+          break;
+      }
     } catch (e) {
       print(e);
     }
 //    return "UnKnown";
   }
 }
-

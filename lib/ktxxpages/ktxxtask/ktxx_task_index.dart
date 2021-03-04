@@ -244,6 +244,38 @@ class _KeTaoFeaturedTaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
         }
       });
     });
+    bus.on("changeBottomNavigatorBarWithCategoryId", (cid) {
+      if (mounted) {
+        setState(() {
+          /*if (index == 1) {
+                      if (!GlobalConfig.isLogin()) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginPage();
+                        }));
+                      } else {
+                        _navigationViews[_currentIndex].controller.reverse();
+                        _currentIndex = index;
+                        _navigationViews[_currentIndex].controller.forward();
+                        _currentPage = _pageList[_currentIndex];
+                      }
+                    } else {
+                      _navigationViews[_currentIndex].controller.reverse();
+                      _currentIndex = index;
+                      _navigationViews[_currentIndex].controller.forward();
+                      _currentPage = _pageList[_currentIndex];
+                    }*/
+          {
+            _navigationViews[_currentIndex].controller.reverse();
+            _currentIndex = 1;
+            _navigationViews[_currentIndex].controller.forward();
+            _currentPage = _pageList[_currentIndex];
+            _pageController.jumpToPage(_currentIndex);
+            bus.emit("changeSelCategory", cid);
+          }
+        });
+      }
+    });
   }
 
   DateTime _lastQuitTime;

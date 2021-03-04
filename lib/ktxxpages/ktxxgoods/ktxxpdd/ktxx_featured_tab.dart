@@ -120,6 +120,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
           if (page == 1) {
             //下拉刷新
             pddGoodsList = result2.data.xList;
+            _showBottomLine=false;
           } else {
             //加载更多
             if (result2 == null ||
@@ -130,6 +131,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
             } else {
               pddGoodsList += result2.data.xList;
               _refreshController.finishLoad(noMore: true);
+              _showBottomLine=true;
             }
           }
           isFirstLoading = false;
@@ -215,6 +217,7 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
           buildBuyToday(),
           buildRowHot(),
           buildProductList(),
+          buildBottomLine(),
         ],
       ),
     );
@@ -1526,6 +1529,28 @@ class _KeTaoFeaturedFeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabP
               ],
             ),
           )),
+    );
+  }
+
+  var _showBottomLine = false;
+
+  Widget buildBottomLine() {
+    return SliverToBoxAdapter(
+      child: Visibility(
+        visible: _showBottomLine,
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
+            child: Text(
+              "~我是有底线的~",
+              style: TextStyle(
+                color: Color(0xff666666),
+                fontSize: ScreenUtil().setSp(32),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
