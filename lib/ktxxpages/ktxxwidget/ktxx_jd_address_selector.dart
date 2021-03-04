@@ -10,6 +10,7 @@ import 'dart:ui' as ui show window;
 
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_region_data_entity.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -56,11 +57,12 @@ class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
   @override
   createState() => _KeTaoFeaturedJDAddressDialogState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedJDAddressDialogState extends State<KeTaoFeaturedJDAddressDialog>
-    with TickerProviderStateMixin {
+class _KeTaoFeaturedJDAddressDialogState
+    extends State<KeTaoFeaturedJDAddressDialog> with TickerProviderStateMixin {
   int _index = 0;
 
   TabController _tabController;
@@ -77,6 +79,7 @@ class _KeTaoFeaturedJDAddressDialogState extends State<KeTaoFeaturedJDAddressDia
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   /// 当前列表数据
   List<RegionDataData> mList = [];
 

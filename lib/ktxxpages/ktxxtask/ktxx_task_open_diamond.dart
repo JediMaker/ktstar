@@ -15,6 +15,7 @@ import 'package:star/ktxxmodels/ktxx_vip_price_entity.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_pay_result.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -27,12 +28,15 @@ class KeTaoFeaturedTaskOpenDiamondPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedTaskOpenDiamondPageState createState() => _KeTaoFeaturedTaskOpenDiamondPageState();
+  _KeTaoFeaturedTaskOpenDiamondPageState createState() =>
+      _KeTaoFeaturedTaskOpenDiamondPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> {
+class _KeTaoFeaturedTaskOpenDiamondPageState
+    extends State<KeTaoFeaturedTaskOpenDiamondPage> {
   String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
 
   String _result = "无";
@@ -427,7 +431,8 @@ class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpen
                     GestureDetector(
                       onTap: () async {
                         if (_payway == 1) {
-                          var result = await KeTaoFeaturedHttpManage.getWechatPayInfo();
+                          var result =
+                              await KeTaoFeaturedHttpManage.getWechatPayInfo();
                           if (result.status) {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
@@ -435,7 +440,8 @@ class _KeTaoFeaturedTaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpen
                             KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
-                          var result = await KeTaoFeaturedHttpManage.getAliPayInfo();
+                          var result =
+                              await KeTaoFeaturedHttpManage.getAliPayInfo();
                           if (result.status) {
                             _payInfo = result.data.payInfo;
                             _payNo = result.data.payNo;

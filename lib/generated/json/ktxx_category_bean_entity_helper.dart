@@ -11,9 +11,9 @@ categoryBeanEntityFromJson(CategoryBeanEntity data, Map<String, dynamic> json) {
     data.errMsg = json['err_msg']?.toString();
   }
   if (json['data'] != null) {
-    data.data = new List<KeTaoFeaturedCategoryBeanData>();
+    data.data = new List<CategoryBeanData>();
     (json['data'] as List).forEach((v) {
-      data.data.add(new KeTaoFeaturedCategoryBeanData().fromJson(v));
+      data.data.add(new CategoryBeanData().fromJson(v));
     });
   }
   return data;
@@ -31,7 +31,7 @@ Map<String, dynamic> categoryBeanEntityToJson(CategoryBeanEntity entity) {
 }
 
 categoryBeanDataFromJson(
-    KeTaoFeaturedCategoryBeanData data, Map<String, dynamic> json) {
+    CategoryBeanData data, Map<String, dynamic> json) {
   if (json['category_id'] != null) {
     data.categoryId = json['category_id']?.toString();
   }
@@ -63,9 +63,9 @@ categoryBeanDataFromJson(
     data.name = json['name']?.toString();
   }
   if (json['children'] != null) {
-    data.children = new List<KeTaoFeaturedCategoryBeanData>();
+    data.children = new List<CategoryBeanData>();
     (json['children'] as List).forEach((v) {
-      data.children.add(new KeTaoFeaturedCategoryBeanData().fromJson(v));
+      data.children.add(new CategoryBeanData().fromJson(v));
     });
   }
   if (json['language_id'] != null) {
@@ -90,7 +90,7 @@ categoryBeanDataFromJson(
 }
 
 Map<String, dynamic> categoryBeanDataToJson(
-    KeTaoFeaturedCategoryBeanData entity) {
+    CategoryBeanData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['category_id'] = entity.categoryId;
   data['id'] = entity.id;

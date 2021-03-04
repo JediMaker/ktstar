@@ -524,8 +524,7 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
   ///
   /// 确认账户信息是否绑定手机号以及微信授权
   static checkUserBind({bool isTaskWall = false}) async {
-    UserInfoData userInfoData =
-        KeTaoFeaturedGlobalConfig.getUserInfo();
+    UserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await KeTaoFeaturedHttpManage.getUserInfo();
@@ -3288,8 +3287,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   /// 确认账户信息是否绑定手机号以及微信授权
   checkUserBind({bool isTaskWall = false}) async {
-    UserInfoData userInfoData =
-        KeTaoFeaturedGlobalConfig.getUserInfo();
+    UserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
     if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await KeTaoFeaturedHttpManage.getUserInfo();

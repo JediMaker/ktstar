@@ -13,7 +13,7 @@ balancePayInfoEntityFromJson(
   }
   if (json['data'] != null) {
     try {
-      data.data = new KeTaoFeaturedBalancePayInfoData().fromJson(json['data']);
+      data.data = new BalancePayInfoData().fromJson(json['data']);
     } catch (e) {}
   }
   return data;
@@ -31,7 +31,7 @@ Map<String, dynamic> balancePayInfoEntityToJson(BalancePayInfoEntity entity) {
 }
 
 balancePayInfoDataFromJson(
-    KeTaoFeaturedBalancePayInfoData data, Map<String, dynamic> json) {
+    BalancePayInfoData data, Map<String, dynamic> json) {
   if (json['pay_no'] != null) {
     data.payNo = json['pay_no']?.toString();
   }
@@ -43,7 +43,7 @@ balancePayInfoDataFromJson(
 }
 
 Map<String, dynamic> balancePayInfoDataToJson(
-    KeTaoFeaturedBalancePayInfoData entity) {
+    BalancePayInfoData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['pay_no'] = entity.payNo;
   if (entity.payInfo != null) {

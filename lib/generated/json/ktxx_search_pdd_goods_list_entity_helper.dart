@@ -2,7 +2,7 @@ import 'package:star/ktxxmodels/ktxx_search_pdd_goods_list_entity.dart';
 import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
 
 searchPddGoodsListEntityFromJson(
-    KeTaoFeaturedSearchPddGoodsListEntity data, Map<String, dynamic> json) {
+    SearchPddGoodsListEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -14,15 +14,14 @@ searchPddGoodsListEntityFromJson(
   }
   if (json['data'] != null) {
     try {
-      data.data =
-          new KeTaoFeaturedSearchPddGoodsListData().fromJson(json['data']);
+      data.data = new SearchPddGoodsListData().fromJson(json['data']);
     } catch (e) {}
   }
   return data;
 }
 
 Map<String, dynamic> searchPddGoodsListEntityToJson(
-    KeTaoFeaturedSearchPddGoodsListEntity entity) {
+    SearchPddGoodsListEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;
@@ -34,7 +33,7 @@ Map<String, dynamic> searchPddGoodsListEntityToJson(
 }
 
 searchPddGoodsListDataFromJson(
-    KeTaoFeaturedSearchPddGoodsListData data, Map<String, dynamic> json) {
+    SearchPddGoodsListData data, Map<String, dynamic> json) {
   if (json['total'] != null) {
     data.total = json['total']?.toInt();
   }
@@ -54,7 +53,7 @@ searchPddGoodsListDataFromJson(
 }
 
 Map<String, dynamic> searchPddGoodsListDataToJson(
-    KeTaoFeaturedSearchPddGoodsListData entity) {
+    SearchPddGoodsListData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['total'] = entity.total;
   data['page'] = entity.page;
@@ -66,7 +65,7 @@ Map<String, dynamic> searchPddGoodsListDataToJson(
 }
 
 searchPddGoodsListDataListFromJson(
-    KeTaoFeaturedSearchPddGoodsListDataList data, Map<String, dynamic> json) {
+    SearchPddGoodsListDataList data, Map<String, dynamic> json) {
   if (json['g_id'] != null) {
     data.gId = json['g_id']?.toInt();
   }
@@ -102,15 +101,15 @@ searchPddGoodsListDataListFromJson(
   }
   if (json['coupons'] != null) {
     try {
-      data.coupons = new KeTaoFeaturedSearchPddGoodsListDataListCoupons()
-          .fromJson(json['coupons']);
+      data.coupons =
+          new SearchPddGoodsListDataListCoupons().fromJson(json['coupons']);
     } catch (e) {}
   }
   return data;
 }
 
 Map<String, dynamic> searchPddGoodsListDataListToJson(
-    KeTaoFeaturedSearchPddGoodsListDataList entity) {
+    SearchPddGoodsListDataList entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['g_id'] = entity.gId;
   data['g_title'] = entity.gTitle;
@@ -130,8 +129,7 @@ Map<String, dynamic> searchPddGoodsListDataListToJson(
 }
 
 searchPddGoodsListDataListCouponsFromJson(
-    KeTaoFeaturedSearchPddGoodsListDataListCoupons data,
-    Map<String, dynamic> json) {
+    SearchPddGoodsListDataListCoupons data, Map<String, dynamic> json) {
   if (json['coupon_discount'] != null) {
     data.couponDiscount = json['coupon_discount']?.toInt();
   }
@@ -145,7 +143,7 @@ searchPddGoodsListDataListCouponsFromJson(
 }
 
 Map<String, dynamic> searchPddGoodsListDataListCouponsToJson(
-    KeTaoFeaturedSearchPddGoodsListDataListCoupons entity) {
+    SearchPddGoodsListDataListCoupons entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['coupon_discount'] = entity.couponDiscount;
   data['coupon_remain_quantity'] = entity.couponRemainQuantity;

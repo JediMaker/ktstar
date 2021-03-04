@@ -10,8 +10,7 @@ class PhoneChargeListEntity with JsonConvert<PhoneChargeListEntity> {
   PhoneChargeListData data;
 }
 
-class PhoneChargeListData
-    with JsonConvert<PhoneChargeListData> {
+class PhoneChargeListData with JsonConvert<PhoneChargeListData> {
   @JSONField(name: "list")
   List<PhoneChargeListDataList> xList;
   int page;
@@ -20,8 +19,7 @@ class PhoneChargeListData
   String phone;
 }
 
-class PhoneChargeListDataList
-    with JsonConvert<PhoneChargeListDataList> {
+class PhoneChargeListDataList with JsonConvert<PhoneChargeListDataList> {
   String id;
   @JSONField(name: "face_money")
   String faceMoney;

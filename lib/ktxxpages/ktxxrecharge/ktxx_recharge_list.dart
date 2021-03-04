@@ -564,8 +564,7 @@ class _KeTaoFeaturedRechargeListPageState
         runSpacing: ScreenUtil().setWidth(20),
         children: _dataList != null
             ? _dataList.asMap().keys.map((valueIndex) {
-                RechargeDataRechageList dataItem =
-                    _dataList[valueIndex];
+                RechargeDataRechageList dataItem = _dataList[valueIndex];
 
                 try {
                   if (_selectIndex == -1 &&

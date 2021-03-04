@@ -2,7 +2,7 @@ import 'package:star/ktxxmodels/ktxx_shareholder_income_list_entity.dart';
 import 'package:star/ktxxmodels/ktxx_income_list_entity.dart';
 
 shareholderIncomeListEntityFromJson(
-    KeTaoFeaturedShareholderIncomeListEntity data, Map<String, dynamic> json) {
+    ShareholderIncomeListEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -22,7 +22,7 @@ shareholderIncomeListEntityFromJson(
 }
 
 Map<String, dynamic> shareholderIncomeListEntityToJson(
-    KeTaoFeaturedShareholderIncomeListEntity entity) {
+    ShareholderIncomeListEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;

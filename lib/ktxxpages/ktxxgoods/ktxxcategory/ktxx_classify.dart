@@ -77,11 +77,11 @@ class KeTaoFeaturedClassifyListPage extends StatefulWidget {
 // BSD-style license that can be found in the LICENSE file.
 class _KeTaoFeaturedClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
     with AutomaticKeepAliveClientMixin {
-  List<KeTaoFeaturedCategoryBeanData> leftListData;
-  List<KeTaoFeaturedCategoryBeanData> rightListData;
+  List<CategoryBeanData> leftListData;
+  List<CategoryBeanData> rightListData;
 
   Future _initData(id) async {
-    List<KeTaoFeaturedCategoryBeanData> categoryList = await KeTaoFeaturedHttpManage.getCategoryList(id);
+    List<CategoryBeanData> categoryList = await KeTaoFeaturedHttpManage.getCategoryList(id);
     if (mounted) {
       setState(() {
         try {
@@ -141,7 +141,7 @@ class _KeTaoFeaturedClassifyListPageState extends State<KeTaoFeaturedClassifyLis
             width: ScreenUtil().setWidth(270),
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                KeTaoFeaturedCategoryBeanData category;
+                CategoryBeanData category;
                 if (leftListData != null) {
                   category = leftListData[index];
                 }

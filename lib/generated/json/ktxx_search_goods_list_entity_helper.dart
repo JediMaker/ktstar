@@ -2,7 +2,7 @@ import 'package:star/ktxxmodels/ktxx_search_goods_list_entity.dart';
 import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
 
 searchGoodsListEntityFromJson(
-    KeTaoFeaturedSearchGoodsListEntity data, Map<String, dynamic> json) {
+    SearchGoodsListEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
     data.status = json['status'];
   }
@@ -13,13 +13,12 @@ searchGoodsListEntityFromJson(
     data.errMsg = json['err_msg'];
   }
   if (json['data'] != null) {
-    data.data = new KeTaoFeaturedSearchGoodsListData().fromJson(json['data']);
+    data.data = new SearchGoodsListData().fromJson(json['data']);
   }
   return data;
 }
 
-Map<String, dynamic> searchGoodsListEntityToJson(
-    KeTaoFeaturedSearchGoodsListEntity entity) {
+Map<String, dynamic> searchGoodsListEntityToJson(SearchGoodsListEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['status'] = entity.status;
   data['err_code'] = entity.errCode;
@@ -31,7 +30,7 @@ Map<String, dynamic> searchGoodsListEntityToJson(
 }
 
 searchGoodsListDataFromJson(
-    KeTaoFeaturedSearchGoodsListData data, Map<String, dynamic> json) {
+    SearchGoodsListData data, Map<String, dynamic> json) {
   if (json['total'] != null) {
     data.total = json['total']?.toString();
   }
@@ -47,8 +46,7 @@ searchGoodsListDataFromJson(
   return data;
 }
 
-Map<String, dynamic> searchGoodsListDataToJson(
-    KeTaoFeaturedSearchGoodsListData entity) {
+Map<String, dynamic> searchGoodsListDataToJson(SearchGoodsListData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['total'] = entity.total;
   data['page'] = entity.page;
@@ -59,7 +57,7 @@ Map<String, dynamic> searchGoodsListDataToJson(
 }
 
 searchGoodsListDataListFromJson(
-    KeTaoFeaturedSearchGoodsListDataList data, Map<String, dynamic> json) {
+    SearchGoodsListDataList data, Map<String, dynamic> json) {
   if (json['id'] != null) {
     data.id = json['id']?.toString();
   }
@@ -82,7 +80,7 @@ searchGoodsListDataListFromJson(
 }
 
 Map<String, dynamic> searchGoodsListDataListToJson(
-    KeTaoFeaturedSearchGoodsListDataList entity) {
+    SearchGoodsListDataList entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['id'] = entity.id;
   data['goods_name'] = entity.goodsName;

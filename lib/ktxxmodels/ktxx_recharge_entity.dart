@@ -2,8 +2,7 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_recharge_extra_entity.dart';
 
-class RechargeEntity
-    with JsonConvert<RechargeEntity> {
+class RechargeEntity with JsonConvert<RechargeEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
@@ -22,8 +21,7 @@ class RechargeData with JsonConvert<RechargeData> {
   RechargeExtraRatio ratio;
 }
 
-class RechargeDataRechageList
-    with JsonConvert<RechargeDataRechageList> {
+class RechargeDataRechageList with JsonConvert<RechargeDataRechageList> {
   int id;
   @JSONField(name: "face_money")
   String faceMoney;
@@ -39,8 +37,7 @@ class RechargeDataRechageList
   String coinDesc;
 }
 
-class RechargeDatacouponList
-    with JsonConvert<RechargeDatacouponList> {
+class RechargeDatacouponList with JsonConvert<RechargeDatacouponList> {
   String money;
   String condition;
 }

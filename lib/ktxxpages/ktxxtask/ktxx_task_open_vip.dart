@@ -19,6 +19,7 @@ import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 import 'package:star/ktxxutils/ktxx_utils.dart';
 import '../../ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -32,12 +33,15 @@ class KeTaoFeaturedTaskOpenVipPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedTaskOpenVipPageState createState() => _KeTaoFeaturedTaskOpenVipPageState();
+  _KeTaoFeaturedTaskOpenVipPageState createState() =>
+      _KeTaoFeaturedTaskOpenVipPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
+class _KeTaoFeaturedTaskOpenVipPageState
+    extends State<KeTaoFeaturedTaskOpenVipPage> {
   var _vipIncome = '10';
   var _vipPrice = '199';
   var _diamondVipIncome = '20';
@@ -320,7 +324,8 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
                         KeTaoFeaturedNavigatorUtils.navigatorRouter(
                             context,
                             KeTaoFeaturedWebViewPage(
-                              initialUrl: KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
+                              initialUrl:
+                                  KeTaoFeaturedAPi.AGREEMENT_SERVICES_URL,
                               showActions: false,
                               title: "服务协议",
                             ));
@@ -1149,8 +1154,10 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
                           term = _vipInfo.moneyList[_selectIndex].type;
                         }
                         if (_payway == 1) {
-                          var result = await KeTaoFeaturedHttpManage.getWechatPayInfo(
-                              pay_type: _isDiamondVip ? "3" : "1", term: term);
+                          var result =
+                              await KeTaoFeaturedHttpManage.getWechatPayInfo(
+                                  pay_type: _isDiamondVip ? "3" : "1",
+                                  term: term);
                           if (result.status) {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
@@ -1158,8 +1165,10 @@ class _KeTaoFeaturedTaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipP
                             KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
-                          var result = await KeTaoFeaturedHttpManage.getAliPayInfo(
-                              pay_type: _isDiamondVip ? "3" : "1", term: term);
+                          var result =
+                              await KeTaoFeaturedHttpManage.getAliPayInfo(
+                                  pay_type: _isDiamondVip ? "3" : "1",
+                                  term: term);
                           if (result.status) {
                             _payInfo = result.data.payInfo;
                             _payNo = result.data.payNo;

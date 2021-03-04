@@ -84,8 +84,8 @@ class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
 class _KeTaoFeaturedNewClassifyListPageState
     extends State<KeTaoFeaturedNewClassifyListPage>
     with AutomaticKeepAliveClientMixin {
-  List<KeTaoFeaturedCategoryBeanData> leftListData;
-  List<KeTaoFeaturedCategoryBeanData> rightListData;
+  List<CategoryBeanData> leftListData;
+  List<CategoryBeanData> rightListData;
   ScrollController _leftScrollController;
   ScrollController _rightScrollController;
   final dataKey = new GlobalKey();
@@ -95,7 +95,7 @@ class _KeTaoFeaturedNewClassifyListPageState
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   Future _initData(id) async {
-    List<KeTaoFeaturedCategoryBeanData> categoryList =
+    List<CategoryBeanData> categoryList =
         await KeTaoFeaturedHttpManage.getCategoryList(id);
     if (mounted) {
       setState(() {
@@ -306,7 +306,7 @@ class _KeTaoFeaturedNewClassifyListPageState
             width: ScreenUtil().setWidth(270),
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                KeTaoFeaturedCategoryBeanData category;
+                CategoryBeanData category;
                 if (leftListData != null) {
                   category = leftListData[index];
                 }
@@ -422,7 +422,7 @@ class _KeTaoFeaturedNewClassifyListPageState
       scrollDirection: Axis.vertical,
       controller: _rightScrollController,
       itemBuilder: (BuildContext context, int index) {
-        KeTaoFeaturedCategoryBeanData category;
+        CategoryBeanData category;
         if (leftListData != null) {
           category = leftListData[index];
           rightListData = leftListData[index].children;
@@ -466,7 +466,7 @@ class _KeTaoFeaturedNewClassifyListPageState
                     mainAxisSpacing: 8,
                     childAspectRatio: 3 / 4),
                 itemBuilder: (BuildContext context, int index) {
-                  KeTaoFeaturedCategoryBeanData category;
+                  CategoryBeanData category;
 
                   if (rightListData != null) {
                     category = rightListData[index];
@@ -568,7 +568,7 @@ class _KeTaoFeaturedNewClassifyListPageState
               childAspectRatio: 3 / 4),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              KeTaoFeaturedCategoryBeanData category;
+              CategoryBeanData category;
               if (rightListData != null) {
                 category = rightListData[index];
               }

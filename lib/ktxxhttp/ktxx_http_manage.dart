@@ -206,8 +206,8 @@ class KeTaoFeaturedHttpManage {
   ///
   ///
   /// 发送修改支付密码验证码
-  static Future<ResultBeanEntity>
-      sendPayPasswordModifyVerificationCode(String phone, String type) async {
+  static Future<ResultBeanEntity> sendPayPasswordModifyVerificationCode(
+      String phone, String type) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -395,8 +395,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 快速登陆密码修改
   ///
-  static Future<ResultBeanEntity> changePassword(
-      String password) async {
+  static Future<ResultBeanEntity> changePassword(String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$password";
     paramsMap["uid"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
@@ -480,8 +479,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 产生二维码
   ///
-  static Future<ResultBeanEntity> generateQRCode(
-      String password) async {
+  static Future<ResultBeanEntity> generateQRCode(String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["id"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -612,8 +610,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 绑定手机号码
   ///
-  static Future<ResultBeanEntity> bindPhone(
-      {tel, code = 12345}) async {
+  static Future<ResultBeanEntity> bindPhone({tel, code = 12345}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
@@ -638,8 +635,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 修改手机号码
   ///
-  static Future<ResultBeanEntity> modifyPhone(
-      {tel, code = 12345}) async {
+  static Future<ResultBeanEntity> modifyPhone({tel, code = 12345}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
@@ -763,8 +759,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务重新提交
   ///
-  static Future<ResultBeanEntity> taskReSubmit(comId, imgId,
-      {remark}) async {
+  static Future<ResultBeanEntity> taskReSubmit(comId, imgId, {remark}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["com_id"] = "$comId";
     paramsMap["img_id"] = "$imgId";
@@ -789,8 +784,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务提交信息
   ///
-  static Future<TaskSubmitInfoEntity> getTaskSubmitInfo(
-      taskId) async {
+  static Future<TaskSubmitInfoEntity> getTaskSubmitInfo(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -839,8 +833,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务重新提交信息
   ///
-  static Future<TaskSubmitInfoEntity> getTaskReSubmitInfo(
-      taskId, comId) async {
+  static Future<TaskSubmitInfoEntity> getTaskReSubmitInfo(taskId, comId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["com_id"] = "$comId";
@@ -866,8 +859,8 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务重新提交信息--其他任务类型
   ///
-  static Future<TaskOtherSubmitInfoEntity>
-      getTaskOtherReSubmitInfo(taskId, comId) async {
+  static Future<TaskOtherSubmitInfoEntity> getTaskOtherReSubmitInfo(
+      taskId, comId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["com_id"] = "$comId";
@@ -1004,8 +997,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务提交列表
   ///
-  static Future<TaskRecordListEntity> getTaskRecordList(
-      page, pageSize) async {
+  static Future<TaskRecordListEntity> getTaskRecordList(page, pageSize) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
@@ -1158,8 +1150,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务详情--非朋友圈任务
   ///
-  static Future<TaskDetailOtherEntity> getTaskDetailOther(
-      taskId) async {
+  static Future<TaskDetailOtherEntity> getTaskDetailOther(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1182,8 +1173,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取任务详情--微信链接分享
   ///
-  static Future<TaskShareEntity> getTaskDetailWechat(
-      taskId) async {
+  static Future<TaskShareEntity> getTaskDetailWechat(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1229,8 +1219,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 任务领取--非朋友圈任务
   ///
-  static Future<TaskDetailOtherEntity> taskReceiveOther(
-      taskId) async {
+  static Future<TaskDetailOtherEntity> taskReceiveOther(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1349,8 +1338,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getWechatPayInfo(
-      {pay_type, term}) async {
+  static Future<WechatPayinfoEntity> getWechatPayInfo({pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["pay_type"] = "$pay_type";
@@ -1408,8 +1396,8 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取微股东微信支付信息
   ///
-  static Future<WechatPayinfoEntity>
-      getMicroShareholdersWechatPayInfo({pay_type, term}) async {
+  static Future<WechatPayinfoEntity> getMicroShareholdersWechatPayInfo(
+      {pay_type, term}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["pay_type"] = "$pay_type";
@@ -1528,8 +1516,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品购买微信支付信息
   ///
-  static Future<WechatPayinfoEntity> getGoodsPayWeChatPayInfo(
-      {orderId}) async {
+  static Future<WechatPayinfoEntity> getGoodsPayWeChatPayInfo({orderId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["order_id"] = "$orderId";
@@ -1843,8 +1830,7 @@ class KeTaoFeaturedHttpManage {
   }
 
   ///删除收货地址
-  static Future<ResultBeanEntity> deleteShippingAddress(
-      addressId) async {
+  static Future<ResultBeanEntity> deleteShippingAddress(addressId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["addr_id"] = "$addressId";
     paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
@@ -1923,8 +1909,7 @@ class KeTaoFeaturedHttpManage {
   }
 
   ///提交订单
-  static Future<ResultBeanEntity> orderSubmit(
-      orderId, needDeduct) async {
+  static Future<ResultBeanEntity> orderSubmit(orderId, needDeduct) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["need_deduct"] = "$needDeduct";
@@ -1979,8 +1964,7 @@ class KeTaoFeaturedHttpManage {
   }
 
   ///创建订单
-  static Future<ResultBeanEntity> createOrder(
-      String goodsId, goodsNum,
+  static Future<ResultBeanEntity> createOrder(String goodsId, goodsNum,
       {specId}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$goodsId";
@@ -2077,8 +2061,7 @@ class KeTaoFeaturedHttpManage {
 
   ///获取提现用户信息
   ///
-  static Future<WithdrawalUserInfoEntity>
-      getWithdrawalUserInfo() async {
+  static Future<WithdrawalUserInfoEntity> getWithdrawalUserInfo() async {
     var response = await KeTaoFeaturedHttpManage.dio.get(
       KeTaoFeaturedAPi.USER_TX_USER,
     );
@@ -2100,8 +2083,7 @@ class KeTaoFeaturedHttpManage {
     return entity;
   }
 
-  static Future<ResultBeanEntity> setPayPassword(
-      String currentPassword) async {
+  static Future<ResultBeanEntity> setPayPassword(String currentPassword) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$currentPassword";
     paramsMap["re_password"] = "$currentPassword";
@@ -2140,8 +2122,7 @@ class KeTaoFeaturedHttpManage {
 
 //
   ///获取商品列表
-  static Future<ResultBeanEntity> getGoodsList(
-      {cId = '', type}) async {
+  static Future<ResultBeanEntity> getGoodsList({cId = '', type}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
@@ -2160,7 +2141,7 @@ class KeTaoFeaturedHttpManage {
   }
 
   ///  商品分类列表
-  static Future<List<KeTaoFeaturedCategoryBeanData>> getCategoryList(
+  static Future<List<CategoryBeanData>> getCategoryList(
       category_id) async {
     var formData = FormData();
     formData.fields..add(MapEntry("parent_category_id", "$category_id "));
@@ -2178,8 +2159,7 @@ class KeTaoFeaturedHttpManage {
 
   //
   ///申请成为微股东
-  static Future<ResultBeanEntity>
-      applyToBecomeAMicroShareholder() async {
+  static Future<ResultBeanEntity> applyToBecomeAMicroShareholder() async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "";
@@ -2258,7 +2238,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品搜索自营商品列表
   ///
-  static Future<KeTaoFeaturedSearchGoodsListEntity> getSearchedGoodsList(
+  static Future<SearchGoodsListEntity> getSearchedGoodsList(
     page, {
     pageSize = 20,
     keyword,
@@ -2277,7 +2257,7 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = KeTaoFeaturedSearchGoodsListEntity();
+    var entity = SearchGoodsListEntity();
     searchGoodsListEntityFromJson(entity, extractData);
     return entity;
   }
@@ -2292,7 +2272,7 @@ class KeTaoFeaturedHttpManage {
   ///
   /// 获取商品搜索拼多多商品列表
   ///
-  static Future<KeTaoFeaturedSearchPddGoodsListEntity> getSearchedPddGoodsList(
+  static Future<SearchPddGoodsListEntity> getSearchedPddGoodsList(
     page, {
     pageSize = 20,
     keyword,
@@ -2311,7 +2291,7 @@ class KeTaoFeaturedHttpManage {
       queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
-    var entity = KeTaoFeaturedSearchPddGoodsListEntity();
+    var entity = SearchPddGoodsListEntity();
     searchPddGoodsListEntityFromJson(entity, extractData);
     return entity;
   }

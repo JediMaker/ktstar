@@ -7,11 +7,11 @@ class CategoryBeanEntity with JsonConvert<CategoryBeanEntity> {
   int errCode;
   @JSONField(name: "err_msg")
   String errMsg;
-  List<KeTaoFeaturedCategoryBeanData> data;
+  List<CategoryBeanData> data;
 }
 
-class KeTaoFeaturedCategoryBeanData
-    with JsonConvert<KeTaoFeaturedCategoryBeanData> {
+class CategoryBeanData
+    with JsonConvert<CategoryBeanData> {
   @JSONField(name: "category_id")
   String categoryId;
   String id;
@@ -27,7 +27,7 @@ class KeTaoFeaturedCategoryBeanData
   @JSONField(name: "img_url")
   String imgUrl;
   String name;
-  List<KeTaoFeaturedCategoryBeanData> children;
+  List<CategoryBeanData> children;
   @JSONField(name: "language_id")
   String languageId;
   String description;

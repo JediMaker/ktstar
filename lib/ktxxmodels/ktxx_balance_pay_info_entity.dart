@@ -7,11 +7,11 @@ class BalancePayInfoEntity with JsonConvert<BalancePayInfoEntity> {
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedBalancePayInfoData data;
+  BalancePayInfoData data;
 }
 
-class KeTaoFeaturedBalancePayInfoData
-    with JsonConvert<KeTaoFeaturedBalancePayInfoData> {
+class BalancePayInfoData
+    with JsonConvert<BalancePayInfoData> {
   @JSONField(name: "pay_no")
   String payNo;
   @JSONField(name: "pay_info")

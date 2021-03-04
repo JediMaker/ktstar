@@ -5,6 +5,7 @@ import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import '../../ktxx_global_config.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_mine.dart';
 import 'package:star/ktxxpages/ktxxshareholders/ktxx_micro_mine.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -68,8 +69,10 @@ class KeTaoFeaturedMinePagePage extends StatefulWidget {
 //  );
 
   @override
-  _KeTaoFeaturedMinePagePageState createState() => _KeTaoFeaturedMinePagePageState();
+  _KeTaoFeaturedMinePagePageState createState() =>
+      _KeTaoFeaturedMinePagePageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -81,6 +84,7 @@ class _KeTaoFeaturedMinePagePageState extends State<KeTaoFeaturedMinePagePage> {
   int SVG_ANGLETYPE_RAD = 3;
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
   ///  微股东等级
   ///
   ///  1 见习股东
@@ -135,8 +139,7 @@ class _KeTaoFeaturedMinePagePageState extends State<KeTaoFeaturedMinePagePage> {
               if (_shareholderType == '2') {
                 rootView = KeTaoFeaturedTaskMinePage();
               } else {
-                rootView = KeTaoFeaturedMicroMinePage(
-                );
+                rootView = KeTaoFeaturedMicroMinePage();
               }
             });
           }
@@ -162,7 +165,7 @@ class _KeTaoFeaturedMinePagePageState extends State<KeTaoFeaturedMinePagePage> {
     var title = '个人中心';
     rootView = KeTaoFeaturedMicroMinePage(
 //      title: title,
-    );
+        );
     return rootView;
   }
 }

@@ -18,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 
 import '../../ktxx_global_config.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -41,7 +42,8 @@ class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
 //color: Colors.blue[700],
 //borderRadius: BorderRadius.circular(10.0)),
 //),
-  KeTaoFeaturedTaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
+  KeTaoFeaturedTaskDetailOtherPage(
+      {Key key, @required this.taskId, this.pageType = 0})
       : super(key: key);
   final String title = "任务详情";
   int pageType;
@@ -51,12 +53,15 @@ class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedTaskDetailOtherPageState createState() => _KeTaoFeaturedTaskDetailOtherPageState();
+  _KeTaoFeaturedTaskDetailOtherPageState createState() =>
+      _KeTaoFeaturedTaskDetailOtherPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> {
+class _KeTaoFeaturedTaskDetailOtherPageState
+    extends State<KeTaoFeaturedTaskDetailOtherPage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";
   int page = 1;
@@ -69,7 +74,8 @@ class _KeTaoFeaturedTaskDetailOtherPageState extends State<KeTaoFeaturedTaskDeta
     try {
       EasyLoading.show();
     } catch (e) {}
-    var result = await KeTaoFeaturedHttpManage.getTaskDetailOther(widget.taskId);
+    var result =
+        await KeTaoFeaturedHttpManage.getTaskDetailOther(widget.taskId);
     if (mounted) {
       if (result.status) {
         setState(() {

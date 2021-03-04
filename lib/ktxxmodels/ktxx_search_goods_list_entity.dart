@@ -2,26 +2,23 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_home_goods_list_entity.dart';
 
-class KeTaoFeaturedSearchGoodsListEntity
-    with JsonConvert<KeTaoFeaturedSearchGoodsListEntity> {
+class SearchGoodsListEntity with JsonConvert<SearchGoodsListEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedSearchGoodsListData data;
+  SearchGoodsListData data;
 }
 
-class KeTaoFeaturedSearchGoodsListData
-    with JsonConvert<KeTaoFeaturedSearchGoodsListData> {
+class SearchGoodsListData with JsonConvert<SearchGoodsListData> {
   String total;
   int page;
   @JSONField(name: "list")
   List<HomeGoodsListGoodsList> goodsList;
 }
 
-class KeTaoFeaturedSearchGoodsListDataList
-    with JsonConvert<KeTaoFeaturedSearchGoodsListDataList> {
+class SearchGoodsListDataList with JsonConvert<SearchGoodsListDataList> {
   String id;
   @JSONField(name: "goods_name")
   String goodsName;

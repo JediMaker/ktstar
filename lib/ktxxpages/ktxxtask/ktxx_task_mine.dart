@@ -36,6 +36,7 @@ import '../../ktxx_global_config.dart';
 import 'ktxx_fans_list.dart';
 import 'ktxx_income_list.dart';
 import 'ktxx_invitation_poster.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -49,8 +50,10 @@ class KeTaoFeaturedTaskMinePage extends StatefulWidget {
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   @override
-  _KeTaoFeaturedTaskMinePageState createState() => _KeTaoFeaturedTaskMinePageState();
+  _KeTaoFeaturedTaskMinePageState createState() =>
+      _KeTaoFeaturedTaskMinePageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -133,7 +136,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
           _dialogWeChatNo = result.data.wxNo;
           _pwdStatus = result.data.pwdStatus;
           _payPwdStatus = result.data.payPwdStatus;
-          isWeChatNoBinded = !KeTaoFeaturedCommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
+          isWeChatNoBinded =
+              !KeTaoFeaturedCommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
           isItAMicroShareholder = result.data.isPartner == "1" ? 1 : 0;
           switch (result.data.type) {
             case "0":
@@ -315,24 +319,24 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                   enableInfiniteRefresh,
                   success,
                   noMore) {
-                return Stack(
-                  children: <Widget>[
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        width: 30.0,
-                        height: 30.0,
-                        child: SpinKitCircle(
-                          color: KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor,
-                          size: 30.0,
-                        ),
-                      ),
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    child: SpinKitCircle(
+                      color: KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor,
+                      size: 30.0,
                     ),
-                  ],
-                );
-              }),
+                  ),
+                ),
+              ],
+            );
+          }),
           slivers: <Widget>[
             buildContent(),
           ],
@@ -467,9 +471,11 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                               var result = await KeTaoFeaturedHttpManage
                                   .applyToBecomeAMicroShareholder();
                               if (result.status) {
-                                KeTaoFeaturedCommonUtils.showToast("微股东申请开通成功！");
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    "微股东申请开通成功！");
                               } else {
-                                KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    "${result.errMsg}");
                               }
                               Navigator.pop(context);
                             },
@@ -536,7 +542,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
               ],
             ),
             onTap: () {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedAddressListPage(type: 1));
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedAddressListPage(type: 1));
             },
             trailing: Wrap(
               alignment: WrapAlignment.center,
@@ -867,7 +874,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                     ],
                   ),
                   onTap: () {
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedAboutPage());
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        context, KeTaoFeaturedAboutPage());
                   },
                   trailing: Wrap(
                     alignment: WrapAlignment.center,
@@ -936,9 +944,10 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
             ),
           ),
           Visibility(
-            visible: KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate') == null
-                ? false
-                : KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate'),
+            visible:
+                KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate') == null
+                    ? false
+                    : KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate'),
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 16),
               child: Divider(
@@ -948,12 +957,14 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
             ),
           ),
           Visibility(
-            visible:
-                KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
-                        (KeTaoFeaturedGlobalConfig.prefs.getBool('isHuaweiUnderReview') &&
-                            Platform.isIOS)
-                    ? false
-                    : true,
+            visible: KeTaoFeaturedGlobalConfig.prefs
+                            .getBool('isHuaweiUnderReview') ==
+                        null ||
+                    (KeTaoFeaturedGlobalConfig.prefs
+                            .getBool('isHuaweiUnderReview') &&
+                        Platform.isIOS)
+                ? false
+                : true,
             child: ListTile(
               title: Row(
                 children: <Widget>[
@@ -971,12 +982,15 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                 ],
               ),
               onTap: () {
-                KeTaoFeaturedUtils.checkAppVersion(context, checkDerictly: true);
+                KeTaoFeaturedUtils.checkAppVersion(context,
+                    checkDerictly: true);
               },
               trailing: Visibility(
-                visible: KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate') == null
-                    ? false
-                    : KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate'),
+                visible:
+                    KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate') ==
+                            null
+                        ? false
+                        : KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate'),
                 child: Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -1037,7 +1051,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                         CupertinoDialogAction(
                           child: Text(
                             '退出',
-                            style: TextStyle(color: KeTaoFeaturedGlobalConfig.checkedColor),
+                            style: TextStyle(
+                                color: KeTaoFeaturedGlobalConfig.checkedColor),
                           ),
                           onPressed: () {
                             KeTaoFeaturedGlobalConfig.prefs.remove("hasLogin");
@@ -1263,7 +1278,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
             fit: FlexFit.tight,
             child: new InkWell(
                 onTap: () {
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
+                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      context, KeTaoFeaturedTaskMessagePage());
                 },
                 child: new Container(
                   child: new Column(
@@ -1343,7 +1359,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                         textColor: Colors.white,
                         gravity: ToastGravity.BOTTOM);
                     return;*/
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedOrderListPage());
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        context, KeTaoFeaturedOrderListPage());
                   },
                   child: new Container(
                     child: new Column(
@@ -1593,7 +1610,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                       child: GestureDetector(
                         onTap: () async {
                           try {
-                            if (KeTaoFeaturedCommonUtils.isEmpty(_availableCashAmount) ||
+                            if (KeTaoFeaturedCommonUtils.isEmpty(
+                                    _availableCashAmount) ||
                                 double.parse(_availableCashAmount.toString()) <=
                                     0) {
                               KeTaoFeaturedCommonUtils.showToast("暂无可提现金额");
@@ -1813,7 +1831,8 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
               KeTaoFeaturedCommonUtils.showIosPayDialog();
               return;
             }
-            await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskOpenVipPage());
+            await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                context, KeTaoFeaturedTaskOpenVipPage());
             /* NavigatorUtils.navigatorRouterAndRemoveUntil(
                 context, RechargeResultPage());*/
             /*var result = await showDialog(
@@ -2119,11 +2138,14 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
                         onTap: () async {
                           if (showPhone) {
                             if ( //CommonUtils.isEmpty(dialogNickName) ||
-                                KeTaoFeaturedCommonUtils.isEmpty(_dialogPhoneNumber)) {
-                              KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
+                                KeTaoFeaturedCommonUtils.isEmpty(
+                                    _dialogPhoneNumber)) {
+                              KeTaoFeaturedCommonUtils.showToast(
+                                  "请检查填写的信息是否完整！");
                               return;
                             }
-                            if (!KeTaoFeaturedCommonUtils.isPhoneLegal(_dialogPhoneNumber)) {
+                            if (!KeTaoFeaturedCommonUtils.isPhoneLegal(
+                                _dialogPhoneNumber)) {
                               KeTaoFeaturedCommonUtils.showSimplePromptDialog(
                                   context, "温馨提示", "请输入正确的手机号");
                               return;
@@ -2131,71 +2153,83 @@ class _KeTaoFeaturedTaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
 
                             if (bindPhone) {
                               //绑定手机号
-                              var result = await KeTaoFeaturedHttpManage.bindPhone(
-                                  tel: _dialogPhoneNumber.toString());
+                              var result =
+                                  await KeTaoFeaturedHttpManage.bindPhone(
+                                      tel: _dialogPhoneNumber.toString());
                               if (result.status) {
                                 String isMerge =
                                     result.data["is_merge"].toString();
                                 switch (isMerge) {
                                   case "1":
-                                    KeTaoFeaturedCommonUtils.showToast("手机号绑定成功");
+                                    KeTaoFeaturedCommonUtils.showToast(
+                                        "手机号绑定成功");
                                     _initUserData();
                                     break;
 
                                   case "2":
-                                    KeTaoFeaturedCommonUtils.showToast("手机账户数据合并成功，请重新登录！");
+                                    KeTaoFeaturedCommonUtils.showToast(
+                                        "手机账户数据合并成功，请重新登录！");
                                     break;
                                 }
                               } else {
-                                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                             if (modifyPhone) {
                               //todo 修改手机号
-                              var result = await KeTaoFeaturedHttpManage.bindPhone(
-                                  tel: _dialogPhoneNumber.toString());
+                              var result =
+                                  await KeTaoFeaturedHttpManage.bindPhone(
+                                      tel: _dialogPhoneNumber.toString());
                               if (result.status) {
                                 KeTaoFeaturedCommonUtils.showToast("手机号修改成功");
                                 _initUserData();
                               } else {
-                                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                             if (addExperienceAccount) {
-                              var result =
-                                  await KeTaoFeaturedHttpManage.addExperienceMemberPhone(
+                              var result = await KeTaoFeaturedHttpManage
+                                  .addExperienceMemberPhone(
                                       tel: _dialogPhoneNumber.toString());
                               if (result.status) {
                                 KeTaoFeaturedCommonUtils.showToast("体验会员添加成功");
                               } else {
-                                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                           }
                           if (showWeChatNo) {
                             if ( //CommonUtils.isEmpty(dialogNickName) ||
-                                KeTaoFeaturedCommonUtils.isEmpty(_dialogWeChatNo)) {
+                                KeTaoFeaturedCommonUtils.isEmpty(
+                                    _dialogWeChatNo)) {
                               KeTaoFeaturedCommonUtils.showToast("微信号不能为空！");
                               return;
                             }
                             if (bindWeChatNo) {
-                              var result = await KeTaoFeaturedHttpManage.bindWeChatNo(
-                                  _dialogWeChatNo.toString());
+                              var result =
+                                  await KeTaoFeaturedHttpManage.bindWeChatNo(
+                                      _dialogWeChatNo.toString());
                               if (result.status) {
                                 KeTaoFeaturedCommonUtils.showToast("微信号绑定成功");
                                 _initUserData();
                               } else {
-                                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             } else {
                               //微信号修改
-                              var result = await KeTaoFeaturedHttpManage.modifyWeChatNo(
-                                  _dialogWeChatNo.toString());
+                              var result =
+                                  await KeTaoFeaturedHttpManage.modifyWeChatNo(
+                                      _dialogWeChatNo.toString());
                               if (result.status) {
                                 KeTaoFeaturedCommonUtils.showToast("微信号修改成功");
                                 _initUserData();
                               } else {
-                                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                           }

@@ -2,18 +2,16 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/ktxxmodels/ktxx_pdd_goods_list_entity.dart';
 
-class KeTaoFeaturedSearchPddGoodsListEntity
-    with JsonConvert<KeTaoFeaturedSearchPddGoodsListEntity> {
+class SearchPddGoodsListEntity with JsonConvert<SearchPddGoodsListEntity> {
   bool status;
   @JSONField(name: "err_code")
   int errCode;
   @JSONField(name: "err_msg")
   dynamic errMsg;
-  KeTaoFeaturedSearchPddGoodsListData data;
+  SearchPddGoodsListData data;
 }
 
-class KeTaoFeaturedSearchPddGoodsListData
-    with JsonConvert<KeTaoFeaturedSearchPddGoodsListData> {
+class SearchPddGoodsListData with JsonConvert<SearchPddGoodsListData> {
   int total;
   int page;
   @JSONField(name: "list_id")
@@ -22,8 +20,7 @@ class KeTaoFeaturedSearchPddGoodsListData
   List<PddGoodsListDataList> xList;
 }
 
-class KeTaoFeaturedSearchPddGoodsListDataList
-    with JsonConvert<KeTaoFeaturedSearchPddGoodsListDataList> {
+class SearchPddGoodsListDataList with JsonConvert<SearchPddGoodsListDataList> {
   @JSONField(name: "g_id")
   int gId;
   @JSONField(name: "g_title")
@@ -46,11 +43,11 @@ class KeTaoFeaturedSearchPddGoodsListDataList
   String mallName;
   @JSONField(name: "g_bonus")
   String gBonus;
-  KeTaoFeaturedSearchPddGoodsListDataListCoupons coupons;
+  SearchPddGoodsListDataListCoupons coupons;
 }
 
-class KeTaoFeaturedSearchPddGoodsListDataListCoupons
-    with JsonConvert<KeTaoFeaturedSearchPddGoodsListDataListCoupons> {
+class SearchPddGoodsListDataListCoupons
+    with JsonConvert<SearchPddGoodsListDataListCoupons> {
   @JSONField(name: "coupon_discount")
   int couponDiscount;
   @JSONField(name: "coupon_remain_quantity")

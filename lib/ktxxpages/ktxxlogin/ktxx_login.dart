@@ -1080,9 +1080,8 @@ class _KeTaoFeaturedLoginPageState extends State<KeTaoFeaturedLoginPage> {
   }
 
   Future<void> _register() async {
-    ResultBeanEntity result =
-        await KeTaoFeaturedHttpManage.register(
-            phoneNumber, checkCode, password, inviteCode);
+    ResultBeanEntity result = await KeTaoFeaturedHttpManage.register(
+        phoneNumber, checkCode, password, inviteCode);
     if (result.status) {
       KeTaoFeaturedCommonUtils.showToast("注册成功，请登陆！");
       if (mounted) {

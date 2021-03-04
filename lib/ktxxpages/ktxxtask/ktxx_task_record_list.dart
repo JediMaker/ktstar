@@ -13,6 +13,7 @@ import 'package:star/ktxxpages/ktxxtask/ktxx_task_submission.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_no_data.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -38,12 +39,15 @@ class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
 //borderRadius: BorderRadius.circular(10.0)),
 //),
   @override
-  _KeTaoFeaturedTaskRecordListPageState createState() => _KeTaoFeaturedTaskRecordListPageState();
+  _KeTaoFeaturedTaskRecordListPageState createState() =>
+      _KeTaoFeaturedTaskRecordListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
+class _KeTaoFeaturedTaskRecordListPageState
+    extends State<KeTaoFeaturedTaskRecordListPage> {
   ///  任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   int page = 1;
   EasyRefreshController _refreshController;
@@ -55,7 +59,8 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
   int SVG_ANGLETYPE_UNKNOWN = 0;
   int SVG_ANGLETYPE_UNSPECIFIED = 1;
   _initData() async {
-    TaskRecordListEntity result = await KeTaoFeaturedHttpManage.getTaskRecordList(page, 10);
+    TaskRecordListEntity result =
+        await KeTaoFeaturedHttpManage.getTaskRecordList(page, 10);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -322,8 +327,12 @@ class _KeTaoFeaturedTaskRecordListPageState extends State<KeTaoFeaturedTaskRecor
           Visibility(
             // todo
             visible: category == "3"
-                ? !KeTaoFeaturedCommonUtils.isEmpty(rejectReason) ? true : false
-                : status == "4" ? true : false,
+                ? !KeTaoFeaturedCommonUtils.isEmpty(rejectReason)
+                    ? true
+                    : false
+                : status == "4"
+                    ? true
+                    : false,
             child: Column(
               children: <Widget>[
                 SizedBox(
