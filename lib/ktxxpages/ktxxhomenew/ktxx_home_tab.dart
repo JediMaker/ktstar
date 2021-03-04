@@ -279,7 +279,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     if (result2.status) {
       if (mounted) {
         setState(() {
-          listId = result2.data.listId;
+//          listId = result2.data.listId;
           if (page == 1) {
             //下拉刷新
             pddGoodsList = result2.data.xList;
