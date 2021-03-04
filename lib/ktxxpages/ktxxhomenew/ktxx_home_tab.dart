@@ -10,6 +10,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
+import 'package:star/generated/json/ktxx_home_goods_list_entity_helper.dart';
 import 'package:star/ktxx_global_config.dart';
 import 'package:star/ktxxhttp/ktxx_http_manage.dart';
 import 'package:star/ktxxmodels/ktxx_home_entity.dart';
@@ -272,11 +273,36 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   FocusNode _focusNode;
 
   Future _initPddGoodsListData() async {
-    var result2 = await KeTaoFeaturedHttpManage.getGoodsList(
+    var result = await KeTaoFeaturedHttpManage.getGoodsList(
         cId: "", type: "", page: page, pageSize: 20, firstId: "");
+    if (result.status) {
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
+      homeGoodsListEntityFromJson(entity, result.data);
+      if (mounted) {
+        setState(() {
+          if (page == 1) {
+            pddGoodsList = entity.goodsList;
+            _refreshController.finishLoad(noMore: false);
+          } else {
+            if (result == null ||
+                result.data == null ||
+                entity.goodsList == null ||
+                entity.goodsList.length == 0) {
+              //              _refreshController.resetLoadState();
+              _refreshController.finishLoad(noMore: true);
+            } else {
+              pddGoodsList += entity.goodsList;
+            }
+          }
+          isFirstLoading = false;
+        });
+      }
+    } else {
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+    }
 //    var result2 = await KeTaoFeaturedHttpManage.getPddGoodsList(page,
 //        listId: listId, categoryId: -1);
-    if (result2.status) {
+   /* if (result2.status) {
       if (mounted) {
         setState(() {
 //          listId = result2.data.listId;
@@ -301,7 +327,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
       }
     } else {
       KeTaoFeaturedCommonUtils.showToast(result2.errMsg);
-    }
+    }*/
   }
 
   Future _initData({bool isRefresh = false}) async {
