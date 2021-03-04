@@ -2137,7 +2137,7 @@ class KeTaoFeaturedHttpManage {
       ..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await KeTaoFeaturedHttpManage.dio.post(
       KeTaoFeaturedAPi.GOODS_LIST,
-      data: paramsMap,
+      data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
