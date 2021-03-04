@@ -1779,7 +1779,12 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
     String path = '';
     String subtitle = '';
     String params = '';
+
+    ///拼多多分类id
     String catId = '';
+
+    ///自营分类id
+    String cId = '';
     String pddType = '';
     String flag = '';
     bool needShow = true;
@@ -1808,6 +1813,9 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
               break;
             case "type":
               pddType = itemList[1];
+              break;
+            case "cid":
+              cId = itemList[1];
               break;
           }
         }
@@ -1919,6 +1927,11 @@ class _KeTaoFeaturedTaskListPageState extends State<KeTaoFeaturedTaskListPage>
                     title: name,
                     categoryId: catId,
                   ));
+              return;
+            }
+            if (path == 'category') {
+              KeTaoFeaturedGlobalConfig.prefs.setString("cid", cId);
+              bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
               return;
             }
             switch (path) {

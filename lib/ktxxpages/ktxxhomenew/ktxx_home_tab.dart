@@ -26,6 +26,7 @@ import 'package:star/ktxxpages/ktxxgoods/ktxxpdd/ktxx_pdd_home.dart';
 import 'package:star/ktxxpages/ktxxlogin/ktxx_login.dart';
 import 'package:star/ktxxpages/ktxxrecharge/ktxx_recharge_list.dart';
 import 'package:star/ktxxpages/ktxxshareholders/ktxx_micro_equity.dart';
+import 'package:star/ktxxpages/ktxxtask/ktxx_invitation_poster.dart';
 import 'package:star/ktxxpages/ktxxtask/ktxx_task_hall.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_price_text.dart';
 import 'package:star/ktxxpages/ktxxwidget/ktxx_dashed_rect.dart';
@@ -202,9 +203,9 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   var iconUrlList = [
     'https://alipic.lanhuapp.com/xdc181602b-826d-4828-8d6d-94e9c86f26ed', //星选
     'https://alipic.lanhuapp.com/xd4f5a9fd6-ee97-4394-96c3-ff4965597f3a', //话费
-    'https://alipic.lanhuapp.com/xd364d623d-ca00-4428-961b-d851f884a35b', //加油
-    'https://alipic.lanhuapp.com/xdb83849b5-db9f-46c3-ba78-34f094c2768f', //美团
-    'https://alipic.lanhuapp.com/xd23e1f65d-5d62-4e29-868b-280f5076ef43', //饿了
+    'https://alipic.lanhuapp.com/xd119b664f-7ed4-482a-9a6b-df50e4131cf8', //加油
+    'https://alipic.lanhuapp.com/xd248cdbbe-5bf3-4d20-ba6b-bc15cf5ac126', //美团
+    'https://alipic.lanhuapp.com/xd3231e35d-92b3-4c46-9ce9-16057e128dca', //饿了
     'https://alipic.lanhuapp.com/xdc05ad33f-5c80-475a-a395-3724ef148b6d', //食品
     'https://alipic.lanhuapp.com/xdd1719150-91de-4acc-a03f-d2383cb1b33f', //百货
     'https://alipic.lanhuapp.com/xded1f6a08-e9c3-4e61-a8fd-662807c190b2', //美妆
@@ -214,13 +215,13 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   var iconNameList = [
     '拼多多', //星选
     '话费中心', //话费
-    '优惠加油', //加油
-    '美团红包', //美团
-    '饿了么', //饿了
-    '美食生鲜', //食品
-    '日用百货', //百货
-    '洗护美容', //美妆
-    '孕妈专区', //母婴
+    '邀请好友', //邀请好友
+    '日用百货', //日用百货
+    '办公文具', //办公文具
+    '食品酒饮', //食品
+    '果品生鲜', //果品生鲜
+    '个护清洁', //个护清洁
+    '母婴玩具', //母婴
     '更多优惠', //更多
   ];
 
@@ -422,6 +423,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
   @override
   void initState() {
     super.initState();
+    _initCacheHomeData();
     _initData();
     _initPddGoodsListData();
     _refreshController = EasyRefreshController();
@@ -440,6 +442,23 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
         }
       }
     } catch (e) {}
+  }
+
+  _initCacheHomeData() {
+    var data = KeTaoFeaturedGlobalConfig.getHomeInfo();
+    if (KeTaoFeaturedCommonUtils.isEmpty(data)) {
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        bannerList = data.banner;
+        taskListAll = data.taskList;
+        userType = data.userLevel;
+        goodsList = data.goodsList;
+        iconList = data.iconList;
+        adList = data.adList;
+      });
+    }
   }
 
   @override
@@ -979,7 +998,12 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
     String path = '';
     String subtitle = '';
     String params = '';
+
+    ///拼多多分类id
     String catId = '';
+
+    ///自营分类id
+    String cId = '';
     String pddType = '';
     String flag = '';
     bool needShow = true;
@@ -1010,6 +1034,9 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
               break;
             case "type":
               pddType = itemList[1];
+              break;
+            case "cid":
+              cId = itemList[1];
               break;
           }
         }
@@ -1079,7 +1106,21 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
               return;
             }
           }
-
+          if (name.contains('邀请')) {
+            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                context, KeTaoFeaturedInvitationPosterPage());
+            return;
+          }
+          if (name.contains('百货')) {
+            KeTaoFeaturedGlobalConfig.prefs.setString("cid", "1");
+            bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
+            return;
+          }
+          if (name.contains('办公')) {
+            KeTaoFeaturedGlobalConfig.prefs.setString("cid", "98");
+            bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
+            return;
+          }
           if (type == 'anchor') {
             //滚动到指定位置
 //            _tabController.animateTo(2);
@@ -1111,6 +1152,7 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
                   context, KeTaoFeaturedPddHomeIndexPage());
               return;
             }
+
             if (path == 'pdd_goods') {
               KeTaoFeaturedNavigatorUtils.navigatorRouter(
                   context,
@@ -1120,6 +1162,11 @@ class _KeTaoFeaturedHomeTabPageState extends State<KeTaoFeaturedHomeTabPage>
                     title: name,
                     categoryId: catId,
                   ));
+              return;
+            }
+            if (path == 'category') {
+              KeTaoFeaturedGlobalConfig.prefs.setString("cid", cId);
+              bus.emit("changeBottomNavigatorBarWithCategoryId", cId);
               return;
             }
             switch (path) {

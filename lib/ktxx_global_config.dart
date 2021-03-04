@@ -227,7 +227,7 @@ class KeTaoFeaturedGlobalConfig {
     if (!_prefs.containsKey("searchList")) {
       prefs.setStringList("searchList", List<String>());
     }
-
+    KeTaoFeaturedGlobalConfig.prefs.setString("cid", "");
     if (!isRelease) {
 //      GlobalConfig.prefs.setString("uid", "123");
     }
