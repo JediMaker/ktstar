@@ -123,983 +123,791 @@ class JsonConvert<T> {
 
   static _getFromJson<T>(Type type, data, json) {
     switch (type) {
-      case KeTaoFeaturedTaskSubmitInfoEntity:
-        return keTaoFeaturedTaskSubmitInfoEntityFromJson(
-            data as KeTaoFeaturedTaskSubmitInfoEntity, json) as T;
-      case KeTaoFeaturedTaskSubmitInfoData:
-        return keTaoFeaturedTaskSubmitInfoDataFromJson(
-            data as KeTaoFeaturedTaskSubmitInfoData, json) as T;
-      case KeTaoFeaturedPayCouponEntity:
-        return keTaoFeaturedPayCouponEntityFromJson(
-            data as KeTaoFeaturedPayCouponEntity, json) as T;
-      case KeTaoFeaturedPayCouponData:
-        return keTaoFeaturedPayCouponDataFromJson(
-            data as KeTaoFeaturedPayCouponData, json) as T;
-      case KeTaoFeaturedVipPriceInfoEntity:
-        return keTaoFeaturedVipPriceInfoEntityFromJson(
-            data as KeTaoFeaturedVipPriceInfoEntity, json) as T;
-      case KeTaoFeaturedVipPriceInfoVip:
-        return keTaoFeaturedVipPriceInfoVipFromJson(
-            data as KeTaoFeaturedVipPriceInfoVip, json) as T;
-      case KeTaoFeaturedVipPriceInfoVipIconDesc:
-        return keTaoFeaturedVipPriceInfoVipIconDescFromJson(
-            data as KeTaoFeaturedVipPriceInfoVipIconDesc, json) as T;
-      case KeTaoFeaturedVipPriceInfoVipMoneyList:
-        return keTaoFeaturedVipPriceInfoVipMoneyListFromJson(
-            data as KeTaoFeaturedVipPriceInfoVipMoneyList, json) as T;
-      case KeTaoFeaturedVipPriceInfoDiamond:
-        return keTaoFeaturedVipPriceInfoDiamondFromJson(
-            data as KeTaoFeaturedVipPriceInfoDiamond, json) as T;
-      case KeTaoFeaturedVipPriceInfoDiamondIconDesc:
-        return keTaoFeaturedVipPriceInfoDiamondIconDescFromJson(
-            data as KeTaoFeaturedVipPriceInfoDiamondIconDesc, json) as T;
-      case KeTaoFeaturedVipPriceInfoDiamondMoneyList:
-        return keTaoFeaturedVipPriceInfoDiamondMoneyListFromJson(
-            data as KeTaoFeaturedVipPriceInfoDiamondMoneyList, json) as T;
-      case KeTaoFeaturedTaskOtherSubmitInfoEntity:
-        return keTaoFeaturedTaskOtherSubmitInfoEntityFromJson(
-            data as KeTaoFeaturedTaskOtherSubmitInfoEntity, json) as T;
-      case KeTaoFeaturedTaskOtherSubmitInfoData:
-        return keTaoFeaturedTaskOtherSubmitInfoDataFromJson(
-            data as KeTaoFeaturedTaskOtherSubmitInfoData, json) as T;
-      case KeTaoFeaturedPhoneChargeListEntity:
-        return keTaoFeaturedPhoneChargeListEntityFromJson(
-            data as KeTaoFeaturedPhoneChargeListEntity, json) as T;
-      case KeTaoFeaturedPhoneChargeListData:
-        return keTaoFeaturedPhoneChargeListDataFromJson(
-            data as KeTaoFeaturedPhoneChargeListData, json) as T;
-      case KeTaoFeaturedPhoneChargeListDataList:
-        return keTaoFeaturedPhoneChargeListDataListFromJson(
-            data as KeTaoFeaturedPhoneChargeListDataList, json) as T;
-      case KeTaoFeaturedFansListEntity:
-        return keTaoFeaturedFansListEntityFromJson(
-            data as KeTaoFeaturedFansListEntity, json) as T;
-      case KeTaoFeaturedFansListData:
-        return keTaoFeaturedFansListDataFromJson(
-            data as KeTaoFeaturedFansListData, json) as T;
-      case KeTaoFeaturedFansListDataList:
-        return keTaoFeaturedFansListDataListFromJson(
-            data as KeTaoFeaturedFansListDataList, json) as T;
-      case KeTaoFeaturedHomeIconListEntity:
-        return keTaoFeaturedHomeIconListEntityFromJson(
-            data as KeTaoFeaturedHomeIconListEntity, json) as T;
-      case KeTaoFeaturedHomeIconListIconList:
-        return keTaoFeaturedHomeIconListIconListFromJson(
-            data as KeTaoFeaturedHomeIconListIconList, json) as T;
-      case KeTaoFeaturedShopTypeEntity:
-        return keTaoFeaturedShopTypeEntityFromJson(
-            data as KeTaoFeaturedShopTypeEntity, json) as T;
+      case TaskSubmitInfoEntity:
+        return taskSubmitInfoEntityFromJson(data as TaskSubmitInfoEntity, json)
+            as T;
+      case TaskSubmitInfoData:
+        return taskSubmitInfoDataFromJson(data as TaskSubmitInfoData, json)
+            as T;
+      case PayCouponEntity:
+        return payCouponEntityFromJson(data as PayCouponEntity, json) as T;
+      case PayCouponData:
+        return payCouponDataFromJson(data as PayCouponData, json) as T;
+      case VipPriceInfoEntity:
+        return vipPriceInfoEntityFromJson(data as VipPriceInfoEntity, json)
+            as T;
+      case VipPriceInfoVip:
+        return vipPriceInfoVipFromJson(data as VipPriceInfoVip, json) as T;
+      case VipPriceInfoVipIconDesc:
+        return vipPriceInfoVipIconDescFromJson(
+            data as VipPriceInfoVipIconDesc, json) as T;
+      case VipPriceInfoVipMoneyList:
+        return vipPriceInfoVipMoneyListFromJson(
+            data as VipPriceInfoVipMoneyList, json) as T;
+      case VipPriceInfoDiamond:
+        return vipPriceInfoDiamondFromJson(data as VipPriceInfoDiamond, json)
+            as T;
+      case VipPriceInfoDiamondIconDesc:
+        return vipPriceInfoDiamondIconDescFromJson(
+            data as VipPriceInfoDiamondIconDesc, json) as T;
+      case VipPriceInfoDiamondMoneyList:
+        return vipPriceInfoDiamondMoneyListFromJson(
+            data as VipPriceInfoDiamondMoneyList, json) as T;
+      case TaskOtherSubmitInfoEntity:
+        return taskOtherSubmitInfoEntityFromJson(
+            data as TaskOtherSubmitInfoEntity, json) as T;
+      case TaskOtherSubmitInfoData:
+        return taskOtherSubmitInfoDataFromJson(
+            data as TaskOtherSubmitInfoData, json) as T;
+      case PhoneChargeListEntity:
+        return phoneChargeListEntityFromJson(
+            data as PhoneChargeListEntity, json) as T;
+      case PhoneChargeListData:
+        return phoneChargeListDataFromJson(data as PhoneChargeListData, json)
+            as T;
+      case PhoneChargeListDataList:
+        return phoneChargeListDataListFromJson(
+            data as PhoneChargeListDataList, json) as T;
+      case FansListEntity:
+        return fansListEntityFromJson(data as FansListEntity, json) as T;
+      case FansListData:
+        return fansListDataFromJson(data as FansListData, json) as T;
+      case FansListDataList:
+        return fansListDataListFromJson(data as FansListDataList, json) as T;
+      case HomeIconListEntity:
+        return homeIconListEntityFromJson(data as HomeIconListEntity, json)
+            as T;
+      case HomeIconListIconList:
+        return homeIconListIconListFromJson(data as HomeIconListIconList, json)
+            as T;
+      case ShopTypeEntity:
+        return shopTypeEntityFromJson(data as ShopTypeEntity, json) as T;
       case ShopTypeData:
         return shopTypeDataFromJson(data as ShopTypeData, json) as T;
       case ShopTypeDataList:
         return shopTypeDataListFromJson(data as ShopTypeDataList, json) as T;
-      case KeTaoFeaturedResultBeanEntity:
-        return keTaoFeaturedResultBeanEntityFromJson(
-            data as KeTaoFeaturedResultBeanEntity, json) as T;
-      case KeTaoFeaturedSearchPddGoodsListEntity:
-        return keTaoFeaturedSearchPddGoodsListEntityFromJson(
-            data as KeTaoFeaturedSearchPddGoodsListEntity, json) as T;
-      case KeTaoFeaturedSearchPddGoodsListData:
-        return keTaoFeaturedSearchPddGoodsListDataFromJson(
-            data as KeTaoFeaturedSearchPddGoodsListData, json) as T;
-      case KeTaoFeaturedSearchPddGoodsListDataList:
-        return keTaoFeaturedSearchPddGoodsListDataListFromJson(
-            data as KeTaoFeaturedSearchPddGoodsListDataList, json) as T;
-      case KeTaoFeaturedSearchPddGoodsListDataListCoupons:
-        return keTaoFeaturedSearchPddGoodsListDataListCouponsFromJson(
-            data as KeTaoFeaturedSearchPddGoodsListDataListCoupons, json) as T;
-      case KeTaoFeaturedPosterEntity:
-        return keTaoFeaturedPosterEntityFromJson(
-            data as KeTaoFeaturedPosterEntity, json) as T;
-      case KeTaoFeaturedPosterData:
-        return keTaoFeaturedPosterDataFromJson(
-            data as KeTaoFeaturedPosterData, json) as T;
-      case KeTaoFeaturedGoodsQueueEntity:
-        return keTaoFeaturedGoodsQueueEntityFromJson(
-            data as KeTaoFeaturedGoodsQueueEntity, json) as T;
-      case KeTaoFeaturedGoodsQueueData:
-        return keTaoFeaturedGoodsQueueDataFromJson(
-            data as KeTaoFeaturedGoodsQueueData, json) as T;
-      case KeTaoFeaturedGoodsQueueDataSignPackage:
-        return keTaoFeaturedGoodsQueueDataSignPackageFromJson(
-            data as KeTaoFeaturedGoodsQueueDataSignPackage, json) as T;
-      case KeTaoFeaturedGoodsQueueDataGoodsInfo:
-        return keTaoFeaturedGoodsQueueDataGoodsInfoFromJson(
-            data as KeTaoFeaturedGoodsQueueDataGoodsInfo, json) as T;
-      case KeTaoFeaturedGoodsQueueDataList:
-        return keTaoFeaturedGoodsQueueDataListFromJson(
-            data as KeTaoFeaturedGoodsQueueDataList, json) as T;
-      case KeTaoFeaturedGoodsQueueDataUserInfo:
-        return keTaoFeaturedGoodsQueueDataUserInfoFromJson(
-            data as KeTaoFeaturedGoodsQueueDataUserInfo, json) as T;
-      case KeTaoFeaturedTaskRecordListEntity:
-        return keTaoFeaturedTaskRecordListEntityFromJson(
-            data as KeTaoFeaturedTaskRecordListEntity, json) as T;
-      case KeTaoFeaturedTaskRecordListData:
-        return keTaoFeaturedTaskRecordListDataFromJson(
-            data as KeTaoFeaturedTaskRecordListData, json) as T;
-      case KeTaoFeaturedTaskRecordListDataList:
-        return keTaoFeaturedTaskRecordListDataListFromJson(
-            data as KeTaoFeaturedTaskRecordListDataList, json) as T;
-      case KeTaoFeaturedFansTotalEntity:
-        return keTaoFeaturedFansTotalEntityFromJson(
-            data as KeTaoFeaturedFansTotalEntity, json) as T;
-      case KeTaoFeaturedFansTotalData:
-        return keTaoFeaturedFansTotalDataFromJson(
-            data as KeTaoFeaturedFansTotalData, json) as T;
-      case KeTaoFeaturedFansTotalDataAgentInfo:
-        return keTaoFeaturedFansTotalDataAgentInfoFromJson(
-            data as KeTaoFeaturedFansTotalDataAgentInfo, json) as T;
-      case KeTaoFeaturedFansTotalDataCountInfo:
-        return keTaoFeaturedFansTotalDataCountInfoFromJson(
-            data as KeTaoFeaturedFansTotalDataCountInfo, json) as T;
-      case KeTaoFeaturedGoodsSpecInfoEntity:
-        return keTaoFeaturedGoodsSpecInfoEntityFromJson(
-            data as KeTaoFeaturedGoodsSpecInfoEntity, json) as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfo:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoFromJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfo, json) as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecItemFromJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem, json) as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceFromJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice, json) as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIdsFromJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds, json) as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01FromJson(
-                data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01, json)
+      case ResultBeanEntity:
+        return resultBeanEntityFromJson(data as ResultBeanEntity, json) as T;
+      case SearchPddGoodsListEntity:
+        return searchPddGoodsListEntityFromJson(
+            data as SearchPddGoodsListEntity, json) as T;
+      case SearchPddGoodsListData:
+        return searchPddGoodsListDataFromJson(
+            data as SearchPddGoodsListData, json) as T;
+      case SearchPddGoodsListDataList:
+        return searchPddGoodsListDataListFromJson(
+            data as SearchPddGoodsListDataList, json) as T;
+      case SearchPddGoodsListDataListCoupons:
+        return searchPddGoodsListDataListCouponsFromJson(
+            data as SearchPddGoodsListDataListCoupons, json) as T;
+      case PosterEntity:
+        return posterEntityFromJson(data as PosterEntity, json) as T;
+      case PosterData:
+        return posterDataFromJson(data as PosterData, json) as T;
+      case GoodsQueueEntity:
+        return goodsQueueEntityFromJson(data as GoodsQueueEntity, json) as T;
+      case GoodsQueueData:
+        return goodsQueueDataFromJson(data as GoodsQueueData, json) as T;
+      case GoodsQueueDataSignPackage:
+        return goodsQueueDataSignPackageFromJson(
+            data as GoodsQueueDataSignPackage, json) as T;
+      case GoodsQueueDataGoodsInfo:
+        return goodsQueueDataGoodsInfoFromJson(
+            data as GoodsQueueDataGoodsInfo, json) as T;
+      case GoodsQueueDataList:
+        return goodsQueueDataListFromJson(data as GoodsQueueDataList, json)
             as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10FromJson(
-                data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10, json)
+      case GoodsQueueDataUserInfo:
+        return goodsQueueDataUserInfoFromJson(
+            data as GoodsQueueDataUserInfo, json) as T;
+      case TaskRecordListEntity:
+        return taskRecordListEntityFromJson(data as TaskRecordListEntity, json)
             as T;
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11FromJson(
-                data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11, json)
+      case TaskRecordListData:
+        return taskRecordListDataFromJson(data as TaskRecordListData, json)
             as T;
-      case KeTaoFeaturedAddressListEntity:
-        return keTaoFeaturedAddressListEntityFromJson(
-            data as KeTaoFeaturedAddressListEntity, json) as T;
-      case KeTaoFeaturedAddressListData:
-        return keTaoFeaturedAddressListDataFromJson(
-            data as KeTaoFeaturedAddressListData, json) as T;
-      case KeTaoFeaturedUserHolderProfitEntity:
-        return keTaoFeaturedUserHolderProfitEntityFromJson(
-            data as KeTaoFeaturedUserHolderProfitEntity, json) as T;
-      case KeTaoFeaturedUserHolderProfitPartnerBonus:
-        return keTaoFeaturedUserHolderProfitPartnerBonusFromJson(
-            data as KeTaoFeaturedUserHolderProfitPartnerBonus, json) as T;
-      case KeTaoFeaturedOrderDetailEntity:
-        return keTaoFeaturedOrderDetailEntityFromJson(
-            data as KeTaoFeaturedOrderDetailEntity, json) as T;
-      case KeTaoFeaturedOrderDetailData:
-        return keTaoFeaturedOrderDetailDataFromJson(
-            data as KeTaoFeaturedOrderDetailData, json) as T;
-      case KeTaoFeaturedOrderDetailDataGoodsList:
-        return keTaoFeaturedOrderDetailDataGoodsListFromJson(
-            data as KeTaoFeaturedOrderDetailDataGoodsList, json) as T;
-      case KeTaoFeaturedPddGoodsInfoEntity:
-        return keTaoFeaturedPddGoodsInfoEntityFromJson(
-            data as KeTaoFeaturedPddGoodsInfoEntity, json) as T;
-      case KeTaoFeaturedPddGoodsInfoData:
-        return keTaoFeaturedPddGoodsInfoDataFromJson(
-            data as KeTaoFeaturedPddGoodsInfoData, json) as T;
-      case KeTaoFeaturedPddGoodsInfoDataCoupons:
-        return keTaoFeaturedPddGoodsInfoDataCouponsFromJson(
-            data as KeTaoFeaturedPddGoodsInfoDataCoupons, json) as T;
-      case KeTaoFeaturedIncomeListEntity:
-        return keTaoFeaturedIncomeListEntityFromJson(
-            data as KeTaoFeaturedIncomeListEntity, json) as T;
-      case KeTaoFeaturedIncomeListData:
-        return keTaoFeaturedIncomeListDataFromJson(
-            data as KeTaoFeaturedIncomeListData, json) as T;
-      case KeTaoFeaturedIncomeListDataList:
-        return keTaoFeaturedIncomeListDataListFromJson(
-            data as KeTaoFeaturedIncomeListDataList, json) as T;
-      case KeTaoFeaturedPddGoodsListEntity:
-        return keTaoFeaturedPddGoodsListEntityFromJson(
-            data as KeTaoFeaturedPddGoodsListEntity, json) as T;
-      case KeTaoFeaturedPddGoodsListData:
-        return keTaoFeaturedPddGoodsListDataFromJson(
-            data as KeTaoFeaturedPddGoodsListData, json) as T;
-      case KeTaoFeaturedPddGoodsListDataList:
-        return keTaoFeaturedPddGoodsListDataListFromJson(
-            data as KeTaoFeaturedPddGoodsListDataList, json) as T;
-      case KeTaoFeaturedPddGoodsListDataListCoupons:
-        return keTaoFeaturedPddGoodsListDataListCouponsFromJson(
-            data as KeTaoFeaturedPddGoodsListDataListCoupons, json) as T;
-      case KeTaoFeaturedBalancePayInfoEntity:
-        return keTaoFeaturedBalancePayInfoEntityFromJson(
-            data as KeTaoFeaturedBalancePayInfoEntity, json) as T;
-      case KeTaoFeaturedBalancePayInfoData:
-        return keTaoFeaturedBalancePayInfoDataFromJson(
-            data as KeTaoFeaturedBalancePayInfoData, json) as T;
-      case KeTaoFeaturedGoodsQueuePersionalEntity:
-        return keTaoFeaturedGoodsQueuePersionalEntityFromJson(
-            data as KeTaoFeaturedGoodsQueuePersionalEntity, json) as T;
-      case KeTaoFeaturedGoodsQueuePersionalData:
-        return keTaoFeaturedGoodsQueuePersionalDataFromJson(
-            data as KeTaoFeaturedGoodsQueuePersionalData, json) as T;
-      case KeTaoFeaturedPddCategoryListEntity:
-        return keTaoFeaturedPddCategoryListEntityFromJson(
-            data as KeTaoFeaturedPddCategoryListEntity, json) as T;
-      case KeTaoFeaturedPddCategoryListData:
-        return keTaoFeaturedPddCategoryListDataFromJson(
-            data as KeTaoFeaturedPddCategoryListData, json) as T;
-      case KeTaoFeaturedMicroShareholderEntity:
-        return keTaoFeaturedMicroShareholderEntityFromJson(
-            data as KeTaoFeaturedMicroShareholderEntity, json) as T;
-      case KeTaoFeaturedMicroShareholderData:
-        return keTaoFeaturedMicroShareholderDataFromJson(
-            data as KeTaoFeaturedMicroShareholderData, json) as T;
-      case KeTaoFeaturedMicroShareholderItemEntity:
-        return keTaoFeaturedMicroShareholderItemEntityFromJson(
-            data as KeTaoFeaturedMicroShareholderItemEntity, json) as T;
-      case KeTaoFeaturedMicroShareholderItemEstimate:
-        return keTaoFeaturedMicroShareholderItemEstimateFromJson(
-            data as KeTaoFeaturedMicroShareholderItemEstimate, json) as T;
-      case KeTaoFeaturedMicroShareholderItemInterests:
-        return keTaoFeaturedMicroShareholderItemInterestsFromJson(
-            data as KeTaoFeaturedMicroShareholderItemInterests, json) as T;
-      case KeTaoFeaturedCategoryBeanEntity:
-        return keTaoFeaturedCategoryBeanEntityFromJson(
-            data as KeTaoFeaturedCategoryBeanEntity, json) as T;
-      case KeTaoFeaturedCategoryBeanData:
-        return keTaoFeaturedCategoryBeanDataFromJson(
-            data as KeTaoFeaturedCategoryBeanData, json) as T;
-      case KeTaoFeaturedPddHomeEntity:
-        return keTaoFeaturedPddHomeEntityFromJson(
-            data as KeTaoFeaturedPddHomeEntity, json) as T;
-      case KeTaoFeaturedPddHomeData:
-        return keTaoFeaturedPddHomeDataFromJson(
-            data as KeTaoFeaturedPddHomeData, json) as T;
-      case KeTaoFeaturedPddHomeDataCat:
-        return keTaoFeaturedPddHomeDataCatFromJson(
-            data as KeTaoFeaturedPddHomeDataCat, json) as T;
-      case KeTaoFeaturedPddHomeDataBanner:
-        return keTaoFeaturedPddHomeDataBannerFromJson(
-            data as KeTaoFeaturedPddHomeDataBanner, json) as T;
-      case KeTaoFeaturedPddHomeDataTool:
-        return keTaoFeaturedPddHomeDataToolFromJson(
-            data as KeTaoFeaturedPddHomeDataTool, json) as T;
-      case KeTaoFeaturedPddHomeDataAd:
-        return keTaoFeaturedPddHomeDataAdFromJson(
-            data as KeTaoFeaturedPddHomeDataAd, json) as T;
-      case KeTaoFeaturedRechargeEntity:
-        return keTaoFeaturedRechargeEntityFromJson(
-            data as KeTaoFeaturedRechargeEntity, json) as T;
-      case KeTaoFeaturedRechargeData:
-        return keTaoFeaturedRechargeDataFromJson(
-            data as KeTaoFeaturedRechargeData, json) as T;
-      case KeTaoFeaturedRechargeDataRechageList:
-        return keTaoFeaturedRechargeDataRechageListFromJson(
-            data as KeTaoFeaturedRechargeDataRechageList, json) as T;
-      case KeTaoFeaturedRechargeDatacouponList:
-        return keTaoFeaturedRechargeDatacouponListFromJson(
-            data as KeTaoFeaturedRechargeDatacouponList, json) as T;
-      case KeTaoFeaturedHomeEntity:
-        return keTaoFeaturedHomeEntityFromJson(
-            data as KeTaoFeaturedHomeEntity, json) as T;
-      case KeTaoFeaturedHomeData:
-        return keTaoFeaturedHomeDataFromJson(
-            data as KeTaoFeaturedHomeData, json) as T;
-      case KeTaoFeaturedHomeDataBanner:
-        return keTaoFeaturedHomeDataBannerFromJson(
-            data as KeTaoFeaturedHomeDataBanner, json) as T;
-      case KeTaoFeaturedHomeDataTaskList:
-        return keTaoFeaturedHomeDataTaskListFromJson(
-            data as KeTaoFeaturedHomeDataTaskList, json) as T;
-      case KeTaoFeaturedHomeDataTaskListList:
-        return keTaoFeaturedHomeDataTaskListListFromJson(
-            data as KeTaoFeaturedHomeDataTaskListList, json) as T;
-      case KeTaoFeaturedSearchGoodsListEntity:
-        return keTaoFeaturedSearchGoodsListEntityFromJson(
-            data as KeTaoFeaturedSearchGoodsListEntity, json) as T;
-      case KeTaoFeaturedSearchGoodsListData:
-        return keTaoFeaturedSearchGoodsListDataFromJson(
-            data as KeTaoFeaturedSearchGoodsListData, json) as T;
-      case KeTaoFeaturedSearchGoodsListDataList:
-        return keTaoFeaturedSearchGoodsListDataListFromJson(
-            data as KeTaoFeaturedSearchGoodsListDataList, json) as T;
-      case KeTaoFeaturedAlipayPayinfoEntity:
-        return keTaoFeaturedAlipayPayinfoEntityFromJson(
-            data as KeTaoFeaturedAlipayPayinfoEntity, json) as T;
-      case KeTaoFeaturedAlipayPayinfoData:
-        return keTaoFeaturedAlipayPayinfoDataFromJson(
-            data as KeTaoFeaturedAlipayPayinfoData, json) as T;
-      case KeTaoFeaturedVipPriceEntity:
-        return keTaoFeaturedVipPriceEntityFromJson(
-            data as KeTaoFeaturedVipPriceEntity, json) as T;
-      case KeTaoFeaturedVipPriceData:
-        return keTaoFeaturedVipPriceDataFromJson(
-            data as KeTaoFeaturedVipPriceData, json) as T;
-      case KeTaoFeaturedWithdrawalInfoEntity:
-        return keTaoFeaturedWithdrawalInfoEntityFromJson(
-            data as KeTaoFeaturedWithdrawalInfoEntity, json) as T;
-      case KeTaoFeaturedWithdrawalInfoData:
-        return keTaoFeaturedWithdrawalInfoDataFromJson(
-            data as KeTaoFeaturedWithdrawalInfoData, json) as T;
-      case KeTaoFeaturedWithdrawalInfoDataUser:
-        return keTaoFeaturedWithdrawalInfoDataUserFromJson(
-            data as KeTaoFeaturedWithdrawalInfoDataUser, json) as T;
-      case KeTaoFeaturedWithdrawalInfoDataUseModel:
-        return keTaoFeaturedWithdrawalInfoDataUseModelFromJson(
-            data as KeTaoFeaturedWithdrawalInfoDataUseModel, json) as T;
-      case KeTaoFeaturedOrderUserInfoEntity:
-        return keTaoFeaturedOrderUserInfoEntityFromJson(
-            data as KeTaoFeaturedOrderUserInfoEntity, json) as T;
-      case KeTaoFeaturedOrderUserInfoUserInfo:
-        return keTaoFeaturedOrderUserInfoUserInfoFromJson(
-            data as KeTaoFeaturedOrderUserInfoUserInfo, json) as T;
-      case KeTaoFeaturedHomeGoodsListEntity:
-        return keTaoFeaturedHomeGoodsListEntityFromJson(
-            data as KeTaoFeaturedHomeGoodsListEntity, json) as T;
-      case KeTaoFeaturedHomeGoodsListGoodsList:
-        return keTaoFeaturedHomeGoodsListGoodsListFromJson(
-            data as KeTaoFeaturedHomeGoodsListGoodsList, json) as T;
-      case KeTaoFeaturedOrderListEntity:
-        return keTaoFeaturedOrderListEntityFromJson(
-            data as KeTaoFeaturedOrderListEntity, json) as T;
-      case KeTaoFeaturedOrderListData:
-        return keTaoFeaturedOrderListDataFromJson(
-            data as KeTaoFeaturedOrderListData, json) as T;
-      case KeTaoFeaturedOrderListDataList:
-        return keTaoFeaturedOrderListDataListFromJson(
-            data as KeTaoFeaturedOrderListDataList, json) as T;
-      case KeTaoFeaturedOrderListDataListGoodsList:
-        return keTaoFeaturedOrderListDataListGoodsListFromJson(
-            data as KeTaoFeaturedOrderListDataListGoodsList, json) as T;
-      case KeTaoFeaturedWithdrawalUserInfoEntity:
-        return keTaoFeaturedWithdrawalUserInfoEntityFromJson(
-            data as KeTaoFeaturedWithdrawalUserInfoEntity, json) as T;
-      case KeTaoFeaturedWithdrawalUserInfoData:
-        return keTaoFeaturedWithdrawalUserInfoDataFromJson(
-            data as KeTaoFeaturedWithdrawalUserInfoData, json) as T;
-      case KeTaoFeaturedWithdrawalUserInfoDataUser:
-        return keTaoFeaturedWithdrawalUserInfoDataUserFromJson(
-            data as KeTaoFeaturedWithdrawalUserInfoDataUser, json) as T;
-      case KeTaoFeaturedShareholderIncomeListEntity:
-        return keTaoFeaturedShareholderIncomeListEntityFromJson(
-            data as KeTaoFeaturedShareholderIncomeListEntity, json) as T;
-      case KeTaoFeaturedAddressInfoEntity:
-        return keTaoFeaturedAddressInfoEntityFromJson(
-            data as KeTaoFeaturedAddressInfoEntity, json) as T;
-      case KeTaoFeaturedAddressInfoData:
-        return keTaoFeaturedAddressInfoDataFromJson(
-            data as KeTaoFeaturedAddressInfoData, json) as T;
-      case KeTaoFeaturedTaskShareEntity:
-        return keTaoFeaturedTaskShareEntityFromJson(
-            data as KeTaoFeaturedTaskShareEntity, json) as T;
-      case KeTaoFeaturedTaskShareData:
-        return keTaoFeaturedTaskShareDataFromJson(
-            data as KeTaoFeaturedTaskShareData, json) as T;
-      case KeTaoFeaturedTaskShareDataShareInfo:
-        return keTaoFeaturedTaskShareDataShareInfoFromJson(
-            data as KeTaoFeaturedTaskShareDataShareInfo, json) as T;
-      case KeTaoFeaturedTaskShareDataFooterImg:
-        return keTaoFeaturedTaskShareDataFooterImgFromJson(
-            data as KeTaoFeaturedTaskShareDataFooterImg, json) as T;
-      case KeTaoFeaturedWechatPayinfoEntity:
-        return keTaoFeaturedWechatPayinfoEntityFromJson(
-            data as KeTaoFeaturedWechatPayinfoEntity, json) as T;
-      case KeTaoFeaturedWechatPayinfoData:
-        return keTaoFeaturedWechatPayinfoDataFromJson(
-            data as KeTaoFeaturedWechatPayinfoData, json) as T;
-      case KeTaoFeaturedWechatPayinfoDataPayInfo:
-        return keTaoFeaturedWechatPayinfoDataPayInfoFromJson(
-            data as KeTaoFeaturedWechatPayinfoDataPayInfo, json) as T;
-      case KeTaoFeaturedMessageListEntity:
-        return keTaoFeaturedMessageListEntityFromJson(
-            data as KeTaoFeaturedMessageListEntity, json) as T;
-      case KeTaoFeaturedMessageListData:
-        return keTaoFeaturedMessageListDataFromJson(
-            data as KeTaoFeaturedMessageListData, json) as T;
-      case KeTaoFeaturedMessageListDataList:
-        return keTaoFeaturedMessageListDataListFromJson(
-            data as KeTaoFeaturedMessageListDataList, json) as T;
-      case KeTaoFeaturedUserInfoEntity:
-        return keTaoFeaturedUserInfoEntityFromJson(
-            data as KeTaoFeaturedUserInfoEntity, json) as T;
-      case KeTaoFeaturedUserInfoData:
-        return keTaoFeaturedUserInfoDataFromJson(
-            data as KeTaoFeaturedUserInfoData, json) as T;
-      case KeTaoFeaturedTaskDetailOtherEntity:
-        return keTaoFeaturedTaskDetailOtherEntityFromJson(
-            data as KeTaoFeaturedTaskDetailOtherEntity, json) as T;
-      case KeTaoFeaturedTaskDetailOtherData:
-        return keTaoFeaturedTaskDetailOtherDataFromJson(
-            data as KeTaoFeaturedTaskDetailOtherData, json) as T;
-      case KeTaoFeaturedTaskDetailOtherDataDescJson:
-        return keTaoFeaturedTaskDetailOtherDataDescJsonFromJson(
-            data as KeTaoFeaturedTaskDetailOtherDataDescJson, json) as T;
-      case KeTaoFeaturedGoodsInfoEntity:
-        return keTaoFeaturedGoodsInfoEntityFromJson(
-            data as KeTaoFeaturedGoodsInfoEntity, json) as T;
-      case KeTaoFeaturedGoodsInfoData:
-        return keTaoFeaturedGoodsInfoDataFromJson(
-            data as KeTaoFeaturedGoodsInfoData, json) as T;
-      case KeTaoFeaturedHomePddCategoryEntity:
-        return keTaoFeaturedHomePddCategoryEntityFromJson(
-            data as KeTaoFeaturedHomePddCategoryEntity, json) as T;
-      case KeTaoFeaturedHomePddCategoryData:
-        return keTaoFeaturedHomePddCategoryDataFromJson(
-            data as KeTaoFeaturedHomePddCategoryData, json) as T;
-      case KeTaoFeaturedHomePddCategoryDataCat:
-        return keTaoFeaturedHomePddCategoryDataCatFromJson(
-            data as KeTaoFeaturedHomePddCategoryDataCat, json) as T;
-      case KeTaoFeaturedVersionInfoEntity:
-        return keTaoFeaturedVersionInfoEntityFromJson(
-            data as KeTaoFeaturedVersionInfoEntity, json) as T;
-      case KeTaoFeaturedVersionInfoData:
-        return keTaoFeaturedVersionInfoDataFromJson(
-            data as KeTaoFeaturedVersionInfoData, json) as T;
-      case KeTaoFeaturedLogisticsInfoEntity:
-        return keTaoFeaturedLogisticsInfoEntityFromJson(
-            data as KeTaoFeaturedLogisticsInfoEntity, json) as T;
-      case KeTaoFeaturedLogisticsInfoData:
-        return keTaoFeaturedLogisticsInfoDataFromJson(
-            data as KeTaoFeaturedLogisticsInfoData, json) as T;
-      case KeTaoFeaturedLogisticsInfoDataExpressList:
-        return keTaoFeaturedLogisticsInfoDataExpressListFromJson(
-            data as KeTaoFeaturedLogisticsInfoDataExpressList, json) as T;
-      case KeTaoFeaturedLogisticsInfoDataExpressListList:
-        return keTaoFeaturedLogisticsInfoDataExpressListListFromJson(
-            data as KeTaoFeaturedLogisticsInfoDataExpressListList, json) as T;
-      case KeTaoFeaturedLogisticsInfoDataExpressInfo:
-        return keTaoFeaturedLogisticsInfoDataExpressInfoFromJson(
-            data as KeTaoFeaturedLogisticsInfoDataExpressInfo, json) as T;
-      case KeTaoFeaturedRechargeExtraEntity:
-        return keTaoFeaturedRechargeExtraEntityFromJson(
-            data as KeTaoFeaturedRechargeExtraEntity, json) as T;
-      case KeTaoFeaturedRechargeExtraSRechageList:
-        return keTaoFeaturedRechargeExtraSRechageListFromJson(
-            data as KeTaoFeaturedRechargeExtraSRechageList, json) as T;
-      case KeTaoFeaturedRechargeExtraRatio:
-        return keTaoFeaturedRechargeExtraRatioFromJson(
-            data as KeTaoFeaturedRechargeExtraRatio, json) as T;
-      case KeTaoFeaturedRegionDataEntity:
-        return keTaoFeaturedRegionDataEntityFromJson(
-            data as KeTaoFeaturedRegionDataEntity, json) as T;
-      case KeTaoFeaturedRegionDataData:
-        return keTaoFeaturedRegionDataDataFromJson(
-            data as KeTaoFeaturedRegionDataData, json) as T;
-      case KeTaoFeaturedRegionDataDatachild:
-        return keTaoFeaturedRegionDataDatachildFromJson(
-            data as KeTaoFeaturedRegionDataDatachild, json) as T;
-      case KeTaoFeaturedRegionDataDatachildchild:
-        return keTaoFeaturedRegionDataDatachildchildFromJson(
-            data as KeTaoFeaturedRegionDataDatachildchild, json) as T;
-      case KeTaoFeaturedLoginEntity:
-        return keTaoFeaturedLoginEntityFromJson(
-            data as KeTaoFeaturedLoginEntity, json) as T;
-      case KeTaoFeaturedLoginData:
-        return keTaoFeaturedLoginDataFromJson(
-            data as KeTaoFeaturedLoginData, json) as T;
-      case KeTaoFeaturedWithdrawalListEntity:
-        return keTaoFeaturedWithdrawalListEntityFromJson(
-            data as KeTaoFeaturedWithdrawalListEntity, json) as T;
-      case KeTaoFeaturedWithdrawalListData:
-        return keTaoFeaturedWithdrawalListDataFromJson(
-            data as KeTaoFeaturedWithdrawalListData, json) as T;
-      case KeTaoFeaturedWithdrawalListDataList:
-        return keTaoFeaturedWithdrawalListDataListFromJson(
-            data as KeTaoFeaturedWithdrawalListDataList, json) as T;
-      case KeTaoFeaturedTaskDetailEntity:
-        return keTaoFeaturedTaskDetailEntityFromJson(
-            data as KeTaoFeaturedTaskDetailEntity, json) as T;
-      case KeTaoFeaturedTaskDetailData:
-        return keTaoFeaturedTaskDetailDataFromJson(
-            data as KeTaoFeaturedTaskDetailData, json) as T;
+      case TaskRecordListDataList:
+        return taskRecordListDataListFromJson(
+            data as TaskRecordListDataList, json) as T;
+      case FansTotalEntity:
+        return fansTotalEntityFromJson(data as FansTotalEntity, json) as T;
+      case FansTotalData:
+        return fansTotalDataFromJson(data as FansTotalData, json) as T;
+      case FansTotalDataAgentInfo:
+        return fansTotalDataAgentInfoFromJson(
+            data as FansTotalDataAgentInfo, json) as T;
+      case FansTotalDataCountInfo:
+        return fansTotalDataCountInfoFromJson(
+            data as FansTotalDataCountInfo, json) as T;
+      case GoodsSpecInfoEntity:
+        return goodsSpecInfoEntityFromJson(data as GoodsSpecInfoEntity, json)
+            as T;
+      case GoodsSpecInfoSpecInfo:
+        return goodsSpecInfoSpecInfoFromJson(
+            data as GoodsSpecInfoSpecInfo, json) as T;
+      case GoodsSpecInfoSpecInfoSpecItem:
+        return goodsSpecInfoSpecInfoSpecItemFromJson(
+            data as GoodsSpecInfoSpecInfoSpecItem, json) as T;
+      case GoodsSpecInfoSpecInfoSpecPrice:
+        return goodsSpecInfoSpecInfoSpecPriceFromJson(
+            data as GoodsSpecInfoSpecInfoSpecPrice, json) as T;
+      case GoodsSpecInfoSpecInfoSpecPriceIds:
+        return goodsSpecInfoSpecInfoSpecPriceIdsFromJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds, json) as T;
+      case GoodsSpecInfoSpecInfoSpecPriceIds01:
+        return goodsSpecInfoSpecInfoSpecPriceIds01FromJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds01, json) as T;
+      case GoodsSpecInfoSpecInfoSpecPriceIds10:
+        return goodsSpecInfoSpecInfoSpecPriceIds10FromJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds10, json) as T;
+      case GoodsSpecInfoSpecInfoSpecPriceIds11:
+        return goodsSpecInfoSpecInfoSpecPriceIds11FromJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds11, json) as T;
+      case AddressListEntity:
+        return addressListEntityFromJson(data as AddressListEntity, json) as T;
+      case AddressListData:
+        return addressListDataFromJson(data as AddressListData, json) as T;
+      case UserHolderProfitEntity:
+        return userHolderProfitEntityFromJson(
+            data as UserHolderProfitEntity, json) as T;
+      case UserHolderProfitPartnerBonus:
+        return userHolderProfitPartnerBonusFromJson(
+            data as UserHolderProfitPartnerBonus, json) as T;
+      case OrderDetailEntity:
+        return orderDetailEntityFromJson(data as OrderDetailEntity, json) as T;
+      case OrderDetailData:
+        return orderDetailDataFromJson(data as OrderDetailData, json) as T;
+      case OrderDetailDataGoodsList:
+        return orderDetailDataGoodsListFromJson(
+            data as OrderDetailDataGoodsList, json) as T;
+      case PddGoodsInfoEntity:
+        return pddGoodsInfoEntityFromJson(data as PddGoodsInfoEntity, json)
+            as T;
+      case PddGoodsInfoData:
+        return pddGoodsInfoDataFromJson(data as PddGoodsInfoData, json) as T;
+      case PddGoodsInfoDataCoupons:
+        return pddGoodsInfoDataCouponsFromJson(
+            data as PddGoodsInfoDataCoupons, json) as T;
+      case IncomeListEntity:
+        return incomeListEntityFromJson(data as IncomeListEntity, json) as T;
+      case IncomeListData:
+        return incomeListDataFromJson(data as IncomeListData, json) as T;
+      case IncomeListDataList:
+        return incomeListDataListFromJson(data as IncomeListDataList, json)
+            as T;
+      case PddGoodsListEntity:
+        return pddGoodsListEntityFromJson(data as PddGoodsListEntity, json)
+            as T;
+      case PddGoodsListData:
+        return pddGoodsListDataFromJson(data as PddGoodsListData, json) as T;
+      case PddGoodsListDataList:
+        return pddGoodsListDataListFromJson(data as PddGoodsListDataList, json)
+            as T;
+      case PddGoodsListDataListCoupons:
+        return pddGoodsListDataListCouponsFromJson(
+            data as PddGoodsListDataListCoupons, json) as T;
+      case BalancePayInfoEntity:
+        return balancePayInfoEntityFromJson(data as BalancePayInfoEntity, json)
+            as T;
+      case BalancePayInfoData:
+        return balancePayInfoDataFromJson(data as BalancePayInfoData, json)
+            as T;
+      case GoodsQueuePersionalEntity:
+        return goodsQueuePersionalEntityFromJson(
+            data as GoodsQueuePersionalEntity, json) as T;
+      case GoodsQueuePersionalData:
+        return goodsQueuePersionalDataFromJson(
+            data as GoodsQueuePersionalData, json) as T;
+      case PddCategoryListEntity:
+        return pddCategoryListEntityFromJson(
+            data as PddCategoryListEntity, json) as T;
+      case PddCategoryListData:
+        return pddCategoryListDataFromJson(data as PddCategoryListData, json)
+            as T;
+      case MicroShareholderEntity:
+        return microShareholderEntityFromJson(
+            data as MicroShareholderEntity, json) as T;
+      case MicroShareholderData:
+        return microShareholderDataFromJson(data as MicroShareholderData, json)
+            as T;
+      case MicroShareholderItemEntity:
+        return microShareholderItemEntityFromJson(
+            data as MicroShareholderItemEntity, json) as T;
+      case MicroShareholderItemEstimate:
+        return microShareholderItemEstimateFromJson(
+            data as MicroShareholderItemEstimate, json) as T;
+      case MicroShareholderItemInterests:
+        return microShareholderItemInterestsFromJson(
+            data as MicroShareholderItemInterests, json) as T;
+      case CategoryBeanEntity:
+        return categoryBeanEntityFromJson(data as CategoryBeanEntity, json)
+            as T;
+      case CategoryBeanData:
+        return categoryBeanDataFromJson(data as CategoryBeanData, json) as T;
+      case PddHomeEntity:
+        return pddHomeEntityFromJson(data as PddHomeEntity, json) as T;
+      case PddHomeData:
+        return pddHomeDataFromJson(data as PddHomeData, json) as T;
+      case PddHomeDataCat:
+        return pddHomeDataCatFromJson(data as PddHomeDataCat, json) as T;
+      case PddHomeDataBanner:
+        return pddHomeDataBannerFromJson(data as PddHomeDataBanner, json) as T;
+      case PddHomeDataTool:
+        return pddHomeDataToolFromJson(data as PddHomeDataTool, json) as T;
+      case PddHomeDataAd:
+        return pddHomeDataAdFromJson(data as PddHomeDataAd, json) as T;
+      case RechargeEntity:
+        return rechargeEntityFromJson(data as RechargeEntity, json) as T;
+      case RechargeData:
+        return rechargeDataFromJson(data as RechargeData, json) as T;
+      case RechargeDataRechageList:
+        return rechargeDataRechageListFromJson(
+            data as RechargeDataRechageList, json) as T;
+      case RechargeDatacouponList:
+        return rechargeDatacouponListFromJson(
+            data as RechargeDatacouponList, json) as T;
+      case HomeEntity:
+        return homeEntityFromJson(data as HomeEntity, json) as T;
+      case HomeData:
+        return homeDataFromJson(data as HomeData, json) as T;
+      case HomeDataBanner:
+        return homeDataBannerFromJson(data as HomeDataBanner, json) as T;
+      case HomeDataTaskList:
+        return homeDataTaskListFromJson(data as HomeDataTaskList, json) as T;
+      case HomeDataTaskListList:
+        return homeDataTaskListListFromJson(data as HomeDataTaskListList, json)
+            as T;
+      case SearchGoodsListEntity:
+        return searchGoodsListEntityFromJson(
+            data as SearchGoodsListEntity, json) as T;
+      case SearchGoodsListData:
+        return searchGoodsListDataFromJson(data as SearchGoodsListData, json)
+            as T;
+      case SearchGoodsListDataList:
+        return searchGoodsListDataListFromJson(
+            data as SearchGoodsListDataList, json) as T;
+      case AlipayPayinfoEntity:
+        return alipayPayinfoEntityFromJson(data as AlipayPayinfoEntity, json)
+            as T;
+      case AlipayPayinfoData:
+        return alipayPayinfoDataFromJson(data as AlipayPayinfoData, json) as T;
+      case VipPriceEntity:
+        return vipPriceEntityFromJson(data as VipPriceEntity, json) as T;
+      case VipPriceData:
+        return vipPriceDataFromJson(data as VipPriceData, json) as T;
+      case WithdrawalInfoEntity:
+        return withdrawalInfoEntityFromJson(data as WithdrawalInfoEntity, json)
+            as T;
+      case WithdrawalInfoData:
+        return withdrawalInfoDataFromJson(data as WithdrawalInfoData, json)
+            as T;
+      case WithdrawalInfoDataUser:
+        return withdrawalInfoDataUserFromJson(
+            data as WithdrawalInfoDataUser, json) as T;
+      case WithdrawalInfoDataUseModel:
+        return withdrawalInfoDataUseModelFromJson(
+            data as WithdrawalInfoDataUseModel, json) as T;
+      case OrderUserInfoEntity:
+        return orderUserInfoEntityFromJson(data as OrderUserInfoEntity, json)
+            as T;
+      case OrderUserInfoUserInfo:
+        return orderUserInfoUserInfoFromJson(
+            data as OrderUserInfoUserInfo, json) as T;
+      case HomeGoodsListEntity:
+        return homeGoodsListEntityFromJson(data as HomeGoodsListEntity, json)
+            as T;
+      case HomeGoodsListGoodsList:
+        return homeGoodsListGoodsListFromJson(
+            data as HomeGoodsListGoodsList, json) as T;
+      case OrderListEntity:
+        return orderListEntityFromJson(data as OrderListEntity, json) as T;
+      case OrderListData:
+        return orderListDataFromJson(data as OrderListData, json) as T;
+      case OrderListDataList:
+        return orderListDataListFromJson(data as OrderListDataList, json) as T;
+      case OrderListDataListGoodsList:
+        return orderListDataListGoodsListFromJson(
+            data as OrderListDataListGoodsList, json) as T;
+      case WithdrawalUserInfoEntity:
+        return withdrawalUserInfoEntityFromJson(
+            data as WithdrawalUserInfoEntity, json) as T;
+      case WithdrawalUserInfoData:
+        return withdrawalUserInfoDataFromJson(
+            data as WithdrawalUserInfoData, json) as T;
+      case WithdrawalUserInfoDataUser:
+        return withdrawalUserInfoDataUserFromJson(
+            data as WithdrawalUserInfoDataUser, json) as T;
+      case ShareholderIncomeListEntity:
+        return shareholderIncomeListEntityFromJson(
+            data as ShareholderIncomeListEntity, json) as T;
+      case AddressInfoEntity:
+        return addressInfoEntityFromJson(data as AddressInfoEntity, json) as T;
+      case AddressInfoData:
+        return addressInfoDataFromJson(data as AddressInfoData, json) as T;
+      case TaskShareEntity:
+        return taskShareEntityFromJson(data as TaskShareEntity, json) as T;
+      case TaskShareData:
+        return taskShareDataFromJson(data as TaskShareData, json) as T;
+      case TaskShareDataShareInfo:
+        return taskShareDataShareInfoFromJson(
+            data as TaskShareDataShareInfo, json) as T;
+      case TaskShareDataFooterImg:
+        return taskShareDataFooterImgFromJson(
+            data as TaskShareDataFooterImg, json) as T;
+      case WechatPayinfoEntity:
+        return wechatPayinfoEntityFromJson(data as WechatPayinfoEntity, json)
+            as T;
+      case WechatPayinfoData:
+        return wechatPayinfoDataFromJson(data as WechatPayinfoData, json) as T;
+      case WechatPayinfoDataPayInfo:
+        return wechatPayinfoDataPayInfoFromJson(
+            data as WechatPayinfoDataPayInfo, json) as T;
+      case MessageListEntity:
+        return messageListEntityFromJson(data as MessageListEntity, json) as T;
+      case MessageListData:
+        return messageListDataFromJson(data as MessageListData, json) as T;
+      case MessageListDataList:
+        return messageListDataListFromJson(data as MessageListDataList, json)
+            as T;
+      case UserInfoEntity:
+        return userInfoEntityFromJson(data as UserInfoEntity, json) as T;
+      case UserInfoData:
+        return userInfoDataFromJson(data as UserInfoData, json) as T;
+      case TaskDetailOtherEntity:
+        return taskDetailOtherEntityFromJson(
+            data as TaskDetailOtherEntity, json) as T;
+      case TaskDetailOtherData:
+        return taskDetailOtherDataFromJson(data as TaskDetailOtherData, json)
+            as T;
+      case TaskDetailOtherDataDescJson:
+        return taskDetailOtherDataDescJsonFromJson(
+            data as TaskDetailOtherDataDescJson, json) as T;
+      case GoodsInfoEntity:
+        return goodsInfoEntityFromJson(data as GoodsInfoEntity, json) as T;
+      case GoodsInfoData:
+        return goodsInfoDataFromJson(data as GoodsInfoData, json) as T;
+      case HomePddCategoryEntity:
+        return homePddCategoryEntityFromJson(
+            data as HomePddCategoryEntity, json) as T;
+      case HomePddCategoryData:
+        return homePddCategoryDataFromJson(data as HomePddCategoryData, json)
+            as T;
+      case HomePddCategoryDataCat:
+        return homePddCategoryDataCatFromJson(
+            data as HomePddCategoryDataCat, json) as T;
+      case VersionInfoEntity:
+        return versionInfoEntityFromJson(data as VersionInfoEntity, json) as T;
+      case VersionInfoData:
+        return versionInfoDataFromJson(data as VersionInfoData, json) as T;
+      case LogisticsInfoEntity:
+        return logisticsInfoEntityFromJson(data as LogisticsInfoEntity, json)
+            as T;
+      case LogisticsInfoData:
+        return logisticsInfoDataFromJson(data as LogisticsInfoData, json) as T;
+      case LogisticsInfoDataExpressList:
+        return logisticsInfoDataExpressListFromJson(
+            data as LogisticsInfoDataExpressList, json) as T;
+      case LogisticsInfoDataExpressListList:
+        return logisticsInfoDataExpressListListFromJson(
+            data as LogisticsInfoDataExpressListList, json) as T;
+      case LogisticsInfoDataExpressInfo:
+        return logisticsInfoDataExpressInfoFromJson(
+            data as LogisticsInfoDataExpressInfo, json) as T;
+      case RechargeExtraEntity:
+        return rechargeExtraEntityFromJson(data as RechargeExtraEntity, json)
+            as T;
+      case RechargeExtraSRechageList:
+        return rechargeExtraSRechageListFromJson(
+            data as RechargeExtraSRechageList, json) as T;
+      case RechargeExtraRatio:
+        return rechargeExtraRatioFromJson(data as RechargeExtraRatio, json)
+            as T;
+      case RegionDataEntity:
+        return regionDataEntityFromJson(data as RegionDataEntity, json) as T;
+      case RegionDataData:
+        return regionDataDataFromJson(data as RegionDataData, json) as T;
+      case RegionDataDatachild:
+        return regionDataDatachildFromJson(data as RegionDataDatachild, json)
+            as T;
+      case RegionDataDatachildchild:
+        return regionDataDatachildchildFromJson(
+            data as RegionDataDatachildchild, json) as T;
+      case LoginEntity:
+        return loginEntityFromJson(data as LoginEntity, json) as T;
+      case LoginData:
+        return loginDataFromJson(data as LoginData, json) as T;
+      case WithdrawalListEntity:
+        return withdrawalListEntityFromJson(data as WithdrawalListEntity, json)
+            as T;
+      case WithdrawalListData:
+        return withdrawalListDataFromJson(data as WithdrawalListData, json)
+            as T;
+      case WithdrawalListDataList:
+        return withdrawalListDataListFromJson(
+            data as WithdrawalListDataList, json) as T;
+      case TaskDetailEntity:
+        return taskDetailEntityFromJson(data as TaskDetailEntity, json) as T;
+      case TaskDetailData:
+        return taskDetailDataFromJson(data as TaskDetailData, json) as T;
     }
     return data as T;
   }
 
   static _getToJson<T>(Type type, data) {
     switch (type) {
-      case KeTaoFeaturedTaskSubmitInfoEntity:
-        return keTaoFeaturedTaskSubmitInfoEntityToJson(
-            data as KeTaoFeaturedTaskSubmitInfoEntity);
-      case KeTaoFeaturedTaskSubmitInfoData:
-        return keTaoFeaturedTaskSubmitInfoDataToJson(
-            data as KeTaoFeaturedTaskSubmitInfoData);
-      case KeTaoFeaturedPayCouponEntity:
-        return keTaoFeaturedPayCouponEntityToJson(
-            data as KeTaoFeaturedPayCouponEntity);
-      case KeTaoFeaturedPayCouponData:
-        return keTaoFeaturedPayCouponDataToJson(
-            data as KeTaoFeaturedPayCouponData);
-      case KeTaoFeaturedVipPriceInfoEntity:
-        return keTaoFeaturedVipPriceInfoEntityToJson(
-            data as KeTaoFeaturedVipPriceInfoEntity);
-      case KeTaoFeaturedVipPriceInfoVip:
-        return keTaoFeaturedVipPriceInfoVipToJson(
-            data as KeTaoFeaturedVipPriceInfoVip);
-      case KeTaoFeaturedVipPriceInfoVipIconDesc:
-        return keTaoFeaturedVipPriceInfoVipIconDescToJson(
-            data as KeTaoFeaturedVipPriceInfoVipIconDesc);
-      case KeTaoFeaturedVipPriceInfoVipMoneyList:
-        return keTaoFeaturedVipPriceInfoVipMoneyListToJson(
-            data as KeTaoFeaturedVipPriceInfoVipMoneyList);
-      case KeTaoFeaturedVipPriceInfoDiamond:
-        return keTaoFeaturedVipPriceInfoDiamondToJson(
-            data as KeTaoFeaturedVipPriceInfoDiamond);
-      case KeTaoFeaturedVipPriceInfoDiamondIconDesc:
-        return keTaoFeaturedVipPriceInfoDiamondIconDescToJson(
-            data as KeTaoFeaturedVipPriceInfoDiamondIconDesc);
-      case KeTaoFeaturedVipPriceInfoDiamondMoneyList:
-        return keTaoFeaturedVipPriceInfoDiamondMoneyListToJson(
-            data as KeTaoFeaturedVipPriceInfoDiamondMoneyList);
-      case KeTaoFeaturedTaskOtherSubmitInfoEntity:
-        return keTaoFeaturedTaskOtherSubmitInfoEntityToJson(
-            data as KeTaoFeaturedTaskOtherSubmitInfoEntity);
-      case KeTaoFeaturedTaskOtherSubmitInfoData:
-        return keTaoFeaturedTaskOtherSubmitInfoDataToJson(
-            data as KeTaoFeaturedTaskOtherSubmitInfoData);
-      case KeTaoFeaturedPhoneChargeListEntity:
-        return keTaoFeaturedPhoneChargeListEntityToJson(
-            data as KeTaoFeaturedPhoneChargeListEntity);
-      case KeTaoFeaturedPhoneChargeListData:
-        return keTaoFeaturedPhoneChargeListDataToJson(
-            data as KeTaoFeaturedPhoneChargeListData);
-      case KeTaoFeaturedPhoneChargeListDataList:
-        return keTaoFeaturedPhoneChargeListDataListToJson(
-            data as KeTaoFeaturedPhoneChargeListDataList);
-      case KeTaoFeaturedFansListEntity:
-        return keTaoFeaturedFansListEntityToJson(
-            data as KeTaoFeaturedFansListEntity);
-      case KeTaoFeaturedFansListData:
-        return keTaoFeaturedFansListDataToJson(
-            data as KeTaoFeaturedFansListData);
-      case KeTaoFeaturedFansListDataList:
-        return keTaoFeaturedFansListDataListToJson(
-            data as KeTaoFeaturedFansListDataList);
-      case KeTaoFeaturedHomeIconListEntity:
-        return keTaoFeaturedHomeIconListEntityToJson(
-            data as KeTaoFeaturedHomeIconListEntity);
-      case KeTaoFeaturedHomeIconListIconList:
-        return keTaoFeaturedHomeIconListIconListToJson(
-            data as KeTaoFeaturedHomeIconListIconList);
-      case KeTaoFeaturedShopTypeEntity:
-        return keTaoFeaturedShopTypeEntityToJson(
-            data as KeTaoFeaturedShopTypeEntity);
+      case TaskSubmitInfoEntity:
+        return taskSubmitInfoEntityToJson(data as TaskSubmitInfoEntity);
+      case TaskSubmitInfoData:
+        return taskSubmitInfoDataToJson(data as TaskSubmitInfoData);
+      case PayCouponEntity:
+        return payCouponEntityToJson(data as PayCouponEntity);
+      case PayCouponData:
+        return payCouponDataToJson(data as PayCouponData);
+      case VipPriceInfoEntity:
+        return vipPriceInfoEntityToJson(data as VipPriceInfoEntity);
+      case VipPriceInfoVip:
+        return vipPriceInfoVipToJson(data as VipPriceInfoVip);
+      case VipPriceInfoVipIconDesc:
+        return vipPriceInfoVipIconDescToJson(data as VipPriceInfoVipIconDesc);
+      case VipPriceInfoVipMoneyList:
+        return vipPriceInfoVipMoneyListToJson(data as VipPriceInfoVipMoneyList);
+      case VipPriceInfoDiamond:
+        return vipPriceInfoDiamondToJson(data as VipPriceInfoDiamond);
+      case VipPriceInfoDiamondIconDesc:
+        return vipPriceInfoDiamondIconDescToJson(
+            data as VipPriceInfoDiamondIconDesc);
+      case VipPriceInfoDiamondMoneyList:
+        return vipPriceInfoDiamondMoneyListToJson(
+            data as VipPriceInfoDiamondMoneyList);
+      case TaskOtherSubmitInfoEntity:
+        return taskOtherSubmitInfoEntityToJson(
+            data as TaskOtherSubmitInfoEntity);
+      case TaskOtherSubmitInfoData:
+        return taskOtherSubmitInfoDataToJson(data as TaskOtherSubmitInfoData);
+      case PhoneChargeListEntity:
+        return phoneChargeListEntityToJson(data as PhoneChargeListEntity);
+      case PhoneChargeListData:
+        return phoneChargeListDataToJson(data as PhoneChargeListData);
+      case PhoneChargeListDataList:
+        return phoneChargeListDataListToJson(data as PhoneChargeListDataList);
+      case FansListEntity:
+        return fansListEntityToJson(data as FansListEntity);
+      case FansListData:
+        return fansListDataToJson(data as FansListData);
+      case FansListDataList:
+        return fansListDataListToJson(data as FansListDataList);
+      case HomeIconListEntity:
+        return homeIconListEntityToJson(data as HomeIconListEntity);
+      case HomeIconListIconList:
+        return homeIconListIconListToJson(data as HomeIconListIconList);
+      case ShopTypeEntity:
+        return shopTypeEntityToJson(data as ShopTypeEntity);
       case ShopTypeData:
         return shopTypeDataToJson(data as ShopTypeData);
       case ShopTypeDataList:
         return shopTypeDataListToJson(data as ShopTypeDataList);
-      case KeTaoFeaturedResultBeanEntity:
-        return keTaoFeaturedResultBeanEntityToJson(
-            data as KeTaoFeaturedResultBeanEntity);
-      case KeTaoFeaturedSearchPddGoodsListEntity:
-        return keTaoFeaturedSearchPddGoodsListEntityToJson(
-            data as KeTaoFeaturedSearchPddGoodsListEntity);
-      case KeTaoFeaturedSearchPddGoodsListData:
-        return keTaoFeaturedSearchPddGoodsListDataToJson(
-            data as KeTaoFeaturedSearchPddGoodsListData);
-      case KeTaoFeaturedSearchPddGoodsListDataList:
-        return keTaoFeaturedSearchPddGoodsListDataListToJson(
-            data as KeTaoFeaturedSearchPddGoodsListDataList);
-      case KeTaoFeaturedSearchPddGoodsListDataListCoupons:
-        return keTaoFeaturedSearchPddGoodsListDataListCouponsToJson(
-            data as KeTaoFeaturedSearchPddGoodsListDataListCoupons);
-      case KeTaoFeaturedPosterEntity:
-        return keTaoFeaturedPosterEntityToJson(
-            data as KeTaoFeaturedPosterEntity);
-      case KeTaoFeaturedPosterData:
-        return keTaoFeaturedPosterDataToJson(data as KeTaoFeaturedPosterData);
-      case KeTaoFeaturedGoodsQueueEntity:
-        return keTaoFeaturedGoodsQueueEntityToJson(
-            data as KeTaoFeaturedGoodsQueueEntity);
-      case KeTaoFeaturedGoodsQueueData:
-        return keTaoFeaturedGoodsQueueDataToJson(
-            data as KeTaoFeaturedGoodsQueueData);
-      case KeTaoFeaturedGoodsQueueDataSignPackage:
-        return keTaoFeaturedGoodsQueueDataSignPackageToJson(
-            data as KeTaoFeaturedGoodsQueueDataSignPackage);
-      case KeTaoFeaturedGoodsQueueDataGoodsInfo:
-        return keTaoFeaturedGoodsQueueDataGoodsInfoToJson(
-            data as KeTaoFeaturedGoodsQueueDataGoodsInfo);
-      case KeTaoFeaturedGoodsQueueDataList:
-        return keTaoFeaturedGoodsQueueDataListToJson(
-            data as KeTaoFeaturedGoodsQueueDataList);
-      case KeTaoFeaturedGoodsQueueDataUserInfo:
-        return keTaoFeaturedGoodsQueueDataUserInfoToJson(
-            data as KeTaoFeaturedGoodsQueueDataUserInfo);
-      case KeTaoFeaturedTaskRecordListEntity:
-        return keTaoFeaturedTaskRecordListEntityToJson(
-            data as KeTaoFeaturedTaskRecordListEntity);
-      case KeTaoFeaturedTaskRecordListData:
-        return keTaoFeaturedTaskRecordListDataToJson(
-            data as KeTaoFeaturedTaskRecordListData);
-      case KeTaoFeaturedTaskRecordListDataList:
-        return keTaoFeaturedTaskRecordListDataListToJson(
-            data as KeTaoFeaturedTaskRecordListDataList);
-      case KeTaoFeaturedFansTotalEntity:
-        return keTaoFeaturedFansTotalEntityToJson(
-            data as KeTaoFeaturedFansTotalEntity);
-      case KeTaoFeaturedFansTotalData:
-        return keTaoFeaturedFansTotalDataToJson(
-            data as KeTaoFeaturedFansTotalData);
-      case KeTaoFeaturedFansTotalDataAgentInfo:
-        return keTaoFeaturedFansTotalDataAgentInfoToJson(
-            data as KeTaoFeaturedFansTotalDataAgentInfo);
-      case KeTaoFeaturedFansTotalDataCountInfo:
-        return keTaoFeaturedFansTotalDataCountInfoToJson(
-            data as KeTaoFeaturedFansTotalDataCountInfo);
-      case KeTaoFeaturedGoodsSpecInfoEntity:
-        return keTaoFeaturedGoodsSpecInfoEntityToJson(
-            data as KeTaoFeaturedGoodsSpecInfoEntity);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfo:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfo);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecItemToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIdsToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01ToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10ToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10);
-      case KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11:
-        return keTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11ToJson(
-            data as KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11);
-      case KeTaoFeaturedAddressListEntity:
-        return keTaoFeaturedAddressListEntityToJson(
-            data as KeTaoFeaturedAddressListEntity);
-      case KeTaoFeaturedAddressListData:
-        return keTaoFeaturedAddressListDataToJson(
-            data as KeTaoFeaturedAddressListData);
-      case KeTaoFeaturedUserHolderProfitEntity:
-        return keTaoFeaturedUserHolderProfitEntityToJson(
-            data as KeTaoFeaturedUserHolderProfitEntity);
-      case KeTaoFeaturedUserHolderProfitPartnerBonus:
-        return keTaoFeaturedUserHolderProfitPartnerBonusToJson(
-            data as KeTaoFeaturedUserHolderProfitPartnerBonus);
-      case KeTaoFeaturedOrderDetailEntity:
-        return keTaoFeaturedOrderDetailEntityToJson(
-            data as KeTaoFeaturedOrderDetailEntity);
-      case KeTaoFeaturedOrderDetailData:
-        return keTaoFeaturedOrderDetailDataToJson(
-            data as KeTaoFeaturedOrderDetailData);
-      case KeTaoFeaturedOrderDetailDataGoodsList:
-        return keTaoFeaturedOrderDetailDataGoodsListToJson(
-            data as KeTaoFeaturedOrderDetailDataGoodsList);
-      case KeTaoFeaturedPddGoodsInfoEntity:
-        return keTaoFeaturedPddGoodsInfoEntityToJson(
-            data as KeTaoFeaturedPddGoodsInfoEntity);
-      case KeTaoFeaturedPddGoodsInfoData:
-        return keTaoFeaturedPddGoodsInfoDataToJson(
-            data as KeTaoFeaturedPddGoodsInfoData);
-      case KeTaoFeaturedPddGoodsInfoDataCoupons:
-        return keTaoFeaturedPddGoodsInfoDataCouponsToJson(
-            data as KeTaoFeaturedPddGoodsInfoDataCoupons);
-      case KeTaoFeaturedIncomeListEntity:
-        return keTaoFeaturedIncomeListEntityToJson(
-            data as KeTaoFeaturedIncomeListEntity);
-      case KeTaoFeaturedIncomeListData:
-        return keTaoFeaturedIncomeListDataToJson(
-            data as KeTaoFeaturedIncomeListData);
-      case KeTaoFeaturedIncomeListDataList:
-        return keTaoFeaturedIncomeListDataListToJson(
-            data as KeTaoFeaturedIncomeListDataList);
-      case KeTaoFeaturedPddGoodsListEntity:
-        return keTaoFeaturedPddGoodsListEntityToJson(
-            data as KeTaoFeaturedPddGoodsListEntity);
-      case KeTaoFeaturedPddGoodsListData:
-        return keTaoFeaturedPddGoodsListDataToJson(
-            data as KeTaoFeaturedPddGoodsListData);
-      case KeTaoFeaturedPddGoodsListDataList:
-        return keTaoFeaturedPddGoodsListDataListToJson(
-            data as KeTaoFeaturedPddGoodsListDataList);
-      case KeTaoFeaturedPddGoodsListDataListCoupons:
-        return keTaoFeaturedPddGoodsListDataListCouponsToJson(
-            data as KeTaoFeaturedPddGoodsListDataListCoupons);
-      case KeTaoFeaturedBalancePayInfoEntity:
-        return keTaoFeaturedBalancePayInfoEntityToJson(
-            data as KeTaoFeaturedBalancePayInfoEntity);
-      case KeTaoFeaturedBalancePayInfoData:
-        return keTaoFeaturedBalancePayInfoDataToJson(
-            data as KeTaoFeaturedBalancePayInfoData);
-      case KeTaoFeaturedGoodsQueuePersionalEntity:
-        return keTaoFeaturedGoodsQueuePersionalEntityToJson(
-            data as KeTaoFeaturedGoodsQueuePersionalEntity);
-      case KeTaoFeaturedGoodsQueuePersionalData:
-        return keTaoFeaturedGoodsQueuePersionalDataToJson(
-            data as KeTaoFeaturedGoodsQueuePersionalData);
-      case KeTaoFeaturedPddCategoryListEntity:
-        return keTaoFeaturedPddCategoryListEntityToJson(
-            data as KeTaoFeaturedPddCategoryListEntity);
-      case KeTaoFeaturedPddCategoryListData:
-        return keTaoFeaturedPddCategoryListDataToJson(
-            data as KeTaoFeaturedPddCategoryListData);
-      case KeTaoFeaturedMicroShareholderEntity:
-        return keTaoFeaturedMicroShareholderEntityToJson(
-            data as KeTaoFeaturedMicroShareholderEntity);
-      case KeTaoFeaturedMicroShareholderData:
-        return keTaoFeaturedMicroShareholderDataToJson(
-            data as KeTaoFeaturedMicroShareholderData);
-      case KeTaoFeaturedMicroShareholderItemEntity:
-        return keTaoFeaturedMicroShareholderItemEntityToJson(
-            data as KeTaoFeaturedMicroShareholderItemEntity);
-      case KeTaoFeaturedMicroShareholderItemEstimate:
-        return keTaoFeaturedMicroShareholderItemEstimateToJson(
-            data as KeTaoFeaturedMicroShareholderItemEstimate);
-      case KeTaoFeaturedMicroShareholderItemInterests:
-        return keTaoFeaturedMicroShareholderItemInterestsToJson(
-            data as KeTaoFeaturedMicroShareholderItemInterests);
-      case KeTaoFeaturedCategoryBeanEntity:
-        return keTaoFeaturedCategoryBeanEntityToJson(
-            data as KeTaoFeaturedCategoryBeanEntity);
-      case KeTaoFeaturedCategoryBeanData:
-        return keTaoFeaturedCategoryBeanDataToJson(
-            data as KeTaoFeaturedCategoryBeanData);
-      case KeTaoFeaturedPddHomeEntity:
-        return keTaoFeaturedPddHomeEntityToJson(
-            data as KeTaoFeaturedPddHomeEntity);
-      case KeTaoFeaturedPddHomeData:
-        return keTaoFeaturedPddHomeDataToJson(data as KeTaoFeaturedPddHomeData);
-      case KeTaoFeaturedPddHomeDataCat:
-        return keTaoFeaturedPddHomeDataCatToJson(
-            data as KeTaoFeaturedPddHomeDataCat);
-      case KeTaoFeaturedPddHomeDataBanner:
-        return keTaoFeaturedPddHomeDataBannerToJson(
-            data as KeTaoFeaturedPddHomeDataBanner);
-      case KeTaoFeaturedPddHomeDataTool:
-        return keTaoFeaturedPddHomeDataToolToJson(
-            data as KeTaoFeaturedPddHomeDataTool);
-      case KeTaoFeaturedPddHomeDataAd:
-        return keTaoFeaturedPddHomeDataAdToJson(
-            data as KeTaoFeaturedPddHomeDataAd);
-      case KeTaoFeaturedRechargeEntity:
-        return keTaoFeaturedRechargeEntityToJson(
-            data as KeTaoFeaturedRechargeEntity);
-      case KeTaoFeaturedRechargeData:
-        return keTaoFeaturedRechargeDataToJson(
-            data as KeTaoFeaturedRechargeData);
-      case KeTaoFeaturedRechargeDataRechageList:
-        return keTaoFeaturedRechargeDataRechageListToJson(
-            data as KeTaoFeaturedRechargeDataRechageList);
-      case KeTaoFeaturedRechargeDatacouponList:
-        return keTaoFeaturedRechargeDatacouponListToJson(
-            data as KeTaoFeaturedRechargeDatacouponList);
-      case KeTaoFeaturedHomeEntity:
-        return keTaoFeaturedHomeEntityToJson(data as KeTaoFeaturedHomeEntity);
-      case KeTaoFeaturedHomeData:
-        return keTaoFeaturedHomeDataToJson(data as KeTaoFeaturedHomeData);
-      case KeTaoFeaturedHomeDataBanner:
-        return keTaoFeaturedHomeDataBannerToJson(
-            data as KeTaoFeaturedHomeDataBanner);
-      case KeTaoFeaturedHomeDataTaskList:
-        return keTaoFeaturedHomeDataTaskListToJson(
-            data as KeTaoFeaturedHomeDataTaskList);
-      case KeTaoFeaturedHomeDataTaskListList:
-        return keTaoFeaturedHomeDataTaskListListToJson(
-            data as KeTaoFeaturedHomeDataTaskListList);
-      case KeTaoFeaturedSearchGoodsListEntity:
-        return keTaoFeaturedSearchGoodsListEntityToJson(
-            data as KeTaoFeaturedSearchGoodsListEntity);
-      case KeTaoFeaturedSearchGoodsListData:
-        return keTaoFeaturedSearchGoodsListDataToJson(
-            data as KeTaoFeaturedSearchGoodsListData);
-      case KeTaoFeaturedSearchGoodsListDataList:
-        return keTaoFeaturedSearchGoodsListDataListToJson(
-            data as KeTaoFeaturedSearchGoodsListDataList);
-      case KeTaoFeaturedAlipayPayinfoEntity:
-        return keTaoFeaturedAlipayPayinfoEntityToJson(
-            data as KeTaoFeaturedAlipayPayinfoEntity);
-      case KeTaoFeaturedAlipayPayinfoData:
-        return keTaoFeaturedAlipayPayinfoDataToJson(
-            data as KeTaoFeaturedAlipayPayinfoData);
-      case KeTaoFeaturedVipPriceEntity:
-        return keTaoFeaturedVipPriceEntityToJson(
-            data as KeTaoFeaturedVipPriceEntity);
-      case KeTaoFeaturedVipPriceData:
-        return keTaoFeaturedVipPriceDataToJson(
-            data as KeTaoFeaturedVipPriceData);
-      case KeTaoFeaturedWithdrawalInfoEntity:
-        return keTaoFeaturedWithdrawalInfoEntityToJson(
-            data as KeTaoFeaturedWithdrawalInfoEntity);
-      case KeTaoFeaturedWithdrawalInfoData:
-        return keTaoFeaturedWithdrawalInfoDataToJson(
-            data as KeTaoFeaturedWithdrawalInfoData);
-      case KeTaoFeaturedWithdrawalInfoDataUser:
-        return keTaoFeaturedWithdrawalInfoDataUserToJson(
-            data as KeTaoFeaturedWithdrawalInfoDataUser);
-      case KeTaoFeaturedWithdrawalInfoDataUseModel:
-        return keTaoFeaturedWithdrawalInfoDataUseModelToJson(
-            data as KeTaoFeaturedWithdrawalInfoDataUseModel);
-      case KeTaoFeaturedOrderUserInfoEntity:
-        return keTaoFeaturedOrderUserInfoEntityToJson(
-            data as KeTaoFeaturedOrderUserInfoEntity);
-      case KeTaoFeaturedOrderUserInfoUserInfo:
-        return keTaoFeaturedOrderUserInfoUserInfoToJson(
-            data as KeTaoFeaturedOrderUserInfoUserInfo);
-      case KeTaoFeaturedHomeGoodsListEntity:
-        return keTaoFeaturedHomeGoodsListEntityToJson(
-            data as KeTaoFeaturedHomeGoodsListEntity);
-      case KeTaoFeaturedHomeGoodsListGoodsList:
-        return keTaoFeaturedHomeGoodsListGoodsListToJson(
-            data as KeTaoFeaturedHomeGoodsListGoodsList);
-      case KeTaoFeaturedOrderListEntity:
-        return keTaoFeaturedOrderListEntityToJson(
-            data as KeTaoFeaturedOrderListEntity);
-      case KeTaoFeaturedOrderListData:
-        return keTaoFeaturedOrderListDataToJson(
-            data as KeTaoFeaturedOrderListData);
-      case KeTaoFeaturedOrderListDataList:
-        return keTaoFeaturedOrderListDataListToJson(
-            data as KeTaoFeaturedOrderListDataList);
-      case KeTaoFeaturedOrderListDataListGoodsList:
-        return keTaoFeaturedOrderListDataListGoodsListToJson(
-            data as KeTaoFeaturedOrderListDataListGoodsList);
-      case KeTaoFeaturedWithdrawalUserInfoEntity:
-        return keTaoFeaturedWithdrawalUserInfoEntityToJson(
-            data as KeTaoFeaturedWithdrawalUserInfoEntity);
-      case KeTaoFeaturedWithdrawalUserInfoData:
-        return keTaoFeaturedWithdrawalUserInfoDataToJson(
-            data as KeTaoFeaturedWithdrawalUserInfoData);
-      case KeTaoFeaturedWithdrawalUserInfoDataUser:
-        return keTaoFeaturedWithdrawalUserInfoDataUserToJson(
-            data as KeTaoFeaturedWithdrawalUserInfoDataUser);
-      case KeTaoFeaturedShareholderIncomeListEntity:
-        return keTaoFeaturedShareholderIncomeListEntityToJson(
-            data as KeTaoFeaturedShareholderIncomeListEntity);
-      case KeTaoFeaturedAddressInfoEntity:
-        return keTaoFeaturedAddressInfoEntityToJson(
-            data as KeTaoFeaturedAddressInfoEntity);
-      case KeTaoFeaturedAddressInfoData:
-        return keTaoFeaturedAddressInfoDataToJson(
-            data as KeTaoFeaturedAddressInfoData);
-      case KeTaoFeaturedTaskShareEntity:
-        return keTaoFeaturedTaskShareEntityToJson(
-            data as KeTaoFeaturedTaskShareEntity);
-      case KeTaoFeaturedTaskShareData:
-        return keTaoFeaturedTaskShareDataToJson(
-            data as KeTaoFeaturedTaskShareData);
-      case KeTaoFeaturedTaskShareDataShareInfo:
-        return keTaoFeaturedTaskShareDataShareInfoToJson(
-            data as KeTaoFeaturedTaskShareDataShareInfo);
-      case KeTaoFeaturedTaskShareDataFooterImg:
-        return keTaoFeaturedTaskShareDataFooterImgToJson(
-            data as KeTaoFeaturedTaskShareDataFooterImg);
-      case KeTaoFeaturedWechatPayinfoEntity:
-        return keTaoFeaturedWechatPayinfoEntityToJson(
-            data as KeTaoFeaturedWechatPayinfoEntity);
-      case KeTaoFeaturedWechatPayinfoData:
-        return keTaoFeaturedWechatPayinfoDataToJson(
-            data as KeTaoFeaturedWechatPayinfoData);
-      case KeTaoFeaturedWechatPayinfoDataPayInfo:
-        return keTaoFeaturedWechatPayinfoDataPayInfoToJson(
-            data as KeTaoFeaturedWechatPayinfoDataPayInfo);
-      case KeTaoFeaturedMessageListEntity:
-        return keTaoFeaturedMessageListEntityToJson(
-            data as KeTaoFeaturedMessageListEntity);
-      case KeTaoFeaturedMessageListData:
-        return keTaoFeaturedMessageListDataToJson(
-            data as KeTaoFeaturedMessageListData);
-      case KeTaoFeaturedMessageListDataList:
-        return keTaoFeaturedMessageListDataListToJson(
-            data as KeTaoFeaturedMessageListDataList);
-      case KeTaoFeaturedUserInfoEntity:
-        return keTaoFeaturedUserInfoEntityToJson(
-            data as KeTaoFeaturedUserInfoEntity);
-      case KeTaoFeaturedUserInfoData:
-        return keTaoFeaturedUserInfoDataToJson(
-            data as KeTaoFeaturedUserInfoData);
-      case KeTaoFeaturedTaskDetailOtherEntity:
-        return keTaoFeaturedTaskDetailOtherEntityToJson(
-            data as KeTaoFeaturedTaskDetailOtherEntity);
-      case KeTaoFeaturedTaskDetailOtherData:
-        return keTaoFeaturedTaskDetailOtherDataToJson(
-            data as KeTaoFeaturedTaskDetailOtherData);
-      case KeTaoFeaturedTaskDetailOtherDataDescJson:
-        return keTaoFeaturedTaskDetailOtherDataDescJsonToJson(
-            data as KeTaoFeaturedTaskDetailOtherDataDescJson);
-      case KeTaoFeaturedGoodsInfoEntity:
-        return keTaoFeaturedGoodsInfoEntityToJson(
-            data as KeTaoFeaturedGoodsInfoEntity);
-      case KeTaoFeaturedGoodsInfoData:
-        return keTaoFeaturedGoodsInfoDataToJson(
-            data as KeTaoFeaturedGoodsInfoData);
-      case KeTaoFeaturedHomePddCategoryEntity:
-        return keTaoFeaturedHomePddCategoryEntityToJson(
-            data as KeTaoFeaturedHomePddCategoryEntity);
-      case KeTaoFeaturedHomePddCategoryData:
-        return keTaoFeaturedHomePddCategoryDataToJson(
-            data as KeTaoFeaturedHomePddCategoryData);
-      case KeTaoFeaturedHomePddCategoryDataCat:
-        return keTaoFeaturedHomePddCategoryDataCatToJson(
-            data as KeTaoFeaturedHomePddCategoryDataCat);
-      case KeTaoFeaturedVersionInfoEntity:
-        return keTaoFeaturedVersionInfoEntityToJson(
-            data as KeTaoFeaturedVersionInfoEntity);
-      case KeTaoFeaturedVersionInfoData:
-        return keTaoFeaturedVersionInfoDataToJson(
-            data as KeTaoFeaturedVersionInfoData);
-      case KeTaoFeaturedLogisticsInfoEntity:
-        return keTaoFeaturedLogisticsInfoEntityToJson(
-            data as KeTaoFeaturedLogisticsInfoEntity);
-      case KeTaoFeaturedLogisticsInfoData:
-        return keTaoFeaturedLogisticsInfoDataToJson(
-            data as KeTaoFeaturedLogisticsInfoData);
-      case KeTaoFeaturedLogisticsInfoDataExpressList:
-        return keTaoFeaturedLogisticsInfoDataExpressListToJson(
-            data as KeTaoFeaturedLogisticsInfoDataExpressList);
-      case KeTaoFeaturedLogisticsInfoDataExpressListList:
-        return keTaoFeaturedLogisticsInfoDataExpressListListToJson(
-            data as KeTaoFeaturedLogisticsInfoDataExpressListList);
-      case KeTaoFeaturedLogisticsInfoDataExpressInfo:
-        return keTaoFeaturedLogisticsInfoDataExpressInfoToJson(
-            data as KeTaoFeaturedLogisticsInfoDataExpressInfo);
-      case KeTaoFeaturedRechargeExtraEntity:
-        return keTaoFeaturedRechargeExtraEntityToJson(
-            data as KeTaoFeaturedRechargeExtraEntity);
-      case KeTaoFeaturedRechargeExtraSRechageList:
-        return keTaoFeaturedRechargeExtraSRechageListToJson(
-            data as KeTaoFeaturedRechargeExtraSRechageList);
-      case KeTaoFeaturedRechargeExtraRatio:
-        return keTaoFeaturedRechargeExtraRatioToJson(
-            data as KeTaoFeaturedRechargeExtraRatio);
-      case KeTaoFeaturedRegionDataEntity:
-        return keTaoFeaturedRegionDataEntityToJson(
-            data as KeTaoFeaturedRegionDataEntity);
-      case KeTaoFeaturedRegionDataData:
-        return keTaoFeaturedRegionDataDataToJson(
-            data as KeTaoFeaturedRegionDataData);
-      case KeTaoFeaturedRegionDataDatachild:
-        return keTaoFeaturedRegionDataDatachildToJson(
-            data as KeTaoFeaturedRegionDataDatachild);
-      case KeTaoFeaturedRegionDataDatachildchild:
-        return keTaoFeaturedRegionDataDatachildchildToJson(
-            data as KeTaoFeaturedRegionDataDatachildchild);
-      case KeTaoFeaturedLoginEntity:
-        return keTaoFeaturedLoginEntityToJson(data as KeTaoFeaturedLoginEntity);
-      case KeTaoFeaturedLoginData:
-        return keTaoFeaturedLoginDataToJson(data as KeTaoFeaturedLoginData);
-      case KeTaoFeaturedWithdrawalListEntity:
-        return keTaoFeaturedWithdrawalListEntityToJson(
-            data as KeTaoFeaturedWithdrawalListEntity);
-      case KeTaoFeaturedWithdrawalListData:
-        return keTaoFeaturedWithdrawalListDataToJson(
-            data as KeTaoFeaturedWithdrawalListData);
-      case KeTaoFeaturedWithdrawalListDataList:
-        return keTaoFeaturedWithdrawalListDataListToJson(
-            data as KeTaoFeaturedWithdrawalListDataList);
-      case KeTaoFeaturedTaskDetailEntity:
-        return keTaoFeaturedTaskDetailEntityToJson(
-            data as KeTaoFeaturedTaskDetailEntity);
-      case KeTaoFeaturedTaskDetailData:
-        return keTaoFeaturedTaskDetailDataToJson(
-            data as KeTaoFeaturedTaskDetailData);
+      case ResultBeanEntity:
+        return resultBeanEntityToJson(data as ResultBeanEntity);
+      case SearchPddGoodsListEntity:
+        return searchPddGoodsListEntityToJson(data as SearchPddGoodsListEntity);
+      case SearchPddGoodsListData:
+        return searchPddGoodsListDataToJson(data as SearchPddGoodsListData);
+      case SearchPddGoodsListDataList:
+        return searchPddGoodsListDataListToJson(
+            data as SearchPddGoodsListDataList);
+      case SearchPddGoodsListDataListCoupons:
+        return searchPddGoodsListDataListCouponsToJson(
+            data as SearchPddGoodsListDataListCoupons);
+      case PosterEntity:
+        return posterEntityToJson(data as PosterEntity);
+      case PosterData:
+        return posterDataToJson(data as PosterData);
+      case GoodsQueueEntity:
+        return goodsQueueEntityToJson(data as GoodsQueueEntity);
+      case GoodsQueueData:
+        return goodsQueueDataToJson(data as GoodsQueueData);
+      case GoodsQueueDataSignPackage:
+        return goodsQueueDataSignPackageToJson(
+            data as GoodsQueueDataSignPackage);
+      case GoodsQueueDataGoodsInfo:
+        return goodsQueueDataGoodsInfoToJson(data as GoodsQueueDataGoodsInfo);
+      case GoodsQueueDataList:
+        return goodsQueueDataListToJson(data as GoodsQueueDataList);
+      case GoodsQueueDataUserInfo:
+        return goodsQueueDataUserInfoToJson(data as GoodsQueueDataUserInfo);
+      case TaskRecordListEntity:
+        return taskRecordListEntityToJson(data as TaskRecordListEntity);
+      case TaskRecordListData:
+        return taskRecordListDataToJson(data as TaskRecordListData);
+      case TaskRecordListDataList:
+        return taskRecordListDataListToJson(data as TaskRecordListDataList);
+      case FansTotalEntity:
+        return fansTotalEntityToJson(data as FansTotalEntity);
+      case FansTotalData:
+        return fansTotalDataToJson(data as FansTotalData);
+      case FansTotalDataAgentInfo:
+        return fansTotalDataAgentInfoToJson(data as FansTotalDataAgentInfo);
+      case FansTotalDataCountInfo:
+        return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);
+      case GoodsSpecInfoEntity:
+        return goodsSpecInfoEntityToJson(data as GoodsSpecInfoEntity);
+      case GoodsSpecInfoSpecInfo:
+        return goodsSpecInfoSpecInfoToJson(data as GoodsSpecInfoSpecInfo);
+      case GoodsSpecInfoSpecInfoSpecItem:
+        return goodsSpecInfoSpecInfoSpecItemToJson(
+            data as GoodsSpecInfoSpecInfoSpecItem);
+      case GoodsSpecInfoSpecInfoSpecPrice:
+        return goodsSpecInfoSpecInfoSpecPriceToJson(
+            data as GoodsSpecInfoSpecInfoSpecPrice);
+      case GoodsSpecInfoSpecInfoSpecPriceIds:
+        return goodsSpecInfoSpecInfoSpecPriceIdsToJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds);
+      case GoodsSpecInfoSpecInfoSpecPriceIds01:
+        return goodsSpecInfoSpecInfoSpecPriceIds01ToJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds01);
+      case GoodsSpecInfoSpecInfoSpecPriceIds10:
+        return goodsSpecInfoSpecInfoSpecPriceIds10ToJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds10);
+      case GoodsSpecInfoSpecInfoSpecPriceIds11:
+        return goodsSpecInfoSpecInfoSpecPriceIds11ToJson(
+            data as GoodsSpecInfoSpecInfoSpecPriceIds11);
+      case AddressListEntity:
+        return addressListEntityToJson(data as AddressListEntity);
+      case AddressListData:
+        return addressListDataToJson(data as AddressListData);
+      case UserHolderProfitEntity:
+        return userHolderProfitEntityToJson(data as UserHolderProfitEntity);
+      case UserHolderProfitPartnerBonus:
+        return userHolderProfitPartnerBonusToJson(
+            data as UserHolderProfitPartnerBonus);
+      case OrderDetailEntity:
+        return orderDetailEntityToJson(data as OrderDetailEntity);
+      case OrderDetailData:
+        return orderDetailDataToJson(data as OrderDetailData);
+      case OrderDetailDataGoodsList:
+        return orderDetailDataGoodsListToJson(data as OrderDetailDataGoodsList);
+      case PddGoodsInfoEntity:
+        return pddGoodsInfoEntityToJson(data as PddGoodsInfoEntity);
+      case PddGoodsInfoData:
+        return pddGoodsInfoDataToJson(data as PddGoodsInfoData);
+      case PddGoodsInfoDataCoupons:
+        return pddGoodsInfoDataCouponsToJson(data as PddGoodsInfoDataCoupons);
+      case IncomeListEntity:
+        return incomeListEntityToJson(data as IncomeListEntity);
+      case IncomeListData:
+        return incomeListDataToJson(data as IncomeListData);
+      case IncomeListDataList:
+        return incomeListDataListToJson(data as IncomeListDataList);
+      case PddGoodsListEntity:
+        return pddGoodsListEntityToJson(data as PddGoodsListEntity);
+      case PddGoodsListData:
+        return pddGoodsListDataToJson(data as PddGoodsListData);
+      case PddGoodsListDataList:
+        return pddGoodsListDataListToJson(data as PddGoodsListDataList);
+      case PddGoodsListDataListCoupons:
+        return pddGoodsListDataListCouponsToJson(
+            data as PddGoodsListDataListCoupons);
+      case BalancePayInfoEntity:
+        return balancePayInfoEntityToJson(data as BalancePayInfoEntity);
+      case BalancePayInfoData:
+        return balancePayInfoDataToJson(data as BalancePayInfoData);
+      case GoodsQueuePersionalEntity:
+        return goodsQueuePersionalEntityToJson(
+            data as GoodsQueuePersionalEntity);
+      case GoodsQueuePersionalData:
+        return goodsQueuePersionalDataToJson(data as GoodsQueuePersionalData);
+      case PddCategoryListEntity:
+        return pddCategoryListEntityToJson(data as PddCategoryListEntity);
+      case PddCategoryListData:
+        return pddCategoryListDataToJson(data as PddCategoryListData);
+      case MicroShareholderEntity:
+        return microShareholderEntityToJson(data as MicroShareholderEntity);
+      case MicroShareholderData:
+        return microShareholderDataToJson(data as MicroShareholderData);
+      case MicroShareholderItemEntity:
+        return microShareholderItemEntityToJson(
+            data as MicroShareholderItemEntity);
+      case MicroShareholderItemEstimate:
+        return microShareholderItemEstimateToJson(
+            data as MicroShareholderItemEstimate);
+      case MicroShareholderItemInterests:
+        return microShareholderItemInterestsToJson(
+            data as MicroShareholderItemInterests);
+      case CategoryBeanEntity:
+        return categoryBeanEntityToJson(data as CategoryBeanEntity);
+      case CategoryBeanData:
+        return categoryBeanDataToJson(data as CategoryBeanData);
+      case PddHomeEntity:
+        return pddHomeEntityToJson(data as PddHomeEntity);
+      case PddHomeData:
+        return pddHomeDataToJson(data as PddHomeData);
+      case PddHomeDataCat:
+        return pddHomeDataCatToJson(data as PddHomeDataCat);
+      case PddHomeDataBanner:
+        return pddHomeDataBannerToJson(data as PddHomeDataBanner);
+      case PddHomeDataTool:
+        return pddHomeDataToolToJson(data as PddHomeDataTool);
+      case PddHomeDataAd:
+        return pddHomeDataAdToJson(data as PddHomeDataAd);
+      case RechargeEntity:
+        return rechargeEntityToJson(data as RechargeEntity);
+      case RechargeData:
+        return rechargeDataToJson(data as RechargeData);
+      case RechargeDataRechageList:
+        return rechargeDataRechageListToJson(data as RechargeDataRechageList);
+      case RechargeDatacouponList:
+        return rechargeDatacouponListToJson(data as RechargeDatacouponList);
+      case HomeEntity:
+        return homeEntityToJson(data as HomeEntity);
+      case HomeData:
+        return homeDataToJson(data as HomeData);
+      case HomeDataBanner:
+        return homeDataBannerToJson(data as HomeDataBanner);
+      case HomeDataTaskList:
+        return homeDataTaskListToJson(data as HomeDataTaskList);
+      case HomeDataTaskListList:
+        return homeDataTaskListListToJson(data as HomeDataTaskListList);
+      case SearchGoodsListEntity:
+        return searchGoodsListEntityToJson(data as SearchGoodsListEntity);
+      case SearchGoodsListData:
+        return searchGoodsListDataToJson(data as SearchGoodsListData);
+      case SearchGoodsListDataList:
+        return searchGoodsListDataListToJson(data as SearchGoodsListDataList);
+      case AlipayPayinfoEntity:
+        return alipayPayinfoEntityToJson(data as AlipayPayinfoEntity);
+      case AlipayPayinfoData:
+        return alipayPayinfoDataToJson(data as AlipayPayinfoData);
+      case VipPriceEntity:
+        return vipPriceEntityToJson(data as VipPriceEntity);
+      case VipPriceData:
+        return vipPriceDataToJson(data as VipPriceData);
+      case WithdrawalInfoEntity:
+        return withdrawalInfoEntityToJson(data as WithdrawalInfoEntity);
+      case WithdrawalInfoData:
+        return withdrawalInfoDataToJson(data as WithdrawalInfoData);
+      case WithdrawalInfoDataUser:
+        return withdrawalInfoDataUserToJson(data as WithdrawalInfoDataUser);
+      case WithdrawalInfoDataUseModel:
+        return withdrawalInfoDataUseModelToJson(
+            data as WithdrawalInfoDataUseModel);
+      case OrderUserInfoEntity:
+        return orderUserInfoEntityToJson(data as OrderUserInfoEntity);
+      case OrderUserInfoUserInfo:
+        return orderUserInfoUserInfoToJson(data as OrderUserInfoUserInfo);
+      case HomeGoodsListEntity:
+        return homeGoodsListEntityToJson(data as HomeGoodsListEntity);
+      case HomeGoodsListGoodsList:
+        return homeGoodsListGoodsListToJson(data as HomeGoodsListGoodsList);
+      case OrderListEntity:
+        return orderListEntityToJson(data as OrderListEntity);
+      case OrderListData:
+        return orderListDataToJson(data as OrderListData);
+      case OrderListDataList:
+        return orderListDataListToJson(data as OrderListDataList);
+      case OrderListDataListGoodsList:
+        return orderListDataListGoodsListToJson(
+            data as OrderListDataListGoodsList);
+      case WithdrawalUserInfoEntity:
+        return withdrawalUserInfoEntityToJson(data as WithdrawalUserInfoEntity);
+      case WithdrawalUserInfoData:
+        return withdrawalUserInfoDataToJson(data as WithdrawalUserInfoData);
+      case WithdrawalUserInfoDataUser:
+        return withdrawalUserInfoDataUserToJson(
+            data as WithdrawalUserInfoDataUser);
+      case ShareholderIncomeListEntity:
+        return shareholderIncomeListEntityToJson(
+            data as ShareholderIncomeListEntity);
+      case AddressInfoEntity:
+        return addressInfoEntityToJson(data as AddressInfoEntity);
+      case AddressInfoData:
+        return addressInfoDataToJson(data as AddressInfoData);
+      case TaskShareEntity:
+        return taskShareEntityToJson(data as TaskShareEntity);
+      case TaskShareData:
+        return taskShareDataToJson(data as TaskShareData);
+      case TaskShareDataShareInfo:
+        return taskShareDataShareInfoToJson(data as TaskShareDataShareInfo);
+      case TaskShareDataFooterImg:
+        return taskShareDataFooterImgToJson(data as TaskShareDataFooterImg);
+      case WechatPayinfoEntity:
+        return wechatPayinfoEntityToJson(data as WechatPayinfoEntity);
+      case WechatPayinfoData:
+        return wechatPayinfoDataToJson(data as WechatPayinfoData);
+      case WechatPayinfoDataPayInfo:
+        return wechatPayinfoDataPayInfoToJson(data as WechatPayinfoDataPayInfo);
+      case MessageListEntity:
+        return messageListEntityToJson(data as MessageListEntity);
+      case MessageListData:
+        return messageListDataToJson(data as MessageListData);
+      case MessageListDataList:
+        return messageListDataListToJson(data as MessageListDataList);
+      case UserInfoEntity:
+        return userInfoEntityToJson(data as UserInfoEntity);
+      case UserInfoData:
+        return userInfoDataToJson(data as UserInfoData);
+      case TaskDetailOtherEntity:
+        return taskDetailOtherEntityToJson(data as TaskDetailOtherEntity);
+      case TaskDetailOtherData:
+        return taskDetailOtherDataToJson(data as TaskDetailOtherData);
+      case TaskDetailOtherDataDescJson:
+        return taskDetailOtherDataDescJsonToJson(
+            data as TaskDetailOtherDataDescJson);
+      case GoodsInfoEntity:
+        return goodsInfoEntityToJson(data as GoodsInfoEntity);
+      case GoodsInfoData:
+        return goodsInfoDataToJson(data as GoodsInfoData);
+      case HomePddCategoryEntity:
+        return homePddCategoryEntityToJson(data as HomePddCategoryEntity);
+      case HomePddCategoryData:
+        return homePddCategoryDataToJson(data as HomePddCategoryData);
+      case HomePddCategoryDataCat:
+        return homePddCategoryDataCatToJson(data as HomePddCategoryDataCat);
+      case VersionInfoEntity:
+        return versionInfoEntityToJson(data as VersionInfoEntity);
+      case VersionInfoData:
+        return versionInfoDataToJson(data as VersionInfoData);
+      case LogisticsInfoEntity:
+        return logisticsInfoEntityToJson(data as LogisticsInfoEntity);
+      case LogisticsInfoData:
+        return logisticsInfoDataToJson(data as LogisticsInfoData);
+      case LogisticsInfoDataExpressList:
+        return logisticsInfoDataExpressListToJson(
+            data as LogisticsInfoDataExpressList);
+      case LogisticsInfoDataExpressListList:
+        return logisticsInfoDataExpressListListToJson(
+            data as LogisticsInfoDataExpressListList);
+      case LogisticsInfoDataExpressInfo:
+        return logisticsInfoDataExpressInfoToJson(
+            data as LogisticsInfoDataExpressInfo);
+      case RechargeExtraEntity:
+        return rechargeExtraEntityToJson(data as RechargeExtraEntity);
+      case RechargeExtraSRechageList:
+        return rechargeExtraSRechageListToJson(
+            data as RechargeExtraSRechageList);
+      case RechargeExtraRatio:
+        return rechargeExtraRatioToJson(data as RechargeExtraRatio);
+      case RegionDataEntity:
+        return regionDataEntityToJson(data as RegionDataEntity);
+      case RegionDataData:
+        return regionDataDataToJson(data as RegionDataData);
+      case RegionDataDatachild:
+        return regionDataDatachildToJson(data as RegionDataDatachild);
+      case RegionDataDatachildchild:
+        return regionDataDatachildchildToJson(data as RegionDataDatachildchild);
+      case LoginEntity:
+        return loginEntityToJson(data as LoginEntity);
+      case LoginData:
+        return loginDataToJson(data as LoginData);
+      case WithdrawalListEntity:
+        return withdrawalListEntityToJson(data as WithdrawalListEntity);
+      case WithdrawalListData:
+        return withdrawalListDataToJson(data as WithdrawalListData);
+      case WithdrawalListDataList:
+        return withdrawalListDataListToJson(data as WithdrawalListDataList);
+      case TaskDetailEntity:
+        return taskDetailEntityToJson(data as TaskDetailEntity);
+      case TaskDetailData:
+        return taskDetailDataToJson(data as TaskDetailData);
     }
     return data as T;
   }
@@ -1107,335 +915,332 @@ class JsonConvert<T> {
   //Go back to a single instance by type
   static _fromJsonSingle(String type, json) {
     switch (type) {
-      case 'KeTaoFeaturedTaskSubmitInfoEntity':
-        return KeTaoFeaturedTaskSubmitInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedTaskSubmitInfoData':
-        return KeTaoFeaturedTaskSubmitInfoData().fromJson(json);
-      case 'KeTaoFeaturedPayCouponEntity':
-        return KeTaoFeaturedPayCouponEntity().fromJson(json);
-      case 'KeTaoFeaturedPayCouponData':
-        return KeTaoFeaturedPayCouponData().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoEntity':
-        return KeTaoFeaturedVipPriceInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoVip':
-        return KeTaoFeaturedVipPriceInfoVip().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoVipIconDesc':
-        return KeTaoFeaturedVipPriceInfoVipIconDesc().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoVipMoneyList':
-        return KeTaoFeaturedVipPriceInfoVipMoneyList().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoDiamond':
-        return KeTaoFeaturedVipPriceInfoDiamond().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoDiamondIconDesc':
-        return KeTaoFeaturedVipPriceInfoDiamondIconDesc().fromJson(json);
-      case 'KeTaoFeaturedVipPriceInfoDiamondMoneyList':
-        return KeTaoFeaturedVipPriceInfoDiamondMoneyList().fromJson(json);
-      case 'KeTaoFeaturedTaskOtherSubmitInfoEntity':
-        return KeTaoFeaturedTaskOtherSubmitInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedTaskOtherSubmitInfoData':
-        return KeTaoFeaturedTaskOtherSubmitInfoData().fromJson(json);
-      case 'KeTaoFeaturedPhoneChargeListEntity':
-        return KeTaoFeaturedPhoneChargeListEntity().fromJson(json);
-      case 'KeTaoFeaturedPhoneChargeListData':
-        return KeTaoFeaturedPhoneChargeListData().fromJson(json);
-      case 'KeTaoFeaturedPhoneChargeListDataList':
-        return KeTaoFeaturedPhoneChargeListDataList().fromJson(json);
-      case 'KeTaoFeaturedFansListEntity':
-        return KeTaoFeaturedFansListEntity().fromJson(json);
-      case 'KeTaoFeaturedFansListData':
-        return KeTaoFeaturedFansListData().fromJson(json);
-      case 'KeTaoFeaturedFansListDataList':
-        return KeTaoFeaturedFansListDataList().fromJson(json);
-      case 'KeTaoFeaturedHomeIconListEntity':
-        return KeTaoFeaturedHomeIconListEntity().fromJson(json);
-      case 'KeTaoFeaturedHomeIconListIconList':
-        return KeTaoFeaturedHomeIconListIconList().fromJson(json);
-      case 'KeTaoFeaturedShopTypeEntity':
-        return KeTaoFeaturedShopTypeEntity().fromJson(json);
+      case 'TaskSubmitInfoEntity':
+        return TaskSubmitInfoEntity().fromJson(json);
+      case 'TaskSubmitInfoData':
+        return TaskSubmitInfoData().fromJson(json);
+      case 'PayCouponEntity':
+        return PayCouponEntity().fromJson(json);
+      case 'PayCouponData':
+        return PayCouponData().fromJson(json);
+      case 'VipPriceInfoEntity':
+        return VipPriceInfoEntity().fromJson(json);
+      case 'VipPriceInfoVip':
+        return VipPriceInfoVip().fromJson(json);
+      case 'VipPriceInfoVipIconDesc':
+        return VipPriceInfoVipIconDesc().fromJson(json);
+      case 'VipPriceInfoVipMoneyList':
+        return VipPriceInfoVipMoneyList().fromJson(json);
+      case 'VipPriceInfoDiamond':
+        return VipPriceInfoDiamond().fromJson(json);
+      case 'VipPriceInfoDiamondIconDesc':
+        return VipPriceInfoDiamondIconDesc().fromJson(json);
+      case 'VipPriceInfoDiamondMoneyList':
+        return VipPriceInfoDiamondMoneyList().fromJson(json);
+      case 'TaskOtherSubmitInfoEntity':
+        return TaskOtherSubmitInfoEntity().fromJson(json);
+      case 'TaskOtherSubmitInfoData':
+        return TaskOtherSubmitInfoData().fromJson(json);
+      case 'PhoneChargeListEntity':
+        return PhoneChargeListEntity().fromJson(json);
+      case 'PhoneChargeListData':
+        return PhoneChargeListData().fromJson(json);
+      case 'PhoneChargeListDataList':
+        return PhoneChargeListDataList().fromJson(json);
+      case 'FansListEntity':
+        return FansListEntity().fromJson(json);
+      case 'FansListData':
+        return FansListData().fromJson(json);
+      case 'FansListDataList':
+        return FansListDataList().fromJson(json);
+      case 'HomeIconListEntity':
+        return HomeIconListEntity().fromJson(json);
+      case 'HomeIconListIconList':
+        return HomeIconListIconList().fromJson(json);
+      case 'ShopTypeEntity':
+        return ShopTypeEntity().fromJson(json);
       case 'ShopTypeData':
         return ShopTypeData().fromJson(json);
       case 'ShopTypeDataList':
         return ShopTypeDataList().fromJson(json);
-      case 'KeTaoFeaturedResultBeanEntity':
-        return KeTaoFeaturedResultBeanEntity().fromJson(json);
-      case 'KeTaoFeaturedSearchPddGoodsListEntity':
-        return KeTaoFeaturedSearchPddGoodsListEntity().fromJson(json);
-      case 'KeTaoFeaturedSearchPddGoodsListData':
-        return KeTaoFeaturedSearchPddGoodsListData().fromJson(json);
-      case 'KeTaoFeaturedSearchPddGoodsListDataList':
-        return KeTaoFeaturedSearchPddGoodsListDataList().fromJson(json);
-      case 'KeTaoFeaturedSearchPddGoodsListDataListCoupons':
-        return KeTaoFeaturedSearchPddGoodsListDataListCoupons().fromJson(json);
-      case 'KeTaoFeaturedPosterEntity':
-        return KeTaoFeaturedPosterEntity().fromJson(json);
-      case 'KeTaoFeaturedPosterData':
-        return KeTaoFeaturedPosterData().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueueEntity':
-        return KeTaoFeaturedGoodsQueueEntity().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueueData':
-        return KeTaoFeaturedGoodsQueueData().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueueDataSignPackage':
-        return KeTaoFeaturedGoodsQueueDataSignPackage().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueueDataGoodsInfo':
-        return KeTaoFeaturedGoodsQueueDataGoodsInfo().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueueDataList':
-        return KeTaoFeaturedGoodsQueueDataList().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueueDataUserInfo':
-        return KeTaoFeaturedGoodsQueueDataUserInfo().fromJson(json);
-      case 'KeTaoFeaturedTaskRecordListEntity':
-        return KeTaoFeaturedTaskRecordListEntity().fromJson(json);
-      case 'KeTaoFeaturedTaskRecordListData':
-        return KeTaoFeaturedTaskRecordListData().fromJson(json);
-      case 'KeTaoFeaturedTaskRecordListDataList':
-        return KeTaoFeaturedTaskRecordListDataList().fromJson(json);
-      case 'KeTaoFeaturedFansTotalEntity':
-        return KeTaoFeaturedFansTotalEntity().fromJson(json);
-      case 'KeTaoFeaturedFansTotalData':
-        return KeTaoFeaturedFansTotalData().fromJson(json);
-      case 'KeTaoFeaturedFansTotalDataAgentInfo':
-        return KeTaoFeaturedFansTotalDataAgentInfo().fromJson(json);
-      case 'KeTaoFeaturedFansTotalDataCountInfo':
-        return KeTaoFeaturedFansTotalDataCountInfo().fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoEntity':
-        return KeTaoFeaturedGoodsSpecInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfo':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfo().fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem().fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice().fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds().fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01()
-            .fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10()
-            .fromJson(json);
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11':
-        return KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11()
-            .fromJson(json);
-      case 'KeTaoFeaturedAddressListEntity':
-        return KeTaoFeaturedAddressListEntity().fromJson(json);
-      case 'KeTaoFeaturedAddressListData':
-        return KeTaoFeaturedAddressListData().fromJson(json);
-      case 'KeTaoFeaturedUserHolderProfitEntity':
-        return KeTaoFeaturedUserHolderProfitEntity().fromJson(json);
-      case 'KeTaoFeaturedUserHolderProfitPartnerBonus':
-        return KeTaoFeaturedUserHolderProfitPartnerBonus().fromJson(json);
-      case 'KeTaoFeaturedOrderDetailEntity':
-        return KeTaoFeaturedOrderDetailEntity().fromJson(json);
-      case 'KeTaoFeaturedOrderDetailData':
-        return KeTaoFeaturedOrderDetailData().fromJson(json);
-      case 'KeTaoFeaturedOrderDetailDataGoodsList':
-        return KeTaoFeaturedOrderDetailDataGoodsList().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsInfoEntity':
-        return KeTaoFeaturedPddGoodsInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsInfoData':
-        return KeTaoFeaturedPddGoodsInfoData().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsInfoDataCoupons':
-        return KeTaoFeaturedPddGoodsInfoDataCoupons().fromJson(json);
-      case 'KeTaoFeaturedIncomeListEntity':
-        return KeTaoFeaturedIncomeListEntity().fromJson(json);
-      case 'KeTaoFeaturedIncomeListData':
-        return KeTaoFeaturedIncomeListData().fromJson(json);
-      case 'KeTaoFeaturedIncomeListDataList':
-        return KeTaoFeaturedIncomeListDataList().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsListEntity':
-        return KeTaoFeaturedPddGoodsListEntity().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsListData':
-        return KeTaoFeaturedPddGoodsListData().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsListDataList':
-        return KeTaoFeaturedPddGoodsListDataList().fromJson(json);
-      case 'KeTaoFeaturedPddGoodsListDataListCoupons':
-        return KeTaoFeaturedPddGoodsListDataListCoupons().fromJson(json);
-      case 'KeTaoFeaturedBalancePayInfoEntity':
-        return KeTaoFeaturedBalancePayInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedBalancePayInfoData':
-        return KeTaoFeaturedBalancePayInfoData().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueuePersionalEntity':
-        return KeTaoFeaturedGoodsQueuePersionalEntity().fromJson(json);
-      case 'KeTaoFeaturedGoodsQueuePersionalData':
-        return KeTaoFeaturedGoodsQueuePersionalData().fromJson(json);
-      case 'KeTaoFeaturedPddCategoryListEntity':
-        return KeTaoFeaturedPddCategoryListEntity().fromJson(json);
-      case 'KeTaoFeaturedPddCategoryListData':
-        return KeTaoFeaturedPddCategoryListData().fromJson(json);
-      case 'KeTaoFeaturedMicroShareholderEntity':
-        return KeTaoFeaturedMicroShareholderEntity().fromJson(json);
-      case 'KeTaoFeaturedMicroShareholderData':
-        return KeTaoFeaturedMicroShareholderData().fromJson(json);
-      case 'KeTaoFeaturedMicroShareholderItemEntity':
-        return KeTaoFeaturedMicroShareholderItemEntity().fromJson(json);
-      case 'KeTaoFeaturedMicroShareholderItemEstimate':
-        return KeTaoFeaturedMicroShareholderItemEstimate().fromJson(json);
-      case 'KeTaoFeaturedMicroShareholderItemInterests':
-        return KeTaoFeaturedMicroShareholderItemInterests().fromJson(json);
-      case 'KeTaoFeaturedCategoryBeanEntity':
-        return KeTaoFeaturedCategoryBeanEntity().fromJson(json);
-      case 'KeTaoFeaturedCategoryBeanData':
-        return KeTaoFeaturedCategoryBeanData().fromJson(json);
-      case 'KeTaoFeaturedPddHomeEntity':
-        return KeTaoFeaturedPddHomeEntity().fromJson(json);
-      case 'KeTaoFeaturedPddHomeData':
-        return KeTaoFeaturedPddHomeData().fromJson(json);
-      case 'KeTaoFeaturedPddHomeDataCat':
-        return KeTaoFeaturedPddHomeDataCat().fromJson(json);
-      case 'KeTaoFeaturedPddHomeDataBanner':
-        return KeTaoFeaturedPddHomeDataBanner().fromJson(json);
-      case 'KeTaoFeaturedPddHomeDataTool':
-        return KeTaoFeaturedPddHomeDataTool().fromJson(json);
-      case 'KeTaoFeaturedPddHomeDataAd':
-        return KeTaoFeaturedPddHomeDataAd().fromJson(json);
-      case 'KeTaoFeaturedRechargeEntity':
-        return KeTaoFeaturedRechargeEntity().fromJson(json);
-      case 'KeTaoFeaturedRechargeData':
-        return KeTaoFeaturedRechargeData().fromJson(json);
-      case 'KeTaoFeaturedRechargeDataRechageList':
-        return KeTaoFeaturedRechargeDataRechageList().fromJson(json);
-      case 'KeTaoFeaturedRechargeDatacouponList':
-        return KeTaoFeaturedRechargeDatacouponList().fromJson(json);
-      case 'KeTaoFeaturedHomeEntity':
-        return KeTaoFeaturedHomeEntity().fromJson(json);
-      case 'KeTaoFeaturedHomeData':
-        return KeTaoFeaturedHomeData().fromJson(json);
-      case 'KeTaoFeaturedHomeDataBanner':
-        return KeTaoFeaturedHomeDataBanner().fromJson(json);
-      case 'KeTaoFeaturedHomeDataTaskList':
-        return KeTaoFeaturedHomeDataTaskList().fromJson(json);
-      case 'KeTaoFeaturedHomeDataTaskListList':
-        return KeTaoFeaturedHomeDataTaskListList().fromJson(json);
-      case 'KeTaoFeaturedSearchGoodsListEntity':
-        return KeTaoFeaturedSearchGoodsListEntity().fromJson(json);
-      case 'KeTaoFeaturedSearchGoodsListData':
-        return KeTaoFeaturedSearchGoodsListData().fromJson(json);
-      case 'KeTaoFeaturedSearchGoodsListDataList':
-        return KeTaoFeaturedSearchGoodsListDataList().fromJson(json);
-      case 'KeTaoFeaturedAlipayPayinfoEntity':
-        return KeTaoFeaturedAlipayPayinfoEntity().fromJson(json);
-      case 'KeTaoFeaturedAlipayPayinfoData':
-        return KeTaoFeaturedAlipayPayinfoData().fromJson(json);
-      case 'KeTaoFeaturedVipPriceEntity':
-        return KeTaoFeaturedVipPriceEntity().fromJson(json);
-      case 'KeTaoFeaturedVipPriceData':
-        return KeTaoFeaturedVipPriceData().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalInfoEntity':
-        return KeTaoFeaturedWithdrawalInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalInfoData':
-        return KeTaoFeaturedWithdrawalInfoData().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalInfoDataUser':
-        return KeTaoFeaturedWithdrawalInfoDataUser().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalInfoDataUseModel':
-        return KeTaoFeaturedWithdrawalInfoDataUseModel().fromJson(json);
-      case 'KeTaoFeaturedOrderUserInfoEntity':
-        return KeTaoFeaturedOrderUserInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedOrderUserInfoUserInfo':
-        return KeTaoFeaturedOrderUserInfoUserInfo().fromJson(json);
-      case 'KeTaoFeaturedHomeGoodsListEntity':
-        return KeTaoFeaturedHomeGoodsListEntity().fromJson(json);
-      case 'KeTaoFeaturedHomeGoodsListGoodsList':
-        return KeTaoFeaturedHomeGoodsListGoodsList().fromJson(json);
-      case 'KeTaoFeaturedOrderListEntity':
-        return KeTaoFeaturedOrderListEntity().fromJson(json);
-      case 'KeTaoFeaturedOrderListData':
-        return KeTaoFeaturedOrderListData().fromJson(json);
-      case 'KeTaoFeaturedOrderListDataList':
-        return KeTaoFeaturedOrderListDataList().fromJson(json);
-      case 'KeTaoFeaturedOrderListDataListGoodsList':
-        return KeTaoFeaturedOrderListDataListGoodsList().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalUserInfoEntity':
-        return KeTaoFeaturedWithdrawalUserInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalUserInfoData':
-        return KeTaoFeaturedWithdrawalUserInfoData().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalUserInfoDataUser':
-        return KeTaoFeaturedWithdrawalUserInfoDataUser().fromJson(json);
-      case 'KeTaoFeaturedShareholderIncomeListEntity':
-        return KeTaoFeaturedShareholderIncomeListEntity().fromJson(json);
-      case 'KeTaoFeaturedAddressInfoEntity':
-        return KeTaoFeaturedAddressInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedAddressInfoData':
-        return KeTaoFeaturedAddressInfoData().fromJson(json);
-      case 'KeTaoFeaturedTaskShareEntity':
-        return KeTaoFeaturedTaskShareEntity().fromJson(json);
-      case 'KeTaoFeaturedTaskShareData':
-        return KeTaoFeaturedTaskShareData().fromJson(json);
-      case 'KeTaoFeaturedTaskShareDataShareInfo':
-        return KeTaoFeaturedTaskShareDataShareInfo().fromJson(json);
-      case 'KeTaoFeaturedTaskShareDataFooterImg':
-        return KeTaoFeaturedTaskShareDataFooterImg().fromJson(json);
-      case 'KeTaoFeaturedWechatPayinfoEntity':
-        return KeTaoFeaturedWechatPayinfoEntity().fromJson(json);
-      case 'KeTaoFeaturedWechatPayinfoData':
-        return KeTaoFeaturedWechatPayinfoData().fromJson(json);
-      case 'KeTaoFeaturedWechatPayinfoDataPayInfo':
-        return KeTaoFeaturedWechatPayinfoDataPayInfo().fromJson(json);
-      case 'KeTaoFeaturedMessageListEntity':
-        return KeTaoFeaturedMessageListEntity().fromJson(json);
-      case 'KeTaoFeaturedMessageListData':
-        return KeTaoFeaturedMessageListData().fromJson(json);
-      case 'KeTaoFeaturedMessageListDataList':
-        return KeTaoFeaturedMessageListDataList().fromJson(json);
-      case 'KeTaoFeaturedUserInfoEntity':
-        return KeTaoFeaturedUserInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedUserInfoData':
-        return KeTaoFeaturedUserInfoData().fromJson(json);
-      case 'KeTaoFeaturedTaskDetailOtherEntity':
-        return KeTaoFeaturedTaskDetailOtherEntity().fromJson(json);
-      case 'KeTaoFeaturedTaskDetailOtherData':
-        return KeTaoFeaturedTaskDetailOtherData().fromJson(json);
-      case 'KeTaoFeaturedTaskDetailOtherDataDescJson':
-        return KeTaoFeaturedTaskDetailOtherDataDescJson().fromJson(json);
-      case 'KeTaoFeaturedGoodsInfoEntity':
-        return KeTaoFeaturedGoodsInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedGoodsInfoData':
-        return KeTaoFeaturedGoodsInfoData().fromJson(json);
-      case 'KeTaoFeaturedHomePddCategoryEntity':
-        return KeTaoFeaturedHomePddCategoryEntity().fromJson(json);
-      case 'KeTaoFeaturedHomePddCategoryData':
-        return KeTaoFeaturedHomePddCategoryData().fromJson(json);
-      case 'KeTaoFeaturedHomePddCategoryDataCat':
-        return KeTaoFeaturedHomePddCategoryDataCat().fromJson(json);
-      case 'KeTaoFeaturedVersionInfoEntity':
-        return KeTaoFeaturedVersionInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedVersionInfoData':
-        return KeTaoFeaturedVersionInfoData().fromJson(json);
-      case 'KeTaoFeaturedLogisticsInfoEntity':
-        return KeTaoFeaturedLogisticsInfoEntity().fromJson(json);
-      case 'KeTaoFeaturedLogisticsInfoData':
-        return KeTaoFeaturedLogisticsInfoData().fromJson(json);
-      case 'KeTaoFeaturedLogisticsInfoDataExpressList':
-        return KeTaoFeaturedLogisticsInfoDataExpressList().fromJson(json);
-      case 'KeTaoFeaturedLogisticsInfoDataExpressListList':
-        return KeTaoFeaturedLogisticsInfoDataExpressListList().fromJson(json);
-      case 'KeTaoFeaturedLogisticsInfoDataExpressInfo':
-        return KeTaoFeaturedLogisticsInfoDataExpressInfo().fromJson(json);
-      case 'KeTaoFeaturedRechargeExtraEntity':
-        return KeTaoFeaturedRechargeExtraEntity().fromJson(json);
-      case 'KeTaoFeaturedRechargeExtraSRechageList':
-        return KeTaoFeaturedRechargeExtraSRechageList().fromJson(json);
-      case 'KeTaoFeaturedRechargeExtraRatio':
-        return KeTaoFeaturedRechargeExtraRatio().fromJson(json);
-      case 'KeTaoFeaturedRegionDataEntity':
-        return KeTaoFeaturedRegionDataEntity().fromJson(json);
-      case 'KeTaoFeaturedRegionDataData':
-        return KeTaoFeaturedRegionDataData().fromJson(json);
-      case 'KeTaoFeaturedRegionDataDatachild':
-        return KeTaoFeaturedRegionDataDatachild().fromJson(json);
-      case 'KeTaoFeaturedRegionDataDatachildchild':
-        return KeTaoFeaturedRegionDataDatachildchild().fromJson(json);
-      case 'KeTaoFeaturedLoginEntity':
-        return KeTaoFeaturedLoginEntity().fromJson(json);
-      case 'KeTaoFeaturedLoginData':
-        return KeTaoFeaturedLoginData().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalListEntity':
-        return KeTaoFeaturedWithdrawalListEntity().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalListData':
-        return KeTaoFeaturedWithdrawalListData().fromJson(json);
-      case 'KeTaoFeaturedWithdrawalListDataList':
-        return KeTaoFeaturedWithdrawalListDataList().fromJson(json);
-      case 'KeTaoFeaturedTaskDetailEntity':
-        return KeTaoFeaturedTaskDetailEntity().fromJson(json);
-      case 'KeTaoFeaturedTaskDetailData':
-        return KeTaoFeaturedTaskDetailData().fromJson(json);
+      case 'ResultBeanEntity':
+        return ResultBeanEntity().fromJson(json);
+      case 'SearchPddGoodsListEntity':
+        return SearchPddGoodsListEntity().fromJson(json);
+      case 'SearchPddGoodsListData':
+        return SearchPddGoodsListData().fromJson(json);
+      case 'SearchPddGoodsListDataList':
+        return SearchPddGoodsListDataList().fromJson(json);
+      case 'SearchPddGoodsListDataListCoupons':
+        return SearchPddGoodsListDataListCoupons().fromJson(json);
+      case 'PosterEntity':
+        return PosterEntity().fromJson(json);
+      case 'PosterData':
+        return PosterData().fromJson(json);
+      case 'GoodsQueueEntity':
+        return GoodsQueueEntity().fromJson(json);
+      case 'GoodsQueueData':
+        return GoodsQueueData().fromJson(json);
+      case 'GoodsQueueDataSignPackage':
+        return GoodsQueueDataSignPackage().fromJson(json);
+      case 'GoodsQueueDataGoodsInfo':
+        return GoodsQueueDataGoodsInfo().fromJson(json);
+      case 'GoodsQueueDataList':
+        return GoodsQueueDataList().fromJson(json);
+      case 'GoodsQueueDataUserInfo':
+        return GoodsQueueDataUserInfo().fromJson(json);
+      case 'TaskRecordListEntity':
+        return TaskRecordListEntity().fromJson(json);
+      case 'TaskRecordListData':
+        return TaskRecordListData().fromJson(json);
+      case 'TaskRecordListDataList':
+        return TaskRecordListDataList().fromJson(json);
+      case 'FansTotalEntity':
+        return FansTotalEntity().fromJson(json);
+      case 'FansTotalData':
+        return FansTotalData().fromJson(json);
+      case 'FansTotalDataAgentInfo':
+        return FansTotalDataAgentInfo().fromJson(json);
+      case 'FansTotalDataCountInfo':
+        return FansTotalDataCountInfo().fromJson(json);
+      case 'GoodsSpecInfoEntity':
+        return GoodsSpecInfoEntity().fromJson(json);
+      case 'GoodsSpecInfoSpecInfo':
+        return GoodsSpecInfoSpecInfo().fromJson(json);
+      case 'GoodsSpecInfoSpecInfoSpecItem':
+        return GoodsSpecInfoSpecInfoSpecItem().fromJson(json);
+      case 'GoodsSpecInfoSpecInfoSpecPrice':
+        return GoodsSpecInfoSpecInfoSpecPrice().fromJson(json);
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds':
+        return GoodsSpecInfoSpecInfoSpecPriceIds().fromJson(json);
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
+        return GoodsSpecInfoSpecInfoSpecPriceIds01().fromJson(json);
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds10':
+        return GoodsSpecInfoSpecInfoSpecPriceIds10().fromJson(json);
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds11':
+        return GoodsSpecInfoSpecInfoSpecPriceIds11().fromJson(json);
+      case 'AddressListEntity':
+        return AddressListEntity().fromJson(json);
+      case 'AddressListData':
+        return AddressListData().fromJson(json);
+      case 'UserHolderProfitEntity':
+        return UserHolderProfitEntity().fromJson(json);
+      case 'UserHolderProfitPartnerBonus':
+        return UserHolderProfitPartnerBonus().fromJson(json);
+      case 'OrderDetailEntity':
+        return OrderDetailEntity().fromJson(json);
+      case 'OrderDetailData':
+        return OrderDetailData().fromJson(json);
+      case 'OrderDetailDataGoodsList':
+        return OrderDetailDataGoodsList().fromJson(json);
+      case 'PddGoodsInfoEntity':
+        return PddGoodsInfoEntity().fromJson(json);
+      case 'PddGoodsInfoData':
+        return PddGoodsInfoData().fromJson(json);
+      case 'PddGoodsInfoDataCoupons':
+        return PddGoodsInfoDataCoupons().fromJson(json);
+      case 'IncomeListEntity':
+        return IncomeListEntity().fromJson(json);
+      case 'IncomeListData':
+        return IncomeListData().fromJson(json);
+      case 'IncomeListDataList':
+        return IncomeListDataList().fromJson(json);
+      case 'PddGoodsListEntity':
+        return PddGoodsListEntity().fromJson(json);
+      case 'PddGoodsListData':
+        return PddGoodsListData().fromJson(json);
+      case 'PddGoodsListDataList':
+        return PddGoodsListDataList().fromJson(json);
+      case 'PddGoodsListDataListCoupons':
+        return PddGoodsListDataListCoupons().fromJson(json);
+      case 'BalancePayInfoEntity':
+        return BalancePayInfoEntity().fromJson(json);
+      case 'BalancePayInfoData':
+        return BalancePayInfoData().fromJson(json);
+      case 'GoodsQueuePersionalEntity':
+        return GoodsQueuePersionalEntity().fromJson(json);
+      case 'GoodsQueuePersionalData':
+        return GoodsQueuePersionalData().fromJson(json);
+      case 'PddCategoryListEntity':
+        return PddCategoryListEntity().fromJson(json);
+      case 'PddCategoryListData':
+        return PddCategoryListData().fromJson(json);
+      case 'MicroShareholderEntity':
+        return MicroShareholderEntity().fromJson(json);
+      case 'MicroShareholderData':
+        return MicroShareholderData().fromJson(json);
+      case 'MicroShareholderItemEntity':
+        return MicroShareholderItemEntity().fromJson(json);
+      case 'MicroShareholderItemEstimate':
+        return MicroShareholderItemEstimate().fromJson(json);
+      case 'MicroShareholderItemInterests':
+        return MicroShareholderItemInterests().fromJson(json);
+      case 'CategoryBeanEntity':
+        return CategoryBeanEntity().fromJson(json);
+      case 'CategoryBeanData':
+        return CategoryBeanData().fromJson(json);
+      case 'PddHomeEntity':
+        return PddHomeEntity().fromJson(json);
+      case 'PddHomeData':
+        return PddHomeData().fromJson(json);
+      case 'PddHomeDataCat':
+        return PddHomeDataCat().fromJson(json);
+      case 'PddHomeDataBanner':
+        return PddHomeDataBanner().fromJson(json);
+      case 'PddHomeDataTool':
+        return PddHomeDataTool().fromJson(json);
+      case 'PddHomeDataAd':
+        return PddHomeDataAd().fromJson(json);
+      case 'RechargeEntity':
+        return RechargeEntity().fromJson(json);
+      case 'RechargeData':
+        return RechargeData().fromJson(json);
+      case 'RechargeDataRechageList':
+        return RechargeDataRechageList().fromJson(json);
+      case 'RechargeDatacouponList':
+        return RechargeDatacouponList().fromJson(json);
+      case 'HomeEntity':
+        return HomeEntity().fromJson(json);
+      case 'HomeData':
+        return HomeData().fromJson(json);
+      case 'HomeDataBanner':
+        return HomeDataBanner().fromJson(json);
+      case 'HomeDataTaskList':
+        return HomeDataTaskList().fromJson(json);
+      case 'HomeDataTaskListList':
+        return HomeDataTaskListList().fromJson(json);
+      case 'SearchGoodsListEntity':
+        return SearchGoodsListEntity().fromJson(json);
+      case 'SearchGoodsListData':
+        return SearchGoodsListData().fromJson(json);
+      case 'SearchGoodsListDataList':
+        return SearchGoodsListDataList().fromJson(json);
+      case 'AlipayPayinfoEntity':
+        return AlipayPayinfoEntity().fromJson(json);
+      case 'AlipayPayinfoData':
+        return AlipayPayinfoData().fromJson(json);
+      case 'VipPriceEntity':
+        return VipPriceEntity().fromJson(json);
+      case 'VipPriceData':
+        return VipPriceData().fromJson(json);
+      case 'WithdrawalInfoEntity':
+        return WithdrawalInfoEntity().fromJson(json);
+      case 'WithdrawalInfoData':
+        return WithdrawalInfoData().fromJson(json);
+      case 'WithdrawalInfoDataUser':
+        return WithdrawalInfoDataUser().fromJson(json);
+      case 'WithdrawalInfoDataUseModel':
+        return WithdrawalInfoDataUseModel().fromJson(json);
+      case 'OrderUserInfoEntity':
+        return OrderUserInfoEntity().fromJson(json);
+      case 'OrderUserInfoUserInfo':
+        return OrderUserInfoUserInfo().fromJson(json);
+      case 'HomeGoodsListEntity':
+        return HomeGoodsListEntity().fromJson(json);
+      case 'HomeGoodsListGoodsList':
+        return HomeGoodsListGoodsList().fromJson(json);
+      case 'OrderListEntity':
+        return OrderListEntity().fromJson(json);
+      case 'OrderListData':
+        return OrderListData().fromJson(json);
+      case 'OrderListDataList':
+        return OrderListDataList().fromJson(json);
+      case 'OrderListDataListGoodsList':
+        return OrderListDataListGoodsList().fromJson(json);
+      case 'WithdrawalUserInfoEntity':
+        return WithdrawalUserInfoEntity().fromJson(json);
+      case 'WithdrawalUserInfoData':
+        return WithdrawalUserInfoData().fromJson(json);
+      case 'WithdrawalUserInfoDataUser':
+        return WithdrawalUserInfoDataUser().fromJson(json);
+      case 'ShareholderIncomeListEntity':
+        return ShareholderIncomeListEntity().fromJson(json);
+      case 'AddressInfoEntity':
+        return AddressInfoEntity().fromJson(json);
+      case 'AddressInfoData':
+        return AddressInfoData().fromJson(json);
+      case 'TaskShareEntity':
+        return TaskShareEntity().fromJson(json);
+      case 'TaskShareData':
+        return TaskShareData().fromJson(json);
+      case 'TaskShareDataShareInfo':
+        return TaskShareDataShareInfo().fromJson(json);
+      case 'TaskShareDataFooterImg':
+        return TaskShareDataFooterImg().fromJson(json);
+      case 'WechatPayinfoEntity':
+        return WechatPayinfoEntity().fromJson(json);
+      case 'WechatPayinfoData':
+        return WechatPayinfoData().fromJson(json);
+      case 'WechatPayinfoDataPayInfo':
+        return WechatPayinfoDataPayInfo().fromJson(json);
+      case 'MessageListEntity':
+        return MessageListEntity().fromJson(json);
+      case 'MessageListData':
+        return MessageListData().fromJson(json);
+      case 'MessageListDataList':
+        return MessageListDataList().fromJson(json);
+      case 'UserInfoEntity':
+        return UserInfoEntity().fromJson(json);
+      case 'UserInfoData':
+        return UserInfoData().fromJson(json);
+      case 'TaskDetailOtherEntity':
+        return TaskDetailOtherEntity().fromJson(json);
+      case 'TaskDetailOtherData':
+        return TaskDetailOtherData().fromJson(json);
+      case 'TaskDetailOtherDataDescJson':
+        return TaskDetailOtherDataDescJson().fromJson(json);
+      case 'GoodsInfoEntity':
+        return GoodsInfoEntity().fromJson(json);
+      case 'GoodsInfoData':
+        return GoodsInfoData().fromJson(json);
+      case 'HomePddCategoryEntity':
+        return HomePddCategoryEntity().fromJson(json);
+      case 'HomePddCategoryData':
+        return HomePddCategoryData().fromJson(json);
+      case 'HomePddCategoryDataCat':
+        return HomePddCategoryDataCat().fromJson(json);
+      case 'VersionInfoEntity':
+        return VersionInfoEntity().fromJson(json);
+      case 'VersionInfoData':
+        return VersionInfoData().fromJson(json);
+      case 'LogisticsInfoEntity':
+        return LogisticsInfoEntity().fromJson(json);
+      case 'LogisticsInfoData':
+        return LogisticsInfoData().fromJson(json);
+      case 'LogisticsInfoDataExpressList':
+        return LogisticsInfoDataExpressList().fromJson(json);
+      case 'LogisticsInfoDataExpressListList':
+        return LogisticsInfoDataExpressListList().fromJson(json);
+      case 'LogisticsInfoDataExpressInfo':
+        return LogisticsInfoDataExpressInfo().fromJson(json);
+      case 'RechargeExtraEntity':
+        return RechargeExtraEntity().fromJson(json);
+      case 'RechargeExtraSRechageList':
+        return RechargeExtraSRechageList().fromJson(json);
+      case 'RechargeExtraRatio':
+        return RechargeExtraRatio().fromJson(json);
+      case 'RegionDataEntity':
+        return RegionDataEntity().fromJson(json);
+      case 'RegionDataData':
+        return RegionDataData().fromJson(json);
+      case 'RegionDataDatachild':
+        return RegionDataDatachild().fromJson(json);
+      case 'RegionDataDatachildchild':
+        return RegionDataDatachildchild().fromJson(json);
+      case 'LoginEntity':
+        return LoginEntity().fromJson(json);
+      case 'LoginData':
+        return LoginData().fromJson(json);
+      case 'WithdrawalListEntity':
+        return WithdrawalListEntity().fromJson(json);
+      case 'WithdrawalListData':
+        return WithdrawalListData().fromJson(json);
+      case 'WithdrawalListDataList':
+        return WithdrawalListDataList().fromJson(json);
+      case 'TaskDetailEntity':
+        return TaskDetailEntity().fromJson(json);
+      case 'TaskDetailData':
+        return TaskDetailData().fromJson(json);
     }
     return null;
   }
@@ -1443,332 +1248,332 @@ class JsonConvert<T> {
   //empty list is returned by type
   static _getListFromType(String type) {
     switch (type) {
-      case 'KeTaoFeaturedTaskSubmitInfoEntity':
-        return List<KeTaoFeaturedTaskSubmitInfoEntity>();
-      case 'KeTaoFeaturedTaskSubmitInfoData':
-        return List<KeTaoFeaturedTaskSubmitInfoData>();
-      case 'KeTaoFeaturedPayCouponEntity':
-        return List<KeTaoFeaturedPayCouponEntity>();
-      case 'KeTaoFeaturedPayCouponData':
-        return List<KeTaoFeaturedPayCouponData>();
-      case 'KeTaoFeaturedVipPriceInfoEntity':
-        return List<KeTaoFeaturedVipPriceInfoEntity>();
-      case 'KeTaoFeaturedVipPriceInfoVip':
-        return List<KeTaoFeaturedVipPriceInfoVip>();
-      case 'KeTaoFeaturedVipPriceInfoVipIconDesc':
-        return List<KeTaoFeaturedVipPriceInfoVipIconDesc>();
-      case 'KeTaoFeaturedVipPriceInfoVipMoneyList':
-        return List<KeTaoFeaturedVipPriceInfoVipMoneyList>();
-      case 'KeTaoFeaturedVipPriceInfoDiamond':
-        return List<KeTaoFeaturedVipPriceInfoDiamond>();
-      case 'KeTaoFeaturedVipPriceInfoDiamondIconDesc':
-        return List<KeTaoFeaturedVipPriceInfoDiamondIconDesc>();
-      case 'KeTaoFeaturedVipPriceInfoDiamondMoneyList':
-        return List<KeTaoFeaturedVipPriceInfoDiamondMoneyList>();
-      case 'KeTaoFeaturedTaskOtherSubmitInfoEntity':
-        return List<KeTaoFeaturedTaskOtherSubmitInfoEntity>();
-      case 'KeTaoFeaturedTaskOtherSubmitInfoData':
-        return List<KeTaoFeaturedTaskOtherSubmitInfoData>();
-      case 'KeTaoFeaturedPhoneChargeListEntity':
-        return List<KeTaoFeaturedPhoneChargeListEntity>();
-      case 'KeTaoFeaturedPhoneChargeListData':
-        return List<KeTaoFeaturedPhoneChargeListData>();
-      case 'KeTaoFeaturedPhoneChargeListDataList':
-        return List<KeTaoFeaturedPhoneChargeListDataList>();
-      case 'KeTaoFeaturedFansListEntity':
-        return List<KeTaoFeaturedFansListEntity>();
-      case 'KeTaoFeaturedFansListData':
-        return List<KeTaoFeaturedFansListData>();
-      case 'KeTaoFeaturedFansListDataList':
-        return List<KeTaoFeaturedFansListDataList>();
-      case 'KeTaoFeaturedHomeIconListEntity':
-        return List<KeTaoFeaturedHomeIconListEntity>();
-      case 'KeTaoFeaturedHomeIconListIconList':
-        return List<KeTaoFeaturedHomeIconListIconList>();
-      case 'KeTaoFeaturedShopTypeEntity':
-        return List<KeTaoFeaturedShopTypeEntity>();
+      case 'TaskSubmitInfoEntity':
+        return List<TaskSubmitInfoEntity>();
+      case 'TaskSubmitInfoData':
+        return List<TaskSubmitInfoData>();
+      case 'PayCouponEntity':
+        return List<PayCouponEntity>();
+      case 'PayCouponData':
+        return List<PayCouponData>();
+      case 'VipPriceInfoEntity':
+        return List<VipPriceInfoEntity>();
+      case 'VipPriceInfoVip':
+        return List<VipPriceInfoVip>();
+      case 'VipPriceInfoVipIconDesc':
+        return List<VipPriceInfoVipIconDesc>();
+      case 'VipPriceInfoVipMoneyList':
+        return List<VipPriceInfoVipMoneyList>();
+      case 'VipPriceInfoDiamond':
+        return List<VipPriceInfoDiamond>();
+      case 'VipPriceInfoDiamondIconDesc':
+        return List<VipPriceInfoDiamondIconDesc>();
+      case 'VipPriceInfoDiamondMoneyList':
+        return List<VipPriceInfoDiamondMoneyList>();
+      case 'TaskOtherSubmitInfoEntity':
+        return List<TaskOtherSubmitInfoEntity>();
+      case 'TaskOtherSubmitInfoData':
+        return List<TaskOtherSubmitInfoData>();
+      case 'PhoneChargeListEntity':
+        return List<PhoneChargeListEntity>();
+      case 'PhoneChargeListData':
+        return List<PhoneChargeListData>();
+      case 'PhoneChargeListDataList':
+        return List<PhoneChargeListDataList>();
+      case 'FansListEntity':
+        return List<FansListEntity>();
+      case 'FansListData':
+        return List<FansListData>();
+      case 'FansListDataList':
+        return List<FansListDataList>();
+      case 'HomeIconListEntity':
+        return List<HomeIconListEntity>();
+      case 'HomeIconListIconList':
+        return List<HomeIconListIconList>();
+      case 'ShopTypeEntity':
+        return List<ShopTypeEntity>();
       case 'ShopTypeData':
         return List<ShopTypeData>();
       case 'ShopTypeDataList':
         return List<ShopTypeDataList>();
-      case 'KeTaoFeaturedResultBeanEntity':
-        return List<KeTaoFeaturedResultBeanEntity>();
-      case 'KeTaoFeaturedSearchPddGoodsListEntity':
-        return List<KeTaoFeaturedSearchPddGoodsListEntity>();
-      case 'KeTaoFeaturedSearchPddGoodsListData':
-        return List<KeTaoFeaturedSearchPddGoodsListData>();
-      case 'KeTaoFeaturedSearchPddGoodsListDataList':
-        return List<KeTaoFeaturedSearchPddGoodsListDataList>();
-      case 'KeTaoFeaturedSearchPddGoodsListDataListCoupons':
-        return List<KeTaoFeaturedSearchPddGoodsListDataListCoupons>();
-      case 'KeTaoFeaturedPosterEntity':
-        return List<KeTaoFeaturedPosterEntity>();
-      case 'KeTaoFeaturedPosterData':
-        return List<KeTaoFeaturedPosterData>();
-      case 'KeTaoFeaturedGoodsQueueEntity':
-        return List<KeTaoFeaturedGoodsQueueEntity>();
-      case 'KeTaoFeaturedGoodsQueueData':
-        return List<KeTaoFeaturedGoodsQueueData>();
-      case 'KeTaoFeaturedGoodsQueueDataSignPackage':
-        return List<KeTaoFeaturedGoodsQueueDataSignPackage>();
-      case 'KeTaoFeaturedGoodsQueueDataGoodsInfo':
-        return List<KeTaoFeaturedGoodsQueueDataGoodsInfo>();
-      case 'KeTaoFeaturedGoodsQueueDataList':
-        return List<KeTaoFeaturedGoodsQueueDataList>();
-      case 'KeTaoFeaturedGoodsQueueDataUserInfo':
-        return List<KeTaoFeaturedGoodsQueueDataUserInfo>();
-      case 'KeTaoFeaturedTaskRecordListEntity':
-        return List<KeTaoFeaturedTaskRecordListEntity>();
-      case 'KeTaoFeaturedTaskRecordListData':
-        return List<KeTaoFeaturedTaskRecordListData>();
-      case 'KeTaoFeaturedTaskRecordListDataList':
-        return List<KeTaoFeaturedTaskRecordListDataList>();
-      case 'KeTaoFeaturedFansTotalEntity':
-        return List<KeTaoFeaturedFansTotalEntity>();
-      case 'KeTaoFeaturedFansTotalData':
-        return List<KeTaoFeaturedFansTotalData>();
-      case 'KeTaoFeaturedFansTotalDataAgentInfo':
-        return List<KeTaoFeaturedFansTotalDataAgentInfo>();
-      case 'KeTaoFeaturedFansTotalDataCountInfo':
-        return List<KeTaoFeaturedFansTotalDataCountInfo>();
-      case 'KeTaoFeaturedGoodsSpecInfoEntity':
-        return List<KeTaoFeaturedGoodsSpecInfoEntity>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfo':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfo>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecItem>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPrice>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds01>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds10>();
-      case 'KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11':
-        return List<KeTaoFeaturedGoodsSpecInfoSpecInfoSpecPriceIds11>();
-      case 'KeTaoFeaturedAddressListEntity':
-        return List<KeTaoFeaturedAddressListEntity>();
-      case 'KeTaoFeaturedAddressListData':
-        return List<KeTaoFeaturedAddressListData>();
-      case 'KeTaoFeaturedUserHolderProfitEntity':
-        return List<KeTaoFeaturedUserHolderProfitEntity>();
-      case 'KeTaoFeaturedUserHolderProfitPartnerBonus':
-        return List<KeTaoFeaturedUserHolderProfitPartnerBonus>();
-      case 'KeTaoFeaturedOrderDetailEntity':
-        return List<KeTaoFeaturedOrderDetailEntity>();
-      case 'KeTaoFeaturedOrderDetailData':
-        return List<KeTaoFeaturedOrderDetailData>();
-      case 'KeTaoFeaturedOrderDetailDataGoodsList':
-        return List<KeTaoFeaturedOrderDetailDataGoodsList>();
-      case 'KeTaoFeaturedPddGoodsInfoEntity':
-        return List<KeTaoFeaturedPddGoodsInfoEntity>();
-      case 'KeTaoFeaturedPddGoodsInfoData':
-        return List<KeTaoFeaturedPddGoodsInfoData>();
-      case 'KeTaoFeaturedPddGoodsInfoDataCoupons':
-        return List<KeTaoFeaturedPddGoodsInfoDataCoupons>();
-      case 'KeTaoFeaturedIncomeListEntity':
-        return List<KeTaoFeaturedIncomeListEntity>();
-      case 'KeTaoFeaturedIncomeListData':
-        return List<KeTaoFeaturedIncomeListData>();
-      case 'KeTaoFeaturedIncomeListDataList':
-        return List<KeTaoFeaturedIncomeListDataList>();
-      case 'KeTaoFeaturedPddGoodsListEntity':
-        return List<KeTaoFeaturedPddGoodsListEntity>();
-      case 'KeTaoFeaturedPddGoodsListData':
-        return List<KeTaoFeaturedPddGoodsListData>();
-      case 'KeTaoFeaturedPddGoodsListDataList':
-        return List<KeTaoFeaturedPddGoodsListDataList>();
-      case 'KeTaoFeaturedPddGoodsListDataListCoupons':
-        return List<KeTaoFeaturedPddGoodsListDataListCoupons>();
-      case 'KeTaoFeaturedBalancePayInfoEntity':
-        return List<KeTaoFeaturedBalancePayInfoEntity>();
-      case 'KeTaoFeaturedBalancePayInfoData':
-        return List<KeTaoFeaturedBalancePayInfoData>();
-      case 'KeTaoFeaturedGoodsQueuePersionalEntity':
-        return List<KeTaoFeaturedGoodsQueuePersionalEntity>();
-      case 'KeTaoFeaturedGoodsQueuePersionalData':
-        return List<KeTaoFeaturedGoodsQueuePersionalData>();
-      case 'KeTaoFeaturedPddCategoryListEntity':
-        return List<KeTaoFeaturedPddCategoryListEntity>();
-      case 'KeTaoFeaturedPddCategoryListData':
-        return List<KeTaoFeaturedPddCategoryListData>();
-      case 'KeTaoFeaturedMicroShareholderEntity':
-        return List<KeTaoFeaturedMicroShareholderEntity>();
-      case 'KeTaoFeaturedMicroShareholderData':
-        return List<KeTaoFeaturedMicroShareholderData>();
-      case 'KeTaoFeaturedMicroShareholderItemEntity':
-        return List<KeTaoFeaturedMicroShareholderItemEntity>();
-      case 'KeTaoFeaturedMicroShareholderItemEstimate':
-        return List<KeTaoFeaturedMicroShareholderItemEstimate>();
-      case 'KeTaoFeaturedMicroShareholderItemInterests':
-        return List<KeTaoFeaturedMicroShareholderItemInterests>();
-      case 'KeTaoFeaturedCategoryBeanEntity':
-        return List<KeTaoFeaturedCategoryBeanEntity>();
-      case 'KeTaoFeaturedCategoryBeanData':
-        return List<KeTaoFeaturedCategoryBeanData>();
-      case 'KeTaoFeaturedPddHomeEntity':
-        return List<KeTaoFeaturedPddHomeEntity>();
-      case 'KeTaoFeaturedPddHomeData':
-        return List<KeTaoFeaturedPddHomeData>();
-      case 'KeTaoFeaturedPddHomeDataCat':
-        return List<KeTaoFeaturedPddHomeDataCat>();
-      case 'KeTaoFeaturedPddHomeDataBanner':
-        return List<KeTaoFeaturedPddHomeDataBanner>();
-      case 'KeTaoFeaturedPddHomeDataTool':
-        return List<KeTaoFeaturedPddHomeDataTool>();
-      case 'KeTaoFeaturedPddHomeDataAd':
-        return List<KeTaoFeaturedPddHomeDataAd>();
-      case 'KeTaoFeaturedRechargeEntity':
-        return List<KeTaoFeaturedRechargeEntity>();
-      case 'KeTaoFeaturedRechargeData':
-        return List<KeTaoFeaturedRechargeData>();
-      case 'KeTaoFeaturedRechargeDataRechageList':
-        return List<KeTaoFeaturedRechargeDataRechageList>();
-      case 'KeTaoFeaturedRechargeDatacouponList':
-        return List<KeTaoFeaturedRechargeDatacouponList>();
-      case 'KeTaoFeaturedHomeEntity':
-        return List<KeTaoFeaturedHomeEntity>();
-      case 'KeTaoFeaturedHomeData':
-        return List<KeTaoFeaturedHomeData>();
-      case 'KeTaoFeaturedHomeDataBanner':
-        return List<KeTaoFeaturedHomeDataBanner>();
-      case 'KeTaoFeaturedHomeDataTaskList':
-        return List<KeTaoFeaturedHomeDataTaskList>();
-      case 'KeTaoFeaturedHomeDataTaskListList':
-        return List<KeTaoFeaturedHomeDataTaskListList>();
-      case 'KeTaoFeaturedSearchGoodsListEntity':
-        return List<KeTaoFeaturedSearchGoodsListEntity>();
-      case 'KeTaoFeaturedSearchGoodsListData':
-        return List<KeTaoFeaturedSearchGoodsListData>();
-      case 'KeTaoFeaturedSearchGoodsListDataList':
-        return List<KeTaoFeaturedSearchGoodsListDataList>();
-      case 'KeTaoFeaturedAlipayPayinfoEntity':
-        return List<KeTaoFeaturedAlipayPayinfoEntity>();
-      case 'KeTaoFeaturedAlipayPayinfoData':
-        return List<KeTaoFeaturedAlipayPayinfoData>();
-      case 'KeTaoFeaturedVipPriceEntity':
-        return List<KeTaoFeaturedVipPriceEntity>();
-      case 'KeTaoFeaturedVipPriceData':
-        return List<KeTaoFeaturedVipPriceData>();
-      case 'KeTaoFeaturedWithdrawalInfoEntity':
-        return List<KeTaoFeaturedWithdrawalInfoEntity>();
-      case 'KeTaoFeaturedWithdrawalInfoData':
-        return List<KeTaoFeaturedWithdrawalInfoData>();
-      case 'KeTaoFeaturedWithdrawalInfoDataUser':
-        return List<KeTaoFeaturedWithdrawalInfoDataUser>();
-      case 'KeTaoFeaturedWithdrawalInfoDataUseModel':
-        return List<KeTaoFeaturedWithdrawalInfoDataUseModel>();
-      case 'KeTaoFeaturedOrderUserInfoEntity':
-        return List<KeTaoFeaturedOrderUserInfoEntity>();
-      case 'KeTaoFeaturedOrderUserInfoUserInfo':
-        return List<KeTaoFeaturedOrderUserInfoUserInfo>();
-      case 'KeTaoFeaturedHomeGoodsListEntity':
-        return List<KeTaoFeaturedHomeGoodsListEntity>();
-      case 'KeTaoFeaturedHomeGoodsListGoodsList':
-        return List<KeTaoFeaturedHomeGoodsListGoodsList>();
-      case 'KeTaoFeaturedOrderListEntity':
-        return List<KeTaoFeaturedOrderListEntity>();
-      case 'KeTaoFeaturedOrderListData':
-        return List<KeTaoFeaturedOrderListData>();
-      case 'KeTaoFeaturedOrderListDataList':
-        return List<KeTaoFeaturedOrderListDataList>();
-      case 'KeTaoFeaturedOrderListDataListGoodsList':
-        return List<KeTaoFeaturedOrderListDataListGoodsList>();
-      case 'KeTaoFeaturedWithdrawalUserInfoEntity':
-        return List<KeTaoFeaturedWithdrawalUserInfoEntity>();
-      case 'KeTaoFeaturedWithdrawalUserInfoData':
-        return List<KeTaoFeaturedWithdrawalUserInfoData>();
-      case 'KeTaoFeaturedWithdrawalUserInfoDataUser':
-        return List<KeTaoFeaturedWithdrawalUserInfoDataUser>();
-      case 'KeTaoFeaturedShareholderIncomeListEntity':
-        return List<KeTaoFeaturedShareholderIncomeListEntity>();
-      case 'KeTaoFeaturedAddressInfoEntity':
-        return List<KeTaoFeaturedAddressInfoEntity>();
-      case 'KeTaoFeaturedAddressInfoData':
-        return List<KeTaoFeaturedAddressInfoData>();
-      case 'KeTaoFeaturedTaskShareEntity':
-        return List<KeTaoFeaturedTaskShareEntity>();
-      case 'KeTaoFeaturedTaskShareData':
-        return List<KeTaoFeaturedTaskShareData>();
-      case 'KeTaoFeaturedTaskShareDataShareInfo':
-        return List<KeTaoFeaturedTaskShareDataShareInfo>();
-      case 'KeTaoFeaturedTaskShareDataFooterImg':
-        return List<KeTaoFeaturedTaskShareDataFooterImg>();
-      case 'KeTaoFeaturedWechatPayinfoEntity':
-        return List<KeTaoFeaturedWechatPayinfoEntity>();
-      case 'KeTaoFeaturedWechatPayinfoData':
-        return List<KeTaoFeaturedWechatPayinfoData>();
-      case 'KeTaoFeaturedWechatPayinfoDataPayInfo':
-        return List<KeTaoFeaturedWechatPayinfoDataPayInfo>();
-      case 'KeTaoFeaturedMessageListEntity':
-        return List<KeTaoFeaturedMessageListEntity>();
-      case 'KeTaoFeaturedMessageListData':
-        return List<KeTaoFeaturedMessageListData>();
-      case 'KeTaoFeaturedMessageListDataList':
-        return List<KeTaoFeaturedMessageListDataList>();
-      case 'KeTaoFeaturedUserInfoEntity':
-        return List<KeTaoFeaturedUserInfoEntity>();
-      case 'KeTaoFeaturedUserInfoData':
-        return List<KeTaoFeaturedUserInfoData>();
-      case 'KeTaoFeaturedTaskDetailOtherEntity':
-        return List<KeTaoFeaturedTaskDetailOtherEntity>();
-      case 'KeTaoFeaturedTaskDetailOtherData':
-        return List<KeTaoFeaturedTaskDetailOtherData>();
-      case 'KeTaoFeaturedTaskDetailOtherDataDescJson':
-        return List<KeTaoFeaturedTaskDetailOtherDataDescJson>();
-      case 'KeTaoFeaturedGoodsInfoEntity':
-        return List<KeTaoFeaturedGoodsInfoEntity>();
-      case 'KeTaoFeaturedGoodsInfoData':
-        return List<KeTaoFeaturedGoodsInfoData>();
-      case 'KeTaoFeaturedHomePddCategoryEntity':
-        return List<KeTaoFeaturedHomePddCategoryEntity>();
-      case 'KeTaoFeaturedHomePddCategoryData':
-        return List<KeTaoFeaturedHomePddCategoryData>();
-      case 'KeTaoFeaturedHomePddCategoryDataCat':
-        return List<KeTaoFeaturedHomePddCategoryDataCat>();
-      case 'KeTaoFeaturedVersionInfoEntity':
-        return List<KeTaoFeaturedVersionInfoEntity>();
-      case 'KeTaoFeaturedVersionInfoData':
-        return List<KeTaoFeaturedVersionInfoData>();
-      case 'KeTaoFeaturedLogisticsInfoEntity':
-        return List<KeTaoFeaturedLogisticsInfoEntity>();
-      case 'KeTaoFeaturedLogisticsInfoData':
-        return List<KeTaoFeaturedLogisticsInfoData>();
-      case 'KeTaoFeaturedLogisticsInfoDataExpressList':
-        return List<KeTaoFeaturedLogisticsInfoDataExpressList>();
-      case 'KeTaoFeaturedLogisticsInfoDataExpressListList':
-        return List<KeTaoFeaturedLogisticsInfoDataExpressListList>();
-      case 'KeTaoFeaturedLogisticsInfoDataExpressInfo':
-        return List<KeTaoFeaturedLogisticsInfoDataExpressInfo>();
-      case 'KeTaoFeaturedRechargeExtraEntity':
-        return List<KeTaoFeaturedRechargeExtraEntity>();
-      case 'KeTaoFeaturedRechargeExtraSRechageList':
-        return List<KeTaoFeaturedRechargeExtraSRechageList>();
-      case 'KeTaoFeaturedRechargeExtraRatio':
-        return List<KeTaoFeaturedRechargeExtraRatio>();
-      case 'KeTaoFeaturedRegionDataEntity':
-        return List<KeTaoFeaturedRegionDataEntity>();
-      case 'KeTaoFeaturedRegionDataData':
-        return List<KeTaoFeaturedRegionDataData>();
-      case 'KeTaoFeaturedRegionDataDatachild':
-        return List<KeTaoFeaturedRegionDataDatachild>();
-      case 'KeTaoFeaturedRegionDataDatachildchild':
-        return List<KeTaoFeaturedRegionDataDatachildchild>();
-      case 'KeTaoFeaturedLoginEntity':
-        return List<KeTaoFeaturedLoginEntity>();
-      case 'KeTaoFeaturedLoginData':
-        return List<KeTaoFeaturedLoginData>();
-      case 'KeTaoFeaturedWithdrawalListEntity':
-        return List<KeTaoFeaturedWithdrawalListEntity>();
-      case 'KeTaoFeaturedWithdrawalListData':
-        return List<KeTaoFeaturedWithdrawalListData>();
-      case 'KeTaoFeaturedWithdrawalListDataList':
-        return List<KeTaoFeaturedWithdrawalListDataList>();
-      case 'KeTaoFeaturedTaskDetailEntity':
-        return List<KeTaoFeaturedTaskDetailEntity>();
-      case 'KeTaoFeaturedTaskDetailData':
-        return List<KeTaoFeaturedTaskDetailData>();
+      case 'ResultBeanEntity':
+        return List<ResultBeanEntity>();
+      case 'SearchPddGoodsListEntity':
+        return List<SearchPddGoodsListEntity>();
+      case 'SearchPddGoodsListData':
+        return List<SearchPddGoodsListData>();
+      case 'SearchPddGoodsListDataList':
+        return List<SearchPddGoodsListDataList>();
+      case 'SearchPddGoodsListDataListCoupons':
+        return List<SearchPddGoodsListDataListCoupons>();
+      case 'PosterEntity':
+        return List<PosterEntity>();
+      case 'PosterData':
+        return List<PosterData>();
+      case 'GoodsQueueEntity':
+        return List<GoodsQueueEntity>();
+      case 'GoodsQueueData':
+        return List<GoodsQueueData>();
+      case 'GoodsQueueDataSignPackage':
+        return List<GoodsQueueDataSignPackage>();
+      case 'GoodsQueueDataGoodsInfo':
+        return List<GoodsQueueDataGoodsInfo>();
+      case 'GoodsQueueDataList':
+        return List<GoodsQueueDataList>();
+      case 'GoodsQueueDataUserInfo':
+        return List<GoodsQueueDataUserInfo>();
+      case 'TaskRecordListEntity':
+        return List<TaskRecordListEntity>();
+      case 'TaskRecordListData':
+        return List<TaskRecordListData>();
+      case 'TaskRecordListDataList':
+        return List<TaskRecordListDataList>();
+      case 'FansTotalEntity':
+        return List<FansTotalEntity>();
+      case 'FansTotalData':
+        return List<FansTotalData>();
+      case 'FansTotalDataAgentInfo':
+        return List<FansTotalDataAgentInfo>();
+      case 'FansTotalDataCountInfo':
+        return List<FansTotalDataCountInfo>();
+      case 'GoodsSpecInfoEntity':
+        return List<GoodsSpecInfoEntity>();
+      case 'GoodsSpecInfoSpecInfo':
+        return List<GoodsSpecInfoSpecInfo>();
+      case 'GoodsSpecInfoSpecInfoSpecItem':
+        return List<GoodsSpecInfoSpecInfoSpecItem>();
+      case 'GoodsSpecInfoSpecInfoSpecPrice':
+        return List<GoodsSpecInfoSpecInfoSpecPrice>();
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds':
+        return List<GoodsSpecInfoSpecInfoSpecPriceIds>();
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds01':
+        return List<GoodsSpecInfoSpecInfoSpecPriceIds01>();
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds10':
+        return List<GoodsSpecInfoSpecInfoSpecPriceIds10>();
+      case 'GoodsSpecInfoSpecInfoSpecPriceIds11':
+        return List<GoodsSpecInfoSpecInfoSpecPriceIds11>();
+      case 'AddressListEntity':
+        return List<AddressListEntity>();
+      case 'AddressListData':
+        return List<AddressListData>();
+      case 'UserHolderProfitEntity':
+        return List<UserHolderProfitEntity>();
+      case 'UserHolderProfitPartnerBonus':
+        return List<UserHolderProfitPartnerBonus>();
+      case 'OrderDetailEntity':
+        return List<OrderDetailEntity>();
+      case 'OrderDetailData':
+        return List<OrderDetailData>();
+      case 'OrderDetailDataGoodsList':
+        return List<OrderDetailDataGoodsList>();
+      case 'PddGoodsInfoEntity':
+        return List<PddGoodsInfoEntity>();
+      case 'PddGoodsInfoData':
+        return List<PddGoodsInfoData>();
+      case 'PddGoodsInfoDataCoupons':
+        return List<PddGoodsInfoDataCoupons>();
+      case 'IncomeListEntity':
+        return List<IncomeListEntity>();
+      case 'IncomeListData':
+        return List<IncomeListData>();
+      case 'IncomeListDataList':
+        return List<IncomeListDataList>();
+      case 'PddGoodsListEntity':
+        return List<PddGoodsListEntity>();
+      case 'PddGoodsListData':
+        return List<PddGoodsListData>();
+      case 'PddGoodsListDataList':
+        return List<PddGoodsListDataList>();
+      case 'PddGoodsListDataListCoupons':
+        return List<PddGoodsListDataListCoupons>();
+      case 'BalancePayInfoEntity':
+        return List<BalancePayInfoEntity>();
+      case 'BalancePayInfoData':
+        return List<BalancePayInfoData>();
+      case 'GoodsQueuePersionalEntity':
+        return List<GoodsQueuePersionalEntity>();
+      case 'GoodsQueuePersionalData':
+        return List<GoodsQueuePersionalData>();
+      case 'PddCategoryListEntity':
+        return List<PddCategoryListEntity>();
+      case 'PddCategoryListData':
+        return List<PddCategoryListData>();
+      case 'MicroShareholderEntity':
+        return List<MicroShareholderEntity>();
+      case 'MicroShareholderData':
+        return List<MicroShareholderData>();
+      case 'MicroShareholderItemEntity':
+        return List<MicroShareholderItemEntity>();
+      case 'MicroShareholderItemEstimate':
+        return List<MicroShareholderItemEstimate>();
+      case 'MicroShareholderItemInterests':
+        return List<MicroShareholderItemInterests>();
+      case 'CategoryBeanEntity':
+        return List<CategoryBeanEntity>();
+      case 'CategoryBeanData':
+        return List<CategoryBeanData>();
+      case 'PddHomeEntity':
+        return List<PddHomeEntity>();
+      case 'PddHomeData':
+        return List<PddHomeData>();
+      case 'PddHomeDataCat':
+        return List<PddHomeDataCat>();
+      case 'PddHomeDataBanner':
+        return List<PddHomeDataBanner>();
+      case 'PddHomeDataTool':
+        return List<PddHomeDataTool>();
+      case 'PddHomeDataAd':
+        return List<PddHomeDataAd>();
+      case 'RechargeEntity':
+        return List<RechargeEntity>();
+      case 'RechargeData':
+        return List<RechargeData>();
+      case 'RechargeDataRechageList':
+        return List<RechargeDataRechageList>();
+      case 'RechargeDatacouponList':
+        return List<RechargeDatacouponList>();
+      case 'HomeEntity':
+        return List<HomeEntity>();
+      case 'HomeData':
+        return List<HomeData>();
+      case 'HomeDataBanner':
+        return List<HomeDataBanner>();
+      case 'HomeDataTaskList':
+        return List<HomeDataTaskList>();
+      case 'HomeDataTaskListList':
+        return List<HomeDataTaskListList>();
+      case 'SearchGoodsListEntity':
+        return List<SearchGoodsListEntity>();
+      case 'SearchGoodsListData':
+        return List<SearchGoodsListData>();
+      case 'SearchGoodsListDataList':
+        return List<SearchGoodsListDataList>();
+      case 'AlipayPayinfoEntity':
+        return List<AlipayPayinfoEntity>();
+      case 'AlipayPayinfoData':
+        return List<AlipayPayinfoData>();
+      case 'VipPriceEntity':
+        return List<VipPriceEntity>();
+      case 'VipPriceData':
+        return List<VipPriceData>();
+      case 'WithdrawalInfoEntity':
+        return List<WithdrawalInfoEntity>();
+      case 'WithdrawalInfoData':
+        return List<WithdrawalInfoData>();
+      case 'WithdrawalInfoDataUser':
+        return List<WithdrawalInfoDataUser>();
+      case 'WithdrawalInfoDataUseModel':
+        return List<WithdrawalInfoDataUseModel>();
+      case 'OrderUserInfoEntity':
+        return List<OrderUserInfoEntity>();
+      case 'OrderUserInfoUserInfo':
+        return List<OrderUserInfoUserInfo>();
+      case 'HomeGoodsListEntity':
+        return List<HomeGoodsListEntity>();
+      case 'HomeGoodsListGoodsList':
+        return List<HomeGoodsListGoodsList>();
+      case 'OrderListEntity':
+        return List<OrderListEntity>();
+      case 'OrderListData':
+        return List<OrderListData>();
+      case 'OrderListDataList':
+        return List<OrderListDataList>();
+      case 'OrderListDataListGoodsList':
+        return List<OrderListDataListGoodsList>();
+      case 'WithdrawalUserInfoEntity':
+        return List<WithdrawalUserInfoEntity>();
+      case 'WithdrawalUserInfoData':
+        return List<WithdrawalUserInfoData>();
+      case 'WithdrawalUserInfoDataUser':
+        return List<WithdrawalUserInfoDataUser>();
+      case 'ShareholderIncomeListEntity':
+        return List<ShareholderIncomeListEntity>();
+      case 'AddressInfoEntity':
+        return List<AddressInfoEntity>();
+      case 'AddressInfoData':
+        return List<AddressInfoData>();
+      case 'TaskShareEntity':
+        return List<TaskShareEntity>();
+      case 'TaskShareData':
+        return List<TaskShareData>();
+      case 'TaskShareDataShareInfo':
+        return List<TaskShareDataShareInfo>();
+      case 'TaskShareDataFooterImg':
+        return List<TaskShareDataFooterImg>();
+      case 'WechatPayinfoEntity':
+        return List<WechatPayinfoEntity>();
+      case 'WechatPayinfoData':
+        return List<WechatPayinfoData>();
+      case 'WechatPayinfoDataPayInfo':
+        return List<WechatPayinfoDataPayInfo>();
+      case 'MessageListEntity':
+        return List<MessageListEntity>();
+      case 'MessageListData':
+        return List<MessageListData>();
+      case 'MessageListDataList':
+        return List<MessageListDataList>();
+      case 'UserInfoEntity':
+        return List<UserInfoEntity>();
+      case 'UserInfoData':
+        return List<UserInfoData>();
+      case 'TaskDetailOtherEntity':
+        return List<TaskDetailOtherEntity>();
+      case 'TaskDetailOtherData':
+        return List<TaskDetailOtherData>();
+      case 'TaskDetailOtherDataDescJson':
+        return List<TaskDetailOtherDataDescJson>();
+      case 'GoodsInfoEntity':
+        return List<GoodsInfoEntity>();
+      case 'GoodsInfoData':
+        return List<GoodsInfoData>();
+      case 'HomePddCategoryEntity':
+        return List<HomePddCategoryEntity>();
+      case 'HomePddCategoryData':
+        return List<HomePddCategoryData>();
+      case 'HomePddCategoryDataCat':
+        return List<HomePddCategoryDataCat>();
+      case 'VersionInfoEntity':
+        return List<VersionInfoEntity>();
+      case 'VersionInfoData':
+        return List<VersionInfoData>();
+      case 'LogisticsInfoEntity':
+        return List<LogisticsInfoEntity>();
+      case 'LogisticsInfoData':
+        return List<LogisticsInfoData>();
+      case 'LogisticsInfoDataExpressList':
+        return List<LogisticsInfoDataExpressList>();
+      case 'LogisticsInfoDataExpressListList':
+        return List<LogisticsInfoDataExpressListList>();
+      case 'LogisticsInfoDataExpressInfo':
+        return List<LogisticsInfoDataExpressInfo>();
+      case 'RechargeExtraEntity':
+        return List<RechargeExtraEntity>();
+      case 'RechargeExtraSRechageList':
+        return List<RechargeExtraSRechageList>();
+      case 'RechargeExtraRatio':
+        return List<RechargeExtraRatio>();
+      case 'RegionDataEntity':
+        return List<RegionDataEntity>();
+      case 'RegionDataData':
+        return List<RegionDataData>();
+      case 'RegionDataDatachild':
+        return List<RegionDataDatachild>();
+      case 'RegionDataDatachildchild':
+        return List<RegionDataDatachildchild>();
+      case 'LoginEntity':
+        return List<LoginEntity>();
+      case 'LoginData':
+        return List<LoginData>();
+      case 'WithdrawalListEntity':
+        return List<WithdrawalListEntity>();
+      case 'WithdrawalListData':
+        return List<WithdrawalListData>();
+      case 'WithdrawalListDataList':
+        return List<WithdrawalListDataList>();
+      case 'TaskDetailEntity':
+        return List<TaskDetailEntity>();
+      case 'TaskDetailData':
+        return List<TaskDetailData>();
     }
     return null;
   }

@@ -10,8 +10,7 @@ class CategoryBeanEntity with JsonConvert<CategoryBeanEntity> {
   List<CategoryBeanData> data;
 }
 
-class CategoryBeanData
-    with JsonConvert<CategoryBeanData> {
+class CategoryBeanData with JsonConvert<CategoryBeanData> {
   @JSONField(name: "category_id")
   String categoryId;
   String id;

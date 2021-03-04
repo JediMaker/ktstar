@@ -10,8 +10,7 @@ class BalancePayInfoEntity with JsonConvert<BalancePayInfoEntity> {
   BalancePayInfoData data;
 }
 
-class BalancePayInfoData
-    with JsonConvert<BalancePayInfoData> {
+class BalancePayInfoData with JsonConvert<BalancePayInfoData> {
   @JSONField(name: "pay_no")
   String payNo;
   @JSONField(name: "pay_info")

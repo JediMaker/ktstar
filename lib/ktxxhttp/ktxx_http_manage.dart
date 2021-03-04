@@ -2141,8 +2141,7 @@ class KeTaoFeaturedHttpManage {
   }
 
   ///  商品分类列表
-  static Future<List<CategoryBeanData>> getCategoryList(
-      category_id) async {
+  static Future<List<CategoryBeanData>> getCategoryList(category_id) async {
     var formData = FormData();
     formData.fields..add(MapEntry("parent_category_id", "$category_id "));
 

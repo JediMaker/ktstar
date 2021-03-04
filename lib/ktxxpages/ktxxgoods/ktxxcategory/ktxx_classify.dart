@@ -9,6 +9,7 @@ import 'package:star/ktxxmodels/ktxx_category_bean_entity.dart';
 import 'package:star/ktxxpages/ktxxgoods/ktxx_goods_list.dart';
 import 'package:star/ktxxutils/ktxx_common_utils.dart';
 import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
+
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
 //  children: <Widget>[
@@ -70,18 +71,22 @@ import 'package:star/ktxxutils/ktxx_navigator_utils.dart';
 // ignore: must_be_immutable
 class KeTaoFeaturedClassifyListPage extends StatefulWidget {
   @override
-  _KeTaoFeaturedClassifyListPageState createState() => _KeTaoFeaturedClassifyListPageState();
+  _KeTaoFeaturedClassifyListPageState createState() =>
+      _KeTaoFeaturedClassifyListPageState();
 }
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _KeTaoFeaturedClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
+class _KeTaoFeaturedClassifyListPageState
+    extends State<KeTaoFeaturedClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;
   List<CategoryBeanData> rightListData;
 
   Future _initData(id) async {
-    List<CategoryBeanData> categoryList = await KeTaoFeaturedHttpManage.getCategoryList(id);
+    List<CategoryBeanData> categoryList =
+        await KeTaoFeaturedHttpManage.getCategoryList(id);
     if (mounted) {
       setState(() {
         try {
@@ -91,6 +96,7 @@ class _KeTaoFeaturedClassifyListPageState extends State<KeTaoFeaturedClassifyLis
       });
     }
   }
+
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
   int SVG_ANGLETYPE_RAD = 3;
