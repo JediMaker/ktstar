@@ -310,6 +310,15 @@ class _KeTaoFeaturedRechargeOrderListPageState
           showBtn = false;
           break;
       }
+    }else if (orderType == "4") {
+      switch (orderStatus) {
+        case "8":
+          orderStatusText = "已完成";
+          showBtn = false;
+          break;
+      }
+    } else {
+      showBtn = false;
     }
     if (orderType == "3") {
       //拼多多订单
@@ -404,6 +413,12 @@ class _KeTaoFeaturedRechargeOrderListPageState
                     return buildGoodsList(goodsList);
                     break;
                   case "3": //拼多多订单
+                    return buildGoodsList(goodsList);
+                    break;
+                  case "4": //美团订单
+                    return buildGoodsList(goodsList);
+                    break;
+                  default:
                     return buildGoodsList(goodsList);
                     break;
                 }
