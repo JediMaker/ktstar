@@ -709,7 +709,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: ScreenUtil().setHeight(245),
+                  height: ScreenUtil().setWidth(255),
                   color: Colors.white,
                   child: Row(
                     children: <Widget>[
@@ -1345,14 +1345,14 @@ class _DetailWindowState extends State<DetailWindow>
                       visible: !CommonUtils.isEmpty(_btPrice),
                       child: Container(
                         margin: EdgeInsets.only(
-                          left: ScreenUtil().setHeight(8),
+                          left: ScreenUtil().setHeight(20),
                         ),
                         child: Text(
                           "分红金：￥$_btPrice",
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
                           style: TextStyle(
                             color: _txtRedColor,
-                            fontSize: ScreenUtil().setSp(28),
+                            fontSize: ScreenUtil().setSp(32),
                           ),
                         ),
                       ),
