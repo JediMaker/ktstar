@@ -153,7 +153,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
     String goodsSign;
     String coin;
     List<OrderListDataListGoodsList> goodsList =
-    List<OrderListDataListGoodsList>();
+        List<OrderListDataListGoodsList>();
     try {
       createTime = listItem.createTime;
       phoneNumber = listItem.mobile;
@@ -240,6 +240,15 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
           showBtn = false;
           break;
       }
+    } else if (orderType == "4") {
+      switch (orderStatus) {
+        case "8":
+          orderStatusText = "已完成";
+          showBtn = false;
+          break;
+      }
+    } else {
+      showBtn = false;
     }
     if (orderType == "3") {
       //拼多多订单
@@ -278,7 +287,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius:
-            BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+                BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
             border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                 color: Colors.white,
@@ -322,18 +331,24 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                     return Column(
                       children: goodsList == null
                           ? Container(
-                        child: Text(''),
-                      )
+                              child: Text(''),
+                            )
                           : List.generate(goodsList.length, (index) {
-                        return buildRechargeItemRow(phoneNumber,
-                            phoneMoney, goodsList[index], refundMsg);
-                      }),
+                              return buildRechargeItemRow(phoneNumber,
+                                  phoneMoney, goodsList[index], refundMsg);
+                            }),
                     );
                     break;
                   case "2": //商品订单
                     return buildGoodsList(goodsList);
                     break;
                   case "3": //拼多多订单
+                    return buildGoodsList(goodsList);
+                    break;
+                  case "4": //美团订单
+                    return buildGoodsList(goodsList);
+                    break;
+                  default:
                     return buildGoodsList(goodsList);
                     break;
                 }
@@ -415,8 +430,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      var result =
-                      await HttpManage.chargeRefund(orderId);
+                      var result = await HttpManage.chargeRefund(orderId);
                       if (result.status) {
                         CommonUtils.showToast("申请已提交");
                         page = 1;
@@ -452,8 +466,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                   ),
                   GestureDetector(
                     onTap: () async {
-                      var result =
-                      await HttpManage.chargeRetry(orderId);
+                      var result = await HttpManage.chargeRetry(orderId);
                       if (result.status) {
                         CommonUtils.showToast("申请已提交");
                         page = 1;
@@ -504,11 +517,11 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
 //                      visible: orderType == "1",
                       child: Container(
                           child: Text(
-                            "订单编号：$orderNo",
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(32),
-                                color: Color(0xff666666)),
-                          )),
+                        "订单编号：$orderNo",
+                        style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
+                            color: Color(0xff666666)),
+                      )),
                     ),
                   ),
                   Visibility(
@@ -558,7 +571,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                         } else if (orderType == "2") {
                           switch (orderStatus) {
                             case "1":
-                            /* if (Platform.isIOS) {
+                              /* if (Platform.isIOS) {
                                 CommonUtils.showIosPayDialog();
                                 return;
                               }*/
@@ -857,6 +870,7 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
         },
         itemCount: goodsList == null ? 0 : goodsList.length);
   }
+
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
       OrderListDataListGoodsList goodsItem, String refundMsg) {
     var imageUrl = '';
