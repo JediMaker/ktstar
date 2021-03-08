@@ -43,6 +43,8 @@ class OrderDetailData with JsonConvert<OrderDetailData> {
   String isCoupon;
   @JSONField(name: "deduct_price")
   String deductPrice;
+  @JSONField(name: "order_bonus")
+  String orderBonus;
   @JSONField(name: "user_info")
   OrderUserInfoUserInfo userInfo;
 }

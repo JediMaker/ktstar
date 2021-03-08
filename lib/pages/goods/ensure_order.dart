@@ -41,6 +41,7 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
   var _leftAmount = "0";
   var _availableAmount = "0";
   var _totalAmount = "0";
+  var _coin = "";
   bool showEnvelope = false;
 
   /*OrderCheckoutEntity entity;
@@ -69,6 +70,7 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
+            _coin = entityResult.data.orderBonus;
             if (double.parse(_totalAmount) > double.parse(totalPrice)) {
               _availableAmount = double.parse(totalPrice).toStringAsFixed(2);
             } else {
@@ -426,6 +428,28 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                                 ),
                               ),
                             ],
+                          ),
+                          Visibility(
+                            visible: CommonUtils.isEmpty(_coin),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  "分红金",
+                                  style: TextStyle(
+                                    color: Color(0xff999999),
+                                    fontSize: ScreenUtil().setSp(36),
+                                  ),
+                                ),
+                                Expanded(child: Text("")),
+                                Text(
+                                  "￥$_coin",
+                                  style: TextStyle(
+                                    color: Color(0xff222222),
+                                    fontSize: ScreenUtil().setSp(36),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Visibility(
                             visible: isCoupon == "1" && showEnvelope,
