@@ -333,6 +333,12 @@ class _MicroMinePageState extends State<MicroMinePage>
                   break;
                 case "2":
                   CommonUtils.showToast("微信账户数据合并成功，请重新登录！");
+                  GlobalConfig.prefs.remove("hasLogin");
+                  GlobalConfig.prefs.remove("token");
+                  GlobalConfig.prefs.remove("loginData");
+                  GlobalConfig.saveLoginStatus(false);
+                  _clearWidgetData();
+                  NavigatorUtils.navigatorRouter(context, LoginPage());
                   break;
               }
             } else {
@@ -1077,7 +1083,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             _clearWidgetData();
                             Navigator.pop(context);
                             NavigatorUtils.navigatorRouter(
-                                context, LoginPage());
+                                this.context, LoginPage());
                           },
                         ),
                       ],
@@ -2620,6 +2626,14 @@ class _MicroMinePageState extends State<MicroMinePage>
 
                                   case "2":
                                     CommonUtils.showToast("手机账户数据合并成功，请重新登录！");
+                                    GlobalConfig.prefs.remove("hasLogin");
+                                    GlobalConfig.prefs.remove("token");
+                                    GlobalConfig.prefs.remove("loginData");
+                                    GlobalConfig.saveLoginStatus(false);
+                                    _clearWidgetData();
+                                    Navigator.pop(context);
+                                    NavigatorUtils.navigatorRouter(
+                                        this.context, LoginPage());
                                     break;
                                 }
                               } else {
