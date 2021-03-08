@@ -43,10 +43,10 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         manifestPlaceholders = [
-                JPUSH_PKGNAME : "com.ketao.star",
+                JPUSH_PKGNAME: "com.ketao.star",
                 JPUSH_APPKEY : "b8b53a639c646141e54bf4df", // NOTE: JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-                CHANNEL_NAME: "developer-default",
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                CHANNEL_NAME : "developer-default",
         ]
         multiDexEnabled true
     }
@@ -75,7 +75,7 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
         }
-        debug{
+        debug {
             signingConfig signingConfigs.debug
         }
     }
@@ -93,4 +93,13 @@ dependencies {
     implementation "com.umeng.umsdk:crash:0.0.4" // native crash包依赖(必选)
     // 引入support支持库的multidex库
     implementation 'com.android.support:multidex:1.0.3'
+    //引入高德地图相关库
+    //2d地图
+//    implementation 'com.amap.api:map2d:latest.integration'
+    //3D地图so及jar
+    implementation 'com.amap.api:3dmap:latest.integration'
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+    //搜索功能
+    implementation 'com.amap.api:search:latest.integration'
 }
