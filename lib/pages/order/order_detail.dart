@@ -841,7 +841,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   Container(
                     color: Colors.white,
                     padding: EdgeInsets.symmetric(
-                        horizontal: 16, vertical: ScreenUtil().setHeight(30)),
+                      horizontal: 16,
+                    ),
                     alignment: Alignment.centerLeft,
                     child: Row(
                       children: [
@@ -902,6 +903,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     color: Colors.white,
                     padding: EdgeInsets.symmetric(
                       horizontal: 16,
+                      vertical: ScreenUtil().setHeight(30),
                     ),
                     alignment: Alignment.centerLeft,
                     child: Row(
