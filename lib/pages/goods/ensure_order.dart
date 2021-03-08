@@ -432,6 +432,7 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                           Visibility(
                             visible: !CommonUtils.isEmpty(_coin),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
                                   "分红金",
