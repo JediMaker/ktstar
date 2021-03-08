@@ -430,7 +430,7 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                             ],
                           ),
                           Visibility(
-                            visible: CommonUtils.isEmpty(_coin),
+                            visible: !CommonUtils.isEmpty(_coin),
                             child: Row(
                               children: <Widget>[
                                 Text(
