@@ -724,7 +724,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                           },
                           child: Container(
                             height: ScreenUtil().setWidth(255),
-                            width: ScreenUtil().setWidth(155),
+                            width: ScreenUtil().setWidth(100),
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
