@@ -25,9 +25,11 @@ import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
 class MicroShareHolderEquityPage extends StatefulWidget {
-  MicroShareHolderEquityPage({Key key, this.shareholderType = 1})
+  MicroShareHolderEquityPage(
+      {Key key, this.shareholderType = 1, this.showBackBtnIcon = true})
       : super(key: key);
   final String title = "微股东权益";
+  bool showBackBtnIcon;
 
   ///股东类型
   ///-1非股东 0 见习股东 ; 1 vip 股东 ，高级股东
@@ -210,22 +212,25 @@ class _MicroShareHolderEquityPageState
             style: TextStyle(
                 color: Colors.white, fontSize: ScreenUtil().setSp(54)),
           ),
-          leading: IconButton(
-            icon: Container(
-              width: ScreenUtil().setWidth(63),
-              height: ScreenUtil().setHeight(63),
-              child: Center(
-                child: Image.asset(
-                  "static/images/icon_ios_back_white.png",
-                  width: ScreenUtil().setWidth(36),
-                  height: ScreenUtil().setHeight(63),
-                  fit: BoxFit.fill,
+          leading: Visibility(
+            visible: widget.showBackBtnIcon,
+            child: IconButton(
+              icon: Container(
+                width: ScreenUtil().setWidth(63),
+                height: ScreenUtil().setHeight(63),
+                child: Center(
+                  child: Image.asset(
+                    "static/images/icon_ios_back_white.png",
+                    width: ScreenUtil().setWidth(36),
+                    height: ScreenUtil().setHeight(63),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
           centerTitle: true,
           elevation: 0,

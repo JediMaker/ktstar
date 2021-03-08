@@ -55,6 +55,9 @@ shopTypeDataListFromJson(ShopTypeDataList data, Map<String, dynamic> json) {
   if (json['profit'] != null) {
     data.profit = json['profit']?.toString();
   }
+  if (json['coin'] != null) {
+    data.coin = json['coin']?.toString();
+  }
   return data;
 }
 
@@ -63,5 +66,6 @@ Map<String, dynamic> shopTypeDataListToJson(ShopTypeDataList entity) {
   data['id'] = entity.id;
   data['name'] = entity.name;
   data['profit'] = entity.profit;
+  data['coin'] = entity.coin;
   return data;
 }

@@ -19,4 +19,5 @@ class ShopTypeDataList with JsonConvert<ShopTypeDataList> {
   String id;
   String name;
   String profit;
+  String coin;
 }

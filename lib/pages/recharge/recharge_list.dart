@@ -50,6 +50,9 @@ class _RechargeListPageState extends State<RechargeListPage> {
   var _fastRatio = '';
   var _slowRatio = '';
 
+  ///是否展示分红金
+  var _showCoin = true;
+
   _initWeChatResponseHandler() {
     GlobalConfig.payType = 1;
     fluwx.weChatResponseEventHandler.listen((res) async {
@@ -130,7 +133,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
         alignment: Alignment.centerLeft,
         color: Color(0xffFFF0D1),
         child: Marquee(
-          text: "话费充值一般情况下10分钟内到账，2个小时内到账都属于正常，超过24小时未到的可以找人工客服处理。",
+          text: "话费充值一般情况下10分钟内到账，4个小时内到账都属于正常，超过24小时未到的可以找人工客服处理。",
           style: TextStyle(
             fontSize: ScreenUtil().setSp(32),
             color: Color(0xffDC6000),
@@ -190,287 +193,294 @@ class _RechargeListPageState extends State<RechargeListPage> {
           ),
           backgroundColor: Color(0xFF489FFF),
         ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(30)),
-          child: Center(
-            child: Column(
-              children: [
-                _buildComplexMarquee(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(48),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      buildphoneInputContainer(),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(30),
-                      ),
-                      buildRechargeLayout(),
-                      Visibility(
-                        visible: _couponData != null &&
-                            _couponData.money != null &&
-                            _couponData.condition != null,
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(
-                              top: ScreenUtil().setHeight(37),
-                              bottom: ScreenUtil().setHeight(182)),
-                          child: Visibility(
-                            child: _couponData != null &&
-                                    _couponData.money != null &&
-                                    _couponData.condition != null
-                                ? Text(
-                                    "* 您有一张${_couponData.money}元优惠券可用(满${_couponData.condition}元)",
-                                    style: TextStyle(
-                                        color: Color(0xff999999),
-                                        fontSize: ScreenUtil().setSp(32)),
-                                  )
-                                : Text(""),
+        body: Container(
+          color: Color(0xffefefef),
+          height: double.infinity,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(30)),
+            child: Center(
+              child: Column(
+                children: [
+                  _buildComplexMarquee(),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(48),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        buildphoneInputContainer(),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(30),
+                        ),
+                        buildRechargeLayout(),
+                        Visibility(
+                          visible: _couponData != null &&
+                              _couponData.money != null &&
+                              _couponData.condition != null,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(37),
+                                bottom: ScreenUtil().setHeight(182)),
+                            child: Visibility(
+                              child: _couponData != null &&
+                                      _couponData.money != null &&
+                                      _couponData.condition != null
+                                  ? Text(
+                                      "* 您有一张${_couponData.money}元优惠券可用(满${_couponData.condition}元)",
+                                      style: TextStyle(
+                                          color: Color(0xff999999),
+                                          fontSize: ScreenUtil().setSp(32)),
+                                    )
+                                  : Text(""),
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.circular(ScreenUtil().setWidth(30)),
-                        ),
-                        margin: EdgeInsets.only(
-                          top: ScreenUtil().setWidth(30),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.symmetric(
-                                vertical: ScreenUtil().setWidth(0),
-                                horizontal: ScreenUtil().setWidth(30),
-                              ),
-                              margin: EdgeInsets.only(
-                                top: ScreenUtil().setWidth(39),
-                              ),
-                              child: Text(
-                                "充值方式",
-                                style: TextStyle(
-                                    color: Color(0xFF222222),
-                                    fontSize: ScreenUtil().setSp(42)),
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () {
-                                setState(() {
-                                  _rechargeWay = 0;
-                                  _dataList = _rechargeList;
-                                });
-                              },
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: ScreenUtil().setWidth(0),
-                                horizontal: ScreenUtil().setWidth(30),
-                              ),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-20, -6, 0.0),
+                        Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                                ScreenUtil().setWidth(30)),
+                          ),
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(30),
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setWidth(0),
+                                  horizontal: ScreenUtil().setWidth(30),
+                                ),
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(39),
+                                ),
                                 child: Text(
-                                  "快速充值",
+                                  "充值方式",
                                   style: TextStyle(
                                       color: Color(0xFF222222),
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
-                              subtitle: Transform(
-                                transform:
-                                    Matrix4.translationValues(-20, -6, 0.0),
-                                child: Text.rich(
-                                  TextSpan(children: [
-                                    TextSpan(text: '预计'),
-                                    TextSpan(
-                                      text: '2小时',
-                                      style: TextStyle(
-                                        color: Color(0xFFCE0100),
-                                      ),
-                                    ),
-                                    TextSpan(text: '内到账，如24小时内未到账，请联系客服。'),
-                                  ]),
-                                  style: TextStyle(
-                                    color: Color(0xFF666666),
-                                    fontSize: ScreenUtil().setSp(32),
+                              ListTile(
+                                onTap: () {
+                                  setState(() {
+                                    _rechargeWay = 0;
+                                    _dataList = _rechargeList;
+                                  });
+                                },
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setWidth(0),
+                                  horizontal: ScreenUtil().setWidth(30),
+                                ),
+                                title: Transform(
+                                  transform:
+                                      Matrix4.translationValues(-20, -6, 0.0),
+                                  child: Text(
+                                    "快速充值",
+                                    style: TextStyle(
+                                        color: Color(0xFF222222),
+                                        fontSize: ScreenUtil().setSp(42)),
                                   ),
                                 ),
-                              ),
-                              leading: CachedNetworkImage(
-                                imageUrl: _rechargeWay == 0
-                                    ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
-                                    : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
-                                width: ScreenUtil().setWidth(60),
-                                height: ScreenUtil().setWidth(60),
-                              ),
-//                              contentPadding: EdgeInsets.all(0),
-                            ),
-                            ListTile(
-                              onTap: () {
-                                setState(() {
-                                  _rechargeWay = 1;
-                                  _dataList = _sRechargeList;
-                                });
-                              },
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: ScreenUtil().setWidth(0),
-                                horizontal: ScreenUtil().setWidth(30),
-                              ),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-20, -6, 0.0),
-                                child: Text(
-                                  "普通充值",
-                                  style: TextStyle(
-                                      color: Color(0xFF222222),
-                                      fontSize: ScreenUtil().setSp(42)),
-                                ),
-                              ),
-                              subtitle: Transform(
-                                transform:
-                                    Matrix4.translationValues(-20, -6, 0.0),
-                                child: Text.rich(
-                                  TextSpan(children: [
-                                    TextSpan(text: '预计'),
-                                    TextSpan(
-                                      text: '72小时',
-                                      style: TextStyle(
-                                        color: Color(0xFFCE0100),
+                                subtitle: Transform(
+                                  transform:
+                                      Matrix4.translationValues(-20, -6, 0.0),
+                                  child: Text.rich(
+                                    TextSpan(children: [
+                                      TextSpan(text: '预计'),
+                                      TextSpan(
+                                        text: '4小时',
+                                        style: TextStyle(
+                                          color: Color(0xFFCE0100),
+                                        ),
                                       ),
+                                      TextSpan(text: '内到账，如24小时内未到账，请联系客服。'),
+                                    ]),
+                                    style: TextStyle(
+                                      color: Color(0xFF666666),
+                                      fontSize: ScreenUtil().setSp(32),
                                     ),
-                                    TextSpan(text: '内到账，急用勿充。'),
-                                  ]),
-                                  style: TextStyle(
-                                    color: Color(0xFF666666),
-                                    fontSize: ScreenUtil().setSp(32),
                                   ),
                                 ),
-                              ),
-                              leading: Container(
-                                child: CachedNetworkImage(
-                                  imageUrl: _rechargeWay == 1
+                                leading: CachedNetworkImage(
+                                  imageUrl: _rechargeWay == 0
                                       ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
                                       : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
                                   width: ScreenUtil().setWidth(60),
                                   height: ScreenUtil().setWidth(60),
                                 ),
+//                              contentPadding: EdgeInsets.all(0),
+                              ),
+                              ListTile(
+                                onTap: () {
+                                  setState(() {
+                                    _rechargeWay = 1;
+                                    _dataList = _sRechargeList;
+                                  });
+                                },
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setWidth(0),
+                                  horizontal: ScreenUtil().setWidth(30),
+                                ),
+                                title: Transform(
+                                  transform:
+                                      Matrix4.translationValues(-20, -6, 0.0),
+                                  child: Text(
+                                    "普通充值",
+                                    style: TextStyle(
+                                        color: Color(0xFF222222),
+                                        fontSize: ScreenUtil().setSp(42)),
+                                  ),
+                                ),
+                                subtitle: Transform(
+                                  transform:
+                                      Matrix4.translationValues(-20, -6, 0.0),
+                                  child: Text.rich(
+                                    TextSpan(children: [
+                                      TextSpan(text: '预计'),
+                                      TextSpan(
+                                        text: '72小时',
+                                        style: TextStyle(
+                                          color: Color(0xFFCE0100),
+                                        ),
+                                      ),
+                                      TextSpan(text: '内到账，急用勿充。'),
+                                    ]),
+                                    style: TextStyle(
+                                      color: Color(0xFF666666),
+                                      fontSize: ScreenUtil().setSp(32),
+                                    ),
+                                  ),
+                                ),
+                                leading: Container(
+                                  child: CachedNetworkImage(
+                                    imageUrl: _rechargeWay == 1
+                                        ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
+                                        : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
+                                    width: ScreenUtil().setWidth(60),
+                                    height: ScreenUtil().setWidth(60),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(80),
+                          ),
+                          child: Text(
+                            "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
+                            style: TextStyle(
+                                color: Color(0xff999999),
+                                fontSize: ScreenUtil().setSp(32)),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(
+                              top: ScreenUtil().setWidth(20),
+                              bottom: ScreenUtil().setWidth(182)),
+                          child: Visibility(
+                            visible: _showCoin,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "*充值成功可获得",
+                                  style: TextStyle(
+                                      color: Color(0xff999999),
+                                      fontSize: ScreenUtil().setSp(32)),
+                                ),
+                                Text(
+                                  "${_rechargeWay == 0 ? '$_fastRatio' : '$_slowRatio'}%",
+                                  style: TextStyle(
+                                      color: GlobalConfig.taskHeadColor,
+                                      fontSize: ScreenUtil().setSp(32)),
+                                ),
+                                Text(
+                                  "分红金",
+                                  style: TextStyle(
+                                      color: GlobalConfig.taskHeadColor,
+                                      fontSize: ScreenUtil().setSp(32)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: true,
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (!CommonUtils.isPhoneLegal(
+                                  _phoneController.text)) {
+                                CommonUtils.showSimplePromptDialog(
+                                    context, "温馨提示", "请输入正确的手机号");
+                                return;
+                              }
+                              try {
+                                _selectedRechargeData = _dataList[_selectIndex];
+                              } catch (e) {
+                                print(e);
+                              }
+                              if (!CommonUtils.isEmpty(_selectedRechargeData)) {
+                                _showSelectPayWayBottomSheet(context);
+                              }
+                            },
+                            child: Container(
+                              //diamond
+                              height: ScreenUtil().setHeight(140),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(46)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xFF489FFF),
+                                  Color(0xFF489FFF),
+                                ]),
+                              ),
+                              child: Text(
+                                "支付",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(42)),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(
-                          top: ScreenUtil().setWidth(80),
-                        ),
-                        child: Text(
-                          "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
-                          style: TextStyle(
-                              color: Color(0xff999999),
-                              fontSize: ScreenUtil().setSp(32)),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(20),
-                            bottom: ScreenUtil().setWidth(182)),
-                        child: Row(
-                          children: [
-                            Text(
-                              "*充值成功可获得",
-                              style: TextStyle(
-                                  color: Color(0xff999999),
-                                  fontSize: ScreenUtil().setSp(32)),
-                            ),
-                            Text(
-                              "${_rechargeWay == 0 ? '$_fastRatio' : '$_slowRatio'}%",
-                              style: TextStyle(
-                                  color: GlobalConfig.taskHeadColor,
-                                  fontSize: ScreenUtil().setSp(32)),
-                            ),
-                            Text(
-                              "分红金",
-                              style: TextStyle(
-                                  color: GlobalConfig.taskHeadColor,
-                                  fontSize: ScreenUtil().setSp(32)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: true,
-                        child: GestureDetector(
-                          onTap: () async {
-                            if (!CommonUtils.isPhoneLegal(
-                                _phoneController.text)) {
-                              CommonUtils.showSimplePromptDialog(
-                                  context, "温馨提示", "请输入正确的手机号");
-                              return;
-                            }
-                            try {
-                              _selectedRechargeData = _dataList[_selectIndex];
-                            } catch (e) {
-                              print(e);
-                            }
-                            if (!CommonUtils.isEmpty(_selectedRechargeData)) {
-                              _showSelectPayWayBottomSheet(context);
-                            }
-                          },
-                          child: Container(
-                            //diamond
-                            height: ScreenUtil().setHeight(140),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(46)),
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF489FFF),
-                                Color(0xFF489FFF),
-                              ]),
-                            ),
-                            child: Text(
-                              "支付",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ScreenUtil().setSp(42)),
+                        Visibility(
+                          visible: false,
+                          child: GestureDetector(
+                            child: Container(
+                              //diamond
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(46)),
+                                gradient: LinearGradient(colors: [
+                                  Color(0xFF489FFF),
+                                  Color(0xFF489FFF),
+                                ]),
+                              ),
+                              child: Text(
+                                "iOS暂未开放",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(42)),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        child: GestureDetector(
-                          child: Container(
-                            //diamond
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(46)),
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF489FFF),
-                                Color(0xFF489FFF),
-                              ]),
-                            ),
-                            child: Text(
-                              "iOS暂未开放",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ScreenUtil().setSp(42)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ) // This trailing comma makes auto-formatting nicer for build methods.
@@ -495,8 +505,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                 RechargeDataRechageList dataItem = _dataList[valueIndex];
 
                 try {
-                  if (_selectIndex == -1 &&
-                      double.parse(dataItem.couponMoney) > 0) {
+                  if (_selectIndex == -1 && valueIndex == 1) {
                     setState(() {
                       _selectIndex = valueIndex;
                     });
@@ -531,7 +540,7 @@ class _RechargeListPageState extends State<RechargeListPage> {
                       ),
                       Text(
                         //
-                        "${dataItem.coinDesc}",
+                        "${_showCoin ? dataItem.coinDesc : dataItem.moneyDesc}",
                         style: TextStyle(
                             fontSize: ScreenUtil().setSp(32),
                             color: _selectIndex == valueIndex
@@ -557,47 +566,143 @@ class _RechargeListPageState extends State<RechargeListPage> {
   }
 
   Widget buildphoneInputContainer() {
-    return Container(
-      height: ScreenUtil().setHeight(162),
-      width: double.maxFinite,
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              controller: _phoneController,
-              keyboardType: TextInputType.number,
-              focusNode: _phoneFocusNode,
-              onChanged: (value) {},
-              inputFormatters: [
-//                            WhitelistingTextInputFormatter(RegExp("[a-z,A-Z,0-9]")),      //限制只允许输入字母和数字
-                WhitelistingTextInputFormatter.digitsOnly,
-                //限制只允许输入数字
-                LengthLimitingTextInputFormatter(11),
-                //限制输入长度不超过11位
-              ],
-              decoration: InputDecoration(
-                /*  labelText: widget.address.iphone == null
-                              ? ''
-                              : widget.address.iphone,*/
-                border: InputBorder.none,
-                hintText: '\t\t\t请输入手机号',
-                hintStyle: TextStyle(
-                    color: Color(0xffb9b9b9), fontSize: ScreenUtil().setSp(42)),
+    return Column(
+      children: [
+        Container(
+          height: ScreenUtil().setWidth(134),
+          width: double.maxFinite,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (mounted) {
+                      setState(() {
+                        _showCoin = true;
+                      });
+                    }
+                  },
+                  child: Container(
+                    height: ScreenUtil().setWidth(134),
+                    width: double.maxFinite,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: _showCoin ? Colors.white : Color(0xfff9f9f9),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          ScreenUtil().setWidth(30),
+                        ),
+                        topRight: Radius.circular(
+                          ScreenUtil().setWidth(30),
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      "分红金奖励",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(38),
+                        color:
+                            _showCoin ? Color(0xff5984E9) : Color(0xff9F9F9F),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (mounted) {
+                      setState(() {
+                        _showCoin = false;
+                      });
+                    }
+                  },
+                  child: Container(
+                    height: ScreenUtil().setWidth(134),
+                    width: double.maxFinite,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: !_showCoin ? Colors.white : Color(0xfff9f9f9),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          ScreenUtil().setWidth(30),
+                        ),
+                        topRight: Radius.circular(
+                          ScreenUtil().setWidth(30),
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      "话费95折",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(38),
+                        color:
+                            !_showCoin ? Color(0xff5984E9) : Color(0xff9F9F9F),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: ScreenUtil().setWidth(162),
+          width: double.maxFinite,
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(
+                ScreenUtil().setWidth(30),
+              ),
+              bottomRight: Radius.circular(
+                ScreenUtil().setWidth(30),
               ),
             ),
           ),
-          Image.asset(
-            "static/images/icon_contact.png",
-            width: ScreenUtil().setWidth(137),
-            height: ScreenUtil().setHeight(83.5),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: _phoneController,
+                  keyboardType: TextInputType.number,
+                  focusNode: _phoneFocusNode,
+                  onChanged: (value) {},
+                  inputFormatters: [
+//                            WhitelistingTextInputFormatter(RegExp("[a-z,A-Z,0-9]")),      //限制只允许输入字母和数字
+                    WhitelistingTextInputFormatter.digitsOnly,
+                    //限制只允许输入数字
+                    LengthLimitingTextInputFormatter(11),
+                    //限制输入长度不超过11位
+                  ],
+                  decoration: InputDecoration(
+                    /*  labelText: widget.address.iphone == null
+                                  ? ''
+                                  : widget.address.iphone,*/
+                    border: InputBorder.none,
+                    hintText: '\t\t\t请输入手机号',
+                    hintStyle: TextStyle(
+                        color: Color(0xffb9b9b9),
+                        fontSize: ScreenUtil().setSp(42)),
+                  ),
+                ),
+              ),
+              Image.asset(
+                "static/images/icon_contact.png",
+                width: ScreenUtil().setWidth(137),
+                height: ScreenUtil().setHeight(83.5),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -627,7 +732,8 @@ class _RechargeListPageState extends State<RechargeListPage> {
                                 color: GlobalConfig.taskHeadColor,
                                 fontSize: 12)),
                         TextSpan(
-                            text: " ${_selectedRechargeData.payMoney}",
+                            text:
+                                " ${_showCoin ? _selectedRechargeData.payMoney : _selectedRechargeData.rebateMoney}",
                             style: TextStyle(
                                 color: GlobalConfig.taskHeadColor,
                                 fontSize: 18)),
@@ -695,7 +801,8 @@ class _RechargeListPageState extends State<RechargeListPage> {
                               await HttpManage.getRechargeWeChatPayInfo(
                                   _phoneController.text,
                                   _selectedRechargeData.id,
-                                  _rechargeWay);
+                                  _rechargeWay,
+                                  showCoin: _showCoin);
                           if (result.status) {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
@@ -706,7 +813,8 @@ class _RechargeListPageState extends State<RechargeListPage> {
                           var result = await HttpManage.getRechargeAliPayInfo(
                               _phoneController.text,
                               _selectedRechargeData.id,
-                              _rechargeWay);
+                              _rechargeWay,
+                              showCoin: _showCoin);
                           if (result.status) {
                             _payInfo = result.data.payInfo;
                             _payNo = result.data.payNo;

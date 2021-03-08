@@ -99,6 +99,12 @@ rechargeDataRechageListFromJson(
   if (json['coin_desc'] != null) {
     data.coinDesc = json['coin_desc']?.toString();
   }
+  if (json['rebate_money'] != null) {
+    data.rebateMoney = json['rebate_money']?.toString();
+  }
+  if (json['money_desc'] != null) {
+    data.moneyDesc = json['money_desc']?.toString();
+  }
   return data;
 }
 
@@ -113,6 +119,8 @@ Map<String, dynamic> rechargeDataRechageListToJson(
   data['flag'] = entity.flag;
   data['coin'] = entity.coin;
   data['coin_desc'] = entity.coinDesc;
+  data['rebate_money'] = entity.rebateMoney;
+  data['money_desc'] = entity.moneyDesc;
   return data;
 }
 

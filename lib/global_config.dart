@@ -205,6 +205,8 @@ class GlobalConfig {
     _initJPushPlatformState();
     configLoading();
     await HttpManage.getHomeInfo();
+    await HttpManage.getUserInfo();
+//    await HttpManage.getShopTypeList();
     //initAndroidDeviceId();
 
     Future.delayed(Duration(seconds: 3));

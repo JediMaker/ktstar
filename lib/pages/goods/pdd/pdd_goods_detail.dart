@@ -690,7 +690,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize:
-                                                    ScreenUtil().setSp(24),
+                                                    ScreenUtil().setSp(30),
                                                 color: Color(0xff999999),
                                               ),
                                             ),
@@ -707,7 +707,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize:
-                                                    ScreenUtil().setSp(24),
+                                                    ScreenUtil().setSp(30),
                                                 color: Color(0xff999999),
                                               ),
                                             ),
@@ -724,7 +724,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize:
-                                                    ScreenUtil().setSp(24),
+                                                    ScreenUtil().setSp(30),
                                                 color: Color(0xff999999),
                                               ),
                                             ),
@@ -916,11 +916,26 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                         margin:
                             EdgeInsets.only(left: ScreenUtil().setWidth(20)),
                         child: IconButton(
-                            icon: CachedNetworkImage(
-                              imageUrl:
-                                  "https://alipic.lanhuapp.com/xd213bb1c5-b03e-4bcd-8573-9837e479d518",
-                              width: ScreenUtil().setWidth(80),
-                              height: ScreenUtil().setHeight(80),
+                            icon: Column(
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl:
+                                      "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
+                                  width: ScreenUtil().setWidth(47),
+                                  height: ScreenUtil().setWidth(51),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: ScreenUtil().setWidth(3)),
+                                  child: Text(
+                                    "首页",
+                                    style: TextStyle(
+                                      color: Color(0xff999999),
+                                      fontSize: ScreenUtil().setSp(28),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             color: Colors.grey,
                             onPressed: () {

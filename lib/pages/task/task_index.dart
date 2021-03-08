@@ -11,6 +11,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/category/new_classify.dart';
+import 'package:star/pages/shareholders/micro_equity.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/task/mine_page.dart';
@@ -367,6 +368,36 @@ class _TaskIndexPageState extends State<TaskIndexPage>
           ),
           vsync: this),
       new NavigationIconView(
+          /* icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
+          ),*/
+          icon: Image.asset(
+            'static/images/icon_profit_nomal.png',
+            width: ScreenUtil().setWidth(68),
+            height: ScreenUtil().setWidth(75),
+          ),
+          /*activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
+          ),*/
+          activeIcon: Image.asset(
+            'static/images/icon_profit_sel.png',
+            width: ScreenUtil().setWidth(68),
+            height: ScreenUtil().setWidth(75),
+          ),
+          title: new Text(
+            '权益',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this),
+      new NavigationIconView(
           icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_mine.svg',
@@ -395,6 +426,9 @@ class _TaskIndexPageState extends State<TaskIndexPage>
 //      new HomePage(tabIndex: _homeTabIndex),
       TaskListPage(),
       NewClassifyListPage(),
+      MicroShareHolderEquityPage(
+        showBackBtnIcon: false,
+      ),
       MinePagePage(),
       /*   new NoticePage(),
       new MyPage()*/

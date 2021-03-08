@@ -1399,15 +1399,14 @@ class HttpManage {
   /// 获取话费充值微信支付信息
   ///
   static Future<WechatPayinfoEntity> getRechargeWeChatPayInfo(
-    tel,
-    rechargeId,
-    rechargeType,
-  ) async {
+      tel, rechargeId, rechargeType,
+      {bool showCoin}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
     paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
+    paramsMap["recharge_mode"] = "${showCoin ? "coin" : "rebate"}";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -1431,15 +1430,14 @@ class HttpManage {
   /// 获取话费充值支付宝支付信息
   ///
   static Future<AlipayPayinfoEntity> getRechargeAliPayInfo(
-    tel,
-    rechargeId,
-    rechargeType,
-  ) async {
+      tel, rechargeId, rechargeType,
+      {bool showCoin}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
     paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
+    paramsMap["recharge_mode"] = "${showCoin ? "coin" : "rebate"}";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));

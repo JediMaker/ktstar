@@ -35,6 +35,10 @@ class RechargeDataRechageList with JsonConvert<RechargeDataRechageList> {
   String coin;
   @JSONField(name: "coin_desc")
   String coinDesc;
+  @JSONField(name: "rebate_money")
+  String rebateMoney;
+  @JSONField(name: "money_desc")
+  String moneyDesc;
 }
 
 class RechargeDatacouponList with JsonConvert<RechargeDatacouponList> {

@@ -19,6 +19,10 @@ class RechargeExtraSRechageList with JsonConvert<RechargeExtraSRechageList> {
   String coin;
   @JSONField(name: "coin_desc")
   String coinDesc;
+  @JSONField(name: "rebate_money")
+  String rebateMoney;
+  @JSONField(name: "money_desc")
+  String moneyDesc;
 }
 
 class RechargeExtraRatio with JsonConvert<RechargeExtraRatio> {
