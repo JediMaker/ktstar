@@ -830,6 +830,7 @@ class _DetailWindowState extends State<DetailWindow>
   var _defaultImgUrl = '';
   var _goodsName = '';
   var _goodsPrice = '';
+  var _btPrice = '';
 
   @override
   void initState() {
@@ -1239,6 +1240,7 @@ class _DetailWindowState extends State<DetailWindow>
             specInfo, _specPrice[_indexTxt]);
         _defaultImgUrl = specInfo.specImg;
         _goodsPrice = specInfo.specPrice;
+        _btPrice = specInfo.specBonus;
         specId = specInfo.specId;
         print(
             'specImg=$_defaultImgUrl&&specPrice=$_goodsPrice&&specId=$specId');
@@ -1331,11 +1333,32 @@ class _DetailWindowState extends State<DetailWindow>
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                PriceText(
-                  text: '$_goodsPrice',
-                  textColor: _txtRedColor,
-                  fontSize: ScreenUtil().setSp(32),
-                  fontBigSize: ScreenUtil().setSp(42),
+                Row(
+                  children: [
+                    PriceText(
+                      text: '$_goodsPrice',
+                      textColor: _txtRedColor,
+                      fontSize: ScreenUtil().setSp(32),
+                      fontBigSize: ScreenUtil().setSp(42),
+                    ),
+                    Visibility(
+                      visible: !CommonUtils.isEmpty(_btPrice),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          bottom: ScreenUtil().setHeight(8),
+                          left: ScreenUtil().setHeight(8),
+                        ),
+                        child: Text(
+                          "分红金：￥$_btPrice",
+//                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
+                          style: TextStyle(
+                            color: _txtRedColor,
+                            fontSize: ScreenUtil().setSp(36),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 /* Text.rich(
                   TextSpan(children: [
