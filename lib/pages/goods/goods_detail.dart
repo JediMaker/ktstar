@@ -715,35 +715,40 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                     children: <Widget>[
                       Container(
                         margin:
-                            EdgeInsets.only(left: ScreenUtil().setWidth(20)),
+                            EdgeInsets.only(left: ScreenUtil().setWidth(40)),
                         height: ScreenUtil().setWidth(255),
                         child: GestureDetector(
                           onTap: () {
                             NavigatorUtils.navigatorRouterAndRemoveUntil(
                                 this.context, TaskIndexPage());
                           },
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl:
-                                      "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
-                                  width: ScreenUtil().setWidth(47),
-                                  height: ScreenUtil().setWidth(51),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: ScreenUtil().setWidth(3)),
-                                  child: Text(
-                                    "首页",
-                                    style: TextStyle(
-                                      color: Color(0xff999999),
-                                      fontSize: ScreenUtil().setSp(28),
+                          child: Container(
+                            height: ScreenUtil().setWidth(255),
+                            width: ScreenUtil().setWidth(155),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl:
+                                        "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
+                                    width: ScreenUtil().setWidth(47),
+                                    height: ScreenUtil().setWidth(51),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: ScreenUtil().setWidth(3)),
+                                    child: Text(
+                                      "首页",
+                                      style: TextStyle(
+                                        color: Color(0xff999999),
+                                        fontSize: ScreenUtil().setSp(28),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
