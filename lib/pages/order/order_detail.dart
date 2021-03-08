@@ -38,6 +38,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   var _payWayText = "--";
   var payPrice;
   var deductPrice = "";
+  var coin = "";
   var orderStatusText = '';
 
   String payTime;
@@ -67,6 +68,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
             deductPrice = entityResult.data.deductPrice;
+            coin = entityResult.data.orderBonus;
             orderNum = entityResult.data.orderno;
             payment = entityResult.data.payment;
             dateAdded = entityResult.data.createTime;
@@ -249,7 +251,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                                      BorderRadius.all(Radius.circular(30)),
                                   border: Border(
                                     top: BorderSide(
                                         width: 0.5, color: Colors.black26),
@@ -846,7 +848,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                         Expanded(
                           child: Text.rich(TextSpan(
                               text: '小计：',
-                              style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                              style:
+                                  TextStyle(fontSize: ScreenUtil().setSp(32)),
                               children: [
                                 TextSpan(
                                   text: '￥$totalPrice',
@@ -875,7 +878,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                      Radius.circular(ScreenUtil().setWidth(39))),
+                                      Radius.circular(
+                                          ScreenUtil().setWidth(39))),
                                   border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                                       color: Color(0xff999999),
@@ -897,14 +901,16 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   Container(
                     color: Colors.white,
                     padding: EdgeInsets.symmetric(
-                      horizontal: 16, ),
+                      horizontal: 16,
+                    ),
                     alignment: Alignment.centerLeft,
                     child: Row(
                       children: [
                         Expanded(
                           child: Text.rich(TextSpan(
                               text: '红包抵扣：',
-                              style: TextStyle(fontSize: ScreenUtil().setSp(32)),
+                              style:
+                                  TextStyle(fontSize: ScreenUtil().setSp(32)),
                               children: [
                                 TextSpan(
                                   text: '-￥$deductPrice',
@@ -933,7 +939,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                      Radius.circular(ScreenUtil().setWidth(39))),
+                                      Radius.circular(
+                                          ScreenUtil().setWidth(39))),
                                   border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
                                       color: Color(0xff999999),
@@ -952,7 +959,74 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       ],
                     ),
                   ),
-                  Container(height: ScreenUtil().setWidth(30),color: Colors.white,)
+                  Visibility(
+                    visible: !CommonUtils.isEmpty(coin),
+                    child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text.rich(TextSpan(
+                                text: '分红金：',
+                                style:
+                                    TextStyle(fontSize: ScreenUtil().setSp(32)),
+                                children: [
+                                  TextSpan(
+                                    text: '￥$coin',
+                                    style: TextStyle(
+                                      color: Color(0xFFF93736),
+                                    ),
+                                  ),
+                                ])),
+                          ),
+                          Visibility(
+                            visible: !GlobalConfig.isRelease, //todo 去除展示控制
+                            child: GestureDetector(
+                              onTap: () async {
+                                NavigatorUtils.navigatorRouter(
+                                    context,
+                                    ReturnGoodsOptionPage(
+                                      product: product,
+                                    ));
+                              },
+                              child: Container(
+                                width: ScreenUtil().setWidth(235),
+                                height: ScreenUtil().setHeight(77),
+                                margin: EdgeInsets.only(
+                                  right: ScreenUtil().setWidth(16),
+                                ),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            ScreenUtil().setWidth(39))),
+                                    border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                        color: Color(0xff999999),
+                                        width: 0.5)),
+                                child: Text(
+                                  //状态：
+                                  "退换",
+                                  style: TextStyle(
+                                    color: Color(0xff666666),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: ScreenUtil().setWidth(30),
+                    color: Colors.white,
+                  )
                 ],
               ),
             ),
