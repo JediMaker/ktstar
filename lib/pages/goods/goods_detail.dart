@@ -1345,7 +1345,6 @@ class _DetailWindowState extends State<DetailWindow>
                       visible: !CommonUtils.isEmpty(_btPrice),
                       child: Container(
                         margin: EdgeInsets.only(
-                          bottom: ScreenUtil().setHeight(8),
                           left: ScreenUtil().setHeight(8),
                         ),
                         child: Text(
@@ -1353,7 +1352,7 @@ class _DetailWindowState extends State<DetailWindow>
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
                           style: TextStyle(
                             color: _txtRedColor,
-                            fontSize: ScreenUtil().setSp(36),
+                            fontSize: ScreenUtil().setSp(28),
                           ),
                         ),
                       ),
