@@ -431,23 +431,37 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
                           ),
                           Visibility(
                             visible: !CommonUtils.isEmpty(_coin),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "分红金",
-                                  style: TextStyle(
-                                    color: Color(0xff999999),
-                                    fontSize: ScreenUtil().setSp(36),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: ScreenUtil().setWidth(30),
+                                    ),
+                                    color: Color(0xffd1d1d1),
+                                    height: ScreenUtil().setWidth(1),
+                                    width: ScreenUtil().setWidth(1029),
                                   ),
                                 ),
-                                Expanded(child: Text("")),
-                                Text(
-                                  "￥$_coin",
-                                  style: TextStyle(
-                                    color: Color(0xff222222),
-                                    fontSize: ScreenUtil().setSp(36),
-                                  ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "分红金",
+                                      style: TextStyle(
+                                        color: Color(0xff999999),
+                                        fontSize: ScreenUtil().setSp(36),
+                                      ),
+                                    ),
+                                    Expanded(child: Text("")),
+                                    Text(
+                                      "￥$_coin",
+                                      style: TextStyle(
+                                        color: Color(0xff222222),
+                                        fontSize: ScreenUtil().setSp(36),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
