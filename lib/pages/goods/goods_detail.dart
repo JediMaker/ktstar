@@ -716,6 +716,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                       Container(
                         margin:
                             EdgeInsets.only(left: ScreenUtil().setWidth(20)),
+                        height: ScreenUtil().setWidth(255),
                         child: GestureDetector(
                           onTap: () {
                             NavigatorUtils.navigatorRouterAndRemoveUntil(
@@ -723,6 +724,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                           },
                           child: Center(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CachedNetworkImage(
                                   imageUrl:
