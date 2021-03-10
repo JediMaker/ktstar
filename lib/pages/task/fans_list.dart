@@ -94,8 +94,7 @@ class _FansListPageState extends State<FansListPage>
             ),
           ];
 
-          _tabController =
-              TabController(length: 5, vsync: this);
+          _tabController = TabController(length: 5, vsync: this);
         });
       }
     } else {}
@@ -174,6 +173,7 @@ class _FansListPageState extends State<FansListPage>
   @override
   void dispose() {
     super.dispose();
+    _tabController.dispose();
   }
 
   @override
@@ -415,7 +415,8 @@ class _FansTabViewState extends State<FansTabView> {
   List<FansListDataList> _fansList;
 
   _initData() async {
-    var result = await HttpManage.getFansList(page, 10, holderType: widget.fansType);
+    var result =
+        await HttpManage.getFansList(page, 10, holderType: widget.fansType);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -617,9 +618,9 @@ class _FansTabViewState extends State<FansTabView> {
       ),
       trailing: GestureDetector(
         child: CachedNetworkImage(
-          imageUrl:"${_getImgName(shareHolderType)}",
-          width: ScreenUtil().setWidth(shareHolderType=='2'?119:137),
-          height: ScreenUtil().setWidth(shareHolderType=='2'?59:77),
+          imageUrl: "${_getImgName(shareHolderType)}",
+          width: ScreenUtil().setWidth(shareHolderType == '2' ? 119 : 137),
+          height: ScreenUtil().setWidth(shareHolderType == '2' ? 59 : 77),
           fit: BoxFit.fill,
         ),
       ),

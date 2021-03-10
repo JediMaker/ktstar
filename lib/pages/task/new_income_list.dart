@@ -8,8 +8,9 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 import '../../global_config.dart';
 
 class NewIncomeListPage extends StatefulWidget {
-  NewIncomeListPage({Key key}) : super(key: key);
+  NewIncomeListPage({Key key, this.showType}) : super(key: key);
   final String title = "收益列表";
+  var showType;
 
   @override
   _NewIncomeListPageState createState() => _NewIncomeListPageState();
@@ -88,11 +89,13 @@ class _NewIncomeListPageState extends State<NewIncomeListPage>
         if (index == 0) {
           tabViews.add(IncomeListPage(
             pageType: 0,
+            showType: widget.showType,
           ));
         } else {
           tabViews.add(ShareHolderIncomeListPage(
             pageType: 0,
             profitType: profitType + index,
+            showType: widget.showType,
           ));
         }
       }

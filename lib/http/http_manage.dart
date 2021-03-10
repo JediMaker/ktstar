@@ -898,15 +898,18 @@ class HttpManage {
   ///
   ///[pageSize] 	单页数据量
   ///
+  ///[showType] 	显示类型  bill-账单明细，profit-收益明细
+  ///
   ///[isWithdrawal] 获取数据类型是否是提现列表
   ///
   /// fasle 获取收益列表 true 获取提现列表
   ///
   static Future<IncomeListEntity> getProfitList(page, pageSize,
-      {isWithdrawal = false}) async {
+      {isWithdrawal = false, showType}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
+    paramsMap["show_type"] = "$showType";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
@@ -925,17 +928,20 @@ class HttpManage {
   ///
   ///[pageSize] 	单页数据量
   ///
+  ///[showType] 	显示类型  bill-账单明细，profit-收益明细
+  ///
   ///[profiType] 	7个人分红 8好友分红 9邀请好友收益
   ///
   ///
   /// fasle 获取微股东收益列表
   ///
   static Future<IncomeListEntity> getHolderProfitList(page, pageSize,
-      {profiType = 7}) async {
+      {profiType = 7, showType}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     paramsMap["profit_type"] = "$profiType";
+    paramsMap["show_type"] = "$showType";
     paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));

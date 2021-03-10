@@ -35,5 +35,9 @@ class IncomeListDataList with JsonConvert<IncomeListDataList> {
   String source;
   @JSONField(name: "attach_id")
   String attachId;
+  @JSONField(name: "type_desc")
+  String typeDesc;
+  @JSONField(name: "type_icon")
+  String typeIcon;
   String title;
 }

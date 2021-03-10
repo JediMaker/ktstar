@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -12,10 +13,15 @@ class IncomeListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
-  IncomeListPage({Key key, @required this.pageType, this.showAppBar = false})
+  IncomeListPage(
+      {Key key,
+      @required this.pageType,
+      this.showAppBar = false,
+      this.showType})
       : super(key: key);
   String title = "";
   bool showAppBar;
+  var showType;
 
   @override
   _IncomeListPageState createState() => _IncomeListPageState();
@@ -36,8 +42,8 @@ class _IncomeListPageState extends State<IncomeListPage>
 
   _initData() async {
     lastTimeDesc = '';
-    IncomeListEntity result =
-        await HttpManage.getProfitList(page, 10, isWithdrawal: isWithdrawal);
+    IncomeListEntity result = await HttpManage.getProfitList(page, 10,
+        isWithdrawal: isWithdrawal, showType: widget.showType);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -181,6 +187,8 @@ class _IncomeListPageState extends State<IncomeListPage>
     String desc = '';
     String iconName = '';
     bool _showTimeDesc = true;
+    String titleTxt = '';
+    String titleIcon = '';
     try {
       price = listItem.price;
       status = listItem.status;
@@ -192,6 +200,8 @@ class _IncomeListPageState extends State<IncomeListPage>
       desc = listItem.desc;
       profitType = listItem.profitType;
       type = listItem.type;
+      titleTxt = listItem.typeDesc;
+      titleIcon = listItem.typeIcon;
     } catch (e) {}
     if (isWithdrawal) {
       prefixText = '-';
@@ -267,6 +277,9 @@ class _IncomeListPageState extends State<IncomeListPage>
           statusText = "邀请奖励-成功";
           break;
       }
+      if (price.contains("-")) {
+        prefixText = '';
+      }
       /*if (GlobalConfig.getUserInfo().type == 3) {
 
         switch (type) {
@@ -314,7 +327,8 @@ class _IncomeListPageState extends State<IncomeListPage>
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: GlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
+              horizontal: GlobalConfig.LAYOUT_MARGIN,
+              vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -332,8 +346,13 @@ class _IncomeListPageState extends State<IncomeListPage>
                   Expanded(
                     child: Row(
                       children: <Widget>[
-                        Image.asset(
+                        /* Image.asset(
                           "static/images/$iconName",
+                          width: ScreenUtil().setWidth(60),
+                          height: ScreenUtil().setWidth(60),
+                        ),*/
+                        CachedNetworkImage(
+                          imageUrl: "$titleIcon",
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),
@@ -341,7 +360,7 @@ class _IncomeListPageState extends State<IncomeListPage>
                           width: ScreenUtil().setWidth(20),
                         ),
                         Text(
-                          statusText,
+                          "$titleTxt",
                           style: TextStyle(
 //                color:  Color(0xFF222222) ,
                               fontSize: ScreenUtil().setSp(42)),

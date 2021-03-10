@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -13,10 +14,15 @@ class ShareHolderIncomeListPage extends StatefulWidget {
   int pageType;
 
   var profitType;
+  var showType;
   bool showAppBar;
 
   ShareHolderIncomeListPage(
-      {Key key, this.pageType = 0, this.showAppBar = false, this.profitType})
+      {Key key,
+      this.pageType = 0,
+      this.showAppBar = false,
+      this.profitType,
+      this.showType})
       : super(key: key);
   String title = "";
 
@@ -42,7 +48,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
   _initData() async {
     lastTimeDesc = '';
     var result = await HttpManage.getHolderProfitList(page, 10,
-        profiType: widget.profitType);
+        profiType: widget.profitType, showType: widget.showType);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -186,6 +192,8 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
     String desc = '';
     String iconName = '';
     bool _showTimeDesc = true;
+    String titleTxt = '';
+    String titleIcon = '';
     try {
       price = listItem.price;
       status = listItem.status;
@@ -201,6 +209,8 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
       desc = listItem.desc;
       profitType = listItem.profitType;
       type = listItem.type;
+      titleTxt = listItem.typeDesc;
+      titleIcon = listItem.typeIcon;
     } catch (e) {
       print(e);
     }
@@ -278,6 +288,9 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
           statusText = "邀请奖励-成功";
           break;
       }
+      if (price.contains("-")) {
+        prefixText = '';
+      }
       /*if (GlobalConfig.getUserInfo().type == 3) {
 
         switch (type) {
@@ -344,8 +357,13 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
                   Expanded(
                     child: Row(
                       children: <Widget>[
-                        Image.asset(
+                        /* Image.asset(
                           "static/images/$iconName",
+                          width: ScreenUtil().setWidth(60),
+                          height: ScreenUtil().setWidth(60),
+                        ),*/
+                        CachedNetworkImage(
+                          imageUrl: "$titleIcon",
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),
@@ -353,7 +371,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
                           width: ScreenUtil().setWidth(20),
                         ),
                         Text(
-                          statusText,
+                          "$titleTxt",
                           style: TextStyle(
 //                color:  Color(0xFF222222) ,
                               fontSize: ScreenUtil().setSp(42)),
