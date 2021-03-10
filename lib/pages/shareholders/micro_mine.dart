@@ -1768,7 +1768,10 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: GestureDetector(
                           onTap: () {
                             NavigatorUtils.navigatorRouter(
-                                context, NewIncomeListPage());
+                                context,
+                                NewIncomeListPage(
+                                  showType: "bill",
+                                ));
                           },
                           child: Container(
                             padding: EdgeInsets.only(
@@ -1905,7 +1908,10 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: GestureDetector(
                           onTap: () {
                             NavigatorUtils.navigatorRouter(
-                                context, NewIncomeListPage());
+                                context,
+                                NewIncomeListPage(
+                                  showType: "profit",
+                                ));
                           },
                           child: Container(
                             padding: EdgeInsets.only(
