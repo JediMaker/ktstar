@@ -40,7 +40,7 @@ class GoodsSpecInfoSpecInfoSpecPriceIds
   String specImg;
   @JSONField(name: "spec_price")
   String specPrice;
-  @JSONField(name: "spec_bonus") //spec_bonus=2.99
+  @JSONField(name: "spec_bonus")
   String specBonus;
 }
 
