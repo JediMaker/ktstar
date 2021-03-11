@@ -11,18 +11,23 @@ import 'package:fluwx/fluwx.dart';
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
+import 'package:star/generated/json/shop_type_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/login_entity.dart';
+import 'package:star/models/shop_type_entity.dart';
+import 'package:star/utils/common_utils.dart';
 
 //import 'package:umeng/umeng.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
 import 'generated/json/login_entity_helper.dart';
 import 'models/user_info_entity.dart';
 //import 'package:umeng/umeng.dart';
+import 'package:amap_search_fluttify/amap_search_fluttify.dart';
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 
 // 提供五套可选主题色
 const _themes = <MaterialColor>[
@@ -95,7 +100,7 @@ class GlobalConfig {
   static Color taskBtnTxtGreyColor = Color(0xFF999999);
 
   /// 是否为release版
-  static bool isRelease = true;
+  static bool isRelease = false;
 
   /// 是否为绑定微信
   static bool isBindWechat = false;
@@ -173,6 +178,7 @@ class GlobalConfig {
   static Future init() async {
     _requestPermission();
     _prefs = await SharedPreferences.getInstance();
+    _count = 1;
     var _profile = _prefs.getString("profile");
     if (_profile != null) {
       try {} catch (e) {
@@ -199,6 +205,22 @@ class GlobalConfig {
     if (!isRelease) {
 //      GlobalConfig.prefs.setString("uid", "123");
     }
+
+    ///    初始化高德定位key
+    ///设置Android和iOS的apiKey<br>
+    ///key的申请请参考高德开放平台官网说明<br>
+    ///Android: https://lbs.amap.com/api/android-location-sdk/guide/create-project/get-key
+    ///iOS: https://lbs.amap.com/api/ios-location-sdk/guide/create-project/get-key
+    /* AMapFlutterLocation.setApiKey(
+        "b9350473f6c0c17719fc9c3f824ad942", "ebb51ce06c26c7cc7fe0802694b8280f");*/
+    await AmapCore.init('ebb51ce06c26c7cc7fe0802694b8280f');
+    await enableFluttifyLog(true);
+    await AmapService.instance.init(
+      iosKey: 'ebb51ce06c26c7cc7fe0802694b8280f',
+      androidKey: 'b9350473f6c0c17719fc9c3f824ad942',
+//      webApiKey: 'e69c6fddf6ccf8de917f5990deaa9aa2',
+    );
+//    await _initUserLocationWithPermission();
     _initFluwx();
     _initUmengAnalytics();
     HttpManage.init();
@@ -206,12 +228,50 @@ class GlobalConfig {
     configLoading();
     await HttpManage.getHomeInfo();
     await HttpManage.getUserInfo();
+    await HttpManage.getSiteShopAgreement();
 //    await HttpManage.getShopTypeList();
     //initAndroidDeviceId();
 
     Future.delayed(Duration(seconds: 3));
     // 如果没有缓存策略，设置默认缓存策略
     //初始化网络请求相关配置
+  }
+
+  static int _count = 1;
+
+  static Future _initUserLocation() async {
+    var location = await AmapLocation.instance
+        .fetchLocation(needAddress: true, mode: LocationAccuracy.High);
+    print("经度:${location.latLng.longitude}");
+    print("维度:${location.latLng.latitude}");
+
+    if (CommonUtils.isEmpty(location.city) &&
+        _count < 3 &&
+        location.latLng.longitude == 0) {
+      initUserLocationWithPermission();
+      _count++;
+      print("count=$_count");
+    } else {
+      _prefs.setString("longitude", location.latLng.longitude.toString());
+      _prefs.setString("latitude", location.latLng.latitude.toString());
+
+      ///根据经纬度信息获取位置；
+      ReGeocode reGeocode =
+          await AmapSearch.instance.searchReGeocode(location.latLng);
+      _prefs.setString("cityName", reGeocode.cityName);
+      /*print("reGeocode.provinceName=${reGeocode.provinceName}");
+      print("reGeocode.cityName=${reGeocode.cityName}");
+      print("reGeocode.districtName=${reGeocode.districtName}");
+      print("reGeocode.formatAddress=${reGeocode.formatAddress}");*/
+    }
+    print("城市cityName:${_prefs.getString("cityName")}");
+  }
+
+  static Future initUserLocationWithPermission({count}) async {
+    if (!CommonUtils.isEmpty(count)) {
+      _count = count;
+    }
+    CommonUtils.requestPermission(Permission.location, _initUserLocation());
   }
 
 //  存储是否登陆的状态
@@ -226,6 +286,15 @@ class GlobalConfig {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     return entity.data;
+  }
+
+  /// 获取店铺行业类型的数据
+  static List<ShopTypeDataList> getShopTypeListData() {
+    final extractData =
+        json.decode(prefs.getString("shopTypeList")) as Map<String, dynamic>;
+    var entity = ShopTypeEntity();
+    shopTypeEntityFromJson(entity, extractData);
+    return entity.data.xList;
   }
 
   /// 获取首页的数据
@@ -258,6 +327,13 @@ class GlobalConfig {
       print(e);
     }
     return entity.data;
+  }
+
+  /// 获取商家入驻协议地址
+  static String getAgreementShopEntryRulesUrl() {
+    return prefs.containsKey("agreementShopEntryRulesUrl")
+        ? prefs.getString("agreementShopEntryRulesUrl")
+        : ""; //prefs.getString("agreementShopEntryRulesUrl");
   }
 
   /// 存储极光推送设备id
@@ -299,6 +375,7 @@ class GlobalConfig {
       Permission.photos,
       Permission.storage,
       Permission.camera,
+      Permission.location,
     ].request();
   }
 

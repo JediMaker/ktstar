@@ -288,6 +288,10 @@ class APi {
   static const String AGREEMENT_SERVICES_URL =
       "https://task.ktkj.shop/tiaokuan.html";
 
+  ///商家入驻规则协议
+  static String AGREEMENT_SHOP_ENTRY_RULES_URL =
+      "${GlobalConfig.getAgreementShopEntryRulesUrl()}";
+
   /* ///用户隐私协议
   static String AGREEMENT_PRIVACY_URL = "https://task.ktkj.shop/yinsi.html";
 */
@@ -354,4 +358,38 @@ class APi {
 
   ///  获取本人排队信息
   static const String QUEUE_MY = "/queue/my";
+
+//  =================商家入驻相关接口=====START=======================
+  ///  商家行业类型列表接口
+  static const String STORE_TYPE_LIST = "store/trade-list";
+
+  ///  商家交易记录列表
+  static const String STORE_ORDERS = "store/orders";
+
+  ///  商家入驻申请接口
+  static const String STORE_APPLY = "store/apply";
+
+  ///  商家详情信息接口
+  static const String STORE_DETAIL = "store/detail";
+
+  ///  商家列表接口
+  static const String STORE_LIST = "store/list";
+
+  ///  商家收款支付页面数据展示
+  static const String STORE_PAY_INFO = "store/pay-info";
+
+  ///  app扫一扫
+  static const String STORE_SCAN = "store/scan";
+
+  ///  付款给商家
+  static const String STORE_PAY_STORE = "pay/store";
+
+  ///  商家后台今日数据及二维码
+  static const String STORE_INFO = "store/info";
+
+  ///商家入驻协议地址
+  static const String SITE_AGREEMENT = "site/agreement";
+
+//  =================商家入驻相关接口======END======================
+
 }

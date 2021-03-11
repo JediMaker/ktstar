@@ -49,13 +49,13 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need location when in use</string>
+	<string>app需要获取您的位置,提供附近商家服务</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Always and when in use!</string>
+	<string>app需要获取您的位置,提供附近商家服务</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Older devices need location.</string>
+	<string>app需要获取您的位置,提供附近商家服务</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Can I have location always?</string>
+	<string>app需要获取您的位置,提供附近商家服务</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Music!</string>
 	<key>kTCCServiceMediaLibrary</key>

@@ -48,6 +48,7 @@ class _OrderListPageState extends State<OrderListPage>
     '美团',
     '饿了么',
     '话费充值',
+    '线下商家',
   ];
 
 //订单类型
@@ -86,6 +87,9 @@ class _OrderListPageState extends State<OrderListPage>
         var orderSource = "${index}";
         if (orderType[index] == '话费充值') {
           orderSource = "4";
+        }
+        if (orderType[index] == '线下商家') {
+          orderSource = "5";
         }
         if (orderType[index] == '饿了么') {
           orderSource = "-1";

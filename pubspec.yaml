@@ -103,6 +103,18 @@ dependencies:
   search_page: ^1.4.0
   #  跑马灯
   marquee: ^1.7.0
+  #  二维码创建
+  qr_flutter: ^3.2.0
+  #  扫描二维码
+  qrscan: ^0.2.22
+  #  #  高德地图定位flutter插件
+  #  amap_flutter_location: ^1.0.1
+  #  引入高德地图Flutter插件
+  amap_map_fluttify: ^0.30.1
+  #  引入高德地图搜索Flutter插件
+  amap_search_fluttify: ^0.16.2
+  #  图片裁剪
+  image_cropper: ^1.3.1
 
 dev_dependencies:
   json_model: #latest version

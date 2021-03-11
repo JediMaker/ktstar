@@ -40,8 +40,8 @@ class MicroShareHolderEquityPage extends StatefulWidget {
       _MicroShareHolderEquityPageState();
 }
 
-class _MicroShareHolderEquityPageState
-    extends State<MicroShareHolderEquityPage> {
+class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
+    with AutomaticKeepAliveClientMixin {
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff666666);
   Color _layoutSelectedColor = Colors.white;
@@ -1731,4 +1731,7 @@ class _MicroShareHolderEquityPageState
   _changeSelectedPayWay(int i) {
     _payway = i;
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

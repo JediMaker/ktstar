@@ -65,6 +65,23 @@ class _WebViewPageState extends State<WebViewPage> {
           style: TextStyle(fontSize: ScreenUtil().setSp(54)),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: Container(
+            width: ScreenUtil().setWidth(63),
+            height: ScreenUtil().setHeight(63),
+            child: Center(
+              child: Image.asset(
+                "static/images/icon_ios_back_white.png",
+                width: ScreenUtil().setWidth(36),
+                height: ScreenUtil().setHeight(63),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         elevation: 0,
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[

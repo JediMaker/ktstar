@@ -30,12 +30,19 @@ import 'package:star/generated/json/pdd_goods_list_entity_helper.dart';
 import 'package:star/generated/json/pdd_home_entity_helper.dart';
 import 'package:star/generated/json/phone_charge_list_entity_helper.dart';
 import 'package:star/generated/json/poster_entity_helper.dart';
+import 'package:star/generated/json/qrcode_result_remote_entity_helper.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
 import 'package:star/generated/json/region_data_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/search_goods_list_entity_helper.dart';
 import 'package:star/generated/json/search_pdd_goods_list_entity_helper.dart';
 import 'package:star/generated/json/shareholder_income_list_entity_helper.dart';
+import 'package:star/generated/json/shop_agreement_uri_entity_helper.dart';
+import 'package:star/generated/json/shop_backstage_info_entity_helper.dart';
+import 'package:star/generated/json/shop_detail_entity_helper.dart';
+import 'package:star/generated/json/shop_list_entity_helper.dart';
+import 'package:star/generated/json/shop_order_list_entity_helper.dart';
+import 'package:star/generated/json/shop_pay_info_entity_helper.dart';
 import 'package:star/generated/json/shop_type_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
@@ -76,11 +83,18 @@ import 'package:star/models/pdd_goods_info_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/models/poster_entity.dart';
+import 'package:star/models/qrcode_result_remote_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/region_data_entity.dart';
 import 'package:star/models/search_goods_list_entity.dart';
 import 'package:star/models/search_pdd_goods_list_entity.dart';
 import 'package:star/models/shareholder_income_list_entity.dart';
+import 'package:star/models/shop_agreement_uri_entity.dart';
+import 'package:star/models/shop_backstage_info_entity.dart';
+import 'package:star/models/shop_detail_entity.dart';
+import 'package:star/models/shop_list_entity.dart';
+import 'package:star/models/shop_order_list_entity.dart';
+import 'package:star/models/shop_pay_info_entity.dart';
 import 'package:star/models/shop_type_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
@@ -2363,6 +2377,365 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///获取店铺行业类型列表
+  static Future<ShopTypeEntity> getShopTypeList() async {
+    var response = await HttpManage.dio.get(
+      APi.STORE_TYPE_LIST,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopTypeEntity();
+    shopTypeEntityFromJson(entity, extractData);
+    if (entity.status) {
+      GlobalConfig.prefs.setString("shopTypeList", response.data.toString());
+    }
+    return entity;
+  }
+
+  ///获取店铺详情信息
+  static Future<ShopDetailEntity> getShopInfo(
+      {storeId, latitude, longitude}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["store_id"] = "$storeId";
+    paramsMap["lat"] = "$latitude";
+    paramsMap['lon'] = "$longitude";
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_DETAIL,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopDetailEntity();
+    shopDetailEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///[storeName] 	店铺名称
+  ///
+  ///[storeLogo] 	店铺logo图片id
+  ///
+  ///[storeImg] 	店铺图片id
+  ///
+  ///[tradeId] 	行业类型id
+  ///
+  ///[storeTel] 	手机号
+  ///
+  ///[storeLat] 	纬度
+  ///
+  ///[storeLng] 	经度
+  ///
+  ///[storeProvince] 	店铺所在省份
+  ///
+  ///[storeCity] 	店铺所在城市
+  ///
+  ///[storeDistrict] 	店铺所在区县
+  ///
+  ///[storeAddr] 	具体地址
+  ///
+  ///[storeRatio] 	让利比例
+  ///
+  ///[storeDesc] 	描述
+  ///
+  ///[storeId] 	店铺id，再次申请时须传，首次申请时不需要传
+  ///
+  ///
+  ///
+  ///商家入驻申请接口
+  static Future<ResultBeanEntity> shopRegistrationApplication({
+    storeName,
+    storeLogo,
+    storeImg,
+    tradeId,
+    storeTel,
+    storeLat,
+    storeLng,
+    storeProvince,
+    storeCity,
+    storeDistrict,
+    storeAddr,
+    storeRatio,
+    storeDesc,
+    storeId,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["store_name"] = "$storeName";
+    paramsMap["store_logo"] = "$storeLogo";
+    paramsMap["store_img"] = "$storeImg";
+    paramsMap["trade_id"] = "$tradeId";
+    paramsMap["store_tel"] = "$storeTel";
+    paramsMap["store_lat"] = "$storeLat";
+    paramsMap["store_lng"] = "$storeLng";
+    paramsMap["store_province"] = "$storeProvince";
+    paramsMap["store_city"] = "$storeCity";
+    paramsMap["store_district"] = "$storeDistrict";
+    paramsMap["store_addr"] = "$storeAddr";
+    paramsMap["store_ratio"] = "$storeRatio";
+    paramsMap["store_desc"] = "$storeDesc";
+    paramsMap["store_id"] = "$storeId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_APPLY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[latitude] 	纬度
+  ///
+  ///[longitude] 	经度
+  ///
+  ///[shopCity] 	店铺所在城市
+  ///
+  ///[page] 	页码
+  ///
+  ///[pageSize]每页显示条数
+  ///
+  ///[storeName] 	搜索的店铺名称
+  ///
+  ///商家列表接口
+  static Future<ShopListEntity> getShopList({
+    latitude,
+    longitude,
+    storeProvince,
+    shopCity,
+    storeDistrict,
+    page,
+    pageSize,
+    storeName,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["lat"] = "$latitude";
+    paramsMap["lon"] = "$longitude";
+    paramsMap["city"] = "$shopCity";
+//    paramsMap["store_district"] = "$storeDistrict";
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap["store_name"] = "$storeName";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopListEntity();
+    shopListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[storeId] 	店铺id
+  ///
+  ///商家收款支付页面数据
+  static Future<ShopPayInfoEntity> getShopPayInfo({
+    storeId,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["store_id"] = "$storeId";
+//    paramsMap["lon"] = "$longitude";
+//    paramsMap["city"] = "$shopCity";
+//    paramsMap["store_district"] = "$storeDistrict";
+//    paramsMap["page"] = "$page";
+//    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_PAY_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopPayInfoEntity();
+    shopPayInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///[shopCode] 商家收款码
+  ///
+  ///[payMoney] 支付金额
+  ///
+  /// 获取商家付款微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> getShopPayWeChatPayInfo(
+      {shopCode, payMoney}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["store_code"] = "$shopCode";
+    paramsMap["pay_money"] = "$payMoney";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_PAY_STORE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[shopCode] 商家收款码
+  ///
+  ///[payMoney] 支付金额
+  ///
+  /// 获取商家付款支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> getShopPayAliPayInfo(
+      {shopCode, payMoney}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["store_code"] = "$shopCode";
+    paramsMap["pay_money"] = "$payMoney";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_PAY_STORE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[shopCode] 商家收款码
+  ///
+  ///[payMoney] 支付金额
+  ///
+  /// 获取商家付款余额支付信息
+  ///
+  static Future<AlipayPayinfoEntity> getShopPayBalanceInfo(
+      {shopCode, payPassword, payMoney}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "3";
+    paramsMap["store_code"] = "$shopCode";
+    paramsMap["pay_money"] = "$payMoney";
+    paramsMap["pay_pwd"] = "$payPassword";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_PAY_STORE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[shopId] 商家店铺id
+  ///
+  ///
+  /// 获取商家后台收款信息
+  ///
+  static Future<ShopBackstageInfoEntity> getShopBackStageInfo({
+    shopId,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["store_id"] = "$shopId";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_INFO,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopBackstageInfoEntity();
+    shopBackstageInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[shopId] 	商家店铺id
+  ///
+  ///[tab] 	列表类型 0全部 1昨日 2近一周 3近一月
+  ///
+  ///[page] 	页码
+  ///
+  ///[pageSize]每页显示条数
+  ///
+  ///商家收款订单列表接口
+  static Future<ShopOrderListEntity> getShopOrderList({
+    shopId,
+    tab,
+    page,
+    pageSize,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["store_id"] = "$shopId";
+    paramsMap["tab"] = "$tab";
+//    paramsMap["store_district"] = "$storeDistrict";
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_ORDERS,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopOrderListEntity();
+    shopOrderListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[qrCodeResult] 	二维码本地扫描结果
+  ///
+  ///app扫一扫结果
+  static Future<QrcodeResultRemoteEntity> getScanResultRemote({
+    qrCodeResult,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["qrcode_url"] = "$qrCodeResult";
+    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.STORE_SCAN,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = QrcodeResultRemoteEntity();
+    qrcodeResultRemoteEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///获取商家入驻协议地址
+  static Future<ShopAgreementUriEntity> getSiteShopAgreement() async {
+    var response = await HttpManage.dio.get(
+      APi.SITE_AGREEMENT,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShopAgreementUriEntity();
+    shopAgreementUriEntityFromJson(entity, extractData);
+    if (entity.status) {
+      GlobalConfig.prefs
+          .setString("agreementShopEntryRulesUrl", entity.data.sjrz);
+    }
     return entity;
   }
 }

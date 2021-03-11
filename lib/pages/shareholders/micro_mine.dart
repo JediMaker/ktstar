@@ -13,6 +13,8 @@ import 'package:star/pages/adress/my_adress.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/login/modify_password.dart';
+import 'package:star/pages/merchantssettle/apply_settle.dart';
+import 'package:star/pages/merchantssettle/shop_backstage.dart';
 import 'package:star/pages/order/order_list.dart';
 import 'package:star/pages/order/recharge_order_list.dart';
 import 'package:star/pages/recharge/recharge_result.dart';
@@ -41,7 +43,7 @@ import '../../global_config.dart';
 
 ///微股东个人中心页面
 class MicroMinePage extends StatefulWidget {
-  MicroMinePage({Key key,  this.userInfoData}) : super(key: key);
+  MicroMinePage({Key key, this.userInfoData}) : super(key: key);
   UserInfoData userInfoData;
 
   @override
@@ -148,10 +150,10 @@ class _MicroMinePageState extends State<MicroMinePage>
           _title = result.data.isPartner == '1'
               ? '见习股东'
               : result.data.isPartner == '3'
-              ? 'VIP股东'
-              : '高级股东';
+                  ? 'VIP股东'
+                  : '高级股东';
           if (result.data.isPartner == '2') {
-            _title= '我的';
+            _title = '我的';
           }
           if (result.data.isPartner == '4') {
             _shareHolderBtnText = '股东权益';
@@ -202,6 +204,83 @@ class _MicroMinePageState extends State<MicroMinePage>
     }
   }
 
+  _initCacheUserData() async {
+    var result = GlobalConfig.getUserInfo();
+    if (mounted) {
+      setState(() {
+        headUrl = result.avatar;
+        nickName = result.username;
+        userType = result.type;
+        _phoneNumber = result.tel;
+        _totalAssetsAmount = result.totalPrice;
+        _cashWithdrawal = result.txPrice;
+        _availableCashAmount = result.nowPrice;
+        isWeChatBinded = result.bindThird;
+        _isWithdrawal = result.isWithdrawal;
+        registerTime = result.regDate;
+        _weChatNo = result.wxNo;
+        _code = result.code;
+        _dialogWeChatNo = result.wxNo;
+        _pwdStatus = result.pwdStatus;
+        _payPwdStatus = result.payPwdStatus;
+        isWeChatNoBinded = !CommonUtils.isEmpty(result.wxNo) ? 1 : 0;
+        isItAMicroShareholder = result.isPartner == "1" ? 1 : 0;
+        _title = result.isPartner == '1'
+            ? '见习股东'
+            : result.isPartner == '3'
+                ? 'VIP股东'
+                : '高级股东';
+        if (result.isPartner == '2') {
+          _title = '我的';
+        }
+        if (result.isPartner == '4') {
+          _shareHolderBtnText = '股东权益';
+        } else {
+          _shareHolderBtnText = '升级股东';
+        }
+        applyStatus = result.storeStatus;
+        _rejectMsg = result.storeRejectMsg;
+        _shopId = result.storeId;
+        if (applyStatus == '2') {
+          _textAccordingToApplyStatus = "商家后台";
+        } else {
+          _textAccordingToApplyStatus = '商家入驻申请';
+        }
+        _yesterdayProfit = result.partnerBonus.yesterday;
+        _sevenDayProfit = result.partnerBonus.week;
+        _monthProfit = result.partnerBonus.month;
+        _totalProfit = result.partnerBonus.total;
+        _todayShouldBeScoredRed = result.partnerBonus.todayDeserve;
+        _todayActualDividend = result.partnerBonus.todayPrice;
+        _currentDividend = result.partnerBonus.coin;
+        switch (result.type) {
+          case "0":
+            isDiamonVip = false;
+            _cardBgImageName = 'task_mine_card_bg.png';
+            break;
+          case "1":
+            isDiamonVip = false;
+            _cardBgImageName = 'task_mine_card_bg_expirence.png';
+            break;
+          case "2":
+            isDiamonVip = true;
+            _cardBgImageName = 'task_mine_card_bg_vip.png';
+            break;
+          case "3":
+//              #F8D9BA
+            isDiamonVip = true;
+            _cardBgImageName = 'task_mine_card_bg_proxy.png';
+            break;
+          case "4":
+//              #F8D9BA
+            isDiamonVip = true;
+            _cardBgImageName = 'task_mine_card_bg_proxy.png';
+            break;
+        }
+      });
+    }
+  }
+
   _clearWidgetData() {
     if (mounted) {
       setState(() {
@@ -243,6 +322,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
     _clearWidgetData();
+    _initCacheUserData();
     _initUserData();
     super.initState();
   }
@@ -291,13 +371,13 @@ class _MicroMinePageState extends State<MicroMinePage>
               _cardBgImageName = 'task_mine_card_bg_vip.png';
               break;
             case "3":
-            //              #F8D9BA
+              //              #F8D9BA
               isDiamonVip = true;
               _cardTextColor = Color(0xffF8D9BA);
               _cardBgImageName = 'task_mine_card_bg_proxy.png';
               break;
             case "4":
-            //              #F8D9BA
+              //              #F8D9BA
               isDiamonVip = true;
               _cardTextColor = Color(0xffF8D9BA);
               _cardBgImageName = 'task_mine_card_bg_proxy.png';
@@ -479,7 +559,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                           width: ScreenUtil().setWidth(1058),
                           height: ScreenUtil().setWidth(302),
                           imageUrl:
-                          "https://alipic.lanhuapp.com/xd8c0b346a-86c3-4734-996d-2f9b553c9ffa"),
+                              "https://alipic.lanhuapp.com/xd8c0b346a-86c3-4734-996d-2f9b553c9ffa"),
                     ),
                   )
                 ],
@@ -539,7 +619,7 @@ class _MicroMinePageState extends State<MicroMinePage>
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
-          BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
+              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
           border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
               color: Colors.white,
@@ -583,7 +663,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -641,7 +721,67 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+            child: Divider(
+              height: ScreenUtil().setHeight(1),
+              color: Color(0xFFefefef),
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                /*  Image.asset(
+                  "static/images/icon_fans.png",
+                  width: ScreenUtil().setWidth(44),
+                  height: ScreenUtil().setWidth(71),
+                ),*/
+                Text(
+                  "$_textAccordingToApplyStatus", //
+                  style: TextStyle(
+//                color:  Color(0xFF222222) ,
+                      fontSize: ScreenUtil().setSp(38)),
+                ),
+              ],
+            ),
+            onTap: () async {
+              if (applyStatus == '2') {
+                NavigatorUtils.navigatorRouter(
+                  context,
+                  ShopBackstagePage(
+                    shopId: _shopId,
+                  ),
+                );
+              } else {
+                await NavigatorUtils.navigatorRouter(
+                  context,
+                  ApplySettlePage(
+                    applyStatus: applyStatus,
+                    rejectMsg: _rejectMsg,
+                    shopId: _shopId,
+                  ),
+                );
+                _initUserData();
+              }
+            },
+            trailing: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                /*Text(
+                  "",
+                  style: TextStyle(color: Color(0xff999999)),
+                ),*/
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: ScreenUtil().setWidth(32),
+                  color: Color(0xff999999),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin:
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -667,7 +807,7 @@ class _MicroMinePageState extends State<MicroMinePage>
               if (isWeChatBinded == 1) {
                 fluwx
                     .sendWeChatAuth(
-                    scope: "snsapi_userinfo", state: "wechat_sdk_demo_test")
+                        scope: "snsapi_userinfo", state: "wechat_sdk_demo_test")
                     .then((code) {});
               }
             },
@@ -699,7 +839,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -777,7 +917,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -873,7 +1013,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -975,7 +1115,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                 : GlobalConfig.prefs.getBool('needUpdate'),
             child: Container(
               margin:
-              EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                  EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
               child: Divider(
                 height: ScreenUtil().setHeight(1),
                 color: Color(0xFFefefef),
@@ -984,11 +1124,10 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Visibility(
             visible:
-            GlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
-                GlobalConfig.prefs.getBool('isHuaweiUnderReview') ||
-                    Platform.isIOS
-                ? false
-                : true,
+                GlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
+                        Platform.isIOS
+                    ? false
+                    : true,
             child: ListTile(
               title: Row(
                 children: <Widget>[
@@ -1007,6 +1146,9 @@ class _MicroMinePageState extends State<MicroMinePage>
               ),
               onTap: () {
                 Utils.checkAppVersion(context, checkDerictly: true);
+                /*if (mounted) {
+                  setState(() {});
+                }*/
               },
               trailing: Visibility(
                 visible: GlobalConfig.prefs.getBool('needUpdate') == null
@@ -1034,7 +1176,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-            EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -1169,7 +1311,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                 flex: 1,
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(
+                      const Divider(
                     height: 1,
                     color: Color(0xFFEFEFEF),
                   ),
@@ -1295,7 +1437,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 backgroundColor: Colors.transparent,
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                  'https://alipic.lanhuapp.com/xd9d064c12-dae4-4e4e-9b68-e15530e3738b',
+                                      'https://alipic.lanhuapp.com/xd9d064c12-dae4-4e4e-9b68-e15530e3738b',
                                   width: ScreenUtil().setWidth(96),
                                   height: ScreenUtil().setWidth(84),
                                 ),
@@ -1360,7 +1502,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 backgroundColor: Colors.transparent,
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                  'https://alipic.lanhuapp.com/xdab2f2767-766c-481a-8f03-b799963ad02c',
+                                      'https://alipic.lanhuapp.com/xdab2f2767-766c-481a-8f03-b799963ad02c',
                                   width: ScreenUtil().setWidth(96),
                                   height: ScreenUtil().setWidth(84),
                                 ),
@@ -1448,7 +1590,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         width: ScreenUtil().setWidth(20),
                         height: ScreenUtil().setWidth(35),
                         imageUrl:
-                        "https://alipic.lanhuapp.com/xdf759159d-dc19-4470-9107-bae18bdaec20"),
+                            "https://alipic.lanhuapp.com/xdf759159d-dc19-4470-9107-bae18bdaec20"),
                   ),
                 ],
               ),
@@ -1474,7 +1616,7 @@ class _MicroMinePageState extends State<MicroMinePage>
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
-          BorderRadius.all(Radius.circular(ScreenUtil().setWidth(28))),
+              BorderRadius.all(Radius.circular(ScreenUtil().setWidth(28))),
           border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
               color: Colors.white,
@@ -1504,7 +1646,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                           backgroundColor: Colors.transparent,
                           child: CachedNetworkImage(
                             imageUrl:
-                            "https://alipic.lanhuapp.com/xd2b9a895d-1adc-4f52-9a44-4cd72cadf49a",
+                                "https://alipic.lanhuapp.com/xd2b9a895d-1adc-4f52-9a44-4cd72cadf49a",
                             width: ScreenUtil().setWidth(128),
                             height: ScreenUtil().setWidth(128),
                           ),
@@ -1540,7 +1682,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                           backgroundColor: Colors.transparent,
                           child: CachedNetworkImage(
                             imageUrl:
-                            "https://alipic.lanhuapp.com/xd0eec94ec-72c2-4fd6-8f3f-05fcb9776510",
+                                "https://alipic.lanhuapp.com/xd0eec94ec-72c2-4fd6-8f3f-05fcb9776510",
                             width: ScreenUtil().setWidth(128),
                             height: ScreenUtil().setWidth(128),
                           ),
@@ -1580,7 +1722,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             backgroundColor: Colors.transparent,
                             child: CachedNetworkImage(
                               imageUrl:
-                              "https://alipic.lanhuapp.com/xdc4d43f07-fd79-4ff1-b120-8689edc7c87a",
+                                  "https://alipic.lanhuapp.com/xdc4d43f07-fd79-4ff1-b120-8689edc7c87a",
                               width: ScreenUtil().setWidth(128),
                               height: ScreenUtil().setWidth(128),
                             ),
@@ -1622,7 +1764,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             backgroundColor: Colors.transparent,
                             child: CachedNetworkImage(
                               imageUrl:
-                              "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
+                                  "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
                               width: ScreenUtil().setWidth(128),
                               height: ScreenUtil().setWidth(128),
                             ),
@@ -1647,18 +1789,18 @@ class _MicroMinePageState extends State<MicroMinePage>
   LinearGradient buildBackgroundLinearGradient() {
     return userType == "3"
         ? LinearGradient(colors: [
-      Color(0xFFFC767E),
-      Color(0xFFFD9245),
-    ])
+            Color(0xFFFC767E),
+            Color(0xFFFD9245),
+          ])
         : userType == "2"
-        ? LinearGradient(colors: [
-      Color(0xFF363636),
-      Color(0xFF363636),
-    ])
-        : LinearGradient(colors: [
-      Color(0xFFD8C2A4),
-      Color(0xFFCC9976),
-    ]);
+            ? LinearGradient(colors: [
+                Color(0xFF363636),
+                Color(0xFF363636),
+              ])
+            : LinearGradient(colors: [
+                Color(0xFFD8C2A4),
+                Color(0xFFCC9976),
+              ]);
   }
 
   GestureDetector buildBanner(BuildContext context) {
@@ -1799,9 +1941,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 ),
                                 Container(
                                   child: Text(
-                                    "${_availableCashAmount == null
-                                        ? '0'
-                                        : '$_availableCashAmount'}",
+                                    "${_availableCashAmount == null ? '0' : '$_availableCashAmount'}",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -1823,7 +1963,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             try {
                               if (CommonUtils.isEmpty(_availableCashAmount) ||
                                   double.parse(
-                                      _availableCashAmount.toString()) <=
+                                          _availableCashAmount.toString()) <=
                                       0) {
                                 CommonUtils.showToast("暂无可提现金额");
                                 return;
@@ -1835,7 +1975,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   context,
                                   WithdrawalPage(
                                       availableCashAmount:
-                                      _availableCashAmount));
+                                          _availableCashAmount));
                               _initUserData();
                               /*var result = await HttpManage.withdrawalApplication(
                                   "2", _availableCashAmount, "", "");
@@ -1892,9 +2032,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                       ),
                     ),
                     image: DecorationImage(
-                        image: Image
-                            .network(
-                            "https://alipic.lanhuapp.com/xd4e927536-e390-4733-8ac9-8d83f22dbd9a")
+                        image: Image.network(
+                                "https://alipic.lanhuapp.com/xd4e927536-e390-4733-8ac9-8d83f22dbd9a")
                             .image),
                   ),
                 ),
@@ -1930,9 +2069,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   height: ScreenUtil().setHeight(16),
                                 ),
                                 Text(
-                                  "${_totalAssetsAmount == null
-                                      ? '0'
-                                      : '$_totalAssetsAmount'}",
+                                  "${_totalAssetsAmount == null ? '0' : '$_totalAssetsAmount'}",
                                   style: TextStyle(
                                     color: Color(0xff222222),
                                     fontSize: ScreenUtil().setSp(42),
@@ -1977,9 +2114,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   height: ScreenUtil().setHeight(16),
                                 ),
                                 Text(
-                                  "${_cashWithdrawal == null
-                                      ? '0'
-                                      : '$_cashWithdrawal'}",
+                                  "${_cashWithdrawal == null ? '0' : '$_cashWithdrawal'}",
                                   style: TextStyle(
                                     color: Color(0xff222222),
                                     fontSize: ScreenUtil().setSp(42),
@@ -2038,9 +2173,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   ),
                                   TextSpan(
                                     text:
-                                    "${_yesterdayProfit == '0'
-                                        ? '0.00'
-                                        : '$_yesterdayProfit'}",
+                                        "${_yesterdayProfit == '0' ? '0.00' : '$_yesterdayProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
@@ -2091,9 +2224,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   ),
                                   TextSpan(
                                     text:
-                                    "${_sevenDayProfit == '0'
-                                        ? '0.00'
-                                        : '$_sevenDayProfit'}",
+                                        "${_sevenDayProfit == '0' ? '0.00' : '$_sevenDayProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
@@ -2144,9 +2275,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   ),
                                   TextSpan(
                                     text:
-                                    "${_monthProfit == '0'
-                                        ? '0.00'
-                                        : '$_monthProfit'}",
+                                        "${_monthProfit == '0' ? '0.00' : '$_monthProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
@@ -2197,9 +2326,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   ),
                                   TextSpan(
                                     text:
-                                    "${_totalProfit == '0'
-                                        ? '0.00'
-                                        : '$_totalProfit'}",
+                                        "${_totalProfit == '0' ? '0.00' : '$_totalProfit'}",
                                   ),
                                 ]),
                                 maxLines: 1,
@@ -2254,7 +2381,7 @@ class _MicroMinePageState extends State<MicroMinePage>
   Widget buildHeadLayout() {
     String text = "";
     text = _title;
-    if (_title== '我的') {
+    if (_title == '我的') {
       text = "普通用户";
     }
     if (!GlobalConfig.isLogin()) {
@@ -2277,64 +2404,64 @@ class _MicroMinePageState extends State<MicroMinePage>
                     ),*/
                   child: headUrl == null
                       ? Visibility(
-                      visible: false,
-                      child: Image.asset(
-                        "static/images/task_default_head.png",
-                        width: ScreenUtil().setWidth(158),
-                        height: ScreenUtil().setWidth(158),
-                        fit: BoxFit.fill,
-                      ))
+                          visible: false,
+                          child: Image.asset(
+                            "static/images/task_default_head.png",
+                            width: ScreenUtil().setWidth(158),
+                            height: ScreenUtil().setWidth(158),
+                            fit: BoxFit.fill,
+                          ))
                       : ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: "$headUrl",
-                      fit: BoxFit.fill,
-                      width: ScreenUtil().setWidth(158),
-                      height: ScreenUtil().setWidth(158),
-                    ),
-                  ),
+                          child: CachedNetworkImage(
+                            imageUrl: "$headUrl",
+                            fit: BoxFit.fill,
+                            width: ScreenUtil().setWidth(158),
+                            height: ScreenUtil().setWidth(158),
+                          ),
+                        ),
                 ),
               ),
               Positioned(
                 child: Visibility(
 //              visible: false,
                     child: Container(
-                      child: Container(
-                          width: ScreenUtil().setWidth(164),
-                          height: ScreenUtil().setWidth(56),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(ScreenUtil().setWidth(28))),
-                            gradient: LinearGradient(colors: [
-                              Color(0xff505050),
-                              Color(0xff222222),
-                            ]),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CachedNetworkImage(
-                                imageUrl:
+                  child: Container(
+                      width: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setWidth(56),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(ScreenUtil().setWidth(28))),
+                        gradient: LinearGradient(colors: [
+                          Color(0xff505050),
+                          Color(0xff222222),
+                        ]),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl:
                                 'https://alipic.lanhuapp.com/xd85fc7a67-0912-4f32-91c3-f907fdc9284d',
-                                width: ScreenUtil().setWidth(20),
-                                height: ScreenUtil().setWidth(25),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: ScreenUtil().setWidth(6),
-                                  bottom: ScreenUtil().setWidth(6),
-                                ),
-                                child: Text("$text",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: _cardTextColor,
-                                      fontSize: ScreenUtil().setSp(28),
-                                    )),
-                              ),
-                            ],
-                          )),
-                    )),
+                            width: ScreenUtil().setWidth(20),
+                            height: ScreenUtil().setWidth(25),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: ScreenUtil().setWidth(6),
+                              bottom: ScreenUtil().setWidth(6),
+                            ),
+                            child: Text("$text",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: _cardTextColor,
+                                  fontSize: ScreenUtil().setSp(28),
+                                )),
+                          ),
+                        ],
+                      )),
+                )),
               )
             ],
           ),
@@ -2455,13 +2582,14 @@ class _MicroMinePageState extends State<MicroMinePage>
     );
   }
 
-  void showMyDialog({bool showNickName = false,
-    bool showPhone = false,
-    bool bindPhone = false,
-    bool bindWeChatNo = false,
-    bool modifyPhone = false,
-    bool addExperienceAccount = false,
-    bool showWeChatNo = false}) {
+  void showMyDialog(
+      {bool showNickName = false,
+      bool showPhone = false,
+      bool bindPhone = false,
+      bool bindWeChatNo = false,
+      bool modifyPhone = false,
+      bool addExperienceAccount = false,
+      bool showWeChatNo = false}) {
     showDialog(
         context: context,
         builder: (context) {
@@ -2487,13 +2615,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                             borderRadius: BorderRadius.all(Radius.circular(46)),
                             // 边框默认色
                             borderSide:
-                            const BorderSide(color: Colors.transparent)),
+                                const BorderSide(color: Colors.transparent)),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(46)),
                             borderSide:
-                            const BorderSide(color: Colors.transparent)
-                          // 聚焦之后的边框色
-                        ),
+                                const BorderSide(color: Colors.transparent)
+                            // 聚焦之后的边框色
+                            ),
                       ),
                       onChanged: (value) {
                         _dialogNickName = value.trim();
@@ -2522,13 +2650,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                             borderRadius: BorderRadius.all(Radius.circular(46)),
                             // 边框默认色
                             borderSide:
-                            const BorderSide(color: Colors.transparent)),
+                                const BorderSide(color: Colors.transparent)),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(46)),
                             borderSide:
-                            const BorderSide(color: Colors.transparent)
-                          // 聚焦之后的边框色
-                        ),
+                                const BorderSide(color: Colors.transparent)
+                            // 聚焦之后的边框色
+                            ),
                       ),
                       onChanged: (value) {
                         _dialogPhoneNumber = value.trim();
@@ -2556,13 +2684,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                             borderRadius: BorderRadius.all(Radius.circular(46)),
                             // 边框默认色
                             borderSide:
-                            const BorderSide(color: Colors.transparent)),
+                                const BorderSide(color: Colors.transparent)),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(46)),
                             borderSide:
-                            const BorderSide(color: Colors.transparent)
-                          // 聚焦之后的边框色
-                        ),
+                                const BorderSide(color: Colors.transparent)
+                            // 聚焦之后的边框色
+                            ),
                       ),
                       onChanged: (value) {
                         _dialogWeChatNo = value.trim();
@@ -2607,7 +2735,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         onTap: () async {
                           if (showPhone) {
                             if ( //CommonUtils.isEmpty(dialogNickName) ||
-                            CommonUtils.isEmpty(_dialogPhoneNumber)) {
+                                CommonUtils.isEmpty(_dialogPhoneNumber)) {
                               CommonUtils.showToast("请检查填写的信息是否完整！");
                               return;
                             }
@@ -2623,7 +2751,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   tel: _dialogPhoneNumber.toString());
                               if (result.status) {
                                 String isMerge =
-                                result.data["is_merge"].toString();
+                                    result.data["is_merge"].toString();
                                 switch (isMerge) {
                                   case "1":
                                     CommonUtils.showToast("手机号绑定成功");
@@ -2659,8 +2787,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                             }
                             if (addExperienceAccount) {
                               var result =
-                              await HttpManage.addExperienceMemberPhone(
-                                  tel: _dialogPhoneNumber.toString());
+                                  await HttpManage.addExperienceMemberPhone(
+                                      tel: _dialogPhoneNumber.toString());
                               if (result.status) {
                                 CommonUtils.showToast("体验会员添加成功");
                               } else {
@@ -2670,7 +2798,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                           }
                           if (showWeChatNo) {
                             if ( //CommonUtils.isEmpty(dialogNickName) ||
-                            CommonUtils.isEmpty(_dialogWeChatNo)) {
+                                CommonUtils.isEmpty(_dialogWeChatNo)) {
                               CommonUtils.showToast("微信号不能为空！");
                               return;
                             }

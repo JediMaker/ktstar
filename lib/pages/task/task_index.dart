@@ -11,6 +11,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/category/new_classify.dart';
+import 'package:star/pages/merchantssettle/shop_list.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
 import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
@@ -48,6 +49,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   int positionIndex = 0;
 
   _initVersionData() async {
+    await GlobalConfig.initUserLocationWithPermission(count: 0);
     var versionInfo = await HttpManage.getVersionInfo();
     if (versionInfo.status) {
       switch (versionInfo.data.wxLogin) {
@@ -375,8 +377,9 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
           ),*/
-          icon: Image.asset(
-            'static/images/icon_profit_nomal.png',
+          icon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xd145d244b-d153-4165-88a1-eae8e225f6e7',
             width: ScreenUtil().setWidth(68),
             height: ScreenUtil().setWidth(75),
           ),
@@ -387,13 +390,46 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
           ),*/
-          activeIcon: Image.asset(
-            'static/images/icon_profit_sel.png',
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xd7c1d7666-ed9e-4a75-96d1-3b2ec627a062',
             width: ScreenUtil().setWidth(68),
             height: ScreenUtil().setWidth(75),
           ),
           title: new Text(
             '权益',
+            style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          ),
+          vsync: this),
+      new NavigationIconView(
+          /* icon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xff777777),
+          ),*/
+          icon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xd182ca7eb-0c78-44f8-8ae3-b86073dfcbcb',
+            width: ScreenUtil().setWidth(80),
+            height: ScreenUtil().setWidth(79),
+          ),
+          /*activeIcon: SvgPicture.asset(
+//                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
+            'static/images/icon_category_sel.svg',
+            width: ScreenUtil().setWidth(74),
+            height: ScreenUtil().setWidth(76),
+            color: Color(0xffce0100),
+          ),*/
+          activeIcon: CachedNetworkImage(
+            imageUrl:
+                'https://alipic.lanhuapp.com/xdda990b37-c04e-43e7-be69-871b56aa0e28',
+            width: ScreenUtil().setWidth(77),
+            height: ScreenUtil().setWidth(75),
+          ),
+          title: new Text(
+            '联盟商家',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
@@ -429,6 +465,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       MicroShareHolderEquityPage(
         showBackBtnIcon: false,
       ),
+      ShopListPage(),
       MinePagePage(),
       /*   new NoticePage(),
       new MyPage()*/

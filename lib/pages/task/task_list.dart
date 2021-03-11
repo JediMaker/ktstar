@@ -24,6 +24,7 @@ import 'package:loading/indicator/line_scale_party_indicator.dart';
 import 'package:loading/indicator/line_scale_pulse_out_indicator.dart';
 import 'package:loading/indicator/pacman_indicator.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:star/bus/my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http.dart';
@@ -39,6 +40,7 @@ import 'package:star/pages/goods/home_pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/login/login.dart';
+import 'package:star/pages/merchantssettle/shop_payment.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
@@ -70,6 +72,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/pages/widget/my_tab.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 ///首页
 class TaskListPage extends StatefulWidget {
@@ -588,11 +591,73 @@ class _TaskListPageState extends State<TaskListPage>
   TextEditingController _controller;
   FocusNode _focusNode;
 
+  ///扫一扫
+  _scan() async {
+    var shopId;
+    var _balance;
+    var _hasPayPassword;
+    var _shopName;
+    var _shopCode;
+
+    /// 调用扫一扫
+    String cameraScanResult = await scanner.scan();
+    var scanResult =
+        await HttpManage.getScanResultRemote(qrCodeResult: cameraScanResult);
+    if (scanResult.status) {
+      shopId = scanResult.data.storeId;
+      _shopName = scanResult.data.name;
+      _shopCode = scanResult.data.code;
+    } else {
+      CommonUtils.showToast("${scanResult.errMsg}");
+      return;
+    }
+    //  获取店铺支付相关信息
+    var entityResult = await HttpManage.getShopPayInfo(storeId: shopId);
+    if (entityResult.status) {
+      _balance = entityResult.data.user.price;
+      _hasPayPassword = entityResult.data.user.payPwdFlag;
+      _shopName = entityResult.data.store.storeName;
+      _shopCode = entityResult.data.store.storeCode;
+    }
+
+    ///进入支付页面
+    NavigatorUtils.navigatorRouter(
+        context,
+        ShopPaymentPage(
+          shopId: shopId,
+          shopName: _shopName,
+          shopCode: _shopCode,
+          balance: _balance,
+          hasPayPassword: _hasPayPassword,
+        ));
+
+    ///
+  }
+
   Widget buildSearchBarLayout() {
     return Container(
       height: 50,
       child: Row(
         children: <Widget>[
+//          https://alipic.lanhuapp.com/xdbb9d62a1-36c2-496b-8c01-8bc79436d834
+          IconButton(
+            icon: Container(
+              width: ScreenUtil().setWidth(78),
+              height: ScreenUtil().setWidth(78),
+              child: Center(
+                child: CachedNetworkImage(
+                  imageUrl:
+                      "https://alipic.lanhuapp.com/xdbb9d62a1-36c2-496b-8c01-8bc79436d834",
+                  width: ScreenUtil().setWidth(78),
+                  height: ScreenUtil().setWidth(78),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            onPressed: () async {
+              CommonUtils.requestPermission(Permission.camera, _scan);
+            },
+          ),
           Expanded(
             child: GestureDetector(
               onTap: () {
@@ -633,11 +698,28 @@ class _TaskListPageState extends State<TaskListPage>
               ),
             ),
           ),
-          Align(
+          IconButton(
+            icon: Container(
+              width: ScreenUtil().setWidth(78),
+              height: ScreenUtil().setWidth(78),
+              child: Center(
+                child: CachedNetworkImage(
+                  width: ScreenUtil().setWidth(78),
+                  height: ScreenUtil().setWidth(78),
+                  imageUrl:
+                      "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
+                ),
+              ),
+            ),
+            onPressed: () {
+              NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+            },
+          ),
+          /*Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+
               },
               child: CachedNetworkImage(
                 width: ScreenUtil().setWidth(78),
@@ -646,7 +728,7 @@ class _TaskListPageState extends State<TaskListPage>
                     "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );
@@ -867,6 +949,7 @@ class _TaskListPageState extends State<TaskListPage>
         elevation: 0,
         brightness: Brightness.dark,
         gradient: _gradientCorlor,
+        titleSpacing: 0,
       ),
       body: Builder(
         builder: (context) {

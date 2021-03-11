@@ -13,6 +13,7 @@ import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/version_info_entity.dart';
+import 'package:star/pages/widget/update_dialog.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -168,14 +169,14 @@ class Utils {
           GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
         if (Platform.isAndroid) {
-          ///华为审核中
+          /*    ///华为审核中
           if (GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
             if (checkDerictly) {
               ///直接检查更新时弹出
               CommonUtils.showToast("当前已是最新版本");
             }
             return;
-          }
+          }*/
         }
         if (Platform.isIOS) {
           ///ios审核中
@@ -207,12 +208,20 @@ class Utils {
           if (Platform.isIOS) {
             url = versionInfo.data.iosUrl;
             if (await canLaunch(url)) {
+              var desc = Platform.isAndroid
+                  ? versionInfo.data.desc
+                  : versionInfo.data.buildNumberDesc;
+
+              final bool wantsUpdate =
+                  await UpdateDialog.showUpdateDialog(context, "$desc", false);
+/*
               final bool wantsUpdate = await showDialog<bool>(
                 context: context,
                 builder: (BuildContext context) =>
                     _buildDialog(context, packageInfo, versionInfo),
                 barrierDismissible: false,
               );
+*/
               if (wantsUpdate != null && wantsUpdate) {
                 GlobalConfig.prefs.remove('updateTime');
                 GlobalConfig.prefs.remove('needUpdate');
@@ -226,12 +235,18 @@ class Utils {
             }
           } else {
             url = versionInfo.data.androidUrl;
-            final bool wantsUpdate = await showDialog<bool>(
+            /* final bool wantsUpdate = await showDialog<bool>(
               context: context,
               builder: (BuildContext context) =>
                   _buildDialog(context, packageInfo, versionInfo),
               barrierDismissible: false,
-            );
+            );*/
+            var desc = Platform.isAndroid
+                ? versionInfo.data.desc
+                : versionInfo.data.buildNumberDesc;
+
+            final bool wantsUpdate =
+                await UpdateDialog.showUpdateDialog(context, "$desc", false);
             if (wantsUpdate != null && wantsUpdate) {
               GlobalConfig.prefs.remove('updateTime'); //饮鸠止渴
               GlobalConfig.prefs.remove('needUpdate');
