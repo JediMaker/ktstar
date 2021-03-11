@@ -117,6 +117,8 @@ import 'package:star/models/fans_list_entity.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/generated/json/pdd_goods_list_entity_helper.dart';
+import 'package:star/models/shop_agreement_uri_entity.dart';
+import 'package:star/generated/json/shop_agreement_uri_entity_helper.dart';
 import 'package:star/models/shop_pay_info_entity.dart';
 import 'package:star/generated/json/shop_pay_info_entity_helper.dart';
 import 'package:star/models/shop_order_list_entity.dart';
@@ -574,6 +576,12 @@ class JsonConvert<T> {
       case PddGoodsListDataListCoupons:
         return pddGoodsListDataListCouponsFromJson(
             data as PddGoodsListDataListCoupons, json) as T;
+      case ShopAgreementUriEntity:
+        return shopAgreementUriEntityFromJson(
+            data as ShopAgreementUriEntity, json) as T;
+      case ShopAgreementUriData:
+        return shopAgreementUriDataFromJson(data as ShopAgreementUriData, json)
+            as T;
       case ShopPayInfoEntity:
         return shopPayInfoEntityFromJson(data as ShopPayInfoEntity, json) as T;
       case ShopPayInfoData:
@@ -972,6 +980,10 @@ class JsonConvert<T> {
       case PddGoodsListDataListCoupons:
         return pddGoodsListDataListCouponsToJson(
             data as PddGoodsListDataListCoupons);
+      case ShopAgreementUriEntity:
+        return shopAgreementUriEntityToJson(data as ShopAgreementUriEntity);
+      case ShopAgreementUriData:
+        return shopAgreementUriDataToJson(data as ShopAgreementUriData);
       case ShopPayInfoEntity:
         return shopPayInfoEntityToJson(data as ShopPayInfoEntity);
       case ShopPayInfoData:
@@ -1337,6 +1349,10 @@ class JsonConvert<T> {
         return PddGoodsListDataList().fromJson(json);
       case 'PddGoodsListDataListCoupons':
         return PddGoodsListDataListCoupons().fromJson(json);
+      case 'ShopAgreementUriEntity':
+        return ShopAgreementUriEntity().fromJson(json);
+      case 'ShopAgreementUriData':
+        return ShopAgreementUriData().fromJson(json);
       case 'ShopPayInfoEntity':
         return ShopPayInfoEntity().fromJson(json);
       case 'ShopPayInfoData':
@@ -1702,6 +1718,10 @@ class JsonConvert<T> {
         return List<PddGoodsListDataList>();
       case 'PddGoodsListDataListCoupons':
         return List<PddGoodsListDataListCoupons>();
+      case 'ShopAgreementUriEntity':
+        return List<ShopAgreementUriEntity>();
+      case 'ShopAgreementUriData':
+        return List<ShopAgreementUriData>();
       case 'ShopPayInfoEntity':
         return List<ShopPayInfoEntity>();
       case 'ShopPayInfoData':
