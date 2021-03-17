@@ -178,46 +178,9 @@ class _MyOctoImageState extends State<MyOctoImage> {
   @override
   Widget build(BuildContext context) {
     if (CommonUtils.isEmpty(widget.image)) {
-      return Container(
-        color: Color(0xffeaeaea),
-      );
+      return null;
     }
-    return CachedNetworkImage(
-      imageUrl: widget.image,
-      width: widget.width,
-      height: widget.height,
-//      placeholder: widget.placeholderBuilder,
-      placeholder: widget.placeholder != null
-          ? widget.placeholderBuilder
-          : (BuildContext context, String url) {
-              return Center(
-                  child: Container(
-                color: Color(0xffeaeaea),
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      ScreenUtil().setWidth(10),
-                    ),
-                    child: Container(
-                        width: ScreenUtil().setWidth(84),
-                        height: ScreenUtil().setWidth(78),
-                        child: Image.asset('static/images/image_empty.png')),
-                  ),
-                ),
-              ));
-            },
-      fadeInCurve: widget.fadeInCurve,
-      fadeInDuration: widget.fadeInDuration,
-      placeholderFadeInDuration: widget.placeholderFadeInDuration,
-      alignment: widget.alignment,
-      fit: widget.fit,
-      repeat: widget.repeat,
-      color: widget.color,
-      colorBlendMode: widget.colorBlendMode,
-      matchTextDirection: widget.matchTextDirection,
-      filterQuality: widget.filterQuality,
-    );
-    /*return OctoImage(
+    return OctoImage(
       image: CachedNetworkImageProvider(widget.image),
       width: widget.width,
       height: widget.height,
@@ -254,6 +217,6 @@ class _MyOctoImageState extends State<MyOctoImage> {
       colorBlendMode: widget.colorBlendMode,
       matchTextDirection: widget.matchTextDirection,
       filterQuality: widget.filterQuality,
-    );*/
+    );
   }
 }
