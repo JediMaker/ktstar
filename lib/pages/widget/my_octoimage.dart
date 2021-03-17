@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -173,7 +174,7 @@ class _MyOctoImageState extends State<MyOctoImage> {
   @override
   Widget build(BuildContext context) {
     return OctoImage(
-      image: network.NetworkImage(widget.image),
+      image: CachedNetworkImageProvider(widget.image),
       width: widget.width,
       height: widget.height,
       imageBuilder: widget.imageBuilder,
@@ -182,7 +183,7 @@ class _MyOctoImageState extends State<MyOctoImage> {
           : (BuildContext context) {
               return Center(
                   child: Container(
-                color: Color(0xffe1e1e1),
+                color: Color(0xffeaeaea),
                 child: Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(
