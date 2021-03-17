@@ -135,7 +135,7 @@ class _ShopListPageState extends State<ShopListPage>
     _refreshController = EasyRefreshController();
 //    _refreshController.finishLoad(noMore: true);
 
-    initUserInfoData();
+//    initUserInfoData();
     _initData();
   }
 
@@ -679,7 +679,7 @@ class _ShopListPageState extends State<ShopListPage>
       onRefresh: () {
         page = 1;
         _initData();
-        initUserInfoData();
+//        initUserInfoData();
         _refreshController.finishLoad(noMore: false);
       },
       onLoad: () {
