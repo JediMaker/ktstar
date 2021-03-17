@@ -902,6 +902,12 @@ class _NoShopDataState extends State<NoShopData> {
   var shopId = '';
 
   @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (!CommonUtils.isEmpty(applyStatus)) {
       if (applyStatus != "2") {
@@ -951,6 +957,19 @@ class _NoShopDataState extends State<NoShopData> {
     );
   }
 
+  initData() async {
+    var result = await HttpManage.getUserInfo();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          shopId = result.data.storeId;
+          rejectMsg = result.data.storeRejectMsg;
+          applyStatus = result.data.storeStatus;
+        });
+      }
+    }
+  }
+
   ///提交审核
   Widget buildJoinButton(context) {
     return Visibility(
@@ -977,16 +996,7 @@ class _NoShopDataState extends State<NoShopData> {
                   shopId: shopId,
                 ),
               );
-            }
-            var result = await HttpManage.getUserInfo();
-            if (result.status) {
-              if (mounted) {
-                setState(() {
-                  shopId = result.data.storeId;
-                  rejectMsg = result.data.storeRejectMsg;
-                  applyStatus = result.data.storeStatus;
-                });
-              }
+              initData();
             }
           },
           child: Container(

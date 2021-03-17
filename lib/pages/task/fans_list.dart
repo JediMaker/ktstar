@@ -314,44 +314,66 @@ class _FansListPageState extends State<FansListPage>
                     color: Colors.white,
                     width: 0.5)),
             child: ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(30), vertical: 0),
               onTap: () async {},
-              leading: Container(
-//                width: ScreenUtil().setWidth(137),
-//                height: ScreenUtil().setHeight(197),
-                child: headUrl == null
-                    ? Visibility(
-                        visible: false,
-                        child: Image.asset(
-                          "static/images/task_default_head.png",
-                          width: ScreenUtil().setWidth(120),
-                          height: ScreenUtil().setWidth(120),
-                          fit: BoxFit.fill,
-                        ),
-                      )
-                    : ClipOval(
-                        child: MyOctoImage(
-                          width: ScreenUtil().setWidth(200),
-                          height: ScreenUtil().setWidth(200),
-                          image: headUrl,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-              ),
               title: Container(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      child: Text(
-                        "${nickName == null ? '' : nickName}",
-                        overflow: TextOverflow.ellipsis,
-                        /*style: TextStyle(
-                            color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: ScreenUtil().setSp(42)),*/
-                        style: TextStyle(
-                            color: Color(0xFF222222),
-                            fontWeight: FontWeight.bold,
-                            fontSize: ScreenUtil().setSp(42)),
+                      width: ScreenUtil().setWidth(168),
+                      height: ScreenUtil().setWidth(168),
+                      child: headUrl == null
+                          ? Visibility(
+                              visible: false,
+                              child: Image.asset(
+                                "static/images/task_default_head.png",
+                                width: ScreenUtil().setWidth(120),
+                                height: ScreenUtil().setWidth(120),
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          : ClipOval(
+                              child: MyOctoImage(
+                                image: headUrl,
+                                fit: BoxFit.fill,
+                                width: ScreenUtil().setWidth(168),
+                                height: ScreenUtil().setWidth(168),
+                              ),
+                            ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: ScreenUtil().setWidth(30), vertical: 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              child: Text(
+                                "${nickName == null ? '' : nickName}",
+                                overflow: TextOverflow.ellipsis,
+                                /*style: TextStyle(
+                                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: ScreenUtil().setSp(42)),*/
+                                style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: ScreenUtil().setSp(42)),
+                              ),
+                            ),
+                            SelectableText(
+                              "${wechatNo == null ? '' : wechatNo}",
+                              style: TextStyle(
+                                  color: Color(0xFF222222),
+                                  fontSize: ScreenUtil().setSp(42)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -360,11 +382,6 @@ class _FansListPageState extends State<FansListPage>
 //            Image.asset("", width:)
                   ],
                 ),
-              ),
-              subtitle: Text(
-                "${wechatNo == null ? '' : wechatNo}",
-                style: TextStyle(
-                    color: Color(0xFF222222), fontSize: ScreenUtil().setSp(42)),
               ),
             ),
           ),
