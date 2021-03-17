@@ -332,7 +332,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                     ),
                     trailing: MyOctoImage(
                       image:
-                          "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : "as"}",
+                          "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : ""}",
                       width: ScreenUtil().setWidth(67),
                       height: ScreenUtil().setWidth(48),
                       fit: BoxFit.fill,
