@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/network_image.dart' as network;
+import 'package:star/utils/common_utils.dart';
 
 class MyOctoImage extends StatefulWidget {
   MyOctoImage(
@@ -176,6 +177,11 @@ class _MyOctoImageState extends State<MyOctoImage> {
 
   @override
   Widget build(BuildContext context) {
+    if (CommonUtils.isEmpty(widget.image)) {
+      return Container(
+        color: Color(0xffeaeaea),
+      );
+    }
     return CachedNetworkImage(
       imageUrl: widget.image,
       width: widget.width,
