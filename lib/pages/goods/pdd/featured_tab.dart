@@ -307,6 +307,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                               color: GlobalConfig.colorPrimary,
                             ),
                           ),
+                          placeholder: (context, url) => Center(
+                            child: Loading(
+                              indicator: BallSpinFadeLoaderIndicator(),
+                              size: 50.0,
+                              color: GlobalConfig.colorPrimary,
+                            ),
+                          ),
                           errorBuilder: (context, url, d) {
                             return Center(child: Text("图片加载失败"));
                           },
@@ -800,6 +807,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                     color: GlobalConfig.colorPrimary,
                   ),
                 ),
+                placeholder: (context, url) => Center(
+                  child: Loading(
+                    indicator: BallSpinFadeLoaderIndicator(),
+                    size: 50.0,
+                    color: GlobalConfig.colorPrimary,
+                  ),
+                ),
                 width: ScreenUtil().setWidth(492),
                 height: ScreenUtil().setWidth(600),
               ),
@@ -1093,6 +1107,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
               width: ScreenUtil().setWidth(1029),
               height: ScreenUtil().setWidth(414),
               placeholderBuilder: (context) => Center(
+                child: Loading(
+                  indicator: BallSpinFadeLoaderIndicator(),
+                  size: 50.0,
+                  color: GlobalConfig.colorPrimary,
+                ),
+              ),
+              placeholder: (context, url) => Center(
                 child: Loading(
                   indicator: BallSpinFadeLoaderIndicator(),
                   size: 50.0,

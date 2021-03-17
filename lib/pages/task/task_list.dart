@@ -2520,6 +2520,13 @@ class _TaskListPageState extends State<TaskListPage>
                   color: GlobalConfig.colorPrimary,
                 ),
               ),
+              placeholder: (context, url) => Center(
+                child: Loading(
+                  indicator: BallSpinFadeLoaderIndicator(),
+                  size: 50.0,
+                  color: GlobalConfig.colorPrimary,
+                ),
+              ),
               fit: BoxFit.fill,
             ),
           );
