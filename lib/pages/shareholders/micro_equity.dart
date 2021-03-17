@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
@@ -407,8 +407,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                         child: GestureDetector(
                       child: Stack(
                         children: [
-                          /* CachedNetworkImage(
-                            imageUrl:
+                          /* MyOctoImage(
+                            image:
                                 'https://alipic.lanhuapp.com/xd52654c11-0f1f-43da-8f0d-43e6ffeddc89',
                             width: ScreenUtil().setWidth(1255),
                             height: ScreenUtil().setWidth(397),
@@ -551,8 +551,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                         ),
                         child: Row(
                           children: [
-                            CachedNetworkImage(
-                              imageUrl: "$lbIcon",
+                            MyOctoImage(
+                              image: "$lbIcon",
                               width: ScreenUtil().setWidth(33),
                               height: ScreenUtil().setWidth(33),
                             ),
@@ -1066,22 +1066,22 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
       ),
       child: Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl:
+          MyOctoImage(
+            image:
                 "https://alipic.lanhuapp.com/xd94361c9c-aef0-4d62-a616-844f4bda2189",
             width: ScreenUtil().setWidth(1065),
             height: ScreenUtil().setWidth(331),
             fit: BoxFit.fill,
           ),
-          CachedNetworkImage(
-            imageUrl:
+          MyOctoImage(
+            image:
                 "https://alipic.lanhuapp.com/xd8690d7d2-d313-45f5-b70c-ec09f259915a",
             width: ScreenUtil().setWidth(1065),
             height: ScreenUtil().setWidth(331),
             fit: BoxFit.fill,
           ),
-          CachedNetworkImage(
-            imageUrl:
+          MyOctoImage(
+            image:
                 "https://alipic.lanhuapp.com/xd42e3eaf9-41e0-4057-ad08-713b3ae1a0e8",
             width: ScreenUtil().setWidth(1065),
             height: ScreenUtil().setWidth(331),
@@ -1337,8 +1337,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: "$headUrl",
+                  child: MyOctoImage(
+                    image: "$headUrl",
                     width: ScreenUtil().setWidth(168),
                     height: ScreenUtil().setWidth(168),
                   ),
@@ -1382,8 +1382,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                   ),
                 ),
                 Container(
-                  child: CachedNetworkImage(
-                    imageUrl: "$iconLinkUrl",
+                  child: MyOctoImage(
+                    image: "$iconLinkUrl",
                     width: ScreenUtil().setWidth(281),
                     height: ScreenUtil().setWidth(149),
                     fit: BoxFit.fill,

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -206,12 +206,14 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                                 height: ScreenUtil().setHeight(695),
                                 fit: BoxFit.fill,
                               )
-                            : CachedNetworkImage(imageUrl: imgUrl)),
+                            : MyOctoImage(image: imgUrl)),
                     Visibility(
                       visible: _imageFile != null,
                       child: Image.file(
                         File(_imageFile != null
-                            ? _imageFile.path == null ? "" : _imageFile.path
+                            ? _imageFile.path == null
+                                ? ""
+                                : _imageFile.path
                             : ""),
                         width: ScreenUtil().setWidth(401),
                         height: ScreenUtil().setHeight(695),
@@ -276,7 +278,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                 ),
                 buildSubmitButton(),
                 buildUploadtButton(),
-                /* CachedNetworkImage(
+                /* MyOctoImage(
                   imageUrl: "",
                 ),*/
               ],

@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -205,14 +205,14 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: CachedNetworkImage(
+                child: MyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
                   width: ScreenUtil().setWidth(243),
                   height: ScreenUtil().setWidth(243),
-                  imageUrl: product.goodsImg == null ? "" : product.goodsImg,
-                  /*   imageUrl: item.imageUrl,
+                  image: product.goodsImg == null ? "" : product.goodsImg,
+                  /*   image: item.image,
                                     width: ScreenUtil().L(120),
                                     height: ScreenUtil().L(120),*/
                 ),
@@ -470,10 +470,10 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             Container(
               alignment: Alignment.centerRight,
               width: ScreenUtil().setWidth(46),
-              child: CachedNetworkImage(
+              child: MyOctoImage(
                 width: ScreenUtil().setWidth(20),
                 height: ScreenUtil().setWidth(36),
-                imageUrl:
+                image:
                     'https://alipic.lanhuapp.com/xd6b0fc912-422b-4a25-8cf0-fab0ca862249',
               ),
             ),
@@ -527,8 +527,8 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
                           color: Color(0xff222222),
                         ),
                       ),
-                      trailing: CachedNetworkImage(
-                        imageUrl:
+                      trailing: MyOctoImage(
+                        image:
                             "${_cargoStatus == index ? "https://alipic.lanhuapp.com/xda760ae72-7c57-4c57-b898-6b6a00d16c9c" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                         width: ScreenUtil().setWidth(60),
                         height: ScreenUtil().setWidth(60),
@@ -598,8 +598,8 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
                     color: Color(0xff222222),
                   ),
                 ),
-                trailing: CachedNetworkImage(
-                  imageUrl:
+                trailing: MyOctoImage(
+                  image:
                       "${_cargoStatus == 0 && _noReceivingReasonSelectedIndex == index || _cargoStatus == 1 && _receivedReasonSelectedIndex == index ? "https://alipic.lanhuapp.com/xda760ae72-7c57-4c57-b898-6b6a00d16c9c" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                   width: ScreenUtil().setWidth(60),
                   height: ScreenUtil().setWidth(60),

@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -244,8 +244,8 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
             child: Container(
                 width: ScreenUtil().setWidth(730),
 //        width: MediaQuery.of(context).size.width / 2.5,
-                child: new CachedNetworkImage(
-                  imageUrl: url,
+                child: new MyOctoImage(
+                  image: url,
                   width: ScreenUtil().setWidth(728),
                   height: ScreenUtil().setHeight(915),
                   fit: BoxFit.fitWidth,

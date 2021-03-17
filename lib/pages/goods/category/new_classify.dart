@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -148,10 +148,10 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CachedNetworkImage(
+                    MyOctoImage(
                       width: ScreenUtil().setWidth(36),
                       height: ScreenUtil().setWidth(36),
-                      imageUrl:
+                      image:
                           "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                     ),
                     Container(
@@ -418,17 +418,17 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          CachedNetworkImage(
+                          MyOctoImage(
                             fit: BoxFit.cover,
-                            imageUrl: category.imgUrl == null
+                            image: category.imgUrl == null
                                 ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'
                                 : category.imgUrl,
-                            /* imageUrl:
+                            /* image:
                             "https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png",*/
                             width: ScreenUtil().setWidth(270),
                             height: ScreenUtil().setWidth(270),
 //            placeholder: (context, url) => new CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
+                            errorBuilder: (context, url, error) =>
                                 new Icon(Icons.error),
                           ),
                           SizedBox(
@@ -518,17 +518,17 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      CachedNetworkImage(
+                      MyOctoImage(
                         fit: BoxFit.cover,
-                        imageUrl: category.imgUrl == null
+                        image: category.imgUrl == null
                             ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'
                             : category.imgUrl,
-                        /* imageUrl:
+                        /* image:
                             "https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png",*/
                         width: ScreenUtil().setWidth(270),
                         height: ScreenUtil().setWidth(270),
 //            placeholder: (context, url) => new CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
+                        errorBuilder: (context, url, error) =>
                             new Icon(Icons.error),
                       ),
                       SizedBox(

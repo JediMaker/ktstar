@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -204,6 +204,7 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
           );
         });
   }
+
   @override
   void initState() {
     super.initState();
@@ -424,13 +425,13 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
                           topRight: Radius.circular(ScreenUtil().setWidth(30)),
                           topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                         ),
-                        child: CachedNetworkImage(
+                        child: MyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           height: ScreenUtil().setWidth(523),
                           width: ScreenUtil().setWidth(523),
                           fit: BoxFit.fill,
-                          imageUrl: "$goodsImg",
+                          image: "$goodsImg",
                         ),
                       ),
                     ),
@@ -438,8 +439,9 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
                       visible: !CommonUtils.isEmpty(_gBonus),
                       child: Container(
                         height: ScreenUtil().setWidth(60),
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 6, ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6,
+                        ),
                         margin: EdgeInsets.only(
                           top: ScreenUtil().setSp(463),
                         ),
@@ -470,7 +472,7 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
 //                          SizedBox(
 //                            height: 10,
 //                          ),
-              
+
                 Container(
                   padding: EdgeInsets.only(
                     left: ScreenUtil().setWidth(20),
@@ -491,8 +493,8 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
                                 ScreenUtil().setWidth(10),
                               ),
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl:
+                            child: MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
                               width: ScreenUtil().setWidth(75),
                               height: ScreenUtil().setWidth(42),

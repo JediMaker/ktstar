@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -17,6 +17,7 @@ import 'package:star/pages/task/task_list.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/task/mine_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/my_webview.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -50,6 +51,9 @@ class _TaskIndexPageState extends State<TaskIndexPage>
 
   _initVersionData() async {
     await GlobalConfig.initUserLocationWithPermission(count: 0);
+    if (GlobalConfig.isLogin()) {
+      await HttpManage.getUserInfo();
+    }
     var versionInfo = await HttpManage.getVersionInfo();
     if (versionInfo.status) {
       switch (versionInfo.data.wxLogin) {
@@ -196,6 +200,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
   void initState() {
     Utils.checkAppVersion(context);
     _initVersionData();
+
     super.initState();
 
     _currentIndex = widget.currentIndex;
@@ -313,8 +318,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             color: Color(0xff777777),
           ),
 /*
-          icon: CachedNetworkImage(
-            imageUrl:
+          icon: MyOctoImage(
+            image:
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
                 'https://alipic.lanhuapp.com/xde9009b67-5da3-4cb5-ae5e-0a6adaf47e9e',
             width: ScreenUtil().setWidth(74),
@@ -329,8 +334,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             color: Color(0xffce0100),
           ),
 /*
-          activeIcon: CachedNetworkImage(
-            imageUrl:
+          activeIcon: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
             width: ScreenUtil().setWidth(74),
             height: ScreenUtil().setWidth(76),
@@ -350,8 +355,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             color: Color(0xff777777),
           ),
 /*
-          icon: CachedNetworkImage(
-            imageUrl:
+          icon: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xda87fe7ad-f66f-4d6a-a344-5bfcd0664c21',
             width: ScreenUtil().setWidth(75),
             height: ScreenUtil().setWidth(75),
@@ -377,8 +382,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
           ),*/
-          icon: CachedNetworkImage(
-            imageUrl:
+          icon: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xd145d244b-d153-4165-88a1-eae8e225f6e7',
             width: ScreenUtil().setWidth(68),
             height: ScreenUtil().setWidth(75),
@@ -390,8 +395,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
           ),*/
-          activeIcon: CachedNetworkImage(
-            imageUrl:
+          activeIcon: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xd7c1d7666-ed9e-4a75-96d1-3b2ec627a062',
             width: ScreenUtil().setWidth(68),
             height: ScreenUtil().setWidth(75),
@@ -409,8 +414,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
           ),*/
-          icon: CachedNetworkImage(
-            imageUrl:
+          icon: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xd182ca7eb-0c78-44f8-8ae3-b86073dfcbcb',
             width: ScreenUtil().setWidth(80),
             height: ScreenUtil().setWidth(79),
@@ -422,8 +427,8 @@ class _TaskIndexPageState extends State<TaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
           ),*/
-          activeIcon: CachedNetworkImage(
-            imageUrl:
+          activeIcon: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xdda990b37-c04e-43e7-be69-871b56aa0e28',
             width: ScreenUtil().setWidth(77),
             height: ScreenUtil().setWidth(75),

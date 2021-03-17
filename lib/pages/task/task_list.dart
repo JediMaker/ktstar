@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -592,7 +592,7 @@ class _TaskListPageState extends State<TaskListPage>
   FocusNode _focusNode;
 
   ///扫一扫
-  _scan() async {
+  scan() async {
     var shopId;
     var _balance;
     var _hasPayPassword;
@@ -645,8 +645,8 @@ class _TaskListPageState extends State<TaskListPage>
               width: ScreenUtil().setWidth(78),
               height: ScreenUtil().setWidth(78),
               child: Center(
-                child: CachedNetworkImage(
-                  imageUrl:
+                child: MyOctoImage(
+                  image:
                       "https://alipic.lanhuapp.com/xdbb9d62a1-36c2-496b-8c01-8bc79436d834",
                   width: ScreenUtil().setWidth(78),
                   height: ScreenUtil().setWidth(78),
@@ -655,7 +655,7 @@ class _TaskListPageState extends State<TaskListPage>
               ),
             ),
             onPressed: () async {
-              CommonUtils.requestPermission(Permission.camera, _scan);
+              CommonUtils.requestPermission(Permission.camera, scan());
             },
           ),
           Expanded(
@@ -676,10 +676,10 @@ class _TaskListPageState extends State<TaskListPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CachedNetworkImage(
+                    MyOctoImage(
                       width: ScreenUtil().setWidth(36),
                       height: ScreenUtil().setWidth(36),
-                      imageUrl:
+                      image:
                           "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                     ),
                     Container(
@@ -703,10 +703,10 @@ class _TaskListPageState extends State<TaskListPage>
               width: ScreenUtil().setWidth(78),
               height: ScreenUtil().setWidth(78),
               child: Center(
-                child: CachedNetworkImage(
+                child: MyOctoImage(
                   width: ScreenUtil().setWidth(78),
                   height: ScreenUtil().setWidth(78),
-                  imageUrl:
+                  image:
                       "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
                 ),
               ),
@@ -721,10 +721,10 @@ class _TaskListPageState extends State<TaskListPage>
               onTap: () {
 
               },
-              child: CachedNetworkImage(
+              child: MyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
-                imageUrl:
+                image:
                     "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
               ),
             ),
@@ -888,8 +888,8 @@ class _TaskListPageState extends State<TaskListPage>
                   ScreenUtil().setWidth(30),
                 ),
               ),
-              child: CachedNetworkImage(
-                imageUrl: "$imgPath",
+              child: MyOctoImage(
+                image: "$imgPath",
                 fit: BoxFit.fitWidth,
                 width: ScreenUtil().setWidth(522),
                 height: ScreenUtil().setWidth(322),
@@ -1224,8 +1224,8 @@ class _TaskListPageState extends State<TaskListPage>
                               Container(
                                 width: ScreenUtil().setWidth(844),
                                 height: ScreenUtil().setWidth(152),
-                                child: CachedNetworkImage(
-                                  imageUrl:
+                                child: MyOctoImage(
+                                  image:
                                       "https://alipic.lanhuapp.com/xde2fb8570-f7e3-47a5-9220-217c64821d87",
                                   fit: BoxFit.fill,
                                 ),
@@ -1233,8 +1233,8 @@ class _TaskListPageState extends State<TaskListPage>
                               Container(
                                 width: ScreenUtil().setWidth(525),
                                 height: ScreenUtil().setWidth(93),
-                                child: CachedNetworkImage(
-                                  imageUrl:
+                                child: MyOctoImage(
+                                  image:
                                       "https://alipic.lanhuapp.com/xdde41acb8-afe5-4d8d-bd12-e9dc417c3894",
                                   fit: BoxFit.fill,
                                 ),
@@ -1273,8 +1273,8 @@ class _TaskListPageState extends State<TaskListPage>
                                   fontSize: ScreenUtil().setSp(42),
                                 ),
                               ),
-                              CachedNetworkImage(
-                                imageUrl:
+                              MyOctoImage(
+                                image:
                                     "https://alipic.lanhuapp.com/xdb2ba7101-ff5b-42ae-a6e7-f890b3b83e91",
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(33),
@@ -1395,8 +1395,8 @@ class _TaskListPageState extends State<TaskListPage>
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 3),
-                          child: CachedNetworkImage(
-                            imageUrl:
+                          child: MyOctoImage(
+                            image:
                                 "https://alipic.lanhuapp.com/xd18562122-edcf-4b8a-8f6d-4528530150ea",
                             fit: BoxFit.fill,
                             width: ScreenUtil().setWidth(12),
@@ -1417,8 +1417,8 @@ class _TaskListPageState extends State<TaskListPage>
                 left: ScreenUtil().setWidth(40),
                 right: GlobalConfig.LAYOUT_MARGIN,
                 top: ScreenUtil().setWidth(10)),
-            child: CachedNetworkImage(
-              imageUrl:
+            child: MyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xd3342447e-ba65-4d86-91eb-edfe87de5ca3",
               fit: BoxFit.fill,
             ),
@@ -1556,13 +1556,13 @@ class _TaskListPageState extends State<TaskListPage>
                         topRight: Radius.circular(ScreenUtil().setWidth(10)),
                         topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                       ),
-                      child: CachedNetworkImage(
+                      child: MyOctoImage(
                         fadeInDuration: Duration(milliseconds: 0),
                         fadeOutDuration: Duration(milliseconds: 0),
                         height: ScreenUtil().setWidth(305),
                         width: ScreenUtil().setWidth(305),
                         fit: BoxFit.fill,
-                        imageUrl: "$goodsImg",
+                        image: "$goodsImg",
                       ),
                     ),
                   ),
@@ -1657,13 +1657,13 @@ class _TaskListPageState extends State<TaskListPage>
                                 ),
                                 margin: EdgeInsets.symmetric(horizontal: 4),
                               ),
-                              CachedNetworkImage(
+                              MyOctoImage(
                                 fadeInDuration: Duration(milliseconds: 0),
                                 fadeOutDuration: Duration(milliseconds: 0),
                                 fit: BoxFit.fitWidth,
                                 height: ScreenUtil().setWidth(26),
                                 width: ScreenUtil().setWidth(26),
-                                imageUrl:
+                                image:
                                     "https://alipic.lanhuapp.com/xd00b6d1cd-b672-41f7-89ea-806d7c3aef94",
                               ),
                             ],
@@ -1709,8 +1709,8 @@ class _TaskListPageState extends State<TaskListPage>
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl:
+                      MyOctoImage(
+                        image:
                             "https://alipic.lanhuapp.com/xd269728c1-1bf9-4bfe-9b86-06af0fabca98",
                         width: ScreenUtil().setWidth(42),
                         height: ScreenUtil().setWidth(42),
@@ -2066,8 +2066,8 @@ class _TaskListPageState extends State<TaskListPage>
               children: <Widget>[
                 new Container(
                   margin: const EdgeInsets.only(bottom: 8.0),
-                  child: CachedNetworkImage(
-                    imageUrl: "$icon",
+                  child: MyOctoImage(
+                    image: "$icon",
                     width: ScreenUtil().setWidth(155),
                     height: ScreenUtil().setWidth(155),
                   ),
@@ -2125,8 +2125,8 @@ class _TaskListPageState extends State<TaskListPage>
                 vertical: ScreenUtil().setWidth(32),
                 horizontal: ScreenUtil().setWidth(32),
               ),
-              child: CachedNetworkImage(
-                imageUrl:
+              child: MyOctoImage(
+                image:
                     "https://alipic.lanhuapp.com/xd9a50a007-6769-44e8-93ed-3e33e099a277",
                 width: ScreenUtil().setWidth(236),
                 height: ScreenUtil().setHeight(66),
@@ -2215,315 +2215,317 @@ class _TaskListPageState extends State<TaskListPage>
               borderRadius: BorderRadius.all(
                 Radius.circular(ScreenUtil().setWidth(30)),
               ),
-              child: Swiper(
-                itemCount: bannerList == null ? 0 : bannerList.length,
-                /*itemWidth: ScreenUtil().setWidth(1125),
-                itemHeight: ScreenUtil().setHeight(623),
-                transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
-                //bannerList == null ? 0 : bannerList.length,
-                loop: _isLoop,
-                autoplay: false,
-                duration: 30,
-                autoplayDisableOnInteraction: true,
-                key: ValueKey(context),
-                controller: _swiperController,
-//          indicatorLayout: PageIndicatorLayout.COLOR,
-                onIndexChanged: (index) async {
-                  if (!CommonUtils.isEmpty(bannerColorList)) {
-                    if (!CommonUtils.isEmpty(bannerColorList[index]) &&
-                        bannerColorList.length == bannerList.length) {
-                      if (mounted) {
-                        setState(() {
-                          _gradientCorlor = LinearGradient(colors: [
-                            bannerColorList[index],
-                            bannerColorList[index],
-                          ]);
-                          /*print(
-                              "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
-                          bannerIndex = index;
-                        });
-                      }
-                      return;
-                    }
-                  }
-                  PaletteGenerator generator =
-                      await PaletteGenerator.fromImageProvider(
-                          Image.network("${bannerList[index].imgPath}").image);
-                  if (mounted) {
-                    setState(() {
-                      bannerIndex = index;
-                      /*switch (bannerList[index].uri.toString().trim()) {
-                        case "upgrade":
-                          _gradientCorlor = LinearGradient(colors: [
-                            Color(0xFF7E090F),
-                            Color(0xFF810A0C),
-                            Color(0xFF7D0A0F),
-                          ]);
-
-                          break;
-                        case "recharge":
-                          _gradientCorlor = LinearGradient(colors: [
-                            Color(0xFF4A07C6),
-                            Color(0xFF4A07C6),
-                          ]);
-                          break;
-                        case "upgrade_diamond":
-                          _gradientCorlor = LinearGradient(colors: [
-                            Color(0xFFB43733),
-                            Color(0xFFB43733),
-                            Color(0xFFB43733),
-                          ]);
-                          break;
-                      }*/
-                      try {
-                        _gradientCorlor = LinearGradient(colors: [
-                          generator.dominantColor.color,
-                          generator.dominantColor.color,
-                        ]);
-                      } catch (e) {}
-                      /*_gradientCorlor = LinearGradient(colors: [
-                        generator.dominantColor.color,
-                        generator.dominantColor.color,
-                      ]);*/
-                    });
-                  }
-                },
-                /*pagination: SwiperPagination(
-                    builder: DotSwiperPaginationBuilder(
-                        //自定义指示器颜色
-                        color: Colors.white,
-                        size: 8.0,
-                        activeColor: GlobalConfig.taskHeadColor,
-                        activeSize: 10.0)),*/
-                itemBuilder: (context, index) {
-                  var bannerData = bannerList[index];
-                  var item = bannerList[index];
-                  String icon = '';
-                  String name = '';
-                  String type = '';
-                  String appId = '';
-                  String path = '';
-                  String imgPath = '';
-                  String subtitle = '';
-                  String params = '';
-                  String catId = '';
-                  String pddType = '';
-                  try {
-                    icon = item.icon;
-                    name = item.name;
-                    type = item.type;
-                    appId = item.appId;
-                    path =
-                        !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
-                    subtitle = item.subtitle;
-                    params = item.params;
-                    imgPath = item.imgPath;
-//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
-                    if (params.contains("&")) {}
-                    List<String> pList = params.split("&");
-                    for (var itemString in pList) {
-                      List<String> itemList = itemString.split("=");
-                      if (!CommonUtils.isEmpty(itemList)) {
-                        switch (itemList[0]) {
-                          case "cat_id":
-                            catId = itemList[1];
-                            break;
-                          case "type":
-                            pddType = itemList[1];
-                            break;
-                        }
-                      }
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                  return GestureDetector(
-                    onTap: () async {
-                      ///跳转对应链接
-                      ///
-                      if (type == 'webapp') {
-                        launchWeChatMiniProgram(username: appId, path: path);
-                        return;
-                      }
-                      if (type == 'app') {
-                        if (path == 'pdd_index') {
-//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
-                          return;
-                        }
-                        if (path == 'pdd_goods') {
-                          NavigatorUtils.navigatorRouter(
-                              context,
-                              PddGoodsListPage(
-                                showAppBar: true,
-                                type: pddType,
-                                title: CommonUtils.isEmpty(name) ? "精选" : name,
-                                categoryId: catId,
-                              ));
-                          return;
-                        }
-                        switch (path) {
-                          case "recharge":
-                            NavigatorUtils.navigatorRouter(
-                                context, RechargeListPage());
-                            break;
-                          case "upgrade":
-                            NavigatorUtils.navigatorRouter(
-                                context, TaskOpenVipPage());
-/*
-                          NavigatorUtils.navigatorRouter(
-                              context, TaskOpenDiamondPage());
-*/
-                            break;
-                          case "recharge":
-                            NavigatorUtils.navigatorRouter(
-                                context, RechargeListPage());
-                            break;
-                          case "goods_list":
-                            NavigatorUtils.navigatorRouter(
-                                context, GoodsListPage());
-                            break;
-                          case "upgrade_diamond":
-                            NavigatorUtils.navigatorRouter(
-                                context,
-                                TaskOpenVipPage(
-                                  taskType: 2,
-                                ));
-                            break;
-                        }
-                        return;
-                      }
-                      if (type == 'toast') {
-                        CommonUtils.showToast("敬请期待");
-                        return;
-                      }
-                      if (type == 'link') {
-                        if (path.toString().startsWith("pinduoduo")) {
-                          if (await canLaunch(path)) {
-                            await launch(path);
-                          } else {
-                            if (path.startsWith("pinduoduo://")) {
-                              CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-                              NavigatorUtils.navigatorRouter(
-                                  context,
-                                  WebViewPluginPage(
-                                    initialUrl: "$path",
-                                    showActions: true,
-                                    title: "拼多多",
-                                    appBarBackgroundColor: Colors.white,
-                                  ));
-                            } else {}
-                            return;
-                          }
-                        }
-                        if (path.contains("yangkeduo")) {
-                          var pddPath = path.replaceAll(
-                              "https://mobile.yangkeduo.com/",
-                              "pinduoduo://com.xunmeng.pinduoduo/");
-                          if (await canLaunch(pddPath)) {
-                            await launch(pddPath);
-                            return;
-                          } else {
-                            NavigatorUtils.navigatorRouter(
-                                context,
-                                WebViewPluginPage(
-                                  initialUrl: "$path",
-                                  showActions: true,
-                                  title: "拼多多",
-                                  appBarBackgroundColor: Colors.white,
-                                ));
-                            return;
-                          }
-                        }
-                        Utils.launchUrl(path);
-                        return;
-                      }
-
-                      ///
-                      switch (bannerList[bannerIndex].uri.toString().trim()) {
-                        case "upgrade":
-                          NavigatorUtils.navigatorRouter(
-                              context, TaskOpenVipPage());
-/*
-                          NavigatorUtils.navigatorRouter(
-                              context, TaskOpenDiamondPage());
-*/
-                          break;
-                        case "recharge":
-                          NavigatorUtils.navigatorRouter(
-                              context, RechargeListPage());
-                          break;
-                        case "goods_list":
-                          NavigatorUtils.navigatorRouter(
-                              context, GoodsListPage());
-                          break;
-                        case "upgrade_diamond":
-                          NavigatorUtils.navigatorRouter(
-                              context,
-                              TaskOpenVipPage(
-                                taskType: 2,
-                              ));
-                          break;
-                      }
-                      if (bannerList[bannerIndex]
-                          .uri
-                          .toString()
-                          .startsWith("http")) {
-                        Utils.launchUrl(bannerList[bannerIndex].uri.toString());
-                        /*bool isImage = false;
-                        Response resust = await Dio().get(bannerList[bannerIndex].uri);
-                        String contentType = resust.headers['content-type'].toString();
-                        if (contentType.startsWith("[image/")) {
-                          isImage = true;
-                        }
-                        if (isImage) {
-                          NavigatorUtils.navigatorRouter(
-                              context,
-                              TaskGalleryPage(
-                                galleryItems: [bannerList[bannerIndex].uri.toString()],
-                              ));
-                          return;
-                        }
-                        */ /*print("contentType=$contentType");
-                        print(
-                            "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
-                        var hColor = GlobalConfig.taskHeadColor;
-                        NavigatorUtils.navigatorRouter(
-                            context,
-                            WebViewPage(
-                              initialUrl: bannerList[bannerIndex].uri.toString(),
-                              showActions: true,
-                              title: "",
-                              appBarBackgroundColor: hColor,
-                            ));*/
-                        /*try {
-                          PaletteGenerator generator =
-                              await PaletteGenerator.fromImageProvider(Image.network(
-                                      "${bannerList[bannerIndex].uri.toString()}")
-                                  .image);
-                          hColor = generator.dominantColor.color;
-                        } catch (e) {}*/
-                      }
-                    },
-                    child: CachedNetworkImage(
-                      imageUrl: bannerData.imgPath,
-//              width: ScreenUtil().setWidth(1125),
-                      placeholder: (context, url) => Center(
-                        child: Loading(
-                          indicator: BallSpinFadeLoaderIndicator(),
-                          size: 50.0,
-                          color: GlobalConfig.colorPrimary,
-                        ),
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                  );
-                },
-              ),
+              child: buildSwiper(),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget buildSwiper() {
+    if (CommonUtils.isEmpty(bannerList)) {
+      return Center(
+        child: Loading(
+          indicator: BallSpinFadeLoaderIndicator(),
+          size: 50.0,
+          color: GlobalConfig.colorPrimary,
+        ),
+      );
+    } else {
+      _isLoop = true;
+      return Swiper(
+        itemCount: CommonUtils.isEmpty(bannerList) ? 0 : bannerList.length,
+        /*itemWidth: ScreenUtil().setWidth(1125),
+              itemHeight: ScreenUtil().setHeight(623),
+              transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
+        //bannerList == null ? 0 : bannerList.length,
+        loop: _isLoop,
+        autoplay: true,
+        duration: 30,
+        autoplayDisableOnInteraction: true,
+        key: ValueKey(context),
+        controller: _swiperController,
+//          indicatorLayout: PageIndicatorLayout.COLOR,
+        onIndexChanged: (index) async {
+          if (!CommonUtils.isEmpty(bannerColorList)) {
+            if (!CommonUtils.isEmpty(bannerColorList[index]) &&
+                bannerColorList.length == bannerList.length) {
+              if (mounted) {
+                setState(() {
+                  _gradientCorlor = LinearGradient(colors: [
+                    bannerColorList[index],
+                    bannerColorList[index],
+                  ]);
+                  /*print(
+                            "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
+                  bannerIndex = index;
+                });
+              }
+              return;
+            }
+          }
+          PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
+              Image.network("${bannerList[index].imgPath}").image);
+          if (mounted) {
+            setState(() {
+              bannerIndex = index;
+              /*switch (bannerList[index].uri.toString().trim()) {
+                      case "upgrade":
+                        _gradientCorlor = LinearGradient(colors: [
+                          Color(0xFF7E090F),
+                          Color(0xFF810A0C),
+                          Color(0xFF7D0A0F),
+                        ]);
+
+                        break;
+                      case "recharge":
+                        _gradientCorlor = LinearGradient(colors: [
+                          Color(0xFF4A07C6),
+                          Color(0xFF4A07C6),
+                        ]);
+                        break;
+                      case "upgrade_diamond":
+                        _gradientCorlor = LinearGradient(colors: [
+                          Color(0xFFB43733),
+                          Color(0xFFB43733),
+                          Color(0xFFB43733),
+                        ]);
+                        break;
+                    }*/
+              try {
+                _gradientCorlor = LinearGradient(colors: [
+                  generator.dominantColor.color,
+                  generator.dominantColor.color,
+                ]);
+              } catch (e) {}
+              /*_gradientCorlor = LinearGradient(colors: [
+                      generator.dominantColor.color,
+                      generator.dominantColor.color,
+                    ]);*/
+            });
+          }
+        },
+        /*pagination: SwiperPagination(
+                  builder: DotSwiperPaginationBuilder(
+                      //自定义指示器颜色
+                      color: Colors.white,
+                      size: 8.0,
+                      activeColor: GlobalConfig.taskHeadColor,
+                      activeSize: 10.0)),*/
+        itemBuilder: (context, index) {
+          var bannerData = bannerList[index];
+          var item = bannerList[index];
+          String icon = '';
+          String name = '';
+          String type = '';
+          String appId = '';
+          String path = '';
+          String imgPath = '';
+          String subtitle = '';
+          String params = '';
+          String catId = '';
+          String pddType = '';
+          try {
+            icon = item.icon;
+            name = item.name;
+            type = item.type;
+            appId = item.appId;
+            path = !CommonUtils.isEmpty(item.path) ? item.path : item.uri;
+            subtitle = item.subtitle;
+            params = item.params;
+            imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+            if (params.contains("&")) {}
+            List<String> pList = params.split("&");
+            for (var itemString in pList) {
+              List<String> itemList = itemString.split("=");
+              if (!CommonUtils.isEmpty(itemList)) {
+                switch (itemList[0]) {
+                  case "cat_id":
+                    catId = itemList[1];
+                    break;
+                  case "type":
+                    pddType = itemList[1];
+                    break;
+                }
+              }
+            }
+          } catch (e) {
+            print(e);
+          }
+          return GestureDetector(
+            onTap: () async {
+              ///跳转对应链接
+              ///
+              if (type == 'webapp') {
+                launchWeChatMiniProgram(username: appId, path: path);
+                return;
+              }
+              if (type == 'app') {
+                if (path == 'pdd_index') {
+//                          NavigatorUtils.navigatorRouter(context, PddHomeIndexPage());
+                  return;
+                }
+                if (path == 'pdd_goods') {
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      PddGoodsListPage(
+                        showAppBar: true,
+                        type: pddType,
+                        title: CommonUtils.isEmpty(name) ? "精选" : name,
+                        categoryId: catId,
+                      ));
+                  return;
+                }
+                switch (path) {
+                  case "recharge":
+                    NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                    break;
+                  case "upgrade":
+                    NavigatorUtils.navigatorRouter(context, TaskOpenVipPage());
+/*
+                        NavigatorUtils.navigatorRouter(
+                            context, TaskOpenDiamondPage());
+*/
+                    break;
+                  case "recharge":
+                    NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                    break;
+                  case "goods_list":
+                    NavigatorUtils.navigatorRouter(context, GoodsListPage());
+                    break;
+                  case "upgrade_diamond":
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        TaskOpenVipPage(
+                          taskType: 2,
+                        ));
+                    break;
+                }
+                return;
+              }
+              if (type == 'toast') {
+                CommonUtils.showToast("敬请期待");
+                return;
+              }
+              if (type == 'link') {
+                if (path.toString().startsWith("pinduoduo")) {
+                  if (await canLaunch(path)) {
+                    await launch(path);
+                  } else {
+                    if (path.startsWith("pinduoduo://")) {
+                      CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          WebViewPluginPage(
+                            initialUrl: "$path",
+                            showActions: true,
+                            title: "拼多多",
+                            appBarBackgroundColor: Colors.white,
+                          ));
+                    } else {}
+                    return;
+                  }
+                }
+                if (path.contains("yangkeduo")) {
+                  var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                      "pinduoduo://com.xunmeng.pinduoduo/");
+                  if (await canLaunch(pddPath)) {
+                    await launch(pddPath);
+                    return;
+                  } else {
+                    NavigatorUtils.navigatorRouter(
+                        context,
+                        WebViewPluginPage(
+                          initialUrl: "$path",
+                          showActions: true,
+                          title: "拼多多",
+                          appBarBackgroundColor: Colors.white,
+                        ));
+                    return;
+                  }
+                }
+                Utils.launchUrl(path);
+                return;
+              }
+
+              ///
+              switch (bannerList[bannerIndex].uri.toString().trim()) {
+                case "upgrade":
+                  NavigatorUtils.navigatorRouter(context, TaskOpenVipPage());
+/*
+                        NavigatorUtils.navigatorRouter(
+                            context, TaskOpenDiamondPage());
+*/
+                  break;
+                case "recharge":
+                  NavigatorUtils.navigatorRouter(context, RechargeListPage());
+                  break;
+                case "goods_list":
+                  NavigatorUtils.navigatorRouter(context, GoodsListPage());
+                  break;
+                case "upgrade_diamond":
+                  NavigatorUtils.navigatorRouter(
+                      context,
+                      TaskOpenVipPage(
+                        taskType: 2,
+                      ));
+                  break;
+              }
+              if (bannerList[bannerIndex].uri.toString().startsWith("http")) {
+                Utils.launchUrl(bannerList[bannerIndex].uri.toString());
+                /*bool isImage = false;
+                      Response resust = await Dio().get(bannerList[bannerIndex].uri);
+                      String contentType = resust.headers['content-type'].toString();
+                      if (contentType.startsWith("[image/")) {
+                        isImage = true;
+                      }
+                      if (isImage) {
+                        NavigatorUtils.navigatorRouter(
+                            context,
+                            TaskGalleryPage(
+                              galleryItems: [bannerList[bannerIndex].uri.toString()],
+                            ));
+                        return;
+                      }
+                      */ /*print("contentType=$contentType");
+                      print(
+                          "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
+                      var hColor = GlobalConfig.taskHeadColor;
+                      NavigatorUtils.navigatorRouter(
+                          context,
+                          WebViewPage(
+                            initialUrl: bannerList[bannerIndex].uri.toString(),
+                            showActions: true,
+                            title: "",
+                            appBarBackgroundColor: hColor,
+                          ));*/
+                /*try {
+                        PaletteGenerator generator =
+                            await PaletteGenerator.fromImageProvider(Image.network(
+                                    "${bannerList[bannerIndex].uri.toString()}")
+                                .image);
+                        hColor = generator.dominantColor.color;
+                      } catch (e) {}*/
+              }
+            },
+            child: MyOctoImage(
+              image: bannerData.imgPath,
+//              width: ScreenUtil().setWidth(1125),
+              placeholderBuilder: (context) => Center(
+                child: Loading(
+                  indicator: BallSpinFadeLoaderIndicator(),
+                  size: 50.0,
+                  color: GlobalConfig.colorPrimary,
+                ),
+              ),
+              fit: BoxFit.fill,
+            ),
+          );
+        },
+      );
+    }
   }
 
   ///邀请好友
@@ -2577,8 +2579,8 @@ class _TaskListPageState extends State<TaskListPage>
               horizontal: GlobalConfig.LAYOUT_MARGIN,
               vertical: GlobalConfig.LAYOUT_MARGIN),
           alignment: Alignment.center,
-          child: CachedNetworkImage(
-            imageUrl:
+          child: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xddcdf45d1-4fd3-47e6-9326-88bb1cfd4edf',
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
@@ -2741,11 +2743,11 @@ class _TaskListPageState extends State<TaskListPage>
         }*/
       },
       leading: ClipOval(
-        child: CachedNetworkImage(
+        child: MyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
-          imageUrl: taskItem.icons,
+          image: taskItem.icons,
         ),
 /*
         child: Image.asset(
@@ -2757,10 +2759,10 @@ class _TaskListPageState extends State<TaskListPage>
 */
       ),
 
-      /* CachedNetworkImage(
+      /* MyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
       title: Text(
@@ -2945,11 +2947,11 @@ class _TaskListPageState extends State<TaskListPage>
         }*/
       },
       leading: ClipOval(
-        child: CachedNetworkImage(
+        child: MyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
-          imageUrl: taskItem.icons,
+          image: taskItem.icons,
         ),
 /*
         child: Image.asset(
@@ -2961,10 +2963,10 @@ class _TaskListPageState extends State<TaskListPage>
 */
       ),
 
-      /* CachedNetworkImage(
+      /* MyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
       title: Text(
@@ -3685,11 +3687,11 @@ class _TaskListTabViewState extends State<TaskListTabView>
                           ),
                         ),
                         /* ClipOval(
-                              child: CachedNetworkImage(
+                              child: MyOctoImage(
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(110),
                                 height: ScreenUtil().setWidth(110),
-                                imageUrl: taskItem.icons,
+                                image: taskItem.icons,
                               ),
                             ),*/
                       ],
@@ -3705,8 +3707,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                             Visibility(
                               visible: true,
                               child: Container(
-                                child: CachedNetworkImage(
-                                  imageUrl: "$_taskIcon",
+                                child: MyOctoImage(
+                                  image: "$_taskIcon",
                                   width: ScreenUtil().setWidth(70),
                                   height: ScreenUtil().setHeight(50),
                                 ),
@@ -3751,8 +3753,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                 height: ScreenUtil().setHeight(48),
                                 alignment: Alignment.centerLeft,
                                 child: _isNewTask
-                                    ? CachedNetworkImage(
-                                        imageUrl:
+                                    ? MyOctoImage(
+                                        image:
                                             "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
                                         width: ScreenUtil().setWidth(30),
                                         height: ScreenUtil().setHeight(54),

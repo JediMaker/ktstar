@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -249,7 +249,7 @@ class _TaskHallPageState extends State<TaskHallPage>
           Image.network("${bannerItem.imgPath}").image);
       bannerColorList.add(generator.dominantColor.color);
     }
-   /* if (mounted) {
+    /* if (mounted) {
       setState(() {
         try {
           _gradientCorlor = LinearGradient(colors: [
@@ -378,24 +378,24 @@ class _TaskHallPageState extends State<TaskHallPage>
                       enableInfiniteRefresh,
                       success,
                       noMore) {
-                    return Stack(
-                      children: <Widget>[
-                        Positioned(
-                          bottom: 0.0,
-                          left: 0.0,
-                          right: 0.0,
-                          child: Container(
-                            width: 30.0,
-                            height: 30.0,
-                            child: SpinKitCircle(
-                              color: GlobalConfig.colorPrimary,
-                              size: 30.0,
-                            ),
-                          ),
+                return Stack(
+                  children: <Widget>[
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        width: 30.0,
+                        height: 30.0,
+                        child: SpinKitCircle(
+                          color: GlobalConfig.colorPrimary,
+                          size: 30.0,
                         ),
-                      ],
-                    );
-                  }),
+                      ),
+                    ),
+                  ],
+                );
+              }),
               firstRefreshWidget: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -554,13 +554,13 @@ class _TaskHallPageState extends State<TaskHallPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(30)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
-                    child: CachedNetworkImage(
+                    child: MyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(340),
                       width: ScreenUtil().setWidth(340),
                       fit: BoxFit.fitWidth,
-                      imageUrl: "$goodsImg",
+                      image: "$goodsImg",
                     ),
                   ),
                 ),
@@ -782,8 +782,8 @@ class _TaskHallPageState extends State<TaskHallPage>
                 child: new CircleAvatar(
                   radius: 20.0,
                   backgroundColor: Colors.transparent,
-                  child: CachedNetworkImage(
-                    imageUrl: "$icon",
+                  child: MyOctoImage(
+                    image: "$icon",
                     width: ScreenUtil().setWidth(136),
                     height: ScreenUtil().setWidth(136),
                   ),
@@ -840,8 +840,8 @@ class _TaskHallPageState extends State<TaskHallPage>
                 vertical: ScreenUtil().setWidth(32),
                 horizontal: ScreenUtil().setWidth(32),
               ),
-              child: CachedNetworkImage(
-                imageUrl:
+              child: MyOctoImage(
+                image:
                     "https://alipic.lanhuapp.com/xd9a50a007-6769-44e8-93ed-3e33e099a277",
                 width: ScreenUtil().setWidth(236),
                 height: ScreenUtil().setHeight(66),
@@ -1057,8 +1057,8 @@ class _TaskHallPageState extends State<TaskHallPage>
                 } catch (e) {}*/
               }
             },
-            child: CachedNetworkImage(
-              imageUrl: bannerData.imgPath,
+            child: MyOctoImage(
+              image: bannerData.imgPath,
               height: ScreenUtil().setHeight(623),
 //              width: ScreenUtil().setWidth(1125),
               fit: BoxFit.fill,
@@ -1096,8 +1096,8 @@ class _TaskHallPageState extends State<TaskHallPage>
           height: ScreenUtil().setHeight(550),
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           alignment: Alignment.center,
-          child: CachedNetworkImage(
-            imageUrl:
+          child: MyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xddcdf45d1-4fd3-47e6-9326-88bb1cfd4edf',
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
@@ -1260,11 +1260,11 @@ class _TaskHallPageState extends State<TaskHallPage>
         }*/
       },
       leading: ClipOval(
-        child: CachedNetworkImage(
+        child: MyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
-          imageUrl: taskItem.icons,
+          image: taskItem.icons,
         ),
 /*
         child: Image.asset(
@@ -1276,10 +1276,10 @@ class _TaskHallPageState extends State<TaskHallPage>
 */
       ),
 
-      /* CachedNetworkImage(
+      /* MyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
       title: Text(
@@ -1464,11 +1464,11 @@ class _TaskHallPageState extends State<TaskHallPage>
         }*/
       },
       leading: ClipOval(
-        child: CachedNetworkImage(
+        child: MyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
-          imageUrl: taskItem.icons,
+          image: taskItem.icons,
         ),
 /*
         child: Image.asset(
@@ -1480,10 +1480,10 @@ class _TaskHallPageState extends State<TaskHallPage>
 */
       ),
 
-      /* CachedNetworkImage(
+      /* MyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
       title: Text(
@@ -2200,11 +2200,11 @@ class _TaskListTabViewState extends State<TaskListTabView>
                           ),
                         ),
                         /* ClipOval(
-                              child: CachedNetworkImage(
+                              child: MyOctoImage(
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(110),
                                 height: ScreenUtil().setWidth(110),
-                                imageUrl: taskItem.icons,
+                                image: taskItem.icons,
                               ),
                             ),*/
                       ],
@@ -2220,8 +2220,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                             Visibility(
                               visible: true,
                               child: Container(
-                                child: CachedNetworkImage(
-                                  imageUrl: "$_taskIcon",
+                                child: MyOctoImage(
+                                  image: "$_taskIcon",
                                   width: ScreenUtil().setWidth(70),
                                   height: ScreenUtil().setHeight(50),
                                 ),
@@ -2266,8 +2266,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                 height: ScreenUtil().setHeight(48),
                                 alignment: Alignment.centerLeft,
                                 child: _isNewTask
-                                    ? CachedNetworkImage(
-                                        imageUrl:
+                                    ? MyOctoImage(
+                                        image:
                                             "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
                                         width: ScreenUtil().setWidth(30),
                                         height: ScreenUtil().setHeight(54),

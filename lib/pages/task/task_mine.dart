@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -290,24 +290,24 @@ class _TaskMinePageState extends State<TaskMinePage>
                   enableInfiniteRefresh,
                   success,
                   noMore) {
-                return Stack(
-                  children: <Widget>[
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        width: 30.0,
-                        height: 30.0,
-                        child: SpinKitCircle(
-                          color: GlobalConfig.taskBtnTxtGreyColor,
-                          size: 30.0,
-                        ),
-                      ),
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    child: SpinKitCircle(
+                      color: GlobalConfig.taskBtnTxtGreyColor,
+                      size: 30.0,
                     ),
-                  ],
-                );
-              }),
+                  ),
+                ),
+              ],
+            );
+          }),
           slivers: <Widget>[
             buildContent(),
           ],
@@ -1816,8 +1816,8 @@ class _TaskMinePageState extends State<TaskMinePage>
                       fit: BoxFit.fill,
                     ))
                 : ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: headUrl,
+                    child: MyOctoImage(
+                      image: headUrl,
                       width: ScreenUtil().setWidth(146),
                       height: ScreenUtil().setWidth(146),
                       fit: BoxFit.fill,

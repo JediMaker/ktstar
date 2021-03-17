@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -362,8 +362,8 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),*/
-                        CachedNetworkImage(
-                          imageUrl: "$titleIcon",
+                        MyOctoImage(
+                          image: "$titleIcon",
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),

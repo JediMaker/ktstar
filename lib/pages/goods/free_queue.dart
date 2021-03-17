@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -217,7 +217,7 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
                 ),
                 child: buildTopContainer(),
                 /*
-                    child: CachedNetworkImage(
+                    child: MyOctoImage(
                       imageUrl:
                           "https://alipic.lanhuapp.com/xd1b3de0f3-69e2-406a-b22d-be4985aa3d00",
                     ),*/
@@ -394,8 +394,8 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
             Container(
               margin: EdgeInsets.only(left: 11),
               child: ClipOval(
-                  child: CachedNetworkImage(
-                imageUrl: "$_headImageUrl",
+                  child: MyOctoImage(
+                image: "$_headImageUrl",
                 width: ScreenUtil().setWidth(182),
                 height: ScreenUtil().setWidth(182),
               )),
@@ -472,8 +472,8 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
           width: ScreenUtil().setWidth(100),
           height: ScreenUtil().setWidth(100),
           alignment: Alignment.center,
-          child: CachedNetworkImage(
-            imageUrl:
+          child: MyOctoImage(
+            image:
                 "https://alipic.lanhuapp.com/xd0822cd7b-26b5-4c61-b922-c622e1f8f507",
             width: ScreenUtil().setWidth(65),
             height: ScreenUtil().setHeight(77),
@@ -484,8 +484,8 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
           width: ScreenUtil().setWidth(100),
           height: ScreenUtil().setWidth(100),
           alignment: Alignment.center,
-          child: CachedNetworkImage(
-            imageUrl:
+          child: MyOctoImage(
+            image:
                 "https://alipic.lanhuapp.com/xd626c4b41-cf3d-459d-aa39-4c3e004aba02",
             width: ScreenUtil().setWidth(65),
             height: ScreenUtil().setHeight(77),
@@ -496,8 +496,8 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
           width: ScreenUtil().setWidth(100),
           height: ScreenUtil().setWidth(100),
           alignment: Alignment.center,
-          child: CachedNetworkImage(
-            imageUrl:
+          child: MyOctoImage(
+            image:
                 "https://alipic.lanhuapp.com/xd07bf2202-80a8-47c3-a6b8-46b472ac4e1d",
             width: ScreenUtil().setWidth(65),
             height: ScreenUtil().setHeight(77),
@@ -541,8 +541,8 @@ class _FreeQueuePageState extends State<FreeQueuePage> {
               Container(
                 margin: EdgeInsets.only(left: 8),
                 child: ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: "$_avatarUrl",
+                  child: MyOctoImage(
+                    image: "$_avatarUrl",
                     width: ScreenUtil().setWidth(100),
                     height: ScreenUtil().setWidth(100),
                     fit: BoxFit.fill,

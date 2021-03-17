@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -289,8 +289,8 @@ class _OrderLogisticsTrackingPageState
               color: Color(0xffD1D1D1),
               width: ScreenUtil().setWidth(60),
               height: ScreenUtil().setWidth(60),
-              indicator: CachedNetworkImage(
-                imageUrl:
+              indicator: MyOctoImage(
+                image:
                     '${index == 0 ? logisticsStatusActiveIconUrl : logisticsStatusIconUrl}',
                 width: ScreenUtil().setWidth(60),
                 height: ScreenUtil().setWidth(60),

@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -84,10 +84,10 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
                 fit: BoxFit.fill,
               ),
 /*
-              child: CachedNetworkImage(
+              child: MyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
-                imageUrl:
+                image:
                     "https://alipic.lanhuapp.com/xd815e5762-05d1-4721-993a-0b866db87c4d",
               ),
 */
@@ -110,10 +110,10 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CachedNetworkImage(
+                    MyOctoImage(
                       width: ScreenUtil().setWidth(48),
                       height: ScreenUtil().setWidth(48),
-                      imageUrl:
+                      image:
                           "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                     ),
                     Container(
@@ -137,10 +137,10 @@ class _PddHomeIndexPageState extends State<PddHomeIndexPage>
               onTap: () {
                 NavigatorUtils.navigatorRouter(context, TaskMessagePage());
               },
-              child: CachedNetworkImage(
+              child: MyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
-                imageUrl:
+                image:
                     "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
               ),
             ),

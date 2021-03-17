@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -611,8 +611,8 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
                       visible: _isReturnSuccess,
                       child: Container(
                         margin: EdgeInsets.only(right: 8),
-                        child: CachedNetworkImage(
-                          imageUrl:
+                        child: MyOctoImage(
+                          image:
                               'https://alipic.lanhuapp.com/xd6099a4da-e864-47bf-8cf5-e859a821e962',
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
@@ -765,13 +765,13 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: CachedNetworkImage(
+                child: MyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
                   width: ScreenUtil().setWidth(243),
                   height: ScreenUtil().setWidth(243),
-                  imageUrl: product.goodsImg == null ? "" : product.goodsImg,
+                  image: product.goodsImg == null ? "" : product.goodsImg,
                   /*   imageUrl: item.imageUrl,
                                     width: ScreenUtil().L(120),
                                     height: ScreenUtil().L(120),*/
@@ -988,9 +988,8 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
           Visibility(
             visible: type == 3,
             child: GestureDetector(
-              onTap: (){
-                Clipboard.setData(ClipboardData(
-                    text: "$subTitle"));
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: "$subTitle"));
                 CommonUtils.showToast("已复制文本");
               },
               child: Container(

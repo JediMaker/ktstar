@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -159,7 +159,7 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
                 ),
                 child: buildTopContainer(),
                 /*
-                    child: CachedNetworkImage(
+                    child: MyOctoImage(
                       imageUrl:
                           "https://alipic.lanhuapp.com/xd1b3de0f3-69e2-406a-b22d-be4985aa3d00",
                     ),*/
@@ -348,8 +348,8 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
         width: ScreenUtil().setWidth(100),
         height: ScreenUtil().setWidth(100),
         alignment: Alignment.center,
-        child: CachedNetworkImage(
-          imageUrl:
+        child: MyOctoImage(
+          image:
               "https://alipic.lanhuapp.com/xde429b121-45d4-4b1a-97ea-0dedaed74a42",
           width: ScreenUtil().setWidth(100),
           height: ScreenUtil().setWidth(100),
@@ -427,8 +427,8 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
                 buildIndexLabel(index, done: done),
                 Container(
                   margin: EdgeInsets.only(left: 8),
-                  child: CachedNetworkImage(
-                    imageUrl: "$_imageUrl",
+                  child: MyOctoImage(
+                    image: "$_imageUrl",
                     width: ScreenUtil().setWidth(120),
                     height: ScreenUtil().setWidth(120),
                     fit: BoxFit.fill,
@@ -526,8 +526,8 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
                               children: [
                                 Container(
                                   margin: EdgeInsets.only(right: 3, left: 10),
-                                  child: CachedNetworkImage(
-                                    imageUrl:
+                                  child: MyOctoImage(
+                                    image:
                                         "https://alipic.lanhuapp.com/xdbc37de1c-84ed-41a8-bd8b-c0c9729f1e3c",
                                     width: ScreenUtil().setWidth(20),
                                     height: ScreenUtil().setHeight(40),
@@ -578,8 +578,8 @@ class _FreeQueuePersonalPageState extends State<FreeQueuePersonalPage> {
                         visible: !done,
                         child: Container(
                           margin: EdgeInsets.only(top: 0, left: 8),
-                          child: CachedNetworkImage(
-                            imageUrl:
+                          child: MyOctoImage(
+                            image:
                                 "https://alipic.lanhuapp.com/xd2e6c09da-9f63-4b1b-9c30-a41ca0a63491",
                             width: ScreenUtil().setWidth(40),
                             height: ScreenUtil().setHeight(40),

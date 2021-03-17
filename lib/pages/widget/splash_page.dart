@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/utils/navigator_utils.dart';
@@ -29,8 +29,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      /*child: CachedNetworkImage(
-        imageUrl:
+      /*child: MyOctoImage(
+        image:
             "https://alipic.lanhuapp.com/xd69c17e55-d263-4281-9dbe-4b10a7079813",
         fit: BoxFit.fill,
       ),*/

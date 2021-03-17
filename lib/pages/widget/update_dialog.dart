@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -23,10 +23,10 @@ class UpdateDialog extends Dialog {
             child: Stack(
               alignment: Alignment.topCenter,
               children: <Widget>[
-                CachedNetworkImage(
+                MyOctoImage(
                   width: ScreenUtil().setWidth(706),
                   height: ScreenUtil().setWidth(1087),
-                  imageUrl:
+                  image:
                       "https://alipic.lanhuapp.com/xdca0eb379-4282-42ea-ad98-531697ac2309",
                 ),
                 Container(

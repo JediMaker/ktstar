@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -193,8 +193,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
 */
                               itemBuilder: (BuildContext context, int index) {
                                 return _swiperImgs != null
-                                    ? new CachedNetworkImage(
-                                        imageUrl: _swiperImgs[index] == null
+                                    ? new MyOctoImage(
+                                        image: _swiperImgs[index] == null
                                             ? ""
                                             : _swiperImgs[index],
                                         fit: BoxFit.fill,
@@ -328,8 +328,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                                     ScreenUtil().setWidth(10),
                                                   ),
                                                 ),
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
+                                                child: MyOctoImage(
+                                                  image:
                                                       "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
 //                                                      "https://img.pddpic.com/favicon.ico",
                                                   width:
@@ -381,8 +381,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                           alignment: Alignment.center,
                                           children: [
                                             Container(
-                                              child: CachedNetworkImage(
-                                                imageUrl:
+                                              child: MyOctoImage(
+                                                image:
                                                     "https://alipic.lanhuapp.com/xd19448a68-5e62-4de5-9df9-fc6e45522e8d",
                                                 width:
                                                     ScreenUtil().setWidth(1045),
@@ -649,8 +649,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                         ScreenUtil().setWidth(30),
                                       ),
                                     ),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
+                                    child: MyOctoImage(
+                                      image:
                                           "https://img.pddpic.com/favicon.ico",
                                       width: ScreenUtil().setWidth(138),
                                       height: ScreenUtil().setWidth(138),
@@ -756,8 +756,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    CachedNetworkImage(
-                                      imageUrl:
+                                    MyOctoImage(
+                                      image:
                                           'https://alipic.lanhuapp.com/xd14aa2fbd-3d5f-46b8-b7ea-fa9e23c97e41',
                                       width: ScreenUtil().setWidth(30),
                                       height: ScreenUtil().setWidth(30),
@@ -873,8 +873,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                             ),
                             Container(
                               color: Colors.white,
-                              child: CachedNetworkImage(
-                                imageUrl: _detailImgs[index],
+                              child: MyOctoImage(
+                                image: _detailImgs[index],
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -893,8 +893,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                 alignment: Alignment.topLeft,
                 child: ClipOval(
                   child: IconButton(
-                    icon: CachedNetworkImage(
-                      imageUrl:
+                    icon: MyOctoImage(
+                      image:
                           "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                     ),
                     onPressed: () {
@@ -918,8 +918,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                         child: IconButton(
                             icon: Column(
                               children: [
-                                CachedNetworkImage(
-                                  imageUrl:
+                                MyOctoImage(
+                                  image:
                                       "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
                                   width: ScreenUtil().setWidth(47),
                                   height: ScreenUtil().setWidth(51),
@@ -1591,8 +1591,8 @@ class _DetailWindowState extends State<DetailWindow>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CachedNetworkImage(
-            imageUrl: "$_defaultImgUrl",
+          MyOctoImage(
+            image: "$_defaultImgUrl",
 /*
                 widget.detailData == null || widget.detailData.data == null
                     ? ""

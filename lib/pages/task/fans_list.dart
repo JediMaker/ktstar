@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -329,8 +329,10 @@ class _FansListPageState extends State<FansListPage>
                         ),
                       )
                     : ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: headUrl,
+                        child: MyOctoImage(
+                          width: ScreenUtil().setWidth(200),
+                          height: ScreenUtil().setWidth(200),
+                          image: headUrl,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -547,8 +549,8 @@ class _FansTabViewState extends State<FansTabView> {
                 fit: BoxFit.fill,
               )
             : ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: headUrl,
+                child: MyOctoImage(
+                  image: headUrl,
                   width: ScreenUtil().setWidth(120),
                   height: ScreenUtil().setWidth(120),
                   fit: BoxFit.fill,
@@ -617,8 +619,8 @@ class _FansTabViewState extends State<FansTabView> {
         ],
       ),
       trailing: GestureDetector(
-        child: CachedNetworkImage(
-          imageUrl: "${_getImgName(shareHolderType)}",
+        child: MyOctoImage(
+          image: "${_getImgName(shareHolderType)}",
           width: ScreenUtil().setWidth(shareHolderType == '2' ? 119 : 137),
           height: ScreenUtil().setWidth(shareHolderType == '2' ? 59 : 77),
           fit: BoxFit.fill,

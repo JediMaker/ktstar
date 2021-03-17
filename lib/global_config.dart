@@ -112,7 +112,7 @@ class GlobalConfig {
   static bool get iosCheck => prefs.getBool("isIosUnderReview");
 
   /// 渠道类型
-  static String get chanelType => getChanelType(chanelType: 0);
+  static String get chanelType => getChanelType(chanelType: 1);
 
   /// [chanelType] 渠道类型
   ///
@@ -227,7 +227,7 @@ class GlobalConfig {
     _initJPushPlatformState();
     configLoading();
     await HttpManage.getHomeInfo();
-    await HttpManage.getUserInfo();
+//    await HttpManage.getUserInfo();
     await HttpManage.getSiteShopAgreement();
 //    await HttpManage.getShopTypeList();
     //initAndroidDeviceId();
@@ -258,7 +258,7 @@ class GlobalConfig {
       ///根据经纬度信息获取位置；
       ReGeocode reGeocode =
           await AmapSearch.instance.searchReGeocode(location.latLng);
-      _prefs.setString("cityName", reGeocode.cityName);
+      _prefs.setString("cityName", await reGeocode.cityName);
       /*print("reGeocode.provinceName=${reGeocode.provinceName}");
       print("reGeocode.cityName=${reGeocode.cityName}");
       print("reGeocode.districtName=${reGeocode.districtName}");

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -111,6 +111,17 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
     super.initState();
     applyStatus = widget.applyStatus;
     _rejectMsg = widget.rejectMsg;
+    setViewVisibility();
+    _shopProfitRatioController.text = _selectProfit + "";
+    _shopProfitRatioFocusNode.addListener(() {
+//      _shopProfitRatioFocusNode.i
+      if (_shopProfitRatioFocusNode.hasFocus) {}
+    });
+//    requestPermission();
+    _initData();
+  }
+
+  void setViewVisibility() {
     if (applyStatus == STATUS_NOT_APPLIED) {
       if (mounted) {
         setState(() {
@@ -138,13 +149,6 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
         });
       }
     }
-    _shopProfitRatioController.text = _selectProfit + "";
-    _shopProfitRatioFocusNode.addListener(() {
-//      _shopProfitRatioFocusNode.i
-      if (_shopProfitRatioFocusNode.hasFocus) {}
-    });
-//    requestPermission();
-    _initData();
   }
 
   ///获取定位初始化定位信息
@@ -169,7 +173,11 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
   _initShopListData() async {
     var result = await HttpManage.getShopTypeList();
     if (result.status) {
-      _shopTypeList = GlobalConfig.getShopTypeListData();
+      if (mounted) {
+        setState(() {
+          _shopTypeList = GlobalConfig.getShopTypeListData();
+        });
+      }
     }
   }
 
@@ -483,8 +491,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
                 left: ScreenUtil().setWidth(30),
                 right: ScreenUtil().setWidth(30),
               ),
-              child: CachedNetworkImage(
-                imageUrl:
+              child: MyOctoImage(
+                image:
                     "https://alipic.lanhuapp.com/xdffeb73c5-368b-4086-b4af-907535f9ff3b",
                 width: ScreenUtil().setWidth(35),
                 height: ScreenUtil().setWidth(47),
@@ -580,8 +588,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
                 left: ScreenUtil().setWidth(30),
                 right: ScreenUtil().setWidth(30),
               ),
-              child: CachedNetworkImage(
-                imageUrl:
+              child: MyOctoImage(
+                image:
                     "https://alipic.lanhuapp.com/xde52a3d9c-25c5-4378-9e95-967be98fa594",
                 width: ScreenUtil().setWidth(36),
                 height: ScreenUtil().setWidth(23),
@@ -644,8 +652,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
                     color: Color(0xff222222),
                   ),
                 ),
-                trailing: CachedNetworkImage(
-                  imageUrl:
+                trailing: MyOctoImage(
+                  image:
                       "${_selectTypeId == item.id ? "https://alipic.lanhuapp.com/xda760ae72-7c57-4c57-b898-6b6a00d16c9c" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                   width: ScreenUtil().setWidth(60),
                   height: ScreenUtil().setWidth(60),
@@ -1003,8 +1011,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
                   CommonUtils.requestPermission(Permission.photos,
                       _onButtonPressed(ImageSource.gallery, context: context));
                 },
-                child: CachedNetworkImage(
-                  imageUrl:
+                child: MyOctoImage(
+                  image:
                       "https://alipic.lanhuapp.com/xdae253960-0d6f-4146-a4f4-46e348039361",
                   width: ScreenUtil().setWidth(327),
                   height: ScreenUtil().setWidth(327),
@@ -1208,7 +1216,6 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
   var _address;
 
   _initData() async {
-    _shopTypeList = GlobalConfig.getShopTypeListData();
     _initShopListData();
     if (CommonUtils.isEmpty(GlobalConfig.prefs.getString("latitude"))) {
       await GlobalConfig.initUserLocationWithPermission(count: 0);
@@ -1226,6 +1233,7 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
         if (result.status) {
           setState(() {
             try {
+              _shopTypeList = GlobalConfig.getShopTypeListData();
               _shopName = result.data.storeName;
               _shopNameController.text = _shopName;
               _contactDetails = result.data.storeTel;
@@ -1304,8 +1312,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
                   CommonUtils.requestPermission(Permission.photos,
                       _onButtonPressed2(ImageSource.gallery, context: context));
                 },
-                child: CachedNetworkImage(
-                  imageUrl:
+                child: MyOctoImage(
+                  image:
                       "https://alipic.lanhuapp.com/xdae253960-0d6f-4146-a4f4-46e348039361",
                   width: ScreenUtil().setWidth(327),
                   height: ScreenUtil().setWidth(327),
@@ -1529,8 +1537,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
           child: Text.rich(
             TextSpan(children: [
               WidgetSpan(
-                child: CachedNetworkImage(
-                  imageUrl:
+                child: MyOctoImage(
+                  image:
                       "${_isAgreementChecked ? 'https://alipic.lanhuapp.com/xd6edb8e0a-146d-4eb6-901a-941895b3c0c6' : 'https://alipic.lanhuapp.com/xd7951edab-996a-47cb-967d-3d79f757ecc1'}",
                   width: ScreenUtil().setWidth(42),
                   height: ScreenUtil().setWidth(42),
@@ -1588,8 +1596,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
             margin: EdgeInsets.only(
               top: ScreenUtil().setWidth(91),
             ),
-            child: CachedNetworkImage(
-              imageUrl:
+            child: MyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xd6ba64a76-9a7e-4320-a416-83c7f0ef6dba",
               width: ScreenUtil().setWidth(350),
               height: ScreenUtil().setWidth(359),
@@ -1681,8 +1689,8 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
             margin: EdgeInsets.only(
               top: ScreenUtil().setWidth(91),
             ),
-            child: CachedNetworkImage(
-              imageUrl:
+            child: MyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xdd0101e83-7469-42e6-8236-60872e06737e",
               width: ScreenUtil().setWidth(386),
               height: ScreenUtil().setWidth(338),

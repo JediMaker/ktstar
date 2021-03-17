@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -113,13 +113,13 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: CachedNetworkImage(
+                child: MyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
                   width: ScreenUtil().setWidth(243),
                   height: ScreenUtil().setWidth(243),
-                  imageUrl: product.goodsImg == null ? "" : product.goodsImg,
+                  image: product.goodsImg == null ? "" : product.goodsImg,
                   /*   imageUrl: item.imageUrl,
                                     width: ScreenUtil().L(120),
                                     height: ScreenUtil().L(120),*/
@@ -313,10 +313,10 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
           alignment: Alignment.center,
           width: ScreenUtil().setWidth(60),
           child: ExcludeSemantics(
-            child: CachedNetworkImage(
+            child: MyOctoImage(
               width: ScreenUtil().setWidth(60),
               height: ScreenUtil().setWidth(60),
-              imageUrl: '$iconUrl',
+              image: '$iconUrl',
             ),
           ),
         ),
@@ -358,10 +358,10 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
         trailing: Container(
           alignment: Alignment.center,
           width: ScreenUtil().setWidth(36),
-          child: CachedNetworkImage(
+          child: MyOctoImage(
             width: ScreenUtil().setWidth(20),
             height: ScreenUtil().setWidth(36),
-            imageUrl:
+            image:
                 'https://alipic.lanhuapp.com/xd6b0fc912-422b-4a25-8cf0-fab0ca862249',
           ),
         ),

@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -162,8 +162,11 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
     return Visibility(
       visible: !CommonUtils.isEmpty(_banner),
       child: new Container(
-        margin:
-             EdgeInsets.only(top: GlobalConfig.LAYOUT_MARGIN, bottom: 5.0, left: GlobalConfig.LAYOUT_MARGIN, right: GlobalConfig.LAYOUT_MARGIN),
+        margin: EdgeInsets.only(
+            top: GlobalConfig.LAYOUT_MARGIN,
+            bottom: 5.0,
+            left: GlobalConfig.LAYOUT_MARGIN,
+            right: GlobalConfig.LAYOUT_MARGIN),
         color: Colors.transparent,
         height: ScreenUtil().setHeight(468),
         child: Center(
@@ -295,21 +298,21 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                     },
                     child: new ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: CachedNetworkImage(
-                          imageUrl: "${item.imgPath}",
-                          placeholder: (context, url) => Center(
+                        child: MyOctoImage(
+                          image: "${item.imgPath}",
+                          placeholderBuilder: (context) => Center(
                             child: Loading(
                               indicator: BallSpinFadeLoaderIndicator(),
                               size: 50.0,
                               color: GlobalConfig.colorPrimary,
                             ),
                           ),
-                          errorWidget: (context, url, d) {
+                          errorBuilder: (context, url, d) {
                             return Center(child: Text("图片加载失败"));
                           },
 
 /*
-                          imageUrl:
+                          image:
                               "https://alipic.lanhuapp.com/xd1e01d251-cd6d-4b84-8f5c-f622146922bc",
 */
                           fit: BoxFit.cover,
@@ -531,8 +534,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   child: new CircleAvatar(
                     radius: 20.0,
                     backgroundColor: Colors.transparent,
-                    child: CachedNetworkImage(
-                      imageUrl: "$icon",
+                    child: MyOctoImage(
+                      image: "$icon",
                       width: ScreenUtil().setWidth(136),
                       height: ScreenUtil().setWidth(136),
                     ),
@@ -583,13 +586,15 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 ));
           },
           child: Container(
-            padding: EdgeInsets.only(left: GlobalConfig.LAYOUT_MARGIN, right: GlobalConfig.LAYOUT_MARGIN),
+            padding: EdgeInsets.only(
+                left: GlobalConfig.LAYOUT_MARGIN,
+                right: GlobalConfig.LAYOUT_MARGIN),
             margin: EdgeInsets.only(bottom: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                CachedNetworkImage(
-                  imageUrl:
+                MyOctoImage(
+                  image:
                       "https://alipic.lanhuapp.com/xdf34d1da7-bae5-4ff5-9ea0-77890e1113e3",
                   width: ScreenUtil().setWidth(522),
                   height: ScreenUtil().setWidth(52),
@@ -623,8 +628,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       child: Column(
         children: [
           Center(
-            child: CachedNetworkImage(
-              imageUrl:
+            child: MyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xd626c699a-d52b-4c3b-b0b1-8f489f74a4cb",
               fit: BoxFit.cover,
               width: ScreenUtil().setWidth(544),
@@ -640,7 +645,11 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
 
   Widget buildAdRowContainer() {
     return Container(
-      margin: EdgeInsets.only(bottom: 16, left: GlobalConfig.LAYOUT_MARGIN, right: GlobalConfig.LAYOUT_MARGIN,),
+      margin: EdgeInsets.only(
+        bottom: 16,
+        left: GlobalConfig.LAYOUT_MARGIN,
+        right: GlobalConfig.LAYOUT_MARGIN,
+      ),
       child: Row(
         children: [
           buildBuyLeftWidget(),
@@ -781,10 +790,10 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   ScreenUtil().setWidth(20),
                 ),
               ),
-              child: CachedNetworkImage(
-                imageUrl: "$imgPath",
+              child: MyOctoImage(
+                image: "$imgPath",
                 fit: BoxFit.fitWidth,
-                placeholder: (context, url) => Center(
+                placeholderBuilder: (context) => Center(
                   child: Loading(
                     indicator: BallSpinFadeLoaderIndicator(),
                     size: 50.0,
@@ -932,8 +941,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                   ScreenUtil().setWidth(20),
                 ),
               ),
-              child: CachedNetworkImage(
-                imageUrl: "$imgPath",
+              child: MyOctoImage(
+                image: "$imgPath",
                 fit: BoxFit.fitWidth,
                 width: ScreenUtil().setWidth(492),
                 height: ScreenUtil().setWidth(600),
@@ -1077,13 +1086,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                 ScreenUtil().setWidth(20),
               ),
             ),
-            child: CachedNetworkImage(
-//              imageUrl: "www.baidu.com",
-              imageUrl: "$imgPath",
+            child: MyOctoImage(
+//              image: "www.baidu.com",
+              image: "$imgPath",
               fit: BoxFit.fitWidth,
               width: ScreenUtil().setWidth(1029),
               height: ScreenUtil().setWidth(414),
-              placeholder: (context, url) => Center(
+              placeholderBuilder: (context) => Center(
                 child: Loading(
                   indicator: BallSpinFadeLoaderIndicator(),
                   size: 50.0,
@@ -1106,7 +1115,9 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN,),
+          margin: EdgeInsets.symmetric(
+            horizontal: GlobalConfig.LAYOUT_MARGIN,
+          ),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,
@@ -1219,13 +1230,13 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                           topRight: Radius.circular(ScreenUtil().setWidth(30)),
                           topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                         ),
-                        child: CachedNetworkImage(
+                        child: MyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           height: ScreenUtil().setWidth(523),
                           width: ScreenUtil().setWidth(523),
                           fit: BoxFit.fill,
-                          imageUrl: "$goodsImg",
+                          image: "$goodsImg",
                         ),
                       ),
                     ),
@@ -1233,8 +1244,9 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                       visible: !CommonUtils.isEmpty(_gBonus),
                       child: Container(
                         height: ScreenUtil().setWidth(60),
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 6,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6,
+                        ),
                         margin: EdgeInsets.only(
                           top: ScreenUtil().setSp(463),
                         ),
@@ -1281,8 +1293,8 @@ class _FeaturedTabPageState extends State<FeaturedTabPage>
                                 ScreenUtil().setWidth(10),
                               ),
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl:
+                            child: MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
                               width: ScreenUtil().setWidth(75),
                               height: ScreenUtil().setWidth(42),

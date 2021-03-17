@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -517,7 +517,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
                   ),
                   buildSubmitButton(),
 //                buildUploadtButton(),
-                  /* CachedNetworkImage(
+                  /* MyOctoImage(
                     imageUrl: "",
                   ),*/
                 ],

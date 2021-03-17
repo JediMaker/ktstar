@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -555,10 +555,10 @@ class _MicroMinePageState extends State<MicroMinePage>
                     child: Container(
                       margin: EdgeInsets.symmetric(
                           vertical: ScreenUtil().setWidth(10)),
-                      child: CachedNetworkImage(
+                      child: MyOctoImage(
                           width: ScreenUtil().setWidth(1058),
                           height: ScreenUtil().setWidth(302),
-                          imageUrl:
+                          image:
                               "https://alipic.lanhuapp.com/xd8c0b346a-86c3-4734-996d-2f9b553c9ffa"),
                     ),
                   )
@@ -1435,8 +1435,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: CachedNetworkImage(
-                                  imageUrl:
+                                child: MyOctoImage(
+                                  image:
                                       'https://alipic.lanhuapp.com/xd9d064c12-dae4-4e4e-9b68-e15530e3738b',
                                   width: ScreenUtil().setWidth(96),
                                   height: ScreenUtil().setWidth(84),
@@ -1500,8 +1500,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: CachedNetworkImage(
-                                  imageUrl:
+                                child: MyOctoImage(
+                                  image:
                                       'https://alipic.lanhuapp.com/xdab2f2767-766c-481a-8f03-b799963ad02c',
                                   width: ScreenUtil().setWidth(96),
                                   height: ScreenUtil().setWidth(84),
@@ -1586,10 +1586,10 @@ class _MicroMinePageState extends State<MicroMinePage>
                     padding: EdgeInsets.only(
                       right: ScreenUtil().setWidth(51),
                     ),
-                    child: CachedNetworkImage(
+                    child: MyOctoImage(
                         width: ScreenUtil().setWidth(20),
                         height: ScreenUtil().setWidth(35),
-                        imageUrl:
+                        image:
                             "https://alipic.lanhuapp.com/xdf759159d-dc19-4470-9107-bae18bdaec20"),
                   ),
                 ],
@@ -1644,8 +1644,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: new CircleAvatar(
                           radius: 20.0,
                           backgroundColor: Colors.transparent,
-                          child: CachedNetworkImage(
-                            imageUrl:
+                          child: MyOctoImage(
+                            image:
                                 "https://alipic.lanhuapp.com/xd2b9a895d-1adc-4f52-9a44-4cd72cadf49a",
                             width: ScreenUtil().setWidth(128),
                             height: ScreenUtil().setWidth(128),
@@ -1680,8 +1680,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: new CircleAvatar(
                           radius: 20.0,
                           backgroundColor: Colors.transparent,
-                          child: CachedNetworkImage(
-                            imageUrl:
+                          child: MyOctoImage(
+                            image:
                                 "https://alipic.lanhuapp.com/xd0eec94ec-72c2-4fd6-8f3f-05fcb9776510",
                             width: ScreenUtil().setWidth(128),
                             height: ScreenUtil().setWidth(128),
@@ -1720,8 +1720,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                           child: new CircleAvatar(
                             radius: 20.0,
                             backgroundColor: Colors.transparent,
-                            child: CachedNetworkImage(
-                              imageUrl:
+                            child: MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xdc4d43f07-fd79-4ff1-b120-8689edc7c87a",
                               width: ScreenUtil().setWidth(128),
                               height: ScreenUtil().setWidth(128),
@@ -1762,8 +1762,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                           child: new CircleAvatar(
                             radius: 20.0,
                             backgroundColor: Colors.transparent,
-                            child: CachedNetworkImage(
-                              imageUrl:
+                            child: MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
                               width: ScreenUtil().setWidth(128),
                               height: ScreenUtil().setWidth(128),
@@ -2412,8 +2412,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                             fit: BoxFit.fill,
                           ))
                       : ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: "$headUrl",
+                          child: MyOctoImage(
+                            image: "$headUrl",
                             fit: BoxFit.fill,
                             width: ScreenUtil().setWidth(158),
                             height: ScreenUtil().setWidth(158),
@@ -2441,8 +2441,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CachedNetworkImage(
-                            imageUrl:
+                          MyOctoImage(
+                            image:
                                 'https://alipic.lanhuapp.com/xd85fc7a67-0912-4f32-91c3-f907fdc9284d',
                             width: ScreenUtil().setWidth(20),
                             height: ScreenUtil().setWidth(25),

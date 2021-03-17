@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -251,8 +251,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       child: Container(
           margin: const EdgeInsets.only(right: 10.0),
 //        width: MediaQuery.of(context).size.width / 2.5,
-          child: new CachedNetworkImage(
-            imageUrl: url,
+          child: new MyOctoImage(
+            image: url,
             width: ScreenUtil().setWidth(274),
             height: ScreenUtil().setWidth(274),
             fit: BoxFit.fill,
@@ -268,8 +268,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           itemCount: images.length,
           autoplay: true,
           itemBuilder: (context, index) {
-            return CachedNetworkImage(
-              imageUrl: images[index],
+            return MyOctoImage(
+              image: images[index],
               width: 1920,
               height: 150,
               fit: BoxFit.fill,
@@ -572,7 +572,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   }
 
   void _goWechat() {
-   /* Clipboard.setData(ClipboardData(text: des));
+    /* Clipboard.setData(ClipboardData(text: des));
     CommonUtils.requestPermission(_permission, _saveImages(showToast: false));
     CommonUtils.showToast("已保存文案和图片");*/
     launch("weixin://");
@@ -894,10 +894,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 
   Widget buildTaskItemLayout() {
     return ListTile(
-      leading: CachedNetworkImage(
+      leading: MyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
             "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),
       title: Text('转发朋友圈'),

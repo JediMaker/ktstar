@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -306,8 +306,8 @@ class _RechargeListPageState extends State<RechargeListPage> {
                                     ),
                                   ),
                                 ),
-                                leading: CachedNetworkImage(
-                                  imageUrl: _rechargeWay == 0
+                                leading: MyOctoImage(
+                                  image: _rechargeWay == 0
                                       ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
                                       : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
                                   width: ScreenUtil().setWidth(60),
@@ -357,8 +357,8 @@ class _RechargeListPageState extends State<RechargeListPage> {
                                   ),
                                 ),
                                 leading: Container(
-                                  child: CachedNetworkImage(
-                                    imageUrl: _rechargeWay == 1
+                                  child: MyOctoImage(
+                                    image: _rechargeWay == 1
                                         ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
                                         : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
                                     width: ScreenUtil().setWidth(60),

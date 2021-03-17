@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
@@ -595,8 +595,8 @@ class _ShopPaymentPageState extends State<ShopPaymentPage> {
                             });
                           },
                           selected: _payWay == 1,
-                          leading: CachedNetworkImage(
-                            imageUrl:
+                          leading: MyOctoImage(
+                            image:
                                 'https://alipic.lanhuapp.com/xdb61f0e63-777a-485a-97c7-ecdd8e261ff2',
                             width: ScreenUtil().setWidth(78),
                             height: ScreenUtil().setWidth(78),
@@ -609,8 +609,8 @@ class _ShopPaymentPageState extends State<ShopPaymentPage> {
                               color: Color(0xff222222),
                             ),
                           ),
-                          trailing: CachedNetworkImage(
-                            imageUrl:
+                          trailing: MyOctoImage(
+                            image:
                                 "${_payWay == 1 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                             width: ScreenUtil().setWidth(60),
                             height: ScreenUtil().setWidth(60),
@@ -624,8 +624,8 @@ class _ShopPaymentPageState extends State<ShopPaymentPage> {
                             });
                           },
                           selected: _payWay == 2,
-                          leading: CachedNetworkImage(
-                            imageUrl:
+                          leading: MyOctoImage(
+                            image:
                                 'https://alipic.lanhuapp.com/xdb0f27927-d450-4cc2-a0df-4147410870e7',
                             width: ScreenUtil().setWidth(78),
                             height: ScreenUtil().setWidth(78),
@@ -638,8 +638,8 @@ class _ShopPaymentPageState extends State<ShopPaymentPage> {
                               color: Color(0xff222222),
                             ),
                           ),
-                          trailing: CachedNetworkImage(
-                            imageUrl:
+                          trailing: MyOctoImage(
+                            image:
                                 "${_payWay == 2 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                             width: ScreenUtil().setWidth(60),
                             height: ScreenUtil().setWidth(60),
@@ -662,8 +662,8 @@ class _ShopPaymentPageState extends State<ShopPaymentPage> {
                                 });
                               },
                               selected: _payWay == 3,
-                              leading: CachedNetworkImage(
-                                imageUrl:
+                              leading: MyOctoImage(
+                                image:
                                     'https://alipic.lanhuapp.com/xdd5f9c369-8c30-4f93-bcf0-151a16b97220',
                                 width: ScreenUtil().setWidth(78),
                                 height: ScreenUtil().setWidth(78),
@@ -676,8 +676,8 @@ class _ShopPaymentPageState extends State<ShopPaymentPage> {
                                   color: Color(0xff222222),
                                 ),
                               ),
-                              trailing: CachedNetworkImage(
-                                imageUrl:
+                              trailing: MyOctoImage(
+                                image:
                                     "${_payWay == 3 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                                 width: ScreenUtil().setWidth(60),
                                 height: ScreenUtil().setWidth(60),

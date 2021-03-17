@@ -4,7 +4,7 @@ import 'dart:io';
 //import 'package:amap_flutter_location/amap_flutter_location.dart';
 //import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -330,8 +330,8 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                         color: Color(0xffAFAFAF),
                       ),
                     ),
-                    trailing: CachedNetworkImage(
-                      imageUrl:
+                    trailing: MyOctoImage(
+                      image:
                           "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : "as"}",
                       width: ScreenUtil().setWidth(67),
                       height: ScreenUtil().setWidth(48),
@@ -360,7 +360,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                         //将搜索出来的点显示在界面上 --此处不能使用自定义图标的marker，使用会报错，至今也没有解决
                         _markerSeached =
                             await _amapController.addMarker(MarkerOption(
-                                coordinate: selectlatlng,
+                                latLng: selectlatlng,
                                 // 自定义定位图标
                                 iconProvider: Image.network(
                                   "https://alipic.lanhuapp.com/xd9ea8dd44-bf59-442a-9732-a64780e5b868",
@@ -595,16 +595,16 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
 //              _controller.showMyLocation(option);
               },
               // 标识点击回调 (可选)
-              onMarkerClicked: (IMarker marker) async {
+              onMarkerClicked: (Marker marker) async {
                 if (_markerSeached == null) {
                   return;
                 }
                 //获取点击点的位置
-                var location = await marker.coordinate;
+                var location = await marker.location;
                 var lon = location.longitude;
                 var lat = location.latitude;
                 //获取搜索点的位置
-                var slocation = await _markerSeached.coordinate;
+                var slocation = await _markerSeached.location;
                 var slon = slocation.longitude;
                 var slat = slocation.latitude;
                 //比较位置
@@ -618,7 +618,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                   }
                   //画上新的点
                   _markerSelect = await _amapController.addMarker(MarkerOption(
-                      coordinate: location,
+                      latLng: location,
                       // 自定义定位图标
                       iconProvider: Image.network(
                         "https://alipic.lanhuapp.com/xd9ea8dd44-bf59-442a-9732-a64780e5b868",
@@ -652,7 +652,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                   _amapController.setCenterCoordinate(coord);
                   //画上新的点
                   _markerSelect = await _amapController.addMarker(MarkerOption(
-                      coordinate: coord,
+                      latLng: coord,
                       // 自定义定位图标
                       iconProvider: Image.network(
                         "https://alipic.lanhuapp.com/xd9ea8dd44-bf59-442a-9732-a64780e5b868",
@@ -750,8 +750,8 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                   _amapController.setCenterCoordinate(_localLatLng);
                   _searchPoiListWithLatLng(_localLatLng);
                 },
-                child: CachedNetworkImage(
-                  imageUrl:
+                child: MyOctoImage(
+                  image:
                       "https://alipic.lanhuapp.com/xd13751b8a-64b6-4400-b34d-5dc34299199a",
                   width: ScreenUtil().setWidth(167),
                   height: ScreenUtil().setWidth(167),
@@ -833,8 +833,8 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        CachedNetworkImage(
-                                          imageUrl:
+                                        MyOctoImage(
+                                          image:
                                               "https://alipic.lanhuapp.com/xd4f7f5e7c-1e62-449a-8967-33ff98c352b5",
                                           width: ScreenUtil().setWidth(41),
                                           height: ScreenUtil().setWidth(41),
@@ -877,7 +877,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = new List();
+    /* List<Widget> widgets = new List();
 //    widgets.add(_createButtonContainer());
 
     if (_locationResult != null) {
@@ -885,7 +885,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
         print("$key: $value");
         widgets.add(_resultWidget(key, value));
       });
-    }
+    }*/
 
     ///使用默认属性创建一个地图M
 

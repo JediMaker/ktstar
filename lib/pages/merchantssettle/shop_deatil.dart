@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
@@ -189,8 +189,8 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
                           borderRadius: BorderRadius.circular(
                             ScreenUtil().setWidth(30),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: "$_shopImageUrl",
+                          child: MyOctoImage(
+                            image: "$_shopImageUrl",
                             width: ScreenUtil().setWidth(1065),
                             height: ScreenUtil().setWidth(700),
                             fit: BoxFit.fill,
@@ -231,8 +231,8 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
                                           margin: EdgeInsets.only(
                                             right: ScreenUtil().setWidth(8),
                                           ),
-                                          child: CachedNetworkImage(
-                                            imageUrl: "$_shopLocationIconUrl",
+                                          child: MyOctoImage(
+                                            image: "$_shopLocationIconUrl",
                                             width: ScreenUtil().setWidth(33),
                                             height: ScreenUtil().setWidth(42),
                                           ),

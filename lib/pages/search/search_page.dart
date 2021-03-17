@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -228,10 +228,10 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                 ),
               ),
 /*
-              child: CachedNetworkImage(
+              child: MyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
-                imageUrl:
+                image:
                     "https://alipic.lanhuapp.com/xd815e5762-05d1-4721-993a-0b866db87c4d",
               ),
 */
@@ -250,10 +250,10 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CachedNetworkImage(
+                  MyOctoImage(
                     width: ScreenUtil().setWidth(48),
                     height: ScreenUtil().setWidth(48),
-                    imageUrl:
+                    image:
                         "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                   ),
                   Expanded(
@@ -393,10 +393,10 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       child: Container(
                         width: ScreenUtil().setWidth(45),
                         height: ScreenUtil().setWidth(48),
-                        /* child: CachedNetworkImage(
+                        /* child: MyOctoImage(
                           width: ScreenUtil().setWidth(45),
                           height: ScreenUtil().setWidth(48),
-                          imageUrl:
+                          image:
                               "https://alipic.lanhuapp.com/xdef7c1966-aea1-4092-a336-329a4eba3428",
                         ),*/
                       ),
@@ -476,10 +476,10 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       onTap: () {
                         showClearDialog();
                       },
-                      child: CachedNetworkImage(
+                      child: MyOctoImage(
                         width: ScreenUtil().setWidth(45),
                         height: ScreenUtil().setWidth(48),
-                        imageUrl:
+                        image:
                             "https://alipic.lanhuapp.com/xdef7c1966-aea1-4092-a336-329a4eba3428",
                       ),
                     )
@@ -785,13 +785,13 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(10)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                     ),
-                    child: CachedNetworkImage(
+                    child: MyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(523),
                       width: ScreenUtil().setWidth(523),
                       fit: BoxFit.fill,
-                      imageUrl: "$goodsImg",
+                      image: "$goodsImg",
                     ),
                   ),
                 ),
@@ -1042,13 +1042,13 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                           topRight: Radius.circular(ScreenUtil().setWidth(10)),
                           topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                         ),
-                        child: CachedNetworkImage(
+                        child: MyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           height: ScreenUtil().setWidth(523),
                           width: ScreenUtil().setWidth(523),
                           fit: BoxFit.fill,
-                          imageUrl: "$goodsImg",
+                          image: "$goodsImg",
                         ),
                       ),
                     ),
@@ -1107,8 +1107,8 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                                 ScreenUtil().setWidth(10),
                               ),
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl:
+                            child: MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
                               width: ScreenUtil().setWidth(75),
                               height: ScreenUtil().setWidth(42),

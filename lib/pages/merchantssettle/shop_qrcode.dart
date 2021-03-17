@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -108,8 +108,8 @@ class _ShopQrCodePageState extends State<ShopQrCodePage> {
                   margin: EdgeInsets.symmetric(
                     vertical: ScreenUtil().setWidth(100),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: "${widget.qrCodeUrl}",
+                  child: MyOctoImage(
+                    image: "${widget.qrCodeUrl}",
                     width: ScreenUtil().setWidth(1030),
                     height: ScreenUtil().setWidth(1373),
                   ),

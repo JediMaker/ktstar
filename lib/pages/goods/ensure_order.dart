@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -125,8 +125,8 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(
                 ScreenUtil().setHeight(ScreenUtil().setHeight(5))),
-            child: CachedNetworkImage(
-              imageUrl:
+            child: MyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xd1503b270-f796-4b53-8146-3ba0d3a09a34",
             ),
           ),
@@ -274,13 +274,13 @@ class _EnsureOrderPageState extends State<EnsureOrderPage>
 //                          width: ScreenUtil().L(120),
 //                          height: ScreenUtil().L(120),
 //                        )
-                              child: CachedNetworkImage(
+                              child: MyOctoImage(
                                 fadeInDuration: Duration(milliseconds: 0),
                                 fadeOutDuration: Duration(milliseconds: 0),
                                 fit: BoxFit.fill,
                                 width: 74,
                                 height: 74,
-                                imageUrl: product.goodsImg == null
+                                image: product.goodsImg == null
                                     ? ""
                                     : product.goodsImg,
                                 /*   imageUrl: item.imageUrl,

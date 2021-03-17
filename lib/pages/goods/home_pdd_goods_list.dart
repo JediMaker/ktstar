@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -346,13 +346,13 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(10)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                     ),
-                    child: CachedNetworkImage(
+                    child: MyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(523),
                       width: ScreenUtil().setWidth(523),
                       fit: BoxFit.fill,
-                      imageUrl: "$goodsImg",
+                      image: "$goodsImg",
                     ),
                   ),
                 ),
@@ -370,8 +370,8 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
                     //"$goodsName",
                     TextSpan(children: [
                       WidgetSpan(
-                          child: CachedNetworkImage(
-                        imageUrl: "https://img.pddpic.com/favicon.ico",
+                          child: MyOctoImage(
+                        image: "https://img.pddpic.com/favicon.ico",
                         width: ScreenUtil().setWidth(48),
                         height: ScreenUtil().setWidth(48),
                       )),
@@ -582,13 +582,13 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
                           topRight: Radius.circular(ScreenUtil().setWidth(30)),
                           topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                         ),
-                        child: CachedNetworkImage(
+                        child: MyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           height: ScreenUtil().setWidth(523),
                           width: ScreenUtil().setWidth(523),
                           fit: BoxFit.fill,
-                          imageUrl: "$goodsImg",
+                          image: "$goodsImg",
                         ),
                       ),
                     ),
@@ -646,8 +646,8 @@ class _HomePddGoodsListPageState extends State<HomePddGoodsListPage>
                                 ScreenUtil().setWidth(10),
                               ),
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl:
+                            child: MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
                               width: ScreenUtil().setWidth(75),
                               height: ScreenUtil().setWidth(42),

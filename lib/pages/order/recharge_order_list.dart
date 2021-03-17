@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -755,13 +755,13 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: CachedNetworkImage(
+                        child: MyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           fit: BoxFit.fill,
                           width: ScreenUtil().setWidth(243),
                           height: ScreenUtil().setWidth(243),
-                          imageUrl:
+                          image:
                               product.goodsImg == null ? "" : product.goodsImg,
                           /*   imageUrl: item.imageUrl,
                                   width: ScreenUtil().L(120),
@@ -883,8 +883,8 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        CachedNetworkImage(
-          imageUrl: "$imageUrl",
+        MyOctoImage(
+          image: "$imageUrl",
           width: ScreenUtil().setWidth(243),
           height: ScreenUtil().setWidth(243),
           fit: BoxFit.fill,

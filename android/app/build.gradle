@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -39,7 +39,7 @@ android {
     defaultConfig {
         applicationId "com.ketao.star"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         manifestPlaceholders = [
@@ -79,8 +79,41 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.appcompat:appcompat:1.2.0'
+            force 'androidx.annotation:annotation:1.1.0'
+            force 'com.google.guava:guava:28.1-android'
+        }
+    }
+    subprojects {
+        afterEvaluate {project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion 29
+                }
+            }
+        }
+    }
+}
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.appcompat:appcompat:1.2.0'
+        force 'androidx.annotation:annotation:1.1.0'
+        force 'com.google.guava:guava:28.1-android'
+    }
 }
 
+
+subprojects {
+    afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion 29
+            }
+        }
+    }
+}
 flutter {
     source '../..'
 }
@@ -102,4 +135,11 @@ dependencies {
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.appcompat:appcompat:1.2.0'
+            force 'androidx.annotation:annotation:1.1.0'
+            force 'com.google.guava:guava:28.1-android'
+        }
+    }
 }

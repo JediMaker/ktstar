@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -169,7 +169,8 @@ class _ShopListPageState extends State<ShopListPage>
   }
 
   ///扫一扫
-  _scan() async {
+  scan() async {
+    /// 调用扫一扫
     var shopId;
     var _balance;
     var _hasPayPassword;
@@ -224,8 +225,8 @@ class _ShopListPageState extends State<ShopListPage>
               width: ScreenUtil().setWidth(78),
               height: ScreenUtil().setWidth(78),
               child: Center(
-                child: CachedNetworkImage(
-                  imageUrl:
+                child: MyOctoImage(
+                  image:
                       "https://alipic.lanhuapp.com/xdd9cb322b-189a-465b-a3f4-a28cb52ce22c",
                   width: ScreenUtil().setWidth(78),
                   height: ScreenUtil().setWidth(78),
@@ -234,8 +235,7 @@ class _ShopListPageState extends State<ShopListPage>
               ),
             ),
             onPressed: () async {
-              /// 调用扫一扫
-              CommonUtils.requestPermission(Permission.camera, _scan);
+              CommonUtils.requestPermission(Permission.camera, scan());
             },
           ),
           Expanded(
@@ -356,8 +356,8 @@ class _ShopListPageState extends State<ShopListPage>
                                     right: ScreenUtil().setWidth(50),
                                     top: ScreenUtil().setWidth(25),
                                   ),
-                                  /* child: CachedNetworkImage(
-                                    imageUrl:
+                                  /* child: MyOctoImage(
+                                    image:
                                         "https://alipic.lanhuapp.com/xd2b236767-514c-4d43-99aa-48d2b74f46c9",
                                     width: ScreenUtil().setWidth(41),
                                     height: ScreenUtil().setWidth(41),
@@ -401,8 +401,8 @@ class _ShopListPageState extends State<ShopListPage>
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CachedNetworkImage(
-                              imageUrl:
+                            MyOctoImage(
+                              image:
                                   "https://alipic.lanhuapp.com/xd2b236767-514c-4d43-99aa-48d2b74f46c9",
                               width: ScreenUtil().setWidth(41),
                               height: ScreenUtil().setWidth(41),
@@ -433,8 +433,8 @@ class _ShopListPageState extends State<ShopListPage>
               left: ScreenUtil().setWidth(20),
               right: ScreenUtil().setWidth(6),
             ),
-            child: CachedNetworkImage(
-              imageUrl:
+            child: MyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xd33803b45-0392-435c-bcb4-1adee00162ed",
               width: ScreenUtil().setWidth(35),
               height: ScreenUtil().setWidth(47),
@@ -550,8 +550,8 @@ class _ShopListPageState extends State<ShopListPage>
                 borderRadius: BorderRadius.circular(
                   ScreenUtil().setWidth(20),
                 ),
-                child: CachedNetworkImage(
-                  imageUrl: "$storeLogoUrl",
+                child: MyOctoImage(
+                  image: "$storeLogoUrl",
                   width: ScreenUtil().setWidth(180),
                   height: ScreenUtil().setWidth(180),
                   fit: BoxFit.fill,
@@ -636,8 +636,8 @@ class _ShopListPageState extends State<ShopListPage>
                             margin: EdgeInsets.only(
                               right: ScreenUtil().setWidth(8),
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl: "$_shopLocationIconUrl",
+                            child: MyOctoImage(
+                              image: "$_shopLocationIconUrl",
                               width: ScreenUtil().setWidth(33),
                               height: ScreenUtil().setWidth(42),
                             ),
@@ -679,6 +679,7 @@ class _ShopListPageState extends State<ShopListPage>
       onRefresh: () {
         page = 1;
         _initData();
+        initUserInfoData();
         _refreshController.finishLoad(noMore: false);
       },
       onLoad: () {
@@ -744,7 +745,7 @@ class _ShopListPageState extends State<ShopListPage>
   @override
   bool get wantKeepAlive => true;
 }
-
+/*
 class NoShopData extends StatelessWidget {
   NoShopData({Key key, this.applyStatus, this.shopId, this.rejectMsg})
       : super(key: key);
@@ -755,7 +756,7 @@ class NoShopData extends StatelessWidget {
   ///2 通过
   ///3 拒绝
   var applyStatus = '';
-  var _btnTxt = '';
+  var _btnTxt = '立即加入';
   var rejectMsg = '';
   var shopId = '';
 
@@ -781,8 +782,8 @@ class NoShopData extends StatelessWidget {
               flex: 2,
             ),
             Center(
-              child: CachedNetworkImage(
-                imageUrl:
+              child: MyOctoImage(
+                image:
                     'https://alipic.lanhuapp.com/xda551ee22-8d85-4fb6-990e-4d4695437e05',
                 width: ScreenUtil().setWidth(674),
                 height: ScreenUtil().setWidth(420),
@@ -827,7 +828,7 @@ class NoShopData extends StatelessWidget {
                 ),
               );
             } else {
-              NavigatorUtils.navigatorRouter(
+              await NavigatorUtils.navigatorRouter(
                 context,
                 ApplySettlePage(
                   applyStatus: applyStatus,
@@ -835,6 +836,157 @@ class NoShopData extends StatelessWidget {
                   shopId: shopId,
                 ),
               );
+            }
+            var result = await HttpManage.getUserInfo();
+            if (result.status) {
+              if (mounted) {
+                setState(() {
+                  _shopId = userInfoData.storeId;
+                  _rejectMsg = userInfoData.storeRejectMsg;
+                  applyStatus = userInfoData.storeStatus;
+                });
+              }
+            }
+          },
+          child: Container(
+            height: ScreenUtil().setWidth(140),
+            width: ScreenUtil().setWidth(673),
+            margin: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(60),
+              vertical: ScreenUtil().setWidth(60),
+            ),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Color(0xFFF36B2E), Color(0xFFF32E43)]),
+                borderRadius: BorderRadius.circular(70)),
+            child: Text(
+              '$_btnTxt',
+              style: TextStyle(
+                  color: Colors.white, fontSize: ScreenUtil().setSp(48)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}*/
+
+class NoShopData extends StatefulWidget {
+  NoShopData({Key key, this.applyStatus, this.shopId, this.rejectMsg})
+      : super(key: key);
+
+  ///商家入驻申请状态
+  ///0 未申请
+  ///1 审核中
+  ///2 通过
+  ///3 拒绝
+  var applyStatus = '';
+  var _btnTxt = '立即加入';
+  var rejectMsg = '';
+  var shopId = '';
+
+  @override
+  _NoShopDataState createState() => _NoShopDataState();
+}
+
+class _NoShopDataState extends State<NoShopData> {
+  ///商家入驻申请状态
+  ///0 未申请
+  ///1 审核中
+  ///2 通过
+  ///3 拒绝
+  var applyStatus = '';
+  var _btnTxt = '立即加入';
+  var rejectMsg = '';
+  var shopId = '';
+
+  @override
+  Widget build(BuildContext context) {
+    if (!CommonUtils.isEmpty(applyStatus)) {
+      if (applyStatus != "2") {
+        _btnTxt = '立即加入';
+      } else {
+        _btnTxt = '我的商家后台';
+      }
+    }
+
+    return Center(
+      child: Container(
+        height: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: SizedBox(),
+              flex: 2,
+            ),
+            Center(
+              child: MyOctoImage(
+                image:
+                    'https://alipic.lanhuapp.com/xda551ee22-8d85-4fb6-990e-4d4695437e05',
+                width: ScreenUtil().setWidth(674),
+                height: ScreenUtil().setWidth(420),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
+              child: Text(
+                '当前城市暂未开通',
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(42),
+                  color: Colors.grey[400],
+                ),
+              ),
+            ),
+            buildJoinButton(context),
+            Expanded(
+              child: SizedBox(),
+              flex: 3,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///提交审核
+  Widget buildJoinButton(context) {
+    return Visibility(
+      visible: !CommonUtils.isEmpty(_btnTxt),
+      child: Container(
+        alignment: Alignment.center,
+        width: double.maxFinite,
+        margin: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(60)),
+        child: GestureDetector(
+          onTap: () async {
+            if (applyStatus == '2') {
+              NavigatorUtils.navigatorRouter(
+                context,
+                ShopBackstagePage(
+                  shopId: shopId,
+                ),
+              );
+            } else {
+              await NavigatorUtils.navigatorRouter(
+                context,
+                ApplySettlePage(
+                  applyStatus: applyStatus,
+                  rejectMsg: rejectMsg,
+                  shopId: shopId,
+                ),
+              );
+            }
+            var result = await HttpManage.getUserInfo();
+            if (result.status) {
+              if (mounted) {
+                setState(() {
+                  shopId = result.data.storeId;
+                  rejectMsg = result.data.storeRejectMsg;
+                  applyStatus = result.data.storeStatus;
+                });
+              }
             }
           },
           child: Container(

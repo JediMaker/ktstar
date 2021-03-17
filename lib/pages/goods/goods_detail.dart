@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -157,8 +157,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
 */
                               itemBuilder: (BuildContext context, int index) {
                                 return detailData != null
-                                    ? new CachedNetworkImage(
-                                        imageUrl: detailData
+                                    ? new MyOctoImage(
+                                        image: detailData
                                                     .data.bannerImgs[index] ==
                                                 null
                                             ? ""
@@ -263,8 +263,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                                   ScreenUtil().setHeight(8)),
                                           child: Column(
                                             children: [
-                                              CachedNetworkImage(
-                                                imageUrl:
+                                              MyOctoImage(
+                                                image:
                                                     'https://alipic.lanhuapp.com/xd3539b630-7c6b-4875-b006-5fd94c667594',
                                                 width:
                                                     ScreenUtil().setWidth(121),
@@ -300,8 +300,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                                     ScreenUtil().setWidth(10),
                                                   ),
                                                 ),
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
+                                                child: MyOctoImage(
+                                                  image:
                                                       "https://alipic.lanhuapp.com/xdece44f05-a7bd-44e8-a47f-95aaa60e0291",
 //                                                      "https://img.pddpic.com/favicon.ico",
                                                   width:
@@ -442,8 +442,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                         ScreenUtil().setWidth(30),
                                       ),
                                     ),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
+                                    child: MyOctoImage(
+                                      image:
                                           "https://alipic.lanhuapp.com/xd45f0820f-d37e-48ea-a2cd-5e12172a4eff",
                                       width: ScreenUtil().setWidth(138),
                                       height: ScreenUtil().setWidth(138),
@@ -548,8 +548,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    CachedNetworkImage(
-                                      imageUrl:
+                                    MyOctoImage(
+                                      image:
                                           'https://alipic.lanhuapp.com/xd14aa2fbd-3d5f-46b8-b7ea-fa9e23c97e41',
                                       width: ScreenUtil().setWidth(30),
                                       height: ScreenUtil().setWidth(30),
@@ -663,10 +663,11 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                 ),
                               ),
                             ),
-                            CachedNetworkImage(
-                              imageUrl: _detailImgs[index],
+                            MyOctoImage(
+                              image: _detailImgs[index],
+                              width: double.maxFinite,
 /*
-         todo               imageUrl: detailData.data.images[index].popup == null
+         todo               image: detailData.data.images[index].popup == null
                                   ? ""
                                   : detailData.data.images[index].popup,
 */
@@ -694,8 +695,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                 alignment: Alignment.topLeft,
                 child: ClipOval(
                   child: IconButton(
-                    icon: CachedNetworkImage(
-                      imageUrl:
+                    icon: MyOctoImage(
+                      image:
                           "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                     ),
                     onPressed: () {
@@ -730,8 +731,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CachedNetworkImage(
-                                    imageUrl:
+                                  MyOctoImage(
+                                    image:
                                         "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
                                     width: ScreenUtil().setWidth(47),
                                     height: ScreenUtil().setWidth(51),
@@ -1323,8 +1324,8 @@ class _DetailWindowState extends State<DetailWindow>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CachedNetworkImage(
-            imageUrl: "$_defaultImgUrl",
+          MyOctoImage(
+            image: "$_defaultImgUrl",
 /*
                 widget.detailData == null || widget.detailData.data == null
                     ? ""

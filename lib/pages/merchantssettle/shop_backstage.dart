@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -278,8 +278,8 @@ class _ShopBackstagePageState extends State<ShopBackstagePage>
                 child: Container(
                   width: ScreenUtil().setWidth(56),
                   height: ScreenUtil().setWidth(56),
-                  child: CachedNetworkImage(
-                    imageUrl: "$content",
+                  child: MyOctoImage(
+                    image: "$content",
                     width: ScreenUtil().setWidth(56),
                     height: ScreenUtil().setWidth(56),
                     fit: BoxFit.fill,

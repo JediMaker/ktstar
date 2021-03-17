@@ -1,10 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/pages/widget/jd_address_selector.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
@@ -309,12 +311,20 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                       fontSize: ScreenUtil().setSp(42),
                       color: _textGray,
                     ),
-                    suffix: CachedNetworkImage(
-                      imageUrl:
+                    suffix: MyOctoImage(
+                      image:
                           "https://alipic.lanhuapp.com/xd99452e46-4542-4a53-b6ca-adfdec2bef69",
                       width: ScreenUtil().setWidth(45),
                       height: ScreenUtil().setHeight(48),
                     ),
+/*
+                    suffix: MyOctoImage(
+                      image:
+                          "https://alipic.lanhuapp.com/xd99452e46-4542-4a53-b6ca-adfdec2bef69",
+                      width: ScreenUtil().setWidth(45),
+                      height: ScreenUtil().setHeight(48),
+                    ),
+*/
                   ),
                 ),
               ),

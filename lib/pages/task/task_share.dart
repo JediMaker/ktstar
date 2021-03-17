@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -157,8 +157,8 @@ class _TaskSharePageState extends State<TaskSharePage> {
                           Row(
                             children: <Widget>[
                               Container(
-                                child: new CachedNetworkImage(
-                                  imageUrl: _headUrl,
+                                child: new MyOctoImage(
+                                  image: _headUrl,
                                   width: ScreenUtil().setWidth(120),
                                   height: ScreenUtil().setWidth(120),
                                   fit: BoxFit.fill,
@@ -268,8 +268,8 @@ class _TaskSharePageState extends State<TaskSharePage> {
       child: Container(
           margin: const EdgeInsets.only(right: 8.0),
 //        width: MediaQuery.of(context).size.width / 2.5,
-          child: new CachedNetworkImage(
-            imageUrl: url,
+          child: new MyOctoImage(
+            image: url,
             width: ScreenUtil().setWidth(256),
             height: ScreenUtil().setWidth(256),
             fit: BoxFit.fill,
@@ -302,8 +302,8 @@ class _TaskSharePageState extends State<TaskSharePage> {
         child: ClipRRect(
           borderRadius:
               BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-          child: CachedNetworkImage(
-            imageUrl: _adImgUrl,
+          child: MyOctoImage(
+            image: _adImgUrl,
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
             fit: BoxFit.fill,

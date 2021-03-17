@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -283,8 +283,8 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
             child: ClipRRect(
               borderRadius:
                   BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-              child: CachedNetworkImage(
-                imageUrl: bannerData,
+              child: MyOctoImage(
+                image: bannerData,
                 height: ScreenUtil().setHeight(623),
 //              width: ScreenUtil().setWidth(1125),
                 fit: BoxFit.fill,
