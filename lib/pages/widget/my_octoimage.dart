@@ -181,7 +181,8 @@ class _MyOctoImageState extends State<MyOctoImage> {
 //      return null;
 //    }
     return OctoImage(
-      image: CachedNetworkImageProvider(widget.image),
+      image: network.NetworkImage(widget.image),
+//      image: CachedNetworkImageProvider(widget.image),
       width: widget.width,
       height: widget.height,
       imageBuilder: widget.imageBuilder,
