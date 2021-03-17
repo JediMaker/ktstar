@@ -46,6 +46,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
   Map<String, Object> _locationResult;
 
   StreamSubscription<Map<String, Object>> _locationListener;
+
 //  AMapFlutterLocation _locationPlugin = new AMapFlutterLocation();
 
   double _longitude;
@@ -330,12 +331,15 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                         color: Color(0xffAFAFAF),
                       ),
                     ),
-                    trailing: MyOctoImage(
-                      image:
-                          "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : ""}",
-                      width: ScreenUtil().setWidth(67),
-                      height: ScreenUtil().setWidth(48),
-                      fit: BoxFit.fill,
+                    trailing: Visibility(
+                      visible: _selextPoiIndex == i,
+                      child: MyOctoImage(
+                        image:
+                            "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : ""}",
+                        width: ScreenUtil().setWidth(67),
+                        height: ScreenUtil().setWidth(48),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     onTap: () async {
                       setState(() {
@@ -400,6 +404,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
     _searchFocusNode.dispose();
     _searchController.dispose();
   }
+
 /*
   ///设置定位参数
   void _setLocationOption() {

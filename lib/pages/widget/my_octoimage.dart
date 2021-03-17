@@ -177,9 +177,9 @@ class _MyOctoImageState extends State<MyOctoImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (CommonUtils.isEmpty(widget.image)) {
-      return null;
-    }
+//    if (CommonUtils.isEmpty(widget.image)) {
+//      return null;
+//    }
     return OctoImage(
       image: CachedNetworkImageProvider(widget.image),
       width: widget.width,
