@@ -164,6 +164,28 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                             ? ""
                                             : detailData.data.bannerImgs[index],
                                         fit: BoxFit.fill,
+                                        placeholderBuilder:
+                                            (BuildContext context) {
+                                          return Center(
+                                              child: Container(
+                                            color: Color(0xffeaeaea),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  ScreenUtil().setWidth(10),
+                                                ),
+                                                child: Container(
+                                                    width: ScreenUtil()
+                                                        .setWidth(84),
+                                                    height: ScreenUtil()
+                                                        .setWidth(78),
+                                                    child: Image.asset(
+                                                        'static/images/image_empty.png')),
+                                              ),
+                                            ),
+                                          ));
+                                        },
                                       )
                                     : Image.asset("static/images/c_error.jpg");
                               },
@@ -672,6 +694,24 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
                                   : detailData.data.images[index].popup,
 */
                               fit: BoxFit.fill,
+                              placeholderBuilder: (BuildContext context) {
+                                return Center(
+                                    child: Container(
+                                  color: Color(0xffeaeaea),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                        ScreenUtil().setWidth(10),
+                                      ),
+                                      child: Container(
+                                          width: ScreenUtil().setWidth(84),
+                                          height: ScreenUtil().setWidth(78),
+                                          child: Image.asset(
+                                              'static/images/image_empty.png')),
+                                    ),
+                                  ),
+                                ));
+                              },
                             ),
                           ],
                         );

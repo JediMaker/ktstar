@@ -108,7 +108,7 @@ class _MicroMinePageState extends State<MicroMinePage>
 
   var _currentDividend = '0';
 
-  ///商家入驻申请状态 todo 值修改
+  ///商家申请状态 todo 值修改
   ///0 未申请
   ///1 审核中
   ///2 通过
@@ -121,7 +121,7 @@ class _MicroMinePageState extends State<MicroMinePage>
   ///商家店铺id
   var _shopId = '';
 
-  var _textAccordingToApplyStatus = '商家入驻申请';
+  var _textAccordingToApplyStatus = '商家申请';
 
   var _shareHolderBtnText = '升级股东';
 
@@ -166,7 +166,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           if (applyStatus == '2') {
             _textAccordingToApplyStatus = "商家后台";
           } else {
-            _textAccordingToApplyStatus = '商家入驻申请';
+            _textAccordingToApplyStatus = '商家申请';
           }
           _yesterdayProfit = result.data.partnerBonus.yesterday;
           _sevenDayProfit = result.data.partnerBonus.week;
@@ -244,7 +244,7 @@ class _MicroMinePageState extends State<MicroMinePage>
         if (applyStatus == '2') {
           _textAccordingToApplyStatus = "商家后台";
         } else {
-          _textAccordingToApplyStatus = '商家入驻申请';
+          _textAccordingToApplyStatus = '商家申请';
         }
         _yesterdayProfit = result.partnerBonus.yesterday;
         _sevenDayProfit = result.partnerBonus.week;
@@ -626,14 +626,14 @@ class _MicroMinePageState extends State<MicroMinePage>
               width: 0.5)),
       child: Column(
         children: <Widget>[
-          ListTile(
+          /* ListTile(
             title: Row(
               children: <Widget>[
-                /*  Image.asset(
+                */ /*  Image.asset(
                   "static/images/icon_fans.png",
                   width: ScreenUtil().setWidth(44),
                   height: ScreenUtil().setWidth(71),
-                ),*/
+                ),*/ /*
                 Text(
                   "收货地址",
                   style: TextStyle(
@@ -649,10 +649,10 @@ class _MicroMinePageState extends State<MicroMinePage>
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                /*Text(
+                */ /*Text(
                   "",
                   style: TextStyle(color: Color(0xff999999)),
-                ),*/
+                ),*/ /*
                 Icon(
                   Icons.arrow_forward_ios,
                   size: ScreenUtil().setWidth(32),
@@ -668,7 +668,7 @@ class _MicroMinePageState extends State<MicroMinePage>
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
             ),
-          ),
+          ),*/
           ListTile(
             title: Row(
               children: <Widget>[
@@ -727,14 +727,14 @@ class _MicroMinePageState extends State<MicroMinePage>
               color: Color(0xFFefefef),
             ),
           ),
-          ListTile(
+          /*ListTile(
             title: Row(
               children: <Widget>[
-                /*  Image.asset(
+                */ /*  Image.asset(
                   "static/images/icon_fans.png",
                   width: ScreenUtil().setWidth(44),
                   height: ScreenUtil().setWidth(71),
-                ),*/
+                ),*/ /*
                 Text(
                   "$_textAccordingToApplyStatus", //
                   style: TextStyle(
@@ -744,33 +744,16 @@ class _MicroMinePageState extends State<MicroMinePage>
               ],
             ),
             onTap: () async {
-              if (applyStatus == '2') {
-                NavigatorUtils.navigatorRouter(
-                  context,
-                  ShopBackstagePage(
-                    shopId: _shopId,
-                  ),
-                );
-              } else {
-                await NavigatorUtils.navigatorRouter(
-                  context,
-                  ApplySettlePage(
-                    applyStatus: applyStatus,
-                    rejectMsg: _rejectMsg,
-                    shopId: _shopId,
-                  ),
-                );
-                _initUserData();
-              }
+//              await _doNavigatorShopStage();
             },
             trailing: Wrap(
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                /*Text(
+                */ /*Text(
                   "",
                   style: TextStyle(color: Color(0xff999999)),
-                ),*/
+                ),*/ /*
                 Icon(
                   Icons.arrow_forward_ios,
                   size: ScreenUtil().setWidth(32),
@@ -786,7 +769,7 @@ class _MicroMinePageState extends State<MicroMinePage>
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
             ),
-          ),
+          ),*/
           ListTile(
             title: Row(
               children: <Widget>[
@@ -1248,6 +1231,31 @@ class _MicroMinePageState extends State<MicroMinePage>
     );
   }
 
+  Future _doNavigatorShopStage() async {
+    if (!GlobalConfig.isLogin()) {
+      NavigatorUtils.navigatorRouter(context, LoginPage());
+      return;
+    }
+    if (applyStatus == '2') {
+      NavigatorUtils.navigatorRouter(
+        context,
+        ShopBackstagePage(
+          shopId: _shopId,
+        ),
+      );
+    } else {
+      await NavigatorUtils.navigatorRouter(
+        context,
+        ApplySettlePage(
+          applyStatus: applyStatus,
+          rejectMsg: _rejectMsg,
+          shopId: _shopId,
+        ),
+      );
+      _initUserData();
+    }
+  }
+
   Visibility buildtasklistVisibility() {
     return Visibility(
       visible: false,
@@ -1610,8 +1618,12 @@ class _MicroMinePageState extends State<MicroMinePage>
     }
     Color _itemsTextColor = Color(0xff666666);
     return Container(
-      height: ScreenUtil().setHeight(292),
-      margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+      margin: EdgeInsets.symmetric(
+        horizontal: GlobalConfig.LAYOUT_MARGIN,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: GlobalConfig.LAYOUT_MARGIN,
+      ),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1621,164 +1633,365 @@ class _MicroMinePageState extends State<MicroMinePage>
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
               color: Colors.white,
               width: 0.5)),
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Flexible(
-            fit: FlexFit.tight,
-            child: new InkWell(
-                onTap: () async {
-                  await NavigatorUtils.navigatorRouter(
-                      context,
-                      FansListPage(
-                        isAgent: userType == "3",
-                      ));
-                },
-                child: new Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 3.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor: Colors.transparent,
-                          child: MyOctoImage(
-                            image:
-                                "https://alipic.lanhuapp.com/xd2b9a895d-1adc-4f52-9a44-4cd72cadf49a",
-                            width: ScreenUtil().setWidth(128),
-                            height: ScreenUtil().setWidth(128),
+      child: Column(
+        children: [
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Flexible(
+                fit: FlexFit.tight,
+                child: new InkWell(
+                    onTap: () async {
+                      if (!GlobalConfig.isLogin()) {
+                        NavigatorUtils.navigatorRouter(context, LoginPage());
+                        return;
+                      }
+                      await NavigatorUtils.navigatorRouter(
+                          context,
+                          FansListPage(
+                            isAgent: userType == "3",
+                          ));
+                    },
+                    child: new Container(
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Container(
+                            margin: const EdgeInsets.only(bottom: 3.0),
+                            child: new CircleAvatar(
+                              radius: 20.0,
+                              backgroundColor: Colors.transparent,
+                              child: MyOctoImage(
+                                image:
+                                    "https://alipic.lanhuapp.com/xd2b9a895d-1adc-4f52-9a44-4cd72cadf49a",
+                                width: ScreenUtil().setWidth(128),
+                                height: ScreenUtil().setWidth(128),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      new Container(
-                        child: new Text(
-                          "粉丝",
-                          style: new TextStyle(
-                            fontSize: ScreenUtil().setSp(38),
-                            color: _itemsTextColor,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )),
-          ),
-          new Flexible(
-            fit: FlexFit.tight,
-            child: new InkWell(
-                onTap: () {
-                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
-                },
-                child: new Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Container(
-                        margin: const EdgeInsets.only(bottom: 3.0),
-                        child: new CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor: Colors.transparent,
-                          child: MyOctoImage(
-                            image:
-                                "https://alipic.lanhuapp.com/xd0eec94ec-72c2-4fd6-8f3f-05fcb9776510",
-                            width: ScreenUtil().setWidth(128),
-                            height: ScreenUtil().setWidth(128),
-                          ),
-                        ),
-                      ),
-                      new Container(
-                        child: new Text("消息",
-                            style: new TextStyle(
+                          new Container(
+                            child: new Text(
+                              "我的粉丝",
+                              style: new TextStyle(
+                                fontSize: ScreenUtil().setSp(38),
                                 color: _itemsTextColor,
-                                fontSize: ScreenUtil().setSp(38))),
-                      )
-                    ],
-                  ),
-                )),
-          ),
-          new Flexible(
-            fit: FlexFit.tight,
-            child: Container(
-              child: new InkWell(
-                  onTap: () {
-                    /* Fluttertoast.showToast(
-                        msg: "暂未开放",
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        gravity: ToastGravity.BOTTOM);
-                    return;*/
-                    NavigatorUtils.navigatorRouter(context, OrderListPage());
-                  },
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                          margin: const EdgeInsets.only(bottom: 3.0),
-                          child: new CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.transparent,
-                            child: MyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xdc4d43f07-fd79-4ff1-b120-8689edc7c87a",
-                              width: ScreenUtil().setWidth(128),
-                              height: ScreenUtil().setWidth(128),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+              new Flexible(
+                fit: FlexFit.tight,
+                child: new InkWell(
+                    onTap: () {
+                      if (!GlobalConfig.isLogin()) {
+                        NavigatorUtils.navigatorRouter(context, LoginPage());
+                        return;
+                      }
+                      NavigatorUtils.navigatorRouter(
+                          context, TaskMessagePage());
+                    },
+                    child: new Container(
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Container(
+                            margin: const EdgeInsets.only(bottom: 3.0),
+                            child: new CircleAvatar(
+                              radius: 20.0,
+                              backgroundColor: Colors.transparent,
+                              child: MyOctoImage(
+                                image:
+                                    "https://alipic.lanhuapp.com/xd0eec94ec-72c2-4fd6-8f3f-05fcb9776510",
+                                width: ScreenUtil().setWidth(128),
+                                height: ScreenUtil().setWidth(128),
+                              ),
                             ),
                           ),
+                          new Container(
+                            child: new Text("我的消息",
+                                style: new TextStyle(
+                                    color: _itemsTextColor,
+                                    fontSize: ScreenUtil().setSp(38))),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+              new Flexible(
+                fit: FlexFit.tight,
+                child: Container(
+                  child: new InkWell(
+                      onTap: () {
+                        /* Fluttertoast.showToast(
+                            msg: "暂未开放",
+                            backgroundColor: Colors.grey,
+                            textColor: Colors.white,
+                            gravity: ToastGravity.BOTTOM);
+                        return;*/
+                        if (!GlobalConfig.isLogin()) {
+                          NavigatorUtils.navigatorRouter(context, LoginPage());
+                          return;
+                        }
+                        NavigatorUtils.navigatorRouter(
+                            context, OrderListPage());
+                      },
+                      child: new Container(
+                        child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              margin: const EdgeInsets.only(bottom: 3.0),
+                              child: new CircleAvatar(
+                                radius: 20.0,
+                                backgroundColor: Colors.transparent,
+                                child: MyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xdc4d43f07-fd79-4ff1-b120-8689edc7c87a",
+                                  width: ScreenUtil().setWidth(128),
+                                  height: ScreenUtil().setWidth(128),
+                                ),
+                              ),
+                            ),
+                            new Container(
+                              child: new Text("我的订单",
+                                  style: new TextStyle(
+                                      color: _itemsTextColor,
+                                      fontSize: ScreenUtil().setSp(38))),
+                            )
+                          ],
                         ),
-                        new Container(
-                          child: new Text("订单",
-                              style: new TextStyle(
-                                  color: _itemsTextColor,
-                                  fontSize: ScreenUtil().setSp(38))),
-                        )
-                      ],
-                    ),
-                  )),
+                      )),
+                ),
+              ),
+              new Flexible(
+                fit: FlexFit.tight,
+                child: Container(
+                  child: new InkWell(
+                      onTap: () {
+                        /* Fluttertoast.showToast(
+                            msg: "暂未开放",
+                            backgroundColor: Colors.grey,
+                            textColor: Colors.white,
+                            gravity: ToastGravity.BOTTOM);
+                        return;*/
+                        if (!GlobalConfig.isLogin()) {
+                          NavigatorUtils.navigatorRouter(context, LoginPage());
+                          return;
+                        }
+                        NavigatorUtils.navigatorRouter(
+                            context, InvitationPosterPage());
+                      },
+                      child: new Container(
+                        child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              margin: const EdgeInsets.only(bottom: 3.0),
+                              child: new CircleAvatar(
+                                radius: 20.0,
+                                backgroundColor: Colors.transparent,
+                                child: MyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
+                                  width: ScreenUtil().setWidth(128),
+                                  height: ScreenUtil().setWidth(128),
+                                ),
+                              ),
+                            ),
+                            new Container(
+                              child: new Text("邀请好友",
+                                  style: new TextStyle(
+                                      color: _itemsTextColor,
+                                      fontSize: ScreenUtil().setSp(38))),
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: GlobalConfig.LAYOUT_MARGIN,
             ),
-          ),
-          new Flexible(
-            fit: FlexFit.tight,
-            child: Container(
-              child: new InkWell(
-                  onTap: () {
-                    /* Fluttertoast.showToast(
-                        msg: "暂未开放",
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        gravity: ToastGravity.BOTTOM);
-                    return;*/
-                    NavigatorUtils.navigatorRouter(
-                        context, InvitationPosterPage());
-                  },
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
-                          margin: const EdgeInsets.only(bottom: 3.0),
-                          child: new CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: Colors.transparent,
-                            child: MyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
-                              width: ScreenUtil().setWidth(128),
-                              height: ScreenUtil().setWidth(128),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new Flexible(
+                  fit: FlexFit.tight,
+                  child: new InkWell(
+                      onTap: () async {
+                        await _doNavigatorShopStage();
+                      },
+                      child: new Container(
+                        child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              margin: const EdgeInsets.only(bottom: 3.0),
+                              child: new CircleAvatar(
+                                radius: 20.0,
+                                backgroundColor: Colors.transparent,
+                                child: MyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xdc96d210d-20cc-4d42-886e-ef8aef5e161a",
+                                  width: ScreenUtil().setWidth(128),
+                                  height: ScreenUtil().setWidth(128),
+                                ),
+                              ),
+                            ),
+                            new Container(
+                              child: new Text(
+                                "$_textAccordingToApplyStatus",
+                                style: new TextStyle(
+                                  fontSize: ScreenUtil().setSp(38),
+                                  color: _itemsTextColor,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+                new Flexible(
+                  fit: FlexFit.tight,
+                  child: new InkWell(
+                      onTap: () async {
+                        if (!GlobalConfig.isLogin()) {
+                          NavigatorUtils.navigatorRouter(context, LoginPage());
+                          return;
+                        }
+                        await NavigatorUtils.navigatorRouter(
+                            context, MicroShareHolderEquityPage());
+                        _initUserData();
+                      },
+                      child: new Container(
+                        child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              margin: const EdgeInsets.only(bottom: 3.0),
+                              child: new CircleAvatar(
+                                radius: 20.0,
+                                backgroundColor: Colors.transparent,
+                                child: MyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xd96161c41-e4a2-494d-a0cc-c7e4c9769a7d",
+                                  width: ScreenUtil().setWidth(128),
+                                  height: ScreenUtil().setWidth(128),
+                                ),
+                              ),
+                            ),
+                            new Container(
+                              child: new Text("股东申请",
+                                  style: new TextStyle(
+                                      color: _itemsTextColor,
+                                      fontSize: ScreenUtil().setSp(38))),
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+                new Flexible(
+                  fit: FlexFit.tight,
+                  child: Container(
+                    child: new InkWell(
+                        onTap: () {
+                          /* Fluttertoast.showToast(
+                              msg: "暂未开放",
+                              backgroundColor: Colors.grey,
+                              textColor: Colors.white,
+                              gravity: ToastGravity.BOTTOM);
+                          return;*/
+                          if (!GlobalConfig.isLogin()) {
+                            NavigatorUtils.navigatorRouter(
+                                context, LoginPage());
+                            return;
+                          }
+                          NavigatorUtils.navigatorRouter(
+                              context, AddressListPage(type: 1));
+                        },
+                        child: new Container(
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Container(
+                                margin: const EdgeInsets.only(bottom: 3.0),
+                                child: new CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundColor: Colors.transparent,
+                                  child: MyOctoImage(
+                                    image:
+                                        "https://alipic.lanhuapp.com/xdba099539-545d-4531-b704-89825487fac0",
+                                    width: ScreenUtil().setWidth(128),
+                                    height: ScreenUtil().setWidth(128),
+                                  ),
+                                ),
+                              ),
+                              new Container(
+                                child: new Text("收货地址",
+                                    style: new TextStyle(
+                                        color: _itemsTextColor,
+                                        fontSize: ScreenUtil().setSp(38))),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                ),
+                new Flexible(
+                  fit: FlexFit.tight,
+                  child: Container(
+                    child: new InkWell(
+                        onTap: () {
+                          /* Fluttertoast.showToast(
+                              msg: "暂未开放",
+                              backgroundColor: Colors.grey,
+                              textColor: Colors.white,
+                              gravity: ToastGravity.BOTTOM);
+                          return;*/
+                          CommonUtils.showToast("敬请期待！");
+                          /*NavigatorUtils.navigatorRouter(
+                              context, OrderListPage());*/
+                        },
+                        child: Visibility(
+                          visible: !GlobalConfig.isHuaweiUnderReview,
+                          child: new Container(
+                            child: new Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new Container(
+                                  margin: const EdgeInsets.only(bottom: 3.0),
+                                  child: new CircleAvatar(
+                                    radius: 20.0,
+                                    backgroundColor: Colors.transparent,
+                                    child: MyOctoImage(
+                                      image:
+                                          "https://alipic.lanhuapp.com/xdf76ad84a-3dfa-433a-b3bd-f316d7a5bea9",
+                                      width: ScreenUtil().setWidth(128),
+                                      height: ScreenUtil().setWidth(128),
+                                    ),
+                                  ),
+                                ),
+                                new Container(
+                                  child: new Text("活动中心",
+                                      style: new TextStyle(
+                                          color: _itemsTextColor,
+                                          fontSize: ScreenUtil().setSp(38))),
+                                )
+                              ],
                             ),
                           ),
-                        ),
-                        new Container(
-                          child: new Text("邀请好友",
-                              style: new TextStyle(
-                                  color: _itemsTextColor,
-                                  fontSize: ScreenUtil().setSp(38))),
-                        )
-                      ],
-                    ),
-                  )),
+                        )),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -2844,6 +3057,5 @@ class _MicroMinePageState extends State<MicroMinePage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

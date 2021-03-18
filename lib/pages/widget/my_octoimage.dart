@@ -186,25 +186,8 @@ class _MyOctoImageState extends State<MyOctoImage> {
       width: widget.width,
       height: widget.height,
       imageBuilder: widget.imageBuilder,
-      placeholderBuilder: widget.placeholderBuilder != null
-          ? widget.placeholderBuilder
-          : (BuildContext context) {
-              return Center(
-                  child: Container(
-                color: Color(0xffeaeaea),
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      ScreenUtil().setWidth(10),
-                    ),
-                    child: Container(
-                        width: ScreenUtil().setWidth(84),
-                        height: ScreenUtil().setWidth(78),
-                        child: Image.asset('static/images/image_empty.png')),
-                  ),
-                ),
-              ));
-            },
+      placeholderBuilder:
+          widget.placeholderBuilder != null ? widget.placeholderBuilder : null,
       //
       progressIndicatorBuilder: widget.progressIndicatorBuilder,
       fadeInCurve: widget.fadeInCurve,

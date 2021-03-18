@@ -112,7 +112,7 @@ class GlobalConfig {
   static bool get iosCheck => prefs.getBool("isIosUnderReview");
 
   /// 渠道类型
-  static String get chanelType => getChanelType(chanelType: 1);
+  static String get chanelType => getChanelType(chanelType: 0);
 
   /// [chanelType] 渠道类型
   ///
