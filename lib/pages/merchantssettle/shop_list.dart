@@ -63,16 +63,13 @@ class _ShopListPageState extends State<ShopListPage>
   var _emptyWidget;
 
   _initData() async {
-    if (CommonUtils.isEmpty(GlobalConfig.prefs.getString("latitude"))) {
-      await GlobalConfig.initUserLocationWithPermission(count: 0);
-      _latitude = GlobalConfig.prefs.getString("latitude");
-      _longitude = GlobalConfig.prefs.getString("longitude");
-      _cityName = GlobalConfig.prefs.getString("cityName");
-    } else {
-      await GlobalConfig.initUserLocationWithPermission(count: 0);
-      _latitude = GlobalConfig.prefs.getString("latitude");
-      _longitude = GlobalConfig.prefs.getString("longitude");
-      _cityName = GlobalConfig.prefs.getString("cityName");
+    await GlobalConfig.initUserLocationWithPermission(count: 0);
+    if (mounted) {
+      setState(() {
+        _latitude = GlobalConfig.prefs.getString("latitude");
+        _longitude = GlobalConfig.prefs.getString("longitude");
+        _cityName = GlobalConfig.prefs.getString("cityName");
+      });
     }
     var result = await HttpManage.getShopList(
         latitude: _latitude,
