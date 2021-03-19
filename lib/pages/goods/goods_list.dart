@@ -163,8 +163,8 @@ class _GoodsListPageState extends State<GoodsListPage> {
               return productItem(item: item);
             },
             staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-            mainAxisSpacing: ScreenUtil().setWidth(20),
-            crossAxisSpacing: ScreenUtil().setWidth(20),
+            mainAxisSpacing: ScreenUtil().setWidth(30),
+            crossAxisSpacing: ScreenUtil().setWidth(30),
           ),
         ),
       ),
@@ -213,7 +213,7 @@ class _GoodsListPageState extends State<GoodsListPage> {
           ),*/
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
           ),
           child: Padding(
 //                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
@@ -228,11 +228,15 @@ class _GoodsListPageState extends State<GoodsListPage> {
 //                        fit: StackFit.expand,
               children: <Widget>[
                 Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.circular(ScreenUtil().setWidth(30)),
+                  ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(ScreenUtil().setWidth(10)),
-                      topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                      topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                      topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
                     child: MyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),

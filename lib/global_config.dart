@@ -11,12 +11,14 @@ import 'package:fluwx/fluwx.dart';
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
+import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/generated/json/shop_type_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:star/models/home_entity.dart';
+import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/shop_type_entity.dart';
 import 'package:star/utils/common_utils.dart';
@@ -25,6 +27,7 @@ import 'package:star/utils/common_utils.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
 import 'generated/json/login_entity_helper.dart';
 import 'models/user_info_entity.dart';
+
 //import 'package:umeng/umeng.dart';
 import 'package:amap_search_fluttify/amap_search_fluttify.dart';
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
@@ -227,6 +230,8 @@ class GlobalConfig {
     _initJPushPlatformState();
     configLoading();
     await HttpManage.getHomeInfo();
+    await HttpManage.getGoodsList(
+        type: "new", page: 1, pageSize: 2, isNewcomer: true);
 //    await HttpManage.getUserInfo();
     await HttpManage.getSiteShopAgreement();
 //    await HttpManage.getShopTypeList();
@@ -304,6 +309,15 @@ class GlobalConfig {
     var entity = HomeEntity();
     homeEntityFromJson(entity, extractData);
     return entity.data;
+  }
+
+  /// 获取首页新人专享的商品数据
+  static List<HomeGoodsListGoodsList> getHomeNewcomersInfo() {
+    final extractData = json.decode(prefs.getString("homeNewcomersData"))
+        as Map<String, dynamic>;
+    HomeGoodsListEntity entity = HomeGoodsListEntity();
+    homeGoodsListEntityFromJson(entity, extractData);
+    return entity.goodsList;
   }
 
   /// 获取关键词历史搜索列表

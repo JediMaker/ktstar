@@ -1,49 +1,34 @@
-import 'dart:convert';
-
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
+import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/widget/PriceText.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:star/bus/my_event_bus.dart';
 
-import '../../global_config.dart';
-import 'goods_detail.dart';
-
-class HomeGoodsListPage extends StatefulWidget {
-  HomeGoodsListPage(
-      {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
-      : super(key: key);
-  String title = "今日爆款";
-  String categoryId;
-  String type;
+class NewcomersGoodsListPage extends StatefulWidget {
+  NewcomersGoodsListPage({Key key}) : super(key: key);
+  final String title = "新人专享";
 
   @override
-  _HomeGoodsListPageState createState() => _HomeGoodsListPageState();
+  _NewcomersGoodsListPageState createState() => _NewcomersGoodsListPageState();
 }
 
-class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
+class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage> {
   int page = 1;
-  int count = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
-  var categoryId;
 
   _initData() async {
     var result = await HttpManage.getGoodsList(
-        cId: widget.categoryId,
-        type: widget.type,
-        page: page,
-        pageSize: 20,
-        firstId: categoryId);
+        type: "new", page: page, pageSize: 20, firstId: '');
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
@@ -75,20 +60,6 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
   void initState() {
     super.initState();
     _refreshController = EasyRefreshController();
-    categoryId = widget.categoryId;
-    bus.on("refreshHomeData", (arg) {
-      page = 1;
-      _initData();
-    });
-    bus.on("loadMoreHomeData", (arg) {
-      page++;
-      _initData();
-    });
-    bus.on("changePddListViewData", (arg) {
-      page = 1;
-      categoryId = arg.catId.toString();
-      _initData();
-    });
     _initData();
   }
 
@@ -98,54 +69,45 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     _refreshController.dispose();
   }
 
+  var bgTitleColor = Color(0xffFF4F69);
+  var bgContentColor = Color(0xffF02341);
+
   @override
   Widget build(BuildContext context) {
-    ///    组件创建完成的回调通知方法
-    ///解决首次数据加载失败问题
-    ///
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(goodsList)) {
-      } else {
-        print("$context WidgetsBinding_initData");
-        if (count < 5) {
-          count++;
-          _initData();
-        }
-      }
-    });
-    return buildCenter();
-    /*return Scaffold(
-//      appBar: AppBar(
-//        title: Text(
-//          widget.title,
-//          style: TextStyle(
-//              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-//        ),
-//        brightness: Brightness.light,
-//        leading: IconButton(
-//          icon: Container(
-//            width: ScreenUtil().setWidth(63),
-//            height: ScreenUtil().setHeight(63),
-//            child: Center(
-//              child: Image.asset(
-//                "static/images/icon_ios_back.png",
-//                width: ScreenUtil().setWidth(36),
-//                height: ScreenUtil().setHeight(63),
-//                fit: BoxFit.fill,
-//              ),
-//            ),
-//          ),
-//          onPressed: () {
-//            Navigator.of(context).pop();
-//          },
-//        ),
-//        centerTitle: true,
-//        backgroundColor: GlobalConfig.taskNomalHeadColor,
-//        elevation: 0,
-//      ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style:
+              TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(54)),
+        ),
+        leading: Visibility(
+          child: IconButton(
+            icon: Container(
+              width: ScreenUtil().setWidth(63),
+              height: ScreenUtil().setHeight(63),
+              child: Center(
+                child: Image.asset(
+                  "static/images/icon_ios_back_white.png",
+                  width: ScreenUtil().setWidth(36),
+                  height: ScreenUtil().setHeight(63),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: bgTitleColor,
+        elevation: 0,
+        brightness: Brightness.dark,
+      ),
       body:
           buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.
-    );*/
+    );
   }
 
   EasyRefresh buildEasyRefresh() {
@@ -153,7 +115,38 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
       topBouncing: false,
       bottomBouncing: false,
       header: MaterialHeader(),
-      footer: MaterialFooter(),
+      footer: CustomFooter(
+//          triggerDistance: ScreenUtil().setWidth(180),
+          completeDuration: Duration(seconds: 1),
+          footerBuilder: (context,
+              loadState,
+              pulledExtent,
+              loadTriggerPullDistance,
+              loadIndicatorExtent,
+              axisDirection,
+              float,
+              completeDuration,
+              enableInfiniteLoad,
+              success,
+              noMore) {
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    /* child: SpinKitCircle(
+                            color: GlobalConfig.colorPrimary,
+                            size: 30.0,
+                          ),*/
+                  ),
+                ),
+              ],
+            );
+          }),
       enableControlFinishLoad: true,
       enableControlFinishRefresh: true,
       controller: _refreshController,
@@ -168,34 +161,71 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
           _initData();
         }
       },
-      emptyWidget: goodsList == null || goodsList.length == 0 ? null : null,
+      emptyWidget:
+          goodsList == null || goodsList.length == 0 ? NoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
 
   Widget buildCenter() {
-    return Center(
-      child: Container(
-        width: double.maxFinite,
-        margin: EdgeInsets.symmetric(
-          horizontal: ScreenUtil().setWidth(30),
-        ),
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Container(
+          color: bgContentColor,
+          child: Column(
+            children: [
+              MyOctoImage(
+                image:
+                    "https://alipic.lanhuapp.com/xd7aa56361-a9bf-46d9-b2f6-8eba2b6848ee",
+                fit: BoxFit.fill,
+                width: ScreenUtil().setWidth(1127),
+                height: ScreenUtil().setWidth(634),
+//                                color: Color(0xffce0100),
+              ),
+              Container(
+                width: double.maxFinite,
+                color: bgContentColor,
+                margin: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(30),
+                ),
 //          height: double.infinity,
-        child: new StaggeredGridView.countBuilder(
-          crossAxisCount: 2,
-          itemCount: goodsList.length,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            HomeGoodsListGoodsList item;
-            try {
-              item = goodsList[index];
-            } catch (e) {}
-            return productItem(item: item);
-          },
-          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-          mainAxisSpacing: ScreenUtil().setWidth(30),
-          crossAxisSpacing: ScreenUtil().setWidth(30),
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: ScreenUtil().setWidth(30),
+                        ),
+                        child: Text(
+                          "所有专区商品奖励20%的分红体验金，体验股东身份，消费就是赚钱",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(30),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    new StaggeredGridView.countBuilder(
+                      crossAxisCount: 2,
+                      itemCount: goodsList.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        HomeGoodsListGoodsList item;
+                        try {
+                          item = goodsList[index];
+                        } catch (e) {}
+                        return productItem(item: item);
+                      },
+                      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                      mainAxisSpacing: ScreenUtil().setWidth(30),
+                      crossAxisSpacing: ScreenUtil().setWidth(30),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

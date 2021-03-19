@@ -328,8 +328,8 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
               return productItem2(item: item);
             },
             staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-            mainAxisSpacing: ScreenUtil().setWidth(20),
-            crossAxisSpacing: ScreenUtil().setWidth(20),
+            mainAxisSpacing: ScreenUtil().setWidth(30),
+            crossAxisSpacing: ScreenUtil().setWidth(30),
           ),
         ),
       ),
@@ -419,7 +419,11 @@ class _PddGoodsListPageState extends State<PddGoodsListPage>
                 Stack(
                   children: [
                     Container(
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.circular(ScreenUtil().setWidth(30)),
+                      ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(ScreenUtil().setWidth(30)),

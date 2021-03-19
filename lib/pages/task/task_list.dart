@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/generated/json/home_goods_list_entity_helper.dart';
+import 'package:star/pages/goods/newcomers/newcomers_goods_list.dart';
 import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -103,6 +106,10 @@ class _TaskListPageState extends State<TaskListPage>
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
   List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
   List<HomeIconListIconList> adList = List<HomeIconListIconList>();
+
+  ///新人专享自营商品列表
+  List<HomeGoodsListGoodsList> newcomersGoodsList =
+      List<HomeGoodsListGoodsList>();
 
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
@@ -305,18 +312,25 @@ class _TaskListPageState extends State<TaskListPage>
 
   _initCacheHomeData() {
     var data = GlobalConfig.getHomeInfo();
-    if (CommonUtils.isEmpty(data)) {
-      return;
+    if (!CommonUtils.isEmpty(data)) {
+      if (mounted) {
+        setState(() {
+          bannerList = data.banner;
+          taskListAll = data.taskList;
+          userType = data.userLevel;
+          goodsList = data.goodsList;
+          iconList = data.iconList;
+          adList = data.adList;
+        });
+      }
     }
-    if (mounted) {
-      setState(() {
-        bannerList = data.banner;
-        taskListAll = data.taskList;
-        userType = data.userLevel;
-        goodsList = data.goodsList;
-        iconList = data.iconList;
-        adList = data.adList;
-      });
+    var newcomersGoodsData = GlobalConfig.getHomeNewcomersInfo();
+    if (!CommonUtils.isEmpty(newcomersGoodsData)) {
+      if (mounted) {
+        setState(() {
+          newcomersGoodsList = newcomersGoodsData;
+        });
+      }
     }
   }
 
@@ -381,6 +395,17 @@ class _TaskListPageState extends State<TaskListPage>
   }
 
   Future _initData({bool isRefresh = false}) async {
+    var newcomersGoodsResult = await HttpManage.getGoodsList(
+        type: "new", page: 1, pageSize: 2, firstId: '');
+    if (newcomersGoodsResult.status) {
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
+      homeGoodsListEntityFromJson(entity, newcomersGoodsResult.data);
+      if (mounted) {
+        setState(() {
+          newcomersGoodsList = entity.goodsList;
+        });
+      }
+    }
     var categoryResult = await HttpManage.getHomePagePddProductCategory();
     try {
       if (categoryResult.status) {
@@ -1115,6 +1140,7 @@ class _TaskListPageState extends State<TaskListPage>
                   ),
                 ],
               )),*/
+              buildLayoutNewcomers(),
               buildGoodsListSliverToBoxAdapter(context),
               buildApplyForMicroShareholders(),
               buildAdRowContainer(),
@@ -1178,6 +1204,341 @@ class _TaskListPageState extends State<TaskListPage>
           );
         },
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  var _newcomersLayoutTextColor = Color(0xffFEF7EA);
+
+  ///新人专享
+  ///
+  ///
+  Widget buildLayoutNewcomers() {
+    return SliverToBoxAdapter(
+      child: Visibility(
+        visible: newcomersGoodsList.length > 0,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: ScreenUtil().setWidth(20),
+            vertical: ScreenUtil().setWidth(30),
+          ),
+          margin: EdgeInsets.only(
+              top: ScreenUtil().setHeight(30),
+              left: GlobalConfig.LAYOUT_MARGIN,
+              right: GlobalConfig.LAYOUT_MARGIN),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              ScreenUtil().setWidth(30),
+            ),
+          ),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  NavigatorUtils.navigatorRouter(
+                    context,
+                    NewcomersGoodsListPage(),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: ScreenUtil().setWidth(16),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      MyOctoImage(
+                        image:
+                            "https://alipic.lanhuapp.com/xdb4f7363d-4855-433a-b036-07f6dc46d1c4",
+                        width: ScreenUtil().setWidth(64),
+                        height: ScreenUtil().setWidth(59),
+                        fit: BoxFit.fill,
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            "新人专享",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(54),
+                              color: Color(0xff222222),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "查看更多",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Color(0xff999999),
+                              fontSize: ScreenUtil().setSp(38),
+                            ),
+//                            https://alipic.lanhuapp.com/xd8d557d60-d753-42a5-9955-ba264728afb7
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: MyOctoImage(
+                              image:
+                                  "https://alipic.lanhuapp.com/xd8d557d60-d753-42a5-9955-ba264728afb7",
+                              fit: BoxFit.fill,
+                              width: ScreenUtil().setWidth(13),
+                              height: ScreenUtil().setWidth(22),
+//                                color: Color(0xffce0100),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(1022),
+                height: ScreenUtil().setWidth(424),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      "static/images/bg_newcomers.png",
+                    ),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 7,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "20",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(160),
+                                  color: _newcomersLayoutTextColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(60),
+                                  left: ScreenUtil().setWidth(5),
+                                  right: ScreenUtil().setWidth(15),
+                                ),
+                                child: Text(
+                                  "%",
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(57),
+                                    color: _newcomersLayoutTextColor,
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "分红",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(48),
+                                      color: _newcomersLayoutTextColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    "体验金",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(33),
+                                      color: _newcomersLayoutTextColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              NavigatorUtils.navigatorRouter(
+                                  context, NewcomersGoodsListPage());
+                            },
+                            child: Container(
+                              width: ScreenUtil().setWidth(327),
+                              height: ScreenUtil().setWidth(84),
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(16),
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0xffF9F3F3),
+                                      Color(0xffFFC37D),
+                                    ]),
+                                /*border: Border.all(
+                                  color: Color(0xffF8A699),
+                                  width: ScreenUtil().setWidth(3),
+                                ),*/
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(ScreenUtil().setWidth(50)),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "立即领取",
+                                    style: TextStyle(
+                                      color: Color(0xffFF4662),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: ScreenUtil().setSp(46),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: ScreenUtil().setWidth(16),
+                                    ),
+                                    child: MyOctoImage(
+                                      image:
+                                          "https://alipic.lanhuapp.com/xd45793b57-8b32-4675-bea9-bd30fa7e5a13",
+                                      fit: BoxFit.fill,
+                                      width: ScreenUtil().setWidth(41),
+                                      height: ScreenUtil().setWidth(41),
+//                                color: Color(0xffce0100),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      flex: 11,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: List.generate(
+                                newcomersGoodsList.length,
+                                (index) {
+                                  var item = newcomersGoodsList[index];
+                                  var salePrice = '';
+                                  var imgUrl = '';
+                                  var goodId = '';
+                                  try {
+                                    salePrice = "￥${item.salePrice}";
+                                    imgUrl = item.goodsImg;
+                                    goodId = item.id;
+                                  } catch (e) {}
+                                  return GestureDetector(
+                                    onTap: () {
+                                      NavigatorUtils.navigatorRouter(
+                                        context,
+                                        GoodsDetailPage(productId: goodId),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(30),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              bottom: ScreenUtil().setWidth(20),
+                                            ),
+                                            child: MyOctoImage(
+                                              image: "$imgUrl",
+                                              fit: BoxFit.fill,
+                                              width: ScreenUtil().setWidth(224),
+                                              height:
+                                                  ScreenUtil().setWidth(224),
+//                                color: Color(0xffce0100),
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                  top: ScreenUtil().setWidth(3),
+                                                  bottom:
+                                                      ScreenUtil().setWidth(3),
+                                                  left:
+                                                      ScreenUtil().setWidth(6),
+                                                  right:
+                                                      ScreenUtil().setWidth(6),
+                                                ),
+                                                margin: EdgeInsets.only(
+                                                  right:
+                                                      ScreenUtil().setWidth(12),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: _newcomerPriceColor,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(ScreenUtil()
+                                                        .setWidth(10)),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "新人价",
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        ScreenUtil().setSp(32),
+                                                    color:
+                                                        _newcomersLayoutTextColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                "$salePrice",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      ScreenUtil().setSp(38),
+                                                  color: _newcomerPriceColor,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -1485,6 +1846,7 @@ class _TaskListPageState extends State<TaskListPage>
   }
 
   var _priceColor = const Color(0xffe31735);
+  var _newcomerPriceColor = const Color(0xffF32E43);
 
   Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';

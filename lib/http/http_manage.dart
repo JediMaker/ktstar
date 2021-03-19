@@ -2061,7 +2061,7 @@ class HttpManage {
 //
   ///获取商品列表
   static Future<ResultBeanEntity> getGoodsList(
-      {cId = '', type, page, pageSize, firstId}) async {
+      {cId = '', type, page, pageSize, firstId, bool isNewcomer}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
@@ -2078,6 +2078,10 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
+    if (entity.status && isNewcomer) {
+      GlobalConfig.prefs
+          .setString("homeNewcomersData", response.data.toString());
+    }
     return entity;
   }
 
