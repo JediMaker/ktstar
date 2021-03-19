@@ -122,9 +122,12 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
     return FlutterEasyLoading(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.zero,
-          child: AppBar(
-            brightness: Brightness.light,
+          preferredSize: Size.fromHeight(0),
+          child: Visibility(
+            visible: false,
+            child: AppBar(
+              brightness: Brightness.light,
+            ),
           ),
         ),
         body: Stack(
