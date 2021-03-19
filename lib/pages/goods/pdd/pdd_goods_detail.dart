@@ -209,13 +209,13 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                                     BorderRadius.circular(
                                                   ScreenUtil().setWidth(10),
                                                 ),
-                                                child: Container(
+                                                /*child: Container(
                                                     width: ScreenUtil()
                                                         .setWidth(84),
                                                     height: ScreenUtil()
                                                         .setWidth(78),
                                                     child: Image.asset(
-                                                        'static/images/image_empty.png')),
+                                                        'static/images/image_empty.png')),*/
                                               ),
                                             ),
                                           ));

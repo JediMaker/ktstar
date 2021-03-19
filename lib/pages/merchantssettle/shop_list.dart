@@ -19,6 +19,7 @@ import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 class ShopListPage extends StatefulWidget {
   ShopListPage({Key key}) : super(key: key);
@@ -153,12 +154,15 @@ class _ShopListPageState extends State<ShopListPage>
         height: double.infinity,
         child: SafeArea(
           child: Scaffold(
-              appBar: AppBar(
+              appBar: GradientAppBar(
                 title: buildSearch(),
                 titleSpacing: 0,
                 elevation: 0,
                 brightness: Brightness.light,
-                backgroundColor: Color(0xfff6f6f6),
+                gradient: LinearGradient(colors: [
+                  Color(0xfff6f6f6),
+                  Color(0xfff6f6f6),
+                ]),
               ),
               body: Container(
                   color: Color(0xfff6f6f6),

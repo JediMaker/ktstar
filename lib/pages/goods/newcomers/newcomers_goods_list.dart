@@ -11,6 +11,7 @@ import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 class NewcomersGoodsListPage extends StatefulWidget {
   NewcomersGoodsListPage({Key key}) : super(key: key);
@@ -75,7 +76,7 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GradientAppBar(
         title: Text(
           widget.title,
           style:
@@ -101,9 +102,12 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: bgTitleColor,
-        elevation: 0,
         brightness: Brightness.dark,
+        gradient: LinearGradient(colors: [
+          bgTitleColor,
+          bgTitleColor,
+        ]),
+        elevation: 0,
       ),
       body:
           buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.
