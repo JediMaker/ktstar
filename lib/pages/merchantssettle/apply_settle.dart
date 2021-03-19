@@ -629,6 +629,7 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
                     Navigator.of(context).pop();
                   });
                   setState(() {
+                    _showProfitWarningText = false;
                     _shopType = item.name;
                     _selectProfit = item.profit;
                     _selectTypeId = item.id;
