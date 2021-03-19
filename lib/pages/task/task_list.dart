@@ -1215,7 +1215,7 @@ class _TaskListPageState extends State<TaskListPage>
   Widget buildLayoutNewcomers() {
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: newcomersGoodsList.length > 0,
+//        visible: newcomersGoodsList.length > 0,
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: ScreenUtil().setWidth(20),

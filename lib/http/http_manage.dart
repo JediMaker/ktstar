@@ -2061,7 +2061,12 @@ class HttpManage {
 //
   ///获取商品列表
   static Future<ResultBeanEntity> getGoodsList(
-      {cId = '', type, page, pageSize, firstId, bool isNewcomer}) async {
+      {cId = '',
+      type,
+      page,
+      pageSize,
+      firstId,
+      bool isNewcomer = false}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
