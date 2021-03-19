@@ -139,14 +139,32 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage> {
                   bottom: 0.0,
                   left: 0.0,
                   right: 0.0,
-                  child: Container(
-                    width: 30.0,
-                    height: 30.0,
-                    /* child: SpinKitCircle(
-                            color: GlobalConfig.colorPrimary,
-                            size: 30.0,
-                          ),*/
+                  child: Visibility(
+                    visible: noMore,
+                    child: Center(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(30),
+                          bottom: ScreenUtil().setWidth(30),
+                        ),
+                        child: Text(
+                          "~我是有底线的~",
+                          style: TextStyle(
+                            color: Color(0xff666666),
+                            fontSize: ScreenUtil().setSp(32),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
+//                  child: Container(
+//                    width: 30.0,
+//                    height: 30.0,
+//                    /* child: SpinKitCircle(
+//                            color: GlobalConfig.colorPrimary,
+//                            size: 30.0,
+//                          ),*/
+//                  ),
                 ),
               ],
             );

@@ -122,7 +122,56 @@ class _GoodsListPageState extends State<GoodsListPage> {
       topBouncing: false,
       bottomBouncing: false,
       header: MaterialHeader(),
-      footer: MaterialFooter(),
+      footer: CustomFooter(
+//          triggerDistance: ScreenUtil().setWidth(180),
+          completeDuration: Duration(seconds: 1),
+          footerBuilder: (context,
+              loadState,
+              pulledExtent,
+              loadTriggerPullDistance,
+              loadIndicatorExtent,
+              axisDirection,
+              float,
+              completeDuration,
+              enableInfiniteLoad,
+              success,
+              noMore) {
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Visibility(
+                    visible: noMore,
+                    child: Center(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(30),
+                          bottom: ScreenUtil().setWidth(30),
+                        ),
+                        child: Text(
+                          "~我是有底线的~",
+                          style: TextStyle(
+                            color: Color(0xff666666),
+                            fontSize: ScreenUtil().setSp(32),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+//                  child: Container(
+//                    width: 30.0,
+//                    height: 30.0,
+//                    /* child: SpinKitCircle(
+//                            color: GlobalConfig.colorPrimary,
+//                            size: 30.0,
+//                          ),*/
+//                  ),
+                ),
+              ],
+            );
+          }),
       enableControlFinishLoad: true,
       enableControlFinishRefresh: true,
       controller: _refreshController,
