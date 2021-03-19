@@ -260,6 +260,7 @@ class _TaskListPageState extends State<TaskListPage>
 //        print("拉起小程序isSuccessful:${res.isSuccessful}");
       }
     });
+    _refreshController = EasyRefreshController();
     initPddTabbar();
     _tabController =
         TabController(length: _tabViews.length, vsync: ScrollableState());
@@ -306,6 +307,10 @@ class _TaskListPageState extends State<TaskListPage>
     });
     bus.on("refreshHomeData", (data) {
       _initData(isRefresh: true);
+      _refreshController.finishLoad(noMore: false);
+    });
+    bus.on("changeRefreshControllerState", (noMore) {
+      _refreshController.finishLoad(noMore: noMore);
     });
     super.initState();
   }
@@ -562,6 +567,7 @@ class _TaskListPageState extends State<TaskListPage>
     _pddTabController.dispose();
     _isLoop = false;
     _isMarqueeLoop = false;
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -615,6 +621,8 @@ class _TaskListPageState extends State<TaskListPage>
   String _hintText;
   TextEditingController _controller;
   FocusNode _focusNode;
+
+  EasyRefreshController _refreshController;
 
   ///扫一扫
   scan() async {
@@ -982,6 +990,7 @@ class _TaskListPageState extends State<TaskListPage>
             enableControlFinishLoad: false,
             topBouncing: false,
             bottomBouncing: false,
+            controller: _refreshController,
             header: CustomHeader(
                 completeDuration: Duration(milliseconds: 1000),
                 headerBuilder: (context,
@@ -1014,7 +1023,8 @@ class _TaskListPageState extends State<TaskListPage>
                   );
                 }),
             footer: CustomFooter(
-//                completeDuration: Duration(seconds: 1),
+//          triggerDistance: ScreenUtil().setWidth(180),
+                completeDuration: Duration(seconds: 1),
                 footerBuilder: (context,
                     loadState,
                     pulledExtent,
@@ -1026,24 +1036,42 @@ class _TaskListPageState extends State<TaskListPage>
                     enableInfiniteLoad,
                     success,
                     noMore) {
-              return Stack(
-                children: <Widget>[
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      width: 30.0,
-                      height: 30.0,
-                      /* child: SpinKitCircle(
-                            color: GlobalConfig.colorPrimary,
-                            size: 30.0,
-                          ),*/
-                    ),
-                  ),
-                ],
-              );
-            }),
+                  return Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Visibility(
+                          visible: noMore,
+                          child: Center(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(30),
+                                bottom: ScreenUtil().setWidth(30),
+                              ),
+                              child: Text(
+                                "~我是有底线的~",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(32),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+//                  child: Container(
+//                    width: 30.0,
+//                    height: 30.0,
+//                    /* child: SpinKitCircle(
+//                            color: GlobalConfig.colorPrimary,
+//                            size: 30.0,
+//                          ),*/
+//                  ),
+                      ),
+                    ],
+                  );
+                }),
             firstRefreshWidget: Container(
               width: double.infinity,
               height: double.infinity,

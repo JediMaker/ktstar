@@ -52,6 +52,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
           if (page == 1) {
             goodsList = entity.goodsList;
             _refreshController.finishLoad(noMore: false);
+            bus.emit("changeRefreshControllerState", false);
           } else {
             if (result == null ||
                 result.data == null ||
@@ -59,6 +60,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                 entity.goodsList.length == 0) {
               //              _refreshController.resetLoadState();
               _refreshController.finishLoad(noMore: true);
+              bus.emit("changeRefreshControllerState", true);
             } else {
               goodsList += entity.goodsList;
             }
