@@ -121,6 +121,12 @@ class _GoodsDetailPageState extends State<GoodsDetailPage>
     FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     return FlutterEasyLoading(
       child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.zero,
+          child: AppBar(
+            brightness: Brightness.light,
+          ),
+        ),
         body: Stack(
           alignment: Alignment.center,
           fit: StackFit.expand,

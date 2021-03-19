@@ -21,7 +21,8 @@ class NewcomersGoodsListPage extends StatefulWidget {
   _NewcomersGoodsListPageState createState() => _NewcomersGoodsListPageState();
 }
 
-class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage> {
+class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage>
+    with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
@@ -442,4 +443,7 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage> {
           )),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
