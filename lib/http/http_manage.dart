@@ -159,7 +159,7 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (GlobalConfig.isRelease) {
+    if (!GlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
