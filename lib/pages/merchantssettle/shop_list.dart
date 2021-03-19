@@ -69,6 +69,7 @@ class _ShopListPageState extends State<ShopListPage>
       _longitude = GlobalConfig.prefs.getString("longitude");
       _cityName = GlobalConfig.prefs.getString("cityName");
     } else {
+      await GlobalConfig.initUserLocationWithPermission(count: 0);
       _latitude = GlobalConfig.prefs.getString("latitude");
       _longitude = GlobalConfig.prefs.getString("longitude");
       _cityName = GlobalConfig.prefs.getString("cityName");

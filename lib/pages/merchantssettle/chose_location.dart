@@ -208,6 +208,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
   void initState() {
     super.initState();
     _searchController = TextEditingController();
+    requestPermission();
 
     /// 动态申请定位权限
     /* requestPermission();
@@ -929,13 +930,14 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
 
   /// 动态申请定位权限
   void requestPermission() async {
-    // 申请权限
+    await GlobalConfig.initUserLocationWithPermission(count: 0);
+    /*// 申请权限
     bool hasLocationPermission = await requestLocationPermission();
     if (hasLocationPermission) {
       print("定位权限申请通过");
     } else {
       print("定位权限申请不通过");
-    }
+    }*/
   }
 
   /// 申请定位权限
