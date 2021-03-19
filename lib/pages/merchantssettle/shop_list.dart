@@ -149,27 +149,22 @@ class _ShopListPageState extends State<ShopListPage>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Color(0xfff6f6f6),
-        height: double.infinity,
-        child: SafeArea(
-          child: Scaffold(
-              appBar: GradientAppBar(
-                title: buildSearch(),
-                titleSpacing: 0,
-                elevation: 0,
-                brightness: Brightness.light,
-                gradient: LinearGradient(colors: [
-                  Color(0xfff6f6f6),
-                  Color(0xfff6f6f6),
-                ]),
-              ),
-              body: Container(
-                  color: Color(0xfff6f6f6),
-                  child:
-                      buildEasyRefresh()) // This trailing comma makes auto-formatting nicer for build methods.
-              ),
-        ));
+    return Scaffold(
+        appBar: GradientAppBar(
+          title: buildSearch(),
+          titleSpacing: 0,
+          elevation: 0,
+          brightness: Brightness.light,
+          gradient: LinearGradient(colors: [
+            Color(0xfff6f6f6),
+            Color(0xfff6f6f6),
+          ]),
+        ),
+        body: Container(
+            color: Color(0xfff6f6f6),
+            child:
+                buildEasyRefresh()) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   ///扫一扫
