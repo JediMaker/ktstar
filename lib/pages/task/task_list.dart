@@ -154,6 +154,8 @@ class _TaskListPageState extends State<TaskListPage>
   var _tabs;
   int _selectedTabIndex = 0;
 
+  var _categoryId;
+
 //分类页签
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
@@ -418,6 +420,10 @@ class _TaskListPageState extends State<TaskListPage>
           setState(() {
             cats = categoryResult.data.cats;
             initPddTabbar();
+            _selectedTabIndex = 0;
+            _tabs = buildTabs();
+            pddcategoryTabsView = buildPddCategoryTabBar();
+            bus.emit("changePddListViewData", cats[_selectedTabIndex]);
           });
         }
       }
@@ -1175,7 +1181,9 @@ class _TaskListPageState extends State<TaskListPage>
               pddcategoryTabsView,
               SliverToBoxAdapter(
                 child: GestureDetector(
-                  child: HomeGoodsListPage(),
+                  child: HomeGoodsListPage(
+                    categoryId: _categoryId,
+                  ),
                   onHorizontalDragStart: (DragStartDetails details) {},
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
                     _offsetValue = details.primaryDelta;
