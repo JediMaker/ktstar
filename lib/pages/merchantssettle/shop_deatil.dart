@@ -67,7 +67,7 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
       if (result.status) {
         setState(() {
           _shopName = result.data.storeName;
-//          _shopImageUrl = result.data.storeImgUrl;
+          _shopImageUrl = result.data.storeImgUrl;
           _shopDistance = result.data.storeDistance;
           _location =
               "${result.data.storeProvince + result.data.storeCity + result.data.storeDistrict + result.data.storeAddr}";
