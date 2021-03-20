@@ -1,3 +1,4 @@
+import 'package:star/pages/ktxxhomenew/ktxx_home_page.dart';
 import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -465,7 +466,7 @@ class _TaskIndexPageState extends State<TaskIndexPage>
 
     _pageList = <StatefulWidget>[
 //      new HomePage(tabIndex: _homeTabIndex),
-      TaskListPage(),
+      HomePagePage(),
       NewClassifyListPage(),
       MicroShareHolderEquityPage(
         showBackBtnIcon: false,

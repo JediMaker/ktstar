@@ -17,17 +17,26 @@ import '../../global_config.dart';
 import 'goods_detail.dart';
 
 class GoodsListPage extends StatefulWidget {
-  GoodsListPage({Key key, this.title = "今日爆款", this.categoryId = '', this.type})
+  GoodsListPage(
+      {Key key,
+      this.title = "今日爆款",
+      this.categoryId = '',
+      this.firstId = '',
+      this.type,
+      this.showAppBar = true})
       : super(key: key);
   String title = "今日爆款";
   String categoryId;
   String type;
+  final String firstId;
+  bool showAppBar;
 
   @override
   _GoodsListPageState createState() => _GoodsListPageState();
 }
 
-class _GoodsListPageState extends State<GoodsListPage> {
+class _GoodsListPageState extends State<GoodsListPage>
+    with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
@@ -84,33 +93,39 @@ class _GoodsListPageState extends State<GoodsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(
-              color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
-        ),
-        brightness: Brightness.light,
-        leading: IconButton(
-          icon: Container(
-            width: ScreenUtil().setWidth(63),
-            height: ScreenUtil().setHeight(63),
-            child: Center(
-              child: Image.asset(
-                "static/images/icon_ios_back.png",
-                width: ScreenUtil().setWidth(36),
-                height: ScreenUtil().setHeight(63),
-                fit: BoxFit.fill,
-              ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(56),
+        child: Visibility(
+          visible: widget.showAppBar,
+          child: AppBar(
+            title: Text(
+              "${widget.title}",
+              style: TextStyle(
+                  color: Color(0xFF222222), fontSize: ScreenUtil().setSp(54)),
             ),
+            brightness: Brightness.light,
+            leading: IconButton(
+              icon: Container(
+                width: ScreenUtil().setWidth(63),
+                height: ScreenUtil().setHeight(63),
+                child: Center(
+                  child: Image.asset(
+                    "static/images/icon_ios_back.png",
+                    width: ScreenUtil().setWidth(36),
+                    height: ScreenUtil().setHeight(63),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            centerTitle: true,
+            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            elevation: 0,
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
         ),
-        centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
-        elevation: 0,
       ),
       body:
           buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.
@@ -409,4 +424,8 @@ class _GoodsListPageState extends State<GoodsListPage> {
           )),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
