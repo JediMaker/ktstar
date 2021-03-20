@@ -208,6 +208,9 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage>
               Container(
                 width: double.maxFinite,
                 color: bgContentColor,
+                constraints: BoxConstraints(
+                  minHeight: ScreenUtil().setWidth(1527),
+                ),
                 margin: EdgeInsets.symmetric(
                   horizontal: ScreenUtil().setWidth(30),
                 ),
