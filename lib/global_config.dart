@@ -216,10 +216,10 @@ class GlobalConfig {
     ///iOS: https://lbs.amap.com/api/ios-location-sdk/guide/create-project/get-key
     /* AMapFlutterLocation.setApiKey(
         "b9350473f6c0c17719fc9c3f824ad942", "ebb51ce06c26c7cc7fe0802694b8280f");*/
-    await AmapCore.init('ebb51ce06c26c7cc7fe0802694b8280f');
-    await enableFluttifyLog(true);
+    await AmapCore.init('ced91b12f28d94bb81b09900777784b7');
+    await enableFluttifyLog(!isRelease);
     await AmapService.instance.init(
-      iosKey: 'ebb51ce06c26c7cc7fe0802694b8280f',
+      iosKey: 'ced91b12f28d94bb81b09900777784b7',
       androidKey: 'b9350473f6c0c17719fc9c3f824ad942',
 //      webApiKey: 'e69c6fddf6ccf8de917f5990deaa9aa2',
     );
@@ -233,7 +233,7 @@ class GlobalConfig {
     await HttpManage.getGoodsList(
         type: "new", page: 1, pageSize: 2, isNewcomer: true);
 //    await HttpManage.getUserInfo();
-    await HttpManage.getSiteShopAgreement();
+//    await HttpManage.getSiteShopAgreement();
 //    await HttpManage.getShopTypeList();
     //initAndroidDeviceId();
 

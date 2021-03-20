@@ -290,7 +290,12 @@ class APi {
 
   ///商家入驻规则协议
   static String AGREEMENT_SHOP_ENTRY_RULES_URL =
+      "https://task.ktkj.shop/agreement/sjrz";
+/*
+  ///商家入驻规则协议
+  static String AGREEMENT_SHOP_ENTRY_RULES_URL =
       "${GlobalConfig.getAgreementShopEntryRulesUrl()}";
+*/
 
   /* ///用户隐私协议
   static String AGREEMENT_PRIVACY_URL = "https://task.ktkj.shop/yinsi.html";
