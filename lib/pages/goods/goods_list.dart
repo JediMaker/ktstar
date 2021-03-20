@@ -212,7 +212,10 @@ class _GoodsListPageState extends State<GoodsListPage>
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30)),
+          margin: EdgeInsets.symmetric(
+            horizontal: ScreenUtil().setWidth(30),
+            vertical: ScreenUtil().setWidth(30),
+          ),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,
