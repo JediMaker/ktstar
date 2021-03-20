@@ -48,7 +48,7 @@ class _GoodsListPageState extends State<GoodsListPage>
         type: widget.type,
         page: page,
         pageSize: 20,
-        firstId: '');
+        firstId: widget.firstId);
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
