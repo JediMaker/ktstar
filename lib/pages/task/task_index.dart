@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:star/pages/ktxxhomenew/ktxx_home_page.dart';
 import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +83,9 @@ class _TaskIndexPageState extends State<TaskIndexPage>
       }
       if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
         Future.delayed(Duration(milliseconds: 30), () {
-          showPrivacyDialog(context);
+          if(Platform.isAndroid){
+            showPrivacyDialog(context);
+          }
         });
       }
     }
