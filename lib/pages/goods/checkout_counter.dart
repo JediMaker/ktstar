@@ -205,14 +205,47 @@ class _CheckOutCounterPageState extends State<CheckOutCounterPage>
                         Center(
                             child: Container(
                           margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(61),
+                            top: ScreenUtil().setWidth(30),
                           ),
-                          child: new Text(
-                            "请输入支付密码",
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(48),
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Column(
+                            children: [
+                              new Text(
+                                "请输入支付密码",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(48),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setWidth(44),
+                                ),
+                                child: new Text(
+                                  "可淘科技",
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(48),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  new Text(
+                                    "￥",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(68),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  new Text(
+                                    "$_payPrice",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(99),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         )),
                         Container(
