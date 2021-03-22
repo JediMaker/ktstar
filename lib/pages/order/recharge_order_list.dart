@@ -548,13 +548,13 @@ class _RechargeOrderListPageState extends State<RechargeOrderListPage>
                                 Radius.circular(ScreenUtil().setWidth(39))),
                             border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                                color: btnTxtBorderColor,
+                                color: Color(0xFF999999),
                                 width: 0.5)),
                         child: Text(
                           //状态：
                           "查看物流",
                           style: TextStyle(
-                            color: btnTxtColor,
+                            color: Color(0xFF222222),
                             fontSize: ScreenUtil().setSp(42),
                           ),
                         ),
