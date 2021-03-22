@@ -82,11 +82,11 @@ class _LoginPageState extends State<LoginPage> {
         GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
       }
       if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
-        Future.delayed(Duration(milliseconds: 300), () {
+        /*Future.delayed(Duration(milliseconds: 300), () {
           if (Platform.isAndroid) {
             showPrivacyDialog(context);
           }
-        });
+        });*/
       }
     }
   }
