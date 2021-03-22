@@ -107,7 +107,7 @@ class _HomePagePageState extends State<HomePagePage> {
   String _shareholderType = '';
 
   _initVersionData() async {
-    var versionInfo = await HttpManage.getVersionInfo();
+    /*var versionInfo = await HttpManage.getVersionInfo();
     if (versionInfo.status) {
       switch (versionInfo.data.wxLogin) {
         case "1": //不显示
@@ -125,42 +125,32 @@ class _HomePagePageState extends State<HomePagePage> {
           }
           break;
       }
-      if (Platform.isAndroid) {
-        if (mounted) {
-          setState(() {
-            rootView = TaskListPage();
+
+    }*/
+    if (Platform.isAndroid) {
+      if (mounted) {
+        setState(() {
+          rootView = TaskListPage();
 //            rootView = HomeIndexPage();
-          });
-        }
-        if (versionInfo.data.whCheck) {
-          //华为应用市场上架审核中
-          GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
-        } else {
-          GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
-        }
-        if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
-          Future.delayed(Duration(milliseconds: 30), () {
-            showPrivacyDialog(context);
-          });
-        }
+        });
       }
-      if (Platform.isIOS) {
+    }
+    if (Platform.isIOS) {
 //        setState(() {
 //          print("GlobalConfig.iosCheck=${GlobalConfig.iosCheck}");
 //          print("versionInfo.data.whCheck=${versionInfo.data.whCheck}");
 //
 //        });
-        if (mounted) {
-          setState(() {
-            if (GlobalConfig.iosCheck) {
-              rootView = HomeIndexPage();
-            } else {
-              rootView = TaskListPage();
+      if (mounted) {
+        setState(() {
+          if (GlobalConfig.iosCheck) {
+            rootView = HomeIndexPage();
+          } else {
+            rootView = TaskListPage();
 //            w1 = HomeIndexPage();
-            }
+          }
 //            rootView = HomeIndexPage();
-          });
-        }
+        });
       }
     }
   }

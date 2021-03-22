@@ -1127,8 +1127,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                   ),
                 ],
               ),
-              onTap: () {
-                Utils.checkAppVersion(context, checkDerictly: true);
+              onTap: () async {
+                await Utils.checkAppVersion(context, checkDerictly: true);
+                _initUserData();
                 /*if (mounted) {
                   setState(() {});
                 }*/
