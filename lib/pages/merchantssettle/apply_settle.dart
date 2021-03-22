@@ -1249,6 +1249,7 @@ class _ApplySettlePageState extends State<ApplySettlePage> {
               }
 
               _shopDesc = result.data.storeDesc;
+              _shopDescController.text = _shopDesc;
               _shopLocation =
                   "${result.data.storeProvince + result.data.storeCity + result.data.storeDistrict + result.data.storeAddr}";
 
