@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/global_config.dart';
 import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
+import 'package:star/models/login_entity.dart';
 import 'package:star/models/result_bean_entity.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/my_webview.dart';
@@ -16,8 +17,6 @@ import 'package:star/pages/widget/time_widget.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
-import 'package:star/models/login_entity.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -84,7 +83,9 @@ class _LoginPageState extends State<LoginPage> {
       }
       if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
         Future.delayed(Duration(milliseconds: 300), () {
-          showPrivacyDialog(context);
+          if (Platform.isAndroid) {
+            showPrivacyDialog(context);
+          }
         });
       }
     }
@@ -120,7 +121,8 @@ class _LoginPageState extends State<LoginPage> {
               if (!CommonUtils.isEmpty(context)) {
                 mContext = context;
               } else {
-                mContext = GlobalConfig.navigatorKey.currentState.overlay.context;
+                mContext =
+                    GlobalConfig.navigatorKey.currentState.overlay.context;
               }
               NavigatorUtils.navigatorRouterAndRemoveUntil(
                   mContext, TaskIndexPage());
@@ -130,7 +132,6 @@ class _LoginPageState extends State<LoginPage> {
           }
         }
       }
-
     });
 
     super.initState();
