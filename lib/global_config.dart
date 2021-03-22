@@ -1,5 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
+
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+
+//import 'package:umeng/umeng.dart';
+import 'package:amap_search_fluttify/amap_search_fluttify.dart';
 
 //import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
@@ -7,16 +11,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluwx/fluwx.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/generated/json/shop_type_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/login_entity.dart';
@@ -25,12 +29,9 @@ import 'package:star/utils/common_utils.dart';
 
 //import 'package:umeng/umeng.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
+
 import 'generated/json/login_entity_helper.dart';
 import 'models/user_info_entity.dart';
-
-//import 'package:umeng/umeng.dart';
-import 'package:amap_search_fluttify/amap_search_fluttify.dart';
-import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 
 // 提供五套可选主题色
 const _themes = <MaterialColor>[
@@ -112,7 +113,9 @@ class GlobalConfig {
   static bool displayThirdLoginInformation = false;
 
   /// ios是否审核上架中
-  static bool get iosCheck => prefs.getBool("isIosUnderReview");
+  static bool get iosCheck => prefs.containsKey("isIosUnderReview")
+      ? prefs.getBool("isIosUnderReview")
+      : false;
 
   /// 渠道类型
   static String get chanelType => getChanelType(chanelType: 0);
