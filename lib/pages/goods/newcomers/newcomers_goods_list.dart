@@ -223,7 +223,7 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage>
                           vertical: ScreenUtil().setWidth(30),
                         ),
                         child: Text(
-                          "所有专区商品奖励20%的分红体验金，体验股东身份，消费就是赚钱",
+                          "所有专区商品奖励40%的分红体验金，体验股东身份，消费就是赚钱",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(30),
                             color: Colors.white,

@@ -1,45 +1,35 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:star/generated/json/home_goods_list_entity_helper.dart';
-import 'package:star/pages/goods/newcomers/newcomers_goods_list.dart';
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:loading/indicator/ball_beat_indicator.dart';
-import 'package:loading/indicator/ball_grid_pulse_indicator.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/indicator/ball_scale_indicator.dart';
-import 'package:loading/indicator/ball_scale_multiple_indicator.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
-import 'package:loading/indicator/line_scale_indicator.dart';
-import 'package:loading/indicator/line_scale_party_indicator.dart';
-import 'package:loading/indicator/line_scale_pulse_out_indicator.dart';
-import 'package:loading/indicator/pacman_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:star/bus/my_event_bus.dart';
+import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/global_config.dart';
-import 'package:star/http/http.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
+import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/user_info_entity.dart';
-import 'package:star/pages/goods/category/classify.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
-import 'package:star/pages/goods/home_pdd_goods_list.dart';
+import 'package:star/pages/goods/home_goods_list.dart';
+import 'package:star/pages/goods/newcomers/newcomers_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/login/login.dart';
@@ -47,35 +37,23 @@ import 'package:star/pages/merchantssettle/shop_payment.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/search/search_page.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
-import 'package:star/pages/task/invitation_poster.dart';
 import 'package:star/pages/task/task_detail.dart';
-import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/pages/task/task_detail_other.dart';
-import 'package:star/pages/task/task_gallery.dart';
 import 'package:star/pages/task/task_hall.dart';
 import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_diamond_dialog.dart';
 import 'package:star/pages/task/task_open_vip.dart';
 import 'package:star/pages/task/task_share.dart';
-import 'package:star/pages/task/task_submission.dart';
 import 'package:star/pages/widget/PriceText.dart';
-import 'package:star/pages/widget/my_webview.dart';
-import 'package:star/pages/goods/home_goods_list.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/pages/widget/persistent_header_builder.dart';
+import 'package:star/pages/widget/round_tab_indicator.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:flutter_screenutil/screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:loading/loading.dart';
 import 'package:star/utils/utils.dart';
-import 'package:star/pages/widget/round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:star/models/home_pdd_category_entity.dart';
-import 'package:star/pages/widget/my_tab.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 ///首页
 class TaskListPage extends StatefulWidget {
@@ -1356,7 +1334,7 @@ class _TaskListPageState extends State<TaskListPage>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "20",
+                                "40",
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(160),
                                   color: _newcomersLayoutTextColor,
