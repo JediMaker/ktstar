@@ -1153,9 +1153,9 @@ class _TaskListPageState extends State<TaskListPage>
                 ],
               )),*/
               buildLayoutNewcomers(),
-              buildGoodsListSliverToBoxAdapter(context),
-              buildApplyForMicroShareholders(),
               buildAdRowContainer(),
+              buildGoodsListSliverToBoxAdapter(context),
+//              buildApplyForMicroShareholders(),
               pddcategoryTabsView,
               SliverToBoxAdapter(
                 child: GestureDetector(
@@ -1229,7 +1229,7 @@ class _TaskListPageState extends State<TaskListPage>
   Widget buildLayoutNewcomers() {
     return SliverToBoxAdapter(
       child: Visibility(
-//        visible: newcomersGoodsList.length > 0,
+        visible: newcomersGoodsList.length > 0,
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: ScreenUtil().setWidth(20),
@@ -1263,32 +1263,51 @@ class _TaskListPageState extends State<TaskListPage>
                     children: <Widget>[
                       MyOctoImage(
                         image:
-                            "https://alipic.lanhuapp.com/xdb4f7363d-4855-433a-b036-07f6dc46d1c4",
-                        width: ScreenUtil().setWidth(64),
-                        height: ScreenUtil().setWidth(59),
+                            "https://alipic.lanhuapp.com/xd9bd6d3e5-7922-4d3e-ae54-7d4c033c0b71",
+                        width: ScreenUtil().setWidth(161),
+                        height: ScreenUtil().setWidth(65),
                         fit: BoxFit.fill,
                       ),
                       Expanded(
                         child: Container(
                           margin: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            "新人专享",
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(54),
-                              color: Color(0xff222222),
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "新人专享",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(54),
+                                  color: Color(0xff222222),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+//                                      top: ScreenUtil().setWidth(60),
+                                  left: ScreenUtil().setWidth(15),
+                                  bottom: ScreenUtil().setWidth(5),
+                                ),
+                                child: Text(
+                                  "下单立享50%分红金",
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(34),
+                                    color: Color(0xff666666),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                       Row(
                         children: [
                           Text(
-                            "查看更多",
+                            "更多",
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Color(0xff999999),
-                              fontSize: ScreenUtil().setSp(38),
+                              fontSize: ScreenUtil().setSp(30),
                             ),
 //                            https://alipic.lanhuapp.com/xd8d557d60-d753-42a5-9955-ba264728afb7
                           ),
@@ -1334,44 +1353,50 @@ class _TaskListPageState extends State<TaskListPage>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "40",
+                                "50",
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(160),
                                   color: _newcomersLayoutTextColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: ScreenUtil().setWidth(60),
-                                  left: ScreenUtil().setWidth(5),
-                                  right: ScreenUtil().setWidth(15),
-                                ),
-                                child: Text(
-                                  "%",
-                                  style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(57),
-                                    color: _newcomersLayoutTextColor,
-                                  ),
-                                ),
-                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "分红",
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(48),
-                                      color: _newcomersLayoutTextColor,
+                                  Container(
+                                    margin: EdgeInsets.only(
+//                                      top: ScreenUtil().setWidth(60),
+                                      left: ScreenUtil().setWidth(25),
+                                    ),
+                                    child: Text(
+                                      "分红金",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(48),
+                                        color: _newcomersLayoutTextColor,
+                                      ),
                                     ),
                                   ),
-                                  Text(
+                                  Container(
+                                    margin: EdgeInsets.only(
+//                                      top: ScreenUtil().setWidth(60),
+                                      left: ScreenUtil().setWidth(5),
+                                      right: ScreenUtil().setWidth(15),
+                                    ),
+                                    child: Text(
+                                      "%",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(57),
+                                        color: _newcomersLayoutTextColor,
+                                      ),
+                                    ),
+                                  ),
+                                  /*Text(
                                     "体验金",
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(33),
                                       color: _newcomersLayoutTextColor,
                                     ),
-                                  ),
+                                  ),*/
                                 ],
                               ),
                             ],
@@ -1460,8 +1485,12 @@ class _TaskListPageState extends State<TaskListPage>
                                     onTap: () {
                                       NavigatorUtils.navigatorRouter(
                                         context,
-                                        GoodsDetailPage(productId: goodId),
+                                        NewcomersGoodsListPage(),
                                       );
+                                      /* NavigatorUtils.navigatorRouter(
+                                        context,
+                                        GoodsDetailPage(productId: goodId),
+                                      );*/
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(

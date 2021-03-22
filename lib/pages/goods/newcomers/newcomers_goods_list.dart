@@ -199,7 +199,7 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage>
             children: [
               MyOctoImage(
                 image:
-                    "https://alipic.lanhuapp.com/xd7aa56361-a9bf-46d9-b2f6-8eba2b6848ee",
+                    "https://alipic.lanhuapp.com/xd78d8bfdb-0642-4fbe-8e83-6ed3d4a3f7a3",
                 fit: BoxFit.fill,
                 width: ScreenUtil().setWidth(1127),
                 height: ScreenUtil().setWidth(634),
@@ -223,7 +223,7 @@ class _NewcomersGoodsListPageState extends State<NewcomersGoodsListPage>
                           vertical: ScreenUtil().setWidth(30),
                         ),
                         child: Text(
-                          "所有专区商品奖励40%的分红体验金，体验股东身份，消费就是赚钱",
+                          "新人专区下单，额外赠送40%分红体验金产生的分润归您",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(30),
                             color: Colors.white,
