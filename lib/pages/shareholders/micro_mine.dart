@@ -1,42 +1,34 @@
 import 'dart:io';
 
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/adress/my_adress.dart';
-import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/login/modify_password.dart';
 import 'package:star/pages/merchantssettle/apply_settle.dart';
 import 'package:star/pages/merchantssettle/shop_backstage.dart';
 import 'package:star/pages/order/order_list.dart';
-import 'package:star/pages/order/recharge_order_list.dart';
-import 'package:star/pages/recharge/recharge_result.dart';
 import 'package:star/pages/shareholders/micro_equity.dart';
 import 'package:star/pages/task/dividend_list.dart';
 import 'package:star/pages/task/fans_list.dart';
 import 'package:star/pages/task/income_list.dart';
 import 'package:star/pages/task/invitation_poster.dart';
 import 'package:star/pages/task/new_income_list.dart';
-import 'package:star/pages/task/pay_result.dart';
 import 'package:star/pages/task/task_about.dart';
 import 'package:star/pages/task/task_message.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
-import 'package:star/pages/task/task_open_diamond_dialog.dart';
-import 'package:star/pages/task/task_open_vip.dart';
-import 'package:star/pages/task/task_record_list.dart';
 import 'package:star/pages/task/task_safe_setting.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/withdrawal/withdrawal.dart';
 import 'package:star/utils/common_utils.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/navigator_utils.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/utils/utils.dart';
 
 import '../../global_config.dart';
@@ -322,7 +314,9 @@ class _MicroMinePageState extends State<MicroMinePage>
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
     _clearWidgetData();
-    _initCacheUserData();
+    if (GlobalConfig.isLogin()) {
+      _initCacheUserData();
+    }
     _initUserData();
     super.initState();
   }
