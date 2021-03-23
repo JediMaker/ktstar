@@ -22,6 +22,9 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 ///申请商家入驻
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedApplySettlePage extends StatefulWidget {
   KeTaoFeaturedApplySettlePage({Key key, this.applyStatus, this.rejectMsg, this.shopId})
       : super(key: key);
@@ -40,6 +43,9 @@ class KeTaoFeaturedApplySettlePage extends StatefulWidget {
   _ApplySettlePageState createState() => _ApplySettlePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
   Location _location;
 

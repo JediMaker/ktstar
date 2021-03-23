@@ -14,6 +14,9 @@ import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
   KeTaoFeaturedTaskRecordListPage({Key key}) : super(key: key);
   final String title = "任务提交记录";
@@ -22,6 +25,9 @@ class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
   _TaskRecordListPageState createState() => _TaskRecordListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
   ///  任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   int page = 1;

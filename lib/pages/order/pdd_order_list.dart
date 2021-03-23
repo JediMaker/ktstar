@@ -27,6 +27,9 @@ import 'package:star/pages/order/order_logistics_tracking.dart';
 import '../../global_config.dart';
 
 ///拼多多订单列表（已弃用）
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPddOrderListPage extends StatefulWidget {
   KeTaoFeaturedPddOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
@@ -35,6 +38,9 @@ class KeTaoFeaturedPddOrderListPage extends StatefulWidget {
   _PddOrderListPageState createState() => _PddOrderListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _PddOrderListPageState extends State<KeTaoFeaturedPddOrderListPage> {
   int page = 1;
   EasyRefreshController _refreshController;

@@ -75,6 +75,9 @@ import 'package:star/pages/widget/my_tab.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 ///首页
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskListPage extends StatefulWidget {
   KeTaoFeaturedTaskListPage({Key key}) : super(key: key);
   final String title = "首页";
@@ -83,6 +86,9 @@ class KeTaoFeaturedTaskListPage extends StatefulWidget {
   _TaskListPageState createState() => _TaskListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -3130,6 +3136,9 @@ class TaskListTabView extends StatefulWidget {
       : super(key: key);
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskListTabViewState extends State<TaskListTabView>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   AnimationController _controller;

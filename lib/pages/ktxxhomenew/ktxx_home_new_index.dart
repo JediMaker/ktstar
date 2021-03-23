@@ -83,6 +83,9 @@ import 'package:url_launcher/url_launcher.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 ///拼多多首页
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomeIndexPage extends StatefulWidget {
   KeTaoFeaturedHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
@@ -96,6 +99,9 @@ class KeTaoFeaturedHomeIndexPage extends StatefulWidget {
   _HomeIndexPageState createState() => _HomeIndexPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.

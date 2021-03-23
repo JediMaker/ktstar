@@ -8,6 +8,9 @@ import '../../global_config.dart';
 import 'my_adress_edit.dart';
 import 'package:star/models/address_list_entity.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedAddressListPage extends StatefulWidget {
   int type; //0、订单选择地址  1、地址编辑修改  2退换货地址修改
   String orderId;
@@ -22,6 +25,9 @@ class KeTaoFeaturedAddressListPage extends StatefulWidget {
   _AddressListPageState createState() => _AddressListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _AddressListPageState extends State<KeTaoFeaturedAddressListPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;

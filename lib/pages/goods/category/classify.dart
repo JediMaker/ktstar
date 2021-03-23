@@ -11,11 +11,17 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 // ignore: must_be_immutable
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedClassifyListPage extends StatefulWidget {
   @override
   _ClassifyListPageState createState() => _ClassifyListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;

@@ -25,6 +25,9 @@ import 'package:star/pages/order/order_logistics_tracking.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedRechargeOrderListPage extends StatefulWidget {
   KeTaoFeaturedRechargeOrderListPage({Key key, this.orderSource})
       : super(key: key);
@@ -35,6 +38,9 @@ class KeTaoFeaturedRechargeOrderListPage extends StatefulWidget {
   _RechargeOrderListPageState createState() => _RechargeOrderListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _RechargeOrderListPageState
     extends State<KeTaoFeaturedRechargeOrderListPage>
     with AutomaticKeepAliveClientMixin {

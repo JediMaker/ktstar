@@ -10,6 +10,9 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskMessagePage extends StatefulWidget {
   KeTaoFeaturedTaskMessagePage({Key key}) : super(key: key);
   final String title = "我的消息";
@@ -18,6 +21,9 @@ class KeTaoFeaturedTaskMessagePage extends StatefulWidget {
   _TaskMessagePageState createState() => _TaskMessagePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskMessagePageState extends State<KeTaoFeaturedTaskMessagePage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";

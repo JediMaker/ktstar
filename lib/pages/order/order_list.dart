@@ -5,6 +5,9 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedOrderListPage extends StatefulWidget {
   KeTaoFeaturedOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
@@ -13,6 +16,9 @@ class KeTaoFeaturedOrderListPage extends StatefulWidget {
   _OrderListPageState createState() => _OrderListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _OrderListPageState extends State<KeTaoFeaturedOrderListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;

@@ -27,6 +27,9 @@ void main() => runApp(MaterialApp(
 String selectedUrl =
     'https://ms.czb365.com/?platformType=92657653&platformCode=15695657828&t=1606702970.981 ';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedWebViewPluginPage extends StatefulWidget {
   var initialUrl;
   var title;
@@ -43,6 +46,9 @@ class KeTaoFeaturedWebViewPluginPage extends StatefulWidget {
   _WebViewPluginPageState createState() => _WebViewPluginPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _WebViewPluginPageState extends State<KeTaoFeaturedWebViewPluginPage> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   var _loadingVisiablity = true;

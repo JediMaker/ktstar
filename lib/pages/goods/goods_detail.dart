@@ -28,6 +28,9 @@ import 'package:star/models/goods_spec_info_entity.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsDetailPage extends StatefulWidget {
   var productId;
 
@@ -37,6 +40,9 @@ class KeTaoFeaturedGoodsDetailPage extends StatefulWidget {
   _GoodsDetailPageState createState() => _GoodsDetailPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
@@ -867,6 +873,9 @@ class DetailWindow extends StatefulWidget {
   _DetailWindowState createState() => _DetailWindowState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _DetailWindowState extends State<DetailWindow>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;

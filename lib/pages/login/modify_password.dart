@@ -8,6 +8,9 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedModifyPasswordPage extends StatefulWidget {
   String title;
 
@@ -17,6 +20,9 @@ class KeTaoFeaturedModifyPasswordPage extends StatefulWidget {
   _ModifyPasswordPageState createState() => _ModifyPasswordPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;

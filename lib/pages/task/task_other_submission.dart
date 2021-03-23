@@ -16,6 +16,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskOtherSubmissionPage extends StatefulWidget {
   KeTaoFeaturedTaskOtherSubmissionPage(
       {Key key, @required this.taskId, this.pageType = 0, this.comId})
@@ -34,6 +37,9 @@ class KeTaoFeaturedTaskOtherSubmissionPage extends StatefulWidget {
       _TaskOtherSubmissionPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissionPage> {
   //List<Asset> images2 = List<Asset>();
   List<Image> images = List<Image>();

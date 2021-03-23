@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 /// @desp:
 /// @time 2019/10/30 14:44
 /// @author lizubing
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
   final double height;
   final num width;
@@ -56,6 +59,9 @@ class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
   }
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _SelectChoiceChipState extends State<KeTaoFeaturedSelectChoiceChip> {
   @override
   Widget build(BuildContext context) {

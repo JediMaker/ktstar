@@ -37,6 +37,9 @@ import 'fans_list.dart';
 import 'income_list.dart';
 import 'invitation_poster.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskMinePage extends StatefulWidget {
   KeTaoFeaturedTaskMinePage({Key key, this.userInfoData}) : super(key: key);
   final String title = "我的";
@@ -46,6 +49,9 @@ class KeTaoFeaturedTaskMinePage extends StatefulWidget {
   _TaskMinePageState createState() => _TaskMinePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskMinePageState extends State<KeTaoFeaturedTaskMinePage>
     with AutomaticKeepAliveClientMixin {
   var headUrl;

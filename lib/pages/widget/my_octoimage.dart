@@ -10,6 +10,9 @@ import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/network_image.dart' as network;
 import 'package:star/utils/common_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMyOctoImage extends StatefulWidget {
   KeTaoFeaturedMyOctoImage(
       {Key key,
@@ -163,6 +166,9 @@ class KeTaoFeaturedMyOctoImage extends StatefulWidget {
   _MyOctoImageState createState() => _MyOctoImageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _MyOctoImageState extends State<KeTaoFeaturedMyOctoImage> {
   @override
   void initState() {

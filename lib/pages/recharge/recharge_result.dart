@@ -8,6 +8,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedRechargeResultPage extends StatefulWidget {
   KeTaoFeaturedRechargeResultPage({Key key}) : super(key: key);
   final String title = "充值成功";
@@ -16,6 +19,9 @@ class KeTaoFeaturedRechargeResultPage extends StatefulWidget {
   _RechargeResultPageState createState() => _RechargeResultPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _RechargeResultPageState extends State<KeTaoFeaturedRechargeResultPage> {
   @override
   void initState() {

@@ -17,6 +17,9 @@ import 'package:star/bus/my_event_bus.dart';
 import '../../global_config.dart';
 import 'goods_detail.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomeGoodsListPage extends StatefulWidget {
   KeTaoFeaturedHomeGoodsListPage(
       {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
@@ -29,6 +32,9 @@ class KeTaoFeaturedHomeGoodsListPage extends StatefulWidget {
   _HomeGoodsListPageState createState() => _HomeGoodsListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _HomeGoodsListPageState extends State<KeTaoFeaturedHomeGoodsListPage> {
   int page = 1;
   int count = 1;

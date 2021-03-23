@@ -10,6 +10,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
   bool refreshCheckOutCounterPage;
 
@@ -39,6 +42,9 @@ class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
   _PayPasswordSettingPageState createState() => _PayPasswordSettingPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSettingPage> {
   var _titieText = "";
   var _descText = "";

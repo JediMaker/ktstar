@@ -20,6 +20,9 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskOpenVipPage extends StatefulWidget {
   KeTaoFeaturedTaskOpenVipPage({Key key, this.taskType = 1}) : super(key: key);
   final String title = "会员中心";
@@ -29,6 +32,9 @@ class KeTaoFeaturedTaskOpenVipPage extends StatefulWidget {
   _TaskOpenVipPageState createState() => _TaskOpenVipPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
   var _vipIncome = '10';
   var _vipPrice = '199';

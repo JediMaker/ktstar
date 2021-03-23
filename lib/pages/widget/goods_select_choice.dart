@@ -7,6 +7,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 /// @desp:
 /// @time 2019/10/30 14:44
 /// @author lizubing
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsSelectChoiceChip extends StatefulWidget {
   final String text;
   final double height;
@@ -38,7 +41,9 @@ class KeTaoFeaturedGoodsSelectChoiceChip extends StatefulWidget {
       this.border = const Border.fromBorderSide(BorderSide(
           color: Color(0xFFf0f0f0), width: 0.5, style: BorderStyle.solid)),
       this.selectBorder = const Border.fromBorderSide(BorderSide(
-          color: const Color(0xffF93736), width: 0.5, style: BorderStyle.solid)),
+          color: const Color(0xffF93736),
+          width: 0.5,
+          style: BorderStyle.solid)),
       this.onSelected,
       this.selected,
       this.textSelectColor = const Color(0xFF1C74D0),
@@ -50,7 +55,11 @@ class KeTaoFeaturedGoodsSelectChoiceChip extends StatefulWidget {
   }
 }
 
-class _GoodsSelectChoiceChipState extends State<KeTaoFeaturedGoodsSelectChoiceChip> {
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+class _GoodsSelectChoiceChipState
+    extends State<KeTaoFeaturedGoodsSelectChoiceChip> {
   @override
   Widget build(BuildContext context) {
     bool _select = widget.selected;

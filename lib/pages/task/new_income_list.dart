@@ -7,6 +7,9 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedNewIncomeListPage extends StatefulWidget {
   KeTaoFeaturedNewIncomeListPage({Key key, this.showType}) : super(key: key);
   final String title = "收益列表";
@@ -16,6 +19,9 @@ class KeTaoFeaturedNewIncomeListPage extends StatefulWidget {
   _NewIncomeListPageState createState() => _NewIncomeListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _NewIncomeListPageState extends State<KeTaoFeaturedNewIncomeListPage>
     with TickerProviderStateMixin {
   TabController _tabController;

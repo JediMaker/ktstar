@@ -24,6 +24,9 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
   KeTaoFeaturedMicroShareHolderEquityPage(
       {Key key, this.shareholderType = 1, this.showBackBtnIcon = true})
@@ -40,6 +43,9 @@ class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
       _MicroShareHolderEquityPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _MicroShareHolderEquityPageState extends State<KeTaoFeaturedMicroShareHolderEquityPage>
     with AutomaticKeepAliveClientMixin {
   Color _textTopColor = Color(0xff0A7FFF);

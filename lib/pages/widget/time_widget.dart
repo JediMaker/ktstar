@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 typedef void StopCount(bool b);
 typedef Future<bool> StartCountAction(BuildContext context);
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTimerWidget extends StatefulWidget {
   final int time;
   final StartCountAction startCountAction;
@@ -18,6 +21,9 @@ class KeTaoFeaturedTimerWidget extends StatefulWidget {
   }
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TimerWidgetState extends State<KeTaoFeaturedTimerWidget> {
   bool isPressed = false;
   Widget timer;
@@ -83,6 +89,9 @@ class TimerCount extends StatefulWidget {
   }
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TimerCountState extends State<TimerCount> {
   int _time;
   bool isPressed = false;

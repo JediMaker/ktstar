@@ -34,6 +34,9 @@ import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
 ///微股东个人中心页面
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMicroMinePage extends StatefulWidget {
   KeTaoFeaturedMicroMinePage({Key key, this.userInfoData}) : super(key: key);
   UserInfoData userInfoData;
@@ -42,6 +45,9 @@ class KeTaoFeaturedMicroMinePage extends StatefulWidget {
   _MicroMinePageState createState() => _MicroMinePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _MicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
     with AutomaticKeepAliveClientMixin {
   var headUrl;

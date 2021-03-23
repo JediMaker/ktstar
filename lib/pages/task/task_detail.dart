@@ -20,10 +20,14 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskDetailPage extends StatefulWidget {
   String taskId;
 
-  KeTaoFeaturedTaskDetailPage({Key key, @required this.taskId, this.pageType = 0})
+  KeTaoFeaturedTaskDetailPage(
+      {Key key, @required this.taskId, this.pageType = 0})
       : super(key: key);
   final String title = "任务下载";
   int pageType;
@@ -34,6 +38,9 @@ class KeTaoFeaturedTaskDetailPage extends StatefulWidget {
 
 void main() {}
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
   Permission _permission = Permission.storage;
 
@@ -408,7 +415,8 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name: "ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
+        name:
+            "ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result.toString());
   }
 
@@ -438,7 +446,8 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _saveImagesWithPermission,
                 childWidget: new Container(
                   child: new Column(
@@ -471,7 +480,8 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _copyText,
                 childWidget: new Container(
                   child: new Column(
@@ -502,7 +512,8 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _goWechat,
                 childWidget: new Container(
                   child: new Column(
@@ -533,7 +544,8 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child:
+                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _goWechat,
                 childWidget: new Container(
                   child: new Column(
@@ -568,7 +580,8 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
   }
 
   void _saveImagesWithPermission() {
-    KeTaoFeaturedCommonUtils.requestPermission(_permission, _saveImages(showToast: true));
+    KeTaoFeaturedCommonUtils.requestPermission(
+        _permission, _saveImages(showToast: true));
   }
 
   void _goWechat() {

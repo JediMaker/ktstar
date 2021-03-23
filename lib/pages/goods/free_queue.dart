@@ -25,6 +25,9 @@ void main() {
   ));
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
   KeTaoFeaturedFreeQueuePage({Key key, this.goodsId, this.pageType = 0}) : super(key: key);
   final String title = "";
@@ -41,6 +44,9 @@ class KeTaoFeaturedFreeQueuePage extends StatefulWidget {
   _FreeQueuePageState createState() => _FreeQueuePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _FreeQueuePageState extends State<KeTaoFeaturedFreeQueuePage> {
   var _headImageUrl = '';
   var _nickName = '';

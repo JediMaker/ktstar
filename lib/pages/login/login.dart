@@ -18,6 +18,9 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedLoginPage extends StatefulWidget {
   KeTaoFeaturedLoginPage({Key key}) : super(key: key);
   String title = "登录";
@@ -26,6 +29,9 @@ class KeTaoFeaturedLoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _LoginPageState extends State<KeTaoFeaturedLoginPage> {
   var _description = '您好，\n请输入您的账号密码';
   TextEditingController _phoneController = new TextEditingController();

@@ -98,6 +98,9 @@ import 'package:star/bus/my_event_bus.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomeTabPage extends StatefulWidget {
   PddHomeData pddHomeData;
   int SVG_ANGLETYPE_DEG = 2;
@@ -112,6 +115,9 @@ class KeTaoFeaturedHomeTabPage extends StatefulWidget {
   KeTaoFeaturedHomeTabPage({Key key, this.pddHomeData}) : super(key: key);
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.

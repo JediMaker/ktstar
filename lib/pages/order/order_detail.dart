@@ -13,6 +13,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedOrderDetailPage extends StatefulWidget {
   KeTaoFeaturedOrderDetailPage({Key key, this.orderId}) : super(key: key);
   final String title = "订单详情";
@@ -22,6 +25,9 @@ class KeTaoFeaturedOrderDetailPage extends StatefulWidget {
   _OrderDetailPageState createState() => _OrderDetailPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _OrderDetailPageState extends State<KeTaoFeaturedOrderDetailPage> {
   OrderDetailEntity entity;
   String orderStatus;

@@ -15,6 +15,9 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFansListPage extends StatefulWidget {
   //是否代理商
   bool isAgent;
@@ -26,6 +29,9 @@ class KeTaoFeaturedFansListPage extends StatefulWidget {
   _FansListPageState createState() => _FansListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _FansListPageState extends State<KeTaoFeaturedFansListPage>
     with TickerProviderStateMixin {
   ///粉丝类型  默认0全部  1vip会员 2普通会员 3体验会员
@@ -428,6 +434,9 @@ class FansTabView extends StatefulWidget {
   _FansTabViewState createState() => _FansTabViewState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _FansTabViewState extends State<FansTabView> {
   int page = 1;
   EasyRefreshController _refreshController;

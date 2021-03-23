@@ -14,6 +14,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPayResultPage extends StatefulWidget {
   String payNo;
   int type;
@@ -26,6 +29,9 @@ class KeTaoFeaturedPayResultPage extends StatefulWidget {
   _PayResultPageState createState() => _PayResultPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
   //
   String _money = '';

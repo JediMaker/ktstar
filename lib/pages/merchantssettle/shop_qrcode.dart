@@ -10,6 +10,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:star/global_config.dart';
 import 'package:star/utils/common_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedShopQrCodePage extends StatefulWidget {
   KeTaoFeaturedShopQrCodePage({Key key, this.qrCodeUrl}) : super(key: key);
   final String title = "我的收款码";
@@ -19,6 +22,9 @@ class KeTaoFeaturedShopQrCodePage extends StatefulWidget {
   _ShopQrCodePageState createState() => _ShopQrCodePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShopQrCodePageState extends State<KeTaoFeaturedShopQrCodePage> {
   Permission _permission = Permission.storage;
 

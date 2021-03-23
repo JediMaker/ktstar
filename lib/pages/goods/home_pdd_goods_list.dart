@@ -24,6 +24,9 @@ import '../../global_config.dart';
 import 'goods_detail.dart';
 import 'pdd/pdd_goods_detail.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedHomePddGoodsListPage extends StatefulWidget {
   KeTaoFeaturedHomePddGoodsListPage({Key key, this.title = "补贴商品", this.categoryId = ''})
       : super(key: key);
@@ -34,6 +37,9 @@ class KeTaoFeaturedHomePddGoodsListPage extends StatefulWidget {
   _HomePddGoodsListPageState createState() => _HomePddGoodsListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _HomePddGoodsListPageState extends State<KeTaoFeaturedHomePddGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;

@@ -21,6 +21,9 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///拼多多首页
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPddHomeIndexPage extends StatefulWidget {
   KeTaoFeaturedPddHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
@@ -29,6 +32,9 @@ class KeTaoFeaturedPddHomeIndexPage extends StatefulWidget {
   _PddHomeIndexPageState createState() => _PddHomeIndexPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;

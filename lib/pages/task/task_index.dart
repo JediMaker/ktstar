@@ -29,6 +29,9 @@ import 'package:video_player/video_player.dart';
 
 import '../widget/navigation_icon_view.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskIndexPage extends StatefulWidget {
   int currentIndex;
 
@@ -42,6 +45,9 @@ void main() {
   runApp(KeTaoFeaturedTaskIndexPage());
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
@@ -546,6 +552,9 @@ class VideoApp extends StatefulWidget {
   _VideoAppState createState() => _VideoAppState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _VideoAppState extends State<VideoApp> {
   VideoPlayerController _controller;
 

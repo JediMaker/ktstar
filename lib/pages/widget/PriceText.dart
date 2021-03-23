@@ -39,6 +39,9 @@ class PriceText extends StatefulWidget {
   _PriceTextState createState() => _PriceTextState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _PriceTextState extends State<PriceText> {
   @override
   void initState() {

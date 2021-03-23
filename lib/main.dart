@@ -95,6 +95,9 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -167,6 +170,9 @@ class QRScanDemo extends StatefulWidget {
   _QRScanDemoState createState() => _QRScanDemoState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _QRScanDemoState extends State<QRScanDemo> {
   Uint8List bytes = Uint8List(0);
   TextEditingController _inputController;

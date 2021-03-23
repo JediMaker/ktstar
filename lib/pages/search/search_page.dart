@@ -34,6 +34,9 @@ class Person {
   Person(this.name, this.surname, this.age);
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedSearchGoodsPage extends StatefulWidget {
   KeTaoFeaturedSearchGoodsPage({Key key}) : super(key: key);
   final String title = "";
@@ -42,6 +45,9 @@ class KeTaoFeaturedSearchGoodsPage extends StatefulWidget {
   _SearchGoodsPageState createState() => _SearchGoodsPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
     with TickerProviderStateMixin {
   int _selectedTabIndex = 0;

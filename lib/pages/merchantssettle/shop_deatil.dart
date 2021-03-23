@@ -8,6 +8,9 @@ import 'package:star/pages/merchantssettle/shop_payment.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedShopDeatilPage extends StatefulWidget {
   KeTaoFeaturedShopDeatilPage(
       {Key key, this.shopId, this.latitude, this.longitude, this.isOwnShop})
@@ -24,6 +27,9 @@ class KeTaoFeaturedShopDeatilPage extends StatefulWidget {
   _ShopDeatilPageState createState() => _ShopDeatilPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
   var _latitude;
   var _longitude;

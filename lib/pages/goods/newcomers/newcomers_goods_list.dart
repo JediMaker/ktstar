@@ -13,6 +13,9 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedNewcomersGoodsListPage extends StatefulWidget {
   KeTaoFeaturedNewcomersGoodsListPage({Key key}) : super(key: key);
   final String title = "新人专享";
@@ -21,6 +24,9 @@ class KeTaoFeaturedNewcomersGoodsListPage extends StatefulWidget {
   _NewcomersGoodsListPageState createState() => _NewcomersGoodsListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _NewcomersGoodsListPageState extends State<KeTaoFeaturedNewcomersGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;

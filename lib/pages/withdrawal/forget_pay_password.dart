@@ -9,6 +9,9 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedForgetPayPasswordPage extends StatefulWidget {
   KeTaoFeaturedForgetPayPasswordPage({Key key, this.phoneNum }) : super(key: key);
   final String title = "";
@@ -18,6 +21,9 @@ class KeTaoFeaturedForgetPayPasswordPage extends StatefulWidget {
   _ForgetPayPasswordPageState createState() => _ForgetPayPasswordPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPage> {
   TextEditingController _checkCodeController;
   TextEditingController _passwordController;

@@ -13,6 +13,9 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskGalleryPage extends StatefulWidget {
   KeTaoFeaturedTaskGalleryPage(
       {Key key, this.galleryItems, this.index = 0, this.type = 0, this.images})
@@ -27,6 +30,9 @@ class KeTaoFeaturedTaskGalleryPage extends StatefulWidget {
   _TaskGalleryPageState createState() => _TaskGalleryPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
   PageController pageController;
   int _currentIndex;
@@ -50,7 +56,8 @@ class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name: "kt_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
+        name:
+            "kt_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result);
     KeTaoFeaturedCommonUtils.showToast("图片已下载");
   }

@@ -18,6 +18,9 @@ import 'package:star/utils/common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedUtils {
   static double formatNum(double num, int postion) {
     /*if ((num.toString().length - num.toString().lastIndexOf(".") - 1) <

@@ -21,6 +21,9 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedShopListPage extends StatefulWidget {
   KeTaoFeaturedShopListPage({Key key}) : super(key: key);
   final String title = "";
@@ -31,6 +34,9 @@ class KeTaoFeaturedShopListPage extends StatefulWidget {
   _ShopListPageState createState() => _ShopListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShopListPageState extends State<KeTaoFeaturedShopListPage>
     with AutomaticKeepAliveClientMixin {
   //搜索框文字控制器
@@ -891,6 +897,9 @@ class NoShopData extends StatefulWidget {
   _NoShopDataState createState() => _NoShopDataState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _NoShopDataState extends State<NoShopData> {
   ///商家入驻申请状态
   ///0 未申请

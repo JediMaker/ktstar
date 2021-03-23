@@ -14,11 +14,17 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 // ignore: must_be_immutable
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
   @override
   _NewClassifyListPageState createState() => _NewClassifyListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;
@@ -127,7 +133,8 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setWidth(100),
@@ -174,7 +181,8 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
 //                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
               },
               child: Container(

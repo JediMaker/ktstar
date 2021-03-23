@@ -5,6 +5,9 @@ import 'package:star/global_config.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_vip.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskOpenDiamondDialogPage extends StatefulWidget {
   KeTaoFeaturedTaskOpenDiamondDialogPage({Key key, this.taskType = 1}) : super(key: key);
   final String title = "";
@@ -15,6 +18,9 @@ class KeTaoFeaturedTaskOpenDiamondDialogPage extends StatefulWidget {
       _TaskOpenDiamondDialogPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskOpenDiamondDialogPageState extends State<KeTaoFeaturedTaskOpenDiamondDialogPage> {
   @override
   void initState() {

@@ -9,6 +9,9 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedAboutPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
@@ -31,6 +34,9 @@ class KeTaoFeaturedAboutPage extends StatefulWidget {
       _ShareHolderIncomeListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务

@@ -27,6 +27,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedFeaturedTabPage extends StatefulWidget {
   PddHomeData pddHomeData;
 
@@ -36,6 +39,9 @@ class KeTaoFeaturedFeaturedTabPage extends StatefulWidget {
   KeTaoFeaturedFeaturedTabPage({Key key, this.pddHomeData}) : super(key: key);
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _FeaturedTabPageState extends State<KeTaoFeaturedFeaturedTabPage>
     with AutomaticKeepAliveClientMixin {
   bool isFirstLoading = true;

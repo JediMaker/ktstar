@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 const double _kTabHeight = 40.0;
 const double _kTextAndIconTabHeight = 72.0;
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
   /// Create an underline style selected tab indicator.
   ///
@@ -53,6 +56,9 @@ class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
   }
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _UnderlinePainter extends BoxPainter {
   _UnderlinePainter(this.decoration, VoidCallback onChanged)
       : assert(decoration != null),

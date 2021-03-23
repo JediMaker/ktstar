@@ -43,6 +43,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/utils/utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskHallPage extends StatefulWidget {
   KeTaoFeaturedTaskHallPage({Key key}) : super(key: key);
   final String title = "任务大厅";
@@ -51,6 +54,9 @@ class KeTaoFeaturedTaskHallPage extends StatefulWidget {
   _TaskHallPageState createState() => _TaskHallPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final dataKey = new GlobalKey();
@@ -1710,6 +1716,9 @@ class TaskListTabView extends StatefulWidget {
       : super(key: key);
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskListTabViewState extends State<TaskListTabView>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;

@@ -15,6 +15,9 @@ import 'package:star/utils/utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedInvitationPosterPage extends StatefulWidget {
   KeTaoFeaturedInvitationPosterPage({Key key}) : super(key: key);
   final String title = "邀请好友";
@@ -23,6 +26,9 @@ class KeTaoFeaturedInvitationPosterPage extends StatefulWidget {
   _InvitationPosterPageState createState() => _InvitationPosterPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage> {
   List<String> _bannerList = [];
   var _bannerIndex = 0;

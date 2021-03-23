@@ -14,6 +14,9 @@ import 'package:star/pages/task/task_gallery.dart';
 import 'package:flutter/cupertino.dart';
 
 ///退货详情
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
   KeTaoFeaturedReturnInfoPage({Key key, this.product}) : super(key: key);
   final String title = "退款详情";
@@ -23,6 +26,9 @@ class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
   _ReturnInfoPageState createState() => _ReturnInfoPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
   var _topBoxBgColor = Color(0xffF32E43);
 

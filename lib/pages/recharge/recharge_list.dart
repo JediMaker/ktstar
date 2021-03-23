@@ -23,6 +23,9 @@ void main() {
   runApp(KeTaoFeaturedRechargeListPage());
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedRechargeListPage extends StatefulWidget {
   KeTaoFeaturedRechargeListPage({Key key}) : super(key: key);
   final String title = "话费充值";
@@ -31,6 +34,9 @@ class KeTaoFeaturedRechargeListPage extends StatefulWidget {
   _RechargeListPageState createState() => _RechargeListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
   TextEditingController _phoneController = new TextEditingController();
   List<RechargeDataRechageList> _dataList;
@@ -399,13 +405,15 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                                 Text(
                                   "${_rechargeWay == 0 ? '$_fastRatio' : '$_slowRatio'}%",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                      color: KeTaoFeaturedGlobalConfig
+                                          .taskHeadColor,
                                       fontSize: ScreenUtil().setSp(32)),
                                 ),
                                 Text(
                                   "分红金",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                      color: KeTaoFeaturedGlobalConfig
+                                          .taskHeadColor,
                                       fontSize: ScreenUtil().setSp(32)),
                                 ),
                               ],
@@ -427,7 +435,8 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                               } catch (e) {
                                 print(e);
                               }
-                              if (!KeTaoFeaturedCommonUtils.isEmpty(_selectedRechargeData)) {
+                              if (!KeTaoFeaturedCommonUtils.isEmpty(
+                                  _selectedRechargeData)) {
                                 _showSelectPayWayBottomSheet(context);
                               }
                             },

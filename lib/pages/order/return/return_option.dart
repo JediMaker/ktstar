@@ -8,6 +8,9 @@ import 'package:star/models/order_detail_entity.dart';
 import 'package:star/pages/order/return/return_option_info.dart';
 import 'package:star/utils/navigator_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedReturnGoodsOptionPage extends StatefulWidget {
   KeTaoFeaturedReturnGoodsOptionPage({Key key, this.product}) : super(key: key);
   final String title = "选择服务";
@@ -17,6 +20,9 @@ class KeTaoFeaturedReturnGoodsOptionPage extends StatefulWidget {
   _ReturnGoodsOptionPageState createState() => _ReturnGoodsOptionPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ReturnGoodsOptionPageState extends State<KeTaoFeaturedReturnGoodsOptionPage> {
   @override
   void initState() {

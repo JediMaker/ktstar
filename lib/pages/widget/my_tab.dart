@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+
 const double _kTabHeight = 36.0;
 const double _kTextAndIconTabHeight = 36.0;
+
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMyTab extends StatelessWidget {
   /// Creates a material design [TabBar] tab.
   ///
@@ -12,11 +17,9 @@ class KeTaoFeaturedMyTab extends StatelessWidget {
     Key key,
     this.text,
     this.icon,
-
-
     this.iconMargin = const EdgeInsets.only(bottom: 10.0),
     this.child,
-  }) : assert(text != null || child != null || icon != null),
+  })  : assert(text != null || child != null || icon != null),
         assert(text == null || child == null),
         super(key: key);
 

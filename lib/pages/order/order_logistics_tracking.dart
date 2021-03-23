@@ -9,6 +9,9 @@ import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedOrderLogisticsTrackingPage extends StatefulWidget {
   KeTaoFeaturedOrderLogisticsTrackingPage({Key key, this.orderId}) : super(key: key);
   final String title = "物流跟踪";
@@ -19,6 +22,9 @@ class KeTaoFeaturedOrderLogisticsTrackingPage extends StatefulWidget {
       _OrderLogisticsTrackingPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _OrderLogisticsTrackingPageState
     extends State<KeTaoFeaturedOrderLogisticsTrackingPage> {
   ///运单号

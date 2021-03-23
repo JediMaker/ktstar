@@ -11,6 +11,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedWithdrawalPage extends StatefulWidget {
   KeTaoFeaturedWithdrawalPage({Key key, @required this.availableCashAmount})
       : super(key: key);
@@ -21,6 +24,9 @@ class KeTaoFeaturedWithdrawalPage extends StatefulWidget {
   _WithdrawalPageState createState() => _WithdrawalPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
   bool _aliPaySelected = true;
   TextEditingController _aliPayAccountController = new TextEditingController();

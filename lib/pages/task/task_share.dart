@@ -12,6 +12,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskSharePage extends StatefulWidget {
   KeTaoFeaturedTaskSharePage({
     Key key,
@@ -24,6 +27,9 @@ class KeTaoFeaturedTaskSharePage extends StatefulWidget {
   _TaskSharePageState createState() => _TaskSharePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
 //  final Color _requestDescBgColor = Color(0xffFFD7C2);
   final Color _requestDescBgColor = Color(0xffF32E43);

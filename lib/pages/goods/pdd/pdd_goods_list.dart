@@ -25,6 +25,9 @@ import '../../../global_config.dart';
 import '../goods_detail.dart';
 import 'pdd_goods_detail.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedPddGoodsListPage extends StatefulWidget {
   KeTaoFeaturedPddGoodsListPage(
       {Key key,
@@ -44,6 +47,9 @@ class KeTaoFeaturedPddGoodsListPage extends StatefulWidget {
   _PddGoodsListPageState createState() => _PddGoodsListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;

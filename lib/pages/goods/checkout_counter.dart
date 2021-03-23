@@ -20,6 +20,9 @@ import 'package:star/models/order_user_info_entity.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedCheckOutCounterPage extends StatefulWidget {
   String orderId;
   String orderMoney;
@@ -30,6 +33,9 @@ class KeTaoFeaturedCheckOutCounterPage extends StatefulWidget {
   _CheckOutCounterPageState createState() => _CheckOutCounterPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
@@ -314,7 +320,8 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                                   }
                                   _checkPayStatus();
                                 } else {
-                                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                                  KeTaoFeaturedCommonUtils.showToast(
+                                      result.errMsg);
                                 }
                               } catch (e) {
                                 EasyLoading.dismiss();

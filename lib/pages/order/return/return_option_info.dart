@@ -14,6 +14,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedReturnOptionInfoPage extends StatefulWidget {
   ///
   ///[pageType]页面类型
@@ -44,6 +47,9 @@ class KeTaoFeaturedReturnOptionInfoPage extends StatefulWidget {
   _ReturnOptionInfoPageState createState() => _ReturnOptionInfoPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ReturnOptionInfoPageState extends State<KeTaoFeaturedReturnOptionInfoPage> {
   /// 未收到货退货原因集合
   ///

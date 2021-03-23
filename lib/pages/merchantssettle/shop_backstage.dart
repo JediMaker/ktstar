@@ -11,6 +11,9 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedShopBackstagePage extends StatefulWidget {
   var shopId;
 
@@ -21,6 +24,9 @@ class KeTaoFeaturedShopBackstagePage extends StatefulWidget {
   _ShopBackstagePageState createState() => _ShopBackstagePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
     with TickerProviderStateMixin {
   var _receivedPayNum = '0';
@@ -315,6 +321,9 @@ class ShopOrderTabView extends StatefulWidget {
   _ShopOrderTabViewState createState() => _ShopOrderTabViewState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShopOrderTabViewState extends State<ShopOrderTabView>
     with AutomaticKeepAliveClientMixin {
   int page = 1;

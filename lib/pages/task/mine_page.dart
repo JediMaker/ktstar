@@ -6,6 +6,9 @@ import '../../global_config.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/shareholders/micro_mine.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedMinePagePage extends StatefulWidget {
   KeTaoFeaturedMinePagePage({Key key}) : super(key: key);
   final String title = "";
@@ -14,6 +17,9 @@ class KeTaoFeaturedMinePagePage extends StatefulWidget {
   _MinePagePageState createState() => _MinePagePageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
   UserInfoData userInfoData;
   Widget rootView;

@@ -16,6 +16,9 @@ import 'package:star/pages/withdrawal/pay_password_setting.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedShopPaymentPage extends StatefulWidget {
   var orderId;
 
@@ -46,6 +49,9 @@ class KeTaoFeaturedShopPaymentPage extends StatefulWidget {
   _ShopPaymentPageState createState() => _ShopPaymentPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _ShopPaymentPageState extends State<KeTaoFeaturedShopPaymentPage> {
   var _latitude;
   var _longitude;

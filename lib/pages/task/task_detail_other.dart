@@ -19,6 +19,9 @@ import 'dart:math' as math;
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
   String taskId;
 
@@ -31,6 +34,9 @@ class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
   _TaskDetailOtherPageState createState() => _TaskDetailOtherPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";

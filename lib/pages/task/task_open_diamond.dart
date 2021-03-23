@@ -16,6 +16,9 @@ import 'package:star/pages/task/pay_result.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedTaskOpenDiamondPage extends StatefulWidget {
   KeTaoFeaturedTaskOpenDiamondPage({Key key}) : super(key: key);
   final String title = "钻石会员权益";
@@ -24,6 +27,9 @@ class KeTaoFeaturedTaskOpenDiamondPage extends StatefulWidget {
   _TaskOpenDiamondPageState createState() => _TaskOpenDiamondPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> {
   String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
 

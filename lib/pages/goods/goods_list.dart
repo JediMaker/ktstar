@@ -16,6 +16,9 @@ import 'package:star/utils/navigator_utils.dart';
 import '../../global_config.dart';
 import 'goods_detail.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedGoodsListPage extends StatefulWidget {
   KeTaoFeaturedGoodsListPage(
       {Key key,
@@ -35,6 +38,9 @@ class KeTaoFeaturedGoodsListPage extends StatefulWidget {
   _GoodsListPageState createState() => _GoodsListPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;

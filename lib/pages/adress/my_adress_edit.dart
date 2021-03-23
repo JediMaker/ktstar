@@ -12,6 +12,9 @@ import 'package:star/utils/common_utils.dart';
 import '../../global_config.dart';
 import 'my_adress.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedAddressDetailPage extends StatefulWidget {
   var addressId;
   String defaultAddressId;
@@ -30,6 +33,9 @@ class KeTaoFeaturedAddressDetailPage extends StatefulWidget {
   _AddressDetailPageState createState() => _AddressDetailPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _AddressDetailPageState extends State<KeTaoFeaturedAddressDetailPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;

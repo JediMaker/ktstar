@@ -7,6 +7,9 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class KeTaoFeaturedWithdrawalResultPage extends StatefulWidget {
   KeTaoFeaturedWithdrawalResultPage({Key key}) : super(key: key);
   final String title = "";
@@ -15,6 +18,9 @@ class KeTaoFeaturedWithdrawalResultPage extends StatefulWidget {
   _WithdrawalResultPageState createState() => _WithdrawalResultPageState();
 }
 
+// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
 class _WithdrawalResultPageState extends State<KeTaoFeaturedWithdrawalResultPage> {
   var _withdrawalPrice = '';
 
