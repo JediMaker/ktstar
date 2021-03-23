@@ -1272,7 +1272,7 @@ class _TaskListPageState extends State<TaskListPage>
                         child: Container(
                           margin: const EdgeInsets.only(left: 8.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 "新人专享",
@@ -1286,7 +1286,6 @@ class _TaskListPageState extends State<TaskListPage>
                                 margin: EdgeInsets.only(
 //                                      top: ScreenUtil().setWidth(60),
                                   left: ScreenUtil().setWidth(15),
-                                  bottom: ScreenUtil().setWidth(5),
                                 ),
                                 child: Text(
                                   "下单立享50%分红金",
