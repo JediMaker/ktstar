@@ -8,8 +8,8 @@ import 'package:star/pages/merchantssettle/shop_payment.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-class ShopDeatilPage extends StatefulWidget {
-  ShopDeatilPage(
+class KeTaoFeaturedShopDeatilPage extends StatefulWidget {
+  KeTaoFeaturedShopDeatilPage(
       {Key key, this.shopId, this.latitude, this.longitude, this.isOwnShop})
       : super(key: key);
   final String title = "商家详情";
@@ -24,7 +24,7 @@ class ShopDeatilPage extends StatefulWidget {
   _ShopDeatilPageState createState() => _ShopDeatilPageState();
 }
 
-class _ShopDeatilPageState extends State<ShopDeatilPage> {
+class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
   var _latitude;
   var _longitude;
   var _provinceName;
@@ -52,13 +52,13 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
   }
 
   _initData() async {
-    if (CommonUtils.isEmpty(GlobalConfig.prefs.getString("latitude"))) {
-      await GlobalConfig.initUserLocationWithPermission(count: 0);
-      _latitude = GlobalConfig.prefs.getString("latitude");
-      _longitude = GlobalConfig.prefs.getString("longitude");
+    if (KeTaoFeaturedCommonUtils.isEmpty(KeTaoFeaturedGlobalConfig.prefs.getString("latitude"))) {
+      await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
+      _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
+      _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
     } else {
-      _latitude = GlobalConfig.prefs.getString("latitude");
-      _longitude = GlobalConfig.prefs.getString("longitude");
+      _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
+      _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
     }
 
     var result = await HttpManage.getShopInfo(
@@ -91,7 +91,7 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
             _showProfitWarningText = false;
             _storeImg = result.data.storeImg;
             _storeLogo = result.data.storeLogo;
-            if (!CommonUtils.isEmpty(result.data.storeLogoUrl)) {
+            if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.storeLogoUrl)) {
               var netImage = Image.network(
                 result.data.storeLogoUrl,
                 width: ScreenUtil().setWidth(327),
@@ -100,7 +100,7 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
               );
               images.add(netImage);
             }
-            if (!CommonUtils.isEmpty(result.data.storeImgUrl)) {
+            if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.storeImgUrl)) {
               var netImage = Image.network(
                 result.data.storeImgUrl,
                 width: ScreenUtil().setWidth(327),
@@ -189,7 +189,7 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
                           borderRadius: BorderRadius.circular(
                             ScreenUtil().setWidth(30),
                           ),
-                          child: MyOctoImage(
+                          child: KeTaoFeaturedMyOctoImage(
                             image: "$_shopImageUrl",
                             width: ScreenUtil().setWidth(1065),
                             height: ScreenUtil().setWidth(700),
@@ -231,7 +231,7 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
                                           margin: EdgeInsets.only(
                                             right: ScreenUtil().setWidth(8),
                                           ),
-                                          child: MyOctoImage(
+                                          child: KeTaoFeaturedMyOctoImage(
                                             image: "$_shopLocationIconUrl",
                                             width: ScreenUtil().setWidth(33),
                                             height: ScreenUtil().setWidth(42),
@@ -286,17 +286,17 @@ class _ShopDeatilPageState extends State<ShopDeatilPage> {
                 onTap: () {
                   if (widget.isOwnShop) {
                     ///进入商家后台
-                    NavigatorUtils.navigatorRouter(
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
                       context,
-                      ShopBackstagePage(
+                      KeTaoFeaturedShopBackstagePage(
                         shopId: widget.shopId,
                       ),
                     );
                   } else {
                     ///进入支付页面
-                    NavigatorUtils.navigatorRouter(
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
                         context,
-                        ShopPaymentPage(
+                        KeTaoFeaturedShopPaymentPage(
                           shopId: widget.shopId,
                           shopName: _shopName,
                           shopCode: _shopCode,

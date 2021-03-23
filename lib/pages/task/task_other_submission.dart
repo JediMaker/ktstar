@@ -16,8 +16,8 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class TaskOtherSubmissionPage extends StatefulWidget {
-  TaskOtherSubmissionPage(
+class KeTaoFeaturedTaskOtherSubmissionPage extends StatefulWidget {
+  KeTaoFeaturedTaskOtherSubmissionPage(
       {Key key, @required this.taskId, this.pageType = 0, this.comId})
       : super(key: key);
   final String title = "提交截图审核";
@@ -34,7 +34,7 @@ class TaskOtherSubmissionPage extends StatefulWidget {
       _TaskOtherSubmissionPageState();
 }
 
-class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
+class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissionPage> {
   //List<Asset> images2 = List<Asset>();
   List<Image> images = List<Image>();
   List<String> imageUrls = List<String>();
@@ -176,7 +176,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
 
                 }*/
                 _indexVisible = false;
-                CommonUtils.requestPermission(Permission.photos,
+                KeTaoFeaturedCommonUtils.requestPermission(Permission.photos,
                     _onButtonPressed(ImageSource.gallery, context: context));
               },
               child: Image.asset(
@@ -192,7 +192,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return TaskGalleryPage(
+                return KeTaoFeaturedTaskGalleryPage(
                   images: images,
                   index: index,
                   type: 1,
@@ -305,8 +305,8 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           if (images.length == 0) {
             return;
           }
-          if (_needRemark && CommonUtils.isEmpty(_remark)) {
-            CommonUtils.showToast("任务备注不能为空！");
+          if (_needRemark && KeTaoFeaturedCommonUtils.isEmpty(_remark)) {
+            KeTaoFeaturedCommonUtils.showToast("任务备注不能为空！");
             return;
           }
           String imgIds = allImgIds.join(",");
@@ -315,22 +315,22 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                 remark: _remark);
             if (result.status) {
-              CommonUtils.showToast("提交成功");
-              NavigatorUtils.navigatorRouterAndRemoveUntil(
-                  context, TaskIndexPage());
+              KeTaoFeaturedCommonUtils.showToast("提交成功");
+              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, KeTaoFeaturedTaskIndexPage());
             } else {
-              CommonUtils.showToast(result.errMsg);
+              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
           } else {
             ///重新提交任务
             var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                 remark: _remark);
             if (result.status) {
-              CommonUtils.showToast("提交成功");
-              NavigatorUtils.navigatorRouterAndRemoveUntil(
-                  context, TaskIndexPage());
+              KeTaoFeaturedCommonUtils.showToast("提交成功");
+              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, KeTaoFeaturedTaskIndexPage());
             } else {
-              CommonUtils.showToast(result.errMsg);
+              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
 
             ///
@@ -343,8 +343,8 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: images.length == 0
-                  ? GlobalConfig.taskHeadDisableColor
-                  : GlobalConfig.taskHeadColor,
+                  ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
+                  : KeTaoFeaturedGlobalConfig.taskHeadColor,
               /*gradient: LinearGradient(
                   colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
               borderRadius: BorderRadius.circular(48)),
@@ -373,16 +373,16 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 /*color: _imageFile == null
-                    ? GlobalConfig.taskHeadDisableColor
-                    : GlobalConfig.taskHeadColor,*/
+                    ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
+                    : KeTaoFeaturedGlobalConfig.taskHeadColor,*/
                 /*gradient: LinearGradient(
                     colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                border: Border.all(color: GlobalConfig.taskHeadColor),
+                border: Border.all(color: KeTaoFeaturedGlobalConfig.taskHeadColor),
                 borderRadius: BorderRadius.circular(48)),
             child: Text(
               '重新上传',
               style: TextStyle(
-                  color: GlobalConfig.taskHeadColor,
+                  color: KeTaoFeaturedGlobalConfig.taskHeadColor,
                   fontSize: ScreenUtil().setSp(48)),
             ),
           ),
@@ -415,7 +415,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
             ),
             centerTitle: true,
             elevation: 0,
-            backgroundColor: GlobalConfig.taskHeadColor,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(
@@ -517,7 +517,7 @@ class _TaskOtherSubmissionPageState extends State<TaskOtherSubmissionPage> {
                   ),
                   buildSubmitButton(),
 //                buildUploadtButton(),
-                  /* MyOctoImage(
+                  /* KeTaoFeaturedMyOctoImage(
                     imageUrl: "",
                   ),*/
                 ],

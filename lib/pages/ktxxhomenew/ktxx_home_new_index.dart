@@ -83,8 +83,8 @@ import 'package:url_launcher/url_launcher.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 ///拼多多首页
-class HomeIndexPage extends StatefulWidget {
-  HomeIndexPage({Key key}) : super(key: key);
+class KeTaoFeaturedHomeIndexPage extends StatefulWidget {
+  KeTaoFeaturedHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
@@ -99,7 +99,7 @@ class HomeIndexPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _HomeIndexPageState extends State<HomeIndexPage>
+class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
@@ -166,7 +166,8 @@ class _HomeIndexPageState extends State<HomeIndexPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setHeight(100),
@@ -206,7 +207,8 @@ class _HomeIndexPageState extends State<HomeIndexPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedTaskMessagePage());
               },
               child: CachedNetworkImage(
                 width: ScreenUtil().setWidth(66),
@@ -224,7 +226,7 @@ class _HomeIndexPageState extends State<HomeIndexPage>
 //分类页签
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
-    if (!CommonUtils.isEmpty(cats)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
       if (cats[0].catName != '首页') {
         HomePddCategoryDataCat catzero = HomePddCategoryDataCat();
         catzero.catName = '首页';
@@ -268,15 +270,15 @@ class _HomeIndexPageState extends State<HomeIndexPage>
 //分类下对应页面
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
-    if (!CommonUtils.isEmpty(cats)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         if ('首页' == classify.catName) {
           tabViews.add(
-            HomeTabPage(pddHomeData: _homeData),
+            KeTaoFeaturedHomeTabPage(pddHomeData: _homeData),
           );
         } else {
-          tabViews.add(GoodsListPage(
+          tabViews.add(KeTaoFeaturedGoodsListPage(
             firstId: classify.catId.toString(),
             showAppBar: false,
           ));
@@ -340,12 +342,12 @@ class _HomeIndexPageState extends State<HomeIndexPage>
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
-                      if (CommonUtils.isEmpty(url)) {
+                      if (KeTaoFeaturedCommonUtils.isEmpty(url)) {
                         return;
                       }
-                      NavigatorUtils.navigatorRouter(
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
                           this.context,
-                          WebViewPluginPage(
+                          KeTaoFeaturedWebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
                             title: "拼多多",
@@ -355,7 +357,7 @@ class _HomeIndexPageState extends State<HomeIndexPage>
 
                     ///
                   } else {
-                    CommonUtils.showToast(result.errMsg);
+                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                   }
                 },
               ),
@@ -366,10 +368,10 @@ class _HomeIndexPageState extends State<HomeIndexPage>
 
 //初始化精选tab数据
   Future _initData() async {
-    /*if (!GlobalConfig.isLogin()) {
-      CommonUtils.showToast("未获取到登录信息，，请登录！");
+    /*if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+      KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        NavigatorUtils.navigatorRouter(context, LoginPage());
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
       });
       return;
     }
@@ -418,7 +420,7 @@ class _HomeIndexPageState extends State<HomeIndexPage>
         });
       }
     } else {
-      CommonUtils.showToast("${result.errMsg}");
+      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -442,7 +444,7 @@ class _HomeIndexPageState extends State<HomeIndexPage>
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 2,
               isScrollable: true,
-              indicator: RoundUnderlineTabIndicator(
+              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Colors.white,
@@ -469,7 +471,7 @@ class _HomeIndexPageState extends State<HomeIndexPage>
                 print(('onRefresh'));
               },
               child: Center(
-                child: FeaturedTabPage(prodproducts),
+                child: KeTaoFeaturedFeaturedTabPage(prodproducts),
               ),
 //              child: _buildTabNewsList(_newsKey, _newsList),
             ),

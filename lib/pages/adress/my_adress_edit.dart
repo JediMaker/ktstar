@@ -12,13 +12,13 @@ import 'package:star/utils/common_utils.dart';
 import '../../global_config.dart';
 import 'my_adress.dart';
 
-class AddressDetailPage extends StatefulWidget {
+class KeTaoFeaturedAddressDetailPage extends StatefulWidget {
   var addressId;
   String defaultAddressId;
   String title;
   int type; //0、订单选择地址  1、地址编辑修改
 
-  AddressDetailPage({
+  KeTaoFeaturedAddressDetailPage({
     @required this.addressId,
     @required this.defaultAddressId,
     @required this.type = 1,
@@ -30,7 +30,7 @@ class AddressDetailPage extends StatefulWidget {
   _AddressDetailPageState createState() => _AddressDetailPageState();
 }
 
-class _AddressDetailPageState extends State<AddressDetailPage>
+class _AddressDetailPageState extends State<KeTaoFeaturedAddressDetailPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   String defaultAddressId;
@@ -131,7 +131,7 @@ class _AddressDetailPageState extends State<AddressDetailPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
         actions: <Widget>[
           GestureDetector(
@@ -148,30 +148,30 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                   ),
                 )),
             onTap: () async {
-              if (CommonUtils.isEmpty(
+              if (KeTaoFeaturedCommonUtils.isEmpty(
                     _unameController.value.text,
                   ) ||
-                  CommonUtils.isEmpty(
+                  KeTaoFeaturedCommonUtils.isEmpty(
                     _phoneController.value.text,
                   ) ||
-                  CommonUtils.isEmpty(
+                  KeTaoFeaturedCommonUtils.isEmpty(
                     _province,
                   ) ||
-                  CommonUtils.isEmpty(
+                  KeTaoFeaturedCommonUtils.isEmpty(
                     _city,
                   ) ||
-                  CommonUtils.isEmpty(
+                  KeTaoFeaturedCommonUtils.isEmpty(
                     _county,
                   ) ||
-                  CommonUtils.isEmpty(_addressDetailController.value.text)) {
+                  KeTaoFeaturedCommonUtils.isEmpty(_addressDetailController.value.text)) {
                 Fluttertoast.showToast(
                     msg: "请检查填写的信息是否完整！",
                     textColor: Colors.white,
                     backgroundColor: Colors.grey);
                 return;
               }
-              if (!CommonUtils.isPhoneLegal(_phoneController.value.text)) {
-                CommonUtils.showSimplePromptDialog(
+              if (!KeTaoFeaturedCommonUtils.isPhoneLegal(_phoneController.value.text)) {
+                KeTaoFeaturedCommonUtils.showSimplePromptDialog(
                     context, "温馨提示", "请输入正确的手机号");
                 return;
               }
@@ -212,46 +212,46 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                       textColor: Colors.white,
                       fontSize: 16.0);*/
                   Navigator.of(context).pop(true);
-                  /*  NavigatorUtils.navigatorRouterReplaceMent(
+                  /*  KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
                       context,
-                      AddressListPage(
+                      KeTaoFeaturedAddressListPage(
                         type: widget.type,
                       ));*/
                   /*Navigator.of(context)
                       .push(new MaterialPageRoute(builder: (context) {
-                    return new AddressListPage(
+                    return new KeTaoFeaturedAddressListPage(
                       type: widget.type,
                     );
                   }));
                   Navigator.of(context).pop();*/
                 } else {
-                  CommonUtils.showToast("${result.errMsg}");
+                  KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
                 }
               } else {
-                if (CommonUtils.isEmpty(
+                if (KeTaoFeaturedCommonUtils.isEmpty(
                       _unameController.value.text,
                     ) ||
-                    CommonUtils.isEmpty(
+                    KeTaoFeaturedCommonUtils.isEmpty(
                       _phoneController.value.text,
                     ) ||
-                    CommonUtils.isEmpty(
+                    KeTaoFeaturedCommonUtils.isEmpty(
                       _province,
                     ) ||
-                    CommonUtils.isEmpty(
+                    KeTaoFeaturedCommonUtils.isEmpty(
                       _city,
                     ) ||
-                    CommonUtils.isEmpty(
+                    KeTaoFeaturedCommonUtils.isEmpty(
                       _county,
                     ) ||
-                    CommonUtils.isEmpty(_addressDetailController.value.text)) {
+                    KeTaoFeaturedCommonUtils.isEmpty(_addressDetailController.value.text)) {
                   Fluttertoast.showToast(
                       msg: "请检查填写的信息是否完整！",
                       textColor: Colors.white,
                       backgroundColor: Colors.grey);
                   return;
                 }
-                if (!CommonUtils.isPhoneLegal(_phoneController.value.text)) {
-                  CommonUtils.showSimplePromptDialog(
+                if (!KeTaoFeaturedCommonUtils.isPhoneLegal(_phoneController.value.text)) {
+                  KeTaoFeaturedCommonUtils.showSimplePromptDialog(
                       context, "温馨提示", "请输入正确的手机号");
                   return;
                 }
@@ -269,21 +269,21 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                       msg: "地址添加成功！",
                       textColor: Colors.white,
                       backgroundColor: Colors.grey);
-                  /*  NavigatorUtils.navigatorRouterReplaceMent(
+                  /*  KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
                       context,
-                      AddressListPage(
+                      KeTaoFeaturedAddressListPage(
                         type: widget.type,
                       ));*/
                   Navigator.of(context).pop(true);
                   /*Navigator.of(context)
                       .push(new MaterialPageRoute(builder: (context) {
-                    return new AddressListPage(
+                    return new KeTaoFeaturedAddressListPage(
                       type: widget.type,
                     );
                   }));
                   Navigator.of(context).pop();*/
                 } else {
-                  CommonUtils.showToast("${result.errMsg}");
+                  KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
                 }
               }
             },
@@ -311,14 +311,14 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                       fontSize: ScreenUtil().setSp(42),
                       color: _textGray,
                     ),
-                    suffix: MyOctoImage(
+                    suffix: KeTaoFeaturedMyOctoImage(
                       image:
                           "https://alipic.lanhuapp.com/xd99452e46-4542-4a53-b6ca-adfdec2bef69",
                       width: ScreenUtil().setWidth(45),
                       height: ScreenUtil().setHeight(48),
                     ),
 /*
-                    suffix: MyOctoImage(
+                    suffix: KeTaoFeaturedMyOctoImage(
                       image:
                           "https://alipic.lanhuapp.com/xd99452e46-4542-4a53-b6ca-adfdec2bef69",
                       width: ScreenUtil().setWidth(45),
@@ -388,7 +388,7 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            '${CommonUtils.isEmpty(_province) ? '请选择省市区' : '$_province $_city $_county'}',
+                            '${KeTaoFeaturedCommonUtils.isEmpty(_province) ? '请选择省市区' : '$_province $_city $_county'}',
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(42),
                             ),
@@ -480,15 +480,15 @@ class _AddressDetailPageState extends State<AddressDetailPage>
                             msg: "地址删除成功！",
                             textColor: Colors.white,
                             backgroundColor: Colors.grey);
-                        /*NavigatorUtils.navigatorRouterReplaceMent(
+                        /*KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
                             context,
-                            AddressListPage(
+                            KeTaoFeaturedAddressListPage(
                               type: 1,
                             ));*/
                         Navigator.of(context).pop(true);
                         /* Navigator.of(context)
                             .push(new MaterialPageRoute(builder: (context) {
-                          return new AddressListPage(
+                          return new KeTaoFeaturedAddressListPage(
                             type: 1,
                           );
                         }));*/
@@ -528,7 +528,7 @@ class _AddressDetailPageState extends State<AddressDetailPage>
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return JDAddressDialog(
+          return KeTaoFeaturedJDAddressDialog(
               onSelected:
                   (province, city, county, provinceId, cityId, countyId) async {
                 var address =

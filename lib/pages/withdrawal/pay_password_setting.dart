@@ -10,10 +10,10 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class PayPasswordSettingPage extends StatefulWidget {
+class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
   bool refreshCheckOutCounterPage;
 
-  PayPasswordSettingPage(
+  KeTaoFeaturedPayPasswordSettingPage(
       {Key key,
       this.pageType = 0,
       this.isModifyType = false,
@@ -39,7 +39,7 @@ class PayPasswordSettingPage extends StatefulWidget {
   _PayPasswordSettingPageState createState() => _PayPasswordSettingPageState();
 }
 
-class _PayPasswordSettingPageState extends State<PayPasswordSettingPage> {
+class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSettingPage> {
   var _titieText = "";
   var _descText = "";
   bool _canSubmit = false;
@@ -96,7 +96,7 @@ class _PayPasswordSettingPageState extends State<PayPasswordSettingPage> {
                   },
                 ),
                 centerTitle: true,
-                backgroundColor: GlobalConfig.taskNomalHeadColor,
+                backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
                 elevation: 0,
               ),
               body: Container(
@@ -211,9 +211,9 @@ class _PayPasswordSettingPageState extends State<PayPasswordSettingPage> {
                                   invokeSetPayPassword(context);
                                 } else {
                                   //确认密码
-                                  NavigatorUtils.navigatorRouterReplaceMent(
+                                  KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
                                       context,
-                                      PayPasswordSettingPage(
+                                      KeTaoFeaturedPayPasswordSettingPage(
                                         password: _currentPassword,
                                         refreshCheckOutCounterPage:
                                             widget.refreshCheckOutCounterPage,
@@ -224,7 +224,7 @@ class _PayPasswordSettingPageState extends State<PayPasswordSettingPage> {
                                 break;
                               case 1:
                                 if (widget.password != _currentPassword) {
-                                  CommonUtils.showToast("两次输入的密码不一致");
+                                  KeTaoFeaturedCommonUtils.showToast("两次输入的密码不一致");
                                   return;
                                 }
                                 invokeSetPayPassword(context);
@@ -272,15 +272,15 @@ class _PayPasswordSettingPageState extends State<PayPasswordSettingPage> {
     if (result.status) {
       Navigator.of(context).pop();
       if (widget.isModifyType) {
-        CommonUtils.showToast("修改支付密码成功！");
+        KeTaoFeaturedCommonUtils.showToast("修改支付密码成功！");
         return;
       }
-      CommonUtils.showToast("设置支付密码成功！");
+      KeTaoFeaturedCommonUtils.showToast("设置支付密码成功！");
       if (widget.refreshCheckOutCounterPage) {
         bus.emit("refreshCheckOutCounterPage", true);
       }
     } else {
-      CommonUtils.showToast("${result.errMsg}");
+      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -289,15 +289,15 @@ class _PayPasswordSettingPageState extends State<PayPasswordSettingPage> {
     var result = await HttpManage.checkPayPassword(_currentPassword);
     EasyLoading.dismiss();
     if (result.status) {
-      NavigatorUtils.navigatorRouterReplaceMent(
+      KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
           context,
-          PayPasswordSettingPage(
+          KeTaoFeaturedPayPasswordSettingPage(
             password: _currentPassword,
             pageType: 0,
             isModifyType: true,
           ));
     } else {
-      CommonUtils.showToast("${result.errMsg}");
+      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
     }
   }
 }

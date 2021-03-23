@@ -10,15 +10,15 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
-class TaskMessagePage extends StatefulWidget {
-  TaskMessagePage({Key key}) : super(key: key);
+class KeTaoFeaturedTaskMessagePage extends StatefulWidget {
+  KeTaoFeaturedTaskMessagePage({Key key}) : super(key: key);
   final String title = "我的消息";
 
   @override
   _TaskMessagePageState createState() => _TaskMessagePageState();
 }
 
-class _TaskMessagePageState extends State<TaskMessagePage> {
+class _TaskMessagePageState extends State<KeTaoFeaturedTaskMessagePage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";
   int page = 1;
@@ -48,7 +48,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -93,7 +93,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: EasyRefresh.custom(
@@ -116,7 +116,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
             }
           },
           emptyWidget:
-              _msgList == null || _msgList.length == 0 ? NoDataPage() : null,
+              _msgList == null || _msgList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
           slivers: <Widget>[buildCenter()],
         ) // This trailing comma makes auto-formatting nicer for build methods.
         );
@@ -155,7 +155,7 @@ class _TaskMessagePageState extends State<TaskMessagePage> {
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: GlobalConfig.LAYOUT_MARGIN,
+          horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
           vertical: ScreenUtil().setHeight(16)),
       padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
       decoration: BoxDecoration(

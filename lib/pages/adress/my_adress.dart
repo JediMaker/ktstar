@@ -8,11 +8,11 @@ import '../../global_config.dart';
 import 'my_adress_edit.dart';
 import 'package:star/models/address_list_entity.dart';
 
-class AddressListPage extends StatefulWidget {
+class KeTaoFeaturedAddressListPage extends StatefulWidget {
   int type; //0、订单选择地址  1、地址编辑修改  2退换货地址修改
   String orderId;
 
-  AddressListPage({
+  KeTaoFeaturedAddressListPage({
     @required this.type = 1,
     this.orderId,
     Key key,
@@ -22,7 +22,7 @@ class AddressListPage extends StatefulWidget {
   _AddressListPageState createState() => _AddressListPageState();
 }
 
-class _AddressListPageState extends State<AddressListPage>
+class _AddressListPageState extends State<KeTaoFeaturedAddressListPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -77,7 +77,7 @@ class _AddressListPageState extends State<AddressListPage>
             if (result.status) {
               Navigator.of(context).pop(true);
             } else {
-              CommonUtils.showToast("${result.errMsg}");
+              KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
             }
           } else if (widget.type == 2) {
             // todo
@@ -86,12 +86,12 @@ class _AddressListPageState extends State<AddressListPage>
             if (result.status) {
               Navigator.of(context).pop(true);
             } else {
-              CommonUtils.showToast("${result.errMsg}");
+              KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
             }*/
           } else {
-            bool result = await NavigatorUtils.navigatorRouter(
+            bool result = await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                AddressDetailPage(
+                KeTaoFeaturedAddressDetailPage(
                     type: widget.type,
                     addressId: itemId,
                     defaultAddressId: defaultAddressId));
@@ -106,7 +106,7 @@ class _AddressListPageState extends State<AddressListPage>
 
             /*Navigator.of(context)
                 .push(new MaterialPageRoute(builder: (context) {
-              return new AddressDetailPage(
+              return new KeTaoFeaturedAddressDetailPage(
                   type: widget.type,
                   address: item,
                   defaultAddressId: defaultAddressId);
@@ -193,9 +193,9 @@ class _AddressListPageState extends State<AddressListPage>
         trailing: Container(
           child: GestureDetector(
             onTap: () async {
-              bool result = await NavigatorUtils.navigatorRouter(
+              bool result = await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                   context,
-                  AddressDetailPage(
+                  KeTaoFeaturedAddressDetailPage(
                       type: widget.type,
                       addressId: itemId,
                       defaultAddressId: defaultAddressId));
@@ -210,7 +210,7 @@ class _AddressListPageState extends State<AddressListPage>
 
               /*Navigator.of(context)
                   .push(new MaterialPageRoute(builder: (context) {
-                return new AddressDetailPage(
+                return new KeTaoFeaturedAddressDetailPage(
                     type: widget.type,
                     address: item,
                     defaultAddressId: defaultAddressId);
@@ -273,7 +273,7 @@ class _AddressListPageState extends State<AddressListPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
         actions: <Widget>[
           GestureDetector(
@@ -290,9 +290,9 @@ class _AddressListPageState extends State<AddressListPage>
                   ),
                 )),
             onTap: () async {
-              bool result = await NavigatorUtils.navigatorRouter(
+              bool result = await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                   context,
-                  AddressDetailPage(
+                  KeTaoFeaturedAddressDetailPage(
                       type: widget.type,
 //                        address: AddressBeanDataAddress(),
                       addressId: null,
@@ -304,7 +304,7 @@ class _AddressListPageState extends State<AddressListPage>
 
               /*Navigator.of(context)
                   .push(new MaterialPageRoute(builder: (context) {
-                return new AddressDetailPage(
+                return new KeTaoFeaturedAddressDetailPage(
                     type: widget.type,
                     address: AddressBeanDataAddress(),
                     defaultAddressId: null);

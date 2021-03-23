@@ -11,12 +11,12 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 // ignore: must_be_immutable
-class ClassifyListPage extends StatefulWidget {
+class KeTaoFeaturedClassifyListPage extends StatefulWidget {
   @override
   _ClassifyListPageState createState() => _ClassifyListPageState();
 }
 
-class _ClassifyListPageState extends State<ClassifyListPage>
+class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;
   List<CategoryBeanData> rightListData;
@@ -44,7 +44,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(rightListData)) {
+      if (!KeTaoFeaturedCommonUtils.isEmpty(rightListData)) {
       } else {
         _initData(0);
       }
@@ -69,7 +69,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
         ),*/
         centerTitle: true,
         brightness: Brightness.light,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: Row(
@@ -181,9 +181,9 @@ class _ClassifyListPageState extends State<ClassifyListPage>
               return GestureDetector(
                 onTap: () {
                   if (category != null) {
-                    NavigatorUtils.navigatorRouter(
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
                         context,
-                        GoodsListPage(
+                        KeTaoFeaturedGoodsListPage(
                           categoryId: category.id,
                           title: category.name,
                         ));
@@ -194,7 +194,7 @@ class _ClassifyListPageState extends State<ClassifyListPage>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      MyOctoImage(
+                      KeTaoFeaturedMyOctoImage(
                         fit: BoxFit.cover,
                         image: category.imgUrl == null
                             ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 //import 'package:lcfarm_flutter_umeng/lcfarm_flutter_umeng.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';
 
-class AppAnalysis extends NavigatorObserver {
+class KeTaoFeaturedAppAnalysis extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
     try {

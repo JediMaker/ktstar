@@ -17,8 +17,8 @@ import 'package:star/bus/my_event_bus.dart';
 import '../../global_config.dart';
 import 'goods_detail.dart';
 
-class HomeGoodsListPage extends StatefulWidget {
-  HomeGoodsListPage(
+class KeTaoFeaturedHomeGoodsListPage extends StatefulWidget {
+  KeTaoFeaturedHomeGoodsListPage(
       {Key key, this.title = "今日爆款", this.categoryId = '', this.type})
       : super(key: key);
   String title = "今日爆款";
@@ -29,7 +29,7 @@ class HomeGoodsListPage extends StatefulWidget {
   _HomeGoodsListPageState createState() => _HomeGoodsListPageState();
 }
 
-class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
+class _HomeGoodsListPageState extends State<KeTaoFeaturedHomeGoodsListPage> {
   int page = 1;
   int count = 1;
   EasyRefreshController _refreshController;
@@ -69,7 +69,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -106,7 +106,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     ///解决首次数据加载失败问题
     ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(goodsList)) {
+      if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
       } else {
         print("$context WidgetsBinding_initData");
         if (count < 5) {
@@ -142,7 +142,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
 //          },
 //        ),
 //        centerTitle: true,
-//        backgroundColor: GlobalConfig.taskNomalHeadColor,
+//        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
 //        elevation: 0,
 //      ),
       body:
@@ -197,7 +197,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
 //                    width: 30.0,
 //                    height: 30.0,
 //                    /* child: SpinKitCircle(
-//                            color: GlobalConfig.colorPrimary,
+//                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
 //                            size: 30.0,
 //                          ),*/
 //                  ),
@@ -279,9 +279,9 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        NavigatorUtils.navigatorRouter(
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
             context,
-            GoodsDetailPage(
+            KeTaoFeaturedGoodsDetailPage(
               productId: id,
             ));
       },
@@ -319,7 +319,7 @@ class _HomeGoodsListPageState extends State<HomeGoodsListPage> {
                       topRight: Radius.circular(ScreenUtil().setWidth(30)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
-                    child: MyOctoImage(
+                    child: KeTaoFeaturedMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(523),

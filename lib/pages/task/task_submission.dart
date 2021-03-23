@@ -13,8 +13,8 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class TaskSubmissionPage extends StatefulWidget {
-  TaskSubmissionPage(
+class KeTaoFeaturedTaskSubmissionPage extends StatefulWidget {
+  KeTaoFeaturedTaskSubmissionPage(
       {Key key, @required this.taskId, this.pageType = 0, this.comId})
       : super(key: key);
   final String title = "提交截图审核";
@@ -30,7 +30,7 @@ class TaskSubmissionPage extends StatefulWidget {
   _TaskSubmissionPageState createState() => _TaskSubmissionPageState();
 }
 
-class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
+class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
   PickedFile _imageFile;
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
@@ -99,14 +99,14 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
             var imageId = entity.data["id"].toString();
             var result = await HttpManage.taskReSubmit(widget.comId, imageId);
             if (result.status) {
-              CommonUtils.showToast("提交成功");
-              NavigatorUtils.navigatorRouterAndRemoveUntil(
-                  context, TaskIndexPage());
+              KeTaoFeaturedCommonUtils.showToast("提交成功");
+              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, KeTaoFeaturedTaskIndexPage());
             } else {
-              CommonUtils.showToast(result.errMsg);
+              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
           } else {
-            CommonUtils.showToast(entity.errMsg);
+            KeTaoFeaturedCommonUtils.showToast(entity.errMsg);
           }
         },
         child: Container(
@@ -116,8 +116,8 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: _imageFile == null
-                  ? GlobalConfig.taskHeadDisableColor
-                  : GlobalConfig.taskHeadColor,
+                  ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
+                  : KeTaoFeaturedGlobalConfig.taskHeadColor,
               /*gradient: LinearGradient(
                   colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
               borderRadius: BorderRadius.circular(48)),
@@ -148,16 +148,16 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 /*color: _imageFile == null
-                    ? GlobalConfig.taskHeadDisableColor
-                    : GlobalConfig.taskHeadColor,*/
+                    ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
+                    : KeTaoFeaturedGlobalConfig.taskHeadColor,*/
                 /*gradient: LinearGradient(
                     colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                border: Border.all(color: GlobalConfig.taskHeadColor),
+                border: Border.all(color: KeTaoFeaturedGlobalConfig.taskHeadColor),
                 borderRadius: BorderRadius.circular(48)),
             child: Text(
               '重新上传',
               style: TextStyle(
-                  color: GlobalConfig.taskHeadColor,
+                  color: KeTaoFeaturedGlobalConfig.taskHeadColor,
                   fontSize: ScreenUtil().setSp(48)),
             ),
           ),
@@ -187,7 +187,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
           ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: GlobalConfig.taskHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 46, vertical: 16),
@@ -206,7 +206,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                                 height: ScreenUtil().setHeight(695),
                                 fit: BoxFit.fill,
                               )
-                            : MyOctoImage(image: imgUrl)),
+                            : KeTaoFeaturedMyOctoImage(image: imgUrl)),
                     Visibility(
                       visible: _imageFile != null,
                       child: Image.file(
@@ -241,7 +241,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                       visible: _imageFile == null,
                       child: GestureDetector(
                           onTap: () async {
-                            CommonUtils.requestPermission(
+                            KeTaoFeaturedCommonUtils.requestPermission(
                                 Permission.photos,
                                 _onButtonPressed(ImageSource.gallery,
                                     context: context));
@@ -278,7 +278,7 @@ class _TaskSubmissionPageState extends State<TaskSubmissionPage> {
                 ),
                 buildSubmitButton(),
                 buildUploadtButton(),
-                /* MyOctoImage(
+                /* KeTaoFeaturedMyOctoImage(
                   imageUrl: "",
                 ),*/
               ],

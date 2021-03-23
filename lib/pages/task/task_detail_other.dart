@@ -19,10 +19,10 @@ import 'dart:math' as math;
 
 import '../../global_config.dart';
 
-class TaskDetailOtherPage extends StatefulWidget {
+class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
   String taskId;
 
-  TaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
+  KeTaoFeaturedTaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
       : super(key: key);
   final String title = "任务详情";
   int pageType;
@@ -31,7 +31,7 @@ class TaskDetailOtherPage extends StatefulWidget {
   _TaskDetailOtherPageState createState() => _TaskDetailOtherPageState();
 }
 
-class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
+class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";
   int page = 1;
@@ -53,7 +53,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
           showBtn = result.data.showBtn;
         });
       } else {
-        CommonUtils.showToast(result.errMsg);
+        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
       }
     }
     try {
@@ -99,7 +99,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
             ),
             centerTitle: true,
             brightness: Brightness.light,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
           body: SingleChildScrollView(
@@ -168,9 +168,9 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
         child: Ink(
           child: InkWell(
               onTap: () async {
-                NavigatorUtils.navigatorRouter(
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
                     context,
-                    TaskOtherSubmissionPage(
+                    KeTaoFeaturedTaskOtherSubmissionPage(
                       taskId: widget.taskId,
                       pageType: widget.pageType,
                     ));
@@ -235,7 +235,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return TaskGalleryPage(
+                return KeTaoFeaturedTaskGalleryPage(
                   galleryItems: images,
                   index: index,
                 );
@@ -244,7 +244,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
             child: Container(
                 width: ScreenUtil().setWidth(730),
 //        width: MediaQuery.of(context).size.width / 2.5,
-                child: new MyOctoImage(
+                child: new KeTaoFeaturedMyOctoImage(
                   image: url,
                   width: ScreenUtil().setWidth(728),
                   height: ScreenUtil().setHeight(915),
@@ -526,7 +526,7 @@ class _TaskDetailOtherPageState extends State<TaskDetailOtherPage> {
   }
 
   _iSStepDescTextComtainsHtml(String desc) {
-    if (CommonUtils.isEmpty(desc)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(desc)) {
       return false;
     }
     if (desc.contains("</")) {

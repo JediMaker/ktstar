@@ -15,7 +15,7 @@ import 'navigator_utils.dart';
 import 'dart:typed_data';
 import 'dart:convert';
 
-class CommonUtils {
+class KeTaoFeaturedCommonUtils {
   static final double MILLIS_LIMIT = 1000.0;
 
   static final double SECONDS_LIMIT = 60 * MILLIS_LIMIT;
@@ -208,7 +208,7 @@ class CommonUtils {
 
   static Future<Null> showIosPayDialog() {
     Future.delayed(Duration(seconds: 0)).then((onValue) {
-      var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+      var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
       showCupertinoDialog(
           context: context,
           builder: (context) {
@@ -236,7 +236,7 @@ class CommonUtils {
   ///版本更新
   static Future<Null> showUpdateDialog(
       BuildContext context, String contentMsg) {
-    return NavigatorUtils.showGSYDialog(
+    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -271,7 +271,7 @@ class CommonUtils {
               fun();
             } else {
               lastPopTime = DateTime.now();
-              CommonUtils.showToast("请勿重复点击！");
+              KeTaoFeaturedCommonUtils.showToast("请勿重复点击！");
             }
           },
           child: childWidget),
@@ -280,7 +280,7 @@ class CommonUtils {
 
   static Future<Null> showPromptDialog(
       BuildContext context, String title, String contentMsg) {
-    return NavigatorUtils.showGSYDialog(
+    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -319,7 +319,7 @@ class CommonUtils {
 
   static Future<Null> showSimplePromptDialog(
       BuildContext context, String title, String contentMsg) {
-    return NavigatorUtils.showGSYDialog(
+    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -345,7 +345,7 @@ class CommonUtils {
                       },
                       child: new Text(
                         '确定',
-                        style: TextStyle(color: GlobalConfig.colorPrimary),
+                        style: TextStyle(color: KeTaoFeaturedGlobalConfig.colorPrimary),
                       )),
                 ),
               ],
@@ -355,7 +355,7 @@ class CommonUtils {
   }
 
   static Future<Null> showPayPasswordDialog(BuildContext context, orderId) {
-    return NavigatorUtils.showGSYDialog(
+    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -481,7 +481,7 @@ class CommonUtils {
     switch (status) {
       case PermissionStatus.denied:
         print("denied");
-        CommonUtils.showToast("相关功能受限，请设置允许相关权限");
+        KeTaoFeaturedCommonUtils.showToast("相关功能受限，请设置允许相关权限");
         break;
       case PermissionStatus.granted:
         fun;
@@ -491,7 +491,7 @@ class CommonUtils {
       case PermissionStatus.undetermined:
         break;
       case PermissionStatus.permanentlyDenied:
-        CommonUtils.showToast("相关功能受限，请设置允许相关权限");
+        KeTaoFeaturedCommonUtils.showToast("相关功能受限，请设置允许相关权限");
         openAppSettings();
         break;
     }

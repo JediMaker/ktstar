@@ -19,8 +19,8 @@ import 'package:star/pages/shareholders/micro_mine.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class HomePagePage extends StatefulWidget {
-  HomePagePage({Key key}) : super(key: key);
+class KeTaoFeaturedHomePagePage extends StatefulWidget {
+  KeTaoFeaturedHomePagePage({Key key}) : super(key: key);
   final String title = "";
 
 //  return Column(
@@ -86,7 +86,7 @@ class HomePagePage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _HomePagePageState extends State<HomePagePage> {
+class _HomePagePageState extends State<KeTaoFeaturedHomePagePage> {
   UserInfoData userInfoData;
   Widget rootView;
   int SVG_ANGLETYPE_DEG = 2;
@@ -111,7 +111,7 @@ class _HomePagePageState extends State<HomePagePage> {
     if (versionInfo.status) {
       switch (versionInfo.data.wxLogin) {
         case "1": //不显示
-          GlobalConfig.displayThirdLoginInformation = false;
+          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = false;
 
           if (mounted) {
             setState(() {});
@@ -119,7 +119,7 @@ class _HomePagePageState extends State<HomePagePage> {
           break;
 
         case "2": //显示
-          GlobalConfig.displayThirdLoginInformation = true;
+          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = true;
           if (mounted) {
             setState(() {});
           }
@@ -130,26 +130,26 @@ class _HomePagePageState extends State<HomePagePage> {
     if (Platform.isAndroid) {
       if (mounted) {
         setState(() {
-          rootView = TaskListPage();
-//            rootView = HomeIndexPage();
+          rootView = KeTaoFeaturedTaskListPage();
+//            rootView = KeTaoFeaturedHomeIndexPage();
         });
       }
     }
     if (Platform.isIOS) {
 //        setState(() {
-//          print("GlobalConfig.iosCheck=${GlobalConfig.iosCheck}");
+//          print("KeTaoFeaturedGlobalConfig.iosCheck=${KeTaoFeaturedGlobalConfig.iosCheck}");
 //          print("versionInfo.data.whCheck=${versionInfo.data.whCheck}");
 //
 //        });
       if (mounted) {
         setState(() {
-          if (GlobalConfig.iosCheck) {
-            rootView = HomeIndexPage();
+          if (KeTaoFeaturedGlobalConfig.iosCheck) {
+            rootView = KeTaoFeaturedHomeIndexPage();
           } else {
-            rootView = TaskListPage();
-//            w1 = HomeIndexPage();
+            rootView = KeTaoFeaturedTaskListPage();
+//            w1 = KeTaoFeaturedHomeIndexPage();
           }
-//            rootView = HomeIndexPage();
+//            rootView = KeTaoFeaturedHomeIndexPage();
         });
       }
     }
@@ -158,7 +158,7 @@ class _HomePagePageState extends State<HomePagePage> {
   ///展示隐私弹窗
   ///
   showPrivacyDialog(context) {
-    return NavigatorUtils.showGSYDialog(
+    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -184,9 +184,9 @@ class _HomePagePageState extends State<HomePagePage> {
                             WidgetSpan(
                               child: GestureDetector(
                                 onTap: () {
-                                  NavigatorUtils.navigatorRouter(
+                                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                       context,
-                                      WebViewPage(
+                                      KeTaoFeaturedWebViewPage(
                                         initialUrl: APi.AGREEMENT_SERVICES_URL,
                                         showActions: false,
                                         title: "服务协议",
@@ -195,7 +195,8 @@ class _HomePagePageState extends State<HomePagePage> {
                                 child: Text(
                                   "《服务协议》",
                                   style: TextStyle(
-                                      color: GlobalConfig.taskHeadColor,
+                                      color: KeTaoFeaturedGlobalConfig
+                                          .taskHeadColor,
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
@@ -205,9 +206,9 @@ class _HomePagePageState extends State<HomePagePage> {
                             WidgetSpan(
                               child: GestureDetector(
                                 onTap: () {
-                                  NavigatorUtils.navigatorRouter(
+                                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                       context,
-                                      WebViewPage(
+                                      KeTaoFeaturedWebViewPage(
                                         initialUrl: APi.AGREEMENT_PRIVACY_URL,
                                         showActions: false,
                                         title: "隐私政策",
@@ -216,7 +217,8 @@ class _HomePagePageState extends State<HomePagePage> {
                                 child: Text(
                                   "《隐私政策》",
                                   style: TextStyle(
-                                      color: GlobalConfig.taskHeadColor,
+                                      color: KeTaoFeaturedGlobalConfig
+                                          .taskHeadColor,
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
@@ -249,7 +251,8 @@ class _HomePagePageState extends State<HomePagePage> {
                   child: new FlatButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        GlobalConfig.prefs.setBool("isAgreePrivacy", true);
+                        KeTaoFeaturedGlobalConfig.prefs
+                            .setBool("isAgreePrivacy", true);
                       },
                       child: new Text(
                         '同意',
@@ -268,7 +271,7 @@ class _HomePagePageState extends State<HomePagePage> {
   @override
   void initState() {
     super.initState();
-    userInfoData = GlobalConfig.getUserInfo();
+    userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
 //    _initData();
     _initVersionData();
   }
@@ -283,14 +286,14 @@ class _HomePagePageState extends State<HomePagePage> {
     var title = '我的';
     /*  WidgetsBinding.instance.addPostFrameCallback((_) {
       print(
-          "GlobalConfig.iosCheck=${GlobalConfig.iosCheck}");
+          "KeTaoFeaturedGlobalConfig.iosCheck=${KeTaoFeaturedGlobalConfig.iosCheck}");
       if (mounted) {
         setState(() {
-          if (GlobalConfig.iosCheck) {
-            rootView = HomeIndexPage();
+          if (KeTaoFeaturedGlobalConfig.iosCheck) {
+            rootView = KeTaoFeaturedHomeIndexPage();
           } else {
-            rootView = TaskListPage();
-//            w1 = HomeIndexPage();
+            rootView = KeTaoFeaturedTaskListPage();
+//            w1 = KeTaoFeaturedHomeIndexPage();
           }
         });
       }

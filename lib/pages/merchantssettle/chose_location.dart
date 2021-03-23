@@ -13,8 +13,8 @@ import 'package:star/global_config.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-class ChoseLocationPage extends StatefulWidget {
-  ChoseLocationPage({Key key, this.onChoicePoint}) : super(key: key);
+class KeTaoFeaturedChoseLocationPage extends StatefulWidget {
+  KeTaoFeaturedChoseLocationPage({Key key, this.onChoicePoint}) : super(key: key);
   final String title = "";
 
   /**
@@ -26,7 +26,7 @@ class ChoseLocationPage extends StatefulWidget {
   _ChoseLocationPageState createState() => _ChoseLocationPageState();
 }
 
-class _ChoseLocationPageState extends State<ChoseLocationPage> {
+class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
   //地图控制器
   AmapController _amapController;
 
@@ -235,14 +235,14 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
               _longitude = value;
             }
           });
-          if (!CommonUtils.isEmpty(_latitude) &&
-              !CommonUtils.isEmpty(_longitude)) {
+          if (!KeTaoFeaturedCommonUtils.isEmpty(_latitude) &&
+              !KeTaoFeaturedCommonUtils.isEmpty(_longitude)) {
             _localLatLng = LatLng(_latitude, _longitude);
-            if (!CommonUtils.isEmpty(_localLatLng)) {
+            if (!KeTaoFeaturedCommonUtils.isEmpty(_localLatLng)) {
               _searchPoiListWithLatLng(_localLatLng);
             }
           }
-          if (!CommonUtils.isEmpty(_localLatLng)) {
+          if (!KeTaoFeaturedCommonUtils.isEmpty(_localLatLng)) {
             _stopLocation();
           }
         }
@@ -334,7 +334,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                     ),
                     trailing: Visibility(
                       visible: _selextPoiIndex == i,
-                      child: MyOctoImage(
+                      child: KeTaoFeaturedMyOctoImage(
                         image:
                             "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : ""}",
                         width: ScreenUtil().setWidth(67),
@@ -568,14 +568,14 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
               // 地图创建完成回调 (可选)
               onMapCreated: (controller) async {
                 _amapController = controller;
-                if (CommonUtils.isEmpty(
-                    GlobalConfig.prefs.getString("latitude"))) {
-                  await GlobalConfig.initUserLocationWithPermission(count: 0);
+                if (KeTaoFeaturedCommonUtils.isEmpty(
+                    KeTaoFeaturedGlobalConfig.prefs.getString("latitude"))) {
+                  await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
                 } else {
                   _latitude =
-                      double.parse(GlobalConfig.prefs.getString("latitude"));
+                      double.parse(KeTaoFeaturedGlobalConfig.prefs.getString("latitude"));
                   _longitude =
-                      double.parse(GlobalConfig.prefs.getString("longitude"));
+                      double.parse(KeTaoFeaturedGlobalConfig.prefs.getString("longitude"));
                 }
                 //获取所在城市
                 var location = await AmapLocation.instance.fetchLocation();
@@ -750,13 +750,13 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
-                  if (CommonUtils.isEmpty(_localLatLng)) {
+                  if (KeTaoFeaturedCommonUtils.isEmpty(_localLatLng)) {
                     return;
                   }
                   _amapController.setCenterCoordinate(_localLatLng);
                   _searchPoiListWithLatLng(_localLatLng);
                 },
-                child: MyOctoImage(
+                child: KeTaoFeaturedMyOctoImage(
                   image:
                       "https://alipic.lanhuapp.com/xd13751b8a-64b6-4400-b34d-5dc34299199a",
                   width: ScreenUtil().setWidth(167),
@@ -799,7 +799,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                                   controller: _searchController,
                                   focusNode: _searchFocusNode,
                                   onChanged: (value) {
-                                    if (CommonUtils.isEmpty(value)) {
+                                    if (KeTaoFeaturedCommonUtils.isEmpty(value)) {
                                       _searchPoiListWithLatLng(_localLatLng);
                                       return;
                                     }
@@ -814,7 +814,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                               ),
                               Visibility(
                                 visible:
-                                    CommonUtils.isEmpty(_searchController.text),
+                                    KeTaoFeaturedCommonUtils.isEmpty(_searchController.text),
                                 child: GestureDetector(
                                   onTap: () {
                                     _searchFocusNode.requestFocus();
@@ -839,7 +839,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        MyOctoImage(
+                                        KeTaoFeaturedMyOctoImage(
                                           image:
                                               "https://alipic.lanhuapp.com/xd4f7f5e7c-1e62-449a-8967-33ff98c352b5",
                                           width: ScreenUtil().setWidth(41),
@@ -930,7 +930,7 @@ class _ChoseLocationPageState extends State<ChoseLocationPage> {
 
   /// 动态申请定位权限
   void requestPermission() async {
-    await GlobalConfig.initUserLocationWithPermission(count: 0);
+    await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
     /*// 申请权限
     bool hasLocationPermission = await requestLocationPermission();
     if (hasLocationPermission) {

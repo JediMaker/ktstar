@@ -20,30 +20,30 @@ import '../../global_config.dart';
 import 'loading_nomal.dart';
 
 void main() => runApp(MaterialApp(
-        home: WebViewPluginPage(
+        home: KeTaoFeaturedWebViewPluginPage(
       initialUrl: 'https://baidu.com',
     )));
 
 String selectedUrl =
     'https://ms.czb365.com/?platformType=92657653&platformCode=15695657828&t=1606702970.981 ';
 
-class WebViewPluginPage extends StatefulWidget {
+class KeTaoFeaturedWebViewPluginPage extends StatefulWidget {
   var initialUrl;
   var title;
   Color appBarBackgroundColor;
   bool showActions;
 
-  WebViewPluginPage(
+  KeTaoFeaturedWebViewPluginPage(
       {@required this.initialUrl,
       this.title,
       this.showActions = false,
-      this.appBarBackgroundColor = GlobalConfig.taskHeadColor});
+      this.appBarBackgroundColor = KeTaoFeaturedGlobalConfig.taskHeadColor});
 
   @override
   _WebViewPluginPageState createState() => _WebViewPluginPageState();
 }
 
-class _WebViewPluginPageState extends State<WebViewPluginPage> {
+class _WebViewPluginPageState extends State<KeTaoFeaturedWebViewPluginPage> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   var _loadingVisiablity = true;
   bool showToast = true;
@@ -89,7 +89,7 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
         if (canLaunch(url) != null) {
           launch(url, forceSafariVC: false);
         } else {
-          CommonUtils.showToast("未安装相应的客户端");
+          KeTaoFeaturedCommonUtils.showToast("未安装相应的客户端");
         }
       }
       if (url.contains("alipay://") || url.contains("alipays://platformapi")) {
@@ -157,11 +157,11 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
               if (state.url.startsWith("pinduoduo://")) {
                 if (showToast) {
                   showToast = false;
-                  CommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                  KeTaoFeaturedCommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
                   /* Navigator.of(context).pop();
-                  NavigatorUtils.navigatorRouter(
+                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
                       context,
-                      WebViewPluginPage(
+                      KeTaoFeaturedWebViewPluginPage(
                         initialUrl: widget.pinduoduoAlternativeUrl,
                         showActions: true,
                         title: "拼多多",
@@ -169,9 +169,9 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
                       ));*/
                   /*flutterWebViewPlugin
                       .reloadUrl(widget.pinduoduoAlternativeUrl);*/
-                  /*NavigatorUtils.navigatorRouterReplaceMent(
+                  /*KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
                       context,
-                      WebViewPluginPage(
+                      KeTaoFeaturedWebViewPluginPage(
                         initialUrl: widget.pinduoduoAlternativeUrl,
                         showActions: true,
                         title: "拼多多",
@@ -179,7 +179,7 @@ class _WebViewPluginPageState extends State<WebViewPluginPage> {
                       ));*/
                 }
               } else {
-                CommonUtils.showToast("未安装相应的客户端");
+                KeTaoFeaturedCommonUtils.showToast("未安装相应的客户端");
               }
             }
           } catch (e) {}

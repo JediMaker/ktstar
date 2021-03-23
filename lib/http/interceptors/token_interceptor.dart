@@ -35,7 +35,7 @@ class TokenInterceptors extends InterceptorsWrapper {
       if (Platform.isIOS) {
         options.headers["version"] = packageInfo.version;
       }
-      options.headers["token"] = GlobalConfig.getLoginInfo().token;
+      options.headers["token"] = KeTaoFeaturedGlobalConfig.getLoginInfo().token;
     } catch (e) {
       print(e);
     }
@@ -62,46 +62,46 @@ class TokenInterceptors extends InterceptorsWrapper {
       resultBeanEntityFromJson(entity, extractData);
       if (entity.errCode.toString() == "308") {
         response = await getAuthorization(request);
-        if (!CommonUtils.isEmpty(response)) {
+        if (!KeTaoFeaturedCommonUtils.isEmpty(response)) {
           return response;
         }
       }
       if (entity.errCode.toString() == "303" ||
           entity.errCode.toString() == "306") {
-        CommonUtils.showToast("未获取到登录信息，，请登录！");
+        KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
         Future.delayed(Duration(seconds: 1)).then((onValue) async {
-          var context = GlobalConfig.navigatorKey.currentState.overlay.context;
-          await NavigatorUtils.navigatorRouter(context, LoginPage());
+          var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+          await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
           bus.emit("changBottomBar");
           return;
         });
       }
       if (entity.errCode.toString() == "304") {
-        if (GlobalConfig.isLogin()) {
-          GlobalConfig.prefs.remove("hasLogin");
-          GlobalConfig.prefs.remove("token");
-          GlobalConfig.prefs.remove("loginData");
-          GlobalConfig.saveLoginStatus(false);
-          CommonUtils.showToast("登陆状态已过期，请重新登录！");
+        if (KeTaoFeaturedGlobalConfig.isLogin()) {
+          KeTaoFeaturedGlobalConfig.prefs.remove("hasLogin");
+          KeTaoFeaturedGlobalConfig.prefs.remove("token");
+          KeTaoFeaturedGlobalConfig.prefs.remove("loginData");
+          KeTaoFeaturedGlobalConfig.saveLoginStatus(false);
+          KeTaoFeaturedCommonUtils.showToast("登陆状态已过期，请重新登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) async {
             var context =
-                GlobalConfig.navigatorKey.currentState.overlay.context;
-            await NavigatorUtils.navigatorRouter(context, LoginPage());
+                KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+            await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
             bus.emit("changBottomBar");
             return;
           });
         } else {
-          CommonUtils.showToast("未获取到登录信息，，请登录！");
+          KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
           Future.delayed(Duration(seconds: 1)).then((onValue) async {
             var context =
-                GlobalConfig.navigatorKey.currentState.overlay.context;
-            await NavigatorUtils.navigatorRouter(context, LoginPage());
+                KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+            await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
             bus.emit("changBottomBar");
             return;
           });
         }
         /*Future.delayed(Duration(seconds: 0)).then((onValue) {
-          var context = GlobalConfig.navigatorKey.currentState.overlay.context;
+          var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
           showCupertinoDialog(
               context: context,
               builder: (context) {
@@ -123,13 +123,13 @@ class TokenInterceptors extends InterceptorsWrapper {
                     CupertinoDialogAction(
                       child: Text(
                         '登录',
-                        style: TextStyle(color: GlobalConfig.colorPrimary),
+                        style: TextStyle(color: KeTaoFeaturedGlobalConfig.colorPrimary),
                       ),
                       onPressed: () {
-                        GlobalConfig.prefs.remove("hasLogin");
-                        GlobalConfig.saveLoginStatus(false);
-                        NavigatorUtils.navigatorRouterAndRemoveUntil(
-                            context, LoginPage());
+                        KeTaoFeaturedGlobalConfig.prefs.remove("hasLogin");
+                        KeTaoFeaturedGlobalConfig.saveLoginStatus(false);
+                        KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                            context, KeTaoFeaturedLoginPage());
                       },
                     ),
                   ],
@@ -152,11 +152,11 @@ class TokenInterceptors extends InterceptorsWrapper {
   ///获取授权token
   Future<Response> getAuthorization(request) async {
     Response response;
-    if (GlobalConfig.prefs.getBool("canRefreshToken")) {
+    if (KeTaoFeaturedGlobalConfig.prefs.getBool("canRefreshToken")) {
       var result = await HttpManage.referToken(request);
-      if (!CommonUtils.isEmpty(result.data)) {
+      if (!KeTaoFeaturedCommonUtils.isEmpty(result.data)) {
         if (result.status) {
-          request.headers["token"] = GlobalConfig.getLoginInfo().token;
+          request.headers["token"] = KeTaoFeaturedGlobalConfig.getLoginInfo().token;
           try {
             if (request.data is FormData) {
               // https://github.com/flutterchina/dio/issues/482

@@ -5,11 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created by WGH
 ///on 2020/7/23
 ///description:版本更新提示弹窗
-class UpdateDialog extends Dialog {
+class KeTaoFeaturedUpdateDialog extends Dialog {
   final String upDateContent;
   final bool isForce;
 
-  UpdateDialog({this.upDateContent, this.isForce});
+  KeTaoFeaturedUpdateDialog({this.upDateContent, this.isForce});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class UpdateDialog extends Dialog {
             child: Stack(
               alignment: Alignment.topCenter,
               children: <Widget>[
-                MyOctoImage(
+                KeTaoFeaturedMyOctoImage(
                   width: ScreenUtil().setWidth(706),
                   height: ScreenUtil().setWidth(1087),
                   image:
@@ -130,7 +130,7 @@ class UpdateDialog extends Dialog {
         context: context,
         builder: (BuildContext context) {
           return WillPopScope(
-              child: UpdateDialog(
+              child: KeTaoFeaturedUpdateDialog(
                   upDateContent: mUpdateContent, isForce: mIsForce),
               onWillPop: _onWillPop);
         });

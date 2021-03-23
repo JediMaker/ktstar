@@ -12,8 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../global_config.dart';
 
-class TaskSharePage extends StatefulWidget {
-  TaskSharePage({
+class KeTaoFeaturedTaskSharePage extends StatefulWidget {
+  KeTaoFeaturedTaskSharePage({
     Key key,
     @required this.taskId,
   }) : super(key: key);
@@ -24,7 +24,7 @@ class TaskSharePage extends StatefulWidget {
   _TaskSharePageState createState() => _TaskSharePageState();
 }
 
-class _TaskSharePageState extends State<TaskSharePage> {
+class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
 //  final Color _requestDescBgColor = Color(0xffFFD7C2);
   final Color _requestDescBgColor = Color(0xffF32E43);
 
@@ -119,7 +119,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
               Navigator.of(context).pop();
             },
           ),
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           centerTitle: true,
 //          backgroundColor: Color(0xfff5f5f5),
           elevation: 0,
@@ -135,7 +135,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
                 child: Column(
                   children: <Widget>[
                     Visibility(
-                        visible: !CommonUtils.isEmpty(_requestDesc),
+                        visible: !KeTaoFeaturedCommonUtils.isEmpty(_requestDesc),
                         child: Container(
                             width: double.infinity,
                             color: _requestDescBgColor,
@@ -157,7 +157,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
                           Row(
                             children: <Widget>[
                               Container(
-                                child: new MyOctoImage(
+                                child: new KeTaoFeaturedMyOctoImage(
                                   image: _headUrl,
                                   width: ScreenUtil().setWidth(120),
                                   height: ScreenUtil().setWidth(120),
@@ -259,7 +259,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return TaskGalleryPage(
+          return KeTaoFeaturedTaskGalleryPage(
             galleryItems: images,
             index: index,
           );
@@ -268,7 +268,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
       child: Container(
           margin: const EdgeInsets.only(right: 8.0),
 //        width: MediaQuery.of(context).size.width / 2.5,
-          child: new MyOctoImage(
+          child: new KeTaoFeaturedMyOctoImage(
             image: url,
             width: ScreenUtil().setWidth(256),
             height: ScreenUtil().setWidth(256),
@@ -281,10 +281,10 @@ class _TaskSharePageState extends State<TaskSharePage> {
     return GestureDetector(
       onTap: () {
 //          HttpManage.getTheMissionWallEntrance("13122336666");
-        if (!CommonUtils.isEmpty(_adUrl)) {
-          NavigatorUtils.navigatorRouter(
+        if (!KeTaoFeaturedCommonUtils.isEmpty(_adUrl)) {
+          KeTaoFeaturedNavigatorUtils.navigatorRouter(
               context,
-              WebViewPage(
+              KeTaoFeaturedWebViewPage(
                 initialUrl: "$_adUrl",
                 showActions: true,
                 title: "",
@@ -302,7 +302,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
         child: ClipRRect(
           borderRadius:
               BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-          child: MyOctoImage(
+          child: KeTaoFeaturedMyOctoImage(
             image: _adImgUrl,
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
@@ -327,7 +327,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
               child: new Container(
                 width: MediaQuery.of(context).size.width / 4,
                 child: new FlatButton(
-                    child: CommonUtils.getNoDuplicateSubmissionWidget(
+                    child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                   fun: _saveImagesWithPermission,
                   childWidget: new Container(
                     child: new Column(
@@ -363,7 +363,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
               child: new Container(
                 width: MediaQuery.of(context).size.width / 4,
                 child: new FlatButton(
-                    child: CommonUtils.getNoDuplicateSubmissionWidget(
+                    child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                   fun: _copyText,
                   childWidget: new Container(
                     child: new Column(
@@ -396,7 +396,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
             new Container(
               width: MediaQuery.of(context).size.width / 2,
               child: new FlatButton(
-                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: () {
                   _goWechat(type: 0);
                 },
@@ -429,7 +429,7 @@ class _TaskSharePageState extends State<TaskSharePage> {
             new Container(
               width: MediaQuery.of(context).size.width / 2,
               child: new FlatButton(
-                  child: CommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: () {
                   _goWechat(type: 1);
                 },
@@ -468,14 +468,14 @@ class _TaskSharePageState extends State<TaskSharePage> {
   void _saveImagesWithPermission() {}
 
   void _goWechat({int type = 0}) {
-    if (CommonUtils.isEmpty(_webUrl)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(_webUrl)) {
       return;
     }
-    if (CommonUtils.isEmpty(_shareThumbnail)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(_shareThumbnail)) {
       _shareThumbnail =
           'https://static-ud.s4.udesk.cn/im_client/images/plugin404.8de7c6fd.png?v=1597492382675';
     }
-    if (CommonUtils.isEmpty(_shareTitle)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(_shareTitle)) {
       _shareTitle = '1';
     }
     try {

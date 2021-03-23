@@ -14,8 +14,8 @@ import 'package:star/pages/task/task_gallery.dart';
 import 'package:flutter/cupertino.dart';
 
 ///退货详情
-class ReturnInfoPage extends StatefulWidget {
-  ReturnInfoPage({Key key, this.product}) : super(key: key);
+class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
+  KeTaoFeaturedReturnInfoPage({Key key, this.product}) : super(key: key);
   final String title = "退款详情";
   OrderDetailDataGoodsList product;
 
@@ -23,7 +23,7 @@ class ReturnInfoPage extends StatefulWidget {
   _ReturnInfoPageState createState() => _ReturnInfoPageState();
 }
 
-class _ReturnInfoPageState extends State<ReturnInfoPage> {
+class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
   var _topBoxBgColor = Color(0xffF32E43);
 
   var _requestDesc = '平台会在7个工作日内给您答复，如有疑问请咨询客服。';
@@ -138,7 +138,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -473,7 +473,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
 
                 }*/
                 _indexVisible = false;
-                CommonUtils.requestPermission(Permission.photos,
+                KeTaoFeaturedCommonUtils.requestPermission(Permission.photos,
                     _onButtonPressed(ImageSource.gallery, context: context));
               },
               child: Image.asset(
@@ -489,7 +489,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return TaskGalleryPage(
+                return KeTaoFeaturedTaskGalleryPage(
                   images: images,
                   index: index,
                   type: 1,
@@ -593,7 +593,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
 
   Widget buildTopStateBox() {
     return Visibility(
-        visible: !CommonUtils.isEmpty(_requestDesc),
+        visible: !KeTaoFeaturedCommonUtils.isEmpty(_requestDesc),
         child: Container(
             width: double.infinity,
             color: _topBoxBgColor,
@@ -611,7 +611,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
                       visible: _isReturnSuccess,
                       child: Container(
                         margin: EdgeInsets.only(right: 8),
-                        child: MyOctoImage(
+                        child: KeTaoFeaturedMyOctoImage(
                           image:
                               'https://alipic.lanhuapp.com/xd6099a4da-e864-47bf-8cf5-e859a821e962',
                           width: ScreenUtil().setWidth(60),
@@ -765,7 +765,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: MyOctoImage(
+                child: KeTaoFeaturedMyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
@@ -990,7 +990,7 @@ class _ReturnInfoPageState extends State<ReturnInfoPage> {
             child: GestureDetector(
               onTap: () {
                 Clipboard.setData(ClipboardData(text: "$subTitle"));
-                CommonUtils.showToast("已复制文本");
+                KeTaoFeaturedCommonUtils.showToast("已复制文本");
               },
               child: Container(
                 child: Text(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 const double _kTabHeight = 36.0;
 const double _kTextAndIconTabHeight = 36.0;
-class MyTab extends StatelessWidget {
+class KeTaoFeaturedMyTab extends StatelessWidget {
   /// Creates a material design [TabBar] tab.
   ///
   /// At least one of [text], [icon], and [child] must be non-null. The [text]
   /// and [child] arguments must not be used at the same time. The
   /// [iconMargin] is only useful when [icon] and either one of [text] or
   /// [child] is non-null.
-  const MyTab({
+  const KeTaoFeaturedMyTab({
     Key key,
     this.text,
     this.icon,

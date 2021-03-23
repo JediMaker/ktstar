@@ -8,15 +8,15 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class RechargeResultPage extends StatefulWidget {
-  RechargeResultPage({Key key}) : super(key: key);
+class KeTaoFeaturedRechargeResultPage extends StatefulWidget {
+  KeTaoFeaturedRechargeResultPage({Key key}) : super(key: key);
   final String title = "充值成功";
 
   @override
   _RechargeResultPageState createState() => _RechargeResultPageState();
 }
 
-class _RechargeResultPageState extends State<RechargeResultPage> {
+class _RechargeResultPageState extends State<KeTaoFeaturedRechargeResultPage> {
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,7 @@ class _RechargeResultPageState extends State<RechargeResultPage> {
         ),
         centerTitle: true,
         brightness: Brightness.light,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: WillPopScope(
@@ -49,7 +49,7 @@ class _RechargeResultPageState extends State<RechargeResultPage> {
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              CommonUtils.showToast("再按一次返回键退出应用！");
+              KeTaoFeaturedCommonUtils.showToast("再按一次返回键退出应用！");
               _lastQuitTime = DateTime.now();
               return false;
             } else {
@@ -109,8 +109,8 @@ class _RechargeResultPageState extends State<RechargeResultPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouterAndRemoveUntil(
-                                context, TaskIndexPage());
+                            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                                context, KeTaoFeaturedTaskIndexPage());
                           },
                           child: Container(
                             alignment: Alignment.center,

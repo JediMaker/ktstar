@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 const double _kTabHeight = 40.0;
 const double _kTextAndIconTabHeight = 72.0;
 
-class RoundUnderlineTabIndicator extends Decoration {
+class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
   /// Create an underline style selected tab indicator.
   ///
   /// The [borderSide] and [insets] arguments must not be null.
-  const RoundUnderlineTabIndicator({
+  const KeTaoFeaturedRoundUnderlineTabIndicator({
     this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
     this.insets = EdgeInsets.zero,
   }) : assert(borderSide != null),
@@ -58,7 +58,7 @@ class _UnderlinePainter extends BoxPainter {
       : assert(decoration != null),
         super(onChanged);
 
-  final RoundUnderlineTabIndicator decoration;
+  final KeTaoFeaturedRoundUnderlineTabIndicator decoration;
 
   BorderSide get borderSide => decoration.borderSide;
   EdgeInsetsGeometry get insets => decoration.insets;

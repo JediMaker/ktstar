@@ -10,8 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:star/global_config.dart';
 import 'package:star/utils/common_utils.dart';
 
-class ShopQrCodePage extends StatefulWidget {
-  ShopQrCodePage({Key key, this.qrCodeUrl}) : super(key: key);
+class KeTaoFeaturedShopQrCodePage extends StatefulWidget {
+  KeTaoFeaturedShopQrCodePage({Key key, this.qrCodeUrl}) : super(key: key);
   final String title = "我的收款码";
   var qrCodeUrl;
 
@@ -19,7 +19,7 @@ class ShopQrCodePage extends StatefulWidget {
   _ShopQrCodePageState createState() => _ShopQrCodePageState();
 }
 
-class _ShopQrCodePageState extends State<ShopQrCodePage> {
+class _ShopQrCodePageState extends State<KeTaoFeaturedShopQrCodePage> {
   Permission _permission = Permission.storage;
 
   @override
@@ -61,7 +61,7 @@ class _ShopQrCodePageState extends State<ShopQrCodePage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: GestureDetector(
@@ -79,7 +79,7 @@ class _ShopQrCodePageState extends State<ShopQrCodePage> {
                         ListTile(
                           onTap: () async {
                             Navigator.of(context).pop();
-                            CommonUtils.requestPermission(
+                            KeTaoFeaturedCommonUtils.requestPermission(
                                 _permission, _saveImage(0));
                           },
                           title: Text(
@@ -108,7 +108,7 @@ class _ShopQrCodePageState extends State<ShopQrCodePage> {
                   margin: EdgeInsets.symmetric(
                     vertical: ScreenUtil().setWidth(100),
                   ),
-                  child: MyOctoImage(
+                  child: KeTaoFeaturedMyOctoImage(
                     image: "${widget.qrCodeUrl}",
                     width: ScreenUtil().setWidth(1030),
                     height: ScreenUtil().setWidth(1373),
@@ -127,8 +127,8 @@ class _ShopQrCodePageState extends State<ShopQrCodePage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name: "kt_${CommonUtils.currentTimeMillis() + index.toString()}");
+        name: "kt_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
     print("当前二维码图片下载结果" + result);
-    CommonUtils.showToast("图片已下载");
+    KeTaoFeaturedCommonUtils.showToast("图片已下载");
   }
 }

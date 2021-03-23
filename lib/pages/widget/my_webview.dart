@@ -15,7 +15,7 @@ import '../../global_config.dart';
 import 'loading_nomal.dart';
 
 void main() => runApp(MaterialApp(
-        home: WebViewPage(
+        home: KeTaoFeaturedWebViewPage(
       initialUrl: 'https://baidu.com',
     )));
 
@@ -34,23 +34,23 @@ The navigation delegate is set to block navigation to the youtube website.
 </html>
 ''';
 
-class WebViewPage extends StatefulWidget {
+class KeTaoFeaturedWebViewPage extends StatefulWidget {
   var initialUrl;
   var title;
   Color appBarBackgroundColor;
   bool showActions;
 
-  WebViewPage(
+  KeTaoFeaturedWebViewPage(
       {@required this.initialUrl,
       this.title,
       this.showActions = false,
-      this.appBarBackgroundColor = GlobalConfig.taskHeadColor});
+      this.appBarBackgroundColor = KeTaoFeaturedGlobalConfig.taskHeadColor});
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _WebViewPageState extends State<KeTaoFeaturedWebViewPage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   var _loadingVisiablity = true;
@@ -98,7 +98,7 @@ class _WebViewPageState extends State<WebViewPage> {
         return Stack(
           children: <Widget>[
             Visibility(
-              child: LoadingWidgetNomal(),
+              child: KeTaoFeaturedLoadingWidgetNomal(),
               visible: _loadingVisiablity,
             ),
             WebView(

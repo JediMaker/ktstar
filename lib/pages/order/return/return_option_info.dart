@@ -14,7 +14,7 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../../global_config.dart';
 
-class ReturnOptionInfoPage extends StatefulWidget {
+class KeTaoFeaturedReturnOptionInfoPage extends StatefulWidget {
   ///
   ///[pageType]页面类型
   ///
@@ -24,7 +24,7 @@ class ReturnOptionInfoPage extends StatefulWidget {
   ///
   ///  2 退货换货
   ///
-  ReturnOptionInfoPage({Key key, this.product, this.pageType = 0})
+  KeTaoFeaturedReturnOptionInfoPage({Key key, this.product, this.pageType = 0})
       : super(key: key);
   String title = "申请退款";
   OrderDetailDataGoodsList product;
@@ -44,7 +44,7 @@ class ReturnOptionInfoPage extends StatefulWidget {
   _ReturnOptionInfoPageState createState() => _ReturnOptionInfoPageState();
 }
 
-class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
+class _ReturnOptionInfoPageState extends State<KeTaoFeaturedReturnOptionInfoPage> {
   /// 未收到货退货原因集合
   ///
   var _noReceivingReturnReasonList = [
@@ -129,7 +129,7 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
               },
             ),
             centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
           body: SingleChildScrollView(
@@ -205,7 +205,7 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: MyOctoImage(
+                child: KeTaoFeaturedMyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
@@ -444,11 +444,11 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             Visibility(
               visible: type == 0,
               child: Text(
-                '${CommonUtils.isEmpty(_selectStatusTxt) ? '请选择' : _selectStatusTxt}',
+                '${KeTaoFeaturedCommonUtils.isEmpty(_selectStatusTxt) ? '请选择' : _selectStatusTxt}',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(42),
-                  color: CommonUtils.isEmpty(_selectStatusTxt)
+                  color: KeTaoFeaturedCommonUtils.isEmpty(_selectStatusTxt)
                       ? Color(0xff999999)
                       : Color(0xff222222),
                 ),
@@ -457,11 +457,11 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             Visibility(
               visible: type == 1,
               child: Text(
-                '${CommonUtils.isEmpty(_selectReasonTxt) ? '请选择' : _selectReasonTxt}',
+                '${KeTaoFeaturedCommonUtils.isEmpty(_selectReasonTxt) ? '请选择' : _selectReasonTxt}',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(42),
-                  color: CommonUtils.isEmpty(_selectReasonTxt)
+                  color: KeTaoFeaturedCommonUtils.isEmpty(_selectReasonTxt)
                       ? Color(0xff999999)
                       : Color(0xff222222),
                 ),
@@ -470,7 +470,7 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             Container(
               alignment: Alignment.centerRight,
               width: ScreenUtil().setWidth(46),
-              child: MyOctoImage(
+              child: KeTaoFeaturedMyOctoImage(
                 width: ScreenUtil().setWidth(20),
                 height: ScreenUtil().setWidth(36),
                 image:
@@ -527,7 +527,7 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
                           color: Color(0xff222222),
                         ),
                       ),
-                      trailing: MyOctoImage(
+                      trailing: KeTaoFeaturedMyOctoImage(
                         image:
                             "${_cargoStatus == index ? "https://alipic.lanhuapp.com/xda760ae72-7c57-4c57-b898-6b6a00d16c9c" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                         width: ScreenUtil().setWidth(60),
@@ -598,7 +598,7 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
                     color: Color(0xff222222),
                   ),
                 ),
-                trailing: MyOctoImage(
+                trailing: KeTaoFeaturedMyOctoImage(
                   image:
                       "${_cargoStatus == 0 && _noReceivingReasonSelectedIndex == index || _cargoStatus == 1 && _receivedReasonSelectedIndex == index ? "https://alipic.lanhuapp.com/xda760ae72-7c57-4c57-b898-6b6a00d16c9c" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                   width: ScreenUtil().setWidth(60),
@@ -840,7 +840,7 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
             padding: EdgeInsets.symmetric(vertical: 10),
             child: ListTile(
               onTap: () async {
-//                      CommonUtils.isEmpty(iphone)
+//                      KeTaoFeaturedCommonUtils.isEmpty(iphone)
 //                  ? Text(
 //                '暂无收货地址信息，点击添加',
 //                style: TextStyle(
@@ -849,9 +849,9 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
 //                ),
 //              )
 //                  :           _initData();
-                NavigatorUtils.navigatorRouter(
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
                     context,
-                    AddressListPage(
+                    KeTaoFeaturedAddressListPage(
                       type: 2,
                     ));
               },
@@ -919,18 +919,18 @@ class _ReturnOptionInfoPageState extends State<ReturnOptionInfoPage> {
         child: InkWell(
             onTap: () async {
               if (widget.pageType == 0 && _cargoStatus == -1) {
-                CommonUtils.showToast("请选择货物状态");
+                KeTaoFeaturedCommonUtils.showToast("请选择货物状态");
                 return;
               }
               if (widget.pageType != 2 &&
                   _receivedReasonSelectedIndex == -1 &&
                   _noReceivingReasonSelectedIndex == -1) {
-                CommonUtils.showToast("请选择退货原因");
+                KeTaoFeaturedCommonUtils.showToast("请选择退货原因");
                 return;
               }
-              NavigatorUtils.navigatorRouter(
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                ReturnInfoPage(
+                KeTaoFeaturedReturnInfoPage(
                   product: widget.product,
                 ),
               );

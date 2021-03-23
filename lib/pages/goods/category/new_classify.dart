@@ -14,12 +14,12 @@ import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
 // ignore: must_be_immutable
-class NewClassifyListPage extends StatefulWidget {
+class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
   @override
   _NewClassifyListPageState createState() => _NewClassifyListPageState();
 }
 
-class _NewClassifyListPageState extends State<NewClassifyListPage>
+class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;
   List<CategoryBeanData> rightListData;
@@ -101,8 +101,8 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
 
   changeSelCategory(cid) {
     print("cid=$cid");
-    if (CommonUtils.isEmpty(cid)) {
-      cid = GlobalConfig.prefs.getString("cid");
+    if (KeTaoFeaturedCommonUtils.isEmpty(cid)) {
+      cid = KeTaoFeaturedGlobalConfig.prefs.getString("cid");
     }
     for (var i = 0; i < leftListData.length; i++) {
       if (leftListData[i].id == cid) {
@@ -127,13 +127,13 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setWidth(100),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
-                    horizontal: GlobalConfig.LAYOUT_MARGIN),
+                    horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(100)),
                     color: Colors.white,
@@ -148,7 +148,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    MyOctoImage(
+                    KeTaoFeaturedMyOctoImage(
                       width: ScreenUtil().setWidth(36),
                       height: ScreenUtil().setWidth(36),
                       image:
@@ -174,8 +174,8 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                NavigatorUtils.navigatorRouter(context, SearchGoodsPage());
-//                NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+//                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
               },
               child: Container(
 //                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 4),
@@ -197,7 +197,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(rightListData)) {
+      if (!KeTaoFeaturedCommonUtils.isEmpty(rightListData)) {
       } else {
         _initData(0);
       }
@@ -404,9 +404,9 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                   return GestureDetector(
                     onTap: () {
                       if (category != null) {
-                        NavigatorUtils.navigatorRouter(
+                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
                             context,
-                            GoodsListPage(
+                            KeTaoFeaturedGoodsListPage(
                               categoryId: category.id,
                               title: category.name,
                             ));
@@ -418,7 +418,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          MyOctoImage(
+                          KeTaoFeaturedMyOctoImage(
                             fit: BoxFit.cover,
                             image: category.imgUrl == null
                                 ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'
@@ -505,9 +505,9 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
               return GestureDetector(
                 onTap: () {
                   if (category != null) {
-                    NavigatorUtils.navigatorRouter(
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
                         context,
-                        GoodsListPage(
+                        KeTaoFeaturedGoodsListPage(
                           categoryId: category.id,
                           title: category.name,
                         ));
@@ -518,7 +518,7 @@ class _NewClassifyListPageState extends State<NewClassifyListPage>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      MyOctoImage(
+                      KeTaoFeaturedMyOctoImage(
                         fit: BoxFit.cover,
                         image: category.imgUrl == null
                             ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'

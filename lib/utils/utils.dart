@@ -18,7 +18,7 @@ import 'package:star/utils/common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Utils {
+class KeTaoFeaturedUtils {
   static double formatNum(double num, int postion) {
     /*if ((num.toString().length - num.toString().lastIndexOf(".") - 1) <
         postion) {
@@ -70,7 +70,7 @@ class Utils {
         .listen((ConnectivityResult result) {
       print(result.toString());
       if (result.toString() == 'ConnectivityResult.none') {
-        CommonUtils.showToast("无网络连接");
+        KeTaoFeaturedCommonUtils.showToast("无网络连接");
       }
     });
   }
@@ -147,7 +147,7 @@ class Utils {
     /// 获取当前版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _localVersion = packageInfo.version;
-    String updateTime = GlobalConfig.prefs.getString('updateTime') ?? null;
+    String updateTime = KeTaoFeaturedGlobalConfig.prefs.getString('updateTime') ?? null;
 
     /// 一天之内只提醒一次需要更新
     if (!checkDerictly) {
@@ -156,7 +156,7 @@ class Utils {
         return;
       }
     }
-    GlobalConfig.prefs.setBool('needUpdate', false);
+    KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', false);
     var versionInfo = await HttpManage.getVersionInfo();
     try {
       if (versionInfo.status) {
@@ -164,23 +164,23 @@ class Utils {
             "_localVersion=$_localVersion；_localbuildNumber=${packageInfo.buildNumber}；versionInfo。versionNo=${versionInfo.data.versionNo}");
         if (versionInfo.data.whCheck) {
           //华为应用市场上架审核中
-          GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+          KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
         } else {
-          GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+          KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
         if (Platform.isAndroid) {
           /*    ///华为审核中
-          if (GlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+          if (KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
             if (checkDerictly) {
               ///直接检查更新时弹出
-              CommonUtils.showToast("当前已是最新版本");
+              KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
             }
             return;
           }*/
         }
         if (Platform.isIOS) {
           ///ios审核中
-          if (GlobalConfig.prefs.getBool("isIosUnderReview")) {
+          if (KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
             return;
           }
         }
@@ -196,14 +196,14 @@ class Utils {
         }
         if (!needUpdate) {
           if (checkDerictly) {
-            CommonUtils.showToast("当前已是最新版本");
+            KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
           }
           return;
         }
-        /* GlobalConfig.prefs
+        /* KeTaoFeaturedGlobalConfig.prefs
             .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);*/
         if (needUpdate) {
-          GlobalConfig.prefs.setBool('needUpdate', true);
+          KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', true);
 
           if (Platform.isIOS) {
             url = versionInfo.data.iosUrl;
@@ -213,7 +213,7 @@ class Utils {
                   : versionInfo.data.buildNumberDesc;
 
               final bool wantsUpdate =
-                  await UpdateDialog.showUpdateDialog(context, "$desc", false);
+                  await KeTaoFeaturedUpdateDialog.showUpdateDialog(context, "$desc", false);
 /*
               final bool wantsUpdate = await showDialog<bool>(
                 context: context,
@@ -223,11 +223,11 @@ class Utils {
               );
 */
               if (wantsUpdate != null && wantsUpdate) {
-                GlobalConfig.prefs.remove('updateTime');
-                GlobalConfig.prefs.remove('needUpdate');
+                KeTaoFeaturedGlobalConfig.prefs.remove('updateTime');
+                KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
                 await launchUrl(url);
               } else {
-                GlobalConfig.prefs
+                KeTaoFeaturedGlobalConfig.prefs
                     .setString('updateTime', DateTime.now().toString());
               }
             } else {
@@ -246,18 +246,18 @@ class Utils {
                 : versionInfo.data.buildNumberDesc;
 
             final bool wantsUpdate =
-                await UpdateDialog.showUpdateDialog(context, "$desc", false);
+                await KeTaoFeaturedUpdateDialog.showUpdateDialog(context, "$desc", false);
             if (wantsUpdate != null && wantsUpdate) {
-              GlobalConfig.prefs.remove('updateTime'); //饮鸠止渴
-              GlobalConfig.prefs.remove('needUpdate');
+              KeTaoFeaturedGlobalConfig.prefs.remove('updateTime'); //饮鸠止渴
+              KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
               await launchUrl(url);
             } else {
-              GlobalConfig.prefs
+              KeTaoFeaturedGlobalConfig.prefs
                   .setString('updateTime', DateTime.now().toString());
             }
           }
         } else {
-          GlobalConfig.prefs.setBool('needUpdate', false);
+          KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', false);
         }
       }
     } catch (e) {
@@ -283,7 +283,7 @@ class Utils {
       String versionRemote, String clientVersion) {
     versionRemote.compareTo(clientVersion);
     bool result = false;
-    if (!CommonUtils.isEmpty(versionRemote) &&
+    if (!KeTaoFeaturedCommonUtils.isEmpty(versionRemote) &&
         versionRemote.indexOf(".") >= 0) {
       List<String> versionNum = versionRemote.split(".");
       List<String> currentNum = clientVersion.split(".");
@@ -310,7 +310,7 @@ class Utils {
       String buildNumberRemote, String buildNumberLocal) {
     buildNumberRemote.compareTo(buildNumberRemote);
     bool result = false;
-    if (!CommonUtils.isEmpty(buildNumberRemote)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(buildNumberRemote)) {
       if (int.parse(buildNumberRemote) > int.parse(buildNumberLocal)) {
         result = true;
       }
@@ -323,7 +323,7 @@ class Utils {
       await launch(url, forceSafariVC: false);
     } else {
 //      throw 'Could not launch $url';
-      CommonUtils.showToast("未安装相关客户端！");
+      KeTaoFeaturedCommonUtils.showToast("未安装相关客户端！");
     }
   }
 }

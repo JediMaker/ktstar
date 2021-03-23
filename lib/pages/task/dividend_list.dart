@@ -8,14 +8,14 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 
-class DividendListPage extends StatefulWidget {
+class KeTaoFeaturedDividendListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
   var profitType;
   bool showAppBar;
 
-  DividendListPage(
+  KeTaoFeaturedDividendListPage(
       {Key key, this.pageType = 0, this.showAppBar = true, this.profitType})
       : super(key: key);
   String title = "分红金明细";
@@ -24,7 +24,7 @@ class DividendListPage extends StatefulWidget {
   _DividendListPageState createState() => _DividendListPageState();
 }
 
-class _DividendListPageState extends State<DividendListPage>
+class _DividendListPageState extends State<KeTaoFeaturedDividendListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -63,7 +63,7 @@ class _DividendListPageState extends State<DividendListPage>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -123,7 +123,7 @@ class _DividendListPageState extends State<DividendListPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
         ),
@@ -148,7 +148,7 @@ class _DividendListPageState extends State<DividendListPage>
           }
         },
         emptyWidget: _profitList == null || _profitList.length == 0
-            ? NoDataPage()
+            ? KeTaoFeaturedNoDataPage()
             : null,
         slivers: <Widget>[buildCenter()],
       ),
@@ -242,7 +242,7 @@ class _DividendListPageState extends State<DividendListPage>
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: GlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
+              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
               color: Colors.white,

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 /// @desp:
 /// @time 2019/10/30 14:44
 /// @author lizubing
-class SelectChoiceChip extends StatefulWidget {
+class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
   final double height;
   final num width;
   final EdgeInsetsGeometry padding;
@@ -26,7 +26,7 @@ class SelectChoiceChip extends StatefulWidget {
   final LinearGradient selectGradient;
   final LinearGradient gradient;
 
-  const SelectChoiceChip(
+  const KeTaoFeaturedSelectChoiceChip(
       {@required this.child,
       this.height,
       this.padding =
@@ -56,7 +56,7 @@ class SelectChoiceChip extends StatefulWidget {
   }
 }
 
-class _SelectChoiceChipState extends State<SelectChoiceChip> {
+class _SelectChoiceChipState extends State<KeTaoFeaturedSelectChoiceChip> {
   @override
   Widget build(BuildContext context) {
     bool _select = widget.selected;

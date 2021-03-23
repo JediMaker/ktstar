@@ -9,11 +9,11 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 
-class IncomeListPage extends StatefulWidget {
+class KeTaoFeaturedIncomeListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
-  IncomeListPage(
+  KeTaoFeaturedIncomeListPage(
       {Key key,
       @required this.pageType,
       this.showAppBar = false,
@@ -27,7 +27,7 @@ class IncomeListPage extends StatefulWidget {
   _IncomeListPageState createState() => _IncomeListPageState();
 }
 
-class _IncomeListPageState extends State<IncomeListPage>
+class _IncomeListPageState extends State<KeTaoFeaturedIncomeListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -64,7 +64,7 @@ class _IncomeListPageState extends State<IncomeListPage>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -124,7 +124,7 @@ class _IncomeListPageState extends State<IncomeListPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
         ),
@@ -149,7 +149,7 @@ class _IncomeListPageState extends State<IncomeListPage>
           }
         },
         emptyWidget: _profitList == null || _profitList.length == 0
-            ? NoDataPage()
+            ? KeTaoFeaturedNoDataPage()
             : null,
         slivers: <Widget>[buildCenter()],
       ),
@@ -280,7 +280,7 @@ class _IncomeListPageState extends State<IncomeListPage>
       if (price.contains("-")) {
         prefixText = '';
       }
-      /*if (GlobalConfig.getUserInfo().type == 3) {
+      /*if (KeTaoFeaturedGlobalConfig.getUserInfo().type == 3) {
 
         switch (type) {
           case "1":
@@ -327,7 +327,7 @@ class _IncomeListPageState extends State<IncomeListPage>
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: GlobalConfig.LAYOUT_MARGIN,
+              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
               vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
@@ -351,7 +351,7 @@ class _IncomeListPageState extends State<IncomeListPage>
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),*/
-                        MyOctoImage(
+                        KeTaoFeaturedMyOctoImage(
                           image: "$titleIcon",
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),

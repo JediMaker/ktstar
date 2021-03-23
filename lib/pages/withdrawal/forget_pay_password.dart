@@ -9,8 +9,8 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
-class ForgetPayPasswordPage extends StatefulWidget {
-  ForgetPayPasswordPage({Key key, this.phoneNum }) : super(key: key);
+class KeTaoFeaturedForgetPayPasswordPage extends StatefulWidget {
+  KeTaoFeaturedForgetPayPasswordPage({Key key, this.phoneNum }) : super(key: key);
   final String title = "";
   var phoneNum;
 
@@ -18,7 +18,7 @@ class ForgetPayPasswordPage extends StatefulWidget {
   _ForgetPayPasswordPageState createState() => _ForgetPayPasswordPageState();
 }
 
-class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
+class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPage> {
   TextEditingController _checkCodeController;
   TextEditingController _passwordController;
   bool _bindPhone = false;
@@ -30,7 +30,7 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
   void initState() {
     _checkCodeController = new TextEditingController()..addListener(() {});
     _passwordController = new TextEditingController()..addListener(() {});
-    if (!CommonUtils.isEmpty(widget.phoneNum)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(widget.phoneNum)) {
       _bindPhone = true;
       var _phoneNum =
           widget.phoneNum.replaceFirst(new RegExp(r'\d{4}'), '****', 3);
@@ -80,7 +80,7 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
               ),
               brightness: Brightness.light,
               centerTitle: true,
-              backgroundColor: GlobalConfig.taskNomalHeadColor,
+              backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
               elevation: 0,
             ),
             body: Center(
@@ -155,7 +155,7 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(36.0),
                                 color: Colors.white),
-                            child: TimerWidget(
+                            child: KeTaoFeaturedTimerWidget(
                               textColor: Color(0xffF32E43),
                               startCountAction: (BuildContext context) {
                                 return smsSend(context);
@@ -232,7 +232,7 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
                               _checkCodeController.value.text.isEmpty ||
                               _passwordController.value.text == null ||
                               _passwordController.value.text.isEmpty) {
-                            CommonUtils.showToast("请检查填写的信息是否完整！");
+                            KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
                           } else {
                             EasyLoading.show();
                             var result = await HttpManage.modifyPayPassword(
@@ -241,11 +241,11 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
                                 _passwordController.value.text);
                             EasyLoading.dismiss();
                             if (result.status) {
-                              CommonUtils.showToast("设置支付密码成功！");
+                              KeTaoFeaturedCommonUtils.showToast("设置支付密码成功！");
                               Navigator.of(context).pop();
                               return true;
                             } else {
-                              CommonUtils.showToast("${result.errMsg}");
+                              KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
                               return false;
                             }
                           }
@@ -285,10 +285,10 @@ class _ForgetPayPasswordPageState extends State<ForgetPayPasswordPage> {
     var result = await HttpManage.sendPayPasswordModifyVerificationCode(
         widget.phoneNum, "4");
     if (result.status) {
-      CommonUtils.showToast("验证码已发送，请注意查收！");
+      KeTaoFeaturedCommonUtils.showToast("验证码已发送，请注意查收！");
       return true;
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
       return false;
     }
   }

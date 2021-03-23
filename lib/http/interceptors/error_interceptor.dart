@@ -36,20 +36,20 @@ class ErrorInterceptors extends InterceptorsWrapper {
             case DioErrorType.CANCEL:
               return "Request Cancel";
             case DioErrorType.CONNECT_TIMEOUT:
-//              CommonUtils.showToast("网络异常，网络连接超时！");
+//              KeTaoFeaturedCommonUtils.showToast("网络异常，网络连接超时！");
 
               break;
       //        return "CONNECT TIMEOUT";
             case DioErrorType.SEND_TIMEOUT:
-//              CommonUtils.showToast("网络异常，数据发送超时！");
+//              KeTaoFeaturedCommonUtils.showToast("网络异常，数据发送超时！");
               break;
       //        return 'Send Time Out';
             case DioErrorType.RESPONSE:
-//              CommonUtils.showToast("服务器异常，请稍后再试！");
+//              KeTaoFeaturedCommonUtils.showToast("服务器异常，请稍后再试！");
               return "Server Incorrect Status";
             case DioErrorType.RECEIVE_TIMEOUT:
       //        return "Receive Time Out";
-//              CommonUtils.showToast("网络异常，数据接收超时！");
+//              KeTaoFeaturedCommonUtils.showToast("网络异常，数据接收超时！");
               break;
             case DioErrorType.DEFAULT:
               String msg = 'UnKnown';
@@ -61,7 +61,7 @@ class ErrorInterceptors extends InterceptorsWrapper {
                       DateTime.now().difference(_lastQuitTime).inSeconds > 5) {
                     /*Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-                    CommonUtils.showToast("网络连接异常！");
+                    KeTaoFeaturedCommonUtils.showToast("网络连接异常！");
                     _lastQuitTime = DateTime.now();
                     return false;
                   } else {

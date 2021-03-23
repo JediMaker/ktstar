@@ -21,8 +21,8 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
-class ShopListPage extends StatefulWidget {
-  ShopListPage({Key key}) : super(key: key);
+class KeTaoFeaturedShopListPage extends StatefulWidget {
+  KeTaoFeaturedShopListPage({Key key}) : super(key: key);
   final String title = "";
   String categoryId;
   String type;
@@ -31,7 +31,7 @@ class ShopListPage extends StatefulWidget {
   _ShopListPageState createState() => _ShopListPageState();
 }
 
-class _ShopListPageState extends State<ShopListPage>
+class _ShopListPageState extends State<KeTaoFeaturedShopListPage>
     with AutomaticKeepAliveClientMixin {
   //搜索框文字控制器
   TextEditingController _searchController = TextEditingController();
@@ -63,12 +63,12 @@ class _ShopListPageState extends State<ShopListPage>
   var _emptyWidget;
 
   _initData() async {
-    await GlobalConfig.initUserLocationWithPermission(count: 0);
+    await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
     if (mounted) {
       setState(() {
-        _latitude = GlobalConfig.prefs.getString("latitude");
-        _longitude = GlobalConfig.prefs.getString("longitude");
-        _cityName = GlobalConfig.prefs.getString("cityName");
+        _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
+        _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
+        _cityName = KeTaoFeaturedGlobalConfig.prefs.getString("cityName");
       });
     }
     var result = await HttpManage.getShopList(
@@ -100,13 +100,13 @@ class _ShopListPageState extends State<ShopListPage>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
   Future initUserInfoData() async {
-    userInfoData = GlobalConfig.getUserInfo();
-    if (CommonUtils.isEmpty(userInfoData)) {
+    userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       var result = await HttpManage.getUserInfo();
       if (result.status) {
         if (mounted) {
@@ -184,7 +184,7 @@ class _ShopListPageState extends State<ShopListPage>
       _shopName = scanResult.data.name;
       _shopCode = scanResult.data.code;
     } else {
-      CommonUtils.showToast("${scanResult.errMsg}");
+      KeTaoFeaturedCommonUtils.showToast("${scanResult.errMsg}");
       return;
     }
     //  获取店铺支付相关信息
@@ -197,9 +197,9 @@ class _ShopListPageState extends State<ShopListPage>
     }
 
     ///进入支付页面
-    NavigatorUtils.navigatorRouter(
+    KeTaoFeaturedNavigatorUtils.navigatorRouter(
         context,
-        ShopPaymentPage(
+        KeTaoFeaturedShopPaymentPage(
           shopId: shopId,
           shopName: _shopName,
           shopCode: _shopCode,
@@ -222,7 +222,7 @@ class _ShopListPageState extends State<ShopListPage>
               width: ScreenUtil().setWidth(78),
               height: ScreenUtil().setWidth(78),
               child: Center(
-                child: MyOctoImage(
+                child: KeTaoFeaturedMyOctoImage(
                   image:
                       "https://alipic.lanhuapp.com/xdd9cb322b-189a-465b-a3f4-a28cb52ce22c",
                   width: ScreenUtil().setWidth(78),
@@ -232,7 +232,8 @@ class _ShopListPageState extends State<ShopListPage>
               ),
             ),
             onPressed: () async {
-              CommonUtils.requestPermission(Permission.camera, scan());
+              KeTaoFeaturedCommonUtils.requestPermission(
+                  Permission.camera, scan());
             },
           ),
           Expanded(
@@ -271,7 +272,7 @@ class _ShopListPageState extends State<ShopListPage>
                             fontSize: ScreenUtil().setSp(42),
                           ),
                           onChanged: (value) {
-                            if (CommonUtils.isEmpty(value)) {
+                            if (KeTaoFeaturedCommonUtils.isEmpty(value)) {
                               return;
                             }
                             if (mounted) {
@@ -293,7 +294,8 @@ class _ShopListPageState extends State<ShopListPage>
                     start: 0,
                     bottom: 10,
                     child: Visibility(
-                      visible: !CommonUtils.isEmpty(_searchController.text),
+                      visible: !KeTaoFeaturedCommonUtils.isEmpty(
+                          _searchController.text),
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -311,7 +313,8 @@ class _ShopListPageState extends State<ShopListPage>
                                     setState(() {
                                       _searchController.text = "";
                                       _shopName = _searchController.text;
-                                      if (CommonUtils.isEmpty(shopList)) {
+                                      if (KeTaoFeaturedCommonUtils.isEmpty(
+                                          shopList)) {
                                         page = 1;
                                         _initData();
                                       }
@@ -353,7 +356,7 @@ class _ShopListPageState extends State<ShopListPage>
                                     right: ScreenUtil().setWidth(50),
                                     top: ScreenUtil().setWidth(25),
                                   ),
-                                  /* child: MyOctoImage(
+                                  /* child: KeTaoFeaturedMyOctoImage(
                                     image:
                                         "https://alipic.lanhuapp.com/xd2b236767-514c-4d43-99aa-48d2b74f46c9",
                                     width: ScreenUtil().setWidth(41),
@@ -373,7 +376,8 @@ class _ShopListPageState extends State<ShopListPage>
                     ),
                   ),
                   Visibility(
-                    visible: CommonUtils.isEmpty(_searchController.text),
+                    visible: KeTaoFeaturedCommonUtils.isEmpty(
+                        _searchController.text),
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
@@ -398,7 +402,7 @@ class _ShopListPageState extends State<ShopListPage>
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            MyOctoImage(
+                            KeTaoFeaturedMyOctoImage(
                               image:
                                   "https://alipic.lanhuapp.com/xd2b236767-514c-4d43-99aa-48d2b74f46c9",
                               width: ScreenUtil().setWidth(41),
@@ -430,7 +434,7 @@ class _ShopListPageState extends State<ShopListPage>
               left: ScreenUtil().setWidth(20),
               right: ScreenUtil().setWidth(6),
             ),
-            child: MyOctoImage(
+            child: KeTaoFeaturedMyOctoImage(
               image:
                   "https://alipic.lanhuapp.com/xd33803b45-0392-435c-bcb4-1adee00162ed",
               width: ScreenUtil().setWidth(35),
@@ -443,7 +447,7 @@ class _ShopListPageState extends State<ShopListPage>
               right: ScreenUtil().setWidth(16),
             ),
             child: Text(
-              "${GlobalConfig.prefs.getString("cityName")}",
+              "${KeTaoFeaturedGlobalConfig.prefs.getString("cityName")}",
               style: TextStyle(
                 color: Color(0xff222222),
                 fontSize: ScreenUtil().setSp(48),
@@ -514,9 +518,9 @@ class _ShopListPageState extends State<ShopListPage>
     return GestureDetector(
       onTap: () {
 //        跳转商家详情
-        NavigatorUtils.navigatorRouter(
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
             context,
-            ShopDeatilPage(
+            KeTaoFeaturedShopDeatilPage(
               shopId: storeId,
               longitude: _longitude,
               latitude: _latitude,
@@ -547,7 +551,7 @@ class _ShopListPageState extends State<ShopListPage>
                 borderRadius: BorderRadius.circular(
                   ScreenUtil().setWidth(20),
                 ),
-                child: MyOctoImage(
+                child: KeTaoFeaturedMyOctoImage(
                   image: "$storeLogoUrl",
                   width: ScreenUtil().setWidth(180),
                   height: ScreenUtil().setWidth(180),
@@ -633,7 +637,7 @@ class _ShopListPageState extends State<ShopListPage>
                             margin: EdgeInsets.only(
                               right: ScreenUtil().setWidth(8),
                             ),
-                            child: MyOctoImage(
+                            child: KeTaoFeaturedMyOctoImage(
                               image: "$_shopLocationIconUrl",
                               width: ScreenUtil().setWidth(33),
                               height: ScreenUtil().setWidth(42),
@@ -695,7 +699,7 @@ class _ShopListPageState extends State<ShopListPage>
   Widget buildCenter() {
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: !CommonUtils.isEmpty(shopList),
+        visible: !KeTaoFeaturedCommonUtils.isEmpty(shopList),
         child: Container(
           width: double.maxFinite,
           margin: EdgeInsets.symmetric(
@@ -717,22 +721,22 @@ class _ShopListPageState extends State<ShopListPage>
 
   Widget buildEmptyWidget() {
     return shopList == null || shopList.length == 0
-        ? CommonUtils.isEmpty(_shopName)
+        ? KeTaoFeaturedCommonUtils.isEmpty(_shopName)
             ? NoShopData(
                 applyStatus: applyStatus,
                 shopId: _shopId,
                 rejectMsg: _rejectMsg,
               )
-            : NoDataPage()
+            : KeTaoFeaturedNoDataPage()
         : null;
   }
 
   Widget buildNoDataWidget() {
     return SliverToBoxAdapter(
       child: Visibility(
-        visible:
-            CommonUtils.isEmpty(shopList) && !CommonUtils.isEmpty(_shopName),
-        child: NoDataPage(),
+        visible: KeTaoFeaturedCommonUtils.isEmpty(shopList) &&
+            !KeTaoFeaturedCommonUtils.isEmpty(_shopName),
+        child: KeTaoFeaturedNoDataPage(),
       ),
     );
   }
@@ -759,7 +763,7 @@ class NoShopData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!CommonUtils.isEmpty(applyStatus)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(applyStatus)) {
       if (applyStatus != "2") {
         _btnTxt = '立即加入';
       } else {
@@ -779,7 +783,7 @@ class NoShopData extends StatelessWidget {
               flex: 2,
             ),
             Center(
-              child: MyOctoImage(
+              child: KeTaoFeaturedMyOctoImage(
                 image:
                     'https://alipic.lanhuapp.com/xda551ee22-8d85-4fb6-990e-4d4695437e05',
                 width: ScreenUtil().setWidth(674),
@@ -810,7 +814,7 @@ class NoShopData extends StatelessWidget {
   ///提交审核
   Widget buildJoinButton(context) {
     return Visibility(
-      visible: !CommonUtils.isEmpty(_btnTxt),
+      visible: !KeTaoFeaturedCommonUtils.isEmpty(_btnTxt),
       child: Container(
         alignment: Alignment.center,
         width: double.maxFinite,
@@ -818,16 +822,16 @@ class NoShopData extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             if (applyStatus == '2') {
-              NavigatorUtils.navigatorRouter(
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                ShopBackstagePage(
+                KeTaoFeaturedShopBackstagePage(
                   shopId: shopId,
                 ),
               );
             } else {
-              await NavigatorUtils.navigatorRouter(
+              await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                ApplySettlePage(
+                KeTaoFeaturedApplySettlePage(
                   applyStatus: applyStatus,
                   rejectMsg: rejectMsg,
                   shopId: shopId,
@@ -906,7 +910,7 @@ class _NoShopDataState extends State<NoShopData> {
 
   @override
   Widget build(BuildContext context) {
-    if (!CommonUtils.isEmpty(applyStatus)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(applyStatus)) {
       if (applyStatus != "2") {
         _btnTxt = '立即加入';
       } else {
@@ -926,7 +930,7 @@ class _NoShopDataState extends State<NoShopData> {
               flex: 2,
             ),
             Center(
-              child: MyOctoImage(
+              child: KeTaoFeaturedMyOctoImage(
                 image:
                     'https://alipic.lanhuapp.com/xda551ee22-8d85-4fb6-990e-4d4695437e05',
                 width: ScreenUtil().setWidth(674),
@@ -970,7 +974,7 @@ class _NoShopDataState extends State<NoShopData> {
   ///提交审核
   Widget buildJoinButton(context) {
     return Visibility(
-      visible: !CommonUtils.isEmpty(_btnTxt),
+      visible: !KeTaoFeaturedCommonUtils.isEmpty(_btnTxt),
       child: Container(
         alignment: Alignment.center,
         width: double.maxFinite,
@@ -978,16 +982,16 @@ class _NoShopDataState extends State<NoShopData> {
         child: GestureDetector(
           onTap: () async {
             if (applyStatus == '2') {
-              NavigatorUtils.navigatorRouter(
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                ShopBackstagePage(
+                KeTaoFeaturedShopBackstagePage(
                   shopId: shopId,
                 ),
               );
             } else {
-              await NavigatorUtils.navigatorRouter(
+              await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                ApplySettlePage(
+                KeTaoFeaturedApplySettlePage(
                   applyStatus: applyStatus,
                   rejectMsg: rejectMsg,
                   shopId: shopId,

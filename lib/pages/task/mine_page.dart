@@ -6,15 +6,15 @@ import '../../global_config.dart';
 import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/shareholders/micro_mine.dart';
 
-class MinePagePage extends StatefulWidget {
-  MinePagePage({Key key}) : super(key: key);
+class KeTaoFeaturedMinePagePage extends StatefulWidget {
+  KeTaoFeaturedMinePagePage({Key key}) : super(key: key);
   final String title = "";
 
   @override
   _MinePagePageState createState() => _MinePagePageState();
 }
 
-class _MinePagePageState extends State<MinePagePage> {
+class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
   UserInfoData userInfoData;
   Widget rootView;
 
@@ -31,8 +31,8 @@ class _MinePagePageState extends State<MinePagePage> {
 
   _initData() async {
     try {
-      userInfoData = GlobalConfig.getUserInfo();
-      if (!CommonUtils.isEmpty(userInfoData.isPartner)) {
+      userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+      if (!KeTaoFeaturedCommonUtils.isEmpty(userInfoData.isPartner)) {
         setState(() {
           _shareholderType = userInfoData.isPartner;
           /*var title = '';
@@ -42,9 +42,9 @@ class _MinePagePageState extends State<MinePagePage> {
                   ? 'VIP股东'
                   : '高级股东';
           if (_shareholderType == '2') {
-            rootView = TaskMinePage();
+            rootView = KeTaoFeaturedTaskMinePage();
           } else {
-            rootView = MicroMinePage(
+            rootView = KeTaoFeaturedMicroMinePage(
               title: title,
             );
           }*/
@@ -57,7 +57,7 @@ class _MinePagePageState extends State<MinePagePage> {
         _shareholderType = result.data.isPartner;
       });
     } else {
-      if (CommonUtils.isEmpty(userInfoData.isPartner)) {
+      if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData.isPartner)) {
         var result = await HttpManage.getUserInfo();
         if (result.status) {
           if (mounted) {
@@ -70,9 +70,9 @@ class _MinePagePageState extends State<MinePagePage> {
                       ? 'VIP股东'
                       : '高级股东';
               if (_shareholderType == '2') {
-                rootView = TaskMinePage();
+                rootView = KeTaoFeaturedTaskMinePage();
               } else {
-                rootView = MicroMinePage(
+                rootView = KeTaoFeaturedMicroMinePage(
                 );
               }
             });
@@ -85,7 +85,7 @@ class _MinePagePageState extends State<MinePagePage> {
   @override
   void initState() {
     super.initState();
-    userInfoData = GlobalConfig.getUserInfo();
+    userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
 //    _initData();
   }
 
@@ -97,7 +97,7 @@ class _MinePagePageState extends State<MinePagePage> {
   @override
   Widget build(BuildContext context) {
     var title = '我的';
-    rootView = MicroMinePage(
+    rootView = KeTaoFeaturedMicroMinePage(
 //      title: title,
     );
     return rootView;

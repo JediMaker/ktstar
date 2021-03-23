@@ -11,7 +11,7 @@ import 'dart:ui' as ui show window;
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/region_data_entity.dart';
 
-class JDAddressDialog extends StatefulWidget {
+class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
   final String title;
   final Function(String province, String city, String county, int provinceId,
       int cityId, int countyId) onSelected;
@@ -23,7 +23,7 @@ class JDAddressDialog extends StatefulWidget {
 
   final TextStyle titleTextStyle;
 
-  JDAddressDialog(
+  KeTaoFeaturedJDAddressDialog(
       {Key key,
       @required this.onSelected,
       this.title,
@@ -38,7 +38,7 @@ class JDAddressDialog extends StatefulWidget {
   createState() => _JDAddressDialogState();
 }
 
-class _JDAddressDialogState extends State<JDAddressDialog>
+class _JDAddressDialogState extends State<KeTaoFeaturedJDAddressDialog>
     with TickerProviderStateMixin {
   int _index = 0;
 

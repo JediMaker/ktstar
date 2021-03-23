@@ -42,7 +42,7 @@ const _themes = <MaterialColor>[
   Colors.red,
 ];
 
-class GlobalConfig {
+class KeTaoFeaturedGlobalConfig {
   static bool dark = false;
   static ThemeData themeData = new ThemeData(
     primarySwatch: Colors.red,
@@ -209,7 +209,7 @@ class GlobalConfig {
     }
 
     if (!isRelease) {
-//      GlobalConfig.prefs.setString("uid", "123");
+//      KeTaoFeaturedGlobalConfig.prefs.setString("uid", "123");
     }
 
     ///    初始化高德定位key
@@ -253,7 +253,7 @@ class GlobalConfig {
     print("经度:${location.latLng.longitude}");
     print("维度:${location.latLng.latitude}");
 
-    if (CommonUtils.isEmpty(location.city) &&
+    if (KeTaoFeaturedCommonUtils.isEmpty(location.city) &&
         _count < 3 &&
         location.latLng.longitude == 0) {
       initUserLocationWithPermission();
@@ -276,10 +276,10 @@ class GlobalConfig {
   }
 
   static Future initUserLocationWithPermission({count}) async {
-    if (!CommonUtils.isEmpty(count)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(count)) {
       _count = count;
     }
-    CommonUtils.requestPermission(Permission.location, _initUserLocation());
+    KeTaoFeaturedCommonUtils.requestPermission(Permission.location, _initUserLocation());
   }
 
 //  存储是否登陆的状态
@@ -325,13 +325,13 @@ class GlobalConfig {
 
   /// 获取关键词历史搜索列表
   static List<String> getSearchList() {
-    var list = GlobalConfig.prefs.getStringList("searchList");
+    var list = KeTaoFeaturedGlobalConfig.prefs.getStringList("searchList");
     return list == null ? List<String>() : list;
   }
 
   /// 保存关键词历史搜索列表
   static setSearchList({List<String> searchList}) {
-    GlobalConfig.prefs.setStringList("searchList", searchList);
+    KeTaoFeaturedGlobalConfig.prefs.setStringList("searchList", searchList);
   }
 
   /// 获取用户信息
@@ -422,7 +422,7 @@ class GlobalConfig {
     }
 
     jpush.setup(
-      appKey: GlobalConfig.JPUSH_APPKEY, //你自己应用的 AppKey
+      appKey: KeTaoFeaturedGlobalConfig.JPUSH_APPKEY, //你自己应用的 AppKey
       channel: "theChannel",
       production: false,
       debug: true,

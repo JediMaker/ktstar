@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/screenutil.dart';
 typedef void StopCount(bool b);
 typedef Future<bool> StartCountAction(BuildContext context);
 
-class TimerWidget extends StatefulWidget {
+class KeTaoFeaturedTimerWidget extends StatefulWidget {
   final int time;
   final StartCountAction startCountAction;
   Color textColor;
 
-  TimerWidget(
+  KeTaoFeaturedTimerWidget(
       {this.time = 10, this.startCountAction, this.textColor = Colors.white});
 
   @override
@@ -18,7 +18,7 @@ class TimerWidget extends StatefulWidget {
   }
 }
 
-class _TimerWidgetState extends State<TimerWidget> {
+class _TimerWidgetState extends State<KeTaoFeaturedTimerWidget> {
   bool isPressed = false;
   Widget timer;
 

@@ -7,15 +7,15 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class WithdrawalResultPage extends StatefulWidget {
-  WithdrawalResultPage({Key key}) : super(key: key);
+class KeTaoFeaturedWithdrawalResultPage extends StatefulWidget {
+  KeTaoFeaturedWithdrawalResultPage({Key key}) : super(key: key);
   final String title = "";
 
   @override
   _WithdrawalResultPageState createState() => _WithdrawalResultPageState();
 }
 
-class _WithdrawalResultPageState extends State<WithdrawalResultPage> {
+class _WithdrawalResultPageState extends State<KeTaoFeaturedWithdrawalResultPage> {
   var _withdrawalPrice = '';
 
   var _withdrawalFee = '';
@@ -84,7 +84,7 @@ class _WithdrawalResultPageState extends State<WithdrawalResultPage> {
         ),
         brightness: Brightness.light,
         centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: buildHomeWidget(

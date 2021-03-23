@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class DashedRect extends StatelessWidget {
+class KeTaoFeaturedDashedRect extends StatelessWidget {
   final Color color;
   final double strokeWidth;
   final double gap;
 
-  DashedRect(
+  KeTaoFeaturedDashedRect(
       {this.color = Colors.black, this.strokeWidth = 1.0, this.gap = 5.0});
 
   @override

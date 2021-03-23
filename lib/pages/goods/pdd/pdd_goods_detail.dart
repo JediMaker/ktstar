@@ -28,19 +28,19 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../global_config.dart';
 
-class PddGoodsDetailPage extends StatefulWidget {
+class KeTaoFeaturedPddGoodsDetailPage extends StatefulWidget {
   var productId;
   var gId;
   var goodsSign;
   var searchId;
 
-  PddGoodsDetailPage({this.productId, this.gId, this.searchId, this.goodsSign});
+  KeTaoFeaturedPddGoodsDetailPage({this.productId, this.gId, this.searchId, this.goodsSign});
 
   @override
   _PddGoodsDetailPageState createState() => _PddGoodsDetailPageState();
 }
 
-class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
+class _PddGoodsDetailPageState extends State<KeTaoFeaturedPddGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
@@ -95,7 +95,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
 //            _queueCount = resultData.data.queueCount;
             _btPrice = pddDetailData.gBonus;
             _detailImgs = pddDetailData.gSlideshow;
-            if (!CommonUtils.isEmpty(_detailImgs)) {
+            if (!KeTaoFeaturedCommonUtils.isEmpty(_detailImgs)) {
               _swiperImgs = _detailImgs.length > 5
                   ? _detailImgs.sublist(0, 5)
                   : _detailImgs;
@@ -112,7 +112,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
             try {
               _couponsAmount = pddDetailData.coupons.couponDiscount.toString();
             } catch (e) {}
-            if (CommonUtils.isEmpty(_couponsAmount)) {
+            if (KeTaoFeaturedCommonUtils.isEmpty(_couponsAmount)) {
               _discountPrice = _salePrice;
             } else {
               _discountPrice =
@@ -193,7 +193,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
 */
                               itemBuilder: (BuildContext context, int index) {
                                 return _swiperImgs != null
-                                    ? new MyOctoImage(
+                                    ? new KeTaoFeaturedMyOctoImage(
                                         image: _swiperImgs[index] == null
                                             ? ""
                                             : _swiperImgs[index],
@@ -290,7 +290,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                     ),
                                     Expanded(
                                       child: Visibility(
-                                        visible: !CommonUtils.isEmpty(_btPrice),
+                                        visible: !KeTaoFeaturedCommonUtils.isEmpty(_btPrice),
                                         child: Container(
                                           margin: EdgeInsets.only(
                                               left: ScreenUtil().setHeight(30),
@@ -308,7 +308,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                       ),
                                     ),
                                     Visibility(
-                                      visible: !CommonUtils.isEmpty(_saleTip),
+                                      visible: !KeTaoFeaturedCommonUtils.isEmpty(_saleTip),
                                       child: Align(
                                         alignment: Alignment.centerRight,
                                         child: Container(
@@ -350,7 +350,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                                     ScreenUtil().setWidth(10),
                                                   ),
                                                 ),
-                                                child: MyOctoImage(
+                                                child: KeTaoFeaturedMyOctoImage(
                                                   image:
                                                       "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
 //                                                      "https://img.pddpic.com/favicon.ico",
@@ -379,20 +379,20 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                   height: ScreenUtil().setHeight(57),
                                 ),
                                 Visibility(
-                                  visible: CommonUtils.isEmpty(_couponsAmount)
+                                  visible: KeTaoFeaturedCommonUtils.isEmpty(_couponsAmount)
                                       ? false
                                       : true,
                                   child: Column(
                                     children: [
                                       GestureDetector(
                                         onTap: () async {
-                                          if (CommonUtils.isEmpty(_mobileUri)) {
+                                          if (KeTaoFeaturedCommonUtils.isEmpty(_mobileUri)) {
                                             return;
                                           }
                                           if (_loginStatus == "0") {
-                                            CommonUtils.showToast("尚未登陆，请登录！");
-                                            NavigatorUtils.navigatorRouter(
-                                                context, LoginPage());
+                                            KeTaoFeaturedCommonUtils.showToast("尚未登陆，请登录！");
+                                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                                context, KeTaoFeaturedLoginPage());
                                             return;
                                           }
                                           if (_loginStatus == "1") {
@@ -403,7 +403,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                           alignment: Alignment.center,
                                           children: [
                                             Container(
-                                              child: MyOctoImage(
+                                              child: KeTaoFeaturedMyOctoImage(
                                                 image:
                                                     "https://alipic.lanhuapp.com/xd19448a68-5e62-4de5-9df9-fc6e45522e8d",
                                                 width:
@@ -518,7 +518,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                                                               .bold),
                                                                 ),
                                                                 Visibility(
-                                                                  visible: !CommonUtils
+                                                                  visible: !KeTaoFeaturedCommonUtils
                                                                       .isEmpty(
                                                                           _validPeriod),
                                                                   child:
@@ -561,7 +561,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                                               ],
                                                             ),
                                                             Visibility(
-                                                              visible: !CommonUtils
+                                                              visible: !KeTaoFeaturedCommonUtils
                                                                   .isEmpty(
                                                                       _validPeriod),
                                                               child: Container(
@@ -671,7 +671,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                         ScreenUtil().setWidth(30),
                                       ),
                                     ),
-                                    child: MyOctoImage(
+                                    child: KeTaoFeaturedMyOctoImage(
                                       image:
                                           "https://img.pddpic.com/favicon.ico",
                                       width: ScreenUtil().setWidth(138),
@@ -778,7 +778,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    MyOctoImage(
+                                    KeTaoFeaturedMyOctoImage(
                                       image:
                                           'https://alipic.lanhuapp.com/xd14aa2fbd-3d5f-46b8-b7ea-fa9e23c97e41',
                                       width: ScreenUtil().setWidth(30),
@@ -895,7 +895,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                             ),
                             Container(
                               color: Colors.white,
-                              child: MyOctoImage(
+                              child: KeTaoFeaturedMyOctoImage(
                                 image: _detailImgs[index],
                                 fit: BoxFit.fill,
                                 placeholderBuilder: (BuildContext context) {
@@ -933,7 +933,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                 alignment: Alignment.topLeft,
                 child: ClipOval(
                   child: IconButton(
-                    icon: MyOctoImage(
+                    icon: KeTaoFeaturedMyOctoImage(
                       image:
                           "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                     ),
@@ -958,8 +958,8 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                         height: ScreenUtil().setWidth(255),
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouterAndRemoveUntil(
-                                this.context, TaskIndexPage());
+                            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                                this.context, KeTaoFeaturedTaskIndexPage());
                           },
                           child: Container(
                             height: ScreenUtil().setWidth(255),
@@ -969,7 +969,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  MyOctoImage(
+                                  KeTaoFeaturedMyOctoImage(
                                     image:
                                         "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
                                     width: ScreenUtil().setWidth(47),
@@ -999,13 +999,13 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                           padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
                           child: GestureDetector(
                             onTap: () async {
-                              if (CommonUtils.isEmpty(_mobileUri)) {
+                              if (KeTaoFeaturedCommonUtils.isEmpty(_mobileUri)) {
                                 return;
                               }
                               if (_loginStatus == "0") {
-                                CommonUtils.showToast("尚未登陆，请登录！");
-                                NavigatorUtils.navigatorRouter(
-                                    context, LoginPage());
+                                KeTaoFeaturedCommonUtils.showToast("尚未登陆，请登录！");
+                                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                    context, KeTaoFeaturedLoginPage());
                                 return;
                               }
                               if (_loginStatus == "1") {
@@ -1095,12 +1095,12 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
-                      if (CommonUtils.isEmpty(url)) {
+                      if (KeTaoFeaturedCommonUtils.isEmpty(url)) {
                         return;
                       }
-                      NavigatorUtils.navigatorRouter(
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
                           this.context,
-                          WebViewPluginPage(
+                          KeTaoFeaturedWebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
                             title: "拼多多",
@@ -1110,7 +1110,7 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
 
                     ///
                   } else {
-                    CommonUtils.showToast(result.errMsg);
+                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                   }
                 },
               ),
@@ -1126,9 +1126,9 @@ class _PddGoodsDetailPageState extends State<PddGoodsDetailPage>
         await launch(_pddUri, forceSafariVC: false);
       } catch (e) {}
     } else {
-      NavigatorUtils.navigatorRouter(
+      KeTaoFeaturedNavigatorUtils.navigatorRouter(
           this.context,
-          WebViewPluginPage(
+          KeTaoFeaturedWebViewPluginPage(
             initialUrl: _mobileH5Uri,
             showActions: true,
             title: "拼多多",
@@ -1502,7 +1502,7 @@ class _DetailWindowState extends State<DetailWindow>
                   runSpacing: ScreenUtil().setWidth(8),
                   alignment: WrapAlignment.start,
                   children: opItem.xList.asMap().keys.map((valueIndex) {
-                    return GoodsSelectChoiceChip(
+                    return KeTaoFeaturedGoodsSelectChoiceChip(
                       /*label:
                         Text('${option.productOptionValue[valueIndex].name}'),
                     selected: selectedMap[option.productOptionId] ==
@@ -1602,14 +1602,14 @@ class _DetailWindowState extends State<DetailWindow>
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      var context = GlobalConfig.navigatorKey.currentState.overlay.context;
-      NavigatorUtils.navigatorRouter(
+      var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+      KeTaoFeaturedNavigatorUtils.navigatorRouter(
           context,
-          EnsureOrderPage(
+          KeTaoFeaturedEnsureOrderPage(
             orderId: "$orderId",
           ));
     } else {
-      CommonUtils.showToast("${result.errMsg}");
+      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -1640,7 +1640,7 @@ class _DetailWindowState extends State<DetailWindow>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          MyOctoImage(
+          KeTaoFeaturedMyOctoImage(
             image: "$_defaultImgUrl",
 /*
                 widget.detailData == null || widget.detailData.data == null

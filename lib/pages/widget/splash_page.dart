@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-class SplashPage extends StatefulWidget {
+class KeTaoFeaturedSplashPage extends StatefulWidget {
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<KeTaoFeaturedSplashPage> {
   @override
   void initState() {
     super.initState();
@@ -18,7 +18,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _toAppPage() {
-    NavigatorUtils.navigatorRouterAndRemoveUntil(context, TaskIndexPage());
+    KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+        context, KeTaoFeaturedTaskIndexPage());
   }
 
   @override
@@ -29,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      /*child: MyOctoImage(
+      /*child: KeTaoFeaturedMyOctoImage(
         image:
             "https://alipic.lanhuapp.com/xd69c17e55-d263-4281-9dbe-4b10a7079813",
         fit: BoxFit.fill,

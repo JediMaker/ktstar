@@ -14,11 +14,11 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class PayResultPage extends StatefulWidget {
+class KeTaoFeaturedPayResultPage extends StatefulWidget {
   String payNo;
   int type;
 
-  PayResultPage({Key key, this.payNo = "", this.type = 0, this.title = "购买成功"})
+  KeTaoFeaturedPayResultPage({Key key, this.payNo = "", this.type = 0, this.title = "购买成功"})
       : super(key: key);
   String title;
 
@@ -26,7 +26,7 @@ class PayResultPage extends StatefulWidget {
   _PayResultPageState createState() => _PayResultPageState();
 }
 
-class _PayResultPageState extends State<PayResultPage> {
+class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
   //
   String _money = '';
   String _condition = '';
@@ -74,7 +74,7 @@ class _PayResultPageState extends State<PayResultPage> {
         ),
         brightness: Brightness.light,
         centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: WillPopScope(
@@ -83,7 +83,7 @@ class _PayResultPageState extends State<PayResultPage> {
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              CommonUtils.showToast("再按一次返回键退出应用");
+              KeTaoFeaturedCommonUtils.showToast("再按一次返回键退出应用");
               _lastQuitTime = DateTime.now();
               return false;
             } else {
@@ -142,8 +142,8 @@ class _PayResultPageState extends State<PayResultPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouterAndRemoveUntil(
-                                context, TaskIndexPage());
+                            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                                context, KeTaoFeaturedTaskIndexPage());
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -176,11 +176,11 @@ class _PayResultPageState extends State<PayResultPage> {
                           child: GestureDetector(
                             onTap: () {
                               if (widget.type == 0) {
-                                NavigatorUtils.navigatorRouter(
-                                    context, RechargeListPage());
+                                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                    context, KeTaoFeaturedRechargeListPage());
                               } else {
-                                NavigatorUtils.navigatorRouter(
-                                    context, OrderListPage());
+                                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                    context, KeTaoFeaturedOrderListPage());
                               }
                             },
                             child: Container(
@@ -284,8 +284,8 @@ class _PayResultPageState extends State<PayResultPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  NavigatorUtils.navigatorRouter(
-                                      context, RechargeListPage());
+                                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                      context, KeTaoFeaturedRechargeListPage());
                                 },
                                 child: Container(
                                   child: Container(

@@ -56,7 +56,7 @@ class _PriceTextState extends State<PriceText> {
         width: 1125, height: 2436, allowFontScaling: false);
     var intText;
     var dotText = '';
-    if (!CommonUtils.isEmpty(widget.text)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(widget.text)) {
       List<String> s = widget.text.split(".");
       try {
         intText = s[0];

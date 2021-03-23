@@ -5,8 +5,8 @@ import 'package:star/global_config.dart';
 import 'package:star/pages/task/task_open_diamond.dart';
 import 'package:star/pages/task/task_open_vip.dart';
 
-class TaskOpenDiamondDialogPage extends StatefulWidget {
-  TaskOpenDiamondDialogPage({Key key, this.taskType = 1}) : super(key: key);
+class KeTaoFeaturedTaskOpenDiamondDialogPage extends StatefulWidget {
+  KeTaoFeaturedTaskOpenDiamondDialogPage({Key key, this.taskType = 1}) : super(key: key);
   final String title = "";
   int taskType;
 
@@ -15,7 +15,7 @@ class TaskOpenDiamondDialogPage extends StatefulWidget {
       _TaskOpenDiamondDialogPageState();
 }
 
-class _TaskOpenDiamondDialogPageState extends State<TaskOpenDiamondDialogPage> {
+class _TaskOpenDiamondDialogPageState extends State<KeTaoFeaturedTaskOpenDiamondDialogPage> {
   @override
   void initState() {
     super.initState();
@@ -68,7 +68,7 @@ class _TaskOpenDiamondDialogPageState extends State<TaskOpenDiamondDialogPage> {
                 Navigator.of(context).pop();
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return TaskOpenVipPage(
+                  return KeTaoFeaturedTaskOpenVipPage(
                     taskType: widget.taskType,
                   );
                 }));

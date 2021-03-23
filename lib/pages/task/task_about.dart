@@ -7,12 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../global_config.dart';
 
-class AboutPage extends StatefulWidget {
+class KeTaoFeaturedAboutPage extends StatefulWidget {
   @override
   _AboutPageState createState() => _AboutPageState();
 }
 
-class _AboutPageState extends State<AboutPage>
+class _AboutPageState extends State<KeTaoFeaturedAboutPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -40,7 +40,7 @@ class _AboutPageState extends State<AboutPage>
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return WebViewPage(
+                return KeTaoFeaturedWebViewPage(
                     initialUrl: APi.AGREEMENT_SERVICES_URL, title: "用户协议");
               }));
             },
@@ -91,7 +91,7 @@ class _AboutPageState extends State<AboutPage>
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return WebViewPage(
+                return KeTaoFeaturedWebViewPage(
                   initialUrl: APi.AGREEMENT_PRIVACY_URL,
                   title: "隐私政策",
                 );
@@ -132,7 +132,7 @@ class _AboutPageState extends State<AboutPage>
           ),
         ),
         Visibility(
-          visible: GlobalConfig.isHuaweiUnderReview,
+          visible: KeTaoFeaturedGlobalConfig.isHuaweiUnderReview,
           child: Column(
             children: [
               Container(
@@ -226,7 +226,7 @@ class _AboutPageState extends State<AboutPage>
           ),
           brightness: Brightness.light,
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: _buildInfoCard());

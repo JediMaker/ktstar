@@ -5,15 +5,15 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 
 import '../../global_config.dart';
 
-class OrderListPage extends StatefulWidget {
-  OrderListPage({Key key}) : super(key: key);
+class KeTaoFeaturedOrderListPage extends StatefulWidget {
+  KeTaoFeaturedOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
 
   @override
   _OrderListPageState createState() => _OrderListPageState();
 }
 
-class _OrderListPageState extends State<OrderListPage>
+class _OrderListPageState extends State<KeTaoFeaturedOrderListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
   int _selectedTabIndex = 0;
@@ -94,7 +94,7 @@ class _OrderListPageState extends State<OrderListPage>
         if (orderType[index] == '饿了么') {
           orderSource = "-1";
         }
-        tabViews.add(RechargeOrderListPage(
+        tabViews.add(KeTaoFeaturedRechargeOrderListPage(
           orderSource: orderSource,
         ));
       }
@@ -130,7 +130,7 @@ class _OrderListPageState extends State<OrderListPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -148,7 +148,7 @@ class _OrderListPageState extends State<OrderListPage>
               indicatorWeight: 2,
               indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
               unselectedLabelColor: Colors.black,
-              indicator: RoundUnderlineTabIndicator(
+              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Color(0xffF32E43),

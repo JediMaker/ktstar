@@ -24,8 +24,8 @@ import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
-class MicroShareHolderEquityPage extends StatefulWidget {
-  MicroShareHolderEquityPage(
+class KeTaoFeaturedMicroShareHolderEquityPage extends StatefulWidget {
+  KeTaoFeaturedMicroShareHolderEquityPage(
       {Key key, this.shareholderType = 1, this.showBackBtnIcon = true})
       : super(key: key);
   final String title = "微股东权益";
@@ -40,7 +40,7 @@ class MicroShareHolderEquityPage extends StatefulWidget {
       _MicroShareHolderEquityPageState();
 }
 
-class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
+class _MicroShareHolderEquityPageState extends State<KeTaoFeaturedMicroShareHolderEquityPage>
     with AutomaticKeepAliveClientMixin {
   Color _textTopColor = Color(0xff0A7FFF);
   Color _textBottomColor = Color(0xff666666);
@@ -87,11 +87,11 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
   UserInfoData userInfoData;
 
   _initWeChatResponseHandler() {
-    GlobalConfig.payType = 3;
+    KeTaoFeaturedGlobalConfig.payType = 3;
     fluwx.weChatResponseEventHandler.listen((res) async {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
-        if (res.isSuccessful && GlobalConfig.payType == 3) {
+        if (res.isSuccessful && KeTaoFeaturedGlobalConfig.payType == 3) {
           _checkPayStatus();
         }
       }
@@ -105,8 +105,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
       List<MicroShareholderItemEntity>();
 
   _initData() async {
-    userInfoData = GlobalConfig.getUserInfo();
-    if (CommonUtils.isEmpty(userInfoData)) {
+    userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
       var result = await HttpManage.getUserInfo();
       if (result.status) {
         setState(() {
@@ -118,7 +118,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                   : 0;
         });
       } else {
-        if (CommonUtils.isEmpty(userInfoData.isPartner)) {
+        if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData.isPartner)) {
           var result = await HttpManage.getUserInfo();
           if (result.status) {
             setState(() {
@@ -133,7 +133,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
         }
       }
     } else {
-      if (!CommonUtils.isEmpty(userInfoData.isPartner)) {
+      if (!KeTaoFeaturedCommonUtils.isEmpty(userInfoData.isPartner)) {
         setState(() {
           _shareholderType = userInfoData.isPartner;
           _currentIndex = _shareholderType == '1'
@@ -163,13 +163,13 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
       var payStatus = result.data["pay_status"].toString();
       switch (payStatus) {
         case "1": //未成功
-          CommonUtils.showToast("支付失败");
+          KeTaoFeaturedCommonUtils.showToast("支付失败");
           break;
         case "2": //已成功
           await HttpManage.getUserInfo();
-          NavigatorUtils.navigatorRouterAndRemoveUntil(
+          KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
-              PayResultPage(
+              KeTaoFeaturedPayResultPage(
                 payNo: _payNo,
                 type: 2,
                 title: '支付成功',
@@ -177,7 +177,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
           break;
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -304,7 +304,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
     ///小喇叭图标
     var lbIcon =
         'https://alipic.lanhuapp.com/xd92657a69-39df-48d4-bb44-ef8edacccde3';
-    if (Platform.isIOS && GlobalConfig.prefs.getBool("isIosUnderReview")) {
+    if (Platform.isIOS && KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
       btnTxt = 'ios暂未开通';
     }
 
@@ -407,7 +407,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                         child: GestureDetector(
                       child: Stack(
                         children: [
-                          /* MyOctoImage(
+                          /* KeTaoFeaturedMyOctoImage(
                             image:
                                 'https://alipic.lanhuapp.com/xd52654c11-0f1f-43da-8f0d-43e6ffeddc89',
                             width: ScreenUtil().setWidth(1255),
@@ -436,7 +436,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                                     var result = await HttpManage
                                         .applyToBecomeAMicroShareholder();
                                     if (result.status) {
-                                      CommonUtils.showToast("微股东申请开通成功！");
+                                      KeTaoFeaturedCommonUtils.showToast("微股东申请开通成功！");
                                     } else {
                                       showOpenMicroShareholderDialog();
                                     }
@@ -551,7 +551,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                         ),
                         child: Row(
                           children: [
-                            MyOctoImage(
+                            KeTaoFeaturedMyOctoImage(
                               image: "$lbIcon",
                               width: ScreenUtil().setWidth(33),
                               height: ScreenUtil().setWidth(33),
@@ -605,8 +605,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  NavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, TaskIndexPage());
+                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KeTaoFeaturedTaskIndexPage());
                 },
               ),
               CupertinoDialogAction(
@@ -738,7 +738,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
     var listSize = _currentIndex == 0 ? 1 : 2;
     return Column(
       children: List.generate(
-          CommonUtils.isEmpty(shareholdersEquityDescriptionList)
+          KeTaoFeaturedCommonUtils.isEmpty(shareholdersEquityDescriptionList)
               ? listSize
               : shareholdersEquityDescriptionList.lenth,
           (index) => buildShareholdersEquityDescriptionDisplayItem(
@@ -756,7 +756,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
       childrenListSize = 1;
     }
 
-    if (!CommonUtils.isEmpty(item)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(item)) {
       try {
         profitTitle = item.title;
         profitDesc = item.desc;
@@ -856,7 +856,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                 ),
                 Column(
                   children: List.generate(
-                      CommonUtils.isEmpty(desChildrenList)
+                      KeTaoFeaturedCommonUtils.isEmpty(desChildrenList)
                           ? childrenListSize
                           : desChildrenList.lenth,
                       (itemIndex) => buildBenefitDescriptionItem(
@@ -882,7 +882,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
         ? "https://alipic.lanhuapp.com/xdde8fa682-7e93-4790-8f11-6654c2724828"
         : 'https://alipic.lanhuapp.com/xd1f5df4e2-52ec-43ac-91a1-9e96dd2960de';
     var iconDesc = '';
-    if (!CommonUtils.isEmpty(item)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(item)) {
       try {
         profitTitle = item.title;
         profitDesc = item.desc;
@@ -1066,21 +1066,21 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
       ),
       child: Stack(
         children: [
-          MyOctoImage(
+          KeTaoFeaturedMyOctoImage(
             image:
                 "https://alipic.lanhuapp.com/xd94361c9c-aef0-4d62-a616-844f4bda2189",
             width: ScreenUtil().setWidth(1065),
             height: ScreenUtil().setWidth(331),
             fit: BoxFit.fill,
           ),
-          MyOctoImage(
+          KeTaoFeaturedMyOctoImage(
             image:
                 "https://alipic.lanhuapp.com/xd8690d7d2-d313-45f5-b70c-ec09f259915a",
             width: ScreenUtil().setWidth(1065),
             height: ScreenUtil().setWidth(331),
             fit: BoxFit.fill,
           ),
-          MyOctoImage(
+          KeTaoFeaturedMyOctoImage(
             image:
                 "https://alipic.lanhuapp.com/xd42e3eaf9-41e0-4057-ad08-713b3ae1a0e8",
             width: ScreenUtil().setWidth(1065),
@@ -1337,7 +1337,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ClipOval(
-                  child: MyOctoImage(
+                  child: KeTaoFeaturedMyOctoImage(
                     image: "$headUrl",
                     width: ScreenUtil().setWidth(168),
                     height: ScreenUtil().setWidth(168),
@@ -1382,7 +1382,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                   ),
                 ),
                 Container(
-                  child: MyOctoImage(
+                  child: KeTaoFeaturedMyOctoImage(
                     image: "$iconLinkUrl",
                     width: ScreenUtil().setWidth(281),
                     height: ScreenUtil().setWidth(149),
@@ -1512,8 +1512,8 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
   }
 
   _showSelectPayWayBottomSheet() {
-    if (Platform.isIOS && GlobalConfig.prefs.getBool("isIosUnderReview")) {
-      CommonUtils.showIosPayDialog();
+    if (Platform.isIOS && KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
+      KeTaoFeaturedCommonUtils.showIosPayDialog();
       return;
     }
     showModalBottomSheet(
@@ -1540,19 +1540,19 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                         TextSpan(
                             text: "¥",
                             style: TextStyle(
-                              color: GlobalConfig.taskHeadColor,
+                              color: KeTaoFeaturedGlobalConfig.taskHeadColor,
                               fontSize: ScreenUtil().setSp(42),
                             )),
                         TextSpan(
                             text: " $_selectPrice",
                             style: TextStyle(
-                              color: GlobalConfig.taskHeadColor,
+                              color: KeTaoFeaturedGlobalConfig.taskHeadColor,
                               fontSize: ScreenUtil().setSp(48),
                             )),
                         /*TextSpan(
                             text: ".00",
                             style: TextStyle(
-                                color: GlobalConfig.taskHeadColor,
+                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
                                 fontSize: 12)),*/
                       ])),
                     ),
@@ -1621,7 +1621,7 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
-                            CommonUtils.showToast(result.errMsg);
+                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
                           var result =
@@ -1632,10 +1632,10 @@ class _MicroShareHolderEquityPageState extends State<MicroShareHolderEquityPage>
                             _payNo = result.data.payNo;
                             callAlipay();
                           } else {
-                            CommonUtils.showToast(result.errMsg);
+                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                           }
                         } else {
-                          CommonUtils.showToast("请选择支付方式");
+                          KeTaoFeaturedCommonUtils.showToast("请选择支付方式");
                         }
                         Navigator.of(context).pop();
                       },

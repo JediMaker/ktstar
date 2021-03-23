@@ -20,126 +20,126 @@ import 'package:star/pages/task/task_mine.dart';
 import 'package:star/pages/task/task_open_vip.dart';
 import 'package:star/pages/task/task_record_list.dart';
 
-class RouteNames {
+class KeTaoFeaturedRouteNames {
   static const String MAINPAGE = '';
-  static const String GoodsListPage = 'goodsListPage';
+  static const String KeTaoFeaturedGoodsListPage = 'goodsListPage';
   static const String LOGINPAGE = "login";
-  static const String OrderListPage = "orderListPage";
-  static const String RechargeListPage = "rechargeListPage";
-  static const String ClassifyListPage = "classifyListPage";
-  static const String TaskListPage = "taskListPage";
-  static const String TaskMinePage = "taskMinePage";
-  static const String TaskOpenVipPage = "taskOpenVipPage";
-  static const String TaskHallPage = "taskHallPage";
-  static const String IncomeListPage = "incomeListPage";
-  static const String InvitationPosterPage = "invitationPosterPage";
-  static const String AboutPage = "aboutPage";
-  static const String FansListPage = "fansListPage";
-  static const String TaskMessagePage = "taskMessagePage";
-  static const String TaskRecordListPage = "taskRecordListPage";
-  static const String PddHomeIndexPage = "pddHome";
-  static const String PddGoodsListPage = "pddList";
-  static const String PddGoodsDetailPage = "pddGoodsDetailPage";
+  static const String KeTaoFeaturedOrderListPage = "orderListPage";
+  static const String KeTaoFeaturedRechargeListPage = "rechargeListPage";
+  static const String KeTaoFeaturedClassifyListPage = "classifyListPage";
+  static const String KeTaoFeaturedTaskListPage = "taskListPage";
+  static const String KeTaoFeaturedTaskMinePage = "taskMinePage";
+  static const String KeTaoFeaturedTaskOpenVipPage = "taskOpenVipPage";
+  static const String KeTaoFeaturedTaskHallPage = "taskHallPage";
+  static const String KeTaoFeaturedIncomeListPage = "incomeListPage";
+  static const String KeTaoFeaturedInvitationPosterPage = "invitationPosterPage";
+  static const String KeTaoFeaturedAboutPage = "aboutPage";
+  static const String KeTaoFeaturedFansListPage = "fansListPage";
+  static const String KeTaoFeaturedTaskMessagePage = "taskMessagePage";
+  static const String KeTaoFeaturedTaskRecordListPage = "taskRecordListPage";
+  static const String KeTaoFeaturedPddHomeIndexPage = "pddHome";
+  static const String KeTaoFeaturedPddGoodsListPage = "pddList";
+  static const String KeTaoFeaturedPddGoodsDetailPage = "pddGoodsDetailPage";
 }
 
 class MyRouters {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     print("RouteSettings==:" + settings.toString());
     switch (settings.name) {
-      case RouteNames.OrderListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedOrderListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.OrderListPage),
-          builder: (context) => RechargeOrderListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedOrderListPage),
+          builder: (context) => KeTaoFeaturedRechargeOrderListPage(),
         );
-      case RouteNames.GoodsListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedGoodsListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.GoodsListPage),
-          builder: (context) => GoodsListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedGoodsListPage),
+          builder: (context) => KeTaoFeaturedGoodsListPage(),
         );
-      case RouteNames.LOGINPAGE:
+      case KeTaoFeaturedRouteNames.LOGINPAGE:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.LOGINPAGE),
-          builder: (context) => LoginPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.LOGINPAGE),
+          builder: (context) => KeTaoFeaturedLoginPage(),
         );
-      case RouteNames.RechargeListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedRechargeListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.RechargeListPage),
-          builder: (context) => RechargeListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedRechargeListPage),
+          builder: (context) => KeTaoFeaturedRechargeListPage(),
         );
-      case RouteNames.ClassifyListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedClassifyListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.ClassifyListPage),
-          builder: (context) => ClassifyListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedClassifyListPage),
+          builder: (context) => KeTaoFeaturedClassifyListPage(),
         );
-      case RouteNames.TaskListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedTaskListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.TaskListPage),
-          builder: (context) => TaskListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedTaskListPage),
+          builder: (context) => KeTaoFeaturedTaskListPage(),
         );
-      case RouteNames.TaskMinePage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedTaskMinePage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.TaskMinePage),
-          builder: (context) => TaskMinePage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedTaskMinePage),
+          builder: (context) => KeTaoFeaturedTaskMinePage(),
         );
-      case RouteNames.TaskOpenVipPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedTaskOpenVipPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.TaskOpenVipPage),
-          builder: (context) => TaskOpenVipPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedTaskOpenVipPage),
+          builder: (context) => KeTaoFeaturedTaskOpenVipPage(),
         );
-      case RouteNames.TaskHallPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedTaskHallPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.TaskHallPage),
-          builder: (context) => TaskHallPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedTaskHallPage),
+          builder: (context) => KeTaoFeaturedTaskHallPage(),
         );
-      case RouteNames.IncomeListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedIncomeListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.IncomeListPage),
-          builder: (context) => IncomeListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedIncomeListPage),
+          builder: (context) => KeTaoFeaturedIncomeListPage(),
         );
-      case RouteNames.InvitationPosterPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedInvitationPosterPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.InvitationPosterPage),
-          builder: (context) => InvitationPosterPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedInvitationPosterPage),
+          builder: (context) => KeTaoFeaturedInvitationPosterPage(),
         );
-      case RouteNames.AboutPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedAboutPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.AboutPage),
-          builder: (context) => AboutPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedAboutPage),
+          builder: (context) => KeTaoFeaturedAboutPage(),
         );
-      case RouteNames.FansListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedFansListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.FansListPage),
-          builder: (context) => FansListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedFansListPage),
+          builder: (context) => KeTaoFeaturedFansListPage(),
         );
-      case RouteNames.TaskMessagePage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedTaskMessagePage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.TaskMessagePage),
-          builder: (context) => TaskMessagePage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedTaskMessagePage),
+          builder: (context) => KeTaoFeaturedTaskMessagePage(),
         );
-      case RouteNames.TaskRecordListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedTaskRecordListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.TaskRecordListPage),
-          builder: (context) => TaskRecordListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedTaskRecordListPage),
+          builder: (context) => KeTaoFeaturedTaskRecordListPage(),
         );
-      case RouteNames.PddHomeIndexPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedPddHomeIndexPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.PddHomeIndexPage),
-          builder: (context) => PddHomeIndexPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedPddHomeIndexPage),
+          builder: (context) => KeTaoFeaturedPddHomeIndexPage(),
         );
-      case RouteNames.PddGoodsListPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedPddGoodsListPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.PddGoodsListPage),
-          builder: (context) => PddGoodsListPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedPddGoodsListPage),
+          builder: (context) => KeTaoFeaturedPddGoodsListPage(),
         );
-      case RouteNames.PddGoodsDetailPage:
+      case KeTaoFeaturedRouteNames.KeTaoFeaturedPddGoodsDetailPage:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.PddGoodsDetailPage),
-          builder: (context) => PddGoodsDetailPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.KeTaoFeaturedPddGoodsDetailPage),
+          builder: (context) => KeTaoFeaturedPddGoodsDetailPage(),
         );
       default:
         return MaterialPageRoute(
-          settings: RouteSettings(name: RouteNames.MAINPAGE),
-          builder: (context) => TaskIndexPage(),
+          settings: RouteSettings(name: KeTaoFeaturedRouteNames.MAINPAGE),
+          builder: (context) => KeTaoFeaturedTaskIndexPage(),
         );
     }
   }

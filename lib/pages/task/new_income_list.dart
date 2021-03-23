@@ -7,8 +7,8 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 
 import '../../global_config.dart';
 
-class NewIncomeListPage extends StatefulWidget {
-  NewIncomeListPage({Key key, this.showType}) : super(key: key);
+class KeTaoFeaturedNewIncomeListPage extends StatefulWidget {
+  KeTaoFeaturedNewIncomeListPage({Key key, this.showType}) : super(key: key);
   final String title = "收益列表";
   var showType;
 
@@ -16,7 +16,7 @@ class NewIncomeListPage extends StatefulWidget {
   _NewIncomeListPageState createState() => _NewIncomeListPageState();
 }
 
-class _NewIncomeListPageState extends State<NewIncomeListPage>
+class _NewIncomeListPageState extends State<KeTaoFeaturedNewIncomeListPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   int _selectedTabIndex = 0;
@@ -87,12 +87,12 @@ class _NewIncomeListPageState extends State<NewIncomeListPage>
     if (orderType != null) {
       for (var index = 0; index < orderType.length; index++) {
         if (index == 0) {
-          tabViews.add(IncomeListPage(
+          tabViews.add(KeTaoFeaturedIncomeListPage(
             pageType: 0,
             showType: widget.showType,
           ));
         } else {
-          tabViews.add(ShareHolderIncomeListPage(
+          tabViews.add(KeTaoFeaturedAboutPage(
             pageType: 0,
             profitType: profitType + index,
             showType: widget.showType,
@@ -131,7 +131,7 @@ class _NewIncomeListPageState extends State<NewIncomeListPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: GlobalConfig.taskNomalHeadColor,
+        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -149,7 +149,7 @@ class _NewIncomeListPageState extends State<NewIncomeListPage>
               indicatorWeight: 2,
               indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
               unselectedLabelColor: Colors.black,
-              indicator: RoundUnderlineTabIndicator(
+              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Color(0xffF32E43),

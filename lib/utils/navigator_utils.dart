@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NavigatorUtils {
+class KeTaoFeaturedNavigatorUtils {
   static navigatorRouter(BuildContext context, Widget widget) {
     return Navigator.push(
         context, new MaterialPageRoute(builder: (context) => widget));

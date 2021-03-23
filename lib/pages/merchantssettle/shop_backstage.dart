@@ -11,17 +11,17 @@ import 'package:star/pages/widget/round_tab_indicator.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-class ShopBackstagePage extends StatefulWidget {
+class KeTaoFeaturedShopBackstagePage extends StatefulWidget {
   var shopId;
 
-  ShopBackstagePage({Key key, this.shopId = ''}) : super(key: key);
+  KeTaoFeaturedShopBackstagePage({Key key, this.shopId = ''}) : super(key: key);
   final String title = "商家后台";
 
   @override
   _ShopBackstagePageState createState() => _ShopBackstagePageState();
 }
 
-class _ShopBackstagePageState extends State<ShopBackstagePage>
+class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
     with TickerProviderStateMixin {
   var _receivedPayNum = '0';
   var _receivedMoney = '0';
@@ -212,7 +212,7 @@ class _ShopBackstagePageState extends State<ShopBackstagePage>
                               ),
                               indicatorPadding:
                                   EdgeInsets.only(top: 4, bottom: 2),
-                              indicator: RoundUnderlineTabIndicator(
+                              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
                                   borderSide: BorderSide(
                                 width: 3.5,
                                 color: Color(0xffF32E43),
@@ -243,11 +243,11 @@ class _ShopBackstagePageState extends State<ShopBackstagePage>
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          if (!CommonUtils.isEmpty(content) && content.startsWith("http")) {
+          if (!KeTaoFeaturedCommonUtils.isEmpty(content) && content.startsWith("http")) {
             ///跳转收款二维码页面
-            NavigatorUtils.navigatorRouter(
+            KeTaoFeaturedNavigatorUtils.navigatorRouter(
                 context,
-                ShopQrCodePage(
+                KeTaoFeaturedShopQrCodePage(
                   qrCodeUrl: _qrCodeUrl,
                 ));
           }
@@ -256,7 +256,7 @@ class _ShopBackstagePageState extends State<ShopBackstagePage>
           children: [
             Visibility(
               visible:
-                  !CommonUtils.isEmpty(content) && !content.startsWith("http"),
+                  !KeTaoFeaturedCommonUtils.isEmpty(content) && !content.startsWith("http"),
               child: Container(
                 height: ScreenUtil().setWidth(78),
                 child: Text(
@@ -270,7 +270,7 @@ class _ShopBackstagePageState extends State<ShopBackstagePage>
             ),
             Visibility(
               visible:
-                  !CommonUtils.isEmpty(content) && content.startsWith("http"),
+                  !KeTaoFeaturedCommonUtils.isEmpty(content) && content.startsWith("http"),
               child: Container(
                 margin: EdgeInsets.only(
                   bottom: ScreenUtil().setWidth(22),
@@ -278,7 +278,7 @@ class _ShopBackstagePageState extends State<ShopBackstagePage>
                 child: Container(
                   width: ScreenUtil().setWidth(56),
                   height: ScreenUtil().setWidth(56),
-                  child: MyOctoImage(
+                  child: KeTaoFeaturedMyOctoImage(
                     image: "$content",
                     width: ScreenUtil().setWidth(56),
                     height: ScreenUtil().setWidth(56),
@@ -345,7 +345,7 @@ class _ShopOrderTabViewState extends State<ShopOrderTabView>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -384,7 +384,7 @@ class _ShopOrderTabViewState extends State<ShopOrderTabView>
         }
       },
       emptyWidget: _shopOrderList == null || _shopOrderList.length == 0
-          ? NoDataPage()
+          ? KeTaoFeaturedNoDataPage()
           : null,
       slivers: <Widget>[buildCenter()],
     );

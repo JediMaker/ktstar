@@ -141,9 +141,9 @@ class HttpManage {
   static void init() {
     // 添加缓存插件
     // 设置用户token（可能为null，代表未登录）
-    if (GlobalConfig.prefs != null &&
-        GlobalConfig.prefs.containsKey("tokenBean")) {
-      final extractData = json.decode(GlobalConfig.prefs.getString("tokenBean"))
+    if (KeTaoFeaturedGlobalConfig.prefs != null &&
+        KeTaoFeaturedGlobalConfig.prefs.containsKey("tokenBean")) {
+      final extractData = json.decode(KeTaoFeaturedGlobalConfig.prefs.getString("tokenBean"))
           as Map<String, dynamic>;
     }
 
@@ -159,11 +159,11 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (!GlobalConfig.isRelease) {
+    if (!KeTaoFeaturedGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
-          return 'PROXY ${GlobalConfig.localProxyIPAddress}:${GlobalConfig.localProxyPort}';
+          return 'PROXY ${KeTaoFeaturedGlobalConfig.localProxyIPAddress}:${KeTaoFeaturedGlobalConfig.localProxyPort}';
         };
         //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
         client.badCertificateCallback =
@@ -176,14 +176,14 @@ class HttpManage {
   /// 获取任务墙入口
   static String getTheMissionWallEntranceUrl(String phone) {
     // 请求参数也可以通过对象传递：
-    var signature = Utils.generateMd5(phone.toString() +
-        GlobalConfig.MISSION_WALL_CHANNEL +
-        GlobalConfig.MISSION_WALL_KEY);
+    var signature = KeTaoFeaturedUtils.generateMd5(phone.toString() +
+        KeTaoFeaturedGlobalConfig.MISSION_WALL_CHANNEL +
+        KeTaoFeaturedGlobalConfig.MISSION_WALL_KEY);
     var paramStr = "?phone=$phone&" +
-        "channel=${GlobalConfig.MISSION_WALL_CHANNEL}&" +
-        "time=${CommonUtils.currentTimeMillis()}&" +
+        "channel=${KeTaoFeaturedGlobalConfig.MISSION_WALL_CHANNEL}&" +
+        "time=${KeTaoFeaturedCommonUtils.currentTimeMillis()}&" +
         "signature=$signature";
-    return GlobalConfig.TASKWALL_ADDRESS + paramStr;
+    return KeTaoFeaturedGlobalConfig.TASKWALL_ADDRESS + paramStr;
   }
 
   ///
@@ -197,11 +197,11 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["type"] = "$type";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields
       ..add(MapEntry(
-          "sign", "${Utils.getSign(paramsMap)}")); //类型  1-注册 2-登录 3-绑定手机号码
+          "sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}")); //类型  1-注册 2-登录 3-绑定手机号码
     var response = await HttpManage.dio.post(
       APi.SMS_SEND,
       data: formData,
@@ -222,11 +222,11 @@ class HttpManage {
       String phone, String type) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields
       ..add(MapEntry(
-          "sign", "${Utils.getSign(paramsMap)}")); //类型  1-注册 2-登录 3-绑定手机号码
+          "sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}")); //类型  1-注册 2-登录 3-绑定手机号码
     var response = await HttpManage.dio.post(
       APi.USER_SEND_SMS,
       data: formData,
@@ -252,11 +252,11 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["password"] = "$password";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     paramsMap["code"] = "$smsCode";
     paramsMap["review_code"] = "$review_code";
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
 
     print(HttpManage.dio.toString());
     var response = await HttpManage.dio.post(
@@ -283,10 +283,10 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["password"] = "$password";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     paramsMap["code"] = "$smsCode";
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
 
     print(HttpManage.dio.toString());
     var response = await HttpManage.dio.post(
@@ -313,10 +313,10 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["password"] = "$password";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     paramsMap["code"] = "$smsCode";
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
 
     print(HttpManage.dio.toString());
     var response = await HttpManage.dio.post(
@@ -341,11 +341,11 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["code"] = "$smsCode";
-    paramsMap["register_id"] = "${GlobalConfig.getJpushRegistrationId()}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["register_id"] = "${KeTaoFeaturedGlobalConfig.getJpushRegistrationId()}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.FAST_LOGIN,
       data: formData,
@@ -354,8 +354,8 @@ class HttpManage {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("loginData", response.data.toString());
-      GlobalConfig.saveLoginStatus(entity.status);
+      KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
+      KeTaoFeaturedGlobalConfig.saveLoginStatus(entity.status);
     }
 
     return entity;
@@ -372,11 +372,11 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$phone";
     paramsMap["password"] = "$password";
-    paramsMap["register_id"] = "${GlobalConfig.getJpushRegistrationId()}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["register_id"] = "${KeTaoFeaturedGlobalConfig.getJpushRegistrationId()}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.LOGIN,
       data: formData,
@@ -385,8 +385,8 @@ class HttpManage {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("loginData", response.data.toString());
-      GlobalConfig.saveLoginStatus(entity.status);
+      KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
+      KeTaoFeaturedGlobalConfig.saveLoginStatus(entity.status);
     }
 
     return entity;
@@ -401,11 +401,11 @@ class HttpManage {
   static Future<ResultBeanEntity> changePassword(String password) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$password";
-    paramsMap["uid"] = "${GlobalConfig.prefs.getString("uid")}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["uid"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.RESET_PASSWORD,
       data: formData,
@@ -414,8 +414,8 @@ class HttpManage {
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
-      GlobalConfig.saveLoginStatus(entity.status);
+      KeTaoFeaturedGlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
+      KeTaoFeaturedGlobalConfig.saveLoginStatus(entity.status);
     }
     return entity;
   }
@@ -429,11 +429,11 @@ class HttpManage {
   static Future<LoginEntity> wechatLogin(code) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["code"] = "$code";
-    paramsMap["register_id"] = "${GlobalConfig.getJpushRegistrationId()}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["register_id"] = "${KeTaoFeaturedGlobalConfig.getJpushRegistrationId()}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.WECHAT_LOGIN,
       data: formData,
@@ -442,8 +442,8 @@ class HttpManage {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("loginData", response.data.toString());
-      GlobalConfig.saveLoginStatus(entity.status);
+      KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
+      KeTaoFeaturedGlobalConfig.saveLoginStatus(entity.status);
     }
     return entity;
   }
@@ -457,10 +457,10 @@ class HttpManage {
   static Future<ResultBeanEntity> bindWechat(code) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["code"] = "$code";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.SITE_BIND_THIRD,
       data: formData,
@@ -478,11 +478,11 @@ class HttpManage {
   ///
   static Future<ResultBeanEntity> generateQRCode(String password) async {
     Map paramsMap = Map<String, dynamic>();
-    paramsMap["id"] = "${GlobalConfig.prefs.getString("uid")}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["id"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.CREATE_QRCODE,
       data: formData,
@@ -491,9 +491,9 @@ class HttpManage {
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
+      KeTaoFeaturedGlobalConfig.prefs.setString("uid", entity.data["uid"].toString());
     }
-    GlobalConfig.saveLoginStatus(entity.status);
+    KeTaoFeaturedGlobalConfig.saveLoginStatus(entity.status);
     return entity;
   }
 
@@ -502,10 +502,10 @@ class HttpManage {
   ///
   static Future<UserInfoEntity> getUserInfo() async {
     Map paramsMap = Map<String, dynamic>();
-//    paramsMap["uid"] = "${GlobalConfig.prefs.getString("uid")}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    paramsMap["uid"] = "${KeTaoFeaturedGlobalConfig.prefs.getString("uid")}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.USER_INFO,
     );
@@ -513,8 +513,8 @@ class HttpManage {
     var entity = UserInfoEntity();
     userInfoEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("userInfo", response.data.toString());
-      print("userInfo" + GlobalConfig.prefs.getString("userInfo"));
+      KeTaoFeaturedGlobalConfig.prefs.setString("userInfo", response.data.toString());
+      print("userInfo" + KeTaoFeaturedGlobalConfig.prefs.getString("userInfo"));
     }
     return entity;
   }
@@ -537,10 +537,10 @@ class HttpManage {
   ///
   static Future<HomeEntity> getHomeInfo() async {
     Map paramsMap = Map<String, dynamic>();
-//    paramsMap["token"] = "${GlobalConfig.getLoginInfo().token}";
-//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    paramsMap["token"] = "${KeTaoFeaturedGlobalConfig.getLoginInfo().token}";
+//    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 //    FormData formData = FormData.fromMap(paramsMap);
-//    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+//    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.SITE_HOME,
 //      queryParameters: paramsMap,
@@ -552,7 +552,7 @@ class HttpManage {
     var entity = HomeEntity();
     homeEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("homeData", response.data.toString());
+      KeTaoFeaturedGlobalConfig.prefs.setString("homeData", response.data.toString());
     }
     return entity;
   }
@@ -562,10 +562,10 @@ class HttpManage {
   ///
   static Future<RechargeEntity> getRechargeList() async {
     Map paramsMap = Map<String, dynamic>();
-//    paramsMap["token"] = "${GlobalConfig.getLoginInfo().token}";
-//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    paramsMap["token"] = "${KeTaoFeaturedGlobalConfig.getLoginInfo().token}";
+//    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
 //    FormData formData = FormData.fromMap(paramsMap);
-//    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+//    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.SITE_RECHARGE,
 //      queryParameters: paramsMap,
@@ -606,9 +606,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.SITE_BIND_PHONE,
       data: formData,
@@ -630,9 +630,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.SITE_BIND_PHONE,
       data: formData,
@@ -656,7 +656,7 @@ class HttpManage {
     if (entity.status) {
       switch (entity.data.wxLogin) {
         case "1": //不显示
-          GlobalConfig.displayThirdLoginInformation = false;
+          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = false;
 
           /* if (mounted) {
             setState(() {});
@@ -664,7 +664,7 @@ class HttpManage {
           break;
 
         case "2": //显示
-          GlobalConfig.displayThirdLoginInformation = true;
+          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = true;
           /*  if (mounted) {
             setState(() {});
           }*/
@@ -672,17 +672,17 @@ class HttpManage {
       }
       if (entity.data.whCheck) {
         //华为应用市场上架审核中
-        GlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+        KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
       } else {
-        GlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+        KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
       }
       if (entity.data.iosCheck) {
         //appStore上架审核中
-        GlobalConfig.prefs.setBool("isIosUnderReview", true);
+        KeTaoFeaturedGlobalConfig.prefs.setBool("isIosUnderReview", true);
       } else {
-        GlobalConfig.prefs.setBool("isIosUnderReview", false);
+        KeTaoFeaturedGlobalConfig.prefs.setBool("isIosUnderReview", false);
       }
-      /*if (!GlobalConfig.isAgreePrivacy && GlobalConfig.isHuaweiUnderReview) {
+      /*if (!KeTaoFeaturedGlobalConfig.isAgreePrivacy && KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
         Future.delayed(Duration(milliseconds: 300), () {
           showPrivacyDialog(context);
         });
@@ -703,9 +703,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["tel"] = "$tel";
     paramsMap["code"] = "$code";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.SITE_EXPERIENCE_MEMBER_PHONE_ADD,
       data: formData,
@@ -727,9 +727,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["img_id"] = "$imgId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_SUBMIT_SAVE,
       data: formData,
@@ -752,9 +752,9 @@ class HttpManage {
     paramsMap["com_id"] = "$comId";
     paramsMap["img_id"] = "$imgId";
     paramsMap["remark"] = "$remark";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_SUBMIT_SAVE,
       data: formData,
@@ -774,9 +774,9 @@ class HttpManage {
   static Future<TaskSubmitInfoEntity> getTaskSubmitInfo(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_SUBMIT_INFO,
       data: formData,
@@ -798,9 +798,9 @@ class HttpManage {
       taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_SUBMIT_INFO,
       data: formData,
@@ -822,9 +822,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["com_id"] = "$comId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_RESUBMIT_INFO,
       data: formData,
@@ -848,9 +848,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
     paramsMap["com_id"] = "$comId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_RESUBMIT_INFO,
       data: formData,
@@ -875,9 +875,9 @@ class HttpManage {
     paramsMap["page_size"] = "$pageSize";
     paramsMap["type"] = "$type";
     paramsMap["holder_type"] = "$holderType";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_FANS_LIST,
       data: formData,
@@ -894,9 +894,9 @@ class HttpManage {
   ///
   static Future<FansTotalEntity> getFansTotal() async {
     Map paramsMap = Map<String, dynamic>();
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_TOTAL_FANS,
       data: formData,
@@ -924,9 +924,9 @@ class HttpManage {
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     paramsMap["show_type"] = "$showType";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       !isWithdrawal ? APi.USER_PROFIT_LIST : APi.USER_WITHDRAWAL_LIST,
       data: formData,
@@ -956,9 +956,9 @@ class HttpManage {
     paramsMap["page_size"] = "$pageSize";
     paramsMap["profit_type"] = "$profiType";
     paramsMap["show_type"] = "$showType";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_PROFIT_LIST,
       data: formData,
@@ -984,9 +984,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_TASK_LIST,
       data: formData,
@@ -1008,9 +1008,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_MSG_LIST,
       data: formData,
@@ -1033,9 +1033,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_HF_LIST,
       data: formData,
@@ -1061,9 +1061,9 @@ class HttpManage {
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     paramsMap["order_source"] = "$orderSource";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_LIST,
       data: formData,
@@ -1086,9 +1086,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_MSG_LIST,
       data: formData,
@@ -1108,9 +1108,9 @@ class HttpManage {
   static Future<TaskDetailEntity> getTaskDetail(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_DETAIL,
       data: formData,
@@ -1130,9 +1130,9 @@ class HttpManage {
   static Future<TaskDetailOtherEntity> getTaskDetailOther(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_DETAIL,
       data: formData,
@@ -1152,9 +1152,9 @@ class HttpManage {
   static Future<TaskShareEntity> getTaskDetailWechat(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_DETAIL,
       data: formData,
@@ -1174,9 +1174,9 @@ class HttpManage {
   static Future<TaskDetailEntity> taskReceive(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_RECEIVE,
       data: formData,
@@ -1196,9 +1196,9 @@ class HttpManage {
   static Future<TaskDetailOtherEntity> taskReceiveOther(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_RECEIVE,
       data: formData,
@@ -1218,9 +1218,9 @@ class HttpManage {
   static Future<TaskShareEntity> taskReceiveWechat(taskId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["task_id"] = "$taskId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.TASK_RECEIVE,
       data: formData,
@@ -1240,9 +1240,9 @@ class HttpManage {
   static Future<ResultBeanEntity> checkPayResult(payNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["pay_no"] = "$payNo";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_CHECK_SUCCESS,
       data: formData,
@@ -1262,9 +1262,9 @@ class HttpManage {
   static Future<ResultBeanEntity> bindWeChatNo(weChatNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["wx_no"] = "$weChatNo";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.SITE_BIND_WECHAT_NO,
       data: formData,
@@ -1284,9 +1284,9 @@ class HttpManage {
   static Future<ResultBeanEntity> modifyWeChatNo(weChatNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["wx_no"] = "$weChatNo";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.SITE_MODIFY_WECHAT_NO,
       data: formData,
@@ -1312,9 +1312,9 @@ class HttpManage {
     paramsMap["payment"] = "2";
     paramsMap["pay_type"] = "$pay_type";
     paramsMap["term"] = "$term";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_UPGRADE_VIP,
       data: formData,
@@ -1340,9 +1340,9 @@ class HttpManage {
     paramsMap["payment"] = "1";
     paramsMap["pay_type"] = "$pay_type";
     paramsMap["term"] = "$term";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_UPGRADE_VIP,
       data: formData,
@@ -1368,9 +1368,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["pay_type"] = "$pay_type";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_UPGRADE_HOLDER,
       data: formData,
@@ -1396,9 +1396,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["pay_type"] = "$pay_type";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_UPGRADE_HOLDER,
       data: formData,
@@ -1427,9 +1427,9 @@ class HttpManage {
     paramsMap["recharge_id"] = "$rechargeId";
     paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
     paramsMap["recharge_mode"] = "${showCoin ? "coin" : "rebate"}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_RECHARGE,
       data: formData,
@@ -1458,9 +1458,9 @@ class HttpManage {
     paramsMap["recharge_id"] = "$rechargeId";
     paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
     paramsMap["recharge_mode"] = "${showCoin ? "coin" : "rebate"}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_RECHARGE,
       data: formData,
@@ -1481,9 +1481,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "2";
     paramsMap["order_id"] = "$orderId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_GOODS,
       data: formData,
@@ -1503,9 +1503,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["payment"] = "1";
     paramsMap["order_id"] = "$orderId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_GOODS,
       data: formData,
@@ -1527,9 +1527,9 @@ class HttpManage {
     paramsMap["payment"] = "3";
     paramsMap["order_id"] = "$orderId";
     paramsMap["pay_pwd"] = "$payPassword";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_GOODS,
       data: formData,
@@ -1549,9 +1549,9 @@ class HttpManage {
   static Future<PayCouponEntity> getRechargeCoupon(payNo) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["pay_no"] = "$payNo";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.PAY_COUPON,
       data: formData,
@@ -1584,9 +1584,9 @@ class HttpManage {
     paramsMap["tx_price"] = "$txPrice";
     paramsMap["zfb_name"] = "$zfbName";
     paramsMap["zfb_account"] = "$zfbAccount";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_WITHDRAWAL_APPLICATION,
       data: formData,
@@ -1618,7 +1618,7 @@ class HttpManage {
     print("文件类型=" + suffix);
     print("文件image=$imageFile");
     paramsMap["file"] = imageFile;
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     var response = await HttpManage.dio.post(
       APi.SITE_UPLOAD_IMG,
@@ -1639,7 +1639,7 @@ class HttpManage {
   static Future<ResultBeanEntity> uploadImageWithBytes(
       ByteData byteData) async {
     List<int> imageData = byteData.buffer.asUint8List();
-    var name = 'ktxx_${CommonUtils.currentTimeMillis()}.jpg';
+    var name = 'ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis()}.jpg';
     MultipartFile imageFile = MultipartFile.fromBytes(
       imageData,
       // 文件名
@@ -1651,7 +1651,7 @@ class HttpManage {
 //    print("文件名=" + name);
     print("文件image=$imageFile");
     paramsMap["file"] = imageFile;
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     var response = await HttpManage.dio.post(
       APi.SITE_UPLOAD_IMG,
@@ -1668,11 +1668,11 @@ class HttpManage {
   ///
   static Future<LoginEntity> referToken(RequestOptions request) async {
     Map paramsMap = Map<String, dynamic>();
-    paramsMap["refertoken"] = "${GlobalConfig.getLoginInfo().refertoken}";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap["refertoken"] = "${KeTaoFeaturedGlobalConfig.getLoginInfo().refertoken}";
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
-    GlobalConfig.prefs.setBool("canRefreshToken", false);
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
+    KeTaoFeaturedGlobalConfig.prefs.setBool("canRefreshToken", false);
     var response = await HttpManage.dio.post(
       APi.REFRESH_TOKEN,
       data: formData,
@@ -1681,9 +1681,9 @@ class HttpManage {
     var entity = LoginEntity();
     loginEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("token", entity.data.token);
-      GlobalConfig.prefs.setString("loginData", response.data.toString());
-      GlobalConfig.prefs.setBool("canRefreshToken", true);
+      KeTaoFeaturedGlobalConfig.prefs.setString("token", entity.data.token);
+      KeTaoFeaturedGlobalConfig.prefs.setString("loginData", response.data.toString());
+      KeTaoFeaturedGlobalConfig.prefs.setBool("canRefreshToken", true);
     }
     return entity;
   }
@@ -1734,9 +1734,9 @@ class HttpManage {
     paramsMap["address"] = "$address";
     paramsMap["is_default"] = "$isDefault";
     paramsMap["addr_id"] = "$addressId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_ADDRESS_EDIT,
       data: formData,
@@ -1767,9 +1767,9 @@ class HttpManage {
     paramsMap["county_id"] = "$countyId";
     paramsMap["address"] = "$address";
     paramsMap["is_default"] = "$isDefault";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_ADDRESS_ADD,
       data: formData,
@@ -1784,9 +1784,9 @@ class HttpManage {
   static Future<ResultBeanEntity> deleteShippingAddress(addressId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["addr_id"] = "$addressId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_ADDRESS_DELETE,
       data: formData,
@@ -1801,9 +1801,9 @@ class HttpManage {
   static Future<AddressInfoEntity> getShippingAddressDetail(addressId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["addr_id"] = "$addressId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_ADDRESS_INFO,
       data: formData,
@@ -1825,9 +1825,9 @@ class HttpManage {
     paramsMap["order_id"] = "$orderId";
     paramsMap["type"] = "all";
     paramsMap["user_flag"] = "1";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_DETAIL,
       data: formData,
@@ -1842,9 +1842,9 @@ class HttpManage {
   static Future<ResultBeanEntity> orderConfirm(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_ENSURE_RECEIVE,
       data: formData,
@@ -1860,9 +1860,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["need_deduct"] = "$needDeduct";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_SUBMIT,
       data: formData,
@@ -1877,9 +1877,9 @@ class HttpManage {
   static Future<LogisticsInfoEntity> getOrderLogisticsInfo(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_LOGISTICS,
       data: formData,
@@ -1894,9 +1894,9 @@ class HttpManage {
   static Future<GoodsInfoEntity> getProductDetails(productId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$productId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.GOODS_INFO,
       data: formData,
@@ -1914,9 +1914,9 @@ class HttpManage {
     paramsMap["goods_id"] = "$goodsId";
     paramsMap["goods_num"] = "$goodsNum";
     paramsMap["spec_id"] = "$specId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_CREATE,
       data: formData,
@@ -1933,9 +1933,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["addr_id"] = "$addressId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_CHANGE_ADDR,
       data: formData,
@@ -1950,9 +1950,9 @@ class HttpManage {
   static Future<GoodsQueueEntity> getGoodsQueueList(String goodsId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["goods_id"] = "$goodsId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.QUEUE_GOODS,
       data: formData,
@@ -1986,9 +1986,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["bx_status"] = "$joinStatus";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.ORDER_QUEUE,
       data: formData,
@@ -2027,9 +2027,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$currentPassword";
     paramsMap["re_password"] = "$currentPassword";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_SET_PAY_PASSWORD,
       data: formData,
@@ -2045,9 +2045,9 @@ class HttpManage {
       String currentPassword) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["password"] = "$currentPassword";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_CHECK_PASSWORD,
       data: formData,
@@ -2068,14 +2068,14 @@ class HttpManage {
       firstId,
       bool isNewcomer = false}) async {
     Map paramsMap = Map<String, dynamic>();
-//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
     paramsMap['one_cid'] = "$firstId"; //一级分类
     paramsMap['type'] = "$type";
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.GOODS_LIST,
       data: paramsMap,
@@ -2084,7 +2084,7 @@ class HttpManage {
     var entity = ResultBeanEntity();
     resultBeanEntityFromJson(entity, extractData);
     if (entity.status && isNewcomer) {
-      GlobalConfig.prefs
+      KeTaoFeaturedGlobalConfig.prefs
           .setString("homeNewcomersData", response.data.toString());
     }
     return entity;
@@ -2110,10 +2110,10 @@ class HttpManage {
   ///申请成为微股东
   static Future<ResultBeanEntity> applyToBecomeAMicroShareholder() async {
     Map paramsMap = Map<String, dynamic>();
-//    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+//    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     paramsMap['cid'] = "";
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.USER_PARTNER,
     );
@@ -2196,9 +2196,9 @@ class HttpManage {
     paramsMap["page_size"] = "$pageSize";
     paramsMap["search_type"] = "1";
     paramsMap["keyword"] = "$keyword";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.GOODS_SEARCH,
       queryParameters: paramsMap,
@@ -2229,9 +2229,9 @@ class HttpManage {
     paramsMap["page_size"] = "$pageSize";
     paramsMap["search_type"] = "2";
     paramsMap["keyword"] = "$keyword";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.GOODS_SEARCH,
       queryParameters: paramsMap,
@@ -2260,9 +2260,9 @@ class HttpManage {
     paramsMap["list_id"] = "$listId";
     paramsMap["cat_id"] = "$categoryId";
     paramsMap["type"] = "$type";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.GOODS_PDD_GOODS_LIST,
       queryParameters: paramsMap,
@@ -2287,9 +2287,9 @@ class HttpManage {
     paramsMap["g_id"] = "$gId";
     paramsMap["goods_sign"] = "$goodsSign";
     paramsMap["search_id"] = "$searchId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.get(
       APi.GOODS_PDD_GOODS_Detail,
       queryParameters: paramsMap,
@@ -2329,9 +2329,9 @@ class HttpManage {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.USER_HOLDER_COIN,
       data: formData,
@@ -2361,7 +2361,7 @@ class HttpManage {
   static Future<ResultBeanEntity> chargeRefund(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     var response = await HttpManage.dio.post(
       APi.ORDER_HF_REFUND,
       data: paramsMap,
@@ -2378,7 +2378,7 @@ class HttpManage {
   static Future<ResultBeanEntity> chargeRetry(orderId) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     var response = await HttpManage.dio.post(
       APi.ORDER_HF_REPAY,
       data: paramsMap,
@@ -2398,7 +2398,7 @@ class HttpManage {
     var entity = ShopTypeEntity();
     shopTypeEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs.setString("shopTypeList", response.data.toString());
+      KeTaoFeaturedGlobalConfig.prefs.setString("shopTypeList", response.data.toString());
     }
     return entity;
   }
@@ -2411,7 +2411,7 @@ class HttpManage {
     paramsMap["lat"] = "$latitude";
     paramsMap['lon'] = "$longitude";
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_DETAIL,
       data: formData,
@@ -2486,9 +2486,9 @@ class HttpManage {
     paramsMap["store_ratio"] = "$storeRatio";
     paramsMap["store_desc"] = "$storeDesc";
     paramsMap["store_id"] = "$storeId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_APPLY,
       data: formData,
@@ -2531,9 +2531,9 @@ class HttpManage {
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     paramsMap["store_name"] = "$storeName";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_LIST,
       data: formData,
@@ -2558,9 +2558,9 @@ class HttpManage {
 //    paramsMap["store_district"] = "$storeDistrict";
 //    paramsMap["page"] = "$page";
 //    paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_PAY_INFO,
       data: formData,
@@ -2585,9 +2585,9 @@ class HttpManage {
     paramsMap["payment"] = "2";
     paramsMap["store_code"] = "$shopCode";
     paramsMap["pay_money"] = "$payMoney";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_PAY_STORE,
       data: formData,
@@ -2611,9 +2611,9 @@ class HttpManage {
     paramsMap["payment"] = "1";
     paramsMap["store_code"] = "$shopCode";
     paramsMap["pay_money"] = "$payMoney";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_PAY_STORE,
       data: formData,
@@ -2638,9 +2638,9 @@ class HttpManage {
     paramsMap["store_code"] = "$shopCode";
     paramsMap["pay_money"] = "$payMoney";
     paramsMap["pay_pwd"] = "$payPassword";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_PAY_STORE,
       data: formData,
@@ -2662,9 +2662,9 @@ class HttpManage {
   }) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["store_id"] = "$shopId";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_INFO,
       data: formData,
@@ -2697,9 +2697,9 @@ class HttpManage {
 //    paramsMap["store_district"] = "$storeDistrict";
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_ORDERS,
       data: formData,
@@ -2719,9 +2719,9 @@ class HttpManage {
   }) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["qrcode_url"] = "$qrCodeResult";
-    paramsMap['timestamp'] = CommonUtils.currentTimeMillis();
+    paramsMap['timestamp'] = KeTaoFeaturedCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${Utils.getSign(paramsMap)}"));
+    formData.fields..add(MapEntry("sign", "${KeTaoFeaturedUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.STORE_SCAN,
       data: formData,
@@ -2742,7 +2742,7 @@ class HttpManage {
     var entity = ShopAgreementUriEntity();
     shopAgreementUriEntityFromJson(entity, extractData);
     if (entity.status) {
-      GlobalConfig.prefs
+      KeTaoFeaturedGlobalConfig.prefs
           .setString("agreementShopEntryRulesUrl", entity.data.sjrz);
     }
     return entity;

@@ -6,12 +6,12 @@
 
 import 'package:flutter/cupertino.dart';
 
-class PersistentHeaderBuilder extends SliverPersistentHeaderDelegate {
+class KeTaoFeaturedPersistentHeaderBuilder extends SliverPersistentHeaderDelegate {
   final double max;
   final double min;
   final Widget Function(BuildContext context, double offset) builder;
 
-  PersistentHeaderBuilder(
+  KeTaoFeaturedPersistentHeaderBuilder(
       {this.max = 120, this.min = 80, @required this.builder})
       : assert(max >= min && builder != null);
 
@@ -28,7 +28,7 @@ class PersistentHeaderBuilder extends SliverPersistentHeaderDelegate {
   double get minExtent => min;
 
   @override
-  bool shouldRebuild(covariant PersistentHeaderBuilder oldDelegate) =>
+  bool shouldRebuild(covariant KeTaoFeaturedPersistentHeaderBuilder oldDelegate) =>
       max != oldDelegate.max ||
       min != oldDelegate.min ||
       builder != oldDelegate.builder;

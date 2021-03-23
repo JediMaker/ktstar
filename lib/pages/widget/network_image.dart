@@ -84,7 +84,7 @@ class NetworkImage
   }
 
 //  自己定义的文件缓存类，
-  static final CacheFileImage _cacheFileImage = CacheFileImage();
+  static final KeTaoFeaturedCacheFileImage _cacheFileImage = KeTaoFeaturedCacheFileImage();
 
   Future<ui.Codec> _loadAsync(
     NetworkImage key,

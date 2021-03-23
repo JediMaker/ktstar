@@ -34,15 +34,15 @@ class Person {
   Person(this.name, this.surname, this.age);
 }
 
-class SearchGoodsPage extends StatefulWidget {
-  SearchGoodsPage({Key key}) : super(key: key);
+class KeTaoFeaturedSearchGoodsPage extends StatefulWidget {
+  KeTaoFeaturedSearchGoodsPage({Key key}) : super(key: key);
   final String title = "";
 
   @override
   _SearchGoodsPageState createState() => _SearchGoodsPageState();
 }
 
-class _SearchGoodsPageState extends State<SearchGoodsPage>
+class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
     with TickerProviderStateMixin {
   int _selectedTabIndex = 0;
   TabController _tabController;
@@ -76,7 +76,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
       }
     });
     _refreshController = EasyRefreshController();
-    _hisArray = GlobalConfig.getSearchList();
+    _hisArray = KeTaoFeaturedGlobalConfig.getSearchList();
   }
 
   @override
@@ -118,7 +118,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -137,7 +137,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -150,10 +150,10 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
         widget.items = result.data.items;
       });
     }*/
-    if (!GlobalConfig.isLogin()) {
-      CommonUtils.showToast("未获取到登录信息，，请登录！");
+    if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+      KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        NavigatorUtils.navigatorRouter(context, LoginPage());
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
       });
       return;
     }
@@ -192,7 +192,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
       if (result2.errCode.toString() == "50001") {
         showPddAuthorizationDialog();
       } else {
-        CommonUtils.showToast(result2.errMsg);
+        KeTaoFeaturedCommonUtils.showToast(result2.errMsg);
       }
     }
   }
@@ -228,7 +228,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                 ),
               ),
 /*
-              child: MyOctoImage(
+              child: KeTaoFeaturedMyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
                 image:
@@ -250,7 +250,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  MyOctoImage(
+                  KeTaoFeaturedMyOctoImage(
                     width: ScreenUtil().setWidth(48),
                     height: ScreenUtil().setWidth(48),
                     image:
@@ -266,8 +266,8 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                           if (mounted) {
                             setState(() {
                               _searchWord = value;
-                              if (CommonUtils.isEmpty(_searchWord)) {
-                                _hisArray = GlobalConfig.getSearchList();
+                              if (KeTaoFeaturedCommonUtils.isEmpty(_searchWord)) {
+                                _hisArray = KeTaoFeaturedGlobalConfig.getSearchList();
                                 _showSearchList = false;
                               }
                             });
@@ -315,7 +315,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
   }
 
   void search() {
-    if (CommonUtils.isEmpty(_searchWord)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(_searchWord)) {
       return;
     }
     if (mounted) {
@@ -324,7 +324,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
         if (!_hisArray.contains(_searchWord)) {
           _hisArray.add(_searchWord);
         }
-        GlobalConfig.setSearchList(searchList: _hisArray);
+        KeTaoFeaturedGlobalConfig.setSearchList(searchList: _hisArray);
         _showSearchList = true;
       });
     }
@@ -366,7 +366,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
 
   ///热门搜索
   buildPopularSearches() {
-    if (CommonUtils.isEmpty(_popularProductWords)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(_popularProductWords)) {
       return SliverToBoxAdapter();
     }
     return SliverToBoxAdapter(
@@ -393,7 +393,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       child: Container(
                         width: ScreenUtil().setWidth(45),
                         height: ScreenUtil().setWidth(48),
-                        /* child: MyOctoImage(
+                        /* child: KeTaoFeaturedMyOctoImage(
                           width: ScreenUtil().setWidth(45),
                           height: ScreenUtil().setWidth(48),
                           image:
@@ -450,12 +450,12 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
 
   ///搜索历史
   Widget getHistoryWidget() {
-    if (CommonUtils.isEmpty(_hisArray)) {
+    if (KeTaoFeaturedCommonUtils.isEmpty(_hisArray)) {
       return SliverToBoxAdapter();
     }
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: !_showSearchList && !CommonUtils.isEmpty(_hisArray),
+        visible: !_showSearchList && !KeTaoFeaturedCommonUtils.isEmpty(_hisArray),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -476,7 +476,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       onTap: () {
                         showClearDialog();
                       },
-                      child: MyOctoImage(
+                      child: KeTaoFeaturedMyOctoImage(
                         width: ScreenUtil().setWidth(45),
                         height: ScreenUtil().setWidth(48),
                         image:
@@ -581,12 +581,12 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
-                      if (CommonUtils.isEmpty(url)) {
+                      if (KeTaoFeaturedCommonUtils.isEmpty(url)) {
                         return;
                       }
-                      NavigatorUtils.navigatorRouter(
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
                           this.context,
-                          WebViewPluginPage(
+                          KeTaoFeaturedWebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
                             title: "拼多多",
@@ -596,7 +596,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
 
                     ///
                   } else {
-                    CommonUtils.showToast(result.errMsg);
+                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
                   }
                 },
               ),
@@ -642,7 +642,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                 onPressed: () {
                   setState(() {
                     _hisArray = List<String>();
-                    GlobalConfig.setSearchList(searchList: _hisArray);
+                    KeTaoFeaturedGlobalConfig.setSearchList(searchList: _hisArray);
                   });
                   Navigator.pop(context);
                 },
@@ -691,7 +691,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
   List<HomeGoodsListGoodsList> goodsList = List<HomeGoodsListGoodsList>();
 
   Widget buildSearchProductList() {
-    if (!CommonUtils.isEmpty(goodsList)) {
+    if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
       print(" goodsList.length=${goodsList.length}");
     }
     return SliverToBoxAdapter(
@@ -704,7 +704,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
 //          height: double.infinity,
             child: new StaggeredGridView.countBuilder(
               crossAxisCount: 2,
-              itemCount: CommonUtils.isEmpty(goodsList) ? 0 : goodsList.length,
+              itemCount: KeTaoFeaturedCommonUtils.isEmpty(goodsList) ? 0 : goodsList.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
@@ -749,9 +749,9 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        NavigatorUtils.navigatorRouter(
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
             context,
-            GoodsDetailPage(
+            KeTaoFeaturedGoodsDetailPage(
               productId: id,
             ));
       },
@@ -785,7 +785,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(10)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                     ),
-                    child: MyOctoImage(
+                    child: KeTaoFeaturedMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(523),
@@ -918,7 +918,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
       child: Column(
         children: [
           Visibility(
-            visible: !CommonUtils.isEmpty(pddGoodsList) &&
+            visible: !KeTaoFeaturedCommonUtils.isEmpty(pddGoodsList) &&
                 _showSearchList &&
                 _selectedTabIndex == 1,
             child: Center(
@@ -929,7 +929,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
 //          height: double.infinity,
                 child: new StaggeredGridView.countBuilder(
                   crossAxisCount: 2,
-                  itemCount: CommonUtils.isEmpty(pddGoodsList)
+                  itemCount: KeTaoFeaturedCommonUtils.isEmpty(pddGoodsList)
                       ? 0
                       : pddGoodsList.length,
                   shrinkWrap: true,
@@ -985,7 +985,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
       try {
         couponAmount = item.coupons.couponDiscount.toString();
       } catch (e) {}
-      if (CommonUtils.isEmpty(couponAmount)) {
+      if (KeTaoFeaturedCommonUtils.isEmpty(couponAmount)) {
         _discountPrice = salePrice;
       } else {
         _discountPrice = (double.parse(salePrice) - double.parse(couponAmount))
@@ -1002,9 +1002,9 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        NavigatorUtils.navigatorRouter(
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
             context,
-            PddGoodsDetailPage(
+            KeTaoFeaturedPddGoodsDetailPage(
               gId: id,
               goodsSign: goodsSign,
               searchId: searchId,
@@ -1042,7 +1042,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                           topRight: Radius.circular(ScreenUtil().setWidth(10)),
                           topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                         ),
-                        child: MyOctoImage(
+                        child: KeTaoFeaturedMyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           height: ScreenUtil().setWidth(523),
@@ -1053,7 +1053,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                       ),
                     ),
                     Visibility(
-                      visible: !CommonUtils.isEmpty(_gBonus),
+                      visible: !KeTaoFeaturedCommonUtils.isEmpty(_gBonus),
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 6, vertical: 4),
@@ -1107,7 +1107,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                                 ScreenUtil().setWidth(10),
                               ),
                             ),
-                            child: MyOctoImage(
+                            child: KeTaoFeaturedMyOctoImage(
                               image:
                                   "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
                               width: ScreenUtil().setWidth(75),
@@ -1133,7 +1133,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                     children: [
                       Expanded(
                         child: Visibility(
-                          visible: !CommonUtils.isEmpty(_shopName),
+                          visible: !KeTaoFeaturedCommonUtils.isEmpty(_shopName),
                           child: Container(
                             child: Text(
                               "$_shopName",
@@ -1232,7 +1232,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                         ),
                       ),
                       Visibility(
-                        visible: !CommonUtils.isEmpty(couponAmount),
+                        visible: !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(
@@ -1258,7 +1258,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                               Container(
                                 height: ScreenUtil().setHeight(42),
                                 margin: EdgeInsets.symmetric(horizontal: 2),
-                                child: DashedRect(
+                                child: KeTaoFeaturedDashedRect(
                                     color: Colors.white,
                                     strokeWidth: 1,
                                     gap: 1.0),
@@ -1320,7 +1320,7 @@ class _SearchGoodsPageState extends State<SearchGoodsPage>
                 indicatorWeight: 2,
                 indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
                 unselectedLabelColor: Colors.black,
-                indicator: RoundUnderlineTabIndicator(
+                indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
                     borderSide: BorderSide(
                   width: 3.5,
                   color: Color(0xffF32E43),

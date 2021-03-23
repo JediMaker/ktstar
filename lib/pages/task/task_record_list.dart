@@ -14,15 +14,15 @@ import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-class TaskRecordListPage extends StatefulWidget {
-  TaskRecordListPage({Key key}) : super(key: key);
+class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
+  KeTaoFeaturedTaskRecordListPage({Key key}) : super(key: key);
   final String title = "任务提交记录";
 
   @override
   _TaskRecordListPageState createState() => _TaskRecordListPageState();
 }
 
-class _TaskRecordListPageState extends State<TaskRecordListPage> {
+class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
   ///  任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   int page = 1;
   EasyRefreshController _refreshController;
@@ -51,7 +51,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -89,7 +89,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
               Navigator.of(context).pop();
             },
           ),
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           centerTitle: true,
 //          backgroundColor: Color(0xfff5f5f5),
           elevation: 0,
@@ -114,7 +114,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
             }
           },
           emptyWidget: _recordList == null || _recordList.length == 0
-              ? NoDataPage()
+              ? KeTaoFeaturedNoDataPage()
               : null,
           slivers: <Widget>[buildCenter()],
         )
@@ -297,7 +297,7 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
           Visibility(
             // todo
             visible: category == "3"
-                ? !CommonUtils.isEmpty(rejectReason) ? true : false
+                ? !KeTaoFeaturedCommonUtils.isEmpty(rejectReason) ? true : false
                 : status == "4" ? true : false,
             child: Column(
               children: <Widget>[
@@ -428,17 +428,17 @@ class _TaskRecordListPageState extends State<TaskRecordListPage> {
                 child: GestureDetector(
                   onTap: () {
                     if (category == '1') {
-                      NavigatorUtils.navigatorRouter(
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
                           context,
-                          TaskSubmissionPage(
+                          KeTaoFeaturedTaskSubmissionPage(
                             taskId: taskId,
                             comId: comId,
                             pageType: 1,
                           ));
                     } else {
-                      NavigatorUtils.navigatorRouter(
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
                           context,
-                          TaskOtherSubmissionPage(
+                          KeTaoFeaturedTaskOtherSubmissionPage(
                             taskId: taskId,
                             comId: comId,
                             pageType: 1,

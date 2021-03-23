@@ -8,8 +8,8 @@ import 'package:star/models/order_detail_entity.dart';
 import 'package:star/pages/order/return/return_option_info.dart';
 import 'package:star/utils/navigator_utils.dart';
 
-class ReturnGoodsOptionPage extends StatefulWidget {
-  ReturnGoodsOptionPage({Key key, this.product}) : super(key: key);
+class KeTaoFeaturedReturnGoodsOptionPage extends StatefulWidget {
+  KeTaoFeaturedReturnGoodsOptionPage({Key key, this.product}) : super(key: key);
   final String title = "选择服务";
   OrderDetailDataGoodsList product;
 
@@ -17,7 +17,7 @@ class ReturnGoodsOptionPage extends StatefulWidget {
   _ReturnGoodsOptionPageState createState() => _ReturnGoodsOptionPageState();
 }
 
-class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
+class _ReturnGoodsOptionPageState extends State<KeTaoFeaturedReturnGoodsOptionPage> {
   @override
   void initState() {
     super.initState();
@@ -52,7 +52,7 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -113,7 +113,7 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: MyOctoImage(
+                child: KeTaoFeaturedMyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
@@ -301,9 +301,9 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
         isThreeLine: true,
         dense: false,
         onTap: () {
-          NavigatorUtils.navigatorRouter(
+          KeTaoFeaturedNavigatorUtils.navigatorRouter(
               context,
-              ReturnOptionInfoPage(
+              KeTaoFeaturedReturnOptionInfoPage(
                 product: product,
                 pageType: type,
               ));
@@ -313,7 +313,7 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
           alignment: Alignment.center,
           width: ScreenUtil().setWidth(60),
           child: ExcludeSemantics(
-            child: MyOctoImage(
+            child: KeTaoFeaturedMyOctoImage(
               width: ScreenUtil().setWidth(60),
               height: ScreenUtil().setWidth(60),
               image: '$iconUrl',
@@ -358,7 +358,7 @@ class _ReturnGoodsOptionPageState extends State<ReturnGoodsOptionPage> {
         trailing: Container(
           alignment: Alignment.center,
           width: ScreenUtil().setWidth(36),
-          child: MyOctoImage(
+          child: KeTaoFeaturedMyOctoImage(
             width: ScreenUtil().setWidth(20),
             height: ScreenUtil().setWidth(36),
             image:

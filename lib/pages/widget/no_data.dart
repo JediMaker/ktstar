@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NoDataPage extends StatelessWidget {
+class KeTaoFeaturedNoDataPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

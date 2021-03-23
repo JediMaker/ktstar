@@ -6,7 +6,7 @@ import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:path_provider/path_provider.dart';
 
-class CacheFileImage {
+class KeTaoFeaturedCacheFileImage {
   /// 获取url字符串的MD5值
   static String getUrlMd5(String url) {
     var content = new Utf8Encoder().convert(url);

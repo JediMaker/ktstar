@@ -13,8 +13,8 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
-class TaskGalleryPage extends StatefulWidget {
-  TaskGalleryPage(
+class KeTaoFeaturedTaskGalleryPage extends StatefulWidget {
+  KeTaoFeaturedTaskGalleryPage(
       {Key key, this.galleryItems, this.index = 0, this.type = 0, this.images})
       : super(key: key);
   final String title = "";
@@ -27,7 +27,7 @@ class TaskGalleryPage extends StatefulWidget {
   _TaskGalleryPageState createState() => _TaskGalleryPageState();
 }
 
-class _TaskGalleryPageState extends State<TaskGalleryPage> {
+class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
   PageController pageController;
   int _currentIndex;
   Permission _permission = Permission.storage;
@@ -50,9 +50,9 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name: "kt_${CommonUtils.currentTimeMillis() + index.toString()}");
+        name: "kt_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result);
-    CommonUtils.showToast("图片已下载");
+    KeTaoFeaturedCommonUtils.showToast("图片已下载");
   }
 
   @override
@@ -82,7 +82,7 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
                           ListTile(
                             onTap: () async {
                               Navigator.of(context).pop();
-                              CommonUtils.requestPermission(
+                              KeTaoFeaturedCommonUtils.requestPermission(
                                   _permission, _saveImage(_currentIndex));
                             },
                             title: Text(
@@ -145,7 +145,7 @@ class _TaskGalleryPageState extends State<TaskGalleryPage> {
               alignment: Alignment.topLeft,
               child: ClipOval(
                 child: IconButton(
-                  icon: MyOctoImage(
+                  icon: KeTaoFeaturedMyOctoImage(
                     image:
                         "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                   ),

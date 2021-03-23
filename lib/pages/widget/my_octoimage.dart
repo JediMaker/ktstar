@@ -10,8 +10,8 @@ import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/network_image.dart' as network;
 import 'package:star/utils/common_utils.dart';
 
-class MyOctoImage extends StatefulWidget {
-  MyOctoImage(
+class KeTaoFeaturedMyOctoImage extends StatefulWidget {
+  KeTaoFeaturedMyOctoImage(
       {Key key,
       this.image,
       this.imageBuilder,
@@ -163,7 +163,7 @@ class MyOctoImage extends StatefulWidget {
   _MyOctoImageState createState() => _MyOctoImageState();
 }
 
-class _MyOctoImageState extends State<MyOctoImage> {
+class _MyOctoImageState extends State<KeTaoFeaturedMyOctoImage> {
   @override
   void initState() {
     super.initState();
@@ -177,7 +177,7 @@ class _MyOctoImageState extends State<MyOctoImage> {
 
   @override
   Widget build(BuildContext context) {
-//    if (CommonUtils.isEmpty(widget.image)) {
+//    if (KeTaoFeaturedCommonUtils.isEmpty(widget.image)) {
 //      return null;
 //    }
     return OctoImage(

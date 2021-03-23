@@ -34,15 +34,15 @@ import 'package:star/utils/utils.dart';
 import '../../global_config.dart';
 
 ///微股东个人中心页面
-class MicroMinePage extends StatefulWidget {
-  MicroMinePage({Key key, this.userInfoData}) : super(key: key);
+class KeTaoFeaturedMicroMinePage extends StatefulWidget {
+  KeTaoFeaturedMicroMinePage({Key key, this.userInfoData}) : super(key: key);
   UserInfoData userInfoData;
 
   @override
   _MicroMinePageState createState() => _MicroMinePageState();
 }
 
-class _MicroMinePageState extends State<MicroMinePage>
+class _MicroMinePageState extends State<KeTaoFeaturedMicroMinePage>
     with AutomaticKeepAliveClientMixin {
   var headUrl;
   var nickName = '';
@@ -137,7 +137,8 @@ class _MicroMinePageState extends State<MicroMinePage>
           _dialogWeChatNo = result.data.wxNo;
           _pwdStatus = result.data.pwdStatus;
           _payPwdStatus = result.data.payPwdStatus;
-          isWeChatNoBinded = !CommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
+          isWeChatNoBinded =
+              !KeTaoFeaturedCommonUtils.isEmpty(result.data.wxNo) ? 1 : 0;
           isItAMicroShareholder = result.data.isPartner == "1" ? 1 : 0;
           _title = result.data.isPartner == '1'
               ? '见习股东'
@@ -197,7 +198,7 @@ class _MicroMinePageState extends State<MicroMinePage>
   }
 
   _initCacheUserData() async {
-    var result = GlobalConfig.getUserInfo();
+    var result = KeTaoFeaturedGlobalConfig.getUserInfo();
     if (mounted) {
       setState(() {
         headUrl = result.avatar;
@@ -215,7 +216,8 @@ class _MicroMinePageState extends State<MicroMinePage>
         _dialogWeChatNo = result.wxNo;
         _pwdStatus = result.pwdStatus;
         _payPwdStatus = result.payPwdStatus;
-        isWeChatNoBinded = !CommonUtils.isEmpty(result.wxNo) ? 1 : 0;
+        isWeChatNoBinded =
+            !KeTaoFeaturedCommonUtils.isEmpty(result.wxNo) ? 1 : 0;
         isItAMicroShareholder = result.isPartner == "1" ? 1 : 0;
         _title = result.isPartner == '1'
             ? '见习股东'
@@ -314,7 +316,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     _dialogWeChatNoController = new TextEditingController();
     initWeChatResHandler();
     _clearWidgetData();
-    if (GlobalConfig.isLogin()) {
+    if (KeTaoFeaturedGlobalConfig.isLogin()) {
       _initCacheUserData();
     }
     _initUserData();
@@ -341,7 +343,8 @@ class _MicroMinePageState extends State<MicroMinePage>
           _dialogWeChatNo = _data.wxNo;
           _pwdStatus = _data.pwdStatus;
           _payPwdStatus = _data.payPwdStatus;
-          isWeChatNoBinded = !CommonUtils.isEmpty(_data.wxNo) ? 1 : 0;
+          isWeChatNoBinded =
+              !KeTaoFeaturedCommonUtils.isEmpty(_data.wxNo) ? 1 : 0;
           isItAMicroShareholder = _data.isPartner == "1" ? 1 : 0;
           _yesterdayProfit = _data.partnerBonus.yesterday;
           _sevenDayProfit = _data.partnerBonus.week;
@@ -383,40 +386,41 @@ class _MicroMinePageState extends State<MicroMinePage>
   }
 
   initWeChatResHandler() async {
-    GlobalConfig.isBindWechat = true;
+    KeTaoFeaturedGlobalConfig.isBindWechat = true;
     fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
         .listen((res) async {
       if (res is fluwx.WeChatAuthResponse) {
         print("微信授权结果：" + "state :${res.state} \n code:${res.code}");
         print("微信授权code" + res.code.toString());
-        if (CommonUtils.isEmpty(res.code)) {
-          CommonUtils.showToast("微信授权获取失败，请重新授权！");
+        if (KeTaoFeaturedCommonUtils.isEmpty(res.code)) {
+          KeTaoFeaturedCommonUtils.showToast("微信授权获取失败，请重新授权！");
         } else {
           /* Fluttertoast.showToast(
               msg: "微信授权获取成功，正在登录！",
               textColor: Colors.white,
               backgroundColor: Colors.grey);*/
-          if (GlobalConfig.isBindWechat) {
+          if (KeTaoFeaturedGlobalConfig.isBindWechat) {
             var result = await HttpManage.bindWechat(res.code);
             if (result.status) {
               String isMerge = result.data["is_merge"].toString();
               switch (isMerge) {
                 case "1":
-                  CommonUtils.showToast("微信授权绑定成功");
+                  KeTaoFeaturedCommonUtils.showToast("微信授权绑定成功");
                   break;
                 case "2":
-                  CommonUtils.showToast("微信账户数据合并成功，请重新登录！");
-                  GlobalConfig.prefs.remove("hasLogin");
-                  GlobalConfig.prefs.remove("token");
-                  GlobalConfig.prefs.remove("loginData");
-                  GlobalConfig.saveLoginStatus(false);
+                  KeTaoFeaturedCommonUtils.showToast("微信账户数据合并成功，请重新登录！");
+                  KeTaoFeaturedGlobalConfig.prefs.remove("hasLogin");
+                  KeTaoFeaturedGlobalConfig.prefs.remove("token");
+                  KeTaoFeaturedGlobalConfig.prefs.remove("loginData");
+                  KeTaoFeaturedGlobalConfig.saveLoginStatus(false);
                   _clearWidgetData();
-                  NavigatorUtils.navigatorRouter(context, LoginPage());
+                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      context, KeTaoFeaturedLoginPage());
                   break;
               }
             } else {
-              CommonUtils.showToast(result.errMsg);
+              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
           }
         }
@@ -437,12 +441,12 @@ class _MicroMinePageState extends State<MicroMinePage>
     ///解决首次数据加载失败问题
     ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!CommonUtils.isEmpty(nickName)) {
+      if (!KeTaoFeaturedCommonUtils.isEmpty(nickName)) {
       } else {
-        if (GlobalConfig.isLogin() && count == 0) {
+        if (KeTaoFeaturedGlobalConfig.isLogin() && count == 0) {
           _initUserData();
           count++;
-        } else if (!GlobalConfig.isLogin()) {
+        } else if (!KeTaoFeaturedGlobalConfig.isLogin()) {
           _clearWidgetData();
         }
       }
@@ -497,7 +501,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         width: 30.0,
                         height: 30.0,
                         child: SpinKitCircle(
-                          color: GlobalConfig.taskBtnTxtGreyColor,
+                          color: KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor,
                           size: 30.0,
                         ),
                       ),
@@ -543,13 +547,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                   itemsLayout(),
                   GestureDetector(
                     onTap: () {
-                      NavigatorUtils.navigatorRouter(
-                          context, InvitationPosterPage());
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                          context, KeTaoFeaturedInvitationPosterPage());
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(
                           vertical: ScreenUtil().setWidth(10)),
-                      child: MyOctoImage(
+                      child: KeTaoFeaturedMyOctoImage(
                           width: ScreenUtil().setWidth(1058),
                           height: ScreenUtil().setWidth(302),
                           image:
@@ -607,8 +611,8 @@ class _MicroMinePageState extends State<MicroMinePage>
     }
     return Container(
       margin: EdgeInsets.only(
-          left: GlobalConfig.LAYOUT_MARGIN,
-          right: GlobalConfig.LAYOUT_MARGIN,
+          left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+          right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
           bottom: ScreenUtil().setHeight(30)),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -637,7 +641,7 @@ class _MicroMinePageState extends State<MicroMinePage>
               ],
             ),
             onTap: () {
-              NavigatorUtils.navigatorRouter(context, AddressListPage(type: 1));
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedAddressListPage(type: 1));
             },
             trailing: Wrap(
               alignment: WrapAlignment.center,
@@ -657,7 +661,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -681,7 +685,7 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
             onTap: () {
               _phoneHintText = "请输入您的手机号";
-              if (CommonUtils.isEmpty(_phoneNumber)) {
+              if (KeTaoFeaturedCommonUtils.isEmpty(_phoneNumber)) {
                 _dialogPhoneNumberController.text = "";
                 //绑定手机号
                 showMyDialog(showPhone: true, bindPhone: true);
@@ -714,8 +718,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+            margin: EdgeInsets.symmetric(
+                horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -758,7 +762,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+                EdgeInsets.symmetric(horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -815,8 +819,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+            margin: EdgeInsets.symmetric(
+                horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -852,7 +856,7 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
             onTap: () {
               //todo 绑定微信号
-              if (CommonUtils.isEmpty(_weChatNo)) {
+              if (KeTaoFeaturedCommonUtils.isEmpty(_weChatNo)) {
                 _dialogWeChatNoController.text = "";
                 //绑定微信号
                 showMyDialog(showWeChatNo: true, bindWeChatNo: true);
@@ -893,8 +897,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+            margin: EdgeInsets.symmetric(
+                horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -902,7 +906,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Visibility(
             visible: true,
-//            visible: !CommonUtils.isEmpty(_phoneNumber),
+//            visible: !KeTaoFeaturedCommonUtils.isEmpty(_phoneNumber),
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -922,9 +926,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                     ],
                   ),
                   onTap: () async {
-                    await NavigatorUtils.navigatorRouter(
+                    await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                         context,
-                        ModifyPasswordPage(
+                        KeTaoFeaturedModifyPasswordPage(
                           title: title,
                         ));
                     _initUserData();
@@ -945,7 +949,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: GlobalConfig.LAYOUT_MARGIN),
+                      horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
                   child: Divider(
                     height: ScreenUtil().setHeight(1),
                     color: Color(0xFFefefef),
@@ -989,8 +993,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+            margin: EdgeInsets.symmetric(
+                horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -1017,7 +1021,8 @@ class _MicroMinePageState extends State<MicroMinePage>
                     ],
                   ),
                   onTap: () {
-                    NavigatorUtils.navigatorRouter(context, AboutPage());
+                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        context, KeTaoFeaturedAboutPage());
                   },
                   trailing: Wrap(
                     alignment: WrapAlignment.center,
@@ -1037,7 +1042,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: GlobalConfig.LAYOUT_MARGIN),
+                      horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
                   child: Divider(
                     height: ScreenUtil().setHeight(1),
                     color: Color(0xFFefefef),
@@ -1066,9 +1071,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                 ],
               ),
               onTap: () {
-                NavigatorUtils.navigatorRouter(
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
                     context,
-                    SafeSettingsPage(
+                    KeTaoFeaturedSafeSettingsPage(
                       hasPayPassword: _payPwdStatus == "2",
                       phoneNum: _phoneNumber,
                     ));
@@ -1087,12 +1092,13 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Visibility(
-            visible: GlobalConfig.prefs.getBool('needUpdate') == null
-                ? false
-                : GlobalConfig.prefs.getBool('needUpdate'),
+            visible:
+                KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate') == null
+                    ? false
+                    : KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate'),
             child: Container(
-              margin:
-                  EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+              margin: EdgeInsets.symmetric(
+                  horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
               child: Divider(
                 height: ScreenUtil().setHeight(1),
                 color: Color(0xFFefefef),
@@ -1100,11 +1106,12 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Visibility(
-            visible:
-                GlobalConfig.prefs.getBool('isHuaweiUnderReview') == null ||
-                        Platform.isIOS
-                    ? false
-                    : true,
+            visible: KeTaoFeaturedGlobalConfig.prefs
+                            .getBool('isHuaweiUnderReview') ==
+                        null ||
+                    Platform.isIOS
+                ? false
+                : true,
             child: ListTile(
               title: Row(
                 children: <Widget>[
@@ -1122,16 +1129,19 @@ class _MicroMinePageState extends State<MicroMinePage>
                 ],
               ),
               onTap: () async {
-                await Utils.checkAppVersion(context, checkDerictly: true);
+                await KeTaoFeaturedUtils.checkAppVersion(context,
+                    checkDerictly: true);
                 _initUserData();
                 /*if (mounted) {
                   setState(() {});
                 }*/
               },
               trailing: Visibility(
-                visible: GlobalConfig.prefs.getBool('needUpdate') == null
-                    ? false
-                    : GlobalConfig.prefs.getBool('needUpdate'),
+                visible:
+                    KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate') ==
+                            null
+                        ? false
+                        : KeTaoFeaturedGlobalConfig.prefs.getBool('needUpdate'),
                 child: Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -1153,8 +1163,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             ),
           ),
           Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+            margin: EdgeInsets.symmetric(
+                horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
@@ -1193,17 +1203,18 @@ class _MicroMinePageState extends State<MicroMinePage>
                         CupertinoDialogAction(
                           child: Text(
                             '退出',
-                            style: TextStyle(color: GlobalConfig.checkedColor),
+                            style: TextStyle(
+                                color: KeTaoFeaturedGlobalConfig.checkedColor),
                           ),
                           onPressed: () {
-                            GlobalConfig.prefs.remove("hasLogin");
-                            GlobalConfig.prefs.remove("token");
-                            GlobalConfig.prefs.remove("loginData");
-                            GlobalConfig.saveLoginStatus(false);
+                            KeTaoFeaturedGlobalConfig.prefs.remove("hasLogin");
+                            KeTaoFeaturedGlobalConfig.prefs.remove("token");
+                            KeTaoFeaturedGlobalConfig.prefs.remove("loginData");
+                            KeTaoFeaturedGlobalConfig.saveLoginStatus(false);
                             _clearWidgetData();
                             Navigator.pop(context);
-                            NavigatorUtils.navigatorRouter(
-                                this.context, LoginPage());
+                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                this.context, KeTaoFeaturedLoginPage());
                           },
                         ),
                       ],
@@ -1227,21 +1238,22 @@ class _MicroMinePageState extends State<MicroMinePage>
   }
 
   Future _doNavigatorShopStage() async {
-    if (!GlobalConfig.isLogin()) {
-      NavigatorUtils.navigatorRouter(context, LoginPage());
+    if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+          context, KeTaoFeaturedLoginPage());
       return;
     }
     if (applyStatus == '2') {
-      NavigatorUtils.navigatorRouter(
+      KeTaoFeaturedNavigatorUtils.navigatorRouter(
         context,
-        ShopBackstagePage(
+        KeTaoFeaturedShopBackstagePage(
           shopId: _shopId,
         ),
       );
     } else {
-      await NavigatorUtils.navigatorRouter(
+      await KeTaoFeaturedNavigatorUtils.navigatorRouter(
         context,
-        ApplySettlePage(
+        KeTaoFeaturedApplySettlePage(
           applyStatus: applyStatus,
           rejectMsg: _rejectMsg,
           shopId: _shopId,
@@ -1261,8 +1273,8 @@ class _MicroMinePageState extends State<MicroMinePage>
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
           margin: EdgeInsets.only(
-              left: GlobalConfig.LAYOUT_MARGIN,
-              right: GlobalConfig.LAYOUT_MARGIN,
+              left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+              right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
               top: 10,
               bottom: 10),
           child: Column(
@@ -1392,8 +1404,8 @@ class _MicroMinePageState extends State<MicroMinePage>
     return Container(
       height: ScreenUtil().setWidth(346),
       margin: EdgeInsets.only(
-        left: GlobalConfig.LAYOUT_MARGIN,
-        right: GlobalConfig.LAYOUT_MARGIN,
+        left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+        right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
         top: ScreenUtil().setWidth(30),
       ),
       alignment: Alignment.center,
@@ -1420,9 +1432,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                   fit: FlexFit.tight,
                   child: new InkWell(
                       onTap: () async {
-                        /* NavigatorUtils.navigatorRouter(
+                        /* KeTaoFeaturedNavigatorUtils.navigatorRouter(
                             context,
-                            FansListPage(
+                            KeTaoFeaturedFansListPage(
                               isAgent: userType == "3",
                             ));*/
                       },
@@ -1438,7 +1450,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: MyOctoImage(
+                                child: KeTaoFeaturedMyOctoImage(
                                   image:
                                       'https://alipic.lanhuapp.com/xd9d064c12-dae4-4e4e-9b68-e15530e3738b',
                                   width: ScreenUtil().setWidth(96),
@@ -1489,7 +1501,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                   fit: FlexFit.tight,
                   child: new InkWell(
                       onTap: () {
-//                  NavigatorUtils.navigatorRouter(context, TaskMessagePage());
+//                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
                       },
                       child: new Container(
                         child: new Row(
@@ -1503,7 +1515,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: MyOctoImage(
+                                child: KeTaoFeaturedMyOctoImage(
                                   image:
                                       'https://alipic.lanhuapp.com/xdab2f2767-766c-481a-8f03-b799963ad02c',
                                   width: ScreenUtil().setWidth(96),
@@ -1545,7 +1557,8 @@ class _MicroMinePageState extends State<MicroMinePage>
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              NavigatorUtils.navigatorRouter(context, DividendListPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedDividendListPage());
             },
             child: Container(
               height: ScreenUtil().setWidth(100),
@@ -1589,7 +1602,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                     padding: EdgeInsets.only(
                       right: ScreenUtil().setWidth(51),
                     ),
-                    child: MyOctoImage(
+                    child: KeTaoFeaturedMyOctoImage(
                         width: ScreenUtil().setWidth(20),
                         height: ScreenUtil().setWidth(35),
                         image:
@@ -1614,10 +1627,10 @@ class _MicroMinePageState extends State<MicroMinePage>
     Color _itemsTextColor = Color(0xff666666);
     return Container(
       margin: EdgeInsets.symmetric(
-        horizontal: GlobalConfig.LAYOUT_MARGIN,
+        horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
       ),
       padding: EdgeInsets.symmetric(
-        vertical: GlobalConfig.LAYOUT_MARGIN,
+        vertical: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
       ),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -1638,13 +1651,14 @@ class _MicroMinePageState extends State<MicroMinePage>
                 fit: FlexFit.tight,
                 child: new InkWell(
                     onTap: () async {
-                      if (!GlobalConfig.isLogin()) {
-                        NavigatorUtils.navigatorRouter(context, LoginPage());
+                      if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                            context, KeTaoFeaturedLoginPage());
                         return;
                       }
-                      await NavigatorUtils.navigatorRouter(
+                      await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                           context,
-                          FansListPage(
+                          KeTaoFeaturedFansListPage(
                             isAgent: userType == "3",
                           ));
                     },
@@ -1657,7 +1671,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             child: new CircleAvatar(
                               radius: 20.0,
                               backgroundColor: Colors.transparent,
-                              child: MyOctoImage(
+                              child: KeTaoFeaturedMyOctoImage(
                                 image:
                                     "https://alipic.lanhuapp.com/xd2b9a895d-1adc-4f52-9a44-4cd72cadf49a",
                                 width: ScreenUtil().setWidth(128),
@@ -1682,12 +1696,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                 fit: FlexFit.tight,
                 child: new InkWell(
                     onTap: () {
-                      if (!GlobalConfig.isLogin()) {
-                        NavigatorUtils.navigatorRouter(context, LoginPage());
+                      if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                            context, KeTaoFeaturedLoginPage());
                         return;
                       }
-                      NavigatorUtils.navigatorRouter(
-                          context, TaskMessagePage());
+                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                          context, KeTaoFeaturedTaskMessagePage());
                     },
                     child: new Container(
                       child: new Column(
@@ -1698,7 +1713,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             child: new CircleAvatar(
                               radius: 20.0,
                               backgroundColor: Colors.transparent,
-                              child: MyOctoImage(
+                              child: KeTaoFeaturedMyOctoImage(
                                 image:
                                     "https://alipic.lanhuapp.com/xd0eec94ec-72c2-4fd6-8f3f-05fcb9776510",
                                 width: ScreenUtil().setWidth(128),
@@ -1727,12 +1742,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                             textColor: Colors.white,
                             gravity: ToastGravity.BOTTOM);
                         return;*/
-                        if (!GlobalConfig.isLogin()) {
-                          NavigatorUtils.navigatorRouter(context, LoginPage());
+                        if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              context, KeTaoFeaturedLoginPage());
                           return;
                         }
-                        NavigatorUtils.navigatorRouter(
-                            context, OrderListPage());
+                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                            context, KeTaoFeaturedOrderListPage());
                       },
                       child: new Container(
                         child: new Column(
@@ -1743,7 +1759,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: MyOctoImage(
+                                child: KeTaoFeaturedMyOctoImage(
                                   image:
                                       "https://alipic.lanhuapp.com/xdc4d43f07-fd79-4ff1-b120-8689edc7c87a",
                                   width: ScreenUtil().setWidth(128),
@@ -1773,12 +1789,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                             textColor: Colors.white,
                             gravity: ToastGravity.BOTTOM);
                         return;*/
-                        if (!GlobalConfig.isLogin()) {
-                          NavigatorUtils.navigatorRouter(context, LoginPage());
+                        if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              context, KeTaoFeaturedLoginPage());
                           return;
                         }
-                        NavigatorUtils.navigatorRouter(
-                            context, InvitationPosterPage());
+                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                            context, KeTaoFeaturedInvitationPosterPage());
                       },
                       child: new Container(
                         child: new Column(
@@ -1789,7 +1806,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: MyOctoImage(
+                                child: KeTaoFeaturedMyOctoImage(
                                   image:
                                       "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
                                   width: ScreenUtil().setWidth(128),
@@ -1812,7 +1829,7 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           Container(
             margin: EdgeInsets.only(
-              top: GlobalConfig.LAYOUT_MARGIN,
+              top: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
             ),
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1833,7 +1850,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: MyOctoImage(
+                                child: KeTaoFeaturedMyOctoImage(
                                   image:
                                       "https://alipic.lanhuapp.com/xdc96d210d-20cc-4d42-886e-ef8aef5e161a",
                                   width: ScreenUtil().setWidth(128),
@@ -1858,12 +1875,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                   fit: FlexFit.tight,
                   child: new InkWell(
                       onTap: () async {
-                        if (!GlobalConfig.isLogin()) {
-                          NavigatorUtils.navigatorRouter(context, LoginPage());
+                        if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              context, KeTaoFeaturedLoginPage());
                           return;
                         }
-                        await NavigatorUtils.navigatorRouter(
-                            context, MicroShareHolderEquityPage());
+                        await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                            context, KeTaoFeaturedMicroShareHolderEquityPage());
                         _initUserData();
                       },
                       child: new Container(
@@ -1875,7 +1893,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: MyOctoImage(
+                                child: KeTaoFeaturedMyOctoImage(
                                   image:
                                       "https://alipic.lanhuapp.com/xd96161c41-e4a2-494d-a0cc-c7e4c9769a7d",
                                   width: ScreenUtil().setWidth(128),
@@ -1904,13 +1922,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                               textColor: Colors.white,
                               gravity: ToastGravity.BOTTOM);
                           return;*/
-                          if (!GlobalConfig.isLogin()) {
-                            NavigatorUtils.navigatorRouter(
-                                context, LoginPage());
+                          if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                context, KeTaoFeaturedLoginPage());
                             return;
                           }
-                          NavigatorUtils.navigatorRouter(
-                              context, AddressListPage(type: 1));
+                          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              context, KeTaoFeaturedAddressListPage(type: 1));
                         },
                         child: new Container(
                           child: new Column(
@@ -1921,7 +1939,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                 child: new CircleAvatar(
                                   radius: 20.0,
                                   backgroundColor: Colors.transparent,
-                                  child: MyOctoImage(
+                                  child: KeTaoFeaturedMyOctoImage(
                                     image:
                                         "https://alipic.lanhuapp.com/xdba099539-545d-4531-b704-89825487fac0",
                                     width: ScreenUtil().setWidth(128),
@@ -1951,12 +1969,13 @@ class _MicroMinePageState extends State<MicroMinePage>
                               textColor: Colors.white,
                               gravity: ToastGravity.BOTTOM);
                           return;*/
-                          CommonUtils.showToast("敬请期待！");
-                          /*NavigatorUtils.navigatorRouter(
-                              context, OrderListPage());*/
+                          KeTaoFeaturedCommonUtils.showToast("敬请期待！");
+                          /*KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              context, KeTaoFeaturedOrderListPage());*/
                         },
                         child: Visibility(
-                          visible: !GlobalConfig.isHuaweiUnderReview,
+                          visible:
+                              !KeTaoFeaturedGlobalConfig.isHuaweiUnderReview,
                           child: new Container(
                             child: new Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -1966,7 +1985,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   child: new CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: Colors.transparent,
-                                    child: MyOctoImage(
+                                    child: KeTaoFeaturedMyOctoImage(
                                       image:
                                           "https://alipic.lanhuapp.com/xdf76ad84a-3dfa-433a-b3bd-f316d7a5bea9",
                                       width: ScreenUtil().setWidth(128),
@@ -2015,7 +2034,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return TaskOpenDiamondPage();
+          return KeTaoFeaturedTaskOpenDiamondPage();
         }));
       },
       child: Visibility(
@@ -2049,8 +2068,8 @@ class _MicroMinePageState extends State<MicroMinePage>
           width: double.maxFinite,
           margin: EdgeInsets.only(
               top: 10,
-              left: GlobalConfig.LAYOUT_MARGIN,
-              right: GlobalConfig.LAYOUT_MARGIN),
+              left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+              right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
           child: Stack(
             alignment: Alignment.topCenter,
             children: <Widget>[
@@ -2098,7 +2117,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     return Card(
       elevation: 0,
       margin: EdgeInsets.symmetric(
-          horizontal: GlobalConfig.LAYOUT_MARGIN,
+          horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
           vertical: ScreenUtil().setHeight(30)),
       child: Stack(
         children: <Widget>[
@@ -2117,9 +2136,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                         fit: FlexFit.tight,
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouter(
+                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                 context,
-                                NewIncomeListPage(
+                                KeTaoFeaturedNewIncomeListPage(
                                   showType: "bill",
                                 ));
                           },
@@ -2169,19 +2188,20 @@ class _MicroMinePageState extends State<MicroMinePage>
                         child: GestureDetector(
                           onTap: () async {
                             try {
-                              if (CommonUtils.isEmpty(_availableCashAmount) ||
+                              if (KeTaoFeaturedCommonUtils.isEmpty(
+                                      _availableCashAmount) ||
                                   double.parse(
                                           _availableCashAmount.toString()) <=
                                       0) {
-                                CommonUtils.showToast("暂无可提现金额");
+                                KeTaoFeaturedCommonUtils.showToast("暂无可提现金额");
                                 return;
                               }
                             } catch (e) {}
 
                             if (_isWithdrawal == "0") {
-                              await NavigatorUtils.navigatorRouter(
+                              await KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
-                                  WithdrawalPage(
+                                  KeTaoFeaturedWithdrawalPage(
                                       availableCashAmount:
                                           _availableCashAmount));
                               _initUserData();
@@ -2200,7 +2220,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                                     backgroundColor: Colors.grey);
                               }*/
                             } else {
-                              CommonUtils.showToast("暂不可提现");
+                              KeTaoFeaturedCommonUtils.showToast("暂不可提现");
                             }
                           },
                           child: Container(
@@ -2254,9 +2274,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                         fit: FlexFit.tight,
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouter(
+                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                 context,
-                                NewIncomeListPage(
+                                KeTaoFeaturedNewIncomeListPage(
                                   showType: "profit",
                                 ));
                           },
@@ -2300,9 +2320,9 @@ class _MicroMinePageState extends State<MicroMinePage>
                         fit: FlexFit.tight,
                         child: GestureDetector(
                           onTap: () {
-                            NavigatorUtils.navigatorRouter(
+                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                 context,
-                                IncomeListPage(
+                                KeTaoFeaturedIncomeListPage(
                                   pageType: 2,
                                   showAppBar: true,
                                 ));
@@ -2592,7 +2612,7 @@ class _MicroMinePageState extends State<MicroMinePage>
     if (_title == '我的') {
       text = "普通用户";
     }
-    if (!GlobalConfig.isLogin()) {
+    if (!KeTaoFeaturedGlobalConfig.isLogin()) {
       nickName = "登陆/注册";
     }
     return Stack(
@@ -2600,7 +2620,8 @@ class _MicroMinePageState extends State<MicroMinePage>
         Container(
           width: ScreenUtil().setWidth(168),
           height: ScreenUtil().setWidth(200),
-          margin: EdgeInsets.symmetric(horizontal: GlobalConfig.LAYOUT_MARGIN),
+          margin: EdgeInsets.symmetric(
+              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
@@ -2620,7 +2641,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                             fit: BoxFit.fill,
                           ))
                       : ClipOval(
-                          child: MyOctoImage(
+                          child: KeTaoFeaturedMyOctoImage(
                             image: "$headUrl",
                             fit: BoxFit.fill,
                             width: ScreenUtil().setWidth(158),
@@ -2649,7 +2670,7 @@ class _MicroMinePageState extends State<MicroMinePage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          MyOctoImage(
+                          KeTaoFeaturedMyOctoImage(
                             image:
                                 'https://alipic.lanhuapp.com/xd85fc7a67-0912-4f32-91c3-f907fdc9284d',
                             width: ScreenUtil().setWidth(20),
@@ -2680,12 +2701,13 @@ class _MicroMinePageState extends State<MicroMinePage>
           ),
           child: ListTile(
             onTap: () async {
-              if (!GlobalConfig.isLogin()) {
-                NavigatorUtils.navigatorRouter(context, LoginPage());
+              if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    context, KeTaoFeaturedLoginPage());
                 return;
               }
-              await NavigatorUtils.navigatorRouter(
-                  context, MicroShareHolderEquityPage());
+              await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedMicroShareHolderEquityPage());
               _initUserData();
             },
             title: Container(
@@ -2729,10 +2751,10 @@ class _MicroMinePageState extends State<MicroMinePage>
             trailing: GestureDetector(
               /* onTap: () async {
                 */ /* Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return LoginPage();
+                  return KeTaoFeaturedLoginPage();
                 }));*/ /*
                 try {
-                  if (CommonUtils.isEmpty(availableCashAmount) ||
+                  if (KeTaoFeaturedCommonUtils.isEmpty(availableCashAmount) ||
                       int.parse(availableCashAmount.toString()) <= 0) {
                     return;
                   }
@@ -2942,13 +2964,16 @@ class _MicroMinePageState extends State<MicroMinePage>
                       child: GestureDetector(
                         onTap: () async {
                           if (showPhone) {
-                            if ( //CommonUtils.isEmpty(dialogNickName) ||
-                                CommonUtils.isEmpty(_dialogPhoneNumber)) {
-                              CommonUtils.showToast("请检查填写的信息是否完整！");
+                            if ( //KeTaoFeaturedCommonUtils.isEmpty(dialogNickName) ||
+                                KeTaoFeaturedCommonUtils.isEmpty(
+                                    _dialogPhoneNumber)) {
+                              KeTaoFeaturedCommonUtils.showToast(
+                                  "请检查填写的信息是否完整！");
                               return;
                             }
-                            if (!CommonUtils.isPhoneLegal(_dialogPhoneNumber)) {
-                              CommonUtils.showSimplePromptDialog(
+                            if (!KeTaoFeaturedCommonUtils.isPhoneLegal(
+                                _dialogPhoneNumber)) {
+                              KeTaoFeaturedCommonUtils.showSimplePromptDialog(
                                   context, "温馨提示", "请输入正确的手机号");
                               return;
                             }
@@ -2962,24 +2987,31 @@ class _MicroMinePageState extends State<MicroMinePage>
                                     result.data["is_merge"].toString();
                                 switch (isMerge) {
                                   case "1":
-                                    CommonUtils.showToast("手机号绑定成功");
+                                    KeTaoFeaturedCommonUtils.showToast(
+                                        "手机号绑定成功");
                                     _initUserData();
                                     break;
 
                                   case "2":
-                                    CommonUtils.showToast("手机账户数据合并成功，请重新登录！");
-                                    GlobalConfig.prefs.remove("hasLogin");
-                                    GlobalConfig.prefs.remove("token");
-                                    GlobalConfig.prefs.remove("loginData");
-                                    GlobalConfig.saveLoginStatus(false);
+                                    KeTaoFeaturedCommonUtils.showToast(
+                                        "手机账户数据合并成功，请重新登录！");
+                                    KeTaoFeaturedGlobalConfig.prefs
+                                        .remove("hasLogin");
+                                    KeTaoFeaturedGlobalConfig.prefs
+                                        .remove("token");
+                                    KeTaoFeaturedGlobalConfig.prefs
+                                        .remove("loginData");
+                                    KeTaoFeaturedGlobalConfig.saveLoginStatus(
+                                        false);
                                     _clearWidgetData();
                                     Navigator.pop(context);
-                                    NavigatorUtils.navigatorRouter(
-                                        this.context, LoginPage());
+                                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                        this.context, KeTaoFeaturedLoginPage());
                                     break;
                                 }
                               } else {
-                                CommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                             if (modifyPhone) {
@@ -2987,10 +3019,11 @@ class _MicroMinePageState extends State<MicroMinePage>
                               var result = await HttpManage.bindPhone(
                                   tel: _dialogPhoneNumber.toString());
                               if (result.status) {
-                                CommonUtils.showToast("手机号修改成功");
+                                KeTaoFeaturedCommonUtils.showToast("手机号修改成功");
                                 _initUserData();
                               } else {
-                                CommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                             if (addExperienceAccount) {
@@ -2998,36 +3031,40 @@ class _MicroMinePageState extends State<MicroMinePage>
                                   await HttpManage.addExperienceMemberPhone(
                                       tel: _dialogPhoneNumber.toString());
                               if (result.status) {
-                                CommonUtils.showToast("体验会员添加成功");
+                                KeTaoFeaturedCommonUtils.showToast("体验会员添加成功");
                               } else {
-                                CommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                           }
                           if (showWeChatNo) {
-                            if ( //CommonUtils.isEmpty(dialogNickName) ||
-                                CommonUtils.isEmpty(_dialogWeChatNo)) {
-                              CommonUtils.showToast("微信号不能为空！");
+                            if ( //KeTaoFeaturedCommonUtils.isEmpty(dialogNickName) ||
+                                KeTaoFeaturedCommonUtils.isEmpty(
+                                    _dialogWeChatNo)) {
+                              KeTaoFeaturedCommonUtils.showToast("微信号不能为空！");
                               return;
                             }
                             if (bindWeChatNo) {
                               var result = await HttpManage.bindWeChatNo(
                                   _dialogWeChatNo.toString());
                               if (result.status) {
-                                CommonUtils.showToast("微信号绑定成功");
+                                KeTaoFeaturedCommonUtils.showToast("微信号绑定成功");
                                 _initUserData();
                               } else {
-                                CommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             } else {
                               //微信号修改
                               var result = await HttpManage.modifyWeChatNo(
                                   _dialogWeChatNo.toString());
                               if (result.status) {
-                                CommonUtils.showToast("微信号修改成功");
+                                KeTaoFeaturedCommonUtils.showToast("微信号修改成功");
                                 _initUserData();
                               } else {
-                                CommonUtils.showToast(result.errMsg);
+                                KeTaoFeaturedCommonUtils.showToast(
+                                    result.errMsg);
                               }
                             }
                           }

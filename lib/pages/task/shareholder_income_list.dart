@@ -9,7 +9,7 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 
-class ShareHolderIncomeListPage extends StatefulWidget {
+class KeTaoFeaturedAboutPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
@@ -17,7 +17,7 @@ class ShareHolderIncomeListPage extends StatefulWidget {
   var showType;
   bool showAppBar;
 
-  ShareHolderIncomeListPage(
+  KeTaoFeaturedAboutPage(
       {Key key,
       this.pageType = 0,
       this.showAppBar = false,
@@ -31,7 +31,7 @@ class ShareHolderIncomeListPage extends StatefulWidget {
       _ShareHolderIncomeListPageState();
 }
 
-class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
+class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -69,7 +69,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -129,7 +129,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: GlobalConfig.taskNomalHeadColor,
+            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
         ),
@@ -154,7 +154,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
           }
         },
         emptyWidget: _profitList == null || _profitList.length == 0
-            ? NoDataPage()
+            ? KeTaoFeaturedNoDataPage()
             : null,
         slivers: <Widget>[buildCenter()],
       ),
@@ -291,7 +291,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
       if (price.contains("-")) {
         prefixText = '';
       }
-      /*if (GlobalConfig.getUserInfo().type == 3) {
+      /*if (KeTaoFeaturedGlobalConfig.getUserInfo().type == 3) {
 
         switch (type) {
           case "1":
@@ -338,7 +338,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: GlobalConfig.LAYOUT_MARGIN,
+              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
               vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
@@ -362,7 +362,7 @@ class _ShareHolderIncomeListPageState extends State<ShareHolderIncomeListPage>
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),*/
-                        MyOctoImage(
+                        KeTaoFeaturedMyOctoImage(
                           image: "$titleIcon",
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),

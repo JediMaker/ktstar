@@ -11,8 +11,8 @@ import 'package:star/utils/navigator_utils.dart';
 
 import '../../global_config.dart';
 
-class WithdrawalPage extends StatefulWidget {
-  WithdrawalPage({Key key, @required this.availableCashAmount})
+class KeTaoFeaturedWithdrawalPage extends StatefulWidget {
+  KeTaoFeaturedWithdrawalPage({Key key, @required this.availableCashAmount})
       : super(key: key);
   final String title = "提现";
   String availableCashAmount; // 可提现金额
@@ -21,7 +21,7 @@ class WithdrawalPage extends StatefulWidget {
   _WithdrawalPageState createState() => _WithdrawalPageState();
 }
 
-class _WithdrawalPageState extends State<WithdrawalPage> {
+class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
   bool _aliPaySelected = true;
   TextEditingController _aliPayAccountController = new TextEditingController();
   FocusNode _aliPayAccountFocusNode = FocusNode();
@@ -109,7 +109,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                 },
               ),
               centerTitle: true,
-              backgroundColor: GlobalConfig.taskNomalHeadColor,
+              backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
               elevation: 0,
             ),
             body: SingleChildScrollView(
@@ -207,7 +207,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                     if (mounted) {
                                       setState(() {
 //                                _aliPaySelected = false;
-                                        CommonUtils.showToast("暂不支持提现到微信");
+                                        KeTaoFeaturedCommonUtils.showToast("暂不支持提现到微信");
                                       });
                                     }
                                   },
@@ -430,16 +430,16 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
       child: Ink(
         child: InkWell(
             onTap: () async {
-              if (CommonUtils.isEmpty(_aliPayAccount) ||
-                  CommonUtils.isEmpty(_aliPayName) ||
-                  CommonUtils.isEmpty(_withdrawalAmount)) {
-                CommonUtils.showToast("请检查填写的信息是否完整！");
+              if (KeTaoFeaturedCommonUtils.isEmpty(_aliPayAccount) ||
+                  KeTaoFeaturedCommonUtils.isEmpty(_aliPayName) ||
+                  KeTaoFeaturedCommonUtils.isEmpty(_withdrawalAmount)) {
+                KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
                 return;
               }
               try {
                 if (double.parse(_withdrawalAmount) >
                     double.parse(widget.availableCashAmount)) {
-                  CommonUtils.showToast("提现金额不能超出账户可提现余额！");
+                  KeTaoFeaturedCommonUtils.showToast("提现金额不能超出账户可提现余额！");
                   return;
                 }
               } catch (e) {}
@@ -448,12 +448,12 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
               EasyLoading.dismiss();
               if (result.status) {
-                CommonUtils.showToast("提现申请已提交");
+                KeTaoFeaturedCommonUtils.showToast("提现申请已提交");
 //                Navigator.of(context).pop();
-                NavigatorUtils.navigatorRouterReplaceMent(
-                    context, WithdrawalResultPage());
+                KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
+                    context, KeTaoFeaturedWithdrawalResultPage());
               } else {
-                CommonUtils.showToast(result.errMsg);
+                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
               }
             },
             child: Container(

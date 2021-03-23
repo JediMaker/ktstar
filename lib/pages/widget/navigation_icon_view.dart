@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NavigationIconView {
-  NavigationIconView(
+class KeTaoFeaturedNavigationIconView {
+  KeTaoFeaturedNavigationIconView(
       {Widget icon, Widget activeIcon, Widget title, TickerProvider vsync})
       : item = new BottomNavigationBarItem(
             icon: icon, title: title, activeIcon: activeIcon),

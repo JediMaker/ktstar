@@ -8,16 +8,16 @@ import 'package:star/utils/common_utils.dart';
 
 import '../../global_config.dart';
 
-class ModifyPasswordPage extends StatefulWidget {
+class KeTaoFeaturedModifyPasswordPage extends StatefulWidget {
   String title;
 
-  ModifyPasswordPage({Key key, this.title}) : super(key: key);
+  KeTaoFeaturedModifyPasswordPage({Key key, this.title}) : super(key: key);
 
   @override
   _ModifyPasswordPageState createState() => _ModifyPasswordPageState();
 }
 
-class _ModifyPasswordPageState extends State<ModifyPasswordPage>
+class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   TextEditingController _checkCodeController;
@@ -71,7 +71,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Container(
@@ -160,7 +160,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(36.0),
                             color: Colors.white),
-                        child: TimerWidget(
+                        child: KeTaoFeaturedTimerWidget(
                           textColor: Color(0xff333333),
                           startCountAction: (BuildContext context) {
                             return smsSend(context);
@@ -222,20 +222,20 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
                             _checkCodeController.value.text.isEmpty ||
                             _passwordController.value.text == null ||
                             _passwordController.value.text.isEmpty) {
-                          CommonUtils.showToast("请检查填写的信息是否完整！");
+                          KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
                         } else {
                           var result = await HttpManage.modifyPassword(
                               _phoneController.value.text,
                               _checkCodeController.value.text,
                               _passwordController.value.text);
                           if (result.status) {
-                            CommonUtils.showToast(
+                            KeTaoFeaturedCommonUtils.showToast(
                                 "${widget.title == "设置密码" ? "设置" : "修改"}密码成功！");
                             Navigator.of(context).pop();
                             return true;
                           } else {
-                            CommonUtils.showToast("${result.errMsg}");
-                         /*   CommonUtils.showToast(
+                            KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                         /*   KeTaoFeaturedCommonUtils.showToast(
                                 "${widget.title == "设置密码" ? "设置" : "修改"}密码失败！");*/
                             return false;
                           }
@@ -266,18 +266,18 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage>
   }
 
   Future<bool> smsSend(BuildContext context) async {
-    if (CommonUtils.isPhoneLegal(_phoneController.value.text)) {
+    if (KeTaoFeaturedCommonUtils.isPhoneLegal(_phoneController.value.text)) {
       var result = await HttpManage.sendVerificationCode(
           _phoneController.value.text, "4");
       if (result.status) {
-        CommonUtils.showToast("验证码已发送，请注意查收！");
+        KeTaoFeaturedCommonUtils.showToast("验证码已发送，请注意查收！");
         return true;
       } else {
-        CommonUtils.showToast(result.errMsg);
+        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
         return false;
       }
     } else {
-      CommonUtils.showSimplePromptDialog(context, "温馨提示", "请输入正确的手机号");
+      KeTaoFeaturedCommonUtils.showSimplePromptDialog(context, "温馨提示", "请输入正确的手机号");
       return false;
     }
   }

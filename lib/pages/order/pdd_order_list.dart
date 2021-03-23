@@ -27,15 +27,15 @@ import 'package:star/pages/order/order_logistics_tracking.dart';
 import '../../global_config.dart';
 
 ///拼多多订单列表（已弃用）
-class PddOrderListPage extends StatefulWidget {
-  PddOrderListPage({Key key}) : super(key: key);
+class KeTaoFeaturedPddOrderListPage extends StatefulWidget {
+  KeTaoFeaturedPddOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
 
   @override
   _PddOrderListPageState createState() => _PddOrderListPageState();
 }
 
-class _PddOrderListPageState extends State<PddOrderListPage> {
+class _PddOrderListPageState extends State<KeTaoFeaturedPddOrderListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
@@ -63,7 +63,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }*/
 
@@ -108,7 +108,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: EasyRefresh.custom(
@@ -131,7 +131,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
             }
           },
           emptyWidget: _orderList == null || _orderList.length == 0
-              ? NoDataPage()
+              ? KeTaoFeaturedNoDataPage()
               : null,
           slivers: <Widget>[buildCenter()],
         ) // This trailing comma makes auto-formatting nicer for build methods.
@@ -238,13 +238,13 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
       onTap: () {
         if (orderSource == "2") {
           //拼多多平台订单
-          if (CommonUtils.isEmpty(goodsList)) {
+          if (KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
             return;
           }
 
-          NavigatorUtils.navigatorRouter(
+          KeTaoFeaturedNavigatorUtils.navigatorRouter(
               context,
-              PddGoodsDetailPage(
+              KeTaoFeaturedPddGoodsDetailPage(
                 gId: goodsList[0].pddGoodsId,
 //                gId: id,
 //                goodsSign: goodsSign,
@@ -254,9 +254,9 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
         }
         if (orderType == "2") {
           //自营商城订单
-          NavigatorUtils.navigatorRouter(
+          KeTaoFeaturedNavigatorUtils.navigatorRouter(
               context,
-              OrderDetailPage(
+              KeTaoFeaturedOrderDetailPage(
                 orderId: orderId,
               ));
         }
@@ -430,9 +430,9 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                     visible: orderType == "2" && orderStatus != '1',
                     child: GestureDetector(
                       onTap: () async {
-                        NavigatorUtils.navigatorRouter(
+                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
                             context,
-                            OrderLogisticsTrackingPage(
+                            KeTaoFeaturedOrderLogisticsTrackingPage(
                               orderId: orderId,
                             ));
                       },
@@ -466,18 +466,18 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                     child: GestureDetector(
                       onTap: () async {
                         if (orderType == "1") {
-                          NavigatorUtils.navigatorRouter(
-                              context, RechargeListPage());
+                          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              context, KeTaoFeaturedRechargeListPage());
                         } else if (orderType == "2") {
                           switch (orderStatus) {
                             case "1":
                               if (Platform.isIOS) {
-                                CommonUtils.showIosPayDialog();
+                                KeTaoFeaturedCommonUtils.showIosPayDialog();
                                 return;
                               }
-                              NavigatorUtils.navigatorRouter(
+                              KeTaoFeaturedNavigatorUtils.navigatorRouter(
                                   context,
-                                  CheckOutCounterPage(
+                                  KeTaoFeaturedCheckOutCounterPage(
                                     orderId: orderId,
                                     orderMoney: payMoney,
                                   ));
@@ -549,12 +549,12 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
           ),
           onPressed: () async {
             var result = await HttpManage.orderIsJoinQueue(orderId, "2");
-            /* if (!CommonUtils.isEmpty(result.errMsg)) {
-              CommonUtils.showToast(result.errMsg);
+            /* if (!KeTaoFeaturedCommonUtils.isEmpty(result.errMsg)) {
+              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }*/
             Navigator.pop(context, false);
-            NavigatorUtils.navigatorRouterAndRemoveUntil(
-                context, TaskIndexPage());
+            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+                context, KeTaoFeaturedTaskIndexPage());
           },
         ),
         CupertinoDialogAction(
@@ -566,12 +566,13 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
           ),
           onPressed: () async {
             var result = await HttpManage.orderIsJoinQueue(orderId, "1");
-            if (!CommonUtils.isEmpty(result.errMsg)) {
-              CommonUtils.showToast(result.errMsg);
+            if (!KeTaoFeaturedCommonUtils.isEmpty(result.errMsg)) {
+              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
             }
             Navigator.pop(context, false);
             if (result.status) {
-              NavigatorUtils.navigatorRouter(context, FreeQueuePersonalPage());
+              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  context, KeTaoFeaturedFreeQueuePersonalPage());
             }
           },
         ),
@@ -614,7 +615,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
             var result = await HttpManage.orderConfirm(orderId);
             if (result.status) {
               Navigator.pop(context, false);
-              CommonUtils.showToast("确认收货成功");
+              KeTaoFeaturedCommonUtils.showToast("确认收货成功");
               showDialog<bool>(
                 context: context,
                 builder: (BuildContext context) =>
@@ -625,7 +626,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
 //              _initData();
               _refreshController.finishLoad(noMore: false);
             } else {
-              CommonUtils.showToast("${result.errMsg}");
+              KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
             }
           },
         ),
@@ -651,7 +652,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: MyOctoImage(
+                        child: KeTaoFeaturedMyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           fit: BoxFit.fill,
@@ -785,7 +786,7 @@ class _PddOrderListPageState extends State<PddOrderListPage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        MyOctoImage(
+        KeTaoFeaturedMyOctoImage(
           image: "$imageUrl",
           width: ScreenUtil().setWidth(243),
           height: ScreenUtil().setWidth(243),

@@ -15,15 +15,15 @@ import 'package:star/utils/utils.dart';
 
 import '../../global_config.dart';
 
-class InvitationPosterPage extends StatefulWidget {
-  InvitationPosterPage({Key key}) : super(key: key);
+class KeTaoFeaturedInvitationPosterPage extends StatefulWidget {
+  KeTaoFeaturedInvitationPosterPage({Key key}) : super(key: key);
   final String title = "邀请好友";
 
   @override
   _InvitationPosterPageState createState() => _InvitationPosterPageState();
 }
 
-class _InvitationPosterPageState extends State<InvitationPosterPage> {
+class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage> {
   List<String> _bannerList = [];
   var _bannerIndex = 0;
   var _linkUrl;
@@ -51,7 +51,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
         });
       }
     } else {
-      CommonUtils.showToast(result.errMsg);
+      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -95,7 +95,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: GlobalConfig.taskNomalHeadColor,
+          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Stack(
@@ -141,7 +141,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                                 onTap: () {
                                   Clipboard.setData(
                                       ClipboardData(text: "可淘星选:$_linkUrl"));
-                                  CommonUtils.showToast("已复制文本");
+                                  KeTaoFeaturedCommonUtils.showToast("已复制文本");
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -178,7 +178,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  CommonUtils.requestPermission(
+                                  KeTaoFeaturedCommonUtils.requestPermission(
                                       _permission, _savePosterImg());
                                 },
                                 child: Container(
@@ -227,12 +227,12 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
           Uint8List.fromList(response.data),
           quality: 60,
           name:
-              "ktxx_${CommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
+              "ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
       print("posterDownloadResult=" + result.toString());
-      CommonUtils.showToast("图片已保存");
+      KeTaoFeaturedCommonUtils.showToast("图片已保存");
     } catch (e) {
       print("err=" + e.toString());
-      CommonUtils.showToast("图片下载失败");
+      KeTaoFeaturedCommonUtils.showToast("图片下载失败");
     }
   }
 
@@ -274,7 +274,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
                 //自定义指示器颜色
                 color: Colors.white,
                 size: 8.0,
-                activeColor: GlobalConfig.taskHeadColor,
+                activeColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
           var bannerData = _bannerList[index];
@@ -283,7 +283,7 @@ class _InvitationPosterPageState extends State<InvitationPosterPage> {
             child: ClipRRect(
               borderRadius:
                   BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-              child: MyOctoImage(
+              child: KeTaoFeaturedMyOctoImage(
                 image: bannerData,
                 height: ScreenUtil().setHeight(623),
 //              width: ScreenUtil().setWidth(1125),

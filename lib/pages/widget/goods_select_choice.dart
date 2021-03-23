@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 /// @desp:
 /// @time 2019/10/30 14:44
 /// @author lizubing
-class GoodsSelectChoiceChip extends StatefulWidget {
+class KeTaoFeaturedGoodsSelectChoiceChip extends StatefulWidget {
   final String text;
   final double height;
   final EdgeInsetsGeometry padding;
@@ -23,7 +23,7 @@ class GoodsSelectChoiceChip extends StatefulWidget {
   final ValueChanged<bool> onSelected;
   final bool selected;
 
-  const GoodsSelectChoiceChip(
+  const KeTaoFeaturedGoodsSelectChoiceChip(
       {@required this.text,
       this.height = 25,
       this.padding = const EdgeInsets.only(
@@ -50,7 +50,7 @@ class GoodsSelectChoiceChip extends StatefulWidget {
   }
 }
 
-class _GoodsSelectChoiceChipState extends State<GoodsSelectChoiceChip> {
+class _GoodsSelectChoiceChipState extends State<KeTaoFeaturedGoodsSelectChoiceChip> {
   @override
   Widget build(BuildContext context) {
     bool _select = widget.selected;
