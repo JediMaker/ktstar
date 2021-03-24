@@ -1,4 +1,3 @@
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -9,7 +8,7 @@ import 'package:star/http/http_manage.dart';
 import 'package:star/models/category_bean_entity.dart';
 import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/search/search_page.dart';
-import 'package:star/pages/task/task_message.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
@@ -339,10 +338,14 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
       totalItemHeight += itemHeight;
     }
     var scrollOffset = totalItemHeight;
+    if (index < 7) {
+      scrollOffset += ScreenUtil().setWidth(10);
+    }
+
     setState(() {
       _rightScrollController.animateTo(scrollOffset,
           duration: new Duration(milliseconds: 200), curve: Curves.ease);
-      Future.delayed(Duration(milliseconds: 500))
+      Future.delayed(Duration(milliseconds: 300))
           .then((value) => resetSelectIndex(index));
     });
   }
