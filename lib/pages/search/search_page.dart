@@ -1,4 +1,3 @@
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -6,8 +5,6 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:search_page/search_page.dart';
-import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
@@ -16,6 +13,7 @@ import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/widget/PriceText.dart';
 import 'package:star/pages/widget/dashed_rect.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/pages/widget/round_tab_indicator.dart';
@@ -108,7 +106,7 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
           print("result.data.goodsList=${result.data.goodsList.length}");
           if (page == 1) {
             goodsList = result.data.goodsList;
-            _refreshController.finishLoad(noMore: true);
+            _refreshController.finishLoad(noMore: false);
           } else {
             if (result == null ||
                 result.data == null ||
@@ -159,7 +157,8 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
     if (!KeTaoFeaturedGlobalConfig.isLogin()) {
       KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            context, KeTaoFeaturedLoginPage());
       });
       return;
     }
@@ -178,6 +177,7 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
           if (page == 1) {
             //下拉刷新
             pddGoodsList = result2.data.xList;
+            _refreshController.finishLoad(noMore: false);
           } else {
             //加载更多
             if (result2 == null ||
@@ -272,8 +272,10 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
                           if (mounted) {
                             setState(() {
                               _searchWord = value;
-                              if (KeTaoFeaturedCommonUtils.isEmpty(_searchWord)) {
-                                _hisArray = KeTaoFeaturedGlobalConfig.getSearchList();
+                              if (KeTaoFeaturedCommonUtils.isEmpty(
+                                  _searchWord)) {
+                                _hisArray =
+                                    KeTaoFeaturedGlobalConfig.getSearchList();
                                 _showSearchList = false;
                               }
                             });
@@ -461,7 +463,8 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
     }
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: !_showSearchList && !KeTaoFeaturedCommonUtils.isEmpty(_hisArray),
+        visible:
+            !_showSearchList && !KeTaoFeaturedCommonUtils.isEmpty(_hisArray),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -648,7 +651,8 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
                 onPressed: () {
                   setState(() {
                     _hisArray = List<String>();
-                    KeTaoFeaturedGlobalConfig.setSearchList(searchList: _hisArray);
+                    KeTaoFeaturedGlobalConfig.setSearchList(
+                        searchList: _hisArray);
                   });
                   Navigator.pop(context);
                 },
@@ -665,10 +669,67 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
       height: double.infinity,
       child: EasyRefresh.custom(
         header: MaterialHeader(),
-        footer: MaterialFooter(),
+        footer: CustomFooter(
+//          triggerDistance: ScreenUtil().setWidth(180),
+            completeDuration: Duration(seconds: 1),
+            footerBuilder: (context,
+                loadState,
+                pulledExtent,
+                loadTriggerPullDistance,
+                loadIndicatorExtent,
+                axisDirection,
+                float,
+                completeDuration,
+                enableInfiniteLoad,
+                success,
+                noMore) {
+              return Stack(
+                children: <Widget>[
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Visibility(
+                      visible: noMore,
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(30),
+                            bottom: ScreenUtil().setWidth(30),
+                          ),
+                          child: Text(
+                            "~我是有底线的~",
+                            style: TextStyle(
+                              color: Color(0xff666666),
+                              fontSize: ScreenUtil().setSp(32),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+//                  child: Container(
+//                    width: 30.0,
+//                    height: 30.0,
+//                    /* child: SpinKitCircle(
+//                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
+//                            size: 30.0,
+//                          ),*/
+//                  ),
+                  ),
+                ],
+              );
+            }),
         controller: _refreshController,
         enableControlFinishRefresh: true,
         enableControlFinishLoad: true,
+        emptyWidget: KeTaoFeaturedCommonUtils.isEmpty(goodsList) &&
+                    _selectedTabIndex == 0 &&
+                    _showSearchList ||
+                KeTaoFeaturedCommonUtils.isEmpty(goodsList) &&
+                    _selectedTabIndex == 1 &&
+                    _showSearchList //channelType
+            ? KeTaoFeaturedNoDataPage()
+            : null,
         onRefresh: () {
           /*_initHomeData();
           _initData();*/
@@ -710,7 +771,9 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
 //          height: double.infinity,
             child: new StaggeredGridView.countBuilder(
               crossAxisCount: 2,
-              itemCount: KeTaoFeaturedCommonUtils.isEmpty(goodsList) ? 0 : goodsList.length,
+              itemCount: KeTaoFeaturedCommonUtils.isEmpty(goodsList)
+                  ? 0
+                  : goodsList.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
@@ -1238,7 +1301,8 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
                         ),
                       ),
                       Visibility(
-                        visible: !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
+                        visible:
+                            !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(
