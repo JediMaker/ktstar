@@ -122,7 +122,10 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      setState(() {
+        _refreshController.finishLoad(noMore: false);
+        goodsList = List<HomeGoodsListGoodsList>();
+      });
     }
   }
 
@@ -198,7 +201,10 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
       if (result2.errCode.toString() == "50001") {
         showPddAuthorizationDialog();
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result2.errMsg);
+        _refreshController.finishLoad(noMore: true);
+        setState(() {
+          pddGoodsList = List<PddGoodsListDataList>();
+        });
       }
     }
   }
