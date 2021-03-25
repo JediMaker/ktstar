@@ -2631,14 +2631,9 @@ class _TaskListPageState extends State<KeTaoFeaturedTaskListPage>
           ),
           Container(
             margin: EdgeInsets.only(
-              left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
-              right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
               top: 6,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(ScreenUtil().setWidth(30)),
-              ),
               child: buildSwiper(),
             ),
           ),
@@ -2669,7 +2664,11 @@ class _TaskListPageState extends State<KeTaoFeaturedTaskListPage>
         loop: _isLoop,
         autoplay: true,
         duration: 30,
+        fade: 1.0,
+        scale: 1,
+        curve: Curves.fastLinearToSlowEaseIn,
         autoplayDisableOnInteraction: true,
+        autoplayDelay: 5000,
         key: ValueKey(context),
         controller: _swiperController,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
@@ -2948,24 +2947,35 @@ class _TaskListPageState extends State<KeTaoFeaturedTaskListPage>
                       } catch (e) {}*/
               }
             },
-            child: KeTaoFeaturedMyOctoImage(
-              image: bannerData.imgPath,
+            child: Container(
+              margin: EdgeInsets.only(
+                left: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+                right: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(ScreenUtil().setWidth(30)),
+                ),
+                child: KeTaoFeaturedMyOctoImage(
+                  image: bannerData.imgPath,
 //              width: ScreenUtil().setWidth(1125),
-              placeholderBuilder: (context) => Center(
-                child: Loading(
-                  indicator: BallSpinFadeLoaderIndicator(),
-                  size: 50.0,
-                  color: KeTaoFeaturedGlobalConfig.colorPrimary,
+                  placeholderBuilder: (context) => Center(
+                    child: Loading(
+                      indicator: BallSpinFadeLoaderIndicator(),
+                      size: 50.0,
+                      color: KeTaoFeaturedGlobalConfig.colorPrimary,
+                    ),
+                  ),
+                  placeholder: (context, url) => Center(
+                    child: Loading(
+                      indicator: BallSpinFadeLoaderIndicator(),
+                      size: 50.0,
+                      color: KeTaoFeaturedGlobalConfig.colorPrimary,
+                    ),
+                  ),
+                  fit: BoxFit.fill,
                 ),
               ),
-              placeholder: (context, url) => Center(
-                child: Loading(
-                  indicator: BallSpinFadeLoaderIndicator(),
-                  size: 50.0,
-                  color: KeTaoFeaturedGlobalConfig.colorPrimary,
-                ),
-              ),
-              fit: BoxFit.fill,
             ),
           );
         },
