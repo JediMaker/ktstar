@@ -62,6 +62,8 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
   ///历史搜索关键词
   List<String> _hisArray;
 
+  var _searchFocusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -89,6 +91,7 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
     _tabController.dispose();
     _textEditingController.dispose();
     _refreshController.dispose();
+    _searchFocusNode.dispose();
   }
 
   _searchData() async {
@@ -273,7 +276,24 @@ class _SearchGoodsPageState extends State<KeTaoFeaturedSearchGoodsPage>
                       margin: EdgeInsets.only(left: 4),
                       child: TextFormField(
                         controller: _textEditingController,
+                        focusNode: _searchFocusNode,
+                        textInputAction: TextInputAction.search,
                         autofocus: false,
+                        onEditingComplete: () {
+                          ///搜索对应商铺列表
+                          ///
+                          if (mounted) {
+                            setState(() {
+                              _searchFocusNode.unfocus();
+                            });
+                          }
+
+                          ///  关键字搜索对应渠道商品
+                          ///
+                          if (!KeTaoFeaturedCommonUtils.isEmpty(_searchWord)) {
+                            search();
+                          }
+                        },
                         onChanged: (value) {
                           if (mounted) {
                             setState(() {

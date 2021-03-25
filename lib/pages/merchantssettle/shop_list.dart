@@ -291,6 +291,7 @@ class _ShopListPageState extends State<KeTaoFeaturedShopListPage>
                             ///
                             if (mounted) {
                               setState(() {
+                                _searchFocusNode.unfocus();
                                 _shopName = _searchController.text.trim();
                                 page = 1;
                                 _initData();
