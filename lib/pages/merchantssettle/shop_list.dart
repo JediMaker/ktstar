@@ -1,25 +1,23 @@
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:star/generated/json/home_goods_list_entity_helper.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
-import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/shop_list_entity.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/merchantssettle/apply_settle.dart';
 import 'package:star/pages/merchantssettle/shop_backstage.dart';
 import 'package:star/pages/merchantssettle/shop_deatil.dart';
 import 'package:star/pages/merchantssettle/shop_payment.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -274,6 +272,7 @@ class _ShopListPageState extends State<KeTaoFeaturedShopListPage>
                           controller: _searchController,
                           focusNode: _searchFocusNode,
                           maxLength: 30,
+                          textInputAction: TextInputAction.search,
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(42),
                           ),
@@ -284,6 +283,17 @@ class _ShopListPageState extends State<KeTaoFeaturedShopListPage>
                             if (mounted) {
                               setState(() {
                                 _searchController.text = value;
+                              });
+                            }
+                          },
+                          onEditingComplete: () {
+                            ///搜索对应商铺列表
+                            ///
+                            if (mounted) {
+                              setState(() {
+                                _shopName = _searchController.text.trim();
+                                page = 1;
+                                _initData();
                               });
                             }
                           },
