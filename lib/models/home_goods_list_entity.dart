@@ -18,4 +18,16 @@ class HomeGoodsListGoodsList with JsonConvert<HomeGoodsListGoodsList> {
   String salePrice;
   @JSONField(name: "bt_price")
   String btPrice;
+  @JSONField(name: "goods_rate")
+  String goodsRate;
+  @JSONField(name: "goods_coin")
+  String goodsCoin;
+  @JSONField(name: "is_coupon")
+  String isCoupon;
+  @JSONField(name: "is_new")
+  String isNew;
+  @JSONField(name: "sale_num")
+  String saleNum;
+  @JSONField(name: "try_coin")
+  String tryCoin;
 }

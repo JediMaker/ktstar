@@ -39,6 +39,24 @@ homeGoodsListGoodsListFromJson(
   if (json['bt_price'] != null) {
     data.btPrice = json['bt_price']?.toString();
   }
+  if (json['goods_rate'] != null) {
+    data.goodsRate = json['goods_rate']?.toString();
+  }
+  if (json['goods_coin'] != null) {
+    data.goodsCoin = json['goods_coin']?.toString();
+  }
+  if (json['is_coupon'] != null) {
+    data.isCoupon = json['is_coupon']?.toString();
+  }
+  if (json['is_new'] != null) {
+    data.isNew = json['is_new']?.toString();
+  }
+  if (json['sale_num'] != null) {
+    data.saleNum = json['sale_num']?.toString();
+  }
+  if (json['try_coin'] != null) {
+    data.tryCoin = json['try_coin']?.toString();
+  }
   return data;
 }
 
@@ -51,5 +69,11 @@ Map<String, dynamic> homeGoodsListGoodsListToJson(
   data['original_price'] = entity.originalPrice;
   data['sale_price'] = entity.salePrice;
   data['bt_price'] = entity.btPrice;
+  data['goods_rate'] = entity.goodsRate;
+  data['goods_coin'] = entity.goodsCoin;
+  data['is_coupon'] = entity.isCoupon;
+  data['is_new'] = entity.isNew;
+  data['sale_num'] = entity.saleNum;
+  data['try_coin'] = entity.tryCoin;
   return data;
 }

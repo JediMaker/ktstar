@@ -88,11 +88,11 @@ class KTKJGlobalConfig {
   ///
   static const String JPUSH_REGISTRATIONID = "b8b53a639c646141e54bf4df";
 
-  /// 渠道名称--华为
+  /// 渠道名称--华为（应用市场审核使用）
   static const String CHANEL_HUAWEI = "huawei";
 
-  /// 渠道名称--小米
-  static const String CHANEL_XIAOMI = "xiaomi";
+  /// 渠道名称--微信公众号内下载
+  static const String CHANEL_WECHAT = "wechat";
 
   static SharedPreferences get prefs => _prefs; // 可选的主题列表
 
@@ -120,14 +120,17 @@ class KTKJGlobalConfig {
       ? prefs.getBool("isIosUnderReview")
       : false;
 
-  /// 渠道类型
+  /// 渠道类型 发版两个包
+  /// 0 应用市场审核
+  ///
+  /// 1 微信公众号内下载
   static String get chanelType => getChanelType(chanelType: 0);
 
   /// [chanelType] 渠道类型
   ///
-  /// 0 华为
+  /// 0 应用市场审核
   ///
-  /// 1 小米
+  /// 1 微信公众号内下载
   ///
   /// 其他 默认-1
   ///
@@ -136,7 +139,7 @@ class KTKJGlobalConfig {
       case 0:
         return CHANEL_HUAWEI;
       case 1:
-        return CHANEL_XIAOMI;
+        return CHANEL_WECHAT;
     }
     return '';
   }

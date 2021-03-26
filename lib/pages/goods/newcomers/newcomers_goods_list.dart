@@ -282,9 +282,7 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
       profit = '预估分红金￥${(item.btPrice)}';
-
-      ///todo 获取分红体验金的值
-      extraCoin = "￥${(item.btPrice)}";
+      extraCoin = "￥${(item.tryCoin)}";
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
@@ -397,7 +395,6 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
                   coinDescFontSize: ScreenUtil().setSp(22),
                   coinFontSize: ScreenUtil().setSp(22),
                   height: ScreenUtil().setWidth(48),
-//                  todo 修改分红体验金
                   coin: extraCoin,
                 ),
                 Container(

@@ -4,12 +4,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
+import 'package:palette_generator/palette_generator.dart';
+import 'package:star/bus/my_event_bus.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/http_manage.dart';
@@ -17,11 +20,9 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
 import 'package:star/models/home_pdd_category_entity.dart';
-import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
-import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_home.dart';
 import 'package:star/pages/login/login.dart';
@@ -34,11 +35,8 @@ import 'package:star/pages/widget/dashed_rect.dart';
 import 'package:star/pages/widget/my_webview_plugin.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:palette_generator/palette_generator.dart';
-import 'package:star/bus/my_event_bus.dart';
 
 //  return Column(
 //  mainAxisSize: MainAxisSize.min,
@@ -216,7 +214,7 @@ class _HomeTabPageState extends State<KTKJHomeTabPage>
     'https://alipic.lanhuapp.com/xdd1719150-91de-4acc-a03f-d2383cb1b33f', //百货
     'https://alipic.lanhuapp.com/xded1f6a08-e9c3-4e61-a8fd-662807c190b2', //美妆
     'https://alipic.lanhuapp.com/xdfc53f58b-9934-42c6-9750-3335c149bceb', //母婴
-    'https://alipic.lanhuapp.com/xd487dbe14-b368-4d68-a5b6-868db055b792', //更多
+//    'https://alipic.lanhuapp.com/xd487dbe14-b368-4d68-a5b6-868db055b792', //更多
   ];
   var iconNameList = [
     '拼多多', //星选
@@ -228,7 +226,7 @@ class _HomeTabPageState extends State<KTKJHomeTabPage>
     '果品生鲜', //果品生鲜
     '个护清洁', //个护清洁
     '母婴玩具', //母婴
-    '更多优惠', //更多
+//    '更多优惠', //更多
   ];
 
   var _tabs;
