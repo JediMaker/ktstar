@@ -1,4 +1,3 @@
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:star/pages/goods/checkout_counter.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/order/order_logistics_tracking.dart';
 import 'package:star/pages/order/return/return_option.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 
@@ -73,7 +73,12 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
             goodsList = entityResult.data.goodsList;
             totalPrice = entityResult.data.totalPrice;
             payPrice = entityResult.data.payPrice;
-            deductPrice = entityResult.data.deductPrice;
+            try {
+              if (double.parse(entityResult.data.deductPrice) != 0) {
+                deductPrice = entityResult.data.deductPrice;
+              }
+            } catch (e) {}
+
             coin = entityResult.data.orderBonus;
             orderNum = entityResult.data.orderno;
             payment = entityResult.data.payment;
@@ -92,6 +97,10 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
             sum = goodsList.length;
 
             switch (orderStatus) {
+              case "-1":
+                orderStatusText =
+                    "已取消"; //chinaUnicom china_mobile china_telecom
+                break;
               case "1":
                 orderStatusText =
                     "待付款"; //chinaUnicom china_mobile china_telecom
@@ -201,7 +210,7 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Visibility(
-                          visible: orderStatus != '1',
+                          visible: orderStatus != '1' && orderStatus != '-1',
                           child: GestureDetector(
                             onTap: () {
                               KTKJNavigatorUtils.navigatorRouter(
@@ -847,6 +856,7 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
                     color: Colors.white,
                     padding: EdgeInsets.symmetric(
                       horizontal: 16,
+                      vertical: ScreenUtil().setHeight(5),
                     ),
                     alignment: Alignment.centerLeft,
                     child: Row(
@@ -904,66 +914,69 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
                       ],
                     ),
                   ),
-                  Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: ScreenUtil().setHeight(30),
-                    ),
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text.rich(TextSpan(
-                              text: '红包抵扣：',
-                              style:
-                                  TextStyle(fontSize: ScreenUtil().setSp(32)),
-                              children: [
-                                TextSpan(
-                                  text: '-￥$deductPrice',
-                                  style: TextStyle(
-                                    color: Color(0xFFF93736),
+                  Visibility(
+                    visible: !KTKJCommonUtils.isEmpty(deductPrice),
+                    child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: ScreenUtil().setHeight(20),
+                      ),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text.rich(TextSpan(
+                                text: '红包抵扣：',
+                                style:
+                                    TextStyle(fontSize: ScreenUtil().setSp(32)),
+                                children: [
+                                  TextSpan(
+                                    text: '-￥$deductPrice',
+                                    style: TextStyle(
+                                      color: Color(0xFFF93736),
+                                    ),
                                   ),
+                                ])),
+                          ),
+                          Visibility(
+                            visible: !KTKJGlobalConfig.isRelease, //todo 去除展示控制
+                            child: GestureDetector(
+                              onTap: () async {
+                                KTKJNavigatorUtils.navigatorRouter(
+                                    context,
+                                    KTKJReturnGoodsOptionPage(
+                                      product: product,
+                                    ));
+                              },
+                              child: Container(
+                                width: ScreenUtil().setWidth(235),
+                                height: ScreenUtil().setHeight(77),
+                                margin: EdgeInsets.only(
+                                  right: ScreenUtil().setWidth(16),
                                 ),
-                              ])),
-                        ),
-                        Visibility(
-                          visible: !KTKJGlobalConfig.isRelease, //todo 去除展示控制
-                          child: GestureDetector(
-                            onTap: () async {
-                              KTKJNavigatorUtils.navigatorRouter(
-                                  context,
-                                  KTKJReturnGoodsOptionPage(
-                                    product: product,
-                                  ));
-                            },
-                            child: Container(
-                              width: ScreenUtil().setWidth(235),
-                              height: ScreenUtil().setHeight(77),
-                              margin: EdgeInsets.only(
-                                right: ScreenUtil().setWidth(16),
-                              ),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          ScreenUtil().setWidth(39))),
-                                  border: Border.all(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            ScreenUtil().setWidth(39))),
+                                    border: Border.all(
 //                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
-                                      color: Color(0xff999999),
-                                      width: 0.5)),
-                              child: Text(
-                                //状态：
-                                "退换",
-                                style: TextStyle(
-                                  color: Color(0xff666666),
-                                  fontSize: ScreenUtil().setSp(42),
+                                        color: Color(0xff999999),
+                                        width: 0.5)),
+                                child: Text(
+                                  //状态：
+                                  "退换",
+                                  style: TextStyle(
+                                    color: Color(0xff666666),
+                                    fontSize: ScreenUtil().setSp(42),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Visibility(
@@ -972,6 +985,7 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
                       color: Colors.white,
                       padding: EdgeInsets.symmetric(
                         horizontal: 16,
+                        vertical: ScreenUtil().setHeight(5),
                       ),
                       alignment: Alignment.centerLeft,
                       child: Row(

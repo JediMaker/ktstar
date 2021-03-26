@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:star/generated/json/address_info_entity_helper.dart';
 import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
@@ -36,7 +35,6 @@ import 'package:star/generated/json/region_data_entity_helper.dart';
 import 'package:star/generated/json/result_bean_entity_helper.dart';
 import 'package:star/generated/json/search_goods_list_entity_helper.dart';
 import 'package:star/generated/json/search_pdd_goods_list_entity_helper.dart';
-import 'package:star/generated/json/shareholder_income_list_entity_helper.dart';
 import 'package:star/generated/json/shop_agreement_uri_entity_helper.dart';
 import 'package:star/generated/json/shop_backstage_info_entity_helper.dart';
 import 'package:star/generated/json/shop_detail_entity_helper.dart';
@@ -63,6 +61,7 @@ import 'package:star/http/interceptors/header_interceptor.dart';
 import 'package:star/http/interceptors/log_interceptor.dart';
 import 'package:star/http/interceptors/token_interceptor.dart';
 import 'package:star/models/address_info_entity.dart';
+import 'package:star/models/address_list_entity.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
 import 'package:star/models/category_bean_entity.dart';
 import 'package:star/models/fans_list_entity.dart';
@@ -73,6 +72,7 @@ import 'package:star/models/goods_queue_persional_entity.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/income_list_entity.dart';
+import 'package:star/models/login_entity.dart';
 import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
@@ -82,13 +82,14 @@ import 'package:star/models/pay_coupon_entity.dart';
 import 'package:star/models/pdd_goods_info_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
 import 'package:star/models/pdd_home_entity.dart';
+import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/models/poster_entity.dart';
 import 'package:star/models/qrcode_result_remote_entity.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/region_data_entity.dart';
+import 'package:star/models/result_bean_entity.dart';
 import 'package:star/models/search_goods_list_entity.dart';
 import 'package:star/models/search_pdd_goods_list_entity.dart';
-import 'package:star/models/shareholder_income_list_entity.dart';
 import 'package:star/models/shop_agreement_uri_entity.dart';
 import 'package:star/models/shop_backstage_info_entity.dart';
 import 'package:star/models/shop_detail_entity.dart';
@@ -103,19 +104,16 @@ import 'package:star/models/task_record_list_entity.dart';
 import 'package:star/models/task_share_entity.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/models/user_info_entity.dart';
+import 'package:star/models/version_info_entity.dart';
+import 'package:star/models/vip_price_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/models/withdrawal_info_entity.dart';
+import 'package:star/models/withdrawal_user_info_entity.dart';
+import 'package:star/pages/goods/newcomers/hot_goods_list.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/utils.dart';
+
 import 'interceptors/response_interceptor.dart';
-import 'package:star/models/result_bean_entity.dart';
-import 'package:star/models/login_entity.dart';
-import 'package:star/models/vip_price_entity.dart';
-import 'package:star/models/version_info_entity.dart';
-import 'package:star/models/phone_charge_list_entity.dart';
-import 'package:star/models/address_list_entity.dart';
-import 'package:star/models/withdrawal_user_info_entity.dart';
-import 'package:http_parser/http_parser.dart';
 
 void getHttp() async {
   try {
@@ -160,7 +158,7 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (KTKJGlobalConfig.isRelease) {
+    if (!KTKJGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
@@ -2067,19 +2065,39 @@ class HttpManage {
       page,
       pageSize,
       firstId,
+      sortType,
       bool isNewcomer = false}) async {
     Map paramsMap = Map<String, dynamic>();
 //    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
     paramsMap['cid'] = "$cId";
     paramsMap['one_cid'] = "$firstId"; //一级分类
     paramsMap['type'] = "$type";
+    switch (sortType) {
+      case SortType.Comprehensive:
+//        paramsMap['orderby'] = "$type";
+        break;
+      case SortType.PriceAscending:
+        paramsMap['orderby'] = "price_up";
+        break;
+      case SortType.PriceDescending:
+        paramsMap['orderby'] = "price_down";
+        break;
+      case SortType.CoinAscending:
+        paramsMap['orderby'] = "coin_up";
+        break;
+      case SortType.CoinDescending:
+        paramsMap['orderby'] = "coin_down";
+        break;
+      default:
+        break;
+    }
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.GOODS_LIST,
-      data: paramsMap,
+      data: formData,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ResultBeanEntity();

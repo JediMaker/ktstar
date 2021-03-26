@@ -37,7 +37,12 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
 
   _initData() async {
     var result = await HttpManage.getGoodsList(
-        type: "hot", page: page, pageSize: 20, firstId: '');
+      type: "hot",
+      page: page,
+      pageSize: 20,
+      firstId: '',
+      sortType: sortType,
+    );
     if (result.status) {
       HomeGoodsListEntity entity = HomeGoodsListEntity();
       homeGoodsListEntityFromJson(entity, result.data);
@@ -208,6 +213,9 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
     );
   }
 
+  var textSelColor = Color(0xffC02B25);
+  var textNomalColor = Color(0xff222222);
+
   Widget buildCenter() {
     return SliverToBoxAdapter(
       child: Center(
@@ -250,7 +258,10 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                             onTap: () {
                               sortType = SortType.Comprehensive;
                               if (mounted) {
-                                setState(() {});
+                                setState(() {
+                                  page = 1;
+                                  _initData();
+                                });
                               }
                             },
                             child: Container(
@@ -259,6 +270,9 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                                   "综合",
                                   style: TextStyle(
                                     fontSize: ScreenUtil().setSp(42),
+                                    color: sortType == SortType.Comprehensive
+                                        ? textSelColor
+                                        : textNomalColor,
                                   ),
                                 )),
                           ),
@@ -275,7 +289,10 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                                 sortType = SortType.CoinAscending;
                               }
                               if (mounted) {
-                                setState(() {});
+                                setState(() {
+                                  page = 1;
+                                  _initData();
+                                });
                               }
                             },
                             child: Row(
@@ -288,6 +305,12 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                                       "分红金",
                                       style: TextStyle(
                                         fontSize: ScreenUtil().setSp(42),
+                                        color: sortType ==
+                                                    SortType.CoinAscending ||
+                                                sortType ==
+                                                    SortType.CoinDescending
+                                            ? textSelColor
+                                            : textNomalColor,
                                       ),
                                     )),
                                 Container(
@@ -341,7 +364,10 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                                 sortType = SortType.PriceAscending;
                               }
                               if (mounted) {
-                                setState(() {});
+                                setState(() {
+                                  page = 1;
+                                  _initData();
+                                });
                               }
                             },
                             child: Row(
@@ -354,6 +380,12 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                                       "价格",
                                       style: TextStyle(
                                         fontSize: ScreenUtil().setSp(42),
+                                        color: sortType ==
+                                                    SortType.PriceAscending ||
+                                                sortType ==
+                                                    SortType.PriceDescending
+                                            ? textSelColor
+                                            : textNomalColor,
                                       ),
                                     )),
                                 Container(
@@ -394,16 +426,6 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                               ],
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "销量",
-                                style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(42),
-                                ),
-                              )),
                         ),
                       ],
                     ),
