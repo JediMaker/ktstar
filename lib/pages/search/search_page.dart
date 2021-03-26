@@ -783,29 +783,36 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
       print(" goodsList.length=${goodsList.length}");
     }
     return SliverToBoxAdapter(
-      child: Visibility(
-        visible: _showSearchList && _selectedTabIndex == 0,
-        child: Center(
-          child: Container(
-            width: double.maxFinite,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Container(
+        color: Color(0xfff5f5f5),
+        child: Visibility(
+          visible: _showSearchList && _selectedTabIndex == 0,
+          child: Center(
+            child: Container(
+              width: double.maxFinite,
+              constraints: BoxConstraints(
+                minHeight: ScreenUtil().setWidth(2100),
+              ),
+              margin: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(30), vertical: 10),
 //          height: double.infinity,
-            child: new StaggeredGridView.countBuilder(
-              crossAxisCount: 2,
-              itemCount:
-                  KTKJCommonUtils.isEmpty(goodsList) ? 0 : goodsList.length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                HomeGoodsListGoodsList item;
-                try {
-                  item = goodsList[index];
-                } catch (e) {}
-                return productItem(item: item);
-              },
-              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-              mainAxisSpacing: ScreenUtil().setWidth(20),
-              crossAxisSpacing: ScreenUtil().setWidth(20),
+              child: new StaggeredGridView.countBuilder(
+                crossAxisCount: 2,
+                itemCount:
+                    KTKJCommonUtils.isEmpty(goodsList) ? 0 : goodsList.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  HomeGoodsListGoodsList item;
+                  try {
+                    item = goodsList[index];
+                  } catch (e) {}
+                  return productItem(item: item);
+                },
+                staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                mainAxisSpacing: ScreenUtil().setWidth(30),
+                crossAxisSpacing: ScreenUtil().setWidth(30),
+              ),
             ),
           ),
         ),
@@ -853,7 +860,7 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
           ),*/
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
           ),
           child: Padding(
 //                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
@@ -868,11 +875,15 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
 //                        fit: StackFit.expand,
               children: <Widget>[
                 Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.circular(ScreenUtil().setWidth(30)),
+                  ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(ScreenUtil().setWidth(10)),
-                      topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                      topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                      topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
                     child: KTKJMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
@@ -1004,40 +1015,47 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
   ///拼多多商品列表
   Widget buildSearchPddProductList() {
     return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          Visibility(
-            visible: !KTKJCommonUtils.isEmpty(pddGoodsList) &&
-                _showSearchList &&
-                _selectedTabIndex == 1,
-            child: Center(
-              child: Container(
+      child: Container(
+        color: Color(0xfff5f5f5),
+        child: Column(
+          children: [
+            Visibility(
+              visible: !KTKJCommonUtils.isEmpty(pddGoodsList) &&
+                  _showSearchList &&
+                  _selectedTabIndex == 1,
+              child: Center(
+                child: Container(
 //            color: Color(0xffefefef),
-                width: double.maxFinite,
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  width: double.maxFinite,
+                  constraints: BoxConstraints(
+                    minHeight: ScreenUtil().setWidth(2100),
+                  ),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(30), vertical: 10),
 //          height: double.infinity,
-                child: new StaggeredGridView.countBuilder(
-                  crossAxisCount: 2,
-                  itemCount: KTKJCommonUtils.isEmpty(pddGoodsList)
-                      ? 0
-                      : pddGoodsList.length,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    PddGoodsListDataList item;
-                    try {
-                      item = pddGoodsList[index];
-                    } catch (e) {}
-                    return productItem2(item: item);
-                  },
-                  staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                  mainAxisSpacing: ScreenUtil().setWidth(20),
-                  crossAxisSpacing: ScreenUtil().setWidth(20),
+                  child: new StaggeredGridView.countBuilder(
+                    crossAxisCount: 2,
+                    itemCount: KTKJCommonUtils.isEmpty(pddGoodsList)
+                        ? 0
+                        : pddGoodsList.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      PddGoodsListDataList item;
+                      try {
+                        item = pddGoodsList[index];
+                      } catch (e) {}
+                      return productItem2(item: item);
+                    },
+                    staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                    mainAxisSpacing: ScreenUtil().setWidth(30),
+                    crossAxisSpacing: ScreenUtil().setWidth(30),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -1108,7 +1126,7 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
           ),*/
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
           ),
           child: Padding(
 //                  padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
@@ -1125,11 +1143,15 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
                 Stack(
                   children: [
                     Container(
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.circular(ScreenUtil().setWidth(30)),
+                      ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(ScreenUtil().setWidth(10)),
-                          topLeft: Radius.circular(ScreenUtil().setWidth(10)),
+                          topRight: Radius.circular(ScreenUtil().setWidth(30)),
+                          topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                         ),
                         child: KTKJMyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
