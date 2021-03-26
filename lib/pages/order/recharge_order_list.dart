@@ -1,27 +1,22 @@
-import 'dart:io';
-
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/http_manage.dart';
-import 'package:star/models/message_list_entity.dart';
-import 'package:star/models/order_detail_entity.dart';
 import 'package:star/models/order_list_entity.dart';
-import 'package:star/models/phone_charge_list_entity.dart';
 import 'package:star/pages/goods/checkout_counter.dart';
 import 'package:star/pages/goods/free_queue_persional.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
 import 'package:star/pages/order/order_detail.dart';
+import 'package:star/pages/order/order_logistics_tracking.dart';
 import 'package:star/pages/recharge/recharge_list.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/PriceText.dart';
+import 'package:star/pages/widget/extra_coin_text.dart';
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:star/pages/order/order_logistics_tracking.dart';
 
 import '../../global_config.dart';
 
@@ -161,6 +156,7 @@ class _RechargeOrderListPageState
     String goodsId;
     String goodsSign;
     String coin;
+    String extraCoin;
     List<OrderListDataListGoodsList> goodsList =
         List<OrderListDataListGoodsList>();
     try {
@@ -177,6 +173,9 @@ class _RechargeOrderListPageState
       refundMsg = listItem.refundMsg;
       contactPhone = listItem.phone;
       coin = listItem.coin;
+
+      /// todo 获取分红体验金的值
+//      extraCoin = listItem.extraCoin;
       goodsList = listItem.goodsList;
       try {
         if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
@@ -362,6 +361,18 @@ class _RechargeOrderListPageState
                     break;
                 }
               },
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child: KeTaoFeaturedExtraCoinTextPage(
+                borderRadius: 15,
+                coinDescFontSize: ScreenUtil().setSp(32),
+                coinFontSize: ScreenUtil().setSp(32),
+                height: ScreenUtil().setWidth(62),
+                rightMargin: 0,
+//                  todo 修改分红体验金
+                coin: extraCoin,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

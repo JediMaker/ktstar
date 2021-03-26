@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/widget/PriceText.dart';
+import 'package:star/pages/widget/extra_coin_text.dart';
 import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/pages/widget/no_data.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -27,7 +28,8 @@ class KeTaoFeaturedNewcomersGoodsListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _NewcomersGoodsListPageState extends State<KeTaoFeaturedNewcomersGoodsListPage>
+class _NewcomersGoodsListPageState
+    extends State<KeTaoFeaturedNewcomersGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
@@ -190,8 +192,9 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedNewcomersGoodsList
           _initData();
         }
       },
-      emptyWidget:
-          goodsList == null || goodsList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+      emptyWidget: goodsList == null || goodsList.length == 0
+          ? KeTaoFeaturedNoDataPage()
+          : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -273,13 +276,17 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedNewcomersGoodsList
     String salePrice = '';
     double topMargin = 0;
     String profit = '分红金￥0';
+    String extraCoin;
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '分红金￥${(item.btPrice)}';
+      profit = '预估分红金￥${(item.btPrice)}';
+
+      ///todo 获取分红体验金的值
+      extraCoin = "￥${(item.btPrice)}";
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
@@ -333,17 +340,44 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedNewcomersGoodsList
                     child: KeTaoFeaturedMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
-                      height: ScreenUtil().setWidth(523),
-                      width: ScreenUtil().setWidth(523),
+//                      height: ScreenUtil().setWidth(523),
+//                      width: ScreenUtil().setWidth(523),
                       fit: BoxFit.fill,
                       image: "$goodsImg",
                     ),
                   ),
                 ),
-
 //                          SizedBox(
 //                            height: 10,
 //                          ),
+                Visibility(
+                  visible: !KeTaoFeaturedCommonUtils.isEmpty(item.btPrice),
+                  child: Container(
+                    height: ScreenUtil().setWidth(60),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 6,
+                    ),
+                    color: _priceColor,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Visibility(
+                            child: Container(
+                              child: Text(
+                                "$profit",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(28),
+                                  color: Color(0xffffffff),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.only(
                     left: ScreenUtil().setWidth(20),
@@ -360,34 +394,13 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedNewcomersGoodsList
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(8),
-                    right: ScreenUtil().setWidth(8),
-                    top: ScreenUtil().setWidth(8),
-                    bottom: ScreenUtil().setWidth(8),
-                  ),
-                  margin: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(20),
-                    right: ScreenUtil().setWidth(20),
-                    top: ScreenUtil().setWidth(8),
-                    bottom: ScreenUtil().setWidth(8),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFDDDC),
-                    borderRadius: BorderRadius.circular(
-                      ScreenUtil().setWidth(10),
-                    ),
-                  ),
-                  child: Text(
-                    "$profit",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(28),
-                      color: Color(0xffF93736),
-                    ),
-                  ),
+                KeTaoFeaturedExtraCoinTextPage(
+                  borderRadius: 8,
+                  coinDescFontSize: ScreenUtil().setSp(22),
+                  coinFontSize: ScreenUtil().setSp(22),
+                  height: ScreenUtil().setWidth(48),
+//                  todo 修改分红体验金
+                  coin: extraCoin,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: topMargin),

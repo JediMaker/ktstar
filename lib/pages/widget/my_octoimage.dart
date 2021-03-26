@@ -186,27 +186,30 @@ class _MyOctoImageState extends State<KeTaoFeaturedMyOctoImage> {
 //    if (KeTaoFeaturedCommonUtils.isEmpty(widget.image)) {
 //      return null;
 //    }
-    return OctoImage(
+    return RepaintBoundary(
+      child: OctoImage(
 //      image: network.NetworkImage(widget.image),
-      image: CachedNetworkImageProvider(widget.image),
-      width: widget.width,
-      height: widget.height,
-      imageBuilder: widget.imageBuilder,
-      placeholderBuilder:
-          widget.placeholderBuilder != null ? widget.placeholderBuilder : null,
-      //
-      progressIndicatorBuilder: widget.progressIndicatorBuilder,
-      fadeInCurve: widget.fadeInCurve,
-      fadeInDuration: widget.fadeInDuration,
-      placeholderFadeInDuration: widget.placeholderFadeInDuration,
-      alignment: widget.alignment,
-      errorBuilder: widget.errorBuilder != null ? widget.errorBuilder : null,
-      fit: widget.fit,
-      repeat: widget.repeat,
-      color: widget.color,
-      colorBlendMode: widget.colorBlendMode,
-      matchTextDirection: widget.matchTextDirection,
-      filterQuality: widget.filterQuality,
+        image: CachedNetworkImageProvider(widget.image),
+        width: widget.width,
+        height: widget.height,
+        imageBuilder: widget.imageBuilder,
+        placeholderBuilder: widget.placeholderBuilder != null
+            ? widget.placeholderBuilder
+            : null,
+        //
+        progressIndicatorBuilder: widget.progressIndicatorBuilder,
+        fadeInCurve: widget.fadeInCurve,
+        fadeInDuration: widget.fadeInDuration,
+        placeholderFadeInDuration: widget.placeholderFadeInDuration,
+        alignment: widget.alignment,
+        errorBuilder: widget.errorBuilder != null ? widget.errorBuilder : null,
+        fit: widget.fit,
+        repeat: widget.repeat,
+        color: widget.color,
+        colorBlendMode: widget.colorBlendMode,
+        matchTextDirection: widget.matchTextDirection,
+        filterQuality: widget.filterQuality,
+      ),
     );
   }
 }
