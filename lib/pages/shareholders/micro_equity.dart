@@ -1,14 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:star/http/api.dart';
 import 'package:star/http/http_manage.dart';
 import 'package:star/models/micro_shareholder_item_entity.dart';
 import 'package:star/models/user_info_entity.dart';
@@ -16,22 +15,24 @@ import 'package:star/models/vip_price_info_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/task/pay_result.dart';
 import 'package:star/pages/task/task_index.dart';
-import 'package:star/pages/widget/my_webview.dart';
-import 'package:star/pages/widget/select_choice.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:star/pages/widget/my_octoimage.dart';
 import 'package:star/utils/common_utils.dart';
 import 'package:star/utils/navigator_utils.dart';
 import 'package:star/utils/utils.dart';
+
 import '../../global_config.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+///微股东权益
 class KTKJMicroShareHolderEquityPage extends StatefulWidget {
   KTKJMicroShareHolderEquityPage(
       {Key key, this.shareholderType = 1, this.showBackBtnIcon = true})
       : super(key: key);
   final String title = "微股东权益";
+
+  ///是否显示 appbar
   bool showBackBtnIcon;
 
   ///股东类型
@@ -92,6 +93,9 @@ class _MicroShareHolderEquityPageState
   ///万份分红金30日收益
   var _monthProfit = '0';
   UserInfoData userInfoData;
+
+  ///是否展示开通股东卡片
+  var showCard = true;
 
   _initWeChatResponseHandler() {
     KTKJGlobalConfig.payType = 3;
@@ -201,6 +205,9 @@ class _MicroShareHolderEquityPageState
       });
     }
     _initData();
+    if (Platform.isIOS && KTKJGlobalConfig.iosCheck) {
+      showCard = false;
+    }
 
     super.initState();
   }
@@ -254,13 +261,16 @@ class _MicroShareHolderEquityPageState
             child: Column(
               children: <Widget>[
                 buildBenefitCenter(),
-                Container(
-                  color: Color(0xff25272E),
-                  child: Column(
-                    children: <Widget>[
-                      buildSwiperCard(),
+                Visibility(
+                  visible: showCard,
+                  child: Container(
+                    color: Color(0xff25272E),
+                    child: Column(
+                      children: <Widget>[
+                        buildSwiperCard(),
 //                      benefitsRow(),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 buildProfitShow(),
