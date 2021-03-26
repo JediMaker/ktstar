@@ -123,6 +123,8 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
 
   var _shareHolderBtnText = '升级股东';
 
+  var _showActionCenter = true;
+
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
     if (result.status) {
@@ -1972,7 +1974,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               context, KTKJOrderListPage());*/
                         },
                         child: Visibility(
-                          visible: !KTKJGlobalConfig.isHuaweiUnderReview,
+                          visible: _showActionCenter,
                           child: new Container(
                             child: new Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -2615,9 +2617,15 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
     var showBtn = true;
     if (Platform.isIOS && KTKJGlobalConfig.iosCheck) {
       showBtn = false;
+      _showActionCenter = false;
       sTxt = "股东权益";
     } else {
       sTxt = "股东申请";
+    }
+    if (Platform.isAndroid) {
+      if (KTKJGlobalConfig.isHuaweiUnderReview) {
+        _showActionCenter = false;
+      }
     }
     return Stack(
       children: [
