@@ -29,6 +29,7 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/goods/goods_detail.dart';
 import 'package:star/pages/goods/goods_list.dart';
 import 'package:star/pages/goods/home_goods_list.dart';
+import 'package:star/pages/goods/newcomers/hot_goods_list.dart';
 import 'package:star/pages/goods/newcomers/newcomers_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_goods_list.dart';
 import 'package:star/pages/goods/pdd/pdd_home.dart';
@@ -1416,7 +1417,8 @@ class _TaskListPageState extends State<KeTaoFeaturedTaskListPage>
                           GestureDetector(
                             onTap: () {
                               KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                  context, KeTaoFeaturedNewcomersGoodsListPage());
+                                  context,
+                                  KeTaoFeaturedNewcomersGoodsListPage());
                             },
                             child: Container(
                               width: ScreenUtil().setWidth(327),
@@ -1627,9 +1629,9 @@ class _TaskListPageState extends State<KeTaoFeaturedTaskListPage>
                   onTap: () {
                     KeTaoFeaturedNavigatorUtils.navigatorRouter(
                         context,
-                        KeTaoFeaturedGoodsListPage(
-                          type: "hot",
-                        ));
+                        KeTaoFeaturedHotGoodsListPage(
+//                          type: "hot",
+                            ));
                   },
                   child: Container(
                     child: Row(
@@ -2332,7 +2334,8 @@ class _TaskListPageState extends State<KeTaoFeaturedTaskListPage>
           /// 判断功能是否需要登录
           if (needLogin) {
             KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
-            KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                context, KeTaoFeaturedLoginPage());
             return;
           }
 
