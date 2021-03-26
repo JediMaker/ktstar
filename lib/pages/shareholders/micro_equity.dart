@@ -205,10 +205,6 @@ class _MicroShareHolderEquityPageState
       });
     }
     _initData();
-    if (Platform.isIOS && KTKJGlobalConfig.iosCheck) {
-      showCard = false;
-    }
-
     super.initState();
   }
 
@@ -219,6 +215,9 @@ class _MicroShareHolderEquityPageState
 
   @override
   Widget build(BuildContext context) {
+    if (Platform.isIOS && KTKJGlobalConfig.iosCheck) {
+      showCard = false;
+    }
     return Scaffold(
         appBar: GradientAppBar(
           title: Text(
@@ -924,6 +923,13 @@ class _MicroShareHolderEquityPageState
                   : _currentIndex == 1
                       ? "缴纳年费$vipPrice元，平台赠送$bonusCoin元分红金用于分红"
                       : "缴纳年费$advancedPrice元，平台赠送$bonusCoin元分红金用于分红";
+              if (!showCard) {
+                profitDesc = _currentIndex == 0
+                    ? '消费满$novitiatePrice元，平台赠送至少$bonusCoin元分红金用于分红'
+                    : _currentIndex == 1
+                        ? "平台赠送$bonusCoin元分红金用于分红"
+                        : "平台赠送$bonusCoin元分红金用于分红";
+              }
               iconDesc = '￥$bonusCoin';
               break;
           }
