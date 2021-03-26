@@ -41,6 +41,8 @@ class OrderListDataList with JsonConvert<OrderListDataList> {
   String refundStatus;
   @JSONField(name: "refund_msg")
   String refundMsg;
+  @JSONField(name: "try_coin")
+  String tryCoin;
   String mobile;
   String phone;
   String coin;

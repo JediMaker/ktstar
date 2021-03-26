@@ -23,6 +23,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+
+///订单列表
 class KTKJRechargeOrderListPage extends StatefulWidget {
   KTKJRechargeOrderListPage({Key key, this.orderSource}) : super(key: key);
   final String title = "我的订单";
@@ -171,9 +173,15 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
       refundMsg = listItem.refundMsg;
       contactPhone = listItem.phone;
       coin = listItem.coin;
+      if (KTKJCommonUtils.isEmpty(listItem.tryCoin)) {
+      } else {
+        try {
+          extraCoin = double.parse(listItem.tryCoin) != 0
+              ? "￥${listItem.tryCoin}"
+              : null;
+        } catch (e) {}
+      }
 
-      /// todo 获取分红体验金的值
-//      extraCoin = listItem.extraCoin;
       goodsList = listItem.goodsList;
       try {
         if (!KTKJCommonUtils.isEmpty(goodsList)) {
@@ -368,7 +376,6 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                 coinFontSize: ScreenUtil().setSp(32),
                 height: ScreenUtil().setWidth(62),
                 rightMargin: 0,
-//                  todo 修改分红体验金
                 coin: extraCoin,
               ),
             ),
