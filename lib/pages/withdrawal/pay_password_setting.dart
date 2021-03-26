@@ -272,9 +272,15 @@ class _PayPasswordSettingPageState extends State<KTKJPayPasswordSettingPage> {
   }
 
   invokeSetPayPassword(BuildContext context) async {
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {
+    }
     var result = await HttpManage.setPayPassword(_currentPassword);
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {
+    }
     if (result.status) {
       Navigator.of(context).pop();
       if (widget.isModifyType) {
@@ -291,9 +297,15 @@ class _PayPasswordSettingPageState extends State<KTKJPayPasswordSettingPage> {
   }
 
   invokeCheckPayPassword(BuildContext context) async {
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {
+    }
     var result = await HttpManage.checkPayPassword(_currentPassword);
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {
+    }
     if (result.status) {
       KTKJNavigatorUtils.navigatorRouterReplaceMent(
           context,

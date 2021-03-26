@@ -46,7 +46,10 @@ class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
 
   _initData() async {
     try {
-      EasyLoading.show();
+      try {
+        EasyLoading.show();
+      } catch (e) {
+      }
       var result = await HttpManage.getGoodsQueuePersonalList();
       if (mounted) {
         if (result.status) {
@@ -493,9 +496,15 @@ class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
                       return;
                     }
                     try {
-                      EasyLoading.show();
+                      try {
+                        EasyLoading.show();
+                      } catch (e) {
+                      }
                       var result = await HttpManage.getGoodsQueueList(goodsId);
-                      EasyLoading.dismiss();
+                      try {
+                        EasyLoading.dismiss();
+                      } catch (e) {
+                      }
                       if (mounted) {
                         if (result.status) {
                           setState(() {

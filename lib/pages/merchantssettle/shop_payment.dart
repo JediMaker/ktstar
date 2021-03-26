@@ -293,13 +293,17 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
                             onCompleted: (v) async {
                               Navigator.pop(context);
                               try {
-                                EasyLoading.show(status: "正在支付");
+                                try {
+                                  EasyLoading.show(status: "正在支付");
+                                } catch (e) {}
                                 var result =
                                     await HttpManage.getShopPayBalanceInfo(
                                         payMoney: _payAmount,
                                         shopCode: _shopCode,
                                         payPassword: v);
-                                EasyLoading.dismiss();
+                                try {
+                                  EasyLoading.dismiss();
+                                } catch (e) {}
                                 if (result.status) {
                                   _payInfo = result.data.payInfo;
                                   _payNo = result.data.payNo;
@@ -806,10 +810,14 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
 
   invokeWxPay() async {
     try {
-      EasyLoading.show();
+      try {
+        EasyLoading.show();
+      } catch (e) {}
       var result = await HttpManage.getShopPayWeChatPayInfo(
           payMoney: _payAmount, shopCode: _shopCode);
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
       if (result.status) {
         _payNo = result.data.payNo;
         /*if (result.data.finish) {
@@ -833,10 +841,14 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
 
   invokeAlipay() async {
     try {
-      EasyLoading.show();
+      try {
+        EasyLoading.show();
+      } catch (e) {}
       var result = await HttpManage.getShopPayAliPayInfo(
           payMoney: _payAmount, shopCode: _shopCode);
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
       if (result.status) {
         _payInfo = result.data.payInfo;
         _payNo = result.data.payNo;

@@ -240,12 +240,18 @@ class _ForgetPayPasswordPageState extends State<KTKJForgetPayPasswordPage> {
                               _passwordController.value.text.isEmpty) {
                             KTKJCommonUtils.showToast("请检查填写的信息是否完整！");
                           } else {
-                            EasyLoading.show();
+                            try {
+                              EasyLoading.show();
+                            } catch (e) {
+                            }
                             var result = await HttpManage.modifyPayPassword(
                                 widget.phoneNum,
                                 _checkCodeController.value.text,
                                 _passwordController.value.text);
-                            EasyLoading.dismiss();
+                            try {
+                              EasyLoading.dismiss();
+                            } catch (e) {
+                            }
                             if (result.status) {
                               KTKJCommonUtils.showToast("设置支付密码成功！");
                               Navigator.of(context).pop();

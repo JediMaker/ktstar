@@ -65,8 +65,13 @@ class _TaskOtherSubmissionPageState extends State<KTKJTaskOtherSubmissionPage> {
         source: source,
       );
       _imageFile = pickedFile;
-      EasyLoading.show(status: "图片上传中...");
+      try {
+        EasyLoading.show(status: "图片上传中...");
+      } catch (e) {}
       var entity = await HttpManage.uploadImage(File(_imageFile.path));
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
       if (entity.status) {
         var imageId = entity.data["id"].toString();
 
@@ -93,7 +98,9 @@ class _TaskOtherSubmissionPageState extends State<KTKJTaskOtherSubmissionPage> {
           images = images;
         });
       }
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
     } catch (e) {
       setState(() {
         _pickImageError = e;

@@ -2815,6 +2815,14 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                     KTKJNavigatorUtils.navigatorRouter(
                         context, KTKJGoodsListPage());
                     break;
+                  case "/goods/new-list":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJGoodsListPage());
+                    break;
+                  case "/store/list":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJGoodsListPage());
+                    break;
                   case "upgrade_diamond":
                     KTKJNavigatorUtils.navigatorRouter(
                         context,

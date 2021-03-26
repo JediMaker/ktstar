@@ -73,7 +73,9 @@ class _FreeQueuePageState extends State<KTKJFreeQueuePage> {
       return;
     }
     try {
-      EasyLoading.show();
+      try {
+        EasyLoading.show();
+      } catch (e) {}
       var result = await HttpManage.getGoodsQueueList(widget.goodsId);
       if (mounted) {
         if (result.status) {

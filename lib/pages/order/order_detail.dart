@@ -55,9 +55,13 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
   List<OrderDetailDataGoodsList> goodsList;
 
   Future _initData({bool onlyChangeAddress = false}) async {
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {}
     var entityResult = await HttpManage.orderDetail(widget.orderId);
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
 /*
     OrderCheckoutEntity entityResult =
         await HttpManage.orderCheckout(widget.cartIdList);

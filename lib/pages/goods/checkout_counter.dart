@@ -152,9 +152,13 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
   }
 
   Future _initData({bool onlyChangeAddress = false}) async {
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {}
     var entityResult = await HttpManage.orderDetail(widget.orderId);
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
     if (mounted) {
       setState(() {
         _payPrice = entityResult.data.payPrice;
@@ -299,11 +303,17 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
                             onCompleted: (v) async {
                               Navigator.pop(context);
                               try {
-                                EasyLoading.show(status: "正在支付");
+                                try {
+                                  EasyLoading.show(status: "正在支付");
+                                } catch (e) {
+                                }
                                 var result =
                                     await HttpManage.getGoodsPayBalanceInfo(
                                         orderId: orderId, payPassword: v);
-                                EasyLoading.dismiss();
+                                try {
+                                  EasyLoading.dismiss();
+                                } catch (e) {
+                                }
                                 if (result.status) {
                                   _payInfo = result.data.payInfo;
                                   _payNo = result.data.payNo;
@@ -626,10 +636,14 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
 
   invokeWxPay() async {
     try {
-      EasyLoading.show();
+      try {
+        EasyLoading.show();
+      } catch (e) {}
       var result =
           await HttpManage.getGoodsPayWeChatPayInfo(orderId: widget.orderId);
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
       if (result.status) {
         _payNo = result.data.payNo;
         if (result.data.finish) {
@@ -653,10 +667,14 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
 
   invokeAlipay() async {
     try {
-      EasyLoading.show();
+      try {
+        EasyLoading.show();
+      } catch (e) {}
       var result =
           await HttpManage.getGoodsPayAliPayInfo(orderId: widget.orderId);
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
       if (result.status) {
         _payInfo = result.data.payInfo;
         _payNo = result.data.payNo;

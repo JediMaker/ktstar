@@ -957,7 +957,9 @@ class _ApplySettlePageState extends State<KTKJApplySettlePage> {
             aspectRatioLockEnabled: true,
           ));
 
-      EasyLoading.show(status: "图片上传中...");
+      try {
+        EasyLoading.show(status: "图片上传中...");
+      } catch (e) {}
       var entity = await HttpManage.uploadImage(
           croppedFile); //File(_imageFile.path) croppedFile
       if (entity.status) {
@@ -986,12 +988,16 @@ class _ApplySettlePageState extends State<KTKJApplySettlePage> {
           images = images;
         });
       }
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
     } catch (e) {
       setState(() {
         _pickImageError = e;
       });
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {}
     }
   }
 
@@ -1162,7 +1168,10 @@ class _ApplySettlePageState extends State<KTKJApplySettlePage> {
             aspectRatioLockDimensionSwapEnabled: true,
             aspectRatioLockEnabled: true,
           ));
-      EasyLoading.show(status: "图片上传中...");
+      try {
+        EasyLoading.show(status: "图片上传中...");
+      } catch (e) {
+      }
       var entity =
           await HttpManage.uploadImage(croppedFile); //File(_imageFile2.path)
       if (entity.status) {
@@ -1192,7 +1201,10 @@ class _ApplySettlePageState extends State<KTKJApplySettlePage> {
           images2 = images2;
         });
       }
-      EasyLoading.dismiss();
+      try {
+        EasyLoading.dismiss();
+      } catch (e) {
+      }
     } catch (e) {
       setState(() {
         _pickImageError2 = e;

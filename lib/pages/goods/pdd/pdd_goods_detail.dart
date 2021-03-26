@@ -1610,10 +1610,14 @@ class _DetailWindowState extends State<DetailWindow>
     /* try {
                 EasyLoading.dismiss();
               } catch (e) {}*/
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {}
     var result =
         await HttpManage.createOrder(goodsId, goodsNum, specId: specId);
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
     if (result.status) {
       try {
         orderId = result.data['order_id'].toString();

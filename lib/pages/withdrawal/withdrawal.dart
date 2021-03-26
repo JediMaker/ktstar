@@ -449,10 +449,16 @@ class _WithdrawalPageState extends State<KTKJWithdrawalPage> {
                   return;
                 }
               } catch (e) {}
-              EasyLoading.show();
+              try {
+                EasyLoading.show();
+              } catch (e) {
+              }
               var result = await HttpManage.withdrawalApplication(
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
-              EasyLoading.dismiss();
+              try {
+                EasyLoading.dismiss();
+              } catch (e) {
+              }
               if (result.status) {
                 KTKJCommonUtils.showToast("提现申请已提交");
 //                Navigator.of(context).pop();

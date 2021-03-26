@@ -46,9 +46,13 @@ class _OrderLogisticsTrackingPageState
       List<LogisticsInfoDataExpressList>();
 
   Future _initData({bool onlyChangeAddress = false}) async {
-    EasyLoading.show();
+    try {
+      EasyLoading.show();
+    } catch (e) {}
     var result = await HttpManage.getOrderLogisticsInfo(widget.orderId);
-    EasyLoading.dismiss();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
     if (result.status) {
       try {
         if (mounted) {
