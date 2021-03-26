@@ -4,12 +4,12 @@ import 'dart:math' as math;
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedDashedRect extends StatelessWidget {
+class KTKJDashedRect extends StatelessWidget {
   final Color color;
   final double strokeWidth;
   final double gap;
 
-  KeTaoFeaturedDashedRect(
+  KTKJDashedRect(
       {this.color = Colors.black, this.strokeWidth = 1.0, this.gap = 5.0});
 
   @override
@@ -19,7 +19,7 @@ class KeTaoFeaturedDashedRect extends StatelessWidget {
         padding: EdgeInsets.all(strokeWidth / 2),
         child: CustomPaint(
           painter:
-          DashRectPainter(color: color, strokeWidth: strokeWidth, gap: gap),
+              DashRectPainter(color: color, strokeWidth: strokeWidth, gap: gap),
         ),
       ),
     );

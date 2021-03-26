@@ -23,7 +23,7 @@ import 'package:qrscan/qrscan.dart' as scanner;
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成
 //
-  KeTaoFeaturedGlobalConfig.init().then((value) async => {runApp(MyApp())});
+  KTKJGlobalConfig.init().then((value) async => {runApp(MyApp())});
   /*if (Platform.isAndroid) {
     //设置状态栏颜色
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
@@ -47,18 +47,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '可淘星选',
-      navigatorKey: KeTaoFeaturedGlobalConfig.navigatorKey,
+      navigatorKey: KTKJGlobalConfig.navigatorKey,
       onGenerateRoute: MyRouters.generateRoute,
-      navigatorObservers: [KeTaoFeaturedAppAnalysis()],
+      navigatorObservers: [KTKJAppAnalysis()],
       theme: ThemeData(
-//        primarySwatch: KeTaoFeaturedCommonUtils.createMaterialColor(Colors.white),
+//        primarySwatch: KTKJCommonUtils.createMaterialColor(Colors.white),
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
         backgroundColor: Color(0xfff5f5f5),
       ),
-      home: KeTaoFeaturedTaskIndexPage(),
+      home: KTKJTaskIndexPage(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

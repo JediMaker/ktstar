@@ -17,11 +17,12 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedPayResultPage extends StatefulWidget {
+class KTKJPayResultPage extends StatefulWidget {
   String payNo;
   int type;
 
-  KeTaoFeaturedPayResultPage({Key key, this.payNo = "", this.type = 0, this.title = "购买成功"})
+  KTKJPayResultPage(
+      {Key key, this.payNo = "", this.type = 0, this.title = "购买成功"})
       : super(key: key);
   String title;
 
@@ -32,7 +33,7 @@ class KeTaoFeaturedPayResultPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
+class _PayResultPageState extends State<KTKJPayResultPage> {
   //
   String _money = '';
   String _condition = '';
@@ -80,7 +81,7 @@ class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
         ),
         brightness: Brightness.light,
         centerTitle: true,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: WillPopScope(
@@ -89,7 +90,7 @@ class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              KeTaoFeaturedCommonUtils.showToast("再按一次返回键退出应用");
+              KTKJCommonUtils.showToast("再按一次返回键退出应用");
               _lastQuitTime = DateTime.now();
               return false;
             } else {
@@ -148,8 +149,8 @@ class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                                context, KeTaoFeaturedTaskIndexPage());
+                            KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                                context, KTKJTaskIndexPage());
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -182,11 +183,11 @@ class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
                           child: GestureDetector(
                             onTap: () {
                               if (widget.type == 0) {
-                                KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                    context, KeTaoFeaturedRechargeListPage());
+                                KTKJNavigatorUtils.navigatorRouter(
+                                    context, KTKJRechargeListPage());
                               } else {
-                                KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                    context, KeTaoFeaturedOrderListPage());
+                                KTKJNavigatorUtils.navigatorRouter(
+                                    context, KTKJOrderListPage());
                               }
                             },
                             child: Container(
@@ -290,8 +291,8 @@ class _PayResultPageState extends State<KeTaoFeaturedPayResultPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                      context, KeTaoFeaturedRechargeListPage());
+                                  KTKJNavigatorUtils.navigatorRouter(
+                                      context, KTKJRechargeListPage());
                                 },
                                 child: Container(
                                   child: Container(

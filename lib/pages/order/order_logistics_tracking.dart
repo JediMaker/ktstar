@@ -12,8 +12,8 @@ import 'package:timeline_tile/timeline_tile.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedOrderLogisticsTrackingPage extends StatefulWidget {
-  KeTaoFeaturedOrderLogisticsTrackingPage({Key key, this.orderId}) : super(key: key);
+class KTKJOrderLogisticsTrackingPage extends StatefulWidget {
+  KTKJOrderLogisticsTrackingPage({Key key, this.orderId}) : super(key: key);
   final String title = "物流跟踪";
   var orderId;
 
@@ -26,7 +26,7 @@ class KeTaoFeaturedOrderLogisticsTrackingPage extends StatefulWidget {
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class _OrderLogisticsTrackingPageState
-    extends State<KeTaoFeaturedOrderLogisticsTrackingPage> {
+    extends State<KTKJOrderLogisticsTrackingPage> {
   ///运单号
   var _waybillNumber;
 
@@ -53,11 +53,11 @@ class _OrderLogisticsTrackingPageState
       try {
         if (mounted) {
           setState(() {
-            if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.expressInfo)) {
+            if (!KTKJCommonUtils.isEmpty(result.data.expressInfo)) {
               _waybillNumber = result.data.expressInfo.number;
-              if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.expressInfo.name)) {
+              if (!KTKJCommonUtils.isEmpty(result.data.expressInfo.name)) {
                 _carrier = result.data.expressInfo.name;
-                if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.expressInfo.tel)) {
+                if (!KTKJCommonUtils.isEmpty(result.data.expressInfo.tel)) {
                   _carrier += "(${result.data.expressInfo.tel})";
                 }
               }
@@ -65,7 +65,7 @@ class _OrderLogisticsTrackingPageState
             _expressList = result.data.expressList;
             _deliveryList = List<LogisticsInfoDataExpressList>();
             for (LogisticsInfoDataExpressList item in _expressList) {
-              if (!KeTaoFeaturedCommonUtils.isEmpty(item.xList)) {
+              if (!KTKJCommonUtils.isEmpty(item.xList)) {
                 for (var it = 0; it < item.xList.length; it++) {
                   LogisticsInfoDataExpressList newItem =
                       LogisticsInfoDataExpressList();
@@ -89,14 +89,14 @@ class _OrderLogisticsTrackingPageState
         print("$e");
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+      KTKJCommonUtils.showToast("${result.errMsg}");
     }
   }
 
   @override
   void initState() {
     super.initState();
-    if (KeTaoFeaturedCommonUtils.isEmpty(widget.orderId)) {
+    if (KTKJCommonUtils.isEmpty(widget.orderId)) {
       return;
     }
     _initData();
@@ -136,7 +136,7 @@ class _OrderLogisticsTrackingPageState
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -147,14 +147,14 @@ class _OrderLogisticsTrackingPageState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Visibility(
-                  visible: !KeTaoFeaturedCommonUtils.isEmpty(_waybillNumber),
+                  visible: !KTKJCommonUtils.isEmpty(_waybillNumber),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Visibility(
-                          visible: !KeTaoFeaturedCommonUtils.isEmpty(_waybillNumber),
+                          visible: !KTKJCommonUtils.isEmpty(_waybillNumber),
                           child: SelectableText.rich(
                             TextSpan(text: '运单号码：', children: [
                               TextSpan(
@@ -173,7 +173,7 @@ class _OrderLogisticsTrackingPageState
                           ),
                         ),
                         Visibility(
-                          visible: !KeTaoFeaturedCommonUtils.isEmpty(_carrier),
+                          visible: !KTKJCommonUtils.isEmpty(_carrier),
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             child: Text(
@@ -190,13 +190,13 @@ class _OrderLogisticsTrackingPageState
                   ),
                 ),
                 Container(
-                  color: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+                  color: KTKJGlobalConfig.taskNomalHeadColor,
                   height: 10,
                 ),
                 Visibility(
-                  visible: KeTaoFeaturedCommonUtils.isEmpty(_deliveryList),
+                  visible: KTKJCommonUtils.isEmpty(_deliveryList),
                   child: Container(
-                    color: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+                    color: KTKJGlobalConfig.taskNomalHeadColor,
                     child: Center(
                       child: SelectableText.rich(
                         TextSpan(
@@ -212,7 +212,7 @@ class _OrderLogisticsTrackingPageState
                   ),
                 ),
                 Visibility(
-                  visible: !KeTaoFeaturedCommonUtils.isEmpty(_deliveryList),
+                  visible: !KTKJCommonUtils.isEmpty(_deliveryList),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     width: double.maxFinite,
@@ -290,12 +290,12 @@ class _OrderLogisticsTrackingPageState
     }
     return TimelineTile(
       alignment: TimelineAlign.start,
-      indicatorStyle: !KeTaoFeaturedCommonUtils.isEmpty(title)
+      indicatorStyle: !KTKJCommonUtils.isEmpty(title)
           ? IndicatorStyle(
               color: Color(0xffD1D1D1),
               width: ScreenUtil().setWidth(60),
               height: ScreenUtil().setWidth(60),
-              indicator: KeTaoFeaturedMyOctoImage(
+              indicator: KTKJMyOctoImage(
                 image:
                     '${index == 0 ? logisticsStatusActiveIconUrl : logisticsStatusIconUrl}',
                 width: ScreenUtil().setWidth(60),
@@ -339,7 +339,7 @@ class _OrderLogisticsTrackingPageState
           mainAxisSize: MainAxisSize.min,
           children: [
             Visibility(
-              visible: !KeTaoFeaturedCommonUtils.isEmpty(title),
+              visible: !KTKJCommonUtils.isEmpty(title),
               child: Text(
                 "$title",
                 style: TextStyle(
@@ -350,7 +350,7 @@ class _OrderLogisticsTrackingPageState
               ),
             ),
             Visibility(
-              visible: !KeTaoFeaturedCommonUtils.isEmpty(desc),
+              visible: !KTKJCommonUtils.isEmpty(desc),
               child: Container(
                 margin: EdgeInsets.only(
                   top: ScreenUtil().setWidth(20),
@@ -365,7 +365,7 @@ class _OrderLogisticsTrackingPageState
               ),
             ),
             Visibility(
-              visible: !KeTaoFeaturedCommonUtils.isEmpty(time),
+              visible: !KTKJCommonUtils.isEmpty(time),
               child: Container(
                 margin: EdgeInsets.only(
                   top: ScreenUtil().setWidth(20),
@@ -383,7 +383,7 @@ class _OrderLogisticsTrackingPageState
             /* Flexible(
               flex: 1,
               child: Visibility(
-                visible: !KeTaoFeaturedCommonUtils.isEmpty(xList) && xList.length > 1,
+                visible: !KTKJCommonUtils.isEmpty(xList) && xList.length > 1,
                 child: Container(
                   width: double.maxFinite,
                   child: ListView.builder(

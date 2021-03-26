@@ -16,7 +16,7 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
+class KTKJNewClassifyListPage extends StatefulWidget {
   @override
   _NewClassifyListPageState createState() => _NewClassifyListPageState();
 }
@@ -24,7 +24,7 @@ class KeTaoFeaturedNewClassifyListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
+class _NewClassifyListPageState extends State<KTKJNewClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;
   List<CategoryBeanData> rightListData;
@@ -106,8 +106,8 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
 
   changeSelCategory(cid) {
     print("cid=$cid");
-    if (KeTaoFeaturedCommonUtils.isEmpty(cid)) {
-      cid = KeTaoFeaturedGlobalConfig.prefs.getString("cid");
+    if (KTKJCommonUtils.isEmpty(cid)) {
+      cid = KTKJGlobalConfig.prefs.getString("cid");
     }
     for (var i = 0; i < leftListData.length; i++) {
       if (leftListData[i].id == cid) {
@@ -132,14 +132,14 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                    context, KeTaoFeaturedSearchGoodsPage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setWidth(100),
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
-                    horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
+                    horizontal: KTKJGlobalConfig.LAYOUT_MARGIN),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(100)),
                     color: Colors.white,
@@ -154,7 +154,7 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    KeTaoFeaturedMyOctoImage(
+                    KTKJMyOctoImage(
                       width: ScreenUtil().setWidth(36),
                       height: ScreenUtil().setWidth(36),
                       image:
@@ -180,9 +180,9 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                    context, KeTaoFeaturedSearchGoodsPage());
-//                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJSearchGoodsPage());
+//                KTKJNavigatorUtils.navigatorRouter(context, KTKJTaskMessagePage());
               },
               child: Container(
 //                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 4),
@@ -204,7 +204,7 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!KeTaoFeaturedCommonUtils.isEmpty(rightListData)) {
+      if (!KTKJCommonUtils.isEmpty(rightListData)) {
       } else {
         _initData(0);
       }
@@ -415,9 +415,9 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
                   return GestureDetector(
                     onTap: () {
                       if (category != null) {
-                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        KTKJNavigatorUtils.navigatorRouter(
                             context,
-                            KeTaoFeaturedGoodsListPage(
+                            KTKJGoodsListPage(
                               categoryId: category.id,
                               title: category.name,
                             ));
@@ -429,7 +429,7 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          KeTaoFeaturedMyOctoImage(
+                          KTKJMyOctoImage(
                             fit: BoxFit.cover,
                             image: category.imgUrl == null
                                 ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'
@@ -516,9 +516,9 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
               return GestureDetector(
                 onTap: () {
                   if (category != null) {
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    KTKJNavigatorUtils.navigatorRouter(
                         context,
-                        KeTaoFeaturedGoodsListPage(
+                        KTKJGoodsListPage(
                           categoryId: category.id,
                           title: category.name,
                         ));
@@ -529,7 +529,7 @@ class _NewClassifyListPageState extends State<KeTaoFeaturedNewClassifyListPage>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      KeTaoFeaturedMyOctoImage(
+                      KTKJMyOctoImage(
                         fit: BoxFit.cover,
                         image: category.imgUrl == null
                             ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'

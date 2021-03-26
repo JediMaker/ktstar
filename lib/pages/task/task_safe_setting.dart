@@ -13,8 +13,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedSafeSettingsPage extends StatefulWidget {
-  KeTaoFeaturedSafeSettingsPage({this.hasPayPassword = false, this.phoneNum});
+class KTKJSafeSettingsPage extends StatefulWidget {
+  KTKJSafeSettingsPage({this.hasPayPassword = false, this.phoneNum});
 
   @override
   _SafeSettingsPageState createState() => _SafeSettingsPageState();
@@ -25,7 +25,7 @@ class KeTaoFeaturedSafeSettingsPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _SafeSettingsPageState extends State<KeTaoFeaturedSafeSettingsPage>
+class _SafeSettingsPageState extends State<KTKJSafeSettingsPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   var _payPwdStatus = '1';
@@ -72,9 +72,9 @@ class _SafeSettingsPageState extends State<KeTaoFeaturedSafeSettingsPage>
             decoration: BoxDecoration(color: Colors.white),
             child: InkWell(
               onTap: () async {
-                await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                await KTKJNavigatorUtils.navigatorRouter(
                     context,
-                    KeTaoFeaturedPayPasswordSettingPage(
+                    KTKJPayPasswordSettingPage(
                       pageType: 0,
                     ));
                 _initUserData();
@@ -130,9 +130,9 @@ class _SafeSettingsPageState extends State<KeTaoFeaturedSafeSettingsPage>
             decoration: BoxDecoration(color: Colors.white),
             child: InkWell(
               onTap: () async {
-                await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                await KTKJNavigatorUtils.navigatorRouter(
                     context,
-                    KeTaoFeaturedPayPasswordSettingPage(
+                    KTKJPayPasswordSettingPage(
                       pageType: 2,
                     ));
                 _initUserData();
@@ -186,9 +186,9 @@ class _SafeSettingsPageState extends State<KeTaoFeaturedSafeSettingsPage>
           decoration: BoxDecoration(color: Colors.white),
           child: InkWell(
             onTap: () async {
-              await KeTaoFeaturedNavigatorUtils.navigatorRouter(
+              await KTKJNavigatorUtils.navigatorRouter(
                   context,
-                  KeTaoFeaturedForgetPayPasswordPage(
+                  KTKJForgetPayPasswordPage(
                     phoneNum: widget.phoneNum,
                   ));
               _initUserData();
@@ -262,7 +262,7 @@ class _SafeSettingsPageState extends State<KeTaoFeaturedSafeSettingsPage>
           ),
           brightness: Brightness.light,
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: _buildInfoCard());

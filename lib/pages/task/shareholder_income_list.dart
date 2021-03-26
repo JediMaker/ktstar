@@ -12,7 +12,7 @@ import 'package:star/utils/common_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedAboutPage extends StatefulWidget {
+class KTKJAboutPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
@@ -20,7 +20,7 @@ class KeTaoFeaturedAboutPage extends StatefulWidget {
   var showType;
   bool showAppBar;
 
-  KeTaoFeaturedAboutPage(
+  KTKJAboutPage(
       {Key key,
       this.pageType = 0,
       this.showAppBar = false,
@@ -37,7 +37,7 @@ class KeTaoFeaturedAboutPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
+class _ShareHolderIncomeListPageState extends State<KTKJAboutPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -75,7 +75,7 @@ class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -135,7 +135,7 @@ class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+            backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
         ),
@@ -160,7 +160,7 @@ class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
           }
         },
         emptyWidget: _profitList == null || _profitList.length == 0
-            ? KeTaoFeaturedNoDataPage()
+            ? KTKJNoDataPage()
             : null,
         slivers: <Widget>[buildCenter()],
       ),
@@ -297,7 +297,7 @@ class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
       if (price.contains("-")) {
         prefixText = '';
       }
-      /*if (KeTaoFeaturedGlobalConfig.getUserInfo().type == 3) {
+      /*if (KTKJGlobalConfig.getUserInfo().type == 3) {
 
         switch (type) {
           case "1":
@@ -344,7 +344,7 @@ class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+              horizontal: KTKJGlobalConfig.LAYOUT_MARGIN,
               vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
@@ -368,7 +368,7 @@ class _ShareHolderIncomeListPageState extends State<KeTaoFeaturedAboutPage>
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),
                         ),*/
-                        KeTaoFeaturedMyOctoImage(
+                        KTKJMyOctoImage(
                           image: "$titleIcon",
                           width: ScreenUtil().setWidth(60),
                           height: ScreenUtil().setWidth(60),

@@ -14,7 +14,7 @@ import 'package:star/models/region_data_entity.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
+class KTKJJDAddressDialog extends StatefulWidget {
   final String title;
   final Function(String province, String city, String county, int provinceId,
       int cityId, int countyId) onSelected;
@@ -26,7 +26,7 @@ class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
 
   final TextStyle titleTextStyle;
 
-  KeTaoFeaturedJDAddressDialog(
+  KTKJJDAddressDialog(
       {Key key,
       @required this.onSelected,
       this.title,
@@ -44,7 +44,7 @@ class KeTaoFeaturedJDAddressDialog extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _JDAddressDialogState extends State<KeTaoFeaturedJDAddressDialog>
+class _JDAddressDialogState extends State<KTKJJDAddressDialog>
     with TickerProviderStateMixin {
   int _index = 0;
 

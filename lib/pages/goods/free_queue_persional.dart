@@ -18,7 +18,7 @@ void main() {
   runApp(MaterialApp(
     home: Container(
       child: Center(
-        child: KeTaoFeaturedFreeQueuePersonalPage(),
+        child: KTKJFreeQueuePersonalPage(),
       ),
     ),
   ));
@@ -27,8 +27,8 @@ void main() {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedFreeQueuePersonalPage extends StatefulWidget {
-  KeTaoFeaturedFreeQueuePersonalPage({Key key, this.pageType = 0}) : super(key: key);
+class KTKJFreeQueuePersonalPage extends StatefulWidget {
+  KTKJFreeQueuePersonalPage({Key key, this.pageType = 0}) : super(key: key);
   final String title = "";
   int pageType;
 
@@ -39,7 +39,7 @@ class KeTaoFeaturedFreeQueuePersonalPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPage> {
+class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
   List<GoodsQueuePersionalData> _dataList = List<GoodsQueuePersionalData>();
 
   var _emptyShow = false;
@@ -53,11 +53,11 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
           setState(() {
             try {
               _dataList = result.data;
-              _emptyShow = KeTaoFeaturedCommonUtils.isEmpty(_dataList);
+              _emptyShow = KTKJCommonUtils.isEmpty(_dataList);
             } catch (e) {}
           });
         } else {
-          KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+          KTKJCommonUtils.showToast(result.errMsg);
         }
       }
     } catch (e) {
@@ -165,7 +165,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
                 ),
                 child: buildTopContainer(),
                 /*
-                    child: KeTaoFeaturedMyOctoImage(
+                    child: KTKJMyOctoImage(
                       imageUrl:
                           "https://alipic.lanhuapp.com/xd1b3de0f3-69e2-406a-b22d-be4985aa3d00",
                     ),*/
@@ -253,7 +253,8 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedGoodsListPage());
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJGoodsListPage());
                 },
                 behavior: HitTestBehavior.opaque,
                 child: Column(
@@ -354,7 +355,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
         width: ScreenUtil().setWidth(100),
         height: ScreenUtil().setWidth(100),
         alignment: Alignment.center,
-        child: KeTaoFeaturedMyOctoImage(
+        child: KTKJMyOctoImage(
           image:
               "https://alipic.lanhuapp.com/xde429b121-45d4-4b1a-97ea-0dedaed74a42",
           width: ScreenUtil().setWidth(100),
@@ -416,9 +417,9 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        KTKJNavigatorUtils.navigatorRouter(
             context,
-            KeTaoFeaturedFreeQueuePage(
+            KTKJFreeQueuePage(
               goodsId: goodsId,
               pageType: 1,
             ));
@@ -433,7 +434,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
                 buildIndexLabel(index, done: done),
                 Container(
                   margin: EdgeInsets.only(left: 8),
-                  child: KeTaoFeaturedMyOctoImage(
+                  child: KTKJMyOctoImage(
                     image: "$_imageUrl",
                     width: ScreenUtil().setWidth(120),
                     height: ScreenUtil().setWidth(120),
@@ -488,7 +489,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
-                    if (KeTaoFeaturedCommonUtils.isEmpty(goodsId) || done) {
+                    if (KTKJCommonUtils.isEmpty(goodsId) || done) {
                       return;
                     }
                     try {
@@ -514,7 +515,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
                             builder: (context) => shareItems(),
                           );
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                          KTKJCommonUtils.showToast(result.errMsg);
                         }
                       }
                     } catch (e) {
@@ -532,7 +533,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
                               children: [
                                 Container(
                                   margin: EdgeInsets.only(right: 3, left: 10),
-                                  child: KeTaoFeaturedMyOctoImage(
+                                  child: KTKJMyOctoImage(
                                     image:
                                         "https://alipic.lanhuapp.com/xdbc37de1c-84ed-41a8-bd8b-c0c9729f1e3c",
                                     width: ScreenUtil().setWidth(20),
@@ -584,7 +585,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
                         visible: !done,
                         child: Container(
                           margin: EdgeInsets.only(top: 0, left: 8),
-                          child: KeTaoFeaturedMyOctoImage(
+                          child: KTKJMyOctoImage(
                             image:
                                 "https://alipic.lanhuapp.com/xd2e6c09da-9f63-4b1b-9c30-a41ca0a63491",
                             width: ScreenUtil().setWidth(40),
@@ -625,7 +626,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
             child: new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _saveImagesWithPermission,
                 childWidget: new Container(
                   child: new Column(
@@ -661,7 +662,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
             child: new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _copyText,
                 childWidget: new Container(
                   child: new Column(
@@ -694,7 +695,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
           new Container(
             width: MediaQuery.of(context).size.width / 2,
             child: new FlatButton(
-                child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
               fun: () {
                 _goWechat(type: 0);
                 Navigator.of(context).pop();
@@ -728,7 +729,7 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
           new Container(
             width: MediaQuery.of(context).size.width / 2,
             child: new FlatButton(
-                child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
               fun: () {
                 _goWechat(type: 1);
                 Navigator.of(context).pop();
@@ -768,14 +769,14 @@ class _FreeQueuePersonalPageState extends State<KeTaoFeaturedFreeQueuePersonalPa
 
   ///分享给微信好友或者朋友圈
   void _goWechat({int type = 0}) {
-    if (KeTaoFeaturedCommonUtils.isEmpty(_webUrl)) {
+    if (KTKJCommonUtils.isEmpty(_webUrl)) {
       return;
     }
-    if (KeTaoFeaturedCommonUtils.isEmpty(_shareThumbnail)) {
+    if (KTKJCommonUtils.isEmpty(_shareThumbnail)) {
       _shareThumbnail =
           'https://static-ud.s4.udesk.cn/im_client/images/plugin404.8de7c6fd.png?v=1597492382675';
     }
-    if (KeTaoFeaturedCommonUtils.isEmpty(_shareTitle)) {
+    if (KTKJCommonUtils.isEmpty(_shareTitle)) {
       _shareTitle = '1';
     }
     try {

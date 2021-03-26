@@ -11,8 +11,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedRechargeResultPage extends StatefulWidget {
-  KeTaoFeaturedRechargeResultPage({Key key}) : super(key: key);
+class KTKJRechargeResultPage extends StatefulWidget {
+  KTKJRechargeResultPage({Key key}) : super(key: key);
   final String title = "充值成功";
 
   @override
@@ -22,7 +22,7 @@ class KeTaoFeaturedRechargeResultPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _RechargeResultPageState extends State<KeTaoFeaturedRechargeResultPage> {
+class _RechargeResultPageState extends State<KTKJRechargeResultPage> {
   @override
   void initState() {
     super.initState();
@@ -46,7 +46,7 @@ class _RechargeResultPageState extends State<KeTaoFeaturedRechargeResultPage> {
         ),
         centerTitle: true,
         brightness: Brightness.light,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: WillPopScope(
@@ -55,7 +55,7 @@ class _RechargeResultPageState extends State<KeTaoFeaturedRechargeResultPage> {
                 DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
               /*Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-              KeTaoFeaturedCommonUtils.showToast("再按一次返回键退出应用！");
+              KTKJCommonUtils.showToast("再按一次返回键退出应用！");
               _lastQuitTime = DateTime.now();
               return false;
             } else {
@@ -115,8 +115,8 @@ class _RechargeResultPageState extends State<KeTaoFeaturedRechargeResultPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                                context, KeTaoFeaturedTaskIndexPage());
+                            KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                                context, KTKJTaskIndexPage());
                           },
                           child: Container(
                             alignment: Alignment.center,

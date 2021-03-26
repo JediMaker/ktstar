@@ -2,7 +2,7 @@ import 'package:star/global_config.dart';
 
 class APi {
 //  6YHgt890Mgplu7054fg8k3g3dQ2CXmh4
-  static String BASE_URL = KeTaoFeaturedGlobalConfig.isRelease
+  static String BASE_URL = KTKJGlobalConfig.isRelease
 //      ? "https://task.ktkj.shop/"
       ? "https://api.ktkj.shop/"
       : "http://test-api.ketaokeji.shop/";
@@ -294,7 +294,7 @@ class APi {
 /*
   ///商家入驻规则协议
   static String AGREEMENT_SHOP_ENTRY_RULES_URL =
-      "${KeTaoFeaturedGlobalConfig.getAgreementShopEntryRulesUrl()}";
+      "${KTKJGlobalConfig.getAgreementShopEntryRulesUrl()}";
 */
 
   /* ///用户隐私协议
@@ -302,7 +302,7 @@ class APi {
 */
 
   ///用户隐私协议
-  static String AGREEMENT_PRIVACY_URL = KeTaoFeaturedGlobalConfig.isHuaweiUnderReview
+  static String AGREEMENT_PRIVACY_URL = KTKJGlobalConfig.isHuaweiUnderReview
       ? 'https://task.ktkj.shop/html/hw_ysxy.html'
       : "https://task.ktkj.shop/yinsi.html";
 

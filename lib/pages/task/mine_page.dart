@@ -9,8 +9,8 @@ import 'package:star/pages/shareholders/micro_mine.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedMinePagePage extends StatefulWidget {
-  KeTaoFeaturedMinePagePage({Key key}) : super(key: key);
+class KTKJMinePagePage extends StatefulWidget {
+  KTKJMinePagePage({Key key}) : super(key: key);
   final String title = "";
 
   @override
@@ -20,7 +20,7 @@ class KeTaoFeaturedMinePagePage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
+class _MinePagePageState extends State<KTKJMinePagePage> {
   UserInfoData userInfoData;
   Widget rootView;
 
@@ -37,8 +37,8 @@ class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
 
   _initData() async {
     try {
-      userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
-      if (!KeTaoFeaturedCommonUtils.isEmpty(userInfoData.isPartner)) {
+      userInfoData = KTKJGlobalConfig.getUserInfo();
+      if (!KTKJCommonUtils.isEmpty(userInfoData.isPartner)) {
         setState(() {
           _shareholderType = userInfoData.isPartner;
           /*var title = '';
@@ -48,9 +48,9 @@ class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
                   ? 'VIP股东'
                   : '高级股东';
           if (_shareholderType == '2') {
-            rootView = KeTaoFeaturedTaskMinePage();
+            rootView = KTKJTaskMinePage();
           } else {
-            rootView = KeTaoFeaturedMicroMinePage(
+            rootView = KTKJMicroMinePage(
               title: title,
             );
           }*/
@@ -63,7 +63,7 @@ class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
         _shareholderType = result.data.isPartner;
       });
     } else {
-      if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData.isPartner)) {
+      if (KTKJCommonUtils.isEmpty(userInfoData.isPartner)) {
         var result = await HttpManage.getUserInfo();
         if (result.status) {
           if (mounted) {
@@ -76,10 +76,9 @@ class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
                       ? 'VIP股东'
                       : '高级股东';
               if (_shareholderType == '2') {
-                rootView = KeTaoFeaturedTaskMinePage();
+                rootView = KTKJTaskMinePage();
               } else {
-                rootView = KeTaoFeaturedMicroMinePage(
-                );
+                rootView = KTKJMicroMinePage();
               }
             });
           }
@@ -91,7 +90,7 @@ class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
   @override
   void initState() {
     super.initState();
-    userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+    userInfoData = KTKJGlobalConfig.getUserInfo();
 //    _initData();
   }
 
@@ -103,9 +102,9 @@ class _MinePagePageState extends State<KeTaoFeaturedMinePagePage> {
   @override
   Widget build(BuildContext context) {
     var title = '我的';
-    rootView = KeTaoFeaturedMicroMinePage(
+    rootView = KTKJMicroMinePage(
 //      title: title,
-    );
+        );
     return rootView;
   }
 }

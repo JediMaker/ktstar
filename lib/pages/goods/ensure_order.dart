@@ -16,11 +16,11 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedEnsureOrderPage extends StatefulWidget {
+class KTKJEnsureOrderPage extends StatefulWidget {
   List<String> cartIdList;
   String orderId;
 
-  KeTaoFeaturedEnsureOrderPage({@required this.orderId});
+  KTKJEnsureOrderPage({@required this.orderId});
 
   @override
   _EnsureOrderPageState createState() => _EnsureOrderPageState();
@@ -29,7 +29,7 @@ class KeTaoFeaturedEnsureOrderPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
+class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   var entity;
@@ -131,7 +131,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(
                 ScreenUtil().setHeight(ScreenUtil().setHeight(5))),
-            child: KeTaoFeaturedMyOctoImage(
+            child: KTKJMyOctoImage(
               image:
                   "https://alipic.lanhuapp.com/xd1503b270-f796-4b53-8146-3ba0d3a09a34",
             ),
@@ -154,7 +154,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Stack(
@@ -176,7 +176,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
                                 bool needRefresh = await Navigator.of(context)
                                     .push(MaterialPageRoute(
                                         builder: (BuildContext context) {
-                                  return new KeTaoFeaturedAddressListPage(
+                                  return new KTKJAddressListPage(
                                     type: 0,
                                     orderId: widget.orderId,
                                   );
@@ -187,7 +187,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
                                 }
 //                                _initData();
                               },
-                              title: KeTaoFeaturedCommonUtils.isEmpty(iphone)
+                              title: KTKJCommonUtils.isEmpty(iphone)
                                   ? Text(
                                       '暂无收货地址信息，点击添加',
                                       style: TextStyle(
@@ -280,7 +280,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
 //                          width: ScreenUtil().L(120),
 //                          height: ScreenUtil().L(120),
 //                        )
-                              child: KeTaoFeaturedMyOctoImage(
+                              child: KTKJMyOctoImage(
                                 fadeInDuration: Duration(milliseconds: 0),
                                 fadeOutDuration: Duration(milliseconds: 0),
                                 fit: BoxFit.fill,
@@ -436,7 +436,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
                             ],
                           ),
                           Visibility(
-                            visible: !KeTaoFeaturedCommonUtils.isEmpty(_coin),
+                            visible: !KTKJCommonUtils.isEmpty(_coin),
                             child: Column(
                               children: [
                                 Center(
@@ -566,7 +566,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
                     )),
                     GestureDetector(
                       onTap: () async {
-                        if (!KeTaoFeaturedCommonUtils.isEmpty(iphone)) {
+                        if (!KTKJCommonUtils.isEmpty(iphone)) {
                           var result = await HttpManage.orderSubmit(
                               widget.orderId, isCoupon);
                           if (result.status) {
@@ -574,7 +574,7 @@ class _EnsureOrderPageState extends State<KeTaoFeaturedEnsureOrderPage>
                             //跳转到结算台
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (BuildContext context) {
-                              return new KeTaoFeaturedCheckOutCounterPage(
+                              return new KTKJCheckOutCounterPage(
                                 orderMoney: payPrice,
                                 orderId: widget.orderId,
                               );

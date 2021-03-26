@@ -46,8 +46,8 @@ import 'package:star/utils/utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskHallPage extends StatefulWidget {
-  KeTaoFeaturedTaskHallPage({Key key}) : super(key: key);
+class KTKJTaskHallPage extends StatefulWidget {
+  KTKJTaskHallPage({Key key}) : super(key: key);
   final String title = "任务大厅";
 
   @override
@@ -57,7 +57,7 @@ class KeTaoFeaturedTaskHallPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
+class _TaskHallPageState extends State<KTKJTaskHallPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final dataKey = new GlobalKey();
   String taskCompletedNum = "";
@@ -142,7 +142,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
     _marqueeSwiperController.startAutoplay();
 
 //    try {
-//      userType = KeTaoFeaturedGlobalConfig.getUserInfo().type;
+//      userType = KTKJGlobalConfig.getUserInfo().type;
 //    } catch (e) {
 //      print(e);
 //    }
@@ -275,26 +275,26 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
   ///
   /// 确认账户信息是否绑定手机号以及微信授权
   static checkUserBind({bool isTaskWall = false}) async {
-    UserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
-    if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
+    UserInfoData userInfoData = KTKJGlobalConfig.getUserInfo();
+    if (KTKJCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await HttpManage.getUserInfo();
       if (result.status) {
-        userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+        userInfoData = KTKJGlobalConfig.getUserInfo();
       } else {
-        KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+        KTKJCommonUtils.showToast("${result.errMsg}");
         return false;
       }
     }
     if (!isTaskWall) {
       if (userInfoData.bindThird == 1) {
-        KeTaoFeaturedCommonUtils.showToast("请先绑定微信后领取任务");
+        KTKJCommonUtils.showToast("请先绑定微信后领取任务");
         return false;
       }
     }
 
-    if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData.tel)) {
-      KeTaoFeaturedCommonUtils.showToast("请先绑定手机号后领取任务");
+    if (KTKJCommonUtils.isEmpty(userInfoData.tel)) {
+      KTKJCommonUtils.showToast("请先绑定手机号后领取任务");
       return false;
     }
     return true;
@@ -394,7 +394,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                         width: 30.0,
                         height: 30.0,
                         child: SpinKitCircle(
-                          color: KeTaoFeaturedGlobalConfig.colorPrimary,
+                          color: KTKJGlobalConfig.colorPrimary,
                           size: 30.0,
                         ),
                       ),
@@ -418,7 +418,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                           width: 50.0,
                           height: 50.0,
                           child: SpinKitFadingCube(
-                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
+                            color: KTKJGlobalConfig.colorPrimary,
                             size: 25.0,
                           ),
                         ),
@@ -524,9 +524,9 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        KTKJNavigatorUtils.navigatorRouter(
             context,
-            KeTaoFeaturedGoodsDetailPage(
+            KTKJGoodsDetailPage(
               productId: id,
             ));
       },
@@ -560,7 +560,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(30)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
-                    child: KeTaoFeaturedMyOctoImage(
+                    child: KTKJMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(340),
@@ -730,22 +730,23 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
           if (type == 'app') {
             switch (path) {
               case "recharge":
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJRechargeListPage());
                 break;
             }
             return;
           }
           if (type == 'toast') {
-            KeTaoFeaturedCommonUtils.showToast("敬请期待");
+            KTKJCommonUtils.showToast("敬请期待");
             return;
           }
           if (type == 'link') {
             /*PaletteGenerator generator =
                 await PaletteGenerator.fromImageProvider(
                     Image.network("$icon").image);
-            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            KTKJNavigatorUtils.navigatorRouter(
                 context,
-                KeTaoFeaturedWebViewPage(
+                KTKJWebViewPage(
                   initialUrl: path,
                   showActions: true,
                   appBarBackgroundColor: generator.dominantColor.color,
@@ -757,24 +758,25 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
               //platformType=渠道编码&platformCode=用户手92657653
               /*path =
                   "https://st.czb365.com/v3_prod/"; */ //?platformType=98653913&authCode=040af220c0f
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+              KTKJNavigatorUtils.navigatorRouter(
                   context,
-                  KeTaoFeaturedWebViewPluginPage(
+                  KTKJWebViewPluginPage(
                     initialUrl: path,
                     showActions: true,
                     title: "优惠加油",
                     appBarBackgroundColor: Colors.white,
                   ));
               return;
-              /* KeTaoFeaturedNavigatorUtils.navigatorRouter(context, MyTestApp());
+              /* KTKJNavigatorUtils.navigatorRouter(context, MyTestApp());
               return;*/
             }
-            if (name.contains('游戏') && KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
-              KeTaoFeaturedCommonUtils.showToast("敬请期待");
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedClassifyListPage());
+            if (name.contains('游戏') && KTKJGlobalConfig.isHuaweiUnderReview) {
+              KTKJCommonUtils.showToast("敬请期待");
+              KTKJNavigatorUtils.navigatorRouter(
+                  context, KTKJClassifyListPage());
               return;
             }
-            KeTaoFeaturedUtils.launchUrl(path);
+            KTKJUtils.launchUrl(path);
             return;
           }
         },
@@ -788,7 +790,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                 child: new CircleAvatar(
                   radius: 20.0,
                   backgroundColor: Colors.transparent,
-                  child: KeTaoFeaturedMyOctoImage(
+                  child: KTKJMyOctoImage(
                     image: "$icon",
                     width: ScreenUtil().setWidth(136),
                     height: ScreenUtil().setWidth(136),
@@ -846,7 +848,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                 vertical: ScreenUtil().setWidth(32),
                 horizontal: ScreenUtil().setWidth(32),
               ),
-              child: KeTaoFeaturedMyOctoImage(
+              child: KTKJMyOctoImage(
                 image:
                     "https://alipic.lanhuapp.com/xd9a50a007-6769-44e8-93ed-3e33e099a277",
                 width: ScreenUtil().setWidth(236),
@@ -897,7 +899,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
   Widget buildBannerLayout2() {
     return GestureDetector(
       onTap: () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskOpenDiamondPage());
+        KTKJNavigatorUtils.navigatorRouter(context, KTKJTaskOpenDiamondPage());
       },
       child: Image.asset(
         "static/images/home_banner.png",
@@ -930,8 +932,8 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
         controller: _swiperController,
 //          indicatorLayout: PageIndicatorLayout.COLOR,
         onIndexChanged: (index) async {
-          if (!KeTaoFeaturedCommonUtils.isEmpty(bannerColorList)) {
-            if (!KeTaoFeaturedCommonUtils.isEmpty(bannerColorList[index]) &&
+          if (!KTKJCommonUtils.isEmpty(bannerColorList)) {
+            if (!KTKJCommonUtils.isEmpty(bannerColorList[index]) &&
                 bannerColorList.length == bannerList.length) {
               if (mounted) {
                 setState(() {
@@ -993,41 +995,44 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                 //自定义指示器颜色
                 color: Colors.white,
                 size: 8.0,
-                activeColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                activeColor: KTKJGlobalConfig.taskHeadColor,
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
           var bannerData = bannerList[index];
           return GestureDetector(
             onTap: () async {
               if (Platform.isIOS) {
-                KeTaoFeaturedCommonUtils.showIosPayDialog();
+                KTKJCommonUtils.showIosPayDialog();
                 return;
               }
 
               switch (bannerList[bannerIndex].uri.toString().trim()) {
                 case "upgrade":
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskOpenVipPage());
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJTaskOpenVipPage());
 /*
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                      context, KeTaoFeaturedTaskOpenDiamondPage());
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJTaskOpenDiamondPage());
 */
                   break;
                 case "recharge":
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedRechargeListPage());
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJRechargeListPage());
                   break;
                 case "goods_list":
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedGoodsListPage());
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJGoodsListPage());
                   break;
                 case "upgrade_diamond":
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  KTKJNavigatorUtils.navigatorRouter(
                       context,
-                      KeTaoFeaturedTaskOpenVipPage(
+                      KTKJTaskOpenVipPage(
                         taskType: 2,
                       ));
                   break;
               }
               if (bannerList[bannerIndex].uri.toString().startsWith("http")) {
-                KeTaoFeaturedUtils.launchUrl(bannerList[bannerIndex].uri.toString());
+                KTKJUtils.launchUrl(bannerList[bannerIndex].uri.toString());
                 /*bool isImage = false;
                 Response resust = await Dio().get(bannerList[bannerIndex].uri);
                 String contentType = resust.headers['content-type'].toString();
@@ -1035,9 +1040,9 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                   isImage = true;
                 }
                 if (isImage) {
-                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                  KTKJNavigatorUtils.navigatorRouter(
                       context,
-                      KeTaoFeaturedTaskGalleryPage(
+                      KTKJTaskGalleryPage(
                         galleryItems: [bannerList[bannerIndex].uri.toString()],
                       ));
                   return;
@@ -1045,10 +1050,10 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                 */ /*print("contentType=$contentType");
                 print(
                     "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
-                var hColor = KeTaoFeaturedGlobalConfig.taskHeadColor;
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                var hColor = KTKJGlobalConfig.taskHeadColor;
+                KTKJNavigatorUtils.navigatorRouter(
                     context,
-                    KeTaoFeaturedWebViewPage(
+                    KTKJWebViewPage(
                       initialUrl: bannerList[bannerIndex].uri.toString(),
                       showActions: true,
                       title: "",
@@ -1063,7 +1068,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                 } catch (e) {}*/
               }
             },
-            child: KeTaoFeaturedMyOctoImage(
+            child: KTKJMyOctoImage(
               image: bannerData.imgPath,
               height: ScreenUtil().setHeight(623),
 //              width: ScreenUtil().setWidth(1125),
@@ -1080,20 +1085,20 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
       child: GestureDetector(
         onTap: () {
           /* if (checkUserBind(isTaskWall: true)) {
-            */ /* KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            */ /* KTKJNavigatorUtils.navigatorRouter(
                 context,
-                KeTaoFeaturedWebViewPage(
+                KTKJWebViewPage(
                   initialUrl: HttpManage.getTheMissionWallEntranceUrl(
-                      "${KeTaoFeaturedGlobalConfig.getUserInfo().tel}"),
+                      "${KTKJGlobalConfig.getUserInfo().tel}"),
                   showActions: true,
                   title: "任务墙",
                   appBarBackgroundColor: Color(0xFFD72825),
                 ));*/ /*
 
           }*/
-          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+          KTKJNavigatorUtils.navigatorRouter(
               context,
-              KeTaoFeaturedTaskOpenVipPage(
+              KTKJTaskOpenVipPage(
                 taskType: 2,
               ));
 //          HttpManage.getTheMissionWallEntrance("13122336666");
@@ -1102,7 +1107,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
           height: ScreenUtil().setHeight(550),
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           alignment: Alignment.center,
-          child: KeTaoFeaturedMyOctoImage(
+          child: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xddcdf45d1-4fd3-47e6-9326-88bb1cfd4edf',
             width: ScreenUtil().setWidth(1061),
@@ -1124,14 +1129,14 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   Widget buildTaskItemLayout(context, HomeDataTaskListList taskItem, index) {
-    var bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgColor;
-    var txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
+    var bgColor = KTKJGlobalConfig.taskBtnBgColor;
+    var txtColor = KTKJGlobalConfig.taskBtnTxtColor;
     var category = '';
     category = taskItem.category;
     switch (taskItem.taskStatus) {
       case -2:
-        bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgGreyColor;
-        txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor;
+        bgColor = KTKJGlobalConfig.taskBtnBgGreyColor;
+        txtColor = KTKJGlobalConfig.taskBtnTxtGreyColor;
         break;
       case -1:
         break;
@@ -1142,8 +1147,8 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
       case 2:
         break;
       case 3:
-        bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgGreyColor;
-        txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor;
+        bgColor = KTKJGlobalConfig.taskBtnBgGreyColor;
+        txtColor = KTKJGlobalConfig.taskBtnTxtGreyColor;
         break;
       case 4:
         break;
@@ -1155,30 +1160,31 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             break;
           case -1: //-1去开通
             if (Platform.isIOS) {
-              KeTaoFeaturedCommonUtils.showIosPayDialog();
+              KTKJCommonUtils.showIosPayDialog();
               return;
             }
             var result = await showDialog(
                 context: context,
                 builder: (context) {
-                  return KeTaoFeaturedTaskOpenDiamondDialogPage();
+                  return KTKJTaskOpenDiamondDialogPage();
                 });
             break;
           case 0: // 领任务
-            if (await checkUserBind(isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
+            if (await checkUserBind(
+                isTaskWall: !KTKJGlobalConfig.isBindWechat)) {
               switch (category) {
                 case "1":
                   var result = await HttpManage.taskReceive(taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailPage(
+                      return KTKJTaskDetailPage(
                         taskId: taskItem.id,
                       );
                     }));
                     _initData();
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                   break;
                 case "2":
@@ -1186,13 +1192,13 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailOtherPage(
+                      return KTKJTaskDetailOtherPage(
                         taskId: taskItem.id,
                       );
                     }));
                     _initData();
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                   break;
               }
@@ -1203,7 +1209,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             if (category == "1") {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailPage(
+                return KTKJTaskDetailPage(
                   taskId: taskItem.id,
                 );
               }));
@@ -1211,7 +1217,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             } else {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailOtherPage(
+                return KTKJTaskDetailOtherPage(
                   taskId: taskItem.id,
                 );
               }));
@@ -1227,7 +1233,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             if (category == "1") {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailPage(
+                return KTKJTaskDetailPage(
                   taskId: taskItem.id,
                   pageType: 1,
                 );
@@ -1236,7 +1242,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             } else {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailOtherPage(
+                return KTKJTaskDetailOtherPage(
                   taskId: taskItem.id,
                   pageType: 1,
                 );
@@ -1249,24 +1255,24 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
         /*if (checkUserBind()) {
           if (index == taskStatus) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return KeTaoFeaturedTaskDetailPage();
+              return KTKJTaskDetailPage();
             }));
           } else if (index == 2) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return KeTaoFeaturedTaskSubmissionPage();
+              return KTKJTaskSubmissionPage();
             }));
           } else {
             var result = await showDialog(
                 context: context,
                 builder: (context) {
-                  return KeTaoFeaturedTaskOpenDiamondDialogPage();
+                  return KTKJTaskOpenDiamondDialogPage();
                 });
             print('$result');
           }
         }*/
       },
       leading: ClipOval(
-        child: KeTaoFeaturedMyOctoImage(
+        child: KTKJMyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
@@ -1282,7 +1288,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
 */
       ),
 
-      /* KeTaoFeaturedMyOctoImage(
+      /* KTKJMyOctoImage(
         width: 40,
         height: 40,
         image:
@@ -1328,14 +1334,14 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   Widget buildTaskItemLayout2(context, HomeDataTaskListList taskItem, index) {
-    var bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgColor;
-    var txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
+    var bgColor = KTKJGlobalConfig.taskBtnBgColor;
+    var txtColor = KTKJGlobalConfig.taskBtnTxtColor;
     var category = '';
     category = taskItem.category;
     switch (taskItem.taskStatus) {
       case -2:
-        bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgGreyColor;
-        txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor;
+        bgColor = KTKJGlobalConfig.taskBtnBgGreyColor;
+        txtColor = KTKJGlobalConfig.taskBtnTxtGreyColor;
         break;
       case -1:
         break;
@@ -1346,8 +1352,8 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
       case 2:
         break;
       case 3:
-        bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgGreyColor;
-        txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor;
+        bgColor = KTKJGlobalConfig.taskBtnBgGreyColor;
+        txtColor = KTKJGlobalConfig.taskBtnTxtGreyColor;
         break;
       case 4:
         break;
@@ -1359,30 +1365,31 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             break;
           case -1: //-1去开通
             if (Platform.isIOS) {
-              KeTaoFeaturedCommonUtils.showIosPayDialog();
+              KTKJCommonUtils.showIosPayDialog();
               return;
             }
             var result = await showDialog(
                 context: context,
                 builder: (context) {
-                  return KeTaoFeaturedTaskOpenDiamondDialogPage();
+                  return KTKJTaskOpenDiamondDialogPage();
                 });
             break;
           case 0: // 领任务
-            if (await checkUserBind(isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
+            if (await checkUserBind(
+                isTaskWall: !KTKJGlobalConfig.isBindWechat)) {
               switch (category) {
                 case "1":
                   var result = await HttpManage.taskReceive(taskItem.id);
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailPage(
+                      return KTKJTaskDetailPage(
                         taskId: taskItem.id,
                       );
                     }));
                     _initData();
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                   break;
                 case "2":
@@ -1390,13 +1397,13 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                   if (result.status) {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailOtherPage(
+                      return KTKJTaskDetailOtherPage(
                         taskId: taskItem.id,
                       );
                     }));
                     _initData();
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                   break;
               }
@@ -1407,7 +1414,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             if (category == "1") {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailPage(
+                return KTKJTaskDetailPage(
                   taskId: taskItem.id,
                 );
               }));
@@ -1415,7 +1422,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             } else {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailOtherPage(
+                return KTKJTaskDetailOtherPage(
                   taskId: taskItem.id,
                 );
               }));
@@ -1431,7 +1438,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             if (category == "1") {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailPage(
+                return KTKJTaskDetailPage(
                   taskId: taskItem.id,
                   pageType: 1,
                 );
@@ -1440,7 +1447,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             } else {
               var result = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskDetailOtherPage(
+                return KTKJTaskDetailOtherPage(
                   taskId: taskItem.id,
                   pageType: 1,
                 );
@@ -1453,24 +1460,24 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
         /*if (checkUserBind()) {
           if (index == taskStatus) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return KeTaoFeaturedTaskDetailPage();
+              return KTKJTaskDetailPage();
             }));
           } else if (index == 2) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return KeTaoFeaturedTaskSubmissionPage();
+              return KTKJTaskSubmissionPage();
             }));
           } else {
             var result = await showDialog(
                 context: context,
                 builder: (context) {
-                  return KeTaoFeaturedTaskOpenDiamondDialogPage();
+                  return KTKJTaskOpenDiamondDialogPage();
                 });
             print('$result');
           }
         }*/
       },
       leading: ClipOval(
-        child: KeTaoFeaturedMyOctoImage(
+        child: KTKJMyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
@@ -1486,7 +1493,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
 */
       ),
 
-      /* KeTaoFeaturedMyOctoImage(
+      /* KTKJMyOctoImage(
         width: 40,
         height: 40,
         image:
@@ -1563,7 +1570,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
                 Text(
                   "$taskCompletedNum/$taskTotalNum",
                   style: TextStyle(
-                      color: KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor,
+                      color: KTKJGlobalConfig.taskBtnTxtGreyColor,
                       fontSize: ScreenUtil().setSp(36)),
                 ),
               ],
@@ -1577,7 +1584,7 @@ class _TaskHallPageState extends State<KeTaoFeaturedTaskHallPage>
             child: Text(
               "完成每日任务可领取更多奖励",
               style: TextStyle(
-                  color: KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor,
+                  color: KTKJGlobalConfig.taskBtnTxtGreyColor,
                   fontSize: ScreenUtil().setSp(36)),
             ),
           ),
@@ -1827,7 +1834,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
     ///解决首次数据加载失败问题
     ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!KeTaoFeaturedCommonUtils.isEmpty(taskList)) {
+      if (!KTKJCommonUtils.isEmpty(taskList)) {
         bus.emit("taskListChanged", 0);
         bus.emit("taskListChanged", taskList.length);
         print('taskListChangedtaskList", taskList.length=${taskList.length}');
@@ -1861,26 +1868,26 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   /// 确认账户信息是否绑定手机号以及微信授权
   checkUserBind({bool isTaskWall = false}) async {
-    UserInfoData userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
-    if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData)) {
+    UserInfoData userInfoData = KTKJGlobalConfig.getUserInfo();
+    if (KTKJCommonUtils.isEmpty(userInfoData)) {
       print("userInfoData is empty is true");
       var result = await HttpManage.getUserInfo();
       if (result.status) {
-        userInfoData = KeTaoFeaturedGlobalConfig.getUserInfo();
+        userInfoData = KTKJGlobalConfig.getUserInfo();
       } else {
-        KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+        KTKJCommonUtils.showToast("${result.errMsg}");
         return false;
       }
     }
     if (!isTaskWall) {
       if (userInfoData.bindThird == 1) {
-        KeTaoFeaturedCommonUtils.showToast("请先绑定微信后领取任务");
+        KTKJCommonUtils.showToast("请先绑定微信后领取任务");
         return false;
       }
     }
 
-    if (KeTaoFeaturedCommonUtils.isEmpty(userInfoData.tel)) {
-      KeTaoFeaturedCommonUtils.showToast("请先绑定手机号后领取任务");
+    if (KTKJCommonUtils.isEmpty(userInfoData.tel)) {
+      KTKJCommonUtils.showToast("请先绑定手机号后领取任务");
       return false;
     }
     return true;
@@ -1888,8 +1895,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
 
   ///任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   Widget buildTaskItemLayout(context, HomeDataTaskListList taskItem, index) {
-    var bgColor = Color(0xffF32E43); // KeTaoFeaturedGlobalConfig.taskBtnBgColor;
-    var txtColor = Colors.white; //KeTaoFeaturedGlobalConfig.taskBtnTxtColor;
+    var bgColor = Color(0xffF32E43); // KTKJGlobalConfig.taskBtnBgColor;
+    var txtColor = Colors.white; //KTKJGlobalConfig.taskBtnTxtColor;
     var category = '';
     bool _isSimpleTask = taskItem.isHigher == '2';
     bool _isShow = true;
@@ -1901,14 +1908,14 @@ class _TaskListTabViewState extends State<TaskListTabView>
       _isFirstHighCommissionTask = false;
     }
     category = taskItem.category;
-    if (KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
+    if (KTKJGlobalConfig.isHuaweiUnderReview) {
       _isShow = !taskItem.title.contains("代购");
     }
     bool _isNewTask = taskItem.isNew == '1';
     switch (taskItem.taskStatus) {
       case -2:
-        bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgGreyColor;
-        txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor;
+        bgColor = KTKJGlobalConfig.taskBtnBgGreyColor;
+        txtColor = KTKJGlobalConfig.taskBtnTxtGreyColor;
         break;
       case -1:
         break;
@@ -1919,8 +1926,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
       case 2:
         break;
       case 3:
-        bgColor = KeTaoFeaturedGlobalConfig.taskBtnBgGreyColor;
-        txtColor = KeTaoFeaturedGlobalConfig.taskBtnTxtGreyColor;
+        bgColor = KTKJGlobalConfig.taskBtnBgGreyColor;
+        txtColor = KTKJGlobalConfig.taskBtnTxtGreyColor;
         break;
       case 4:
         break;
@@ -1933,7 +1940,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
           Visibility(
             visible: firstHighIndex == index,
             child: Container(
-              color: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+              color: KTKJGlobalConfig.taskNomalHeadColor,
               height: 8,
             ),
           ),
@@ -1941,7 +1948,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
             behavior: HitTestBehavior.opaque,
             onTap: () async {
               /*      if (true) {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskSharePage());
+                KTKJNavigatorUtils.navigatorRouter(context, KTKJTaskSharePage());
                 return;
               }*/
               switch (taskItem.taskStatus) {
@@ -1949,20 +1956,20 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   break;
                 case -1: //-1去开通
                   if (Platform.isIOS) {
-                    KeTaoFeaturedCommonUtils.showIosPayDialog();
+                    KTKJCommonUtils.showIosPayDialog();
                     return;
                   }
                   var result = await showDialog(
                       context: context,
                       builder: (context) {
-                        return KeTaoFeaturedTaskOpenDiamondDialogPage(
+                        return KTKJTaskOpenDiamondDialogPage(
                           taskType: widget.taskType,
                         );
                       });
                   break;
                 case 0: // 领任务
                   if (await checkUserBind(
-                      isTaskWall: !KeTaoFeaturedGlobalConfig.isBindWechat)) {
+                      isTaskWall: !KTKJGlobalConfig.isBindWechat)) {
                     switch (userType) {
                       case "0": //普通
                         break;
@@ -1970,13 +1977,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                         break;
                       case "2": //vip
                         if (widget.taskType != 1) {
-                          KeTaoFeaturedCommonUtils.showToast("请到vip专区领取任务");
+                          KTKJCommonUtils.showToast("请到vip专区领取任务");
                           return;
                         }
                         break;
                       case "4": //钻石
                         if (widget.taskType != 2) {
-                          KeTaoFeaturedCommonUtils.showToast("请到钻石专区领取任务");
+                          KTKJCommonUtils.showToast("请到钻石专区领取任务");
                           return;
                         }
                         break;
@@ -1984,20 +1991,20 @@ class _TaskListTabViewState extends State<TaskListTabView>
                     switch (category) {
                       case "1":
                         /*if (userType == "0") {
-                          KeTaoFeaturedCommonUtils.showToast("您只能领取非朋友圈任务");
+                          KTKJCommonUtils.showToast("您只能领取非朋友圈任务");
                           return;
                         }*/
                         var result = await HttpManage.taskReceive(taskItem.id);
                         if (result.status) {
                           var result = await Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return KeTaoFeaturedTaskDetailPage(
+                            return KTKJTaskDetailPage(
                               taskId: taskItem.id,
                             );
                           }));
                           _initData();
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                          KTKJCommonUtils.showToast(result.errMsg);
                         }
                         break;
                       case "2":
@@ -2006,13 +2013,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                         if (result.status) {
                           var result = await Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return KeTaoFeaturedTaskDetailOtherPage(
+                            return KTKJTaskDetailOtherPage(
                               taskId: taskItem.id,
                             );
                           }));
                           _initData();
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                          KTKJCommonUtils.showToast(result.errMsg);
                         }
                         break;
                       case "3":
@@ -2021,13 +2028,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                         if (result.status) {
                           var result = await Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return KeTaoFeaturedTaskSharePage(
+                            return KTKJTaskSharePage(
                               taskId: taskItem.id,
                             );
                           }));
                           _initData();
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                          KTKJCommonUtils.showToast(result.errMsg);
                         }
                         break;
                     }
@@ -2042,13 +2049,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                       break;
                     case "2": //vip
                       if (widget.taskType != 1) {
-                        KeTaoFeaturedCommonUtils.showToast("请到vip专区提交任务");
+                        KTKJCommonUtils.showToast("请到vip专区提交任务");
                         return;
                       }
                       break;
                     case "4": //钻石
                       if (widget.taskType != 2) {
-                        KeTaoFeaturedCommonUtils.showToast("请到钻石专区提交任务");
+                        KTKJCommonUtils.showToast("请到钻石专区提交任务");
                         return;
                       }
                       break;
@@ -2056,7 +2063,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   if (category == "1") {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailPage(
+                      return KTKJTaskDetailPage(
                         taskId: taskItem.id,
                       );
                     }));
@@ -2064,7 +2071,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   } else {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailOtherPage(
+                      return KTKJTaskDetailOtherPage(
                         taskId: taskItem.id,
                       );
                     }));
@@ -2075,16 +2082,16 @@ class _TaskListTabViewState extends State<TaskListTabView>
                 case 2: //2待审核
                   switch (category) {
                     case "3":
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           context,
-                          KeTaoFeaturedTaskSharePage(
+                          KTKJTaskSharePage(
                             taskId: taskItem.id,
                           ));
                       break;
                     case "4": //商品补贴任务
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           context,
-                          KeTaoFeaturedTaskDetailOtherPage(
+                          KTKJTaskDetailOtherPage(
                             taskId: taskItem.id,
                           ));
                       break;
@@ -2100,13 +2107,13 @@ class _TaskListTabViewState extends State<TaskListTabView>
                       break;
                     case "2": //vip
                       if (widget.taskType != 1) {
-                        KeTaoFeaturedCommonUtils.showToast("请到vip专区提交任务");
+                        KTKJCommonUtils.showToast("请到vip专区提交任务");
                         return;
                       }
                       break;
                     case "4": //钻石
                       if (widget.taskType != 2) {
-                        KeTaoFeaturedCommonUtils.showToast("请到钻石专区提交任务");
+                        KTKJCommonUtils.showToast("请到钻石专区提交任务");
                         return;
                       }
                       break;
@@ -2114,7 +2121,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   if (category == "1") {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailPage(
+                      return KTKJTaskDetailPage(
                         taskId: taskItem.id,
                       );
                     }));
@@ -2122,7 +2129,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                   } else {
                     var result = await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return KeTaoFeaturedTaskDetailOtherPage(
+                      return KTKJTaskDetailOtherPage(
                         taskId: taskItem.id,
                       );
                     }));
@@ -2134,17 +2141,17 @@ class _TaskListTabViewState extends State<TaskListTabView>
               /*if (checkUserBind()) {
                             if (index == taskStatus) {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                return KeTaoFeaturedTaskDetailPage();
+                                return KTKJTaskDetailPage();
                               }));
                             } else if (index == 2) {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                return KeTaoFeaturedTaskSubmissionPage();
+                                return KTKJTaskSubmissionPage();
                               }));
                             } else {
                               var result = await showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return KeTaoFeaturedTaskOpenDiamondDialogPage();
+                                    return KTKJTaskOpenDiamondDialogPage();
                                   });
                               print('$result');
                             }
@@ -2209,7 +2216,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                           ),
                         ),
                         /* ClipOval(
-                              child: KeTaoFeaturedMyOctoImage(
+                              child: KTKJMyOctoImage(
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(110),
                                 height: ScreenUtil().setWidth(110),
@@ -2229,7 +2236,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                             Visibility(
                               visible: true,
                               child: Container(
-                                child: KeTaoFeaturedMyOctoImage(
+                                child: KTKJMyOctoImage(
                                   image: "$_taskIcon",
                                   width: ScreenUtil().setWidth(70),
                                   height: ScreenUtil().setHeight(50),
@@ -2275,7 +2282,7 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                 height: ScreenUtil().setHeight(48),
                                 alignment: Alignment.centerLeft,
                                 child: _isNewTask
-                                    ? KeTaoFeaturedMyOctoImage(
+                                    ? KTKJMyOctoImage(
                                         image:
                                             "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
                                         width: ScreenUtil().setWidth(30),

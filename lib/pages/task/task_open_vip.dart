@@ -23,8 +23,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskOpenVipPage extends StatefulWidget {
-  KeTaoFeaturedTaskOpenVipPage({Key key, this.taskType = 1}) : super(key: key);
+class KTKJTaskOpenVipPage extends StatefulWidget {
+  KTKJTaskOpenVipPage({Key key, this.taskType = 1}) : super(key: key);
   final String title = "会员中心";
   int taskType;
 
@@ -35,7 +35,7 @@ class KeTaoFeaturedTaskOpenVipPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
+class _TaskOpenVipPageState extends State<KTKJTaskOpenVipPage> {
   var _vipIncome = '10';
   var _vipPrice = '199';
   var _diamondVipIncome = '20';
@@ -54,11 +54,11 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
   VipPriceInfoDiamond _diamondInfo;
 
   _initWeChatResponseHandler() {
-    KeTaoFeaturedGlobalConfig.payType = 0;
+    KTKJGlobalConfig.payType = 0;
     fluwx.weChatResponseEventHandler.listen((res) async {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
-        if (res.isSuccessful && KeTaoFeaturedGlobalConfig.payType == 0) {
+        if (res.isSuccessful && KTKJGlobalConfig.payType == 0) {
           _checkPayStatus();
         }
       }
@@ -73,13 +73,13 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
           _vipInfo = result.data.vip;
           _diamondInfo = result.data.diamond;
           if (_vipInfo.moneyList.length > 0 &&
-              !KeTaoFeaturedCommonUtils.isEmpty(_vipInfo.moneyList[0]) &&
+              !KTKJCommonUtils.isEmpty(_vipInfo.moneyList[0]) &&
               _vipInfo.moneyList[0].flag &&
               !_isDiamondVip) {
             _selectIndex = 0;
           }
           if (_diamondInfo.moneyList.length > 0 &&
-              !KeTaoFeaturedCommonUtils.isEmpty(_diamondInfo.moneyList[0]) &&
+              !KTKJCommonUtils.isEmpty(_diamondInfo.moneyList[0]) &&
               _diamondInfo.moneyList[0].flag &&
               _isDiamondVip) {
             _selectIndex = 0;
@@ -95,18 +95,18 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
       var payStatus = result.data["pay_status"].toString();
       switch (payStatus) {
         case "1": //未成功
-          KeTaoFeaturedCommonUtils.showToast("支付失败");
+          KTKJCommonUtils.showToast("支付失败");
           break;
         case "2": //已成功
-          KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
-              KeTaoFeaturedPayResultPage(
+              KTKJPayResultPage(
                 payNo: _payNo,
               ));
           break;
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -204,7 +204,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                                     //VIP会员
                                     _isDiamondVip = false;
                                     if (_vipInfo.moneyList.length > 0 &&
-                                        !KeTaoFeaturedCommonUtils.isEmpty(
+                                        !KTKJCommonUtils.isEmpty(
                                             _vipInfo.moneyList[0]) &&
                                         _vipInfo.moneyList[0].flag) {
                                       _selectIndex = 0;
@@ -213,7 +213,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                                     ///钻石会员
                                     _isDiamondVip = true;
                                     if (_diamondInfo.moneyList.length > 0 &&
-                                        !KeTaoFeaturedCommonUtils.isEmpty(
+                                        !KTKJCommonUtils.isEmpty(
                                             _diamondInfo.moneyList[0]) &&
                                         _diamondInfo.moneyList[0].flag) {
                                       _selectIndex = 0;
@@ -242,7 +242,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                 child: GestureDetector(
                   onTap: () async {
                     if (_selectIndex == -1) {
-                      KeTaoFeaturedCommonUtils.showToast("请选择会员卡类型");
+                      KTKJCommonUtils.showToast("请选择会员卡类型");
                       return;
                     }
                     //标语
@@ -298,9 +298,9 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                         ),
                       ),
                       onTap: () {
-                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        KTKJNavigatorUtils.navigatorRouter(
                             context,
-                            KeTaoFeaturedWebViewPage(
+                            KTKJWebViewPage(
                               initialUrl: APi.AGREEMENT_SERVICES_URL,
                               showActions: false,
                               title: "服务协议",
@@ -325,7 +325,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                       onTap: () {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return KeTaoFeaturedWebViewPage(
+                          return KTKJWebViewPage(
                             initialUrl: APi.AGREEMENT_PRIVACY_URL,
                             title: "隐私政策",
                           );
@@ -931,7 +931,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
       }
       des = '$title续费$renewalPrice元';
     } catch (e) {}
-    return KeTaoFeaturedSelectChoiceChip(
+    return KTKJSelectChoiceChip(
       width: ScreenUtil().setWidth(325),
       height: ScreenUtil().setHeight(393),
       child: Container(
@@ -1024,7 +1024,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
       onSelected: (v) {
         setState(() {
           if (!flag) {
-            KeTaoFeaturedCommonUtils.showToast("暂未开通，敬请期待");
+            KTKJCommonUtils.showToast("暂未开通，敬请期待");
             return;
           }
           _selectIndex = index;
@@ -1057,17 +1057,17 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                         TextSpan(
                             text: "¥",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 12)),
                         TextSpan(
                             text: " $_selectPrice",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 18)),
                         /*TextSpan(
                             text: ".00",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 12)),*/
                       ])),
                     ),
@@ -1136,7 +1136,7 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                            KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
                           var result = await HttpManage.getAliPayInfo(
@@ -1146,10 +1146,10 @@ class _TaskOpenVipPageState extends State<KeTaoFeaturedTaskOpenVipPage> {
                             _payNo = result.data.payNo;
                             callAlipay();
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                            KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast("请选择支付方式");
+                          KTKJCommonUtils.showToast("请选择支付方式");
                         }
                         Navigator.of(context).pop();
                       },

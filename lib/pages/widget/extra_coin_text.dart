@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:star/utils/common_utils.dart';
 
 ///限时额外赠送分红体验金 展示文本
-class KeTaoFeaturedExtraCoinTextPage extends StatefulWidget {
-  KeTaoFeaturedExtraCoinTextPage({
+class KTKJExtraCoinTextPage extends StatefulWidget {
+  KTKJExtraCoinTextPage({
     Key key,
     this.coin,
     this.borderColor = const Color(0xffF32E43),
@@ -45,7 +45,7 @@ class KeTaoFeaturedExtraCoinTextPage extends StatefulWidget {
   _ExtraCoinTextPageState createState() => _ExtraCoinTextPageState();
 }
 
-class _ExtraCoinTextPageState extends State<KeTaoFeaturedExtraCoinTextPage> {
+class _ExtraCoinTextPageState extends State<KTKJExtraCoinTextPage> {
   @override
   void initState() {
     super.initState();
@@ -59,7 +59,7 @@ class _ExtraCoinTextPageState extends State<KeTaoFeaturedExtraCoinTextPage> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: !KeTaoFeaturedCommonUtils.isEmpty(widget.coin),
+      visible: !KTKJCommonUtils.isEmpty(widget.coin),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

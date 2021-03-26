@@ -32,7 +32,7 @@ class PriceText extends StatefulWidget {
     this.fontSize,
     this.fontBigSize,
     this.fontWeight = FontWeight.bold,
-    this.textColor ,
+    this.textColor,
   });
   //免单
   @override
@@ -50,7 +50,7 @@ class _PriceTextState extends State<PriceText> {
 
   @override
   void dispose() {
-    super.dispose();//队列
+    super.dispose(); //队列
   }
 
   @override
@@ -59,7 +59,7 @@ class _PriceTextState extends State<PriceText> {
         width: 1125, height: 2436, allowFontScaling: false);
     var intText;
     var dotText = '';
-    if (!KeTaoFeaturedCommonUtils.isEmpty(widget.text)) {
+    if (!KTKJCommonUtils.isEmpty(widget.text)) {
       List<String> s = widget.text.split(".");
       try {
         intText = s[0];
@@ -71,7 +71,7 @@ class _PriceTextState extends State<PriceText> {
         TextSpan(
           children: [
             TextSpan(
-                text: '￥', style: TextStyle(fontSize: widget.fontSize-3)),
+                text: '￥', style: TextStyle(fontSize: widget.fontSize - 3)),
             TextSpan(
                 text: intText, style: TextStyle(fontSize: widget.fontBigSize)),
             TextSpan(text: dotText),

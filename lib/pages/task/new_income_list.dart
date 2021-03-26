@@ -10,8 +10,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedNewIncomeListPage extends StatefulWidget {
-  KeTaoFeaturedNewIncomeListPage({Key key, this.showType}) : super(key: key);
+class KTKJNewIncomeListPage extends StatefulWidget {
+  KTKJNewIncomeListPage({Key key, this.showType}) : super(key: key);
   final String title = "收益列表";
   var showType;
 
@@ -22,7 +22,7 @@ class KeTaoFeaturedNewIncomeListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _NewIncomeListPageState extends State<KeTaoFeaturedNewIncomeListPage>
+class _NewIncomeListPageState extends State<KTKJNewIncomeListPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   int _selectedTabIndex = 0;
@@ -93,12 +93,12 @@ class _NewIncomeListPageState extends State<KeTaoFeaturedNewIncomeListPage>
     if (orderType != null) {
       for (var index = 0; index < orderType.length; index++) {
         if (index == 0) {
-          tabViews.add(KeTaoFeaturedIncomeListPage(
+          tabViews.add(KTKJIncomeListPage(
             pageType: 0,
             showType: widget.showType,
           ));
         } else {
-          tabViews.add(KeTaoFeaturedAboutPage(
+          tabViews.add(KTKJAboutPage(
             pageType: 0,
             profitType: profitType + index,
             showType: widget.showType,
@@ -137,7 +137,7 @@ class _NewIncomeListPageState extends State<KeTaoFeaturedNewIncomeListPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -155,7 +155,7 @@ class _NewIncomeListPageState extends State<KeTaoFeaturedNewIncomeListPage>
               indicatorWeight: 2,
               indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
               unselectedLabelColor: Colors.black,
-              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
+              indicator: KTKJRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Color(0xffF32E43),

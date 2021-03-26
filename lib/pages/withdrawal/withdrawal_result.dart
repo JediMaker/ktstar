@@ -10,8 +10,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedWithdrawalResultPage extends StatefulWidget {
-  KeTaoFeaturedWithdrawalResultPage({Key key}) : super(key: key);
+class KTKJWithdrawalResultPage extends StatefulWidget {
+  KTKJWithdrawalResultPage({Key key}) : super(key: key);
   final String title = "";
 
   @override
@@ -21,7 +21,7 @@ class KeTaoFeaturedWithdrawalResultPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _WithdrawalResultPageState extends State<KeTaoFeaturedWithdrawalResultPage> {
+class _WithdrawalResultPageState extends State<KTKJWithdrawalResultPage> {
   var _withdrawalPrice = '';
 
   var _withdrawalFee = '';
@@ -90,7 +90,7 @@ class _WithdrawalResultPageState extends State<KeTaoFeaturedWithdrawalResultPage
         ),
         brightness: Brightness.light,
         centerTitle: true,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: buildHomeWidget(

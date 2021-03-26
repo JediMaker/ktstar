@@ -45,7 +45,7 @@ const _themes = <MaterialColor>[
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedGlobalConfig {
+class KTKJGlobalConfig {
   static bool dark = false;
   static ThemeData themeData = new ThemeData(
     primarySwatch: Colors.red,
@@ -212,7 +212,7 @@ class KeTaoFeaturedGlobalConfig {
     }
 
     if (!isRelease) {
-//      KeTaoFeaturedGlobalConfig.prefs.setString("uid", "123");
+//      KTKJGlobalConfig.prefs.setString("uid", "123");
     }
 
     ///    初始化高德定位key
@@ -256,7 +256,7 @@ class KeTaoFeaturedGlobalConfig {
     print("经度:${location.latLng.longitude}");
     print("维度:${location.latLng.latitude}");
 
-    if (KeTaoFeaturedCommonUtils.isEmpty(location.city) &&
+    if (KTKJCommonUtils.isEmpty(location.city) &&
         _count < 3 &&
         location.latLng.longitude == 0) {
       initUserLocationWithPermission();
@@ -279,10 +279,10 @@ class KeTaoFeaturedGlobalConfig {
   }
 
   static Future initUserLocationWithPermission({count}) async {
-    if (!KeTaoFeaturedCommonUtils.isEmpty(count)) {
+    if (!KTKJCommonUtils.isEmpty(count)) {
       _count = count;
     }
-    KeTaoFeaturedCommonUtils.requestPermission(Permission.location, _initUserLocation());
+    KTKJCommonUtils.requestPermission(Permission.location, _initUserLocation());
   }
 
 //  存储是否登陆的状态
@@ -328,13 +328,13 @@ class KeTaoFeaturedGlobalConfig {
 
   /// 获取关键词历史搜索列表
   static List<String> getSearchList() {
-    var list = KeTaoFeaturedGlobalConfig.prefs.getStringList("searchList");
+    var list = KTKJGlobalConfig.prefs.getStringList("searchList");
     return list == null ? List<String>() : list;
   }
 
   /// 保存关键词历史搜索列表
   static setSearchList({List<String> searchList}) {
-    KeTaoFeaturedGlobalConfig.prefs.setStringList("searchList", searchList);
+    KTKJGlobalConfig.prefs.setStringList("searchList", searchList);
   }
 
   /// 获取用户信息
@@ -425,7 +425,7 @@ class KeTaoFeaturedGlobalConfig {
     }
 
     jpush.setup(
-      appKey: KeTaoFeaturedGlobalConfig.JPUSH_APPKEY, //你自己应用的 AppKey
+      appKey: KTKJGlobalConfig.JPUSH_APPKEY, //你自己应用的 AppKey
       channel: "theChannel",
       production: false,
       debug: true,

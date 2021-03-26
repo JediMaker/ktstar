@@ -22,10 +22,10 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
+class KTKJTaskDetailOtherPage extends StatefulWidget {
   String taskId;
 
-  KeTaoFeaturedTaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
+  KTKJTaskDetailOtherPage({Key key, @required this.taskId, this.pageType = 0})
       : super(key: key);
   final String title = "任务详情";
   int pageType;
@@ -37,7 +37,7 @@ class KeTaoFeaturedTaskDetailOtherPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> {
+class _TaskDetailOtherPageState extends State<KTKJTaskDetailOtherPage> {
   ///消息类型 0官方提醒 1 系统通知
   String noticeType = "0";
   int page = 1;
@@ -59,7 +59,7 @@ class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> 
           showBtn = result.data.showBtn;
         });
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+        KTKJCommonUtils.showToast(result.errMsg);
       }
     }
     try {
@@ -105,7 +105,7 @@ class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> 
             ),
             centerTitle: true,
             brightness: Brightness.light,
-            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+            backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
           body: SingleChildScrollView(
@@ -174,9 +174,9 @@ class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> 
         child: Ink(
           child: InkWell(
               onTap: () async {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                KTKJNavigatorUtils.navigatorRouter(
                     context,
-                    KeTaoFeaturedTaskOtherSubmissionPage(
+                    KTKJTaskOtherSubmissionPage(
                       taskId: widget.taskId,
                       pageType: widget.pageType,
                     ));
@@ -241,7 +241,7 @@ class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> 
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskGalleryPage(
+                return KTKJTaskGalleryPage(
                   galleryItems: images,
                   index: index,
                 );
@@ -250,7 +250,7 @@ class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> 
             child: Container(
                 width: ScreenUtil().setWidth(730),
 //        width: MediaQuery.of(context).size.width / 2.5,
-                child: new KeTaoFeaturedMyOctoImage(
+                child: new KTKJMyOctoImage(
                   image: url,
                   width: ScreenUtil().setWidth(728),
                   height: ScreenUtil().setHeight(915),
@@ -532,7 +532,7 @@ class _TaskDetailOtherPageState extends State<KeTaoFeaturedTaskDetailOtherPage> 
   }
 
   _iSStepDescTextComtainsHtml(String desc) {
-    if (KeTaoFeaturedCommonUtils.isEmpty(desc)) {
+    if (KTKJCommonUtils.isEmpty(desc)) {
       return false;
     }
     if (desc.contains("</")) {

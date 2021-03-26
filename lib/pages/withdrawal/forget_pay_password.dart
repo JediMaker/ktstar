@@ -12,8 +12,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedForgetPayPasswordPage extends StatefulWidget {
-  KeTaoFeaturedForgetPayPasswordPage({Key key, this.phoneNum }) : super(key: key);
+class KTKJForgetPayPasswordPage extends StatefulWidget {
+  KTKJForgetPayPasswordPage({Key key, this.phoneNum}) : super(key: key);
   final String title = "";
   var phoneNum;
 
@@ -24,7 +24,7 @@ class KeTaoFeaturedForgetPayPasswordPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPage> {
+class _ForgetPayPasswordPageState extends State<KTKJForgetPayPasswordPage> {
   TextEditingController _checkCodeController;
   TextEditingController _passwordController;
   bool _bindPhone = false;
@@ -36,7 +36,7 @@ class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPa
   void initState() {
     _checkCodeController = new TextEditingController()..addListener(() {});
     _passwordController = new TextEditingController()..addListener(() {});
-    if (!KeTaoFeaturedCommonUtils.isEmpty(widget.phoneNum)) {
+    if (!KTKJCommonUtils.isEmpty(widget.phoneNum)) {
       _bindPhone = true;
       var _phoneNum =
           widget.phoneNum.replaceFirst(new RegExp(r'\d{4}'), '****', 3);
@@ -86,7 +86,7 @@ class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPa
               ),
               brightness: Brightness.light,
               centerTitle: true,
-              backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+              backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
               elevation: 0,
             ),
             body: Center(
@@ -161,7 +161,7 @@ class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPa
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(36.0),
                                 color: Colors.white),
-                            child: KeTaoFeaturedTimerWidget(
+                            child: KTKJTimerWidget(
                               textColor: Color(0xffF32E43),
                               startCountAction: (BuildContext context) {
                                 return smsSend(context);
@@ -238,7 +238,7 @@ class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPa
                               _checkCodeController.value.text.isEmpty ||
                               _passwordController.value.text == null ||
                               _passwordController.value.text.isEmpty) {
-                            KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
+                            KTKJCommonUtils.showToast("请检查填写的信息是否完整！");
                           } else {
                             EasyLoading.show();
                             var result = await HttpManage.modifyPayPassword(
@@ -247,11 +247,11 @@ class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPa
                                 _passwordController.value.text);
                             EasyLoading.dismiss();
                             if (result.status) {
-                              KeTaoFeaturedCommonUtils.showToast("设置支付密码成功！");
+                              KTKJCommonUtils.showToast("设置支付密码成功！");
                               Navigator.of(context).pop();
                               return true;
                             } else {
-                              KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                              KTKJCommonUtils.showToast("${result.errMsg}");
                               return false;
                             }
                           }
@@ -291,10 +291,10 @@ class _ForgetPayPasswordPageState extends State<KeTaoFeaturedForgetPayPasswordPa
     var result = await HttpManage.sendPayPasswordModifyVerificationCode(
         widget.phoneNum, "4");
     if (result.status) {
-      KeTaoFeaturedCommonUtils.showToast("验证码已发送，请注意查收！");
+      KTKJCommonUtils.showToast("验证码已发送，请注意查收！");
       return true;
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
       return false;
     }
   }

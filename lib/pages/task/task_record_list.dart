@@ -17,8 +17,8 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
-  KeTaoFeaturedTaskRecordListPage({Key key}) : super(key: key);
+class KTKJTaskRecordListPage extends StatefulWidget {
+  KTKJTaskRecordListPage({Key key}) : super(key: key);
   final String title = "任务提交记录";
 
   @override
@@ -28,7 +28,7 @@ class KeTaoFeaturedTaskRecordListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
+class _TaskRecordListPageState extends State<KTKJTaskRecordListPage> {
   ///  任务状态 -2不可领取 -1去开通 0领任务 1待提交 2待审核 3已完成 4被驳回
   int page = 1;
   EasyRefreshController _refreshController;
@@ -57,7 +57,7 @@ class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -95,7 +95,7 @@ class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
               Navigator.of(context).pop();
             },
           ),
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           centerTitle: true,
 //          backgroundColor: Color(0xfff5f5f5),
           elevation: 0,
@@ -120,7 +120,7 @@ class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
             }
           },
           emptyWidget: _recordList == null || _recordList.length == 0
-              ? KeTaoFeaturedNoDataPage()
+              ? KTKJNoDataPage()
               : null,
           slivers: <Widget>[buildCenter()],
         )
@@ -303,8 +303,12 @@ class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
           Visibility(
             // todo
             visible: category == "3"
-                ? !KeTaoFeaturedCommonUtils.isEmpty(rejectReason) ? true : false
-                : status == "4" ? true : false,
+                ? !KTKJCommonUtils.isEmpty(rejectReason)
+                    ? true
+                    : false
+                : status == "4"
+                    ? true
+                    : false,
             child: Column(
               children: <Widget>[
                 SizedBox(
@@ -434,17 +438,17 @@ class _TaskRecordListPageState extends State<KeTaoFeaturedTaskRecordListPage> {
                 child: GestureDetector(
                   onTap: () {
                     if (category == '1') {
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           context,
-                          KeTaoFeaturedTaskSubmissionPage(
+                          KTKJTaskSubmissionPage(
                             taskId: taskId,
                             comId: comId,
                             pageType: 1,
                           ));
                     } else {
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           context,
-                          KeTaoFeaturedTaskOtherSubmissionPage(
+                          KTKJTaskOtherSubmissionPage(
                             taskId: taskId,
                             comId: comId,
                             pageType: 1,

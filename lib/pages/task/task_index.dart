@@ -32,26 +32,26 @@ import '../widget/navigation_icon_view.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskIndexPage extends StatefulWidget {
+class KTKJTaskIndexPage extends StatefulWidget {
   int currentIndex;
 
-  KeTaoFeaturedTaskIndexPage({this.currentIndex = 0});
+  KTKJTaskIndexPage({this.currentIndex = 0});
 
   @override
   State<StatefulWidget> createState() => new _TaskIndexPageState();
 }
 
 void main() {
-  runApp(KeTaoFeaturedTaskIndexPage());
+  runApp(KTKJTaskIndexPage());
 }
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
+class _TaskIndexPageState extends State<KTKJTaskIndexPage>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
-  List<KeTaoFeaturedNavigationIconView> _navigationViews;
+  List<KTKJNavigationIconView> _navigationViews;
   List<StatefulWidget> _pageList;
   StatefulWidget _currentPage;
 
@@ -59,15 +59,15 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   int positionIndex = 0;
 
   _initVersionData() async {
-    await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
-    if (KeTaoFeaturedGlobalConfig.isLogin()) {
+    await KTKJGlobalConfig.initUserLocationWithPermission(count: 0);
+    if (KTKJGlobalConfig.isLogin()) {
       await HttpManage.getUserInfo();
     }
     var versionInfo = await HttpManage.getVersionInfo();
     if (versionInfo.status) {
       switch (versionInfo.data.wxLogin) {
         case "1": //不显示
-          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = false;
+          KTKJGlobalConfig.displayThirdLoginInformation = false;
 
           if (mounted) {
             setState(() {});
@@ -75,7 +75,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
           break;
 
         case "2": //显示
-          KeTaoFeaturedGlobalConfig.displayThirdLoginInformation = true;
+          KTKJGlobalConfig.displayThirdLoginInformation = true;
           if (mounted) {
             setState(() {});
           }
@@ -83,13 +83,14 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
       }
       if (versionInfo.data.whCheck) {
         //华为应用市场上架审核中
-        KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+        KTKJGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
       } else {
-        KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+        KTKJGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
       }
-      if (!KeTaoFeaturedGlobalConfig.isAgreePrivacy && KeTaoFeaturedGlobalConfig.isHuaweiUnderReview) {
+      if (!KTKJGlobalConfig.isAgreePrivacy &&
+          KTKJGlobalConfig.isHuaweiUnderReview) {
         Future.delayed(Duration(milliseconds: 30), () {
-          if(Platform.isAndroid){
+          if (Platform.isAndroid) {
             showPrivacyDialog(context);
           }
         });
@@ -100,7 +101,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   ///展示隐私弹窗
   ///
   showPrivacyDialog(context) {
-    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
+    return KTKJNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -126,9 +127,9 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                             WidgetSpan(
                               child: GestureDetector(
                                 onTap: () {
-                                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                  KTKJNavigatorUtils.navigatorRouter(
                                       context,
-                                      KeTaoFeaturedWebViewPage(
+                                      KTKJWebViewPage(
                                         initialUrl: APi.AGREEMENT_SERVICES_URL,
                                         showActions: false,
                                         title: "服务协议",
@@ -137,7 +138,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                                 child: Text(
                                   "《服务协议》",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                      color: KTKJGlobalConfig.taskHeadColor,
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
@@ -147,9 +148,9 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                             WidgetSpan(
                               child: GestureDetector(
                                 onTap: () {
-                                  KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                  KTKJNavigatorUtils.navigatorRouter(
                                       context,
-                                      KeTaoFeaturedWebViewPage(
+                                      KTKJWebViewPage(
                                         initialUrl: APi.AGREEMENT_PRIVACY_URL,
                                         showActions: false,
                                         title: "隐私政策",
@@ -158,7 +159,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                                 child: Text(
                                   "《隐私政策》",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                      color: KTKJGlobalConfig.taskHeadColor,
                                       fontSize: ScreenUtil().setSp(42)),
                                 ),
                               ),
@@ -191,7 +192,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                   child: new FlatButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        KeTaoFeaturedGlobalConfig.prefs.setBool("isAgreePrivacy", true);
+                        KTKJGlobalConfig.prefs.setBool("isAgreePrivacy", true);
                       },
                       child: new Text(
                         '同意',
@@ -209,7 +210,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
 
   @override
   void initState() {
-    KeTaoFeaturedUtils.checkAppVersion(context);
+    KTKJUtils.checkAppVersion(context);
     _initVersionData();
 
     super.initState();
@@ -221,10 +222,10 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
       }
       setState(() {
         /*if (index == 1) {
-                      if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                      if (!KTKJGlobalConfig.isLogin()) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
-                          return KeTaoFeaturedLoginPage();
+                          return KTKJLoginPage();
                         }));
                       } else {
                         _navigationViews[_currentIndex].controller.reverse();
@@ -251,10 +252,10 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
       if (mounted) {
         setState(() {
           /*if (index == 1) {
-                      if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                      if (!KTKJGlobalConfig.isLogin()) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
-                          return KeTaoFeaturedLoginPage();
+                          return KTKJLoginPage();
                         }));
                       } else {
                         _navigationViews[_currentIndex].controller.reverse();
@@ -296,7 +297,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                   DateTime.now().difference(_lastQuitTime).inSeconds > 1) {
                 /*Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('再按一次 Back 按钮退出')));*/
-                KeTaoFeaturedCommonUtils.showToast("再按一次返回键退出应用");
+                KTKJCommonUtils.showToast("再按一次返回键退出应用");
                 _lastQuitTime = DateTime.now();
                 return false;
               } else {
@@ -319,8 +320,8 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   }
 
   Scaffold buildHomeWidget() {
-    _navigationViews = <KeTaoFeaturedNavigationIconView>[
-      new KeTaoFeaturedNavigationIconView(
+    _navigationViews = <KTKJNavigationIconView>[
+      new KTKJNavigationIconView(
           icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_home.svg',
@@ -329,7 +330,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             color: Color(0xff777777),
           ),
 /*
-          icon: KeTaoFeaturedMyOctoImage(
+          icon: KTKJMyOctoImage(
             image:
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
                 'https://alipic.lanhuapp.com/xde9009b67-5da3-4cb5-ae5e-0a6adaf47e9e',
@@ -345,7 +346,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             color: Color(0xffce0100),
           ),
 /*
-          activeIcon: KeTaoFeaturedMyOctoImage(
+          activeIcon: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xd456bae13-0c32-4df3-a87f-f2f93c5961aa',
             width: ScreenUtil().setWidth(74),
@@ -357,7 +358,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
-      new KeTaoFeaturedNavigationIconView(
+      new KTKJNavigationIconView(
           icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_category.svg',
@@ -366,7 +367,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             color: Color(0xff777777),
           ),
 /*
-          icon: KeTaoFeaturedMyOctoImage(
+          icon: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xda87fe7ad-f66f-4d6a-a344-5bfcd0664c21',
             width: ScreenUtil().setWidth(75),
@@ -385,7 +386,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
-      new KeTaoFeaturedNavigationIconView(
+      new KTKJNavigationIconView(
           /* icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_category.svg',
@@ -393,7 +394,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
           ),*/
-          icon: KeTaoFeaturedMyOctoImage(
+          icon: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xd145d244b-d153-4165-88a1-eae8e225f6e7',
             width: ScreenUtil().setWidth(68),
@@ -406,7 +407,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
           ),*/
-          activeIcon: KeTaoFeaturedMyOctoImage(
+          activeIcon: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xd7c1d7666-ed9e-4a75-96d1-3b2ec627a062',
             width: ScreenUtil().setWidth(68),
@@ -417,7 +418,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
-      new KeTaoFeaturedNavigationIconView(
+      new KTKJNavigationIconView(
           /* icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_category.svg',
@@ -425,7 +426,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xff777777),
           ),*/
-          icon: KeTaoFeaturedMyOctoImage(
+          icon: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xd182ca7eb-0c78-44f8-8ae3-b86073dfcbcb',
             width: ScreenUtil().setWidth(80),
@@ -438,7 +439,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             height: ScreenUtil().setWidth(76),
             color: Color(0xffce0100),
           ),*/
-          activeIcon: KeTaoFeaturedMyOctoImage(
+          activeIcon: KTKJMyOctoImage(
             image:
                 'https://alipic.lanhuapp.com/xdda990b37-c04e-43e7-be69-871b56aa0e28',
             width: ScreenUtil().setWidth(77),
@@ -449,7 +450,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
-      new KeTaoFeaturedNavigationIconView(
+      new KTKJNavigationIconView(
           icon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
             'static/images/icon_mine.svg',
@@ -470,19 +471,19 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
           ),
           vsync: this)
     ];
-    for (KeTaoFeaturedNavigationIconView view in _navigationViews) {
+    for (KTKJNavigationIconView view in _navigationViews) {
       view.controller.addListener(_rebuild);
     }
 
     _pageList = <StatefulWidget>[
 //      new HomePage(tabIndex: _homeTabIndex),
-      KeTaoFeaturedHomePagePage(),
-      KeTaoFeaturedNewClassifyListPage(),
-      KeTaoFeaturedMicroShareHolderEquityPage(
+      KTKJHomePagePage(),
+      KTKJNewClassifyListPage(),
+      KTKJMicroShareHolderEquityPage(
         showBackBtnIcon: false,
       ),
-      KeTaoFeaturedShopListPage(),
-      KeTaoFeaturedMinePagePage(),
+      KTKJShopListPage(),
+      KTKJMinePagePage(),
       /*   new NoticePage(),
       new MyPage()*/
     ];
@@ -497,7 +498,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
         bottomNavigationBar: Builder(
             builder: (context) => BottomNavigationBar(
                 items: _navigationViews
-                    .map((KeTaoFeaturedNavigationIconView navigationIconView) =>
+                    .map((KTKJNavigationIconView navigationIconView) =>
                         navigationIconView.item)
                     .toList(),
                 currentIndex: _currentIndex,
@@ -506,10 +507,10 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
                 onTap: (int index) {
                   setState(() {
                     /*if (index == 1) {
-                      if (!KeTaoFeaturedGlobalConfig.isLogin()) {
+                      if (!KTKJGlobalConfig.isLogin()) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
-                          return KeTaoFeaturedLoginPage();
+                          return KTKJLoginPage();
                         }));
                       } else {
                         _navigationViews[_currentIndex].controller.reverse();
@@ -541,7 +542,7 @@ class _TaskIndexPageState extends State<KeTaoFeaturedTaskIndexPage>
   @override
   void dispose() {
     super.dispose();
-    for (KeTaoFeaturedNavigationIconView view in _navigationViews) {
+    for (KTKJNavigationIconView view in _navigationViews) {
       view.controller.dispose();
     }
   }

@@ -17,8 +17,8 @@ import 'package:flutter/cupertino.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
-  KeTaoFeaturedReturnInfoPage({Key key, this.product}) : super(key: key);
+class KTKJReturnInfoPage extends StatefulWidget {
+  KTKJReturnInfoPage({Key key, this.product}) : super(key: key);
   final String title = "退款详情";
   OrderDetailDataGoodsList product;
 
@@ -29,7 +29,7 @@ class KeTaoFeaturedReturnInfoPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
+class _ReturnInfoPageState extends State<KTKJReturnInfoPage> {
   var _topBoxBgColor = Color(0xffF32E43);
 
   var _requestDesc = '平台会在7个工作日内给您答复，如有疑问请咨询客服。';
@@ -144,7 +144,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -479,7 +479,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
 
                 }*/
                 _indexVisible = false;
-                KeTaoFeaturedCommonUtils.requestPermission(Permission.photos,
+                KTKJCommonUtils.requestPermission(Permission.photos,
                     _onButtonPressed(ImageSource.gallery, context: context));
               },
               child: Image.asset(
@@ -495,7 +495,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskGalleryPage(
+                return KTKJTaskGalleryPage(
                   images: images,
                   index: index,
                   type: 1,
@@ -599,7 +599,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
 
   Widget buildTopStateBox() {
     return Visibility(
-        visible: !KeTaoFeaturedCommonUtils.isEmpty(_requestDesc),
+        visible: !KTKJCommonUtils.isEmpty(_requestDesc),
         child: Container(
             width: double.infinity,
             color: _topBoxBgColor,
@@ -617,7 +617,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
                       visible: _isReturnSuccess,
                       child: Container(
                         margin: EdgeInsets.only(right: 8),
-                        child: KeTaoFeaturedMyOctoImage(
+                        child: KTKJMyOctoImage(
                           image:
                               'https://alipic.lanhuapp.com/xd6099a4da-e864-47bf-8cf5-e859a821e962',
                           width: ScreenUtil().setWidth(60),
@@ -771,7 +771,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: KeTaoFeaturedMyOctoImage(
+                child: KTKJMyOctoImage(
                   fadeInDuration: Duration(milliseconds: 0),
                   fadeOutDuration: Duration(milliseconds: 0),
                   fit: BoxFit.fill,
@@ -996,7 +996,7 @@ class _ReturnInfoPageState extends State<KeTaoFeaturedReturnInfoPage> {
             child: GestureDetector(
               onTap: () {
                 Clipboard.setData(ClipboardData(text: "$subTitle"));
-                KeTaoFeaturedCommonUtils.showToast("已复制文本");
+                KTKJCommonUtils.showToast("已复制文本");
               },
               child: Container(
                 child: Text(

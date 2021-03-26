@@ -8,11 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedUpdateDialog extends Dialog {
+class KTKJUpdateDialog extends Dialog {
   final String upDateContent;
   final bool isForce;
 
-  KeTaoFeaturedUpdateDialog({this.upDateContent, this.isForce});
+  KTKJUpdateDialog({this.upDateContent, this.isForce});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class KeTaoFeaturedUpdateDialog extends Dialog {
             child: Stack(
               alignment: Alignment.topCenter,
               children: <Widget>[
-                KeTaoFeaturedMyOctoImage(
+                KTKJMyOctoImage(
                   width: ScreenUtil().setWidth(706),
                   height: ScreenUtil().setWidth(1087),
                   image:
@@ -133,7 +133,7 @@ class KeTaoFeaturedUpdateDialog extends Dialog {
         context: context,
         builder: (BuildContext context) {
           return WillPopScope(
-              child: KeTaoFeaturedUpdateDialog(
+              child: KTKJUpdateDialog(
                   upDateContent: mUpdateContent, isForce: mIsForce),
               onWillPop: _onWillPop);
         });

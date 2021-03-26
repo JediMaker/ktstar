@@ -18,7 +18,7 @@ import 'dart:convert';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedCommonUtils {
+class KTKJCommonUtils {
   static final double MILLIS_LIMIT = 1000.0;
 
   static final double SECONDS_LIMIT = 60 * MILLIS_LIMIT;
@@ -211,7 +211,7 @@ class KeTaoFeaturedCommonUtils {
 
   static Future<Null> showIosPayDialog() {
     Future.delayed(Duration(seconds: 0)).then((onValue) {
-      var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
+      var context = KTKJGlobalConfig.navigatorKey.currentState.overlay.context;
       showCupertinoDialog(
           context: context,
           builder: (context) {
@@ -239,7 +239,7 @@ class KeTaoFeaturedCommonUtils {
   ///版本更新
   static Future<Null> showUpdateDialog(
       BuildContext context, String contentMsg) {
-    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
+    return KTKJNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -274,7 +274,7 @@ class KeTaoFeaturedCommonUtils {
               fun();
             } else {
               lastPopTime = DateTime.now();
-              KeTaoFeaturedCommonUtils.showToast("请勿重复点击！");
+              KTKJCommonUtils.showToast("请勿重复点击！");
             }
           },
           child: childWidget),
@@ -283,7 +283,7 @@ class KeTaoFeaturedCommonUtils {
 
   static Future<Null> showPromptDialog(
       BuildContext context, String title, String contentMsg) {
-    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
+    return KTKJNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -322,7 +322,7 @@ class KeTaoFeaturedCommonUtils {
 
   static Future<Null> showSimplePromptDialog(
       BuildContext context, String title, String contentMsg) {
-    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
+    return KTKJNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -348,7 +348,7 @@ class KeTaoFeaturedCommonUtils {
                       },
                       child: new Text(
                         '确定',
-                        style: TextStyle(color: KeTaoFeaturedGlobalConfig.colorPrimary),
+                        style: TextStyle(color: KTKJGlobalConfig.colorPrimary),
                       )),
                 ),
               ],
@@ -358,7 +358,7 @@ class KeTaoFeaturedCommonUtils {
   }
 
   static Future<Null> showPayPasswordDialog(BuildContext context, orderId) {
-    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
+    return KTKJNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -484,7 +484,7 @@ class KeTaoFeaturedCommonUtils {
     switch (status) {
       case PermissionStatus.denied:
         print("denied");
-        KeTaoFeaturedCommonUtils.showToast("相关功能受限，请设置允许相关权限");
+        KTKJCommonUtils.showToast("相关功能受限，请设置允许相关权限");
         break;
       case PermissionStatus.granted:
         fun;
@@ -494,7 +494,7 @@ class KeTaoFeaturedCommonUtils {
       case PermissionStatus.undetermined:
         break;
       case PermissionStatus.permanentlyDenied:
-        KeTaoFeaturedCommonUtils.showToast("相关功能受限，请设置允许相关权限");
+        KTKJCommonUtils.showToast("相关功能受限，请设置允许相关权限");
         openAppSettings();
         break;
     }

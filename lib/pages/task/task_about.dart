@@ -10,7 +10,7 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedAboutPage extends StatefulWidget {
+class KTKJAboutPage extends StatefulWidget {
   @override
   _AboutPageState createState() => _AboutPageState();
 }
@@ -18,7 +18,7 @@ class KeTaoFeaturedAboutPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _AboutPageState extends State<KeTaoFeaturedAboutPage>
+class _AboutPageState extends State<KTKJAboutPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -46,7 +46,7 @@ class _AboutPageState extends State<KeTaoFeaturedAboutPage>
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return KeTaoFeaturedWebViewPage(
+                return KTKJWebViewPage(
                     initialUrl: APi.AGREEMENT_SERVICES_URL, title: "用户协议");
               }));
             },
@@ -97,7 +97,7 @@ class _AboutPageState extends State<KeTaoFeaturedAboutPage>
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return KeTaoFeaturedWebViewPage(
+                return KTKJWebViewPage(
                   initialUrl: APi.AGREEMENT_PRIVACY_URL,
                   title: "隐私政策",
                 );
@@ -138,7 +138,7 @@ class _AboutPageState extends State<KeTaoFeaturedAboutPage>
           ),
         ),
         Visibility(
-          visible: KeTaoFeaturedGlobalConfig.isHuaweiUnderReview,
+          visible: KTKJGlobalConfig.isHuaweiUnderReview,
           child: Column(
             children: [
               Container(
@@ -151,8 +151,7 @@ class _AboutPageState extends State<KeTaoFeaturedAboutPage>
               Ink(
                 decoration: BoxDecoration(color: Colors.white),
                 child: InkWell(
-                  onTap: () {
-                  },
+                  onTap: () {},
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 16),
@@ -232,7 +231,7 @@ class _AboutPageState extends State<KeTaoFeaturedAboutPage>
           ),
           brightness: Brightness.light,
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: _buildInfoCard());

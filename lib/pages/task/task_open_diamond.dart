@@ -19,8 +19,8 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskOpenDiamondPage extends StatefulWidget {
-  KeTaoFeaturedTaskOpenDiamondPage({Key key}) : super(key: key);
+class KTKJTaskOpenDiamondPage extends StatefulWidget {
+  KTKJTaskOpenDiamondPage({Key key}) : super(key: key);
   final String title = "钻石会员权益";
 
   @override
@@ -30,7 +30,7 @@ class KeTaoFeaturedTaskOpenDiamondPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> {
+class _TaskOpenDiamondPageState extends State<KTKJTaskOpenDiamondPage> {
   String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
 
   String _result = "无";
@@ -54,11 +54,11 @@ class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> 
   }
 
   _initWeChatResponseHandler() {
-    KeTaoFeaturedGlobalConfig.payType = 0;
+    KTKJGlobalConfig.payType = 0;
     fluwx.weChatResponseEventHandler.listen((res) async {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
-        if (res.isSuccessful && KeTaoFeaturedGlobalConfig.payType == 0) {
+        if (res.isSuccessful && KTKJGlobalConfig.payType == 0) {
           _checkPayStatus();
         }
       }
@@ -71,22 +71,22 @@ class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> 
       var payStatus = result.data["pay_status"].toString();
       switch (payStatus) {
         case "1": //未成功
-          KeTaoFeaturedCommonUtils.showToast("支付失败");
+          KTKJCommonUtils.showToast("支付失败");
           break;
         case "2": //已成功
           /* Fluttertoast.showToast(
               msg: "开通成功,去领任务吧",
               textColor: Colors.white,
               backgroundColor: Colors.grey);*/
-          KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
-              KeTaoFeaturedPayResultPage(
+              KTKJPayResultPage(
                 payNo: _payNo,
               ));
           break;
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -341,17 +341,17 @@ class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> 
                         TextSpan(
                             text: "¥",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 12)),
                         TextSpan(
                             text: " 199",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 18)),
                         TextSpan(
                             text: ".00",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 12)),
                       ])),
                     ),
@@ -413,7 +413,7 @@ class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> 
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                            KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
                           var result = await HttpManage.getAliPayInfo();
@@ -422,10 +422,10 @@ class _TaskOpenDiamondPageState extends State<KeTaoFeaturedTaskOpenDiamondPage> 
                             _payNo = result.data.payNo;
                             callAlipay();
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                            KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast("请选择支付方式");
+                          KTKJCommonUtils.showToast("请选择支付方式");
                         }
                         Navigator.of(context).pop();
                       },

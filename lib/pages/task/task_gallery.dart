@@ -16,8 +16,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskGalleryPage extends StatefulWidget {
-  KeTaoFeaturedTaskGalleryPage(
+class KTKJTaskGalleryPage extends StatefulWidget {
+  KTKJTaskGalleryPage(
       {Key key, this.galleryItems, this.index = 0, this.type = 0, this.images})
       : super(key: key);
   final String title = "";
@@ -33,7 +33,7 @@ class KeTaoFeaturedTaskGalleryPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
+class _TaskGalleryPageState extends State<KTKJTaskGalleryPage> {
   PageController pageController;
   int _currentIndex;
   Permission _permission = Permission.storage;
@@ -56,10 +56,9 @@ class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name:
-            "kt_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
+        name: "kt_${KTKJCommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result);
-    KeTaoFeaturedCommonUtils.showToast("图片已下载");
+    KTKJCommonUtils.showToast("图片已下载");
   }
 
   @override
@@ -89,7 +88,7 @@ class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
                           ListTile(
                             onTap: () async {
                               Navigator.of(context).pop();
-                              KeTaoFeaturedCommonUtils.requestPermission(
+                              KTKJCommonUtils.requestPermission(
                                   _permission, _saveImage(_currentIndex));
                             },
                             title: Text(
@@ -152,7 +151,7 @@ class _TaskGalleryPageState extends State<KeTaoFeaturedTaskGalleryPage> {
               alignment: Alignment.topLeft,
               child: ClipOval(
                 child: IconButton(
-                  icon: KeTaoFeaturedMyOctoImage(
+                  icon: KTKJMyOctoImage(
                     image:
                         "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                   ),

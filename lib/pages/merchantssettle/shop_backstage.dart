@@ -14,10 +14,10 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedShopBackstagePage extends StatefulWidget {
+class KTKJShopBackstagePage extends StatefulWidget {
   var shopId;
 
-  KeTaoFeaturedShopBackstagePage({Key key, this.shopId = ''}) : super(key: key);
+  KTKJShopBackstagePage({Key key, this.shopId = ''}) : super(key: key);
   final String title = "商家后台";
 
   @override
@@ -27,7 +27,7 @@ class KeTaoFeaturedShopBackstagePage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
+class _ShopBackstagePageState extends State<KTKJShopBackstagePage>
     with TickerProviderStateMixin {
   var _receivedPayNum = '0';
   var _receivedMoney = '0';
@@ -218,7 +218,7 @@ class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
                               ),
                               indicatorPadding:
                                   EdgeInsets.only(top: 4, bottom: 2),
-                              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
+                              indicator: KTKJRoundUnderlineTabIndicator(
                                   borderSide: BorderSide(
                                 width: 3.5,
                                 color: Color(0xffF32E43),
@@ -249,11 +249,11 @@ class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          if (!KeTaoFeaturedCommonUtils.isEmpty(content) && content.startsWith("http")) {
+          if (!KTKJCommonUtils.isEmpty(content) && content.startsWith("http")) {
             ///跳转收款二维码页面
-            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            KTKJNavigatorUtils.navigatorRouter(
                 context,
-                KeTaoFeaturedShopQrCodePage(
+                KTKJShopQrCodePage(
                   qrCodeUrl: _qrCodeUrl,
                 ));
           }
@@ -261,8 +261,8 @@ class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
         child: Column(
           children: [
             Visibility(
-              visible:
-                  !KeTaoFeaturedCommonUtils.isEmpty(content) && !content.startsWith("http"),
+              visible: !KTKJCommonUtils.isEmpty(content) &&
+                  !content.startsWith("http"),
               child: Container(
                 height: ScreenUtil().setWidth(78),
                 child: Text(
@@ -275,8 +275,8 @@ class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
               ),
             ),
             Visibility(
-              visible:
-                  !KeTaoFeaturedCommonUtils.isEmpty(content) && content.startsWith("http"),
+              visible: !KTKJCommonUtils.isEmpty(content) &&
+                  content.startsWith("http"),
               child: Container(
                 margin: EdgeInsets.only(
                   bottom: ScreenUtil().setWidth(22),
@@ -284,7 +284,7 @@ class _ShopBackstagePageState extends State<KeTaoFeaturedShopBackstagePage>
                 child: Container(
                   width: ScreenUtil().setWidth(56),
                   height: ScreenUtil().setWidth(56),
-                  child: KeTaoFeaturedMyOctoImage(
+                  child: KTKJMyOctoImage(
                     image: "$content",
                     width: ScreenUtil().setWidth(56),
                     height: ScreenUtil().setWidth(56),
@@ -354,7 +354,7 @@ class _ShopOrderTabViewState extends State<ShopOrderTabView>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -393,7 +393,7 @@ class _ShopOrderTabViewState extends State<ShopOrderTabView>
         }
       },
       emptyWidget: _shopOrderList == null || _shopOrderList.length == 0
-          ? KeTaoFeaturedNoDataPage()
+          ? KTKJNoDataPage()
           : null,
       slivers: <Widget>[buildCenter()],
     );

@@ -23,11 +23,10 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskDetailPage extends StatefulWidget {
+class KTKJTaskDetailPage extends StatefulWidget {
   String taskId;
 
-  KeTaoFeaturedTaskDetailPage(
-      {Key key, @required this.taskId, this.pageType = 0})
+  KTKJTaskDetailPage({Key key, @required this.taskId, this.pageType = 0})
       : super(key: key);
   final String title = "任务下载";
   int pageType;
@@ -41,7 +40,7 @@ void main() {}
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
+class _TaskDetailPageState extends State<KTKJTaskDetailPage> {
   Permission _permission = Permission.storage;
 
   String _response = "";
@@ -106,7 +105,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskHeadColor,
         ),
         body: Stack(
           children: <Widget>[
@@ -249,7 +248,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return KeTaoFeaturedTaskGalleryPage(
+          return KTKJTaskGalleryPage(
             galleryItems: images,
             index: index,
           );
@@ -258,7 +257,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
       child: Container(
           margin: const EdgeInsets.only(right: 10.0),
 //        width: MediaQuery.of(context).size.width / 2.5,
-          child: new KeTaoFeaturedMyOctoImage(
+          child: new KTKJMyOctoImage(
             image: url,
             width: ScreenUtil().setWidth(274),
             height: ScreenUtil().setWidth(274),
@@ -275,7 +274,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
           itemCount: images.length,
           autoplay: true,
           itemBuilder: (context, index) {
-            return KeTaoFeaturedMyOctoImage(
+            return KTKJMyOctoImage(
               image: images[index],
               width: 1920,
               height: 150,
@@ -415,8 +414,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
     var result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
-        name:
-            "ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis() + index.toString()}");
+        name: "ktxx_${KTKJCommonUtils.currentTimeMillis() + index.toString()}");
     print("当前$index下载结果" + result.toString());
   }
 
@@ -425,7 +423,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
       _save(i);
     }
     if (showToast) {
-      KeTaoFeaturedCommonUtils.showToast("图片已下载");
+      KTKJCommonUtils.showToast("图片已下载");
     }
   }
 
@@ -446,8 +444,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child:
-                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _saveImagesWithPermission,
                 childWidget: new Container(
                   child: new Column(
@@ -480,8 +477,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child:
-                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _copyText,
                 childWidget: new Container(
                   child: new Column(
@@ -512,8 +508,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child:
-                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _goWechat,
                 childWidget: new Container(
                   child: new Column(
@@ -544,8 +539,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
             new Container(
               width: MediaQuery.of(context).size.width / 4,
               child: new FlatButton(
-                  child:
-                      KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: _goWechat,
                 childWidget: new Container(
                   child: new Column(
@@ -580,20 +574,20 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
   }
 
   void _saveImagesWithPermission() {
-    KeTaoFeaturedCommonUtils.requestPermission(
+    KTKJCommonUtils.requestPermission(
         _permission, _saveImages(showToast: true));
   }
 
   void _goWechat() {
     /* Clipboard.setData(ClipboardData(text: des));
-    KeTaoFeaturedCommonUtils.requestPermission(_permission, _saveImages(showToast: false));
-    KeTaoFeaturedCommonUtils.showToast("已保存文案和图片");*/
+    KTKJCommonUtils.requestPermission(_permission, _saveImages(showToast: false));
+    KTKJCommonUtils.showToast("已保存文案和图片");*/
     launch("weixin://");
   }
 
   void _copyText() {
     Clipboard.setData(ClipboardData(text: des));
-    KeTaoFeaturedCommonUtils.showToast("已复制文案");
+    KTKJCommonUtils.showToast("已复制文案");
   }
 
   Widget myServiceCard2() {
@@ -855,17 +849,16 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       /*color: _imageFile == null
-                        ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
-                        : KeTaoFeaturedGlobalConfig.taskHeadColor,*/
+                        ? KTKJGlobalConfig.taskHeadDisableColor
+                        : KTKJGlobalConfig.taskHeadColor,*/
                       /*gradient: LinearGradient(
                         colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                      border: Border.all(
-                          color: KeTaoFeaturedGlobalConfig.taskHeadColor),
+                      border: Border.all(color: KTKJGlobalConfig.taskHeadColor),
                       borderRadius: BorderRadius.circular(48)),
                   child: Text(
                     '复制文案',
                     style: TextStyle(
-                        color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                        color: KTKJGlobalConfig.taskHeadColor,
                         fontSize: ScreenUtil().setSp(42)),
                   ),
                 ),
@@ -877,7 +870,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return KeTaoFeaturedTaskSubmissionPage(
+                    return KTKJTaskSubmissionPage(
                       taskId: widget.taskId,
                       pageType: widget.pageType,
                     );
@@ -888,7 +881,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                      color: KTKJGlobalConfig.taskHeadColor,
                       /*gradient: LinearGradient(
                           colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
                       borderRadius: BorderRadius.circular(48)),
@@ -908,7 +901,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
 
   Widget buildTaskItemLayout() {
     return ListTile(
-      leading: KeTaoFeaturedMyOctoImage(
+      leading: KTKJMyOctoImage(
         width: 40,
         height: 40,
         image:
@@ -993,7 +986,7 @@ class _TaskDetailPageState extends State<KeTaoFeaturedTaskDetailPage> {
           images = result.data.fileId;
         });
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+        KTKJCommonUtils.showToast(result.errMsg);
       }
     }
   }

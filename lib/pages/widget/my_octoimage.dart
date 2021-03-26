@@ -13,8 +13,8 @@ import 'package:star/utils/common_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedMyOctoImage extends StatefulWidget {
-  KeTaoFeaturedMyOctoImage(
+class KTKJMyOctoImage extends StatefulWidget {
+  KTKJMyOctoImage(
       {Key key,
       this.image,
       this.imageBuilder,
@@ -169,7 +169,7 @@ class KeTaoFeaturedMyOctoImage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _MyOctoImageState extends State<KeTaoFeaturedMyOctoImage> {
+class _MyOctoImageState extends State<KTKJMyOctoImage> {
   @override
   void initState() {
     super.initState();
@@ -183,7 +183,7 @@ class _MyOctoImageState extends State<KeTaoFeaturedMyOctoImage> {
 
   @override
   Widget build(BuildContext context) {
-//    if (KeTaoFeaturedCommonUtils.isEmpty(widget.image)) {
+//    if (KTKJCommonUtils.isEmpty(widget.image)) {
 //      return null;
 //    }
     return RepaintBoundary(

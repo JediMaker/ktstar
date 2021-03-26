@@ -16,8 +16,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskSubmissionPage extends StatefulWidget {
-  KeTaoFeaturedTaskSubmissionPage(
+class KTKJTaskSubmissionPage extends StatefulWidget {
+  KTKJTaskSubmissionPage(
       {Key key, @required this.taskId, this.pageType = 0, this.comId})
       : super(key: key);
   final String title = "提交截图审核";
@@ -36,7 +36,7 @@ class KeTaoFeaturedTaskSubmissionPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
+class _TaskSubmissionPageState extends State<KTKJTaskSubmissionPage> {
   PickedFile _imageFile;
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
@@ -105,14 +105,14 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
             var imageId = entity.data["id"].toString();
             var result = await HttpManage.taskReSubmit(widget.comId, imageId);
             if (result.status) {
-              KeTaoFeaturedCommonUtils.showToast("提交成功");
-              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                  context, KeTaoFeaturedTaskIndexPage());
+              KTKJCommonUtils.showToast("提交成功");
+              KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, KTKJTaskIndexPage());
             } else {
-              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+              KTKJCommonUtils.showToast(result.errMsg);
             }
           } else {
-            KeTaoFeaturedCommonUtils.showToast(entity.errMsg);
+            KTKJCommonUtils.showToast(entity.errMsg);
           }
         },
         child: Container(
@@ -122,8 +122,8 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: _imageFile == null
-                  ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
-                  : KeTaoFeaturedGlobalConfig.taskHeadColor,
+                  ? KTKJGlobalConfig.taskHeadDisableColor
+                  : KTKJGlobalConfig.taskHeadColor,
               /*gradient: LinearGradient(
                   colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
               borderRadius: BorderRadius.circular(48)),
@@ -154,16 +154,16 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 /*color: _imageFile == null
-                    ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
-                    : KeTaoFeaturedGlobalConfig.taskHeadColor,*/
+                    ? KTKJGlobalConfig.taskHeadDisableColor
+                    : KTKJGlobalConfig.taskHeadColor,*/
                 /*gradient: LinearGradient(
                     colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                border: Border.all(color: KeTaoFeaturedGlobalConfig.taskHeadColor),
+                border: Border.all(color: KTKJGlobalConfig.taskHeadColor),
                 borderRadius: BorderRadius.circular(48)),
             child: Text(
               '重新上传',
               style: TextStyle(
-                  color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                  color: KTKJGlobalConfig.taskHeadColor,
                   fontSize: ScreenUtil().setSp(48)),
             ),
           ),
@@ -193,7 +193,7 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
           ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskHeadColor,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 46, vertical: 16),
@@ -212,7 +212,7 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
                                 height: ScreenUtil().setHeight(695),
                                 fit: BoxFit.fill,
                               )
-                            : KeTaoFeaturedMyOctoImage(image: imgUrl)),
+                            : KTKJMyOctoImage(image: imgUrl)),
                     Visibility(
                       visible: _imageFile != null,
                       child: Image.file(
@@ -247,7 +247,7 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
                       visible: _imageFile == null,
                       child: GestureDetector(
                           onTap: () async {
-                            KeTaoFeaturedCommonUtils.requestPermission(
+                            KTKJCommonUtils.requestPermission(
                                 Permission.photos,
                                 _onButtonPressed(ImageSource.gallery,
                                     context: context));
@@ -284,7 +284,7 @@ class _TaskSubmissionPageState extends State<KeTaoFeaturedTaskSubmissionPage> {
                 ),
                 buildSubmitButton(),
                 buildUploadtButton(),
-                /* KeTaoFeaturedMyOctoImage(
+                /* KTKJMyOctoImage(
                   imageUrl: "",
                 ),*/
               ],

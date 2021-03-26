@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedCacheFileImage {
+class KTKJCacheFileImage {
   /// 获取url字符串的MD5值
   static String getUrlMd5(String url) {
     var content = new Utf8Encoder().convert(url);

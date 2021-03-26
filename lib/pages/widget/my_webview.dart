@@ -15,7 +15,7 @@ import '../../global_config.dart';
 import 'loading_nomal.dart';
 
 void main() => runApp(MaterialApp(
-        home: KeTaoFeaturedWebViewPage(
+        home: KTKJWebViewPage(
       initialUrl: 'https://baidu.com',
     )));
 
@@ -37,17 +37,17 @@ The navigation delegate is set to block navigation to the youtube website.
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedWebViewPage extends StatefulWidget {
+class KTKJWebViewPage extends StatefulWidget {
   var initialUrl;
   var title;
   Color appBarBackgroundColor;
   bool showActions;
 
-  KeTaoFeaturedWebViewPage(
+  KTKJWebViewPage(
       {@required this.initialUrl,
       this.title,
       this.showActions = false,
-      this.appBarBackgroundColor = KeTaoFeaturedGlobalConfig.taskHeadColor});
+      this.appBarBackgroundColor = KTKJGlobalConfig.taskHeadColor});
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
@@ -56,7 +56,7 @@ class KeTaoFeaturedWebViewPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _WebViewPageState extends State<KeTaoFeaturedWebViewPage> {
+class _WebViewPageState extends State<KTKJWebViewPage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   var _loadingVisiablity = true;
@@ -104,7 +104,7 @@ class _WebViewPageState extends State<KeTaoFeaturedWebViewPage> {
         return Stack(
           children: <Widget>[
             Visibility(
-              child: KeTaoFeaturedLoadingWidgetNomal(),
+              child: KTKJLoadingWidgetNomal(),
               visible: _loadingVisiablity,
             ),
             WebView(

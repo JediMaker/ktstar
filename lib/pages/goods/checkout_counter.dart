@@ -23,11 +23,11 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedCheckOutCounterPage extends StatefulWidget {
+class KTKJCheckOutCounterPage extends StatefulWidget {
   String orderId;
   String orderMoney;
 
-  KeTaoFeaturedCheckOutCounterPage({this.orderId, this.orderMoney});
+  KTKJCheckOutCounterPage({this.orderId, this.orderMoney});
 
   @override
   _CheckOutCounterPageState createState() => _CheckOutCounterPageState();
@@ -36,7 +36,7 @@ class KeTaoFeaturedCheckOutCounterPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
+class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -53,11 +53,11 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
   int _payWay = 3;
 
   _initWeChatResponseHandler() {
-    KeTaoFeaturedGlobalConfig.payType = 2;
+    KTKJGlobalConfig.payType = 2;
     fluwx.weChatResponseEventHandler.listen((res) async {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
-        if (res.isSuccessful && KeTaoFeaturedGlobalConfig.payType == 2) {
+        if (res.isSuccessful && KTKJGlobalConfig.payType == 2) {
           _checkPayStatus();
         }
       }
@@ -70,12 +70,12 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
       var payStatus = result.data["pay_status"].toString();
       switch (payStatus) {
         case "1": //未成功
-          KeTaoFeaturedCommonUtils.showToast("支付失败");
+          KTKJCommonUtils.showToast("支付失败");
           break;
         case "2": //已成功
-          KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
-              KeTaoFeaturedPayResultPage(
+              KTKJPayResultPage(
                 payNo: _payNo,
                 type: 1,
                 title: '支付成功',
@@ -83,7 +83,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
           break;
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -194,7 +194,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
   }
 
   showPayPasswordDialog(BuildContext context, orderId) {
-    return KeTaoFeaturedNavigatorUtils.showGSYDialog(
+    return KTKJNavigatorUtils.showGSYDialog(
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -308,10 +308,10 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                                   _payInfo = result.data.payInfo;
                                   _payNo = result.data.payNo;
                                   if (result.data.finish) {
-                                    KeTaoFeaturedNavigatorUtils
+                                    KTKJNavigatorUtils
                                         .navigatorRouterAndRemoveUntil(
                                             this.context,
-                                            KeTaoFeaturedPayResultPage(
+                                            KTKJPayResultPage(
                                               payNo: _payNo,
                                               type: 1,
                                               title: '支付成功',
@@ -320,8 +320,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                                   }
                                   _checkPayStatus();
                                 } else {
-                                  KeTaoFeaturedCommonUtils.showToast(
-                                      result.errMsg);
+                                  KTKJCommonUtils.showToast(result.errMsg);
                                 }
                               } catch (e) {
                                 EasyLoading.dismiss();
@@ -402,9 +401,9 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
           ),
           onPressed: () async {
             Navigator.pop(context, false);
-            KeTaoFeaturedNavigatorUtils.navigatorRouter(
+            KTKJNavigatorUtils.navigatorRouter(
                 context,
-                KeTaoFeaturedPayPasswordSettingPage(
+                KTKJPayPasswordSettingPage(
                   pageType: 0,
                   refreshCheckOutCounterPage: true,
                 ));
@@ -445,7 +444,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+            backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
           body: KeyboardDismissOnTap(
@@ -514,7 +513,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                             child: ListTile(
                               onTap: () async {
                                 if (!_canUseBalance) {
-                                  KeTaoFeaturedCommonUtils.showToast("账户余额不足！");
+                                  KTKJCommonUtils.showToast("账户余额不足！");
                                   return;
                                 }
                                 setState(() {
@@ -522,7 +521,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                                 });
                               },
                               selected: _payWay == 3,
-                              leading: KeTaoFeaturedMyOctoImage(
+                              leading: KTKJMyOctoImage(
                                 image:
                                     'https://alipic.lanhuapp.com/xdd5f9c369-8c30-4f93-bcf0-151a16b97220',
                                 width: ScreenUtil().setWidth(78),
@@ -536,7 +535,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                                   color: Color(0xff222222),
                                 ),
                               ),
-                              trailing: KeTaoFeaturedMyOctoImage(
+                              trailing: KTKJMyOctoImage(
                                 image:
                                     "${_payWay == 3 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                                 width: ScreenUtil().setWidth(60),
@@ -557,7 +556,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                             });
                           },
                           selected: _payWay == 1,
-                          leading: KeTaoFeaturedMyOctoImage(
+                          leading: KTKJMyOctoImage(
                             image:
                                 'https://alipic.lanhuapp.com/xdb61f0e63-777a-485a-97c7-ecdd8e261ff2',
                             width: ScreenUtil().setWidth(78),
@@ -571,7 +570,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                               color: Color(0xff222222),
                             ),
                           ),
-                          trailing: KeTaoFeaturedMyOctoImage(
+                          trailing: KTKJMyOctoImage(
                             image:
                                 "${_payWay == 1 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                             width: ScreenUtil().setWidth(60),
@@ -590,7 +589,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                             });
                           },
                           selected: _payWay == 2,
-                          leading: KeTaoFeaturedMyOctoImage(
+                          leading: KTKJMyOctoImage(
                             image:
                                 'https://alipic.lanhuapp.com/xdb0f27927-d450-4cc2-a0df-4147410870e7',
                             width: ScreenUtil().setWidth(78),
@@ -604,7 +603,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
                               color: Color(0xff222222),
                             ),
                           ),
-                          trailing: KeTaoFeaturedMyOctoImage(
+                          trailing: KTKJMyOctoImage(
                             image:
                                 "${_payWay == 2 ? "https://alipic.lanhuapp.com/xdfa5fc964-b765-41b5-ada7-c89372b1d61d" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                             width: ScreenUtil().setWidth(60),
@@ -634,9 +633,9 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
       if (result.status) {
         _payNo = result.data.payNo;
         if (result.data.finish) {
-          KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
-              KeTaoFeaturedPayResultPage(
+              KTKJPayResultPage(
                 payNo: _payNo,
                 type: 1,
                 title: '支付成功',
@@ -645,7 +644,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
         }
         callWxPay(result.data);
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+        KTKJCommonUtils.showToast(result.errMsg);
       }
     } catch (e) {
       EasyLoading.dismiss();
@@ -662,9 +661,9 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
         _payInfo = result.data.payInfo;
         _payNo = result.data.payNo;
         if (result.data.finish) {
-          KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
+          KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
               context,
-              KeTaoFeaturedPayResultPage(
+              KTKJPayResultPage(
                 payNo: _payNo,
                 type: 1,
                 title: '支付成功',
@@ -673,7 +672,7 @@ class _CheckOutCounterPageState extends State<KeTaoFeaturedCheckOutCounterPage>
         }
         callAlipay();
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+        KTKJCommonUtils.showToast(result.errMsg);
       }
     } catch (e) {
       EasyLoading.dismiss();

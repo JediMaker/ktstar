@@ -15,8 +15,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskSharePage extends StatefulWidget {
-  KeTaoFeaturedTaskSharePage({
+class KTKJTaskSharePage extends StatefulWidget {
+  KTKJTaskSharePage({
     Key key,
     @required this.taskId,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class KeTaoFeaturedTaskSharePage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
+class _TaskSharePageState extends State<KTKJTaskSharePage> {
 //  final Color _requestDescBgColor = Color(0xffFFD7C2);
   final Color _requestDescBgColor = Color(0xffF32E43);
 
@@ -125,7 +125,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
               Navigator.of(context).pop();
             },
           ),
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           centerTitle: true,
 //          backgroundColor: Color(0xfff5f5f5),
           elevation: 0,
@@ -141,7 +141,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
                 child: Column(
                   children: <Widget>[
                     Visibility(
-                        visible: !KeTaoFeaturedCommonUtils.isEmpty(_requestDesc),
+                        visible: !KTKJCommonUtils.isEmpty(_requestDesc),
                         child: Container(
                             width: double.infinity,
                             color: _requestDescBgColor,
@@ -163,7 +163,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
                           Row(
                             children: <Widget>[
                               Container(
-                                child: new KeTaoFeaturedMyOctoImage(
+                                child: new KTKJMyOctoImage(
                                   image: _headUrl,
                                   width: ScreenUtil().setWidth(120),
                                   height: ScreenUtil().setWidth(120),
@@ -265,7 +265,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return KeTaoFeaturedTaskGalleryPage(
+          return KTKJTaskGalleryPage(
             galleryItems: images,
             index: index,
           );
@@ -274,7 +274,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
       child: Container(
           margin: const EdgeInsets.only(right: 8.0),
 //        width: MediaQuery.of(context).size.width / 2.5,
-          child: new KeTaoFeaturedMyOctoImage(
+          child: new KTKJMyOctoImage(
             image: url,
             width: ScreenUtil().setWidth(256),
             height: ScreenUtil().setWidth(256),
@@ -287,10 +287,10 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
     return GestureDetector(
       onTap: () {
 //          HttpManage.getTheMissionWallEntrance("13122336666");
-        if (!KeTaoFeaturedCommonUtils.isEmpty(_adUrl)) {
-          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        if (!KTKJCommonUtils.isEmpty(_adUrl)) {
+          KTKJNavigatorUtils.navigatorRouter(
               context,
-              KeTaoFeaturedWebViewPage(
+              KTKJWebViewPage(
                 initialUrl: "$_adUrl",
                 showActions: true,
                 title: "",
@@ -308,7 +308,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
         child: ClipRRect(
           borderRadius:
               BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-          child: KeTaoFeaturedMyOctoImage(
+          child: KTKJMyOctoImage(
             image: _adImgUrl,
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
@@ -333,7 +333,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
               child: new Container(
                 width: MediaQuery.of(context).size.width / 4,
                 child: new FlatButton(
-                    child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                    child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                   fun: _saveImagesWithPermission,
                   childWidget: new Container(
                     child: new Column(
@@ -369,7 +369,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
               child: new Container(
                 width: MediaQuery.of(context).size.width / 4,
                 child: new FlatButton(
-                    child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                    child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                   fun: _copyText,
                   childWidget: new Container(
                     child: new Column(
@@ -402,7 +402,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
             new Container(
               width: MediaQuery.of(context).size.width / 2,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: () {
                   _goWechat(type: 0);
                 },
@@ -435,7 +435,7 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
             new Container(
               width: MediaQuery.of(context).size.width / 2,
               child: new FlatButton(
-                  child: KeTaoFeaturedCommonUtils.getNoDuplicateSubmissionWidget(
+                  child: KTKJCommonUtils.getNoDuplicateSubmissionWidget(
                 fun: () {
                   _goWechat(type: 1);
                 },
@@ -474,14 +474,14 @@ class _TaskSharePageState extends State<KeTaoFeaturedTaskSharePage> {
   void _saveImagesWithPermission() {}
 
   void _goWechat({int type = 0}) {
-    if (KeTaoFeaturedCommonUtils.isEmpty(_webUrl)) {
+    if (KTKJCommonUtils.isEmpty(_webUrl)) {
       return;
     }
-    if (KeTaoFeaturedCommonUtils.isEmpty(_shareThumbnail)) {
+    if (KTKJCommonUtils.isEmpty(_shareThumbnail)) {
       _shareThumbnail =
           'https://static-ud.s4.udesk.cn/im_client/images/plugin404.8de7c6fd.png?v=1597492382675';
     }
-    if (KeTaoFeaturedCommonUtils.isEmpty(_shareTitle)) {
+    if (KTKJCommonUtils.isEmpty(_shareTitle)) {
       _shareTitle = '1';
     }
     try {

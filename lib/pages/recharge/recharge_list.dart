@@ -20,14 +20,14 @@ import 'package:star/utils/navigator_utils.dart';
 import '../../global_config.dart';
 
 void main() {
-  runApp(KeTaoFeaturedRechargeListPage());
+  runApp(KTKJRechargeListPage());
 }
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedRechargeListPage extends StatefulWidget {
-  KeTaoFeaturedRechargeListPage({Key key}) : super(key: key);
+class KTKJRechargeListPage extends StatefulWidget {
+  KTKJRechargeListPage({Key key}) : super(key: key);
   final String title = "话费充值";
 
   @override
@@ -37,7 +37,7 @@ class KeTaoFeaturedRechargeListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
+class _RechargeListPageState extends State<KTKJRechargeListPage> {
   TextEditingController _phoneController = new TextEditingController();
   List<RechargeDataRechageList> _dataList;
   List<RechargeDataRechageList> _rechargeList;
@@ -60,11 +60,11 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
   var _showCoin = true;
 
   _initWeChatResponseHandler() {
-    KeTaoFeaturedGlobalConfig.payType = 1;
+    KTKJGlobalConfig.payType = 1;
     fluwx.weChatResponseEventHandler.listen((res) async {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
-        if (res.isSuccessful && KeTaoFeaturedGlobalConfig.payType == 1) {
+        if (res.isSuccessful && KTKJGlobalConfig.payType == 1) {
 //          Fluttertoast.showToast(
 //              msg: "支付成功！",
 //              textColor: Colors.white,
@@ -74,19 +74,19 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
             var payStatus = result.data["pay_status"].toString();
             switch (payStatus) {
               case "1": //未成功
-                KeTaoFeaturedCommonUtils.showToast("支付失败！");
+                KTKJCommonUtils.showToast("支付失败！");
                 break;
               case "2": //已成功
                 /* Fluttertoast.showToast(
                     msg: "支付成功！",
                     textColor: Colors.white,
                     backgroundColor: Colors.grey);*/
-                KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                    context, KeTaoFeaturedRechargeResultPage());
+                KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                    context, KTKJRechargeResultPage());
                 break;
             }
           } else {
-            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+            KTKJCommonUtils.showToast(result.errMsg);
           }
         }
       }
@@ -312,7 +312,7 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                                     ),
                                   ),
                                 ),
-                                leading: KeTaoFeaturedMyOctoImage(
+                                leading: KTKJMyOctoImage(
                                   image: _rechargeWay == 0
                                       ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
                                       : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
@@ -363,7 +363,7 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                                   ),
                                 ),
                                 leading: Container(
-                                  child: KeTaoFeaturedMyOctoImage(
+                                  child: KTKJMyOctoImage(
                                     image: _rechargeWay == 1
                                         ? "https://alipic.lanhuapp.com/xdbab78329-2c4e-43e2-9e51-dbbbeb7cf054"
                                         : "https://alipic.lanhuapp.com/xddc7cc594-6c37-47c3-979c-1855bdc31a2f",
@@ -405,15 +405,13 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                                 Text(
                                   "${_rechargeWay == 0 ? '$_fastRatio' : '$_slowRatio'}%",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig
-                                          .taskHeadColor,
+                                      color: KTKJGlobalConfig.taskHeadColor,
                                       fontSize: ScreenUtil().setSp(32)),
                                 ),
                                 Text(
                                   "分红金",
                                   style: TextStyle(
-                                      color: KeTaoFeaturedGlobalConfig
-                                          .taskHeadColor,
+                                      color: KTKJGlobalConfig.taskHeadColor,
                                       fontSize: ScreenUtil().setSp(32)),
                                 ),
                               ],
@@ -424,9 +422,9 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                           visible: true,
                           child: GestureDetector(
                             onTap: () async {
-                              if (!KeTaoFeaturedCommonUtils.isPhoneLegal(
+                              if (!KTKJCommonUtils.isPhoneLegal(
                                   _phoneController.text)) {
-                                KeTaoFeaturedCommonUtils.showSimplePromptDialog(
+                                KTKJCommonUtils.showSimplePromptDialog(
                                     context, "温馨提示", "请输入正确的手机号");
                                 return;
                               }
@@ -435,7 +433,7 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                               } catch (e) {
                                 print(e);
                               }
-                              if (!KeTaoFeaturedCommonUtils.isEmpty(
+                              if (!KTKJCommonUtils.isEmpty(
                                   _selectedRechargeData)) {
                                 _showSelectPayWayBottomSheet(context);
                               }
@@ -520,7 +518,7 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                     });
                   }
                 } catch (e) {}
-                return KeTaoFeaturedSelectChoiceChip(
+                return KTKJSelectChoiceChip(
                   width: ScreenUtil().setWidth(310),
                   height: ScreenUtil().setHeight(216),
                   child: Column(
@@ -738,18 +736,18 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                         TextSpan(
                             text: "¥",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 12)),
                         TextSpan(
                             text:
                                 " ${_showCoin ? _selectedRechargeData.payMoney : _selectedRechargeData.rebateMoney}",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 18)),
                         /*   TextSpan(
                             text: ".00",
                             style: TextStyle(
-                                color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                                color: KTKJGlobalConfig.taskHeadColor,
                                 fontSize: 12)),*/
                       ])),
                     ),
@@ -816,7 +814,7 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                            KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payWay == 2) {
                           var result = await HttpManage.getRechargeAliPayInfo(
@@ -829,10 +827,10 @@ class _RechargeListPageState extends State<KeTaoFeaturedRechargeListPage> {
                             _payNo = result.data.payNo;
                             callAlipay();
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                            KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else {
-                          KeTaoFeaturedCommonUtils.showToast("请选择支付方式！");
+                          KTKJCommonUtils.showToast("请选择支付方式！");
                           return;
                         }
                         Navigator.of(context).pop();

@@ -28,8 +28,8 @@ import 'pdd_goods_detail.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedPddGoodsListPage extends StatefulWidget {
-  KeTaoFeaturedPddGoodsListPage(
+class KTKJPddGoodsListPage extends StatefulWidget {
+  KTKJPddGoodsListPage(
       {Key key,
       this.title = "补贴商品",
       this.categoryId = '',
@@ -50,7 +50,7 @@ class KeTaoFeaturedPddGoodsListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
+class _PddGoodsListPageState extends State<KTKJPddGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   bool isFirstLoading = true;
@@ -81,12 +81,12 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }*/
-    if (!KeTaoFeaturedGlobalConfig.isLogin()) {
-      KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
+    if (!KTKJGlobalConfig.isLogin()) {
+      KTKJCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+        KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
       });
       return;
     }
@@ -130,7 +130,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
           });
         }
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result2.errMsg);
+        KTKJCommonUtils.showToast(result2.errMsg);
       }
     } catch (e) {}
   }
@@ -187,12 +187,12 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
-                      if (KeTaoFeaturedCommonUtils.isEmpty(url)) {
+                      if (KTKJCommonUtils.isEmpty(url)) {
                         return;
                       }
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           this.context,
-                          KeTaoFeaturedWebViewPluginPage(
+                          KTKJWebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
                             title: "拼多多",
@@ -202,7 +202,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
 
                     ///
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                 },
               ),
@@ -274,7 +274,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
 //                    width: 30.0,
 //                    height: 30.0,
 //                    /* child: SpinKitCircle(
-//                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
+//                            color: KTKJGlobalConfig.colorPrimary,
 //                            size: 30.0,
 //                          ),*/
 //                  ),
@@ -301,7 +301,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
         topBouncing: false,
         bottomBouncing: false,
         emptyWidget: pddGoodsList == null || pddGoodsList.length == 0
-            ? KeTaoFeaturedNoDataPage()
+            ? KTKJNoDataPage()
             : null,
         slivers: <Widget>[
           buildCenter2(),
@@ -316,7 +316,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
     ///解决首次数据加载失败问题
     ///
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      /*if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
+      /*if (!KTKJCommonUtils.isEmpty(goodsList)) {
       } else {
         _initData();
       }*/
@@ -352,7 +352,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                 },
               ),
               centerTitle: true,
-              backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+              backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
               elevation: 0,
             ),
           ),
@@ -368,7 +368,8 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
       child: Center(
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN),
+          margin:
+              EdgeInsets.symmetric(horizontal: KTKJGlobalConfig.LAYOUT_MARGIN),
 //          height: double.infinity,
           child: new StaggeredGridView.countBuilder(
             crossAxisCount: 2,
@@ -423,7 +424,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
       try {
         couponAmount = item.coupons.couponDiscount.toString();
       } catch (e) {}
-      if (KeTaoFeaturedCommonUtils.isEmpty(couponAmount)) {
+      if (KTKJCommonUtils.isEmpty(couponAmount)) {
         _discountPrice = salePrice;
       } else {
         _discountPrice = (double.parse(salePrice) - double.parse(couponAmount))
@@ -440,9 +441,9 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        KTKJNavigatorUtils.navigatorRouter(
             context,
-            KeTaoFeaturedPddGoodsDetailPage(
+            KTKJPddGoodsDetailPage(
               gId: id,
               goodsSign: goodsSign,
               searchId: searchId,
@@ -484,7 +485,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                           topRight: Radius.circular(ScreenUtil().setWidth(30)),
                           topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                         ),
-                        child: KeTaoFeaturedMyOctoImage(
+                        child: KTKJMyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           height: ScreenUtil().setWidth(523),
@@ -495,7 +496,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                       ),
                     ),
                     Visibility(
-                      visible: !KeTaoFeaturedCommonUtils.isEmpty(_gBonus),
+                      visible: !KTKJCommonUtils.isEmpty(_gBonus),
                       child: Container(
                         height: ScreenUtil().setWidth(60),
                         padding: EdgeInsets.symmetric(
@@ -552,7 +553,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                                 ScreenUtil().setWidth(10),
                               ),
                             ),
-                            child: KeTaoFeaturedMyOctoImage(
+                            child: KTKJMyOctoImage(
                               image:
                                   "https://alipic.lanhuapp.com/xd84ca449e-5f8a-4427-bc99-96f0af169b33",
                               width: ScreenUtil().setWidth(75),
@@ -577,7 +578,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                     children: [
                       Expanded(
                         child: Visibility(
-                          visible: !KeTaoFeaturedCommonUtils.isEmpty(_shopName),
+                          visible: !KTKJCommonUtils.isEmpty(_shopName),
                           child: Container(
                             child: Text(
                               "$_shopName",
@@ -676,7 +677,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                         ),
                       ),
                       Visibility(
-                        visible: !KeTaoFeaturedCommonUtils.isEmpty(couponAmount),
+                        visible: !KTKJCommonUtils.isEmpty(couponAmount),
                         child: Container(
                           height: ScreenUtil().setHeight(52),
                           padding: EdgeInsets.only(
@@ -702,7 +703,7 @@ class _PddGoodsListPageState extends State<KeTaoFeaturedPddGoodsListPage>
                               Container(
                                 height: ScreenUtil().setHeight(42),
                                 margin: EdgeInsets.symmetric(horizontal: 2),
-                                child: KeTaoFeaturedDashedRect(
+                                child: KTKJDashedRect(
                                     color: Colors.white,
                                     strokeWidth: 1,
                                     gap: 1.0),

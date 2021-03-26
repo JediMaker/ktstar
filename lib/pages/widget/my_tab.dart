@@ -6,14 +6,14 @@ const double _kTextAndIconTabHeight = 36.0;
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedMyTab extends StatelessWidget {
+class KTKJMyTab extends StatelessWidget {
   /// Creates a material design [TabBar] tab.
   ///
   /// At least one of [text], [icon], and [child] must be non-null. The [text]
   /// and [child] arguments must not be used at the same time. The
   /// [iconMargin] is only useful when [icon] and either one of [text] or
   /// [child] is non-null.
-  const KeTaoFeaturedMyTab({
+  const KTKJMyTab({
     Key key,
     this.text,
     this.icon,

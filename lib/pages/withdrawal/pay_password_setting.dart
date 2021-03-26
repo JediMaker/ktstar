@@ -13,10 +13,10 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
+class KTKJPayPasswordSettingPage extends StatefulWidget {
   bool refreshCheckOutCounterPage;
 
-  KeTaoFeaturedPayPasswordSettingPage(
+  KTKJPayPasswordSettingPage(
       {Key key,
       this.pageType = 0,
       this.isModifyType = false,
@@ -45,7 +45,7 @@ class KeTaoFeaturedPayPasswordSettingPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSettingPage> {
+class _PayPasswordSettingPageState extends State<KTKJPayPasswordSettingPage> {
   var _titieText = "";
   var _descText = "";
   bool _canSubmit = false;
@@ -102,7 +102,7 @@ class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSetting
                   },
                 ),
                 centerTitle: true,
-                backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+                backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
                 elevation: 0,
               ),
               body: Container(
@@ -217,9 +217,9 @@ class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSetting
                                   invokeSetPayPassword(context);
                                 } else {
                                   //确认密码
-                                  KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
+                                  KTKJNavigatorUtils.navigatorRouterReplaceMent(
                                       context,
-                                      KeTaoFeaturedPayPasswordSettingPage(
+                                      KTKJPayPasswordSettingPage(
                                         password: _currentPassword,
                                         refreshCheckOutCounterPage:
                                             widget.refreshCheckOutCounterPage,
@@ -230,7 +230,7 @@ class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSetting
                                 break;
                               case 1:
                                 if (widget.password != _currentPassword) {
-                                  KeTaoFeaturedCommonUtils.showToast("两次输入的密码不一致");
+                                  KTKJCommonUtils.showToast("两次输入的密码不一致");
                                   return;
                                 }
                                 invokeSetPayPassword(context);
@@ -278,15 +278,15 @@ class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSetting
     if (result.status) {
       Navigator.of(context).pop();
       if (widget.isModifyType) {
-        KeTaoFeaturedCommonUtils.showToast("修改支付密码成功！");
+        KTKJCommonUtils.showToast("修改支付密码成功！");
         return;
       }
-      KeTaoFeaturedCommonUtils.showToast("设置支付密码成功！");
+      KTKJCommonUtils.showToast("设置支付密码成功！");
       if (widget.refreshCheckOutCounterPage) {
         bus.emit("refreshCheckOutCounterPage", true);
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+      KTKJCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -295,15 +295,15 @@ class _PayPasswordSettingPageState extends State<KeTaoFeaturedPayPasswordSetting
     var result = await HttpManage.checkPayPassword(_currentPassword);
     EasyLoading.dismiss();
     if (result.status) {
-      KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
+      KTKJNavigatorUtils.navigatorRouterReplaceMent(
           context,
-          KeTaoFeaturedPayPasswordSettingPage(
+          KTKJPayPasswordSettingPage(
             password: _currentPassword,
             pageType: 0,
             isModifyType: true,
           ));
     } else {
-      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+      KTKJCommonUtils.showToast("${result.errMsg}");
     }
   }
 }

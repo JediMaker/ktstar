@@ -18,11 +18,11 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedFansListPage extends StatefulWidget {
+class KTKJFansListPage extends StatefulWidget {
   //是否代理商
   bool isAgent;
 
-  KeTaoFeaturedFansListPage({Key key, this.isAgent = false}) : super(key: key);
+  KTKJFansListPage({Key key, this.isAgent = false}) : super(key: key);
   final String title = "我的粉丝";
 
   @override
@@ -32,7 +32,7 @@ class KeTaoFeaturedFansListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _FansListPageState extends State<KeTaoFeaturedFansListPage>
+class _FansListPageState extends State<KTKJFansListPage>
     with TickerProviderStateMixin {
   ///粉丝类型  默认0全部  1vip会员 2普通会员 3体验会员
   int fansType;
@@ -210,20 +210,20 @@ class _FansListPageState extends State<KeTaoFeaturedFansListPage>
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Center(
           child: Column(
             children: <Widget>[
               Visibility(
-                  visible: !widget.isAgent &&
-                      !KeTaoFeaturedCommonUtils.isEmpty(_agentInfo),
+                  visible:
+                      !widget.isAgent && !KTKJCommonUtils.isEmpty(_agentInfo),
                   child: buildHeadLayout()),
               Flexible(
                 child: Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+                      horizontal: KTKJGlobalConfig.LAYOUT_MARGIN,
                       vertical: ScreenUtil().setHeight(30)),
                   padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
                   decoration: BoxDecoration(
@@ -307,7 +307,7 @@ class _FansListPageState extends State<KeTaoFeaturedFansListPage>
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(
-                horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+                horizontal: KTKJGlobalConfig.LAYOUT_MARGIN,
                 vertical: ScreenUtil().setHeight(30)),
             height: ScreenUtil().setHeight(295),
             padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
@@ -342,7 +342,7 @@ class _FansListPageState extends State<KeTaoFeaturedFansListPage>
                               ),
                             )
                           : ClipOval(
-                              child: KeTaoFeaturedMyOctoImage(
+                              child: KTKJMyOctoImage(
                                 image: headUrl,
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(168),
@@ -466,7 +466,7 @@ class _FansTabViewState extends State<FansTabView> {
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -505,7 +505,7 @@ class _FansTabViewState extends State<FansTabView> {
         }
       },
       emptyWidget:
-          _fansList == null || _fansList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+          _fansList == null || _fansList.length == 0 ? KTKJNoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -576,7 +576,7 @@ class _FansTabViewState extends State<FansTabView> {
                 fit: BoxFit.fill,
               )
             : ClipOval(
-                child: KeTaoFeaturedMyOctoImage(
+                child: KTKJMyOctoImage(
                   image: headUrl,
                   width: ScreenUtil().setWidth(120),
                   height: ScreenUtil().setWidth(120),
@@ -646,7 +646,7 @@ class _FansTabViewState extends State<FansTabView> {
         ],
       ),
       trailing: GestureDetector(
-        child: KeTaoFeaturedMyOctoImage(
+        child: KTKJMyOctoImage(
           image: "${_getImgName(shareHolderType)}",
           width: ScreenUtil().setWidth(shareHolderType == '2' ? 119 : 137),
           height: ScreenUtil().setWidth(shareHolderType == '2' ? 59 : 77),

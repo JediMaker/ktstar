@@ -17,8 +17,8 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedHotGoodsListPage extends StatefulWidget {
-  KeTaoFeaturedHotGoodsListPage({Key key}) : super(key: key);
+class KTKJHotGoodsListPage extends StatefulWidget {
+  KTKJHotGoodsListPage({Key key}) : super(key: key);
   final String title = "今日爆款";
 
   @override
@@ -28,7 +28,7 @@ class KeTaoFeaturedHotGoodsListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
+class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
@@ -61,7 +61,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -180,7 +180,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
 //                    width: 30.0,
 //                    height: 30.0,
 //                    /* child: SpinKitCircle(
-//                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
+//                            color: KTKJGlobalConfig.colorPrimary,
 //                            size: 30.0,
 //                          ),*/
 //                  ),
@@ -202,9 +202,8 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
           _initData();
         }
       },
-      emptyWidget: goodsList == null || goodsList.length == 0
-          ? KeTaoFeaturedNoDataPage()
-          : null,
+      emptyWidget:
+          goodsList == null || goodsList.length == 0 ? KTKJNoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -218,7 +217,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
             children: [
               Stack(
                 children: [
-                  KeTaoFeaturedMyOctoImage(
+                  KTKJMyOctoImage(
                     image:
                         "https://alipic.lanhuapp.com/xde2aee21e-6f3c-4e02-9f6c-fb430f9a1bab",
                     fit: BoxFit.fill,
@@ -300,7 +299,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
                                     children: [
                                       Container(
                                         alignment: Alignment.center,
-                                        child: KeTaoFeaturedMyOctoImage(
+                                        child: KTKJMyOctoImage(
                                           image:
                                               sortType == SortType.CoinAscending
                                                   ? arrowUpSel
@@ -314,7 +313,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
                                         margin: EdgeInsets.only(
                                           top: ScreenUtil().setWidth(4),
                                         ),
-                                        child: KeTaoFeaturedMyOctoImage(
+                                        child: KTKJMyOctoImage(
                                           image: sortType ==
                                                   SortType.CoinDescending
                                               ? arrowDownSel
@@ -366,7 +365,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
                                     children: [
                                       Container(
                                         alignment: Alignment.center,
-                                        child: KeTaoFeaturedMyOctoImage(
+                                        child: KTKJMyOctoImage(
                                           image: sortType ==
                                                   SortType.PriceAscending
                                               ? arrowUpSel
@@ -380,7 +379,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
                                         margin: EdgeInsets.only(
                                           top: ScreenUtil().setWidth(4),
                                         ),
-                                        child: KeTaoFeaturedMyOctoImage(
+                                        child: KTKJMyOctoImage(
                                           image: sortType ==
                                                   SortType.PriceDescending
                                               ? arrowDownSel
@@ -482,9 +481,9 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        KTKJNavigatorUtils.navigatorRouter(
             context,
-            KeTaoFeaturedGoodsDetailPage(
+            KTKJGoodsDetailPage(
               productId: id,
             ));
       },
@@ -522,7 +521,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(30)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
-                    child: KeTaoFeaturedMyOctoImage(
+                    child: KTKJMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
 //                      height: ScreenUtil().setWidth(523),
@@ -536,7 +535,7 @@ class _NewcomersGoodsListPageState extends State<KeTaoFeaturedHotGoodsListPage>
 //                            height: 10,
 //                          ),
                 Visibility(
-                  visible: !KeTaoFeaturedCommonUtils.isEmpty(item.btPrice),
+                  visible: !KTKJCommonUtils.isEmpty(item.btPrice),
                   child: Container(
                     height: ScreenUtil().setWidth(60),
                     padding: EdgeInsets.symmetric(

@@ -18,8 +18,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedInvitationPosterPage extends StatefulWidget {
-  KeTaoFeaturedInvitationPosterPage({Key key}) : super(key: key);
+class KTKJInvitationPosterPage extends StatefulWidget {
+  KTKJInvitationPosterPage({Key key}) : super(key: key);
   final String title = "邀请好友";
 
   @override
@@ -29,7 +29,7 @@ class KeTaoFeaturedInvitationPosterPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage> {
+class _InvitationPosterPageState extends State<KTKJInvitationPosterPage> {
   List<String> _bannerList = [];
   var _bannerIndex = 0;
   var _linkUrl;
@@ -57,7 +57,7 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -101,7 +101,7 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Stack(
@@ -147,7 +147,7 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
                                 onTap: () {
                                   Clipboard.setData(
                                       ClipboardData(text: "可淘星选:$_linkUrl"));
-                                  KeTaoFeaturedCommonUtils.showToast("已复制文本");
+                                  KTKJCommonUtils.showToast("已复制文本");
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -184,7 +184,7 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  KeTaoFeaturedCommonUtils.requestPermission(
+                                  KTKJCommonUtils.requestPermission(
                                       _permission, _savePosterImg());
                                 },
                                 child: Container(
@@ -233,12 +233,12 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
           Uint8List.fromList(response.data),
           quality: 60,
           name:
-              "ktxx_${KeTaoFeaturedCommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
+              "ktxx_${KTKJCommonUtils.currentTimeMillis() + _bannerIndex.toString()}");
       print("posterDownloadResult=" + result.toString());
-      KeTaoFeaturedCommonUtils.showToast("图片已保存");
+      KTKJCommonUtils.showToast("图片已保存");
     } catch (e) {
       print("err=" + e.toString());
-      KeTaoFeaturedCommonUtils.showToast("图片下载失败");
+      KTKJCommonUtils.showToast("图片下载失败");
     }
   }
 
@@ -280,7 +280,7 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
                 //自定义指示器颜色
                 color: Colors.white,
                 size: 8.0,
-                activeColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                activeColor: KTKJGlobalConfig.taskHeadColor,
                 activeSize: 10.0)),*/
         itemBuilder: (context, index) {
           var bannerData = _bannerList[index];
@@ -289,7 +289,7 @@ class _InvitationPosterPageState extends State<KeTaoFeaturedInvitationPosterPage
             child: ClipRRect(
               borderRadius:
                   BorderRadius.all(Radius.circular(ScreenUtil().setWidth(30))),
-              child: KeTaoFeaturedMyOctoImage(
+              child: KTKJMyOctoImage(
                 image: bannerData,
                 height: ScreenUtil().setHeight(623),
 //              width: ScreenUtil().setWidth(1125),

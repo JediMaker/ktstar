@@ -14,7 +14,7 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedClassifyListPage extends StatefulWidget {
+class KTKJClassifyListPage extends StatefulWidget {
   @override
   _ClassifyListPageState createState() => _ClassifyListPageState();
 }
@@ -22,7 +22,7 @@ class KeTaoFeaturedClassifyListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
+class _ClassifyListPageState extends State<KTKJClassifyListPage>
     with AutomaticKeepAliveClientMixin {
   List<CategoryBeanData> leftListData;
   List<CategoryBeanData> rightListData;
@@ -50,7 +50,7 @@ class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!KeTaoFeaturedCommonUtils.isEmpty(rightListData)) {
+      if (!KTKJCommonUtils.isEmpty(rightListData)) {
       } else {
         _initData(0);
       }
@@ -75,7 +75,7 @@ class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
         ),*/
         centerTitle: true,
         brightness: Brightness.light,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
         elevation: 0,
       ),
       body: Row(
@@ -187,9 +187,9 @@ class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
               return GestureDetector(
                 onTap: () {
                   if (category != null) {
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    KTKJNavigatorUtils.navigatorRouter(
                         context,
-                        KeTaoFeaturedGoodsListPage(
+                        KTKJGoodsListPage(
                           categoryId: category.id,
                           title: category.name,
                         ));
@@ -200,7 +200,7 @@ class _ClassifyListPageState extends State<KeTaoFeaturedClassifyListPage>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      KeTaoFeaturedMyOctoImage(
+                      KTKJMyOctoImage(
                         fit: BoxFit.cover,
                         image: category.imgUrl == null
                             ? 'https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png'

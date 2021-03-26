@@ -17,8 +17,8 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedNewcomersGoodsListPage extends StatefulWidget {
-  KeTaoFeaturedNewcomersGoodsListPage({Key key}) : super(key: key);
+class KTKJNewcomersGoodsListPage extends StatefulWidget {
+  KTKJNewcomersGoodsListPage({Key key}) : super(key: key);
   final String title = "新人专享";
 
   @override
@@ -28,8 +28,7 @@ class KeTaoFeaturedNewcomersGoodsListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _NewcomersGoodsListPageState
-    extends State<KeTaoFeaturedNewcomersGoodsListPage>
+class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
@@ -62,7 +61,7 @@ class _NewcomersGoodsListPageState
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -170,7 +169,7 @@ class _NewcomersGoodsListPageState
 //                    width: 30.0,
 //                    height: 30.0,
 //                    /* child: SpinKitCircle(
-//                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
+//                            color: KTKJGlobalConfig.colorPrimary,
 //                            size: 30.0,
 //                          ),*/
 //                  ),
@@ -192,9 +191,8 @@ class _NewcomersGoodsListPageState
           _initData();
         }
       },
-      emptyWidget: goodsList == null || goodsList.length == 0
-          ? KeTaoFeaturedNoDataPage()
-          : null,
+      emptyWidget:
+          goodsList == null || goodsList.length == 0 ? KTKJNoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -206,7 +204,7 @@ class _NewcomersGoodsListPageState
           color: bgContentColor,
           child: Column(
             children: [
-              KeTaoFeaturedMyOctoImage(
+              KTKJMyOctoImage(
                 image:
                     "https://alipic.lanhuapp.com/xd78d8bfdb-0642-4fbe-8e83-6ed3d4a3f7a3",
                 fit: BoxFit.fill,
@@ -297,9 +295,9 @@ class _NewcomersGoodsListPageState
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        KTKJNavigatorUtils.navigatorRouter(
             context,
-            KeTaoFeaturedGoodsDetailPage(
+            KTKJGoodsDetailPage(
               productId: id,
             ));
       },
@@ -337,7 +335,7 @@ class _NewcomersGoodsListPageState
                       topRight: Radius.circular(ScreenUtil().setWidth(30)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
-                    child: KeTaoFeaturedMyOctoImage(
+                    child: KTKJMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
 //                      height: ScreenUtil().setWidth(523),
@@ -351,7 +349,7 @@ class _NewcomersGoodsListPageState
 //                            height: 10,
 //                          ),
                 Visibility(
-                  visible: !KeTaoFeaturedCommonUtils.isEmpty(item.btPrice),
+                  visible: !KTKJCommonUtils.isEmpty(item.btPrice),
                   child: Container(
                     height: ScreenUtil().setWidth(60),
                     padding: EdgeInsets.symmetric(
@@ -394,7 +392,7 @@ class _NewcomersGoodsListPageState
                     ),
                   ),
                 ),
-                KeTaoFeaturedExtraCoinTextPage(
+                KTKJExtraCoinTextPage(
                   borderRadius: 8,
                   coinDescFontSize: ScreenUtil().setSp(22),
                   coinFontSize: ScreenUtil().setSp(22),

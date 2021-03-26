@@ -21,7 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedUtils {
+class KTKJUtils {
   static double formatNum(double num, int postion) {
     /*if ((num.toString().length - num.toString().lastIndexOf(".") - 1) <
         postion) {
@@ -73,7 +73,7 @@ class KeTaoFeaturedUtils {
         .listen((ConnectivityResult result) {
       print(result.toString());
       if (result.toString() == 'ConnectivityResult.none') {
-        KeTaoFeaturedCommonUtils.showToast("无网络连接");
+        KTKJCommonUtils.showToast("无网络连接");
       }
     });
   }
@@ -150,7 +150,7 @@ class KeTaoFeaturedUtils {
     /// 获取当前版本
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _localVersion = packageInfo.version;
-    String updateTime = KeTaoFeaturedGlobalConfig.prefs.getString('updateTime') ?? null;
+    String updateTime = KTKJGlobalConfig.prefs.getString('updateTime') ?? null;
 
     /// 一天之内只提醒一次需要更新
     if (!checkDerictly) {
@@ -159,7 +159,7 @@ class KeTaoFeaturedUtils {
         return;
       }
     }
-    KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', false);
+    KTKJGlobalConfig.prefs.setBool('needUpdate', false);
     var versionInfo = await HttpManage.getVersionInfo();
     try {
       if (versionInfo.status) {
@@ -167,23 +167,23 @@ class KeTaoFeaturedUtils {
             "_localVersion=$_localVersion；_localbuildNumber=${packageInfo.buildNumber}；versionInfo。versionNo=${versionInfo.data.versionNo}");
         if (versionInfo.data.whCheck) {
           //华为应用市场上架审核中
-          KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
+          KTKJGlobalConfig.prefs.setBool("isHuaweiUnderReview", true);
         } else {
-          KeTaoFeaturedGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
+          KTKJGlobalConfig.prefs.setBool("isHuaweiUnderReview", false);
         }
         if (Platform.isAndroid) {
           /*    ///华为审核中
-          if (KeTaoFeaturedGlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
+          if (KTKJGlobalConfig.prefs.getBool("isHuaweiUnderReview")) {
             if (checkDerictly) {
               ///直接检查更新时弹出
-              KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
+              KTKJCommonUtils.showToast("当前已是最新版本");
             }
             return;
           }*/
         }
         if (Platform.isIOS) {
           ///ios审核中
-          if (KeTaoFeaturedGlobalConfig.prefs.getBool("isIosUnderReview")) {
+          if (KTKJGlobalConfig.prefs.getBool("isIosUnderReview")) {
             return;
           }
         }
@@ -199,14 +199,14 @@ class KeTaoFeaturedUtils {
         }
         if (!needUpdate) {
           if (checkDerictly) {
-            KeTaoFeaturedCommonUtils.showToast("当前已是最新版本");
+            KTKJCommonUtils.showToast("当前已是最新版本");
           }
           return;
         }
-        /* KeTaoFeaturedGlobalConfig.prefs
+        /* KTKJGlobalConfig.prefs
             .setBool('isHuaweiUnderReview', versionInfo.data.whCheck);*/
         if (needUpdate) {
-          KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', true);
+          KTKJGlobalConfig.prefs.setBool('needUpdate', true);
 
           if (Platform.isIOS) {
             url = versionInfo.data.iosUrl;
@@ -215,8 +215,8 @@ class KeTaoFeaturedUtils {
                   ? versionInfo.data.desc
                   : versionInfo.data.buildNumberDesc;
 
-              final bool wantsUpdate =
-                  await KeTaoFeaturedUpdateDialog.showUpdateDialog(context, "$desc", false);
+              final bool wantsUpdate = await KTKJUpdateDialog.showUpdateDialog(
+                  context, "$desc", false);
 /*
               final bool wantsUpdate = await showDialog<bool>(
                 context: context,
@@ -226,11 +226,11 @@ class KeTaoFeaturedUtils {
               );
 */
               if (wantsUpdate != null && wantsUpdate) {
-                KeTaoFeaturedGlobalConfig.prefs.remove('updateTime');
-                KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
+                KTKJGlobalConfig.prefs.remove('updateTime');
+                KTKJGlobalConfig.prefs.remove('needUpdate');
                 await launchUrl(url);
               } else {
-                KeTaoFeaturedGlobalConfig.prefs
+                KTKJGlobalConfig.prefs
                     .setString('updateTime', DateTime.now().toString());
               }
             } else {
@@ -248,19 +248,19 @@ class KeTaoFeaturedUtils {
                 ? versionInfo.data.desc
                 : versionInfo.data.buildNumberDesc;
 
-            final bool wantsUpdate =
-                await KeTaoFeaturedUpdateDialog.showUpdateDialog(context, "$desc", false);
+            final bool wantsUpdate = await KTKJUpdateDialog.showUpdateDialog(
+                context, "$desc", false);
             if (wantsUpdate != null && wantsUpdate) {
-              KeTaoFeaturedGlobalConfig.prefs.remove('updateTime'); //饮鸠止渴
-              KeTaoFeaturedGlobalConfig.prefs.remove('needUpdate');
+              KTKJGlobalConfig.prefs.remove('updateTime'); //饮鸠止渴
+              KTKJGlobalConfig.prefs.remove('needUpdate');
               await launchUrl(url);
             } else {
-              KeTaoFeaturedGlobalConfig.prefs
+              KTKJGlobalConfig.prefs
                   .setString('updateTime', DateTime.now().toString());
             }
           }
         } else {
-          KeTaoFeaturedGlobalConfig.prefs.setBool('needUpdate', false);
+          KTKJGlobalConfig.prefs.setBool('needUpdate', false);
         }
       }
     } catch (e) {
@@ -286,7 +286,7 @@ class KeTaoFeaturedUtils {
       String versionRemote, String clientVersion) {
     versionRemote.compareTo(clientVersion);
     bool result = false;
-    if (!KeTaoFeaturedCommonUtils.isEmpty(versionRemote) &&
+    if (!KTKJCommonUtils.isEmpty(versionRemote) &&
         versionRemote.indexOf(".") >= 0) {
       List<String> versionNum = versionRemote.split(".");
       List<String> currentNum = clientVersion.split(".");
@@ -313,7 +313,7 @@ class KeTaoFeaturedUtils {
       String buildNumberRemote, String buildNumberLocal) {
     buildNumberRemote.compareTo(buildNumberRemote);
     bool result = false;
-    if (!KeTaoFeaturedCommonUtils.isEmpty(buildNumberRemote)) {
+    if (!KTKJCommonUtils.isEmpty(buildNumberRemote)) {
       if (int.parse(buildNumberRemote) > int.parse(buildNumberLocal)) {
         result = true;
       }
@@ -326,7 +326,7 @@ class KeTaoFeaturedUtils {
       await launch(url, forceSafariVC: false);
     } else {
 //      throw 'Could not launch $url';
-      KeTaoFeaturedCommonUtils.showToast("未安装相关客户端！");
+      KTKJCommonUtils.showToast("未安装相关客户端！");
     }
   }
 }

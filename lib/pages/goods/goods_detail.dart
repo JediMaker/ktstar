@@ -31,10 +31,10 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedGoodsDetailPage extends StatefulWidget {
+class KTKJGoodsDetailPage extends StatefulWidget {
   var productId;
 
-  KeTaoFeaturedGoodsDetailPage({@required this.productId});
+  KTKJGoodsDetailPage({@required this.productId});
 
   @override
   _GoodsDetailPageState createState() => _GoodsDetailPageState();
@@ -43,7 +43,7 @@ class KeTaoFeaturedGoodsDetailPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
+class _GoodsDetailPageState extends State<KTKJGoodsDetailPage>
     with TickerProviderStateMixin {
   AnimationController _controller;
   var _txtRedColor = const Color(0xffF93736);
@@ -163,7 +163,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
 */
                               itemBuilder: (BuildContext context, int index) {
                                 return detailData != null
-                                    ? new KeTaoFeaturedMyOctoImage(
+                                    ? new KTKJMyOctoImage(
                                         image: detailData
                                                     .data.bannerImgs[index] ==
                                                 null
@@ -265,7 +265,8 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                     ),
                                     Expanded(
                                       child: Visibility(
-                                        visible: !KeTaoFeaturedCommonUtils.isEmpty(_btPrice),
+                                        visible:
+                                            !KTKJCommonUtils.isEmpty(_btPrice),
                                         child: Container(
                                           margin: EdgeInsets.only(
                                               bottom:
@@ -291,7 +292,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                                   ScreenUtil().setHeight(8)),
                                           child: Column(
                                             children: [
-                                              KeTaoFeaturedMyOctoImage(
+                                              KTKJMyOctoImage(
                                                 image:
                                                     'https://alipic.lanhuapp.com/xd3539b630-7c6b-4875-b006-5fd94c667594',
                                                 width:
@@ -328,7 +329,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                                     ScreenUtil().setWidth(10),
                                                   ),
                                                 ),
-                                                child: KeTaoFeaturedMyOctoImage(
+                                                child: KTKJMyOctoImage(
                                                   image:
                                                       "https://alipic.lanhuapp.com/xdece44f05-a7bd-44e8-a47f-95aaa60e0291",
 //                                                      "https://img.pddpic.com/favicon.ico",
@@ -362,9 +363,9 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                             visible: false,
                             child: GestureDetector(
                               onTap: () {
-                                KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                                KTKJNavigatorUtils.navigatorRouter(
                                     context,
-                                    KeTaoFeaturedFreeQueuePage(
+                                    KTKJFreeQueuePage(
                                       goodsId: widget.productId,
                                     ));
                               },
@@ -470,7 +471,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                         ScreenUtil().setWidth(30),
                                       ),
                                     ),
-                                    child: KeTaoFeaturedMyOctoImage(
+                                    child: KTKJMyOctoImage(
                                       image:
                                           "https://alipic.lanhuapp.com/xd45f0820f-d37e-48ea-a2cd-5e12172a4eff",
                                       width: ScreenUtil().setWidth(138),
@@ -576,7 +577,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    KeTaoFeaturedMyOctoImage(
+                                    KTKJMyOctoImage(
                                       image:
                                           'https://alipic.lanhuapp.com/xd14aa2fbd-3d5f-46b8-b7ea-fa9e23c97e41',
                                       width: ScreenUtil().setWidth(30),
@@ -691,7 +692,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                 ),
                               ),
                             ),
-                            KeTaoFeaturedMyOctoImage(
+                            KTKJMyOctoImage(
                               image: _detailImgs[index],
                               width: double.maxFinite,
 /*
@@ -741,7 +742,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                 alignment: Alignment.topLeft,
                 child: ClipOval(
                   child: IconButton(
-                    icon: KeTaoFeaturedMyOctoImage(
+                    icon: KTKJMyOctoImage(
                       image:
                           "https://alipic.lanhuapp.com/xd45f343be-7273-4f2b-956d-80a7d39dde4a",
                     ),
@@ -766,8 +767,8 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                         height: ScreenUtil().setWidth(255),
                         child: GestureDetector(
                           onTap: () {
-                            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                                this.context, KeTaoFeaturedTaskIndexPage());
+                            KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                                this.context, KTKJTaskIndexPage());
                           },
                           child: Container(
                             height: ScreenUtil().setWidth(255),
@@ -777,7 +778,7 @@ class _GoodsDetailPageState extends State<KeTaoFeaturedGoodsDetailPage>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  KeTaoFeaturedMyOctoImage(
+                                  KTKJMyOctoImage(
                                     image:
                                         "https://alipic.lanhuapp.com/xd91be302a-1aed-4a4f-9315-797dad51d647",
                                     width: ScreenUtil().setWidth(47),
@@ -1048,16 +1049,16 @@ class _DetailWindowState extends State<DetailWindow>
                       opacity: canSubmit ? 1 : 0.4,
                       child: GestureDetector(
                         onTap: () async {
-                          if (KeTaoFeaturedGlobalConfig.isLogin()) {
+                          if (KTKJGlobalConfig.isLogin()) {
                             if (canSubmit) {
                               createBuyOrder();
                               if (!mounted) return;
                               Navigator.of(context).pop();
                             }
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast("尚未登陆，请登录！");
-                            KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                                context, KeTaoFeaturedLoginPage());
+                            KTKJCommonUtils.showToast("尚未登陆，请登录！");
+                            KTKJNavigatorUtils.navigatorRouter(
+                                context, KTKJLoginPage());
                           }
                         },
                         child: Container(
@@ -1234,7 +1235,7 @@ class _DetailWindowState extends State<DetailWindow>
                   runSpacing: ScreenUtil().setWidth(8),
                   alignment: WrapAlignment.start,
                   children: opItem.xList.asMap().keys.map((valueIndex) {
-                    return KeTaoFeaturedGoodsSelectChoiceChip(
+                    return KTKJGoodsSelectChoiceChip(
                       /*label:
                         Text('${option.productOptionValue[valueIndex].name}'),
                     selected: selectedMap[option.productOptionId] ==
@@ -1335,14 +1336,14 @@ class _DetailWindowState extends State<DetailWindow>
       try {
         orderId = result.data['order_id'].toString();
       } catch (e) {}
-      var context = KeTaoFeaturedGlobalConfig.navigatorKey.currentState.overlay.context;
-      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+      var context = KTKJGlobalConfig.navigatorKey.currentState.overlay.context;
+      KTKJNavigatorUtils.navigatorRouter(
           context,
-          KeTaoFeaturedEnsureOrderPage(
+          KTKJEnsureOrderPage(
             orderId: "$orderId",
           ));
     } else {
-      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+      KTKJCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -1373,7 +1374,7 @@ class _DetailWindowState extends State<DetailWindow>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          KeTaoFeaturedMyOctoImage(
+          KTKJMyOctoImage(
             image: "$_defaultImgUrl",
 /*
                 widget.detailData == null || widget.detailData.data == null
@@ -1401,7 +1402,7 @@ class _DetailWindowState extends State<DetailWindow>
                       fontBigSize: ScreenUtil().setSp(42),
                     ),
                     Visibility(
-                      visible: !KeTaoFeaturedCommonUtils.isEmpty(_btPrice),
+                      visible: !KTKJCommonUtils.isEmpty(_btPrice),
                       child: Container(
                         margin: EdgeInsets.only(
                           left: ScreenUtil().setHeight(20),

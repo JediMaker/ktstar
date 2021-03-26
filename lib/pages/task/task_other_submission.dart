@@ -19,8 +19,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTaskOtherSubmissionPage extends StatefulWidget {
-  KeTaoFeaturedTaskOtherSubmissionPage(
+class KTKJTaskOtherSubmissionPage extends StatefulWidget {
+  KTKJTaskOtherSubmissionPage(
       {Key key, @required this.taskId, this.pageType = 0, this.comId})
       : super(key: key);
   final String title = "提交截图审核";
@@ -40,7 +40,7 @@ class KeTaoFeaturedTaskOtherSubmissionPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissionPage> {
+class _TaskOtherSubmissionPageState extends State<KTKJTaskOtherSubmissionPage> {
   //List<Asset> images2 = List<Asset>();
   List<Image> images = List<Image>();
   List<String> imageUrls = List<String>();
@@ -182,7 +182,7 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
 
                 }*/
                 _indexVisible = false;
-                KeTaoFeaturedCommonUtils.requestPermission(Permission.photos,
+                KTKJCommonUtils.requestPermission(Permission.photos,
                     _onButtonPressed(ImageSource.gallery, context: context));
               },
               child: Image.asset(
@@ -198,7 +198,7 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return KeTaoFeaturedTaskGalleryPage(
+                return KTKJTaskGalleryPage(
                   images: images,
                   index: index,
                   type: 1,
@@ -311,8 +311,8 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
           if (images.length == 0) {
             return;
           }
-          if (_needRemark && KeTaoFeaturedCommonUtils.isEmpty(_remark)) {
-            KeTaoFeaturedCommonUtils.showToast("任务备注不能为空！");
+          if (_needRemark && KTKJCommonUtils.isEmpty(_remark)) {
+            KTKJCommonUtils.showToast("任务备注不能为空！");
             return;
           }
           String imgIds = allImgIds.join(",");
@@ -321,22 +321,22 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
             var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                 remark: _remark);
             if (result.status) {
-              KeTaoFeaturedCommonUtils.showToast("提交成功");
-              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                  context, KeTaoFeaturedTaskIndexPage());
+              KTKJCommonUtils.showToast("提交成功");
+              KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, KTKJTaskIndexPage());
             } else {
-              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+              KTKJCommonUtils.showToast(result.errMsg);
             }
           } else {
             ///重新提交任务
             var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                 remark: _remark);
             if (result.status) {
-              KeTaoFeaturedCommonUtils.showToast("提交成功");
-              KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                  context, KeTaoFeaturedTaskIndexPage());
+              KTKJCommonUtils.showToast("提交成功");
+              KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                  context, KTKJTaskIndexPage());
             } else {
-              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+              KTKJCommonUtils.showToast(result.errMsg);
             }
 
             ///
@@ -349,8 +349,8 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: images.length == 0
-                  ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
-                  : KeTaoFeaturedGlobalConfig.taskHeadColor,
+                  ? KTKJGlobalConfig.taskHeadDisableColor
+                  : KTKJGlobalConfig.taskHeadColor,
               /*gradient: LinearGradient(
                   colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
               borderRadius: BorderRadius.circular(48)),
@@ -379,16 +379,16 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 /*color: _imageFile == null
-                    ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
-                    : KeTaoFeaturedGlobalConfig.taskHeadColor,*/
+                    ? KTKJGlobalConfig.taskHeadDisableColor
+                    : KTKJGlobalConfig.taskHeadColor,*/
                 /*gradient: LinearGradient(
                     colors: [Color(0xFFFE9322), Color(0xFFFFB541)]),*/
-                border: Border.all(color: KeTaoFeaturedGlobalConfig.taskHeadColor),
+                border: Border.all(color: KTKJGlobalConfig.taskHeadColor),
                 borderRadius: BorderRadius.circular(48)),
             child: Text(
               '重新上传',
               style: TextStyle(
-                  color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                  color: KTKJGlobalConfig.taskHeadColor,
                   fontSize: ScreenUtil().setSp(48)),
             ),
           ),
@@ -421,7 +421,7 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
             ),
             centerTitle: true,
             elevation: 0,
-            backgroundColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+            backgroundColor: KTKJGlobalConfig.taskHeadColor,
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(
@@ -523,7 +523,7 @@ class _TaskOtherSubmissionPageState extends State<KeTaoFeaturedTaskOtherSubmissi
                   ),
                   buildSubmitButton(),
 //                buildUploadtButton(),
-                  /* KeTaoFeaturedMyOctoImage(
+                  /* KTKJMyOctoImage(
                     imageUrl: "",
                   ),*/
                 ],

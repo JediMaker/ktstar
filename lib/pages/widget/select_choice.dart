@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
+class KTKJSelectChoiceChip extends StatefulWidget {
   final double height;
   final num width;
   final EdgeInsetsGeometry padding;
@@ -29,7 +29,7 @@ class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
   final LinearGradient selectGradient;
   final LinearGradient gradient;
 
-  const KeTaoFeaturedSelectChoiceChip(
+  const KTKJSelectChoiceChip(
       {@required this.child,
       this.height,
       this.padding =
@@ -62,7 +62,7 @@ class KeTaoFeaturedSelectChoiceChip extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _SelectChoiceChipState extends State<KeTaoFeaturedSelectChoiceChip> {
+class _SelectChoiceChipState extends State<KTKJSelectChoiceChip> {
   @override
   Widget build(BuildContext context) {
     bool _select = widget.selected;

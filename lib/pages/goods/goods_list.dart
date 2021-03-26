@@ -19,8 +19,8 @@ import 'goods_detail.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedGoodsListPage extends StatefulWidget {
-  KeTaoFeaturedGoodsListPage(
+class KTKJGoodsListPage extends StatefulWidget {
+  KTKJGoodsListPage(
       {Key key,
       this.title = "今日爆款",
       this.categoryId = '',
@@ -41,7 +41,7 @@ class KeTaoFeaturedGoodsListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
+class _GoodsListPageState extends State<KTKJGoodsListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
@@ -78,7 +78,7 @@ class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -128,7 +128,7 @@ class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+            backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
         ),
@@ -185,7 +185,7 @@ class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
 //                    width: 30.0,
 //                    height: 30.0,
 //                    /* child: SpinKitCircle(
-//                            color: KeTaoFeaturedGlobalConfig.colorPrimary,
+//                            color: KTKJGlobalConfig.colorPrimary,
 //                            size: 30.0,
 //                          ),*/
 //                  ),
@@ -208,7 +208,7 @@ class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
         }
       },
       emptyWidget:
-          goodsList == null || goodsList.length == 0 ? KeTaoFeaturedNoDataPage() : null,
+          goodsList == null || goodsList.length == 0 ? KTKJNoDataPage() : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -271,9 +271,9 @@ class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
     return GestureDetector(
       onTap: () {
 //        launchWeChatMiniProgram(username: "gh_8ae370170974");
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+        KTKJNavigatorUtils.navigatorRouter(
             context,
-            KeTaoFeaturedGoodsDetailPage(
+            KTKJGoodsDetailPage(
               productId: id,
             ));
       },
@@ -311,7 +311,7 @@ class _GoodsListPageState extends State<KeTaoFeaturedGoodsListPage>
                       topRight: Radius.circular(ScreenUtil().setWidth(30)),
                       topLeft: Radius.circular(ScreenUtil().setWidth(30)),
                     ),
-                    child: KeTaoFeaturedMyOctoImage(
+                    child: KTKJMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
                       height: ScreenUtil().setWidth(523),

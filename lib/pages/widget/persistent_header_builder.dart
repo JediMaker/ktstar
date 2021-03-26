@@ -9,12 +9,12 @@ import 'package:flutter/cupertino.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedPersistentHeaderBuilder extends SliverPersistentHeaderDelegate {
+class KTKJPersistentHeaderBuilder extends SliverPersistentHeaderDelegate {
   final double max;
   final double min;
   final Widget Function(BuildContext context, double offset) builder;
 
-  KeTaoFeaturedPersistentHeaderBuilder(
+  KTKJPersistentHeaderBuilder(
       {this.max = 120, this.min = 80, @required this.builder})
       : assert(max >= min && builder != null);
 
@@ -31,7 +31,7 @@ class KeTaoFeaturedPersistentHeaderBuilder extends SliverPersistentHeaderDelegat
   double get minExtent => min;
 
   @override
-  bool shouldRebuild(covariant KeTaoFeaturedPersistentHeaderBuilder oldDelegate) =>
+  bool shouldRebuild(covariant KTKJPersistentHeaderBuilder oldDelegate) =>
       max != oldDelegate.max ||
       min != oldDelegate.min ||
       builder != oldDelegate.builder;

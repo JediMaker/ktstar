@@ -7,12 +7,12 @@ typedef Future<bool> StartCountAction(BuildContext context);
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedTimerWidget extends StatefulWidget {
+class KTKJTimerWidget extends StatefulWidget {
   final int time;
   final StartCountAction startCountAction;
   Color textColor;
 
-  KeTaoFeaturedTimerWidget(
+  KTKJTimerWidget(
       {this.time = 10, this.startCountAction, this.textColor = Colors.white});
 
   @override
@@ -24,7 +24,7 @@ class KeTaoFeaturedTimerWidget extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _TimerWidgetState extends State<KeTaoFeaturedTimerWidget> {
+class _TimerWidgetState extends State<KTKJTimerWidget> {
   bool isPressed = false;
   Widget timer;
 

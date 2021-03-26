@@ -11,14 +11,14 @@ import 'package:star/utils/common_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedDividendListPage extends StatefulWidget {
+class KTKJDividendListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
 
   var profitType;
   bool showAppBar;
 
-  KeTaoFeaturedDividendListPage(
+  KTKJDividendListPage(
       {Key key, this.pageType = 0, this.showAppBar = true, this.profitType})
       : super(key: key);
   String title = "分红金明细";
@@ -30,7 +30,7 @@ class KeTaoFeaturedDividendListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _DividendListPageState extends State<KeTaoFeaturedDividendListPage>
+class _DividendListPageState extends State<KTKJDividendListPage>
     with AutomaticKeepAliveClientMixin {
   ///收益类型 0邀请 1任务
   String incomeType = "0";
@@ -69,7 +69,7 @@ class _DividendListPageState extends State<KeTaoFeaturedDividendListPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -129,7 +129,7 @@ class _DividendListPageState extends State<KeTaoFeaturedDividendListPage>
               },
             ),
             centerTitle: true,
-            backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+            backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
             elevation: 0,
           ),
         ),
@@ -154,7 +154,7 @@ class _DividendListPageState extends State<KeTaoFeaturedDividendListPage>
           }
         },
         emptyWidget: _profitList == null || _profitList.length == 0
-            ? KeTaoFeaturedNoDataPage()
+            ? KTKJNoDataPage()
             : null,
         slivers: <Widget>[buildCenter()],
       ),
@@ -227,28 +227,29 @@ class _DividendListPageState extends State<KeTaoFeaturedDividendListPage>
               margin: EdgeInsets.only(top: 10, bottom: 10),
               child: Center(
                   child: Container(
-                    height: ScreenUtil().setWidth(53),
-                    width: ScreenUtil().setWidth(201),
-                    decoration: BoxDecoration(
-                      color: Color(0xffdedede),
-                      borderRadius: BorderRadius.circular(
-                        ScreenUtil().setSp(10),
-                      ),
+                height: ScreenUtil().setWidth(53),
+                width: ScreenUtil().setWidth(201),
+                decoration: BoxDecoration(
+                  color: Color(0xffdedede),
+                  borderRadius: BorderRadius.circular(
+                    ScreenUtil().setSp(10),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '$timeDesc',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenUtil().setSp(32),
                     ),
-                    child: Center(
-                      child: Text(
-                        '$timeDesc',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(32),
-                        ),
-                      ),
-                    ),
-                  ))),
+                  ),
+                ),
+              ))),
         ),
         Container(
           margin: EdgeInsets.symmetric(
-              horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN, vertical: ScreenUtil().setHeight(16)),
+              horizontal: KTKJGlobalConfig.LAYOUT_MARGIN,
+              vertical: ScreenUtil().setHeight(16)),
           padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
           decoration: BoxDecoration(
               color: Colors.white,

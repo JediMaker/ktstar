@@ -1,4 +1,3 @@
-
 // 默认高度从46改为40
 import 'package:flutter/material.dart';
 
@@ -8,14 +7,14 @@ const double _kTextAndIconTabHeight = 72.0;
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
+class KTKJRoundUnderlineTabIndicator extends Decoration {
   /// Create an underline style selected tab indicator.
   ///
   /// The [borderSide] and [insets] arguments must not be null.
-  const KeTaoFeaturedRoundUnderlineTabIndicator({
+  const KTKJRoundUnderlineTabIndicator({
     this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
     this.insets = EdgeInsets.zero,
-  }) : assert(borderSide != null),
+  })  : assert(borderSide != null),
         assert(insets != null);
 
   /// The color and weight of the horizontal line drawn below the selected tab.
@@ -51,7 +50,7 @@ class KeTaoFeaturedRoundUnderlineTabIndicator extends Decoration {
   }
 
   @override
-  _UnderlinePainter createBoxPainter([ VoidCallback onChanged ]) {
+  _UnderlinePainter createBoxPainter([VoidCallback onChanged]) {
     return _UnderlinePainter(this, onChanged);
   }
 }
@@ -64,7 +63,7 @@ class _UnderlinePainter extends BoxPainter {
       : assert(decoration != null),
         super(onChanged);
 
-  final KeTaoFeaturedRoundUnderlineTabIndicator decoration;
+  final KTKJRoundUnderlineTabIndicator decoration;
 
   BorderSide get borderSide => decoration.borderSide;
   EdgeInsetsGeometry get insets => decoration.insets;
@@ -93,12 +92,11 @@ class _UnderlinePainter extends BoxPainter {
     assert(configuration.size != null);
     final Rect rect = offset & configuration.size;
     final TextDirection textDirection = configuration.textDirection;
-    final Rect indicator = _indicatorRectFor(rect, textDirection).deflate(borderSide.width / 2.0);
+    final Rect indicator =
+        _indicatorRectFor(rect, textDirection).deflate(borderSide.width / 2.0);
 //    final Paint paint = borderSide.toPaint()..strokeCap = StrokeCap.square;
     // 改为圆角
     final Paint paint = borderSide.toPaint()..strokeCap = StrokeCap.round;
     canvas.drawLine(indicator.bottomLeft, indicator.bottomRight, paint);
   }
 }
- 
- 

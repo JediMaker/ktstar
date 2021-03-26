@@ -24,8 +24,8 @@ import 'package:url_launcher/url_launcher.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedPddHomeIndexPage extends StatefulWidget {
-  KeTaoFeaturedPddHomeIndexPage({Key key}) : super(key: key);
+class KTKJPddHomeIndexPage extends StatefulWidget {
+  KTKJPddHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
 
   @override
@@ -35,7 +35,7 @@ class KeTaoFeaturedPddHomeIndexPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
+class _PddHomeIndexPageState extends State<KTKJPddHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
@@ -90,7 +90,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
                 fit: BoxFit.fill,
               ),
 /*
-              child: KeTaoFeaturedMyOctoImage(
+              child: KTKJMyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
                 image:
@@ -102,7 +102,8 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedSearchGoodsPage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setHeight(100),
@@ -116,7 +117,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    KeTaoFeaturedMyOctoImage(
+                    KTKJMyOctoImage(
                       width: ScreenUtil().setWidth(48),
                       height: ScreenUtil().setWidth(48),
                       image:
@@ -141,9 +142,10 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedTaskMessagePage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJTaskMessagePage());
               },
-              child: KeTaoFeaturedMyOctoImage(
+              child: KTKJMyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
                 image:
@@ -159,7 +161,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
 //分类页签
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
-    if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
+    if (!KTKJCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         tabs.add(Container(
@@ -199,15 +201,15 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
 
-    if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
+    if (!KTKJCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         if ('精选' == classify.catName) {
           tabViews.add(
-            KeTaoFeaturedFeaturedTabPage(pddHomeData: _homeData),
+            KTKJFeaturedTabPage(pddHomeData: _homeData),
           );
         } else {
-          tabViews.add(KeTaoFeaturedPddGoodsListPage(
+          tabViews.add(KTKJPddGoodsListPage(
             categoryId: classify.catId,
             tabIndex: index,
           ));
@@ -271,12 +273,12 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
-                      if (KeTaoFeaturedCommonUtils.isEmpty(url)) {
+                      if (KTKJCommonUtils.isEmpty(url)) {
                         return;
                       }
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           this.context,
-                          KeTaoFeaturedWebViewPluginPage(
+                          KTKJWebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
                             title: "拼多多",
@@ -286,7 +288,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
 
                     ///
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                 },
               ),
@@ -297,10 +299,10 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
 
 //初始化精选tab数据
   Future _initData() async {
-    if (!KeTaoFeaturedGlobalConfig.isLogin()) {
-      KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
+    if (!KTKJGlobalConfig.isLogin()) {
+      KTKJCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+        KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
       });
       return;
     }
@@ -340,7 +342,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+      KTKJCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -364,7 +366,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 2,
               isScrollable: true,
-              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
+              indicator: KTKJRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Colors.white,
@@ -391,7 +393,7 @@ class _PddHomeIndexPageState extends State<KeTaoFeaturedPddHomeIndexPage>
                 print(('onRefresh'));
               },
               child: Center(
-                child: KeTaoFeaturedFeaturedTabPage(prodproducts),
+                child: KTKJFeaturedTabPage(prodproducts),
               ),
 //              child: _buildTabNewsList(_newsKey, _newsList),
             ),

@@ -25,8 +25,8 @@ import 'package:image_cropper/image_cropper.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedApplySettlePage extends StatefulWidget {
-  KeTaoFeaturedApplySettlePage({Key key, this.applyStatus, this.rejectMsg, this.shopId})
+class KTKJApplySettlePage extends StatefulWidget {
+  KTKJApplySettlePage({Key key, this.applyStatus, this.rejectMsg, this.shopId})
       : super(key: key);
   final String title = "申请商家入驻";
 
@@ -46,7 +46,7 @@ class KeTaoFeaturedApplySettlePage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
+class _ApplySettlePageState extends State<KTKJApplySettlePage> {
   Location _location;
 
   /* _initData() async {
@@ -162,7 +162,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
     //获取所在城市
     _location = await AmapLocation.instance
         .fetchLocation(mode: LocationAccuracy.High, needAddress: true);
-    if (!KeTaoFeaturedCommonUtils.isEmpty(_location)) {
+    if (!KTKJCommonUtils.isEmpty(_location)) {
       if (mounted) {
         setState(() {
           _shopLocation = "${_location.country + _location.address}";
@@ -181,7 +181,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
     if (result.status) {
       if (mounted) {
         setState(() {
-          _shopTypeList = KeTaoFeaturedGlobalConfig.getShopTypeListData();
+          _shopTypeList = KTKJGlobalConfig.getShopTypeListData();
         });
       }
     }
@@ -396,8 +396,8 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
 //    _shopLocationController.text = _shopLocation;
     return GestureDetector(
       onTap: () async {
-        Map selectAddressInfo =
-            await KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedChoseLocationPage());
+        Map selectAddressInfo = await KTKJNavigatorUtils.navigatorRouter(
+            context, KTKJChoseLocationPage());
         /* 'title': await item.title,
         'addressDetail': distance +
         await item.provinceName +
@@ -412,7 +412,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
         'cityName': await item.cityName,
         'adName': await item.adName,
         'address': await item.address,*/
-        if (KeTaoFeaturedCommonUtils.isEmpty(selectAddressInfo)) {
+        if (KTKJCommonUtils.isEmpty(selectAddressInfo)) {
           return;
         }
         if (mounted) {
@@ -445,7 +445,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               child: Stack(
                 children: [
                   Visibility(
-                    visible: KeTaoFeaturedCommonUtils.isEmpty(_shopLocation),
+                    visible: KTKJCommonUtils.isEmpty(_shopLocation),
                     child: TextField(
                       maxLines: 1,
                       controller: _shopLocationController,
@@ -476,7 +476,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                     ),
                   ),
                   Visibility(
-                    visible: !KeTaoFeaturedCommonUtils.isEmpty(_shopLocation),
+                    visible: !KTKJCommonUtils.isEmpty(_shopLocation),
                     child: Container(
                       child: Text(
                         "$_shopLocation",
@@ -497,7 +497,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 left: ScreenUtil().setWidth(30),
                 right: ScreenUtil().setWidth(30),
               ),
-              child: KeTaoFeaturedMyOctoImage(
+              child: KTKJMyOctoImage(
                 image:
                     "https://alipic.lanhuapp.com/xdffeb73c5-368b-4086-b4af-907535f9ff3b",
                 width: ScreenUtil().setWidth(35),
@@ -542,7 +542,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               child: Stack(
                 children: [
                   Visibility(
-                    visible: KeTaoFeaturedCommonUtils.isEmpty(_shopType),
+                    visible: KTKJCommonUtils.isEmpty(_shopType),
                     child: TextField(
                       maxLines: 1,
                       controller: _shopTypeController,
@@ -573,7 +573,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                     ),
                   ),
                   Visibility(
-                    visible: !KeTaoFeaturedCommonUtils.isEmpty(_shopType),
+                    visible: !KTKJCommonUtils.isEmpty(_shopType),
                     child: Container(
                       child: Text(
                         "$_shopType",
@@ -594,7 +594,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 left: ScreenUtil().setWidth(30),
                 right: ScreenUtil().setWidth(30),
               ),
-              child: KeTaoFeaturedMyOctoImage(
+              child: KTKJMyOctoImage(
                 image:
                     "https://alipic.lanhuapp.com/xde52a3d9c-25c5-4378-9e95-967be98fa594",
                 width: ScreenUtil().setWidth(36),
@@ -659,7 +659,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                     color: Color(0xff222222),
                   ),
                 ),
-                trailing: KeTaoFeaturedMyOctoImage(
+                trailing: KTKJMyOctoImage(
                   image:
                       "${_selectTypeId == item.id ? "https://alipic.lanhuapp.com/xda760ae72-7c57-4c57-b898-6b6a00d16c9c" : "https://alipic.lanhuapp.com/xd9cbbe519-1886-421d-a02e-27d8c33cfc90"}",
                   width: ScreenUtil().setWidth(60),
@@ -709,7 +709,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                   onChanged: (value) {
                     setState(() {
                       _shopProfitRatio = value.trim();
-                      if (KeTaoFeaturedCommonUtils.isEmpty(_selectProfit)) {
+                      if (KTKJCommonUtils.isEmpty(_selectProfit)) {
                         return;
                       }
                       if (double.parse(_shopProfitRatio) <
@@ -740,7 +740,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                   decoration: null,
                 ),
                 Visibility(
-                  visible: !KeTaoFeaturedCommonUtils.isEmpty(_shopProfitRatio),
+                  visible: !KTKJCommonUtils.isEmpty(_shopProfitRatio),
                   child: GestureDetector(
                     onTap: () {
                       _shopProfitRatioFocusNode.requestFocus();
@@ -762,8 +762,8 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
             ),
           ),
           Visibility(
-            visible:
-                _showProfitWarningText && !KeTaoFeaturedCommonUtils.isEmpty(_selectProfit),
+            visible: _showProfitWarningText &&
+                !KTKJCommonUtils.isEmpty(_selectProfit),
             child: Container(
               child: Text(
                 "*该行业让利比例最低为$_selectProfit%",
@@ -777,8 +777,8 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
             ),
           ),
           Visibility(
-            visible:
-                !_showProfitWarningText && !KeTaoFeaturedCommonUtils.isEmpty(_selectProfit),
+            visible: !_showProfitWarningText &&
+                !KTKJCommonUtils.isEmpty(_selectProfit),
             child: Container(
               child: Text(
                 "*用户预估分红金可得$_estimateProfit%",
@@ -838,7 +838,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                   decoration: null,
                 ),
                 Visibility(
-                  visible: KeTaoFeaturedCommonUtils.isEmpty(_shopDesc),
+                  visible: KTKJCommonUtils.isEmpty(_shopDesc),
                   child: GestureDetector(
                     onTap: () {
                       _shopDescFocusNode.requestFocus();
@@ -947,7 +947,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
           ],
           androidUiSettings: AndroidUiSettings(
               toolbarTitle: '图片裁剪',
-              toolbarColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+              toolbarColor: KTKJGlobalConfig.taskHeadColor,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.square,
               lockAspectRatio: true),
@@ -1015,10 +1015,10 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
 
                   }*/
                   _indexVisible = false;
-                  KeTaoFeaturedCommonUtils.requestPermission(Permission.photos,
+                  KTKJCommonUtils.requestPermission(Permission.photos,
                       _onButtonPressed(ImageSource.gallery, context: context));
                 },
-                child: KeTaoFeaturedMyOctoImage(
+                child: KTKJMyOctoImage(
                   image:
                       "https://alipic.lanhuapp.com/xdae253960-0d6f-4146-a4f4-46e348039361",
                   width: ScreenUtil().setWidth(327),
@@ -1033,7 +1033,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return KeTaoFeaturedTaskGalleryPage(
+                  return KTKJTaskGalleryPage(
                     images: images,
                     index: index,
                     type: 1,
@@ -1153,7 +1153,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
           ],
           androidUiSettings: AndroidUiSettings(
               toolbarTitle: '图片裁剪',
-              toolbarColor: KeTaoFeaturedGlobalConfig.taskHeadColor,
+              toolbarColor: KTKJGlobalConfig.taskHeadColor,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.ratio3x2,
               lockAspectRatio: true),
@@ -1224,13 +1224,13 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
 
   _initData() async {
     _initShopListData();
-    if (KeTaoFeaturedCommonUtils.isEmpty(KeTaoFeaturedGlobalConfig.prefs.getString("latitude"))) {
-      await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
-      _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
-      _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
+    if (KTKJCommonUtils.isEmpty(KTKJGlobalConfig.prefs.getString("latitude"))) {
+      await KTKJGlobalConfig.initUserLocationWithPermission(count: 0);
+      _latitude = KTKJGlobalConfig.prefs.getString("latitude");
+      _longitude = KTKJGlobalConfig.prefs.getString("longitude");
     } else {
-      _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
-      _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
+      _latitude = KTKJGlobalConfig.prefs.getString("latitude");
+      _longitude = KTKJGlobalConfig.prefs.getString("longitude");
     }
 
     if (applyStatus != STATUS_NOT_APPLIED) {
@@ -1240,7 +1240,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
         if (result.status) {
           setState(() {
             try {
-              _shopTypeList = KeTaoFeaturedGlobalConfig.getShopTypeListData();
+              _shopTypeList = KTKJGlobalConfig.getShopTypeListData();
               _shopName = result.data.storeName;
               _shopNameController.text = _shopName;
               _contactDetails = result.data.storeTel;
@@ -1270,7 +1270,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               _cityName = result.data.storeCity;
               _adName = result.data.storeDistrict;
               _address = result.data.storeAddr;
-              if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.storeLogoUrl)) {
+              if (!KTKJCommonUtils.isEmpty(result.data.storeLogoUrl)) {
                 var netImage = Image.network(
                   result.data.storeLogoUrl,
                   width: ScreenUtil().setWidth(327),
@@ -1279,7 +1279,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 );
                 images.add(netImage);
               }
-              if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.storeImgUrl)) {
+              if (!KTKJCommonUtils.isEmpty(result.data.storeImgUrl)) {
                 var netImage = Image.network(
                   result.data.storeImgUrl,
                   width: ScreenUtil().setWidth(327),
@@ -1317,10 +1317,10 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
 
                   }*/
                   _indexVisible2 = false;
-                  KeTaoFeaturedCommonUtils.requestPermission(Permission.photos,
+                  KTKJCommonUtils.requestPermission(Permission.photos,
                       _onButtonPressed2(ImageSource.gallery, context: context));
                 },
-                child: KeTaoFeaturedMyOctoImage(
+                child: KTKJMyOctoImage(
                   image:
                       "https://alipic.lanhuapp.com/xdae253960-0d6f-4146-a4f4-46e348039361",
                   width: ScreenUtil().setWidth(327),
@@ -1335,7 +1335,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return KeTaoFeaturedTaskGalleryPage(
+                  return KTKJTaskGalleryPage(
                     images: images2,
                     index: index,
                     type: 1,
@@ -1409,34 +1409,34 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
           width: double.maxFinite,
           child: GestureDetector(
             onTap: () async {
-              if (KeTaoFeaturedCommonUtils.isEmpty(_shopName) ||
-                  KeTaoFeaturedCommonUtils.isEmpty(_shopProfitRatio) ||
-                  KeTaoFeaturedCommonUtils.isEmpty(_shopType) ||
-                  KeTaoFeaturedCommonUtils.isEmpty(_shopLocation) ||
-                  KeTaoFeaturedCommonUtils.isEmpty(_contactDetails)) {
-                KeTaoFeaturedCommonUtils.showToast("必填项内容未填写！");
+              if (KTKJCommonUtils.isEmpty(_shopName) ||
+                  KTKJCommonUtils.isEmpty(_shopProfitRatio) ||
+                  KTKJCommonUtils.isEmpty(_shopType) ||
+                  KTKJCommonUtils.isEmpty(_shopLocation) ||
+                  KTKJCommonUtils.isEmpty(_contactDetails)) {
+                KTKJCommonUtils.showToast("必填项内容未填写！");
                 return;
               }
-              if (!KeTaoFeaturedCommonUtils.isPhoneLegal(_contactDetails)) {
-                KeTaoFeaturedCommonUtils.showToast("请输入正确的手机号！");
+              if (!KTKJCommonUtils.isPhoneLegal(_contactDetails)) {
+                KTKJCommonUtils.showToast("请输入正确的手机号！");
                 return;
               }
               if (_showProfitWarningText) {
-                KeTaoFeaturedCommonUtils.showToast("请填写合适的让利比例！");
+                KTKJCommonUtils.showToast("请填写合适的让利比例！");
                 return;
               }
               if (images.length == 0) {
-                KeTaoFeaturedCommonUtils.showToast("未上传店铺头像！");
+                KTKJCommonUtils.showToast("未上传店铺头像！");
                 return;
               }
               if (!_isAgreementChecked) {
-                KeTaoFeaturedCommonUtils.showToast("请选择同意入驻规则！");
+                KTKJCommonUtils.showToast("请选择同意入驻规则！");
                 return;
               }
-              if (!KeTaoFeaturedCommonUtils.isEmpty(allImgIds)) {
+              if (!KTKJCommonUtils.isEmpty(allImgIds)) {
                 _storeLogo = allImgIds.join(",");
               }
-              if (!KeTaoFeaturedCommonUtils.isEmpty(allImgIds2)) {
+              if (!KTKJCommonUtils.isEmpty(allImgIds2)) {
                 _storeImg = allImgIds2.join(",");
               }
               /* 'title': await item.title,
@@ -1453,7 +1453,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
         'cityName': await item.cityName,
         'adName': await item.adName,
         'address': await item.address,*/
-              if (!KeTaoFeaturedCommonUtils.isEmpty(_selectAddressInfo)) {
+              if (!KTKJCommonUtils.isEmpty(_selectAddressInfo)) {
                 _latitude = _selectAddressInfo["latitude"].toString();
                 _longitude = _selectAddressInfo["longitude"].toString();
                 _provinceName = _selectAddressInfo["provinceName"].toString();
@@ -1480,10 +1480,10 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 storeId: widget.shopId,
               );
               if (result.status) {
-                KeTaoFeaturedCommonUtils.showToast("申请已提交");
+                KTKJCommonUtils.showToast("申请已提交");
                 Navigator.of(context).pop();
               } else {
-                KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                KTKJCommonUtils.showToast("${result.errMsg}");
               }
 
 //              HttpManage.s
@@ -1493,22 +1493,22 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                     remark: _remark);
                 if (result.status) {
-                  KeTaoFeaturedCommonUtils.showToast("提交成功");
-                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, KeTaoFeaturedTaskIndexPage());
+                  KTKJCommonUtils.showToast("提交成功");
+                  KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KTKJTaskIndexPage());
                 } else {
-                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                  KTKJCommonUtils.showToast(result.errMsg);
                 }
               } else {
                 ///重新提交任务
                 var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                     remark: _remark);
                 if (result.status) {
-                  KeTaoFeaturedCommonUtils.showToast("提交成功");
-                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, KeTaoFeaturedTaskIndexPage());
+                  KTKJCommonUtils.showToast("提交成功");
+                  KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KTKJTaskIndexPage());
                 } else {
-                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                  KTKJCommonUtils.showToast(result.errMsg);
                 }
 
                 ///
@@ -1523,8 +1523,8 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: images.length == 0
-                      ? KeTaoFeaturedGlobalConfig.taskHeadDisableColor
-                      : KeTaoFeaturedGlobalConfig.taskHeadColor,
+                      ? KTKJGlobalConfig.taskHeadDisableColor
+                      : KTKJGlobalConfig.taskHeadColor,
                   gradient: LinearGradient(
                       colors: [Color(0xFFF36B2E), Color(0xFFF32E43)]),
                   borderRadius: BorderRadius.circular(70)),
@@ -1545,7 +1545,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
           child: Text.rich(
             TextSpan(children: [
               WidgetSpan(
-                child: KeTaoFeaturedMyOctoImage(
+                child: KTKJMyOctoImage(
                   image:
                       "${_isAgreementChecked ? 'https://alipic.lanhuapp.com/xd6edb8e0a-146d-4eb6-901a-941895b3c0c6' : 'https://alipic.lanhuapp.com/xd7951edab-996a-47cb-967d-3d79f757ecc1'}",
                   width: ScreenUtil().setWidth(42),
@@ -1557,13 +1557,13 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
               WidgetSpan(
                 child: GestureDetector(
                   onTap: () {
-                    if (KeTaoFeaturedCommonUtils.isEmpty(
+                    if (KTKJCommonUtils.isEmpty(
                         APi.AGREEMENT_SHOP_ENTRY_RULES_URL)) {
                       return;
                     }
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    KTKJNavigatorUtils.navigatorRouter(
                         context,
-                        KeTaoFeaturedWebViewPage(
+                        KTKJWebViewPage(
                           initialUrl: APi.AGREEMENT_SHOP_ENTRY_RULES_URL,
                           showActions: false,
                           title: "商家入驻规则协议",
@@ -1572,7 +1572,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                   child: Text(
                     "《商家入驻规则协议》",
                     style: TextStyle(
-                        color: KeTaoFeaturedGlobalConfig.taskHeadColor,
+                        color: KTKJGlobalConfig.taskHeadColor,
                         fontSize: ScreenUtil().setSp(32)),
                   ),
                 ),
@@ -1604,7 +1604,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
             margin: EdgeInsets.only(
               top: ScreenUtil().setWidth(91),
             ),
-            child: KeTaoFeaturedMyOctoImage(
+            child: KTKJMyOctoImage(
               image:
                   "https://alipic.lanhuapp.com/xd6ba64a76-9a7e-4320-a416-83c7f0ef6dba",
               width: ScreenUtil().setWidth(350),
@@ -1641,22 +1641,22 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                     remark: _remark);
                 if (result.status) {
-                  KeTaoFeaturedCommonUtils.showToast("提交成功");
-                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, KeTaoFeaturedTaskIndexPage());
+                  KTKJCommonUtils.showToast("提交成功");
+                  KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KTKJTaskIndexPage());
                 } else {
-                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                  KTKJCommonUtils.showToast(result.errMsg);
                 }
               } else {
                 ///重新提交任务
                 var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                     remark: _remark);
                 if (result.status) {
-                  KeTaoFeaturedCommonUtils.showToast("提交成功");
-                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, KeTaoFeaturedTaskIndexPage());
+                  KTKJCommonUtils.showToast("提交成功");
+                  KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KTKJTaskIndexPage());
                 } else {
-                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                  KTKJCommonUtils.showToast(result.errMsg);
                 }
 
                 ///
@@ -1697,7 +1697,7 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
             margin: EdgeInsets.only(
               top: ScreenUtil().setWidth(91),
             ),
-            child: KeTaoFeaturedMyOctoImage(
+            child: KTKJMyOctoImage(
               image:
                   "https://alipic.lanhuapp.com/xdd0101e83-7469-42e6-8236-60872e06737e",
               width: ScreenUtil().setWidth(386),
@@ -1734,22 +1734,22 @@ class _ApplySettlePageState extends State<KeTaoFeaturedApplySettlePage> {
                 var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                     remark: _remark);
                 if (result.status) {
-                  KeTaoFeaturedCommonUtils.showToast("提交成功");
-                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, KeTaoFeaturedTaskIndexPage());
+                  KTKJCommonUtils.showToast("提交成功");
+                  KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KTKJTaskIndexPage());
                 } else {
-                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                  KTKJCommonUtils.showToast(result.errMsg);
                 }
               } else {
                 ///重新提交任务
                 var result = await HttpManage.taskReSubmit(widget.comId, imgIds,
                     remark: _remark);
                 if (result.status) {
-                  KeTaoFeaturedCommonUtils.showToast("提交成功");
-                  KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                      context, KeTaoFeaturedTaskIndexPage());
+                  KTKJCommonUtils.showToast("提交成功");
+                  KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                      context, KTKJTaskIndexPage());
                 } else {
-                  KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                  KTKJCommonUtils.showToast(result.errMsg);
                 }
 
                 ///

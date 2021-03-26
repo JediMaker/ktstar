@@ -11,8 +11,8 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedShopDeatilPage extends StatefulWidget {
-  KeTaoFeaturedShopDeatilPage(
+class KTKJShopDeatilPage extends StatefulWidget {
+  KTKJShopDeatilPage(
       {Key key, this.shopId, this.latitude, this.longitude, this.isOwnShop})
       : super(key: key);
   final String title = "商家详情";
@@ -30,7 +30,7 @@ class KeTaoFeaturedShopDeatilPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
+class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
   var _latitude;
   var _longitude;
   var _provinceName;
@@ -58,13 +58,13 @@ class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
   }
 
   _initData() async {
-    if (KeTaoFeaturedCommonUtils.isEmpty(KeTaoFeaturedGlobalConfig.prefs.getString("latitude"))) {
-      await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
-      _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
-      _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
+    if (KTKJCommonUtils.isEmpty(KTKJGlobalConfig.prefs.getString("latitude"))) {
+      await KTKJGlobalConfig.initUserLocationWithPermission(count: 0);
+      _latitude = KTKJGlobalConfig.prefs.getString("latitude");
+      _longitude = KTKJGlobalConfig.prefs.getString("longitude");
     } else {
-      _latitude = KeTaoFeaturedGlobalConfig.prefs.getString("latitude");
-      _longitude = KeTaoFeaturedGlobalConfig.prefs.getString("longitude");
+      _latitude = KTKJGlobalConfig.prefs.getString("latitude");
+      _longitude = KTKJGlobalConfig.prefs.getString("longitude");
     }
 
     var result = await HttpManage.getShopInfo(
@@ -97,7 +97,7 @@ class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
             _showProfitWarningText = false;
             _storeImg = result.data.storeImg;
             _storeLogo = result.data.storeLogo;
-            if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.storeLogoUrl)) {
+            if (!KTKJCommonUtils.isEmpty(result.data.storeLogoUrl)) {
               var netImage = Image.network(
                 result.data.storeLogoUrl,
                 width: ScreenUtil().setWidth(327),
@@ -106,7 +106,7 @@ class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
               );
               images.add(netImage);
             }
-            if (!KeTaoFeaturedCommonUtils.isEmpty(result.data.storeImgUrl)) {
+            if (!KTKJCommonUtils.isEmpty(result.data.storeImgUrl)) {
               var netImage = Image.network(
                 result.data.storeImgUrl,
                 width: ScreenUtil().setWidth(327),
@@ -195,7 +195,7 @@ class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
                           borderRadius: BorderRadius.circular(
                             ScreenUtil().setWidth(30),
                           ),
-                          child: KeTaoFeaturedMyOctoImage(
+                          child: KTKJMyOctoImage(
                             image: "$_shopImageUrl",
                             width: ScreenUtil().setWidth(1065),
                             height: ScreenUtil().setWidth(700),
@@ -237,7 +237,7 @@ class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
                                           margin: EdgeInsets.only(
                                             right: ScreenUtil().setWidth(8),
                                           ),
-                                          child: KeTaoFeaturedMyOctoImage(
+                                          child: KTKJMyOctoImage(
                                             image: "$_shopLocationIconUrl",
                                             width: ScreenUtil().setWidth(33),
                                             height: ScreenUtil().setWidth(42),
@@ -292,17 +292,17 @@ class _ShopDeatilPageState extends State<KeTaoFeaturedShopDeatilPage> {
                 onTap: () {
                   if (widget.isOwnShop) {
                     ///进入商家后台
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    KTKJNavigatorUtils.navigatorRouter(
                       context,
-                      KeTaoFeaturedShopBackstagePage(
+                      KTKJShopBackstagePage(
                         shopId: widget.shopId,
                       ),
                     );
                   } else {
                     ///进入支付页面
-                    KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                    KTKJNavigatorUtils.navigatorRouter(
                         context,
-                        KeTaoFeaturedShopPaymentPage(
+                        KTKJShopPaymentPage(
                           shopId: widget.shopId,
                           shopName: _shopName,
                           shopCode: _shopCode,

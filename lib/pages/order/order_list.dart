@@ -8,8 +8,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedOrderListPage extends StatefulWidget {
-  KeTaoFeaturedOrderListPage({Key key}) : super(key: key);
+class KTKJOrderListPage extends StatefulWidget {
+  KTKJOrderListPage({Key key}) : super(key: key);
   final String title = "我的订单";
 
   @override
@@ -19,7 +19,7 @@ class KeTaoFeaturedOrderListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _OrderListPageState extends State<KeTaoFeaturedOrderListPage>
+class _OrderListPageState extends State<KTKJOrderListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
   int _selectedTabIndex = 0;
@@ -100,7 +100,7 @@ class _OrderListPageState extends State<KeTaoFeaturedOrderListPage>
         if (orderType[index] == '饿了么') {
           orderSource = "-1";
         }
-        tabViews.add(KeTaoFeaturedRechargeOrderListPage(
+        tabViews.add(KTKJRechargeOrderListPage(
           orderSource: orderSource,
         ));
       }
@@ -136,7 +136,7 @@ class _OrderListPageState extends State<KeTaoFeaturedOrderListPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -154,7 +154,7 @@ class _OrderListPageState extends State<KeTaoFeaturedOrderListPage>
               indicatorWeight: 2,
               indicatorPadding: EdgeInsets.only(top: 4, bottom: 2),
               unselectedLabelColor: Colors.black,
-              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
+              indicator: KTKJRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Color(0xffF32E43),

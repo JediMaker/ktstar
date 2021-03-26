@@ -16,8 +16,8 @@ import 'package:star/utils/navigator_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedChoseLocationPage extends StatefulWidget {
-  KeTaoFeaturedChoseLocationPage({Key key, this.onChoicePoint}) : super(key: key);
+class KTKJChoseLocationPage extends StatefulWidget {
+  KTKJChoseLocationPage({Key key, this.onChoicePoint}) : super(key: key);
   final String title = "";
 
   /**
@@ -32,7 +32,7 @@ class KeTaoFeaturedChoseLocationPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
+class _ChoseLocationPageState extends State<KTKJChoseLocationPage> {
   //地图控制器
   AmapController _amapController;
 
@@ -241,14 +241,14 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
               _longitude = value;
             }
           });
-          if (!KeTaoFeaturedCommonUtils.isEmpty(_latitude) &&
-              !KeTaoFeaturedCommonUtils.isEmpty(_longitude)) {
+          if (!KTKJCommonUtils.isEmpty(_latitude) &&
+              !KTKJCommonUtils.isEmpty(_longitude)) {
             _localLatLng = LatLng(_latitude, _longitude);
-            if (!KeTaoFeaturedCommonUtils.isEmpty(_localLatLng)) {
+            if (!KTKJCommonUtils.isEmpty(_localLatLng)) {
               _searchPoiListWithLatLng(_localLatLng);
             }
           }
-          if (!KeTaoFeaturedCommonUtils.isEmpty(_localLatLng)) {
+          if (!KTKJCommonUtils.isEmpty(_localLatLng)) {
             _stopLocation();
           }
         }
@@ -340,7 +340,7 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
                     ),
                     trailing: Visibility(
                       visible: _selextPoiIndex == i,
-                      child: KeTaoFeaturedMyOctoImage(
+                      child: KTKJMyOctoImage(
                         image:
                             "${_selextPoiIndex == i ? "https://alipic.lanhuapp.com/xd1cbf866e-022f-4f79-b1a6-a26ab6e30113" : ""}",
                         width: ScreenUtil().setWidth(67),
@@ -574,14 +574,15 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
               // 地图创建完成回调 (可选)
               onMapCreated: (controller) async {
                 _amapController = controller;
-                if (KeTaoFeaturedCommonUtils.isEmpty(
-                    KeTaoFeaturedGlobalConfig.prefs.getString("latitude"))) {
-                  await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
+                if (KTKJCommonUtils.isEmpty(
+                    KTKJGlobalConfig.prefs.getString("latitude"))) {
+                  await KTKJGlobalConfig.initUserLocationWithPermission(
+                      count: 0);
                 } else {
-                  _latitude =
-                      double.parse(KeTaoFeaturedGlobalConfig.prefs.getString("latitude"));
-                  _longitude =
-                      double.parse(KeTaoFeaturedGlobalConfig.prefs.getString("longitude"));
+                  _latitude = double.parse(
+                      KTKJGlobalConfig.prefs.getString("latitude"));
+                  _longitude = double.parse(
+                      KTKJGlobalConfig.prefs.getString("longitude"));
                 }
                 //获取所在城市
                 var location = await AmapLocation.instance.fetchLocation();
@@ -756,13 +757,13 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
-                  if (KeTaoFeaturedCommonUtils.isEmpty(_localLatLng)) {
+                  if (KTKJCommonUtils.isEmpty(_localLatLng)) {
                     return;
                   }
                   _amapController.setCenterCoordinate(_localLatLng);
                   _searchPoiListWithLatLng(_localLatLng);
                 },
-                child: KeTaoFeaturedMyOctoImage(
+                child: KTKJMyOctoImage(
                   image:
                       "https://alipic.lanhuapp.com/xd13751b8a-64b6-4400-b34d-5dc34299199a",
                   width: ScreenUtil().setWidth(167),
@@ -805,7 +806,7 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
                                   controller: _searchController,
                                   focusNode: _searchFocusNode,
                                   onChanged: (value) {
-                                    if (KeTaoFeaturedCommonUtils.isEmpty(value)) {
+                                    if (KTKJCommonUtils.isEmpty(value)) {
                                       _searchPoiListWithLatLng(_localLatLng);
                                       return;
                                     }
@@ -819,8 +820,8 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
                                 ),
                               ),
                               Visibility(
-                                visible:
-                                    KeTaoFeaturedCommonUtils.isEmpty(_searchController.text),
+                                visible: KTKJCommonUtils.isEmpty(
+                                    _searchController.text),
                                 child: GestureDetector(
                                   onTap: () {
                                     _searchFocusNode.requestFocus();
@@ -845,7 +846,7 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        KeTaoFeaturedMyOctoImage(
+                                        KTKJMyOctoImage(
                                           image:
                                               "https://alipic.lanhuapp.com/xd4f7f5e7c-1e62-449a-8967-33ff98c352b5",
                                           width: ScreenUtil().setWidth(41),
@@ -936,7 +937,7 @@ class _ChoseLocationPageState extends State<KeTaoFeaturedChoseLocationPage> {
 
   /// 动态申请定位权限
   void requestPermission() async {
-    await KeTaoFeaturedGlobalConfig.initUserLocationWithPermission(count: 0);
+    await KTKJGlobalConfig.initUserLocationWithPermission(count: 0);
     /*// 申请权限
     bool hasLocationPermission = await requestLocationPermission();
     if (hasLocationPermission) {

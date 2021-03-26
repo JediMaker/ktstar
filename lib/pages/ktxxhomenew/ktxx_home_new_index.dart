@@ -86,8 +86,8 @@ import 'package:url_launcher/url_launcher.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedHomeIndexPage extends StatefulWidget {
-  KeTaoFeaturedHomeIndexPage({Key key}) : super(key: key);
+class KTKJHomeIndexPage extends StatefulWidget {
+  KTKJHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
   int SVG_ANGLETYPE_DEG = 2;
   int SVG_ANGLETYPE_GRAD = 4;
@@ -105,7 +105,7 @@ class KeTaoFeaturedHomeIndexPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
+class _HomeIndexPageState extends State<KTKJHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
@@ -172,8 +172,8 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
           Expanded(
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                    context, KeTaoFeaturedSearchGoodsPage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJSearchGoodsPage());
               },
               child: Container(
                 height: ScreenUtil().setHeight(100),
@@ -213,8 +213,8 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                    context, KeTaoFeaturedTaskMessagePage());
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJTaskMessagePage());
               },
               child: CachedNetworkImage(
                 width: ScreenUtil().setWidth(66),
@@ -232,7 +232,7 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 //分类页签
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
-    if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
+    if (!KTKJCommonUtils.isEmpty(cats)) {
       if (cats[0].catName != '首页') {
         HomePddCategoryDataCat catzero = HomePddCategoryDataCat();
         catzero.catName = '首页';
@@ -276,15 +276,15 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 //分类下对应页面
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
-    if (!KeTaoFeaturedCommonUtils.isEmpty(cats)) {
+    if (!KTKJCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         if ('首页' == classify.catName) {
           tabViews.add(
-            KeTaoFeaturedHomeTabPage(pddHomeData: _homeData),
+            KTKJHomeTabPage(pddHomeData: _homeData),
           );
         } else {
-          tabViews.add(KeTaoFeaturedGoodsListPage(
+          tabViews.add(KTKJGoodsListPage(
             firstId: classify.catId.toString(),
             showAppBar: false,
           ));
@@ -348,12 +348,12 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
                     if (await canLaunch(pddUrl)) {
                       await launch(pddUrl);
                     } else {
-                      if (KeTaoFeaturedCommonUtils.isEmpty(url)) {
+                      if (KTKJCommonUtils.isEmpty(url)) {
                         return;
                       }
-                      KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                      KTKJNavigatorUtils.navigatorRouter(
                           this.context,
-                          KeTaoFeaturedWebViewPluginPage(
+                          KTKJWebViewPluginPage(
                             initialUrl: "$url",
                             showActions: true,
                             title: "拼多多",
@@ -363,7 +363,7 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 
                     ///
                   } else {
-                    KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                    KTKJCommonUtils.showToast(result.errMsg);
                   }
                 },
               ),
@@ -374,10 +374,10 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
 
 //初始化精选tab数据
   Future _initData() async {
-    /*if (!KeTaoFeaturedGlobalConfig.isLogin()) {
-      KeTaoFeaturedCommonUtils.showToast("未获取到登录信息，，请登录！");
+    /*if (!KTKJGlobalConfig.isLogin()) {
+      KTKJCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
-        KeTaoFeaturedNavigatorUtils.navigatorRouter(context, KeTaoFeaturedLoginPage());
+        KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
       });
       return;
     }
@@ -426,7 +426,7 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+      KTKJCommonUtils.showToast("${result.errMsg}");
     }
   }
 
@@ -450,7 +450,7 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 2,
               isScrollable: true,
-              indicator: KeTaoFeaturedRoundUnderlineTabIndicator(
+              indicator: KTKJRoundUnderlineTabIndicator(
                   borderSide: BorderSide(
                 width: 3.5,
                 color: Colors.white,
@@ -477,7 +477,7 @@ class _HomeIndexPageState extends State<KeTaoFeaturedHomeIndexPage>
                 print(('onRefresh'));
               },
               child: Center(
-                child: KeTaoFeaturedFeaturedTabPage(prodproducts),
+                child: KTKJFeaturedTabPage(prodproducts),
               ),
 //              child: _buildTabNewsList(_newsKey, _newsList),
             ),

@@ -14,8 +14,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedWithdrawalPage extends StatefulWidget {
-  KeTaoFeaturedWithdrawalPage({Key key, @required this.availableCashAmount})
+class KTKJWithdrawalPage extends StatefulWidget {
+  KTKJWithdrawalPage({Key key, @required this.availableCashAmount})
       : super(key: key);
   final String title = "提现";
   String availableCashAmount; // 可提现金额
@@ -27,7 +27,7 @@ class KeTaoFeaturedWithdrawalPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
+class _WithdrawalPageState extends State<KTKJWithdrawalPage> {
   bool _aliPaySelected = true;
   TextEditingController _aliPayAccountController = new TextEditingController();
   FocusNode _aliPayAccountFocusNode = FocusNode();
@@ -115,7 +115,7 @@ class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
                 },
               ),
               centerTitle: true,
-              backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+              backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
               elevation: 0,
             ),
             body: SingleChildScrollView(
@@ -213,7 +213,7 @@ class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
                                     if (mounted) {
                                       setState(() {
 //                                _aliPaySelected = false;
-                                        KeTaoFeaturedCommonUtils.showToast("暂不支持提现到微信");
+                                        KTKJCommonUtils.showToast("暂不支持提现到微信");
                                       });
                                     }
                                   },
@@ -436,16 +436,16 @@ class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
       child: Ink(
         child: InkWell(
             onTap: () async {
-              if (KeTaoFeaturedCommonUtils.isEmpty(_aliPayAccount) ||
-                  KeTaoFeaturedCommonUtils.isEmpty(_aliPayName) ||
-                  KeTaoFeaturedCommonUtils.isEmpty(_withdrawalAmount)) {
-                KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
+              if (KTKJCommonUtils.isEmpty(_aliPayAccount) ||
+                  KTKJCommonUtils.isEmpty(_aliPayName) ||
+                  KTKJCommonUtils.isEmpty(_withdrawalAmount)) {
+                KTKJCommonUtils.showToast("请检查填写的信息是否完整！");
                 return;
               }
               try {
                 if (double.parse(_withdrawalAmount) >
                     double.parse(widget.availableCashAmount)) {
-                  KeTaoFeaturedCommonUtils.showToast("提现金额不能超出账户可提现余额！");
+                  KTKJCommonUtils.showToast("提现金额不能超出账户可提现余额！");
                   return;
                 }
               } catch (e) {}
@@ -454,12 +454,12 @@ class _WithdrawalPageState extends State<KeTaoFeaturedWithdrawalPage> {
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
               EasyLoading.dismiss();
               if (result.status) {
-                KeTaoFeaturedCommonUtils.showToast("提现申请已提交");
+                KTKJCommonUtils.showToast("提现申请已提交");
 //                Navigator.of(context).pop();
-                KeTaoFeaturedNavigatorUtils.navigatorRouterReplaceMent(
-                    context, KeTaoFeaturedWithdrawalResultPage());
+                KTKJNavigatorUtils.navigatorRouterReplaceMent(
+                    context, KTKJWithdrawalResultPage());
               } else {
-                KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+                KTKJCommonUtils.showToast(result.errMsg);
               }
             },
             child: Container(

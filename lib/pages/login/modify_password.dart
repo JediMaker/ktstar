@@ -11,10 +11,10 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedModifyPasswordPage extends StatefulWidget {
+class KTKJModifyPasswordPage extends StatefulWidget {
   String title;
 
-  KeTaoFeaturedModifyPasswordPage({Key key, this.title}) : super(key: key);
+  KTKJModifyPasswordPage({Key key, this.title}) : super(key: key);
 
   @override
   _ModifyPasswordPageState createState() => _ModifyPasswordPageState();
@@ -23,7 +23,7 @@ class KeTaoFeaturedModifyPasswordPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
+class _ModifyPasswordPageState extends State<KTKJModifyPasswordPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   TextEditingController _checkCodeController;
@@ -77,7 +77,7 @@ class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
             },
           ),
           centerTitle: true,
-          backgroundColor: KeTaoFeaturedGlobalConfig.taskNomalHeadColor,
+          backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
           elevation: 0,
         ),
         body: Container(
@@ -166,7 +166,7 @@ class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(36.0),
                             color: Colors.white),
-                        child: KeTaoFeaturedTimerWidget(
+                        child: KTKJTimerWidget(
                           textColor: Color(0xff333333),
                           startCountAction: (BuildContext context) {
                             return smsSend(context);
@@ -228,20 +228,20 @@ class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
                             _checkCodeController.value.text.isEmpty ||
                             _passwordController.value.text == null ||
                             _passwordController.value.text.isEmpty) {
-                          KeTaoFeaturedCommonUtils.showToast("请检查填写的信息是否完整！");
+                          KTKJCommonUtils.showToast("请检查填写的信息是否完整！");
                         } else {
                           var result = await HttpManage.modifyPassword(
                               _phoneController.value.text,
                               _checkCodeController.value.text,
                               _passwordController.value.text);
                           if (result.status) {
-                            KeTaoFeaturedCommonUtils.showToast(
+                            KTKJCommonUtils.showToast(
                                 "${widget.title == "设置密码" ? "设置" : "修改"}密码成功！");
                             Navigator.of(context).pop();
                             return true;
                           } else {
-                            KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
-                         /*   KeTaoFeaturedCommonUtils.showToast(
+                            KTKJCommonUtils.showToast("${result.errMsg}");
+                            /*   KTKJCommonUtils.showToast(
                                 "${widget.title == "设置密码" ? "设置" : "修改"}密码失败！");*/
                             return false;
                           }
@@ -272,18 +272,18 @@ class _ModifyPasswordPageState extends State<KeTaoFeaturedModifyPasswordPage>
   }
 
   Future<bool> smsSend(BuildContext context) async {
-    if (KeTaoFeaturedCommonUtils.isPhoneLegal(_phoneController.value.text)) {
+    if (KTKJCommonUtils.isPhoneLegal(_phoneController.value.text)) {
       var result = await HttpManage.sendVerificationCode(
           _phoneController.value.text, "4");
       if (result.status) {
-        KeTaoFeaturedCommonUtils.showToast("验证码已发送，请注意查收！");
+        KTKJCommonUtils.showToast("验证码已发送，请注意查收！");
         return true;
       } else {
-        KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+        KTKJCommonUtils.showToast(result.errMsg);
         return false;
       }
     } else {
-      KeTaoFeaturedCommonUtils.showSimplePromptDialog(context, "温馨提示", "请输入正确的手机号");
+      KTKJCommonUtils.showSimplePromptDialog(context, "温馨提示", "请输入正确的手机号");
       return false;
     }
   }

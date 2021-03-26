@@ -23,9 +23,8 @@ import '../../global_config.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KeTaoFeaturedRechargeOrderListPage extends StatefulWidget {
-  KeTaoFeaturedRechargeOrderListPage({Key key, this.orderSource})
-      : super(key: key);
+class KTKJRechargeOrderListPage extends StatefulWidget {
+  KTKJRechargeOrderListPage({Key key, this.orderSource}) : super(key: key);
   final String title = "我的订单";
   String orderSource = "1";
 
@@ -36,8 +35,7 @@ class KeTaoFeaturedRechargeOrderListPage extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class _RechargeOrderListPageState
-    extends State<KeTaoFeaturedRechargeOrderListPage>
+class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   EasyRefreshController _refreshController;
@@ -70,7 +68,7 @@ class _RechargeOrderListPageState
         });
       }
     } else {
-      KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+      KTKJCommonUtils.showToast(result.errMsg);
     }
   }
 
@@ -110,7 +108,7 @@ class _RechargeOrderListPageState
         }
       },
       emptyWidget: _orderList == null || _orderList.length == 0
-          ? KeTaoFeaturedNoDataPage()
+          ? KTKJNoDataPage()
           : null,
       slivers: <Widget>[buildCenter()],
     ) // This trailing comma makes auto-formatting nicer for build methods.
@@ -178,7 +176,7 @@ class _RechargeOrderListPageState
 //      extraCoin = listItem.extraCoin;
       goodsList = listItem.goodsList;
       try {
-        if (!KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
+        if (!KTKJCommonUtils.isEmpty(goodsList)) {
           goodsSign = goodsList[0].goodsSign;
           goodsId = goodsList[0].goodsId;
           print("goodsSign=$goodsSign&&goodsId=$goodsId");
@@ -266,12 +264,12 @@ class _RechargeOrderListPageState
       onTap: () {
         if (orderType == "3") {
           //拼多多平台订单
-          if (KeTaoFeaturedCommonUtils.isEmpty(goodsList)) {
+          if (KTKJCommonUtils.isEmpty(goodsList)) {
             return;
           }
-          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+          KTKJNavigatorUtils.navigatorRouter(
               context,
-              KeTaoFeaturedPddGoodsDetailPage(
+              KTKJPddGoodsDetailPage(
                 gId: goodsId,
                 goodsSign: goodsSign,
 //                searchId: searchId,
@@ -280,16 +278,16 @@ class _RechargeOrderListPageState
         }
         if (orderType == "2") {
           //自营商城订单
-          KeTaoFeaturedNavigatorUtils.navigatorRouter(
+          KTKJNavigatorUtils.navigatorRouter(
               context,
-              KeTaoFeaturedOrderDetailPage(
+              KTKJOrderDetailPage(
                 orderId: orderId,
               ));
         }
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: KeTaoFeaturedGlobalConfig.LAYOUT_MARGIN,
+            horizontal: KTKJGlobalConfig.LAYOUT_MARGIN,
             vertical: ScreenUtil().setHeight(16)),
         padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
         decoration: BoxDecoration(
@@ -364,7 +362,7 @@ class _RechargeOrderListPageState
             ),
             Container(
               alignment: Alignment.centerRight,
-              child: KeTaoFeaturedExtraCoinTextPage(
+              child: KTKJExtraCoinTextPage(
                 borderRadius: 15,
                 coinDescFontSize: ScreenUtil().setSp(32),
                 coinFontSize: ScreenUtil().setSp(32),
@@ -452,12 +450,12 @@ class _RechargeOrderListPageState
                     onTap: () async {
                       var result = await HttpManage.chargeRefund(orderId);
                       if (result.status) {
-                        KeTaoFeaturedCommonUtils.showToast("申请已提交");
+                        KTKJCommonUtils.showToast("申请已提交");
                         page = 1;
                         _initData();
                         _refreshController.finishLoad(noMore: false);
                       } else {
-                        KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                        KTKJCommonUtils.showToast("${result.errMsg}");
                       }
                     },
                     child: Container(
@@ -488,12 +486,12 @@ class _RechargeOrderListPageState
                     onTap: () async {
                       var result = await HttpManage.chargeRetry(orderId);
                       if (result.status) {
-                        KeTaoFeaturedCommonUtils.showToast("申请已提交");
+                        KTKJCommonUtils.showToast("申请已提交");
                         page = 1;
                         _initData();
                         _refreshController.finishLoad(noMore: false);
                       } else {
-                        KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+                        KTKJCommonUtils.showToast("${result.errMsg}");
                       }
                     },
                     child: Container(
@@ -550,9 +548,9 @@ class _RechargeOrderListPageState
                         orderStatus != '-1',
                     child: GestureDetector(
                       onTap: () async {
-                        KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                        KTKJNavigatorUtils.navigatorRouter(
                             context,
-                            KeTaoFeaturedOrderLogisticsTrackingPage(
+                            KTKJOrderLogisticsTrackingPage(
                               orderId: orderId,
                             ));
                       },
@@ -586,18 +584,18 @@ class _RechargeOrderListPageState
                     child: GestureDetector(
                       onTap: () async {
                         if (orderType == "1") {
-                          KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                              context, KeTaoFeaturedRechargeListPage());
+                          KTKJNavigatorUtils.navigatorRouter(
+                              context, KTKJRechargeListPage());
                         } else if (orderType == "2") {
                           switch (orderStatus) {
                             case "1":
                               /* if (Platform.isIOS) {
-                                KeTaoFeaturedCommonUtils.showIosPayDialog();
+                                KTKJCommonUtils.showIosPayDialog();
                                 return;
                               }*/
-                              KeTaoFeaturedNavigatorUtils.navigatorRouter(
+                              KTKJNavigatorUtils.navigatorRouter(
                                   context,
-                                  KeTaoFeaturedCheckOutCounterPage(
+                                  KTKJCheckOutCounterPage(
                                     orderId: orderId,
                                     orderMoney: payMoney,
                                   ));
@@ -669,12 +667,12 @@ class _RechargeOrderListPageState
           ),
           onPressed: () async {
             var result = await HttpManage.orderIsJoinQueue(orderId, "2");
-            /* if (!KeTaoFeaturedCommonUtils.isEmpty(result.errMsg)) {
-              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+            /* if (!KTKJCommonUtils.isEmpty(result.errMsg)) {
+              KTKJCommonUtils.showToast(result.errMsg);
             }*/
             Navigator.pop(context, false);
-            KeTaoFeaturedNavigatorUtils.navigatorRouterAndRemoveUntil(
-                context, KeTaoFeaturedTaskIndexPage());
+            KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+                context, KTKJTaskIndexPage());
           },
         ),
         CupertinoDialogAction(
@@ -686,13 +684,13 @@ class _RechargeOrderListPageState
           ),
           onPressed: () async {
             var result = await HttpManage.orderIsJoinQueue(orderId, "1");
-            if (!KeTaoFeaturedCommonUtils.isEmpty(result.errMsg)) {
-              KeTaoFeaturedCommonUtils.showToast(result.errMsg);
+            if (!KTKJCommonUtils.isEmpty(result.errMsg)) {
+              KTKJCommonUtils.showToast(result.errMsg);
             }
             Navigator.pop(context, false);
             if (result.status) {
-              KeTaoFeaturedNavigatorUtils.navigatorRouter(
-                  context, KeTaoFeaturedFreeQueuePersonalPage());
+              KTKJNavigatorUtils.navigatorRouter(
+                  context, KTKJFreeQueuePersonalPage());
             }
           },
         ),
@@ -735,7 +733,7 @@ class _RechargeOrderListPageState
             var result = await HttpManage.orderConfirm(orderId);
             if (result.status) {
               Navigator.pop(context, false);
-              KeTaoFeaturedCommonUtils.showToast("确认收货成功");
+              KTKJCommonUtils.showToast("确认收货成功");
               /*showDialog<bool>(
                 context: context,
                 builder: (BuildContext context) =>
@@ -746,7 +744,7 @@ class _RechargeOrderListPageState
               _initData();
               _refreshController.finishLoad(noMore: false);
             } else {
-              KeTaoFeaturedCommonUtils.showToast("${result.errMsg}");
+              KTKJCommonUtils.showToast("${result.errMsg}");
             }
           },
         ),
@@ -776,7 +774,7 @@ class _RechargeOrderListPageState
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: KeTaoFeaturedMyOctoImage(
+                        child: KTKJMyOctoImage(
                           fadeInDuration: Duration(milliseconds: 0),
                           fadeOutDuration: Duration(milliseconds: 0),
                           fit: BoxFit.fill,
@@ -904,7 +902,7 @@ class _RechargeOrderListPageState
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        KeTaoFeaturedMyOctoImage(
+        KTKJMyOctoImage(
           image: "$imageUrl",
           width: ScreenUtil().setWidth(243),
           height: ScreenUtil().setWidth(243),
@@ -956,7 +954,7 @@ class _RechargeOrderListPageState
                 ),
               ),
               Visibility(
-                visible: !KeTaoFeaturedCommonUtils.isEmpty(refundMsg),
+                visible: !KTKJCommonUtils.isEmpty(refundMsg),
                 child: Column(
                   children: [
                     SizedBox(
