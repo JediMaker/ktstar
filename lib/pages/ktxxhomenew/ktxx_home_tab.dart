@@ -1342,7 +1342,7 @@ class _HomeTabPageState extends State<KTKJHomeTabPage>
                   KTKJCommonUtils.isEmpty(adList) ? 0 : adList.length,
                   (index) => buildAdWidget(adList[index], index)),
             ),
-            buildApplyForMicroShareholders(),
+//            buildApplyForMicroShareholders(),
           ],
         ),
       ),
