@@ -1615,6 +1615,8 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
     );
   }
 
+  var sTxt = "股东申请";
+
   Widget itemsLayout() {
     bool isProxy = false;
     if ("3" == userType) {
@@ -1898,7 +1900,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               ),
                             ),
                             new Container(
-                              child: new Text("股东申请",
+                              child: new Text("$sTxt",
                                   style: new TextStyle(
                                       color: _itemsTextColor,
                                       fontSize: ScreenUtil().setSp(38))),
@@ -2610,6 +2612,13 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
     if (!KTKJGlobalConfig.isLogin()) {
       nickName = "登陆/注册";
     }
+    var showBtn = true;
+    if (Platform.isIOS && KTKJGlobalConfig.iosCheck) {
+      showBtn = false;
+      sTxt = "股东权益";
+    } else {
+      sTxt = "股东申请";
+    }
     return Stack(
       children: [
         Container(
@@ -2700,6 +2709,9 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                 KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
                 return;
               }
+              if (Platform.isIOS && KTKJGlobalConfig.iosCheck) {
+                return;
+              }
               await KTKJNavigatorUtils.navigatorRouter(
                   context, KTKJMicroShareHolderEquityPage());
               _initUserData();
@@ -2774,6 +2786,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                 }
               },*/
               child: Visibility(
+                visible: showBtn,
                 child: Container(
                   width: ScreenUtil().setWidth(236),
                   height: ScreenUtil().setWidth(83),
