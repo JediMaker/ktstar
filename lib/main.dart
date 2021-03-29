@@ -14,7 +14,7 @@ import 'package:star/pages/base_router/myrouter.dart';
 import 'package:star/pages/login/login.dart';
 import 'package:star/pages/task/task_index.dart';
 import 'package:star/pages/widget/splash_page.dart';
-import 'package:star/utils/common_utils.dart';
+import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'pages/widget/common_localizations.dart';

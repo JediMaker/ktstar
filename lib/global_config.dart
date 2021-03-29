@@ -20,12 +20,12 @@ import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/generated/json/shop_type_entity_helper.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
-import 'package:star/http/http_manage.dart';
+import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/shop_type_entity.dart';
-import 'package:star/utils/common_utils.dart';
+import 'package:star/utils/ktkj_common_utils.dart';
 
 //import 'package:umeng/umeng.dart';
 import 'package:umeng_analytics_plugin/umeng_analytics_plugin.dart';

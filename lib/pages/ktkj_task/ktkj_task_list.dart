@@ -1,79 +1,61 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:star/bus/ktkj_my_event_bus.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:loading/indicator/ball_beat_indicator.dart';
-import 'package:loading/indicator/ball_grid_pulse_indicator.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/indicator/ball_scale_indicator.dart';
-import 'package:loading/indicator/ball_scale_multiple_indicator.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
-import 'package:loading/indicator/line_scale_indicator.dart';
-import 'package:loading/indicator/line_scale_party_indicator.dart';
-import 'package:loading/indicator/line_scale_pulse_out_indicator.dart';
-import 'package:loading/indicator/pacman_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:star/bus/ktkj_my_event_bus.dart';
+import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/global_config.dart';
-import 'package:star/http/ktkj_http.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
+import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/user_info_entity.dart';
-import 'package:star/pages/ktkj_goods/ktkj_category/ktkj_classify.dart';
 import 'package:star/pages/ktkj_goods/ktkj_goods_detail.dart';
 import 'package:star/pages/ktkj_goods/ktkj_goods_list.dart';
-import 'package:star/pages/goods/home_pdd_goods_list.dart';
+import 'package:star/pages/ktkj_goods/ktkj_home_goods_list.dart';
+import 'package:star/pages/ktkj_goods/ktkj_newcomers/ktkj_hot_goods_list.dart';
+import 'package:star/pages/ktkj_goods/ktkj_newcomers/ktkj_newcomers_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_home.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
+import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_payment.dart';
 import 'package:star/pages/ktkj_recharge/ktkj_recharge_list.dart';
 import 'package:star/pages/ktkj_search/ktkj_search_page.dart';
 import 'package:star/pages/ktkj_shareholders/ktkj_micro_equity.dart';
-import 'package:star/pages/ktkj_task/ktkj_invitation_poster.dart';
-import 'package:star/pages/task/task_detail.dart';
-import 'package:flutter_page_indicator/flutter_page_indicator.dart';
-import 'package:star/pages/task/task_detail_other.dart';
-import 'package:star/pages/ktkj_task/ktkj_task_gallery.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_detail.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_detail_other.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_hall.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_message.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_open_diamond.dart';
-import 'package:star/pages/task/task_open_diamond_dialog.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_open_diamond_dialog.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_open_vip.dart';
-import 'package:star/pages/task/task_share.dart';
-import 'package:star/pages/task/task_submission.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_share.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_webview.dart';
-import 'package:star/pages/goods/home_goods_list.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_webview_plugin.dart';
-import 'package:star/pages/widget/persistent_header_builder.dart';
+import 'package:star/pages/ktkj_widget/ktkj_persistent_header_builder.dart';
+import 'package:star/pages/ktkj_widget/ktkj_round_tab_indicator.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
-import 'package:flutter_screenutil/screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:loading/loading.dart';
 import 'package:star/utils/ktkj_utils.dart';
-import 'package:star/pages/ktkj_widget/ktkj_round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:star/models/home_pdd_category_entity.dart';
-import 'package:star/pages/widget/my_tab.dart';
-
-// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 ///首页
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -86,9 +68,6 @@ class KTKJTaskListPage extends StatefulWidget {
   _TaskListPageState createState() => _TaskListPageState();
 }
 
-// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -113,24 +92,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
   List<HomeIconListIconList> iconList = List<HomeIconListIconList>();
   List<HomeIconListIconList> adList = List<HomeIconListIconList>();
 
-//    Container(
-//height: 6.0,
-//width: 6.0,
-//decoration: BoxDecoration(
-//color: furnitureCateDisableColor,
-//shape: BoxShape.circle,
-//),
-//),
-//SizedBox(
-//width: 5.0,
-//),
-//Container(
-//height: 5.0,
-//width: 20.0,
-//decoration: BoxDecoration(
-//color: Colors.blue[700],
-//borderRadius: BorderRadius.circular(10.0)),
-//),
+  ///新人专享自营商品列表
+  List<HomeGoodsListGoodsList> newcomersGoodsList =
+      List<HomeGoodsListGoodsList>();
+
   ///当前用户等级 0普通用户 1体验用户 2VIP用户 3代理 4钻石用户
   var userType;
   var _tabIndexBeforeRefresh = 0;
@@ -170,26 +135,11 @@ class _TaskListPageState extends State<KTKJTaskListPage>
   List<HomePddCategoryDataCat> cats;
 
   var _marqueeSwiperController = SwiperController();
-  var iconUrlList = [
-    'https://alipic.lanhuapp.com/xdc181602b-826d-4828-8d6d-94e9c86f26ed', //星选
-    'https://alipic.lanhuapp.com/xd4f5a9fd6-ee97-4394-96c3-ff4965597f3a', //话费
-    'https://alipic.lanhuapp.com/xd364d623d-ca00-4428-961b-d851f884a35b', //加油
-    'https://alipic.lanhuapp.com/xdb83849b5-db9f-46c3-ba78-34f094c2768f', //美团
-    'https://alipic.lanhuapp.com/xd23e1f65d-5d62-4e29-868b-280f5076ef43', //饿了
-    'https://alipic.lanhuapp.com/xdc05ad33f-5c80-475a-a395-3724ef148b6d', //食品
-    'https://alipic.lanhuapp.com/xdd1719150-91de-4acc-a03f-d2383cb1b33f', //百货
-    'https://alipic.lanhuapp.com/xded1f6a08-e9c3-4e61-a8fd-662807c190b2', //美妆
-    'https://alipic.lanhuapp.com/xdfc53f58b-9934-42c6-9750-3335c149bceb', //母婴
-    'https://alipic.lanhuapp.com/xd487dbe14-b368-4d68-a5b6-868db055b792', //更多
-  ];
 
   var _tabs;
   int _selectedTabIndex = 0;
-  int SVG_ANGLETYPE_DEG = 2;
-  int SVG_ANGLETYPE_GRAD = 4;
-  int SVG_ANGLETYPE_RAD = 3;
-  int SVG_ANGLETYPE_UNKNOWN = 0;
-  int SVG_ANGLETYPE_UNSPECIFIED = 1;
+
+  var _categoryId;
 
 //分类页签
   List<Widget> buildTabs() {
@@ -297,6 +247,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
 //        print("拉起小程序isSuccessful:${res.isSuccessful}");
       }
     });
+    _refreshController = EasyRefreshController();
     initPddTabbar();
     _tabController =
         TabController(length: _tabViews.length, vsync: ScrollableState());
@@ -312,6 +263,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         } catch (e) {}
       }
     });
+
+    _initCacheHomeData();
     _initData();
     _swiperController = new SwiperController();
     _marqueeSwiperController = SwiperController();
@@ -341,8 +294,36 @@ class _TaskListPageState extends State<KTKJTaskListPage>
     });
     bus.on("refreshHomeData", (data) {
       _initData(isRefresh: true);
+      _refreshController.finishLoad(noMore: false);
+    });
+    bus.on("changeRefreshControllerState", (noMore) {
+      _refreshController.finishLoad(noMore: noMore);
     });
     super.initState();
+  }
+
+  _initCacheHomeData() {
+    var data = KTKJGlobalConfig.getHomeInfo();
+    if (!KTKJCommonUtils.isEmpty(data)) {
+      if (mounted) {
+        setState(() {
+          bannerList = data.banner;
+          taskListAll = data.taskList;
+          userType = data.userLevel;
+          goodsList = data.goodsList;
+          iconList = data.iconList;
+          adList = data.adList;
+        });
+      }
+    }
+    var newcomersGoodsData = KTKJGlobalConfig.getHomeNewcomersInfo();
+    if (!KTKJCommonUtils.isEmpty(newcomersGoodsData)) {
+      if (mounted) {
+        setState(() {
+          newcomersGoodsList = newcomersGoodsData;
+        });
+      }
+    }
   }
 
   initPddTabbar() {
@@ -406,6 +387,17 @@ class _TaskListPageState extends State<KTKJTaskListPage>
   }
 
   Future _initData({bool isRefresh = false}) async {
+    var newcomersGoodsResult = await HttpManage.getGoodsList(
+        type: "new", page: 1, pageSize: 2, firstId: '');
+    if (newcomersGoodsResult.status) {
+      HomeGoodsListEntity entity = HomeGoodsListEntity();
+      homeGoodsListEntityFromJson(entity, newcomersGoodsResult.data);
+      if (mounted) {
+        setState(() {
+          newcomersGoodsList = entity.goodsList;
+        });
+      }
+    }
     var categoryResult = await HttpManage.getHomePagePddProductCategory();
     try {
       if (categoryResult.status) {
@@ -413,6 +405,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
           setState(() {
             cats = categoryResult.data.cats;
             initPddTabbar();
+            _selectedTabIndex = 0;
+            _tabs = buildTabs();
+            pddcategoryTabsView = buildPddCategoryTabBar();
+            bus.emit("changePddListViewData", cats[_selectedTabIndex]);
           });
         }
       }
@@ -562,6 +558,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
     _pddTabController.dispose();
     _isLoop = false;
     _isMarqueeLoop = false;
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -616,11 +613,75 @@ class _TaskListPageState extends State<KTKJTaskListPage>
   TextEditingController _controller;
   FocusNode _focusNode;
 
+  EasyRefreshController _refreshController;
+
+  ///扫一扫
+  scan() async {
+    var shopId;
+    var _balance;
+    var _hasPayPassword;
+    var _shopName;
+    var _shopCode;
+
+    /// 调用扫一扫
+    String cameraScanResult = await scanner.scan();
+    var scanResult =
+        await HttpManage.getScanResultRemote(qrCodeResult: cameraScanResult);
+    if (scanResult.status) {
+      shopId = scanResult.data.storeId;
+      _shopName = scanResult.data.name;
+      _shopCode = scanResult.data.code;
+    } else {
+      KTKJCommonUtils.showToast("${scanResult.errMsg}");
+      return;
+    }
+    //  获取店铺支付相关信息
+    var entityResult = await HttpManage.getShopPayInfo(storeId: shopId);
+    if (entityResult.status) {
+      _balance = entityResult.data.user.price;
+      _hasPayPassword = entityResult.data.user.payPwdFlag;
+      _shopName = entityResult.data.store.storeName;
+      _shopCode = entityResult.data.store.storeCode;
+    }
+
+    ///进入支付页面
+    KTKJNavigatorUtils.navigatorRouter(
+        context,
+        KTKJShopPaymentPage(
+          shopId: shopId,
+          shopName: _shopName,
+          shopCode: _shopCode,
+          balance: _balance,
+          hasPayPassword: _hasPayPassword,
+        ));
+
+    ///
+  }
+
   Widget buildSearchBarLayout() {
     return Container(
       height: 50,
       child: Row(
         children: <Widget>[
+//          https://alipic.lanhuapp.com/xdbb9d62a1-36c2-496b-8c01-8bc79436d834
+          IconButton(
+            icon: Container(
+              width: ScreenUtil().setWidth(78),
+              height: ScreenUtil().setWidth(78),
+              child: Center(
+                child: KTKJMyOctoImage(
+                  image:
+                      "https://alipic.lanhuapp.com/xdbb9d62a1-36c2-496b-8c01-8bc79436d834",
+                  width: ScreenUtil().setWidth(78),
+                  height: ScreenUtil().setWidth(78),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            onPressed: () async {
+              KTKJCommonUtils.requestPermission(Permission.camera, scan());
+            },
+          ),
           Expanded(
             child: GestureDetector(
               onTap: () {
@@ -640,10 +701,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CachedNetworkImage(
+                    KTKJMyOctoImage(
                       width: ScreenUtil().setWidth(36),
                       height: ScreenUtil().setWidth(36),
-                      imageUrl:
+                      image:
                           "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                     ),
                     Container(
@@ -662,21 +723,38 @@ class _TaskListPageState extends State<KTKJTaskListPage>
               ),
             ),
           ),
-          Align(
+          IconButton(
+            icon: Container(
+              width: ScreenUtil().setWidth(78),
+              height: ScreenUtil().setWidth(78),
+              child: Center(
+                child: KTKJMyOctoImage(
+                  width: ScreenUtil().setWidth(78),
+                  height: ScreenUtil().setWidth(78),
+                  image:
+                      "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
+                ),
+              ),
+            ),
+            onPressed: () {
+              KTKJNavigatorUtils.navigatorRouter(
+                  context, KTKJTaskMessagePage());
+            },
+          ),
+          /*Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                KTKJNavigatorUtils.navigatorRouter(
-                    context, KTKJTaskMessagePage());
+
               },
-              child: CachedNetworkImage(
+              child: KTKJMyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
-                imageUrl:
+                image:
                     "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );
@@ -838,8 +916,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                   ScreenUtil().setWidth(30),
                 ),
               ),
-              child: CachedNetworkImage(
-                imageUrl: "$imgPath",
+              child: KTKJMyOctoImage(
+                image: "$imgPath",
                 fit: BoxFit.fitWidth,
                 width: ScreenUtil().setWidth(522),
                 height: ScreenUtil().setWidth(322),
@@ -899,6 +977,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         elevation: 0,
         brightness: Brightness.dark,
         gradient: _gradientCorlor,
+        titleSpacing: 0,
       ),
       body: Builder(
         builder: (context) {
@@ -906,6 +985,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
             enableControlFinishLoad: false,
             topBouncing: false,
             bottomBouncing: false,
+            controller: _refreshController,
             header: CustomHeader(
                 completeDuration: Duration(milliseconds: 1000),
                 headerBuilder: (context,
@@ -938,7 +1018,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                   );
                 }),
             footer: CustomFooter(
-//                completeDuration: Duration(seconds: 1),
+//          triggerDistance: ScreenUtil().setWidth(180),
+                completeDuration: Duration(seconds: 1),
                 footerBuilder: (context,
                     loadState,
                     pulledExtent,
@@ -950,24 +1031,42 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                     enableInfiniteLoad,
                     success,
                     noMore) {
-              return Stack(
-                children: <Widget>[
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      width: 30.0,
-                      height: 30.0,
-                      /* child: SpinKitCircle(
-                            color: KTKJGlobalConfig.colorPrimary,
-                            size: 30.0,
-                          ),*/
-                    ),
-                  ),
-                ],
-              );
-            }),
+                  return Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Visibility(
+                          visible: noMore,
+                          child: Center(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(30),
+                                bottom: ScreenUtil().setWidth(30),
+                              ),
+                              child: Text(
+                                "~我是有底线的~",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(32),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+//                  child: Container(
+//                    width: 30.0,
+//                    height: 30.0,
+//                    /* child: SpinKitCircle(
+//                            color: KTKJGlobalConfig.colorPrimary,
+//                            size: 30.0,
+//                          ),*/
+//                  ),
+                      ),
+                    ],
+                  );
+                }),
             firstRefreshWidget: Container(
               width: double.infinity,
               height: double.infinity,
@@ -1064,13 +1163,16 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                   ),
                 ],
               )),*/
-              buildGoodsListSliverToBoxAdapter(context),
-              buildApplyForMicroShareholders(),
+              buildLayoutNewcomers(),
               buildAdRowContainer(),
+              buildGoodsListSliverToBoxAdapter(context),
+//              buildApplyForMicroShareholders(),
               pddcategoryTabsView,
               SliverToBoxAdapter(
                 child: GestureDetector(
-                  child: KTKJHomePddGoodsListPage(),
+                  child: KTKJHomeGoodsListPage(
+                    categoryId: _categoryId,
+                  ),
                   onHorizontalDragStart: (DragStartDetails details) {},
                   onHorizontalDragUpdate: (DragUpdateDetails details) {
                     _offsetValue = details.primaryDelta;
@@ -1130,6 +1232,369 @@ class _TaskListPageState extends State<KTKJTaskListPage>
     );
   }
 
+  var _newcomersLayoutTextColor = Color(0xffFEF7EA);
+
+  ///新人专享
+  ///
+  ///
+  Widget buildLayoutNewcomers() {
+    return SliverToBoxAdapter(
+      child: Visibility(
+        visible: newcomersGoodsList.length > 0,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: ScreenUtil().setWidth(20),
+            vertical: ScreenUtil().setWidth(30),
+          ),
+          margin: EdgeInsets.only(
+              top: ScreenUtil().setHeight(30),
+              left: KTKJGlobalConfig.LAYOUT_MARGIN,
+              right: KTKJGlobalConfig.LAYOUT_MARGIN),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              ScreenUtil().setWidth(30),
+            ),
+          ),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  KTKJNavigatorUtils.navigatorRouter(
+                    context,
+                    KTKJNewcomersGoodsListPage(),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: ScreenUtil().setWidth(16),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      KTKJMyOctoImage(
+                        image:
+                            "https://alipic.lanhuapp.com/xd9bd6d3e5-7922-4d3e-ae54-7d4c033c0b71",
+                        width: ScreenUtil().setWidth(161),
+                        height: ScreenUtil().setWidth(65),
+                        fit: BoxFit.fill,
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "新人专享",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(54),
+                                  color: Color(0xff222222),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+//                                      top: ScreenUtil().setWidth(60),
+                                  left: ScreenUtil().setWidth(15),
+                                ),
+                                child: Text(
+                                  "下单立享50%分红金",
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(34),
+                                    color: Color(0xff666666),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "更多",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Color(0xff999999),
+                              fontSize: ScreenUtil().setSp(30),
+                            ),
+//                            https://alipic.lanhuapp.com/xd8d557d60-d753-42a5-9955-ba264728afb7
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: KTKJMyOctoImage(
+                              image:
+                                  "https://alipic.lanhuapp.com/xd8d557d60-d753-42a5-9955-ba264728afb7",
+                              fit: BoxFit.fill,
+                              width: ScreenUtil().setWidth(13),
+                              height: ScreenUtil().setWidth(22),
+//                                color: Color(0xffce0100),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(1022),
+                height: ScreenUtil().setWidth(424),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      "static/images/bg_newcomers.png",
+                    ),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 7,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "50",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(160),
+                                  color: _newcomersLayoutTextColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+//                                      top: ScreenUtil().setWidth(60),
+                                      left: ScreenUtil().setWidth(25),
+                                    ),
+                                    child: Text(
+                                      "分红金",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(48),
+                                        color: _newcomersLayoutTextColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+//                                      top: ScreenUtil().setWidth(60),
+                                      left: ScreenUtil().setWidth(5),
+                                      right: ScreenUtil().setWidth(15),
+                                    ),
+                                    child: Text(
+                                      "%",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(57),
+                                        color: _newcomersLayoutTextColor,
+                                      ),
+                                    ),
+                                  ),
+                                  /*Text(
+                                    "体验金",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(33),
+                                      color: _newcomersLayoutTextColor,
+                                    ),
+                                  ),*/
+                                ],
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              KTKJNavigatorUtils.navigatorRouter(
+                                  context, KTKJNewcomersGoodsListPage());
+                            },
+                            child: Container(
+                              width: ScreenUtil().setWidth(327),
+                              height: ScreenUtil().setWidth(84),
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(16),
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0xffF9F3F3),
+                                      Color(0xffFFC37D),
+                                    ]),
+                                /*border: Border.all(
+                                  color: Color(0xffF8A699),
+                                  width: ScreenUtil().setWidth(3),
+                                ),*/
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(ScreenUtil().setWidth(50)),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "立即领取",
+                                    style: TextStyle(
+                                      color: Color(0xffFF4662),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: ScreenUtil().setSp(46),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: ScreenUtil().setWidth(16),
+                                    ),
+                                    child: KTKJMyOctoImage(
+                                      image:
+                                          "https://alipic.lanhuapp.com/xd45793b57-8b32-4675-bea9-bd30fa7e5a13",
+                                      fit: BoxFit.fill,
+                                      width: ScreenUtil().setWidth(41),
+                                      height: ScreenUtil().setWidth(41),
+//                                color: Color(0xffce0100),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      flex: 11,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: List.generate(
+                                newcomersGoodsList.length,
+                                (index) {
+                                  var item = newcomersGoodsList[index];
+                                  var salePrice = '';
+                                  var imgUrl = '';
+                                  var goodId = '';
+                                  try {
+                                    salePrice = "￥${item.salePrice}";
+                                    imgUrl = item.goodsImg;
+                                    goodId = item.id;
+                                  } catch (e) {}
+                                  return GestureDetector(
+                                    onTap: () {
+                                      KTKJNavigatorUtils.navigatorRouter(
+                                        context,
+                                        KTKJNewcomersGoodsListPage(),
+                                      );
+                                      /* KTKJNavigatorUtils.navigatorRouter(
+                                        context,
+                                        KTKJGoodsDetailPage(productId: goodId),
+                                      );*/
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(30),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              bottom: ScreenUtil().setWidth(20),
+                                            ),
+                                            child: KTKJMyOctoImage(
+                                              image: "$imgUrl",
+                                              fit: BoxFit.fill,
+                                              width: ScreenUtil().setWidth(224),
+                                              height:
+                                                  ScreenUtil().setWidth(224),
+//                                color: Color(0xffce0100),
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                  top: ScreenUtil().setWidth(3),
+                                                  bottom:
+                                                      ScreenUtil().setWidth(3),
+                                                  left:
+                                                      ScreenUtil().setWidth(6),
+                                                  right:
+                                                      ScreenUtil().setWidth(6),
+                                                ),
+                                                margin: EdgeInsets.only(
+                                                  right:
+                                                      ScreenUtil().setWidth(12),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: _newcomerPriceColor,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(ScreenUtil()
+                                                        .setWidth(10)),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "新人价",
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        ScreenUtil().setSp(32),
+                                                    color:
+                                                        _newcomersLayoutTextColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                "$salePrice",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      ScreenUtil().setSp(38),
+                                                  color: _newcomerPriceColor,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   ///自营消费补贴商品列表
   Widget buildGoodsListSliverToBoxAdapter(BuildContext context) {
     return SliverToBoxAdapter(
@@ -1158,7 +1623,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
                     KTKJNavigatorUtils.navigatorRouter(
-                        context, KTKJGoodsListPage());
+                        context,
+                        KTKJHotGoodsListPage(
+//                          type: "hot",
+                            ));
                   },
                   child: Container(
                     child: Row(
@@ -1170,8 +1638,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                               Container(
                                 width: ScreenUtil().setWidth(844),
                                 height: ScreenUtil().setWidth(152),
-                                child: CachedNetworkImage(
-                                  imageUrl:
+                                child: KTKJMyOctoImage(
+                                  image:
                                       "https://alipic.lanhuapp.com/xde2fb8570-f7e3-47a5-9220-217c64821d87",
                                   fit: BoxFit.fill,
                                 ),
@@ -1179,9 +1647,9 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                               Container(
                                 width: ScreenUtil().setWidth(525),
                                 height: ScreenUtil().setWidth(93),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      "https://alipic.lanhuapp.com/xd2f96e526-c4b7-42d1-b4a9-813e1976d2e0",
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xdde41acb8-afe5-4d8d-bd12-e9dc417c3894",
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -1219,8 +1687,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                                   fontSize: ScreenUtil().setSp(42),
                                 ),
                               ),
-                              CachedNetworkImage(
-                                imageUrl:
+                              KTKJMyOctoImage(
+                                image:
                                     "https://alipic.lanhuapp.com/xdb2ba7101-ff5b-42ae-a6e7-f890b3b83e91",
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(33),
@@ -1341,8 +1809,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 3),
-                          child: CachedNetworkImage(
-                            imageUrl:
+                          child: KTKJMyOctoImage(
+                            image:
                                 "https://alipic.lanhuapp.com/xd18562122-edcf-4b8a-8f6d-4528530150ea",
                             fit: BoxFit.fill,
                             width: ScreenUtil().setWidth(12),
@@ -1363,8 +1831,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                 left: ScreenUtil().setWidth(40),
                 right: KTKJGlobalConfig.LAYOUT_MARGIN,
                 top: ScreenUtil().setWidth(10)),
-            child: CachedNetworkImage(
-              imageUrl:
+            child: KTKJMyOctoImage(
+              image:
                   "https://alipic.lanhuapp.com/xd3342447e-ba65-4d86-91eb-edfe87de5ca3",
               fit: BoxFit.fill,
             ),
@@ -1431,6 +1899,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
   }
 
   var _priceColor = const Color(0xffe31735);
+  var _newcomerPriceColor = const Color(0xffF32E43);
 
   Widget productItem({HomeGoodsListGoodsList item}) {
     String id = '';
@@ -1502,13 +1971,13 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                         topRight: Radius.circular(ScreenUtil().setWidth(10)),
                         topLeft: Radius.circular(ScreenUtil().setWidth(10)),
                       ),
-                      child: CachedNetworkImage(
+                      child: KTKJMyOctoImage(
                         fadeInDuration: Duration(milliseconds: 0),
                         fadeOutDuration: Duration(milliseconds: 0),
                         height: ScreenUtil().setWidth(305),
                         width: ScreenUtil().setWidth(305),
                         fit: BoxFit.fill,
-                        imageUrl: "$goodsImg",
+                        image: "$goodsImg",
                       ),
                     ),
                   ),
@@ -1603,13 +2072,13 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                                 ),
                                 margin: EdgeInsets.symmetric(horizontal: 4),
                               ),
-                              CachedNetworkImage(
+                              KTKJMyOctoImage(
                                 fadeInDuration: Duration(milliseconds: 0),
                                 fadeOutDuration: Duration(milliseconds: 0),
                                 fit: BoxFit.fitWidth,
                                 height: ScreenUtil().setWidth(26),
                                 width: ScreenUtil().setWidth(26),
-                                imageUrl:
+                                image:
                                     "https://alipic.lanhuapp.com/xd00b6d1cd-b672-41f7-89ea-806d7c3aef94",
                               ),
                             ],
@@ -1655,8 +2124,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl:
+                      KTKJMyOctoImage(
+                        image:
                             "https://alipic.lanhuapp.com/xd269728c1-1bf9-4bfe-9b86-06af0fabca98",
                         width: ScreenUtil().setWidth(42),
                         height: ScreenUtil().setWidth(42),
@@ -2014,8 +2483,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
               children: <Widget>[
                 new Container(
                   margin: const EdgeInsets.only(bottom: 8.0),
-                  child: CachedNetworkImage(
-                    imageUrl: "$icon",
+                  child: KTKJMyOctoImage(
+                    image: "$icon",
                     width: ScreenUtil().setWidth(155),
                     height: ScreenUtil().setWidth(155),
                   ),
@@ -2073,8 +2542,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                 vertical: ScreenUtil().setWidth(32),
                 horizontal: ScreenUtil().setWidth(32),
               ),
-              child: CachedNetworkImage(
-                imageUrl:
+              child: KTKJMyOctoImage(
+                image:
                     "https://alipic.lanhuapp.com/xd9a50a007-6769-44e8-93ed-3e33e099a277",
                 width: ScreenUtil().setWidth(236),
                 height: ScreenUtil().setHeight(66),
@@ -2155,326 +2624,357 @@ class _TaskListPageState extends State<KTKJTaskListPage>
           ),
           Container(
             margin: EdgeInsets.only(
-              left: KTKJGlobalConfig.LAYOUT_MARGIN,
-              right: KTKJGlobalConfig.LAYOUT_MARGIN,
               top: 6,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(ScreenUtil().setWidth(30)),
-              ),
-              child: Swiper(
-                itemCount: bannerList == null ? 0 : bannerList.length,
-                /*itemWidth: ScreenUtil().setWidth(1125),
-                itemHeight: ScreenUtil().setHeight(623),
-                transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
-                //bannerList == null ? 0 : bannerList.length,
-                loop: _isLoop,
-                autoplay: false,
-                duration: 30,
-                autoplayDisableOnInteraction: true,
-                key: ValueKey(context),
-                controller: _swiperController,
-//          indicatorLayout: PageIndicatorLayout.COLOR,
-                onIndexChanged: (index) async {
-                  if (!KTKJCommonUtils.isEmpty(bannerColorList)) {
-                    if (!KTKJCommonUtils.isEmpty(bannerColorList[index]) &&
-                        bannerColorList.length == bannerList.length) {
-                      if (mounted) {
-                        setState(() {
-                          _gradientCorlor = LinearGradient(colors: [
-                            bannerColorList[index],
-                            bannerColorList[index],
-                          ]);
-                          /*print(
-                              "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
-                          bannerIndex = index;
-                        });
-                      }
-                      return;
-                    }
-                  }
-                  PaletteGenerator generator =
-                      await PaletteGenerator.fromImageProvider(
-                          Image.network("${bannerList[index].imgPath}").image);
-                  if (mounted) {
-                    setState(() {
-                      bannerIndex = index;
-                      /*switch (bannerList[index].uri.toString().trim()) {
-                        case "upgrade":
-                          _gradientCorlor = LinearGradient(colors: [
-                            Color(0xFF7E090F),
-                            Color(0xFF810A0C),
-                            Color(0xFF7D0A0F),
-                          ]);
-
-                          break;
-                        case "recharge":
-                          _gradientCorlor = LinearGradient(colors: [
-                            Color(0xFF4A07C6),
-                            Color(0xFF4A07C6),
-                          ]);
-                          break;
-                        case "upgrade_diamond":
-                          _gradientCorlor = LinearGradient(colors: [
-                            Color(0xFFB43733),
-                            Color(0xFFB43733),
-                            Color(0xFFB43733),
-                          ]);
-                          break;
-                      }*/
-                      try {
-                        _gradientCorlor = LinearGradient(colors: [
-                          generator.dominantColor.color,
-                          generator.dominantColor.color,
-                        ]);
-                      } catch (e) {}
-                      /*_gradientCorlor = LinearGradient(colors: [
-                        generator.dominantColor.color,
-                        generator.dominantColor.color,
-                      ]);*/
-                    });
-                  }
-                },
-                /*pagination: SwiperPagination(
-                    builder: DotSwiperPaginationBuilder(
-                        //自定义指示器颜色
-                        color: Colors.white,
-                        size: 8.0,
-                        activeColor: KTKJGlobalConfig.taskHeadColor,
-                        activeSize: 10.0)),*/
-                itemBuilder: (context, index) {
-                  var bannerData = bannerList[index];
-                  var item = bannerList[index];
-                  String icon = '';
-                  String name = '';
-                  String type = '';
-                  String appId = '';
-                  String path = '';
-                  String imgPath = '';
-                  String subtitle = '';
-                  String params = '';
-                  String catId = '';
-                  String pddType = '';
-                  try {
-                    icon = item.icon;
-                    name = item.name;
-                    type = item.type;
-                    appId = item.appId;
-                    path = !KTKJCommonUtils.isEmpty(item.path)
-                        ? item.path
-                        : item.uri;
-                    subtitle = item.subtitle;
-                    params = item.params;
-                    imgPath = item.imgPath;
-//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
-                    if (params.contains("&")) {}
-                    List<String> pList = params.split("&");
-                    for (var itemString in pList) {
-                      List<String> itemList = itemString.split("=");
-                      if (!KTKJCommonUtils.isEmpty(itemList)) {
-                        switch (itemList[0]) {
-                          case "cat_id":
-                            catId = itemList[1];
-                            break;
-                          case "type":
-                            pddType = itemList[1];
-                            break;
-                        }
-                      }
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                  return GestureDetector(
-                    onTap: () async {
-                      ///跳转对应链接
-                      ///
-                      if (type == 'webapp') {
-                        launchWeChatMiniProgram(username: appId, path: path);
-                        return;
-                      }
-                      if (type == 'app') {
-                        if (path == 'pdd_index') {
-//                          KTKJNavigatorUtils.navigatorRouter(context, KTKJPddHomeIndexPage());
-                          return;
-                        }
-                        if (path == 'pdd_goods') {
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context,
-                              KTKJPddGoodsListPage(
-                                showAppBar: true,
-                                type: pddType,
-                                title:
-                                    KTKJCommonUtils.isEmpty(name) ? "精选" : name,
-                                categoryId: catId,
-                              ));
-                          return;
-                        }
-                        switch (path) {
-                          case "recharge":
-                            KTKJNavigatorUtils.navigatorRouter(
-                                context, KTKJRechargeListPage());
-                            break;
-                          case "upgrade":
-                            KTKJNavigatorUtils.navigatorRouter(
-                                context, KTKJTaskOpenVipPage());
-/*
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJTaskOpenDiamondPage());
-*/
-                            break;
-                          case "recharge":
-                            KTKJNavigatorUtils.navigatorRouter(
-                                context, KTKJRechargeListPage());
-                            break;
-                          case "goods_list":
-                            KTKJNavigatorUtils.navigatorRouter(
-                                context, KTKJGoodsListPage());
-                            break;
-                          case "upgrade_diamond":
-                            KTKJNavigatorUtils.navigatorRouter(
-                                context,
-                                KTKJTaskOpenVipPage(
-                                  taskType: 2,
-                                ));
-                            break;
-                        }
-                        return;
-                      }
-                      if (type == 'toast') {
-                        KTKJCommonUtils.showToast("敬请期待");
-                        return;
-                      }
-                      if (type == 'link') {
-                        if (path.toString().startsWith("pinduoduo")) {
-                          if (await canLaunch(path)) {
-                            await launch(path);
-                          } else {
-                            if (path.startsWith("pinduoduo://")) {
-                              KTKJCommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
-                              KTKJNavigatorUtils.navigatorRouter(
-                                  context,
-                                  KTKJWebViewPluginPage(
-                                    initialUrl: "$path",
-                                    showActions: true,
-                                    title: "拼多多",
-                                    appBarBackgroundColor: Colors.white,
-                                  ));
-                            } else {}
-                            return;
-                          }
-                        }
-                        if (path.contains("yangkeduo")) {
-                          var pddPath = path.replaceAll(
-                              "https://mobile.yangkeduo.com/",
-                              "pinduoduo://com.xunmeng.pinduoduo/");
-                          if (await canLaunch(pddPath)) {
-                            await launch(pddPath);
-                            return;
-                          } else {
-                            KTKJNavigatorUtils.navigatorRouter(
-                                context,
-                                KTKJWebViewPluginPage(
-                                  initialUrl: "$path",
-                                  showActions: true,
-                                  title: "拼多多",
-                                  appBarBackgroundColor: Colors.white,
-                                ));
-                            return;
-                          }
-                        }
-                        KTKJUtils.launchUrl(path);
-                        return;
-                      }
-
-                      ///
-                      switch (bannerList[bannerIndex].uri.toString().trim()) {
-                        case "upgrade":
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJTaskOpenVipPage());
-/*
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJTaskOpenDiamondPage());
-*/
-                          break;
-                        case "recharge":
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJRechargeListPage());
-                          break;
-                        case "goods_list":
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJGoodsListPage());
-                          break;
-                        case "upgrade_diamond":
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context,
-                              KTKJTaskOpenVipPage(
-                                taskType: 2,
-                              ));
-                          break;
-                      }
-                      if (bannerList[bannerIndex]
-                          .uri
-                          .toString()
-                          .startsWith("http")) {
-                        KTKJUtils.launchUrl(
-                            bannerList[bannerIndex].uri.toString());
-                        /*bool isImage = false;
-                        Response resust = await Dio().get(bannerList[bannerIndex].uri);
-                        String contentType = resust.headers['content-type'].toString();
-                        if (contentType.startsWith("[image/")) {
-                          isImage = true;
-                        }
-                        if (isImage) {
-                          KTKJNavigatorUtils.navigatorRouter(
-                              context,
-                              KTKJTaskGalleryPage(
-                                galleryItems: [bannerList[bannerIndex].uri.toString()],
-                              ));
-                          return;
-                        }
-                        */ /*print("contentType=$contentType");
-                        print(
-                            "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
-                        var hColor = KTKJGlobalConfig.taskHeadColor;
-                        KTKJNavigatorUtils.navigatorRouter(
-                            context,
-                            KTKJWebViewPage(
-                              initialUrl: bannerList[bannerIndex].uri.toString(),
-                              showActions: true,
-                              title: "",
-                              appBarBackgroundColor: hColor,
-                            ));*/
-                        /*try {
-                          PaletteGenerator generator =
-                              await PaletteGenerator.fromImageProvider(Image.network(
-                                      "${bannerList[bannerIndex].uri.toString()}")
-                                  .image);
-                          hColor = generator.dominantColor.color;
-                        } catch (e) {}*/
-                      }
-                    },
-                    child: CachedNetworkImage(
-                      imageUrl: bannerData.imgPath,
-//              width: ScreenUtil().setWidth(1125),
-                      placeholder: (context, url) => Center(
-                        child: Loading(
-                          indicator: BallSpinFadeLoaderIndicator(),
-                          size: 50.0,
-                          color: KTKJGlobalConfig.colorPrimary,
-                        ),
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                  );
-                },
-              ),
+              child: buildSwiper(),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget buildSwiper() {
+    if (KTKJCommonUtils.isEmpty(bannerList)) {
+      return Center(
+        child: Loading(
+          indicator: BallSpinFadeLoaderIndicator(),
+          size: 50.0,
+          color: KTKJGlobalConfig.colorPrimary,
+        ),
+      );
+    } else {
+      _isLoop = true;
+      return Swiper(
+        itemCount: KTKJCommonUtils.isEmpty(bannerList) ? 0 : bannerList.length,
+        /*itemWidth: ScreenUtil().setWidth(1125),
+              itemHeight: ScreenUtil().setHeight(623),
+              transformer: ScaleAndFadeTransformer(scale: 0, fade: 0),*/
+        //bannerList == null ? 0 : bannerList.length,
+        loop: _isLoop,
+        autoplay: true,
+        duration: 30,
+        fade: 1.0,
+        scale: 1,
+        curve: Curves.fastLinearToSlowEaseIn,
+        autoplayDisableOnInteraction: true,
+        autoplayDelay: 5000,
+        key: ValueKey(context),
+        controller: _swiperController,
+//          indicatorLayout: PageIndicatorLayout.COLOR,
+        onIndexChanged: (index) async {
+          if (!KTKJCommonUtils.isEmpty(bannerColorList)) {
+            if (!KTKJCommonUtils.isEmpty(bannerColorList[index]) &&
+                bannerColorList.length == bannerList.length) {
+              if (mounted) {
+                setState(() {
+                  _gradientCorlor = LinearGradient(colors: [
+                    bannerColorList[index],
+                    bannerColorList[index],
+                  ]);
+                  /*print(
+                            "index=$index&&  bannerColorList[index]=${bannerColorList[index]}");*/
+                  bannerIndex = index;
+                });
+              }
+              return;
+            }
+          }
+          PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
+              Image.network("${bannerList[index].imgPath}").image);
+          if (mounted) {
+            setState(() {
+              bannerIndex = index;
+              /*switch (bannerList[index].uri.toString().trim()) {
+                      case "upgrade":
+                        _gradientCorlor = LinearGradient(colors: [
+                          Color(0xFF7E090F),
+                          Color(0xFF810A0C),
+                          Color(0xFF7D0A0F),
+                        ]);
+
+                        break;
+                      case "recharge":
+                        _gradientCorlor = LinearGradient(colors: [
+                          Color(0xFF4A07C6),
+                          Color(0xFF4A07C6),
+                        ]);
+                        break;
+                      case "upgrade_diamond":
+                        _gradientCorlor = LinearGradient(colors: [
+                          Color(0xFFB43733),
+                          Color(0xFFB43733),
+                          Color(0xFFB43733),
+                        ]);
+                        break;
+                    }*/
+              try {
+                _gradientCorlor = LinearGradient(colors: [
+                  generator.dominantColor.color,
+                  generator.dominantColor.color,
+                ]);
+              } catch (e) {}
+              /*_gradientCorlor = LinearGradient(colors: [
+                      generator.dominantColor.color,
+                      generator.dominantColor.color,
+                    ]);*/
+            });
+          }
+        },
+        /*pagination: SwiperPagination(
+                  builder: DotSwiperPaginationBuilder(
+                      //自定义指示器颜色
+                      color: Colors.white,
+                      size: 8.0,
+                      activeColor: KTKJGlobalConfig.taskHeadColor,
+                      activeSize: 10.0)),*/
+        itemBuilder: (context, index) {
+          var bannerData = bannerList[index];
+          var item = bannerList[index];
+          String icon = '';
+          String name = '';
+          String type = '';
+          String appId = '';
+          String path = '';
+          String imgPath = '';
+          String subtitle = '';
+          String params = '';
+          String catId = '';
+          String pddType = '';
+          try {
+            icon = item.icon;
+            name = item.name;
+            type = item.type;
+            appId = item.appId;
+            path = !KTKJCommonUtils.isEmpty(item.path) ? item.path : item.uri;
+            subtitle = item.subtitle;
+            params = item.params;
+            imgPath = item.imgPath;
+//      print("iconsubtitle=${icon + name + type + appId + path + subtitle}");
+            if (params.contains("&")) {}
+            List<String> pList = params.split("&");
+            for (var itemString in pList) {
+              List<String> itemList = itemString.split("=");
+              if (!KTKJCommonUtils.isEmpty(itemList)) {
+                switch (itemList[0]) {
+                  case "cat_id":
+                    catId = itemList[1];
+                    break;
+                  case "type":
+                    pddType = itemList[1];
+                    break;
+                }
+              }
+            }
+          } catch (e) {
+            print(e);
+          }
+          return GestureDetector(
+            onTap: () async {
+              ///跳转对应链接
+              ///
+              if (type == 'webapp') {
+                launchWeChatMiniProgram(username: appId, path: path);
+                return;
+              }
+              if (type == 'app') {
+                if (path == 'pdd_index') {
+//                          KTKJNavigatorUtils.navigatorRouter(context, KTKJPddHomeIndexPage());
+                  return;
+                }
+                if (path == 'pdd_goods') {
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context,
+                      KTKJPddGoodsListPage(
+                        showAppBar: true,
+                        type: pddType,
+                        title: KTKJCommonUtils.isEmpty(name) ? "精选" : name,
+                        categoryId: catId,
+                      ));
+                  return;
+                }
+                switch (path) {
+                  case "recharge":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJRechargeListPage());
+                    break;
+                  case "upgrade":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJTaskOpenVipPage());
+/*
+                        KTKJNavigatorUtils.navigatorRouter(
+                            context, KTKJTaskOpenDiamondPage());
+*/
+                    break;
+                  case "recharge":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJRechargeListPage());
+                    break;
+                  case "goods_list":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJGoodsListPage());
+                    break;
+                  case "/goods/new-list":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJGoodsListPage());
+                    break;
+                  case "/store/list":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJGoodsListPage());
+                    break;
+                  case "upgrade_diamond":
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context,
+                        KTKJTaskOpenVipPage(
+                          taskType: 2,
+                        ));
+                    break;
+                }
+                return;
+              }
+              if (type == 'toast') {
+                KTKJCommonUtils.showToast("敬请期待");
+                return;
+              }
+              if (type == 'link') {
+                if (path.toString().startsWith("pinduoduo")) {
+                  if (await canLaunch(path)) {
+                    await launch(path);
+                  } else {
+                    if (path.startsWith("pinduoduo://")) {
+                      KTKJCommonUtils.showToast("亲，您还未安装拼多多客户端哦！");
+                      KTKJNavigatorUtils.navigatorRouter(
+                          context,
+                          KTKJWebViewPluginPage(
+                            initialUrl: "$path",
+                            showActions: true,
+                            title: "拼多多",
+                            appBarBackgroundColor: Colors.white,
+                          ));
+                    } else {}
+                    return;
+                  }
+                }
+                if (path.contains("yangkeduo")) {
+                  var pddPath = path.replaceAll("https://mobile.yangkeduo.com/",
+                      "pinduoduo://com.xunmeng.pinduoduo/");
+                  if (await canLaunch(pddPath)) {
+                    await launch(pddPath);
+                    return;
+                  } else {
+                    KTKJNavigatorUtils.navigatorRouter(
+                        context,
+                        KTKJWebViewPluginPage(
+                          initialUrl: "$path",
+                          showActions: true,
+                          title: "拼多多",
+                          appBarBackgroundColor: Colors.white,
+                        ));
+                    return;
+                  }
+                }
+                KTKJUtils.launchUrl(path);
+                return;
+              }
+
+              ///
+              switch (bannerList[bannerIndex].uri.toString().trim()) {
+                case "upgrade":
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJTaskOpenVipPage());
+/*
+                        KTKJNavigatorUtils.navigatorRouter(
+                            context, KTKJTaskOpenDiamondPage());
+*/
+                  break;
+                case "recharge":
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJRechargeListPage());
+                  break;
+                case "goods_list":
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context, KTKJGoodsListPage());
+                  break;
+                case "upgrade_diamond":
+                  KTKJNavigatorUtils.navigatorRouter(
+                      context,
+                      KTKJTaskOpenVipPage(
+                        taskType: 2,
+                      ));
+                  break;
+              }
+              if (bannerList[bannerIndex].uri.toString().startsWith("http")) {
+                KTKJUtils.launchUrl(bannerList[bannerIndex].uri.toString());
+                /*bool isImage = false;
+                      Response resust = await Dio().get(bannerList[bannerIndex].uri);
+                      String contentType = resust.headers['content-type'].toString();
+                      if (contentType.startsWith("[image/")) {
+                        isImage = true;
+                      }
+                      if (isImage) {
+                        KTKJNavigatorUtils.navigatorRouter(
+                            context,
+                            KTKJTaskGalleryPage(
+                              galleryItems: [bannerList[bannerIndex].uri.toString()],
+                            ));
+                        return;
+                      }
+                      */ /*print("contentType=$contentType");
+                      print(
+                          "contentTypeIsImage=${contentType.startsWith("[image/")}");*/ /*
+                      var hColor = KTKJGlobalConfig.taskHeadColor;
+                      KTKJNavigatorUtils.navigatorRouter(
+                          context,
+                          KTKJWebViewPage(
+                            initialUrl: bannerList[bannerIndex].uri.toString(),
+                            showActions: true,
+                            title: "",
+                            appBarBackgroundColor: hColor,
+                          ));*/
+                /*try {
+                        PaletteGenerator generator =
+                            await PaletteGenerator.fromImageProvider(Image.network(
+                                    "${bannerList[bannerIndex].uri.toString()}")
+                                .image);
+                        hColor = generator.dominantColor.color;
+                      } catch (e) {}*/
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(
+                left: KTKJGlobalConfig.LAYOUT_MARGIN,
+                right: KTKJGlobalConfig.LAYOUT_MARGIN,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(ScreenUtil().setWidth(30)),
+                ),
+                child: KTKJMyOctoImage(
+                  image: bannerData.imgPath,
+//              width: ScreenUtil().setWidth(1125),
+                  placeholderBuilder: (context) => Center(
+                    child: Loading(
+                      indicator: BallSpinFadeLoaderIndicator(),
+                      size: 50.0,
+                      color: KTKJGlobalConfig.colorPrimary,
+                    ),
+                  ),
+                  placeholder: (context, url) => Center(
+                    child: Loading(
+                      indicator: BallSpinFadeLoaderIndicator(),
+                      size: 50.0,
+                      color: KTKJGlobalConfig.colorPrimary,
+                    ),
+                  ),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 
   ///邀请好友
@@ -2528,8 +3028,8 @@ class _TaskListPageState extends State<KTKJTaskListPage>
               horizontal: KTKJGlobalConfig.LAYOUT_MARGIN,
               vertical: KTKJGlobalConfig.LAYOUT_MARGIN),
           alignment: Alignment.center,
-          child: CachedNetworkImage(
-            imageUrl:
+          child: KTKJMyOctoImage(
+            image:
                 'https://alipic.lanhuapp.com/xddcdf45d1-4fd3-47e6-9326-88bb1cfd4edf',
             width: ScreenUtil().setWidth(1061),
             height: ScreenUtil().setHeight(550),
@@ -2693,11 +3193,11 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         }*/
       },
       leading: ClipOval(
-        child: CachedNetworkImage(
+        child: KTKJMyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
-          imageUrl: taskItem.icons,
+          image: taskItem.icons,
         ),
 /*
         child: Image.asset(
@@ -2709,10 +3209,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
 */
       ),
 
-      /* CachedNetworkImage(
+      /* KTKJMyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
       title: Text(
@@ -2898,11 +3398,11 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         }*/
       },
       leading: ClipOval(
-        child: CachedNetworkImage(
+        child: KTKJMyOctoImage(
           fit: BoxFit.fill,
           width: ScreenUtil().setWidth(110),
           height: ScreenUtil().setWidth(110),
-          imageUrl: taskItem.icons,
+          image: taskItem.icons,
         ),
 /*
         child: Image.asset(
@@ -2914,10 +3414,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
 */
       ),
 
-      /* CachedNetworkImage(
+      /* KTKJMyOctoImage(
         width: 40,
         height: 40,
-        imageUrl:
+        image:
         "https://img2020.cnblogs.com/blog/2016690/202009/2016690-20200901173254702-27754128.png",
       ),*/
       title: Text(
@@ -3641,11 +4141,11 @@ class _TaskListTabViewState extends State<TaskListTabView>
                           ),
                         ),
                         /* ClipOval(
-                              child: CachedNetworkImage(
+                              child: KTKJMyOctoImage(
                                 fit: BoxFit.fill,
                                 width: ScreenUtil().setWidth(110),
                                 height: ScreenUtil().setWidth(110),
-                                imageUrl: taskItem.icons,
+                                image: taskItem.icons,
                               ),
                             ),*/
                       ],
@@ -3661,8 +4161,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                             Visibility(
                               visible: true,
                               child: Container(
-                                child: CachedNetworkImage(
-                                  imageUrl: "$_taskIcon",
+                                child: KTKJMyOctoImage(
+                                  image: "$_taskIcon",
                                   width: ScreenUtil().setWidth(70),
                                   height: ScreenUtil().setHeight(50),
                                 ),
@@ -3707,8 +4207,8 @@ class _TaskListTabViewState extends State<TaskListTabView>
                                 height: ScreenUtil().setHeight(48),
                                 alignment: Alignment.centerLeft,
                                 child: _isNewTask
-                                    ? CachedNetworkImage(
-                                        imageUrl:
+                                    ? KTKJMyOctoImage(
+                                        image:
                                             "https://alipic.lanhuapp.com/xdaaa3829c-8973-49d5-ae2a-715583553432",
                                         width: ScreenUtil().setWidth(30),
                                         height: ScreenUtil().setHeight(54),

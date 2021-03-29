@@ -3,18 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:star/http/api.dart';
+import 'package:star/global_config.dart';
+import 'package:star/http/ktkj_api.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/ktxxhomenew/ktxx_home_new_index.dart';
-import 'package:star/pages/task/task_index.dart';
-import 'package:star/pages/task/task_list.dart';
-import 'package:star/pages/widget/my_webview.dart';
-import 'package:star/utils/common_utils.dart';
-import 'package:star/http/http_manage.dart';
-import 'package:star/utils/navigator_utils.dart';
-import '../../global_config.dart';
-import 'package:star/pages/task/task_mine.dart';
-import 'package:star/pages/shareholders/micro_mine.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_list.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_webview.dart';
+import 'package:star/utils/ktkj_common_utils.dart';
+import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/utils/ktkj_navigator_utils.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_mine.dart';
+import 'package:star/pages/ktkj_shareholders/ktkj_micro_mine.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a

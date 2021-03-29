@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,13 +7,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/bus/ktkj_my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
-import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/pdd_home_entity.dart';
-import 'package:star/pages/ktkj_goods/ktkj_goods_list.dart';
-import 'package:star/pages/ktkj_goods/ktkj_home_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_featured_tab.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_list.dart';
-import 'package:star/pages/ktxxhomenew/ktxx_home_tab.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_search/ktkj_search_page.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_message.dart';
@@ -24,93 +20,27 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:star/pages/ktkj_widget/ktkj_round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-//  return Column(
-//  mainAxisSize: MainAxisSize.min,
-//  children: <Widget>[
-//  Stack(
-//  overflow: Overflow.visible,
-//  children: <Widget>[
-//  GestureDetector(
-//  onTap: () {
-//  if (catg.name == listProfileCategories[0].name)
-//  Navigator.pushNamed(context, '/furniture');
-//  },
-//  child: Container(
-//  padding: EdgeInsets.all(10.0),
-//  decoration: BoxDecoration(
-//  shape: BoxShape.circle,
-//  color: profile_info_categories_background,
-//  ),
-//  child: Icon(
-//  catg.icon,
-//  // size: 20.0,
-//  ),
-//  ),
-//  ),
-//  catg.number > 0
-//  ? Positioned(
-//  right: -5.0,
-//  child: Container(
-//  padding: EdgeInsets.all(5.0),
-//  decoration: BoxDecoration(
-//  color: profile_info_background,
-//  shape: BoxShape.circle,
-//  ),
-//  child: Text(
-//  catg.number.toString(),
-//  style: TextStyle(
-//  color: Colors.white,
-//  fontSize: 10.0,
-//  ),
-//  ),
-//  ),
-//  )
-//      : SizedBox(),
-//  ],
-//  ),
-//  SizedBox(
-//  height: 10.0,
-//  ),
-//  Text(
-//  catg.name,
-//  style: TextStyle(
-//  fontSize: 13.0,
-//  ),
-//  )
-//  ],
-//  );
-// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 ///拼多多首页
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-class KTKJHomeIndexPage extends StatefulWidget {
-  KTKJHomeIndexPage({Key key}) : super(key: key);
+class KTKJPddHomeIndexPage extends StatefulWidget {
+  KTKJPddHomeIndexPage({Key key}) : super(key: key);
   final String title = "";
-  int SVG_ANGLETYPE_DEG = 2;
-  int SVG_ANGLETYPE_GRAD = 4;
-  int SVG_ANGLETYPE_RAD = 3;
-  int SVG_ANGLETYPE_UNKNOWN = 0;
-  int SVG_ANGLETYPE_UNSPECIFIED = 1;
 
   @override
-  _HomeIndexPageState createState() => _HomeIndexPageState();
+  _PddHomeIndexPageState createState() => _PddHomeIndexPageState();
 }
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-// Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-class _HomeIndexPageState extends State<KTKJHomeIndexPage>
+class _PddHomeIndexPageState extends State<KTKJPddHomeIndexPage>
     with TickerProviderStateMixin {
   TabController _tabController;
   var resultData;
   bool isFirstLoading = true;
-  List<HomePddCategoryDataCat> cats;
+  List<PddHomeDataCat> cats;
   PddHomeData _homeData;
   var _tabViews;
   var _tabs;
@@ -120,8 +50,8 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
   void initState() {
     super.initState();
     _initData();
-    _tabController = new TabController(
-        vsync: this, length: cats == null ? 0 : cats.length + 1);
+    _tabController =
+        new TabController(vsync: this, length: cats == null ? 0 : cats.length);
     _tabController.addListener(() {
       if (mounted) {
         setState(() {
@@ -147,11 +77,11 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
       height: 50,
       child: Row(
         children: <Widget>[
-          /* Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: GestureDetector(
               onTap: () {
-//                Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
               child: Image.asset(
                 "static/images/icon_ios_back_white.png",
@@ -159,16 +89,16 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
                 height: ScreenUtil().setHeight(63),
                 fit: BoxFit.fill,
               ),
-*/ /*
-              child: CachedNetworkImage(
+/*
+              child: KTKJMyOctoImage(
                 width: ScreenUtil().setWidth(78),
                 height: ScreenUtil().setWidth(78),
-                imageUrl:
+                image:
                     "https://alipic.lanhuapp.com/xd815e5762-05d1-4721-993a-0b866db87c4d",
               ),
-*/ /*
+*/
             ),
-          ),*/
+          ),
           Expanded(
             child: GestureDetector(
               onTap: () {
@@ -180,19 +110,18 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(ScreenUtil().setWidth(10))),
-                  color: Color(0xfff6f3f7),
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  color: Colors.white,
                 ),
-                margin: EdgeInsets.only(right: ScreenUtil().setWidth(35)),
+                margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CachedNetworkImage(
+                    KTKJMyOctoImage(
                       width: ScreenUtil().setWidth(48),
                       height: ScreenUtil().setWidth(48),
-                      imageUrl:
-                          "https://alipic.lanhuapp.com/xd2f81f113-2d92-4801-a475-b903844a8640",
+                      image:
+                          "https://alipic.lanhuapp.com/xd8f3e4512-742b-425a-8660-1feddac4e231",
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 4),
@@ -216,11 +145,11 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
                 KTKJNavigatorUtils.navigatorRouter(
                     context, KTKJTaskMessagePage());
               },
-              child: CachedNetworkImage(
-                width: ScreenUtil().setWidth(66),
-                height: ScreenUtil().setWidth(66),
-                imageUrl:
-                    "https://alipic.lanhuapp.com/xd98032aa4-8ec3-464c-817a-2a522a769fd3",
+              child: KTKJMyOctoImage(
+                width: ScreenUtil().setWidth(78),
+                height: ScreenUtil().setWidth(78),
+                image:
+                    "https://alipic.lanhuapp.com/xd63f13c86-a6db-4057-a97c-86aa31c9f283",
               ),
             ),
           ),
@@ -233,11 +162,6 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
   List<Widget> buildTabs() {
     List<Widget> tabs = <Widget>[];
     if (!KTKJCommonUtils.isEmpty(cats)) {
-      if (cats[0].catName != '首页') {
-        HomePddCategoryDataCat catzero = HomePddCategoryDataCat();
-        catzero.catName = '首页';
-        cats.insert(0, catzero);
-      }
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
         tabs.add(Container(
@@ -276,17 +200,18 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
 //分类下对应页面
   List<Widget> buildTabViews() {
     List<Widget> tabViews = <Widget>[];
+
     if (!KTKJCommonUtils.isEmpty(cats)) {
       for (var index = 0; index < cats.length; index++) {
         var classify = cats[index];
-        if ('首页' == classify.catName) {
+        if ('精选' == classify.catName) {
           tabViews.add(
-            KTKJHomeTabPage(pddHomeData: _homeData),
+            KTKJFeaturedTabPage(pddHomeData: _homeData),
           );
         } else {
-          tabViews.add(KTKJGoodsListPage(
-            firstId: classify.catId.toString(),
-            showAppBar: false,
+          tabViews.add(KTKJPddGoodsListPage(
+            categoryId: classify.catId,
+            tabIndex: index,
           ));
         }
       }
@@ -374,7 +299,7 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
 
 //初始化精选tab数据
   Future _initData() async {
-    /*if (!KTKJGlobalConfig.isLogin()) {
+    if (!KTKJGlobalConfig.isLogin()) {
       KTKJCommonUtils.showToast("未获取到登录信息，，请登录！");
       Future.delayed(Duration(seconds: 1), () {
         KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
@@ -386,43 +311,34 @@ class _HomeIndexPageState extends State<KTKJHomeIndexPage>
         authResult.errCode.toString() == "60001") {
       showPddAuthorizationDialog();
       return;
-    }*/
-/*    try {
-      EasyLoading.show();
-    } catch (e) {}*/
-    var categoryResult = await HttpManage.getHomePagePddProductCategory();
+    }
     try {
-      if (categoryResult.status) {
-        if (mounted) {
-          setState(() {
-            cats = categoryResult.data.cats;
-            _tabController = new TabController(
-                vsync: this, length: cats == null ? 0 : cats.length + 1);
-            _tabController.addListener(() {
-              if (mounted) {
-                setState(() {
-                  if (_tabController.index == _tabController.animation.value) {
-                    _selectedTabIndex = _tabController.index;
-                    print("_selectedTabIndex=$_selectedTabIndex");
-                    _tabs = buildTabs();
-                  }
-                });
-              }
-            });
-            _tabs = buildTabs();
-            _tabViews = buildTabViews();
-          });
-        }
-      }
+      EasyLoading.show();
     } catch (e) {}
     PddHomeEntity result = await HttpManage.getPddHomeData();
-/*    try {
+    try {
       EasyLoading.dismiss();
-    } catch (e) {}*/
+    } catch (e) {}
     if (result.status) {
       if (mounted) {
         setState(() {
           _homeData = result.data;
+          cats = _homeData.cats;
+          _tabController = new TabController(
+              vsync: this, length: cats == null ? 0 : cats.length);
+          _tabController.addListener(() {
+            if (mounted) {
+              setState(() {
+                if (_tabController.index == _tabController.animation.value) {
+                  _selectedTabIndex = _tabController.index;
+                  print("_selectedTabIndex=$_selectedTabIndex");
+                  _tabs = buildTabs();
+                }
+              });
+            }
+          });
+          _tabs = buildTabs();
+          _tabViews = buildTabViews();
         });
       }
     } else {
