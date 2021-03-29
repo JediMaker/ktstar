@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
-import 'package:star/pages/widget/loading_nomal.dart';
+import 'package:star/pages/ktkj_widget/ktkj_loading_nomal.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 

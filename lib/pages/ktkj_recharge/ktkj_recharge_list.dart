@@ -13,7 +13,7 @@ import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/recharge_extra_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
-import 'package:star/pages/recharge/recharge_result.dart';
+import 'package:star/pages/ktkj_recharge/ktkj_recharge_result.dart';
 import 'package:star/pages/ktkj_widget/ktkj_select_choice.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/ktkj_common_utils.dart';

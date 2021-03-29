@@ -14,7 +14,7 @@ import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_api.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/shop_type_entity.dart';
-import 'package:star/pages/merchantssettle/chose_location.dart';
+import 'package:star/pages/ktkj_merchantssettle/ktkj_chose_location.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_gallery.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_webview.dart';
 import 'package:star/utils/ktkj_common_utils.dart';

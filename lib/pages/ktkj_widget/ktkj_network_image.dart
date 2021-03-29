@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:star/pages/widget/cachefile_image.dart';
+import 'package:star/pages/ktkj_widget/ktkj_cachefile_image.dart';
 
 // Copyright 2014 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be

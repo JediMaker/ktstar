@@ -10,7 +10,7 @@ import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/task_record_list_entity.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_other_submission.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_submission.dart';
-import 'package:star/pages/widget/no_data.dart';
+import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 

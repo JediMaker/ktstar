@@ -7,7 +7,7 @@ import 'package:fluwx/fluwx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
-import 'package:star/pages/goods/free_queue.dart';
+import 'package:star/pages/ktkj_goods/ktkj_free_queue.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';

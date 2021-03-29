@@ -2,23 +2,19 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:star/global_config.dart';
-import 'package:star/pages/base_router/app_analysis.dart';
-import 'package:star/pages/base_router/myrouter.dart';
-import 'package:star/pages/login/login.dart';
-import 'package:star/pages/task/task_index.dart';
-import 'package:star/pages/widget/splash_page.dart';
-import 'package:star/utils/ktkj_common_utils.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'pages/widget/common_localizations.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:star/global_config.dart';
+import 'package:star/pages/ktkj_base_router/ktkj_app_analysis.dart';
+import 'package:star/pages/ktkj_base_router/ktkj_myrouter.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
+
+import 'pages/ktkj_widget/ktkj_common_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); //确认初始化操作完成

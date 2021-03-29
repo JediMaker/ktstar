@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
-import 'package:star/pages/withdrawal/withdrawal_result.dart';
+import 'package:star/pages/ktkj_withdrawal/ktkj_withdrawal_result.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 

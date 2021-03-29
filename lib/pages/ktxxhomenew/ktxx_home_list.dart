@@ -35,7 +35,7 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/ktkj_goods/ktkj_category/ktkj_classify.dart';
 import 'package:star/pages/ktkj_goods/ktkj_goods_detail.dart';
 import 'package:star/pages/ktkj_goods/ktkj_goods_list.dart';
-import 'package:star/pages/goods/home_pdd_goods_list.dart';
+import 'package:star/pages/ktkj_goods/ktkj_home_pdd_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_home.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
@@ -43,22 +43,22 @@ import 'package:star/pages/ktkj_recharge/ktkj_recharge_list.dart';
 import 'package:star/pages/ktkj_search/ktkj_search_page.dart';
 import 'package:star/pages/ktkj_shareholders/ktkj_micro_equity.dart';
 import 'package:star/pages/ktkj_task/ktkj_invitation_poster.dart';
-import 'package:star/pages/task/task_detail.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_detail.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
-import 'package:star/pages/task/task_detail_other.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_detail_other.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_gallery.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_hall.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_message.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_open_diamond.dart';
-import 'package:star/pages/task/task_open_diamond_dialog.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_open_diamond_dialog.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_open_vip.dart';
-import 'package:star/pages/task/task_share.dart';
-import 'package:star/pages/task/task_submission.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_share.dart';
+import 'package:star/pages/ktkj_task/ktkj_task_submission.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_webview.dart';
-import 'package:star/pages/goods/home_goods_list.dart';
+import 'package:star/pages/ktkj_goods/ktkj_home_goods_list.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_webview_plugin.dart';
-import 'package:star/pages/widget/persistent_header_builder.dart';
+import 'package:star/pages/ktkj_widget/ktkj_persistent_header_builder.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -69,7 +69,7 @@ import 'package:star/pages/ktkj_widget/ktkj_round_tab_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:star/models/home_pdd_category_entity.dart';
-import 'package:star/pages/widget/my_tab.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_tab.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a

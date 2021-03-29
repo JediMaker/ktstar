@@ -7,8 +7,8 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/order_detail_entity.dart';
-import 'package:star/pages/adress/my_adress.dart';
-import 'package:star/pages/goods/checkout_counter.dart';
+import 'package:star/pages/ktkj_adress/ktkj_my_adress.dart';
+import 'package:star/pages/ktkj_goods/ktkj_checkout_counter.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 

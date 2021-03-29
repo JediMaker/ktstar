@@ -13,7 +13,7 @@ import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_api.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/version_info_entity.dart';
-import 'package:star/pages/widget/update_dialog.dart';
+import 'package:star/pages/ktkj_widget/ktkj_update_dialog.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';

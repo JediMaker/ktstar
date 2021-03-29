@@ -17,7 +17,7 @@ import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/pages/ktkj_goods/ktkj_ensure_order.dart';
-import 'package:star/pages/goods/free_queue.dart';
+import 'package:star/pages/ktkj_goods/ktkj_free_queue.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';

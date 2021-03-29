@@ -5,7 +5,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/shop_order_list_entity.dart';
-import 'package:star/pages/merchantssettle/shop_qrcode.dart';
+import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_qrcode.dart';
 import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/pages/ktkj_widget/ktkj_round_tab_indicator.dart';
 import 'package:star/utils/ktkj_common_utils.dart';

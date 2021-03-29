@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
-import 'package:star/pages/widget/network_image.dart' as network;
+import 'package:star/pages/ktkj_widget/ktkj_network_image.dart' as network;
 import 'package:star/utils/ktkj_common_utils.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file

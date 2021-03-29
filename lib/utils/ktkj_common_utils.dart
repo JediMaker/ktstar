@@ -9,9 +9,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:star/global_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quiver/strings.dart';
+import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'dart:math' as math;
 import 'package:url_launcher/url_launcher.dart';
-import 'navigator_utils.dart';
 import 'dart:typed_data';
 import 'dart:convert';
 

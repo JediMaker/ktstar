@@ -9,7 +9,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/goods_queue_entity.dart';
-import 'package:star/pages/goods/free_queue_persional.dart';
+import 'package:star/pages/ktkj_goods/ktkj_free_queue_persional.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';

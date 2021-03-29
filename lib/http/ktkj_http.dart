@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:star/http/ktkj_code.dart';
+import 'package:star/http/ktkj_interceptors/ktkj_error_interceptor.dart';
 import 'dart:collection';
 
-import 'code.dart';
-import 'interceptors/error_interceptor.dart';
-import 'interceptors/header_interceptor.dart';
-import 'interceptors/log_interceptor.dart';
-import 'interceptors/response_interceptor.dart';
-import 'result_data.dart';
+import 'package:star/http/ktkj_interceptors/ktkj_header_interceptor.dart';
+import 'package:star/http/ktkj_interceptors/ktkj_log_interceptor.dart';
+import 'package:star/http/ktkj_interceptors/ktkj_response_interceptor.dart';
+import 'package:star/http/ktkj_result_data.dart';
+
 
 ///http请求
 class MyHttp {

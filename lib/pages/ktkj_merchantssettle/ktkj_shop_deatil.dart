@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
-import 'package:star/pages/merchantssettle/shop_backstage.dart';
-import 'package:star/pages/merchantssettle/shop_payment.dart';
+import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_backstage.dart';
+import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_payment.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 

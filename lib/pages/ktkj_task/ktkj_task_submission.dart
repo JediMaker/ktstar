@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:star/global_config.dart';
-import 'package:star/pages/widget/my_octoimage.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';

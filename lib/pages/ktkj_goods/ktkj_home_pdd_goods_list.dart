@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:star/global_config.dart';
-import 'package:star/pages/goods/pdd/pdd_goods_detail.dart';
+import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_detail.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +14,10 @@ import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/pdd_goods_list_entity.dart';
-import 'package:star/pages/widget/PriceText.dart';
-import 'package:star/pages/widget/dashed_rect.dart';
-import 'package:star/pages/widget/my_webview_plugin.dart';
-import 'package:star/pages/widget/no_data.dart';
+import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
+import 'package:star/pages/ktkj_widget/ktkj_dashed_rect.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_webview_plugin.dart';
+import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';

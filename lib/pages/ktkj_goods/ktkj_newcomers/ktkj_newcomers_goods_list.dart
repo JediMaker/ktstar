@@ -6,11 +6,11 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/generated/json/home_goods_list_entity_helper.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/home_goods_list_entity.dart';
-import 'package:star/pages/goods/goods_detail.dart';
-import 'package:star/pages/widget/PriceText.dart';
-import 'package:star/pages/widget/extra_coin_text.dart';
+import 'package:star/pages/ktkj_goods/ktkj_goods_detail.dart';
+import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
+import 'package:star/pages/ktkj_widget/ktkj_extra_coin_text.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
-import 'package:star/pages/widget/no_data.dart';
+import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 

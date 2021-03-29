@@ -12,18 +12,18 @@ import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/models/order_list_entity.dart';
 import 'package:star/models/phone_charge_list_entity.dart';
-import 'package:star/pages/goods/checkout_counter.dart';
-import 'package:star/pages/goods/free_queue_persional.dart';
+import 'package:star/pages/ktkj_goods/ktkj_checkout_counter.dart';
+import 'package:star/pages/ktkj_goods/ktkj_free_queue_persional.dart';
 import 'package:star/pages/ktkj_goods/ktkj_goods_detail.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_detail.dart';
 //import 'file:///E:/devDemoCode/star/lib/pages/goods/pdd/pdd_goods_detail.dart';
-import 'package:star/pages/order/order_detail.dart';
+import 'package:star/pages/ktkj_order/ktkj_order_detail.dart';
 import 'package:star/pages/ktkj_recharge/ktkj_recharge_list.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
 import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
-import 'package:star/pages/order/order_logistics_tracking.dart';
+import 'package:star/pages/ktkj_order/ktkj_order_logistics_tracking.dart';
 
 ///拼多多订单列表（已弃用）
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file

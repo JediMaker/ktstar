@@ -15,7 +15,7 @@ import 'package:star/models/vip_price_info_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/ktkj_task/ktkj_pay_result.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
-import 'package:star/pages/widget/my_octoimage.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:star/utils/ktkj_utils.dart';
