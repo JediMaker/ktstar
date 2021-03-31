@@ -18,6 +18,7 @@ import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -241,8 +242,8 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
         case "3":
           orderStatusText = "待收货";
           btnTxt = "确认收货";
-          btnTxtColor = Colors.redAccent; //
-          btnTxtBorderColor = Colors.redAccent; //
+          btnTxtColor = Color(0xFFF93736); //
+          btnTxtBorderColor = Color(0xFFF93736); //油卡充值
           break;
         case "5":
           orderStatusText = "已完成";
@@ -639,6 +640,39 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                           style: TextStyle(
                             color: btnTxtColor,
                             fontSize: ScreenUtil().setSp(42),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: orderType == "3" && orderStatusText == "待收货",
+                    child: GestureDetector(
+                      onTap: () async {
+                        ///打开拼多多
+                        var url = "pinduoduo://";
+                        if (await canLaunch(url) != null) {
+                          await launch(url, forceSafariVC: false);
+                        } else {
+//      throw 'Could not launch $url';
+                        }
+                      },
+                      child: Container(
+                        height: ScreenUtil().setHeight(77),
+                        alignment: Alignment.center,
+                        /* decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(ScreenUtil().setWidth(39))),
+                            border: Border.all(
+//                    color: isDiamonVip ? Color(0xFFF8D9BA) : Colors.white,
+                                color: btnTxtBorderColor,
+                                width: 0.5)),*/
+                        child: Text(
+                          //状态：
+                          "前往拼多多确认收货",
+                          style: TextStyle(
+                            color: btnTxtColor,
+                            fontSize: ScreenUtil().setSp(32),
                           ),
                         ),
                       ),
