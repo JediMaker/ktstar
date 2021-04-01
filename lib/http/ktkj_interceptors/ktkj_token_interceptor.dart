@@ -73,7 +73,7 @@ class TokenInterceptors extends InterceptorsWrapper {
           var context =
               KTKJGlobalConfig.navigatorKey.currentState.overlay.context;
           await KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
-          bus.emit("changBottomBar");
+          bus.emit("changBottomBar", 0);
           return;
         });
       }
@@ -88,7 +88,7 @@ class TokenInterceptors extends InterceptorsWrapper {
             var context =
                 KTKJGlobalConfig.navigatorKey.currentState.overlay.context;
             await KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
-            bus.emit("changBottomBar");
+            bus.emit("changBottomBar", 0);
             return;
           });
         } else {
@@ -97,7 +97,7 @@ class TokenInterceptors extends InterceptorsWrapper {
             var context =
                 KTKJGlobalConfig.navigatorKey.currentState.overlay.context;
             await KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
-            bus.emit("changBottomBar");
+            bus.emit("changBottomBar", 0);
             return;
           });
         }

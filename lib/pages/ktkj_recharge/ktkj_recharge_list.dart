@@ -1,21 +1,18 @@
-import 'dart:io';
-
-import 'package:star/global_config.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:marquee/marquee.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/models/recharge_extra_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/ktkj_recharge/ktkj_recharge_result.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/pages/ktkj_widget/ktkj_select_choice.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
@@ -110,7 +107,7 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
           ratio = result.data.ratio;
           _fastRatio = ratio.fast;
           _slowRatio = ratio.slow;
-          _dataList = _rechargeList;
+          _dataList = _sRechargeList;
           try {
             _couponData = result.data.couponList[0];
           } catch (e) {}
@@ -139,7 +136,7 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
         alignment: Alignment.centerLeft,
         color: Color(0xffFFF0D1),
         child: Marquee(
-          text: "话费充值一般情况下10分钟内到账，4个小时内到账都属于正常，超过24小时未到的可以找人工客服处理。",
+          text: "话费充值预计24小时内到账，急用勿充，超过72小时未到的可以找人工客服处理。",
           style: TextStyle(
             fontSize: ScreenUtil().setSp(32),
             color: Color(0xffDC6000),
@@ -273,10 +270,19 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                               ),
                               ListTile(
                                 onTap: () {
-                                  setState(() {
-                                    _rechargeWay = 0;
+                                  if (mounted) {
+                                    setState(() {
+                                      _rechargeWay = 0;
+                                      _showCoin = true;
+                                      _dataList = _sRechargeList;
+                                      return;
+                                    });
+                                  }
+                                  /*setState(() {
+
                                     _dataList = _rechargeList;
-                                  });
+
+                                  });*/
                                 },
                                 contentPadding: EdgeInsets.symmetric(
                                   vertical: ScreenUtil().setWidth(0),
@@ -286,7 +292,7 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                                   transform:
                                       Matrix4.translationValues(-20, -6, 0.0),
                                   child: Text(
-                                    "快速充值",
+                                    "分红金奖励",
                                     style: TextStyle(
                                         color: Color(0xFF222222),
                                         fontSize: ScreenUtil().setSp(42)),
@@ -295,20 +301,31 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                                 subtitle: Transform(
                                   transform:
                                       Matrix4.translationValues(-20, -6, 0.0),
-                                  child: Text.rich(
-                                    TextSpan(children: [
-                                      TextSpan(text: '预计'),
-                                      TextSpan(
-                                        text: '4小时',
-                                        style: TextStyle(
-                                          color: Color(0xFFCE0100),
+                                  child: Visibility(
+//                                    visible: _showCoin,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "充值成功可获得",
+                                          style: TextStyle(
+                                              color: Color(0xff666666),
+                                              fontSize: ScreenUtil().setSp(32)),
                                         ),
-                                      ),
-                                      TextSpan(text: '内到账，如24小时内未到账，请联系客服。'),
-                                    ]),
-                                    style: TextStyle(
-                                      color: Color(0xFF666666),
-                                      fontSize: ScreenUtil().setSp(32),
+                                        Text(
+                                          "$_slowRatio%",
+                                          style: TextStyle(
+                                              color: KTKJGlobalConfig
+                                                  .taskHeadColor,
+                                              fontSize: ScreenUtil().setSp(32)),
+                                        ),
+                                        Text(
+                                          "分红金",
+                                          style: TextStyle(
+                                              color: KTKJGlobalConfig
+                                                  .taskHeadColor,
+                                              fontSize: ScreenUtil().setSp(32)),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -323,10 +340,18 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                               ),
                               ListTile(
                                 onTap: () {
-                                  setState(() {
-                                    _rechargeWay = 1;
+                                  if (mounted) {
+                                    setState(() {
+                                      _rechargeWay = 1;
+                                      _showCoin = false;
+                                      _dataList = _sRechargeList;
+                                      return;
+                                    });
+                                  }
+                                  /* setState(() {
+
                                     _dataList = _sRechargeList;
-                                  });
+                                  });*/
                                 },
                                 contentPadding: EdgeInsets.symmetric(
                                   vertical: ScreenUtil().setWidth(0),
@@ -336,7 +361,7 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                                   transform:
                                       Matrix4.translationValues(-20, -6, 0.0),
                                   child: Text(
-                                    "普通充值",
+                                    "95折充值",
                                     style: TextStyle(
                                         color: Color(0xFF222222),
                                         fontSize: ScreenUtil().setSp(42)),
@@ -345,21 +370,35 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                                 subtitle: Transform(
                                   transform:
                                       Matrix4.translationValues(-20, -6, 0.0),
-                                  child: Text.rich(
-                                    TextSpan(children: [
-                                      TextSpan(text: '预计'),
-                                      TextSpan(
-                                        text: '72小时',
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "充100立减",
                                         style: TextStyle(
-                                          color: Color(0xFFCE0100),
-                                        ),
+                                            color: Color(0xff666666),
+                                            fontSize: ScreenUtil().setSp(32)),
                                       ),
-                                      TextSpan(text: '内到账，急用勿充。'),
-                                    ]),
-                                    style: TextStyle(
-                                      color: Color(0xFF666666),
-                                      fontSize: ScreenUtil().setSp(32),
-                                    ),
+                                      Text(
+                                        "5元",
+                                        style: TextStyle(
+                                            color:
+                                                KTKJGlobalConfig.taskHeadColor,
+                                            fontSize: ScreenUtil().setSp(32)),
+                                      ),
+                                      Text(
+                                        "，充200立减",
+                                        style: TextStyle(
+                                            color: Color(0xff666666),
+                                            fontSize: ScreenUtil().setSp(32)),
+                                      ),
+                                      Text(
+                                        "10元，",
+                                        style: TextStyle(
+                                            color:
+                                                KTKJGlobalConfig.taskHeadColor,
+                                            fontSize: ScreenUtil().setSp(32)),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 leading: Container(
@@ -375,46 +414,52 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(80),
-                          ),
-                          child: Text(
-                            "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
-                            style: TextStyle(
-                                color: Color(0xff999999),
-                                fontSize: ScreenUtil().setSp(32)),
+                        Visibility(
+                          visible: false,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            margin: EdgeInsets.only(
+                              top: ScreenUtil().setWidth(80),
+                            ),
+                            child: Text(
+                              "* 由于充值通道要求，话费可充值时段为：09:00~23:00",
+                              style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: ScreenUtil().setSp(32)),
+                            ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(20),
-                              bottom: ScreenUtil().setWidth(182)),
-                          child: Visibility(
-                            visible: _showCoin,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "*充值成功可获得",
-                                  style: TextStyle(
-                                      color: Color(0xff999999),
-                                      fontSize: ScreenUtil().setSp(32)),
-                                ),
-                                Text(
-                                  "${_rechargeWay == 0 ? '$_fastRatio' : '$_slowRatio'}%",
-                                  style: TextStyle(
-                                      color: KTKJGlobalConfig.taskHeadColor,
-                                      fontSize: ScreenUtil().setSp(32)),
-                                ),
-                                Text(
-                                  "分红金",
-                                  style: TextStyle(
-                                      color: KTKJGlobalConfig.taskHeadColor,
-                                      fontSize: ScreenUtil().setSp(32)),
-                                ),
-                              ],
+                        Visibility(
+                          visible: false,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(20),
+                                bottom: ScreenUtil().setWidth(182)),
+                            child: Visibility(
+                              visible: _showCoin,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "*充值成功可获得",
+                                    style: TextStyle(
+                                        color: Color(0xff999999),
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  ),
+                                  Text(
+                                    "'$_slowRatio'%",
+                                    style: TextStyle(
+                                        color: KTKJGlobalConfig.taskHeadColor,
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  ),
+                                  Text(
+                                    "分红金",
+                                    style: TextStyle(
+                                        color: KTKJGlobalConfig.taskHeadColor,
+                                        fontSize: ScreenUtil().setSp(32)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -441,6 +486,9 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
                             child: Container(
                               //diamond
                               height: ScreenUtil().setHeight(140),
+                              margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(200),
+                                  bottom: ScreenUtil().setWidth(182)),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 borderRadius:
@@ -575,7 +623,7 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
   Widget buildphoneInputContainer() {
     return Column(
       children: [
-        Container(
+        /*Container(
           height: ScreenUtil().setWidth(134),
           width: double.maxFinite,
           alignment: Alignment.center,
@@ -658,7 +706,7 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
               ),
             ],
           ),
-        ),
+        ),*/
         Container(
           height: ScreenUtil().setWidth(162),
           width: double.maxFinite,
@@ -666,6 +714,12 @@ class _RechargeListPageState extends State<KTKJRechargeListPage> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(
+                ScreenUtil().setWidth(30),
+              ),
+              topRight: Radius.circular(
+                ScreenUtil().setWidth(30),
+              ),
               bottomLeft: Radius.circular(
                 ScreenUtil().setWidth(30),
               ),
