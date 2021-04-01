@@ -240,7 +240,7 @@ class _TaskIndexPageState extends State<KTKJTaskIndexPage>
                     }*/
         {
           _navigationViews[_currentIndex].controller.reverse();
-          _currentIndex = 0;
+          _currentIndex = arg;
           _navigationViews[_currentIndex].controller.forward();
           _currentPage = _pageList[_currentIndex];
           _pageController.jumpToPage(_currentIndex);
