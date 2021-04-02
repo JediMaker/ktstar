@@ -119,6 +119,8 @@ import 'package:star/models/shop_pay_info_entity.dart';
 import 'package:star/generated/json/shop_pay_info_entity_helper.dart';
 import 'package:star/models/user_holder_profit_entity.dart';
 import 'package:star/generated/json/user_holder_profit_entity_helper.dart';
+import 'package:star/models/cart_create_order_entity.dart';
+import 'package:star/generated/json/cart_create_order_entity_helper.dart';
 import 'package:star/models/shop_order_list_entity.dart';
 import 'package:star/generated/json/shop_order_list_entity_helper.dart';
 import 'package:star/models/vip_price_entity.dart';
@@ -599,6 +601,12 @@ class JsonConvert<T> {
       case UserHolderProfitPartnerBonus:
         return userHolderProfitPartnerBonusFromJson(
             data as UserHolderProfitPartnerBonus, json) as T;
+      case CartCreateOrderEntity:
+        return cartCreateOrderEntityFromJson(
+            data as CartCreateOrderEntity, json) as T;
+      case CartCreateOrderData:
+        return cartCreateOrderDataFromJson(data as CartCreateOrderData, json)
+            as T;
       case ShopOrderListEntity:
         return shopOrderListEntityFromJson(data as ShopOrderListEntity, json)
             as T;
@@ -1018,6 +1026,10 @@ class JsonConvert<T> {
       case UserHolderProfitPartnerBonus:
         return userHolderProfitPartnerBonusToJson(
             data as UserHolderProfitPartnerBonus);
+      case CartCreateOrderEntity:
+        return cartCreateOrderEntityToJson(data as CartCreateOrderEntity);
+      case CartCreateOrderData:
+        return cartCreateOrderDataToJson(data as CartCreateOrderData);
       case ShopOrderListEntity:
         return shopOrderListEntityToJson(data as ShopOrderListEntity);
       case ShopOrderListData:
@@ -1406,6 +1418,10 @@ class JsonConvert<T> {
         return UserHolderProfitEntity().fromJson(json);
       case 'UserHolderProfitPartnerBonus':
         return UserHolderProfitPartnerBonus().fromJson(json);
+      case 'CartCreateOrderEntity':
+        return CartCreateOrderEntity().fromJson(json);
+      case 'CartCreateOrderData':
+        return CartCreateOrderData().fromJson(json);
       case 'ShopOrderListEntity':
         return ShopOrderListEntity().fromJson(json);
       case 'ShopOrderListData':
@@ -1791,6 +1807,10 @@ class JsonConvert<T> {
         return List<UserHolderProfitEntity>();
       case 'UserHolderProfitPartnerBonus':
         return List<UserHolderProfitPartnerBonus>();
+      case 'CartCreateOrderEntity':
+        return List<CartCreateOrderEntity>();
+      case 'CartCreateOrderData':
+        return List<CartCreateOrderData>();
       case 'ShopOrderListEntity':
         return List<ShopOrderListEntity>();
       case 'ShopOrderListData':
