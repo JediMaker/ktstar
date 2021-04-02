@@ -15,10 +15,6 @@ import 'package:star/models/pdd_home_entity.dart';
 import 'package:star/generated/json/pdd_home_entity_helper.dart';
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
-import 'package:star/models/fans_list_entity.dart';
-import 'package:star/generated/json/fans_list_entity_helper.dart';
-import 'package:star/models/address_list_entity.dart';
-import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/models/micro_shareholder_item_entity.dart';
 import 'package:star/generated/json/micro_shareholder_item_entity_helper.dart';
 import 'package:star/models/pdd_category_list_entity.dart';
@@ -27,8 +23,6 @@ import 'package:star/models/goods_spec_info_entity.dart';
 import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/generated/json/goods_info_entity_helper.dart';
-import 'package:star/models/fans_total_entity.dart';
-import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/models/qrcode_result_remote_entity.dart';
 import 'package:star/generated/json/qrcode_result_remote_entity_helper.dart';
 import 'package:star/models/task_detail_other_entity.dart';
@@ -67,6 +61,8 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
+import 'package:star/models/cart_selected_goods_total_price_entity.dart';
+import 'package:star/generated/json/cart_selected_goods_total_price_entity_helper.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
 import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
@@ -89,14 +85,20 @@ import 'package:star/models/message_list_entity.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/models/task_submit_info_entity.dart';
 import 'package:star/generated/json/task_submit_info_entity_helper.dart';
+import 'package:star/models/fans_total_entity.dart';
+import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
 import 'package:star/models/task_record_list_entity.dart';
 import 'package:star/generated/json/task_record_list_entity_helper.dart';
+import 'package:star/models/address_list_entity.dart';
+import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/models/goods_queue_entity.dart';
 import 'package:star/generated/json/goods_queue_entity_helper.dart';
+import 'package:star/models/fans_list_entity.dart';
+import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/models/address_info_entity.dart';
 import 'package:star/generated/json/address_info_entity_helper.dart';
 import 'package:star/models/shop_backstage_info_entity.dart';
@@ -191,16 +193,6 @@ class JsonConvert<T> {
       case HomePddCategoryDataCat:
         return homePddCategoryDataCatFromJson(
             data as HomePddCategoryDataCat, json) as T;
-      case FansListEntity:
-        return fansListEntityFromJson(data as FansListEntity, json) as T;
-      case FansListData:
-        return fansListDataFromJson(data as FansListData, json) as T;
-      case FansListDataList:
-        return fansListDataListFromJson(data as FansListDataList, json) as T;
-      case AddressListEntity:
-        return addressListEntityFromJson(data as AddressListEntity, json) as T;
-      case AddressListData:
-        return addressListDataFromJson(data as AddressListData, json) as T;
       case MicroShareholderItemEntity:
         return microShareholderItemEntityFromJson(
             data as MicroShareholderItemEntity, json) as T;
@@ -244,16 +236,6 @@ class JsonConvert<T> {
         return goodsInfoEntityFromJson(data as GoodsInfoEntity, json) as T;
       case GoodsInfoData:
         return goodsInfoDataFromJson(data as GoodsInfoData, json) as T;
-      case FansTotalEntity:
-        return fansTotalEntityFromJson(data as FansTotalEntity, json) as T;
-      case FansTotalData:
-        return fansTotalDataFromJson(data as FansTotalData, json) as T;
-      case FansTotalDataAgentInfo:
-        return fansTotalDataAgentInfoFromJson(
-            data as FansTotalDataAgentInfo, json) as T;
-      case FansTotalDataCountInfo:
-        return fansTotalDataCountInfoFromJson(
-            data as FansTotalDataCountInfo, json) as T;
       case QrcodeResultRemoteEntity:
         return qrcodeResultRemoteEntityFromJson(
             data as QrcodeResultRemoteEntity, json) as T;
@@ -408,6 +390,12 @@ class JsonConvert<T> {
       case RechargeDatacouponList:
         return rechargeDatacouponListFromJson(
             data as RechargeDatacouponList, json) as T;
+      case CartSelectedGoodsTotalPriceEntity:
+        return cartSelectedGoodsTotalPriceEntityFromJson(
+            data as CartSelectedGoodsTotalPriceEntity, json) as T;
+      case CartSelectedGoodsTotalPriceData:
+        return cartSelectedGoodsTotalPriceDataFromJson(
+            data as CartSelectedGoodsTotalPriceData, json) as T;
       case MicroShareholderEntity:
         return microShareholderEntityFromJson(
             data as MicroShareholderEntity, json) as T;
@@ -482,6 +470,16 @@ class JsonConvert<T> {
       case TaskSubmitInfoData:
         return taskSubmitInfoDataFromJson(data as TaskSubmitInfoData, json)
             as T;
+      case FansTotalEntity:
+        return fansTotalEntityFromJson(data as FansTotalEntity, json) as T;
+      case FansTotalData:
+        return fansTotalDataFromJson(data as FansTotalData, json) as T;
+      case FansTotalDataAgentInfo:
+        return fansTotalDataAgentInfoFromJson(
+            data as FansTotalDataAgentInfo, json) as T;
+      case FansTotalDataCountInfo:
+        return fansTotalDataCountInfoFromJson(
+            data as FansTotalDataCountInfo, json) as T;
       case UserInfoEntity:
         return userInfoEntityFromJson(data as UserInfoEntity, json) as T;
       case UserInfoData:
@@ -501,6 +499,10 @@ class JsonConvert<T> {
       case TaskRecordListDataList:
         return taskRecordListDataListFromJson(
             data as TaskRecordListDataList, json) as T;
+      case AddressListEntity:
+        return addressListEntityFromJson(data as AddressListEntity, json) as T;
+      case AddressListData:
+        return addressListDataFromJson(data as AddressListData, json) as T;
       case GoodsQueueEntity:
         return goodsQueueEntityFromJson(data as GoodsQueueEntity, json) as T;
       case GoodsQueueData:
@@ -517,6 +519,12 @@ class JsonConvert<T> {
       case GoodsQueueDataUserInfo:
         return goodsQueueDataUserInfoFromJson(
             data as GoodsQueueDataUserInfo, json) as T;
+      case FansListEntity:
+        return fansListEntityFromJson(data as FansListEntity, json) as T;
+      case FansListData:
+        return fansListDataFromJson(data as FansListData, json) as T;
+      case FansListDataList:
+        return fansListDataListFromJson(data as FansListDataList, json) as T;
       case AddressInfoEntity:
         return addressInfoEntityFromJson(data as AddressInfoEntity, json) as T;
       case AddressInfoData:
@@ -676,16 +684,6 @@ class JsonConvert<T> {
         return homePddCategoryDataToJson(data as HomePddCategoryData);
       case HomePddCategoryDataCat:
         return homePddCategoryDataCatToJson(data as HomePddCategoryDataCat);
-      case FansListEntity:
-        return fansListEntityToJson(data as FansListEntity);
-      case FansListData:
-        return fansListDataToJson(data as FansListData);
-      case FansListDataList:
-        return fansListDataListToJson(data as FansListDataList);
-      case AddressListEntity:
-        return addressListEntityToJson(data as AddressListEntity);
-      case AddressListData:
-        return addressListDataToJson(data as AddressListData);
       case MicroShareholderItemEntity:
         return microShareholderItemEntityToJson(
             data as MicroShareholderItemEntity);
@@ -725,14 +723,6 @@ class JsonConvert<T> {
         return goodsInfoEntityToJson(data as GoodsInfoEntity);
       case GoodsInfoData:
         return goodsInfoDataToJson(data as GoodsInfoData);
-      case FansTotalEntity:
-        return fansTotalEntityToJson(data as FansTotalEntity);
-      case FansTotalData:
-        return fansTotalDataToJson(data as FansTotalData);
-      case FansTotalDataAgentInfo:
-        return fansTotalDataAgentInfoToJson(data as FansTotalDataAgentInfo);
-      case FansTotalDataCountInfo:
-        return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);
       case QrcodeResultRemoteEntity:
         return qrcodeResultRemoteEntityToJson(data as QrcodeResultRemoteEntity);
       case QrcodeResultRemoteData:
@@ -862,6 +852,12 @@ class JsonConvert<T> {
         return rechargeDataRechageListToJson(data as RechargeDataRechageList);
       case RechargeDatacouponList:
         return rechargeDatacouponListToJson(data as RechargeDatacouponList);
+      case CartSelectedGoodsTotalPriceEntity:
+        return cartSelectedGoodsTotalPriceEntityToJson(
+            data as CartSelectedGoodsTotalPriceEntity);
+      case CartSelectedGoodsTotalPriceData:
+        return cartSelectedGoodsTotalPriceDataToJson(
+            data as CartSelectedGoodsTotalPriceData);
       case MicroShareholderEntity:
         return microShareholderEntityToJson(data as MicroShareholderEntity);
       case MicroShareholderData:
@@ -919,6 +915,14 @@ class JsonConvert<T> {
         return taskSubmitInfoEntityToJson(data as TaskSubmitInfoEntity);
       case TaskSubmitInfoData:
         return taskSubmitInfoDataToJson(data as TaskSubmitInfoData);
+      case FansTotalEntity:
+        return fansTotalEntityToJson(data as FansTotalEntity);
+      case FansTotalData:
+        return fansTotalDataToJson(data as FansTotalData);
+      case FansTotalDataAgentInfo:
+        return fansTotalDataAgentInfoToJson(data as FansTotalDataAgentInfo);
+      case FansTotalDataCountInfo:
+        return fansTotalDataCountInfoToJson(data as FansTotalDataCountInfo);
       case UserInfoEntity:
         return userInfoEntityToJson(data as UserInfoEntity);
       case UserInfoData:
@@ -934,6 +938,10 @@ class JsonConvert<T> {
         return taskRecordListDataToJson(data as TaskRecordListData);
       case TaskRecordListDataList:
         return taskRecordListDataListToJson(data as TaskRecordListDataList);
+      case AddressListEntity:
+        return addressListEntityToJson(data as AddressListEntity);
+      case AddressListData:
+        return addressListDataToJson(data as AddressListData);
       case GoodsQueueEntity:
         return goodsQueueEntityToJson(data as GoodsQueueEntity);
       case GoodsQueueData:
@@ -947,6 +955,12 @@ class JsonConvert<T> {
         return goodsQueueDataListToJson(data as GoodsQueueDataList);
       case GoodsQueueDataUserInfo:
         return goodsQueueDataUserInfoToJson(data as GoodsQueueDataUserInfo);
+      case FansListEntity:
+        return fansListEntityToJson(data as FansListEntity);
+      case FansListData:
+        return fansListDataToJson(data as FansListData);
+      case FansListDataList:
+        return fansListDataListToJson(data as FansListDataList);
       case AddressInfoEntity:
         return addressInfoEntityToJson(data as AddressInfoEntity);
       case AddressInfoData:
@@ -1084,16 +1098,6 @@ class JsonConvert<T> {
         return HomePddCategoryData().fromJson(json);
       case 'HomePddCategoryDataCat':
         return HomePddCategoryDataCat().fromJson(json);
-      case 'FansListEntity':
-        return FansListEntity().fromJson(json);
-      case 'FansListData':
-        return FansListData().fromJson(json);
-      case 'FansListDataList':
-        return FansListDataList().fromJson(json);
-      case 'AddressListEntity':
-        return AddressListEntity().fromJson(json);
-      case 'AddressListData':
-        return AddressListData().fromJson(json);
       case 'MicroShareholderItemEntity':
         return MicroShareholderItemEntity().fromJson(json);
       case 'MicroShareholderItemEstimate':
@@ -1124,14 +1128,6 @@ class JsonConvert<T> {
         return GoodsInfoEntity().fromJson(json);
       case 'GoodsInfoData':
         return GoodsInfoData().fromJson(json);
-      case 'FansTotalEntity':
-        return FansTotalEntity().fromJson(json);
-      case 'FansTotalData':
-        return FansTotalData().fromJson(json);
-      case 'FansTotalDataAgentInfo':
-        return FansTotalDataAgentInfo().fromJson(json);
-      case 'FansTotalDataCountInfo':
-        return FansTotalDataCountInfo().fromJson(json);
       case 'QrcodeResultRemoteEntity':
         return QrcodeResultRemoteEntity().fromJson(json);
       case 'QrcodeResultRemoteData':
@@ -1252,6 +1248,10 @@ class JsonConvert<T> {
         return RechargeDataRechageList().fromJson(json);
       case 'RechargeDatacouponList':
         return RechargeDatacouponList().fromJson(json);
+      case 'CartSelectedGoodsTotalPriceEntity':
+        return CartSelectedGoodsTotalPriceEntity().fromJson(json);
+      case 'CartSelectedGoodsTotalPriceData':
+        return CartSelectedGoodsTotalPriceData().fromJson(json);
       case 'MicroShareholderEntity':
         return MicroShareholderEntity().fromJson(json);
       case 'MicroShareholderData':
@@ -1308,6 +1308,14 @@ class JsonConvert<T> {
         return TaskSubmitInfoEntity().fromJson(json);
       case 'TaskSubmitInfoData':
         return TaskSubmitInfoData().fromJson(json);
+      case 'FansTotalEntity':
+        return FansTotalEntity().fromJson(json);
+      case 'FansTotalData':
+        return FansTotalData().fromJson(json);
+      case 'FansTotalDataAgentInfo':
+        return FansTotalDataAgentInfo().fromJson(json);
+      case 'FansTotalDataCountInfo':
+        return FansTotalDataCountInfo().fromJson(json);
       case 'UserInfoEntity':
         return UserInfoEntity().fromJson(json);
       case 'UserInfoData':
@@ -1322,6 +1330,10 @@ class JsonConvert<T> {
         return TaskRecordListData().fromJson(json);
       case 'TaskRecordListDataList':
         return TaskRecordListDataList().fromJson(json);
+      case 'AddressListEntity':
+        return AddressListEntity().fromJson(json);
+      case 'AddressListData':
+        return AddressListData().fromJson(json);
       case 'GoodsQueueEntity':
         return GoodsQueueEntity().fromJson(json);
       case 'GoodsQueueData':
@@ -1334,6 +1346,12 @@ class JsonConvert<T> {
         return GoodsQueueDataList().fromJson(json);
       case 'GoodsQueueDataUserInfo':
         return GoodsQueueDataUserInfo().fromJson(json);
+      case 'FansListEntity':
+        return FansListEntity().fromJson(json);
+      case 'FansListData':
+        return FansListData().fromJson(json);
+      case 'FansListDataList':
+        return FansListDataList().fromJson(json);
       case 'AddressInfoEntity':
         return AddressInfoEntity().fromJson(json);
       case 'AddressInfoData':
@@ -1465,16 +1483,6 @@ class JsonConvert<T> {
         return List<HomePddCategoryData>();
       case 'HomePddCategoryDataCat':
         return List<HomePddCategoryDataCat>();
-      case 'FansListEntity':
-        return List<FansListEntity>();
-      case 'FansListData':
-        return List<FansListData>();
-      case 'FansListDataList':
-        return List<FansListDataList>();
-      case 'AddressListEntity':
-        return List<AddressListEntity>();
-      case 'AddressListData':
-        return List<AddressListData>();
       case 'MicroShareholderItemEntity':
         return List<MicroShareholderItemEntity>();
       case 'MicroShareholderItemEstimate':
@@ -1505,14 +1513,6 @@ class JsonConvert<T> {
         return List<GoodsInfoEntity>();
       case 'GoodsInfoData':
         return List<GoodsInfoData>();
-      case 'FansTotalEntity':
-        return List<FansTotalEntity>();
-      case 'FansTotalData':
-        return List<FansTotalData>();
-      case 'FansTotalDataAgentInfo':
-        return List<FansTotalDataAgentInfo>();
-      case 'FansTotalDataCountInfo':
-        return List<FansTotalDataCountInfo>();
       case 'QrcodeResultRemoteEntity':
         return List<QrcodeResultRemoteEntity>();
       case 'QrcodeResultRemoteData':
@@ -1633,6 +1633,10 @@ class JsonConvert<T> {
         return List<RechargeDataRechageList>();
       case 'RechargeDatacouponList':
         return List<RechargeDatacouponList>();
+      case 'CartSelectedGoodsTotalPriceEntity':
+        return List<CartSelectedGoodsTotalPriceEntity>();
+      case 'CartSelectedGoodsTotalPriceData':
+        return List<CartSelectedGoodsTotalPriceData>();
       case 'MicroShareholderEntity':
         return List<MicroShareholderEntity>();
       case 'MicroShareholderData':
@@ -1689,6 +1693,14 @@ class JsonConvert<T> {
         return List<TaskSubmitInfoEntity>();
       case 'TaskSubmitInfoData':
         return List<TaskSubmitInfoData>();
+      case 'FansTotalEntity':
+        return List<FansTotalEntity>();
+      case 'FansTotalData':
+        return List<FansTotalData>();
+      case 'FansTotalDataAgentInfo':
+        return List<FansTotalDataAgentInfo>();
+      case 'FansTotalDataCountInfo':
+        return List<FansTotalDataCountInfo>();
       case 'UserInfoEntity':
         return List<UserInfoEntity>();
       case 'UserInfoData':
@@ -1703,6 +1715,10 @@ class JsonConvert<T> {
         return List<TaskRecordListData>();
       case 'TaskRecordListDataList':
         return List<TaskRecordListDataList>();
+      case 'AddressListEntity':
+        return List<AddressListEntity>();
+      case 'AddressListData':
+        return List<AddressListData>();
       case 'GoodsQueueEntity':
         return List<GoodsQueueEntity>();
       case 'GoodsQueueData':
@@ -1715,6 +1731,12 @@ class JsonConvert<T> {
         return List<GoodsQueueDataList>();
       case 'GoodsQueueDataUserInfo':
         return List<GoodsQueueDataUserInfo>();
+      case 'FansListEntity':
+        return List<FansListEntity>();
+      case 'FansListData':
+        return List<FansListData>();
+      case 'FansListDataList':
+        return List<FansListDataList>();
       case 'AddressInfoEntity':
         return List<AddressInfoEntity>();
       case 'AddressInfoData':
