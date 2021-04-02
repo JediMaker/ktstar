@@ -297,6 +297,7 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
             context,
             KTKJGoodsDetailPage(
               productId: id,
+              isNew: true,
             ));
       },
       child: Container(

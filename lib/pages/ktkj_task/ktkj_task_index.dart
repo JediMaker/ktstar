@@ -1,8 +1,5 @@
 import 'dart:io';
 
-import 'package:star/pages/ktkj_widget/ktkj_navigation_icon_view.dart';
-import 'package:star/pages/ktxxhomenew/ktxx_home_page.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -12,17 +9,14 @@ import 'package:star/bus/ktkj_my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_api.dart';
 import 'package:star/http/ktkj_http_manage.dart';
-import 'package:star/models/home_entity.dart';
-import 'package:star/pages/ktkj_goods/ktkj_category/ktkj_classify.dart';
+import 'package:star/pages/ktkj_goods/ktkj_cart/ktkj_goods_cart.dart';
 import 'package:star/pages/ktkj_goods/ktkj_category/ktkj_new_classify.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_list.dart';
-import 'package:star/pages/ktkj_shareholders/ktkj_micro_equity.dart';
-import 'package:star/pages/ktkj_task/ktkj_task_list.dart';
-import 'package:star/pages/ktkj_task/ktkj_task_mine.dart';
 import 'package:star/pages/ktkj_task/ktkj_mine_page.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_webview.dart';
+import 'package:star/pages/ktkj_widget/ktkj_navigation_icon_view.dart';
+import 'package:star/pages/ktxxhomenew/ktxx_home_page.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:star/utils/ktkj_utils.dart';
@@ -207,13 +201,15 @@ class _TaskIndexPageState extends State<KTKJTaskIndexPage>
         });
   }
 
+  ///页面是否首次加载
+  var isFirst = true;
+
   @override
   void initState() {
     KTKJUtils.checkAppVersion(context);
     _initVersionData();
 
     super.initState();
-
     _currentIndex = widget.currentIndex;
     bus.on("changBottomBar", (arg) {
       if (!mounted) {
@@ -288,6 +284,13 @@ class _TaskIndexPageState extends State<KTKJTaskIndexPage>
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         width: 1125, height: 2436, allowFontScaling: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (isFirst) {
+        isFirst = false;
+        _currentPage = _pageList[_currentIndex];
+        _pageController.jumpToPage(_currentIndex);
+      }
+    });
     return KeyboardDismissOnTap(
       child: Scaffold(
         body: WillPopScope(
@@ -395,9 +398,9 @@ class _TaskIndexPageState extends State<KTKJTaskIndexPage>
           ),*/
           icon: KTKJMyOctoImage(
             image:
-                'https://alipic.lanhuapp.com/xd145d244b-d153-4165-88a1-eae8e225f6e7',
-            width: ScreenUtil().setWidth(68),
-            height: ScreenUtil().setWidth(75),
+                'https://alipic.lanhuapp.com/xd6a74748b-ce4e-4e98-99e4-2603cedfd48f',
+            width: ScreenUtil().setWidth(80),
+            height: ScreenUtil().setWidth(76),
           ),
           /*activeIcon: SvgPicture.asset(
 //                'https://alipic.lanhuapp.com/xd8c969d26-126e-4eeb-abf8-c58086628934',
@@ -408,12 +411,12 @@ class _TaskIndexPageState extends State<KTKJTaskIndexPage>
           ),*/
           activeIcon: KTKJMyOctoImage(
             image:
-                'https://alipic.lanhuapp.com/xd7c1d7666-ed9e-4a75-96d1-3b2ec627a062',
-            width: ScreenUtil().setWidth(68),
-            height: ScreenUtil().setWidth(75),
+                'https://alipic.lanhuapp.com/xdf6407325-4243-4676-abd2-fa4d2b151c50',
+            width: ScreenUtil().setWidth(80),
+            height: ScreenUtil().setWidth(76),
           ),
           title: new Text(
-            '权益',
+            '购物车',
             style: TextStyle(fontSize: ScreenUtil().setSp(28)),
           ),
           vsync: this),
@@ -478,9 +481,10 @@ class _TaskIndexPageState extends State<KTKJTaskIndexPage>
 //      new HomePage(tabIndex: _homeTabIndex),
       KTKJHomePagePage(),
       KTKJNewClassifyListPage(),
-      KTKJMicroShareHolderEquityPage(
+      KTKJShoppingCartPage(),
+      /*KTKJMicroShareHolderEquityPage(
         showBackBtnIcon: false,
-      ),
+      ),*/
       KTKJShopListPage(),
       KTKJMinePagePage(),
       /*   new NoticePage(),

@@ -1,7 +1,5 @@
 import 'dart:collection';
 
-import 'package:star/global_config.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,13 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'dart:ui' as ui show window;
-
-import 'package:star/bus/ktkj_my_event_bus.dart';
 import 'package:star/generated/json/goods_spec_info_entity_helper.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/goods_info_entity.dart';
+import 'package:star/models/goods_spec_info_entity.dart';
 import 'package:star/pages/ktkj_goods/ktkj_ensure_order.dart';
 import 'package:star/pages/ktkj_goods/ktkj_free_queue.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
@@ -23,17 +19,18 @@ import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
 import 'package:star/pages/ktkj_widget/ktkj_goods_select_choice.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_fractionpaginationbuilder.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
-import 'package:star/models/goods_spec_info_entity.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KTKJGoodsDetailPage extends StatefulWidget {
   var productId;
+  bool isNew;
 
-  KTKJGoodsDetailPage({@required this.productId});
+  KTKJGoodsDetailPage({@required this.productId, this.isNew = false});
 
   @override
   _GoodsDetailPageState createState() => _GoodsDetailPageState();
@@ -765,7 +762,7 @@ class _GoodsDetailPageState extends State<KTKJGoodsDetailPage>
                     children: <Widget>[
                       Container(
                         margin:
-                            EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                            EdgeInsets.only(left: ScreenUtil().setWidth(50)),
                         height: ScreenUtil().setWidth(255),
                         child: GestureDetector(
                           onTap: () {
@@ -803,53 +800,168 @@ class _GoodsDetailPageState extends State<KTKJGoodsDetailPage>
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          height: ScreenUtil().setHeight(155),
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
-                          child: GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(
-                                        ScreenUtil().setWidth(30),
-                                      ),
-                                      topRight: Radius.circular(
-                                        ScreenUtil().setWidth(30),
+                      Container(
+                        margin:
+                            EdgeInsets.only(left: ScreenUtil().setWidth(60)),
+                        height: ScreenUtil().setWidth(255),
+                        child: GestureDetector(
+                          onTap: () async {
+                            await KTKJNavigatorUtils
+                                .navigatorRouterAndRemoveUntil(
+                                    this.context,
+                                    KTKJTaskIndexPage(
+                                      currentIndex: 2,
+                                    ));
+                          },
+                          child: Container(
+                            height: ScreenUtil().setWidth(255),
+                            width: ScreenUtil().setWidth(100),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  KTKJMyOctoImage(
+                                    image:
+                                        "https://alipic.lanhuapp.com/xd52eef821-eaea-4810-88e7-8c62e307bec6",
+                                    width: ScreenUtil().setWidth(47),
+                                    height: ScreenUtil().setWidth(51),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: ScreenUtil().setWidth(3)),
+                                    child: Text(
+                                      "购物车",
+                                      style: TextStyle(
+                                        color: Color(0xff999999),
+                                        fontSize: ScreenUtil().setSp(28),
                                       ),
                                     ),
                                   ),
-                                  builder: (BuildContext context) {
-                                    return DetailWindow(
-                                      detailData: detailData,
-                                      type: 1,
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: ScreenUtil().setHeight(155),
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(horizontal: 26),
-                              margin: EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                " 立即购买 ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(42)),
+                                ],
                               ),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    Color(0xFFF93736),
-                                    Color(0xFFF93664)
-                                  ]),
-                                  borderRadius: BorderRadius.circular(50)),
                             ),
                           ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Visibility(
+                              ///新人专享商品不展示加入购物车
+                              visible: !widget.isNew,
+                              child: Container(
+                                width: ScreenUtil().setWidth(320),
+                                height: ScreenUtil().setWidth(110),
+                                margin: EdgeInsets.only(
+                                  left: ScreenUtil().setWidth(80),
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(
+                                              ScreenUtil().setWidth(30),
+                                            ),
+                                            topRight: Radius.circular(
+                                              ScreenUtil().setWidth(30),
+                                            ),
+                                          ),
+                                        ),
+                                        builder: (BuildContext context) {
+                                          return DetailWindow(
+                                            detailData: detailData,
+                                            type: 0,
+                                          );
+                                        });
+                                  },
+                                  child: Container(
+                                    width: ScreenUtil().setWidth(320),
+                                    height: ScreenUtil().setWidth(110),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      " 加入购物车 ",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: ScreenUtil().setSp(42)),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(colors: [
+                                          Color(0xFFFFA02E),
+                                          Color(0xFFFFA02E)
+                                        ]),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Container(
+                                  width: !widget.isNew
+                                      ? ScreenUtil().setWidth(320)
+                                      : double.infinity,
+                                  height: ScreenUtil().setWidth(110),
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: !widget.isNew
+                                        ? 0
+                                        : ScreenUtil().setWidth(32),
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                ScreenUtil().setWidth(30),
+                                              ),
+                                              topRight: Radius.circular(
+                                                ScreenUtil().setWidth(30),
+                                              ),
+                                            ),
+                                          ),
+                                          builder: (BuildContext context) {
+                                            return DetailWindow(
+                                              detailData: detailData,
+                                              type: 1,
+                                            );
+                                          });
+                                    },
+                                    child: Container(
+                                      width: !widget.isNew
+                                          ? ScreenUtil().setWidth(320)
+                                          : double.infinity,
+                                      height: ScreenUtil().setWidth(110),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        " 立即购买 ",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: ScreenUtil().setSp(42)),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(colors: [
+                                            Color(0xFFF93736),
+                                            Color(0xFFF93664)
+                                          ]),
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     ],
@@ -868,6 +980,8 @@ class _GoodsDetailPageState extends State<KTKJGoodsDetailPage>
 class DetailWindow extends StatefulWidget {
 //  GoodsDetailBeanEntity detailData; todo
   GoodsInfoEntity detailData;
+
+  ///按钮操作类型 0 加入购物车； 1 立即购买
   int type;
 
   DetailWindow({@required this.detailData, @required this.type});
@@ -879,6 +993,7 @@ class DetailWindow extends StatefulWidget {
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+///
 class _DetailWindowState extends State<DetailWindow>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
@@ -1053,7 +1168,12 @@ class _DetailWindowState extends State<DetailWindow>
                         onTap: () async {
                           if (KTKJGlobalConfig.isLogin()) {
                             if (canSubmit) {
-                              createBuyOrder();
+                              if (widget.type == 0) {
+                                addToCart();
+                              } else {
+                                createBuyOrder();
+                              }
+
                               if (!mounted) return;
                               Navigator.of(context).pop();
                             }
@@ -1304,21 +1424,48 @@ class _DetailWindowState extends State<DetailWindow>
         _goodsPrice = specInfo.specPrice;
         _btPrice = specInfo.specBonus;
         specId = specInfo.specId;
-        print(
-            'specImg=$_defaultImgUrl&&specPrice=$_goodsPrice&&specId=$specId');
-
         /* if (mounted) {
         setState(() {});
       }*/
-      } catch (e) {
-        print("specIdspecIdspecIdspecId$e");
-      }
+      } catch (e) {}
     } else {
       canSubmit = false;
-      print("specIdspecIdspecIdspecId=====null");
     }
   }
 
+  ///加入购物车
+  Future addToCart() async {
+    var goodsId = '';
+    var goodsNum;
+    var orderId = '';
+    try {
+      goodsId = widget.detailData.data.id;
+      goodsNum = _count;
+    } catch (e) {}
+    /* try {
+                EasyLoading.dismiss();
+              } catch (e) {}*/
+    try {
+      EasyLoading.show();
+    } catch (e) {}
+    var result =
+        await HttpManage.createOrder(goodsId, goodsNum, specId: specId);
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
+    if (result.status) {
+      try {
+        EasyLoading.showSuccess(
+          "加购成功",
+          duration: Duration(seconds: 3),
+        );
+      } catch (e) {}
+    } else {
+      KTKJCommonUtils.showToast("${result.errMsg}");
+    }
+  }
+
+  ///创建订单
   Future createBuyOrder() async {
     var goodsId = '';
     var goodsNum;
