@@ -1584,7 +1584,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                   Expanded(
                     child: Container(
                       child: Text(
-                        "当前分红金：$_currentDividend元",
+                        "当前分红金：$_currentDividend个",
                         style: new TextStyle(
                           color: Color(0xff3a3a3a),
                           fontSize: ScreenUtil().setSp(42),

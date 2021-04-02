@@ -917,20 +917,20 @@ class _MicroShareHolderEquityPageState
               break;
             case 1:
               var bonusCoin = '${_dataList[_currentIndex].interests.bonusCoin}';
-              profitTitle = '$bonusCoin元分红金';
+              profitTitle = '$bonusCoin个分红金';
               profitDesc = _currentIndex == 0
-                  ? '消费满$novitiatePrice元，平台赠送至少$bonusCoin元分红金用于分红'
+                  ? '消费满$novitiatePrice元，平台赠送至少$bonusCoin个分红金用于分红'
                   : _currentIndex == 1
-                      ? "缴纳年费$vipPrice元，平台赠送$bonusCoin元分红金用于分红"
-                      : "缴纳年费$advancedPrice元，平台赠送$bonusCoin元分红金用于分红";
+                      ? "缴纳年费$vipPrice元，平台赠送$bonusCoin个分红金用于分红"
+                      : "缴纳年费$advancedPrice元，平台赠送$bonusCoin个分红金用于分红";
               if (!showCard) {
                 profitDesc = _currentIndex == 0
-                    ? '消费满$novitiatePrice元，平台赠送至少$bonusCoin元分红金用于分红'
+                    ? '消费满$novitiatePrice元，平台赠送至少$bonusCoin个分红金用于分红'
                     : _currentIndex == 1
-                        ? "平台赠送$bonusCoin元分红金用于分红"
-                        : "平台赠送$bonusCoin元分红金用于分红";
+                        ? "平台赠送$bonusCoin个分红金用于分红"
+                        : "平台赠送$bonusCoin个分红金用于分红";
               }
-              iconDesc = '￥$bonusCoin';
+              iconDesc = '$bonusCoin';
               break;
           }
           break;
@@ -1122,7 +1122,7 @@ class _MicroShareHolderEquityPageState
                     right: ScreenUtil().setWidth(30),
                   ),
                   child: Text(
-                    "以下为每10000元分红金所得数据",
+                    "以下为每10000个分红金所得数据",
                     style: TextStyle(
                       color: Color(0xff949494),
                       fontSize: ScreenUtil().setSp(33),
