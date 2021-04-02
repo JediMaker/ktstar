@@ -263,20 +263,6 @@ class APi {
   ///首页分类商品列表
   static const String CATEGORY = "/category/tree";
 
-  ///分类
-
-  ///购物车
-  static const String CART = "/api/index.php?route=api/cart";
-
-  ///添加商品
-  static const String CART_ADD = "/api/index.php?route=api/cart/add";
-
-  ///删除商品
-  static const String CART_DEL = "/api/index.php?route=api/cart/remove";
-
-  ///修改商品
-  static const String CART_EDIT = "/api/index.php?route=api/cart/edit";
-
   ///协议信息地址
   ///
   ///
@@ -291,6 +277,7 @@ class APi {
   ///商家入驻规则协议
   static String AGREEMENT_SHOP_ENTRY_RULES_URL =
       "https://task.ktkj.shop/agreement/sjrz";
+
 /*
   ///商家入驻规则协议
   static String AGREEMENT_SHOP_ENTRY_RULES_URL =
@@ -396,5 +383,27 @@ class APi {
   static const String SITE_AGREEMENT = "site/agreement";
 
 //  =================商家入驻相关接口======END======================
+//  =================购物车相关接口======START======================
+  ///购物车商品添加
+  static const String CART_ADD = "cart/add";
+
+  ///购物车商品删除
+  static const String CART_DELETE = "cart/delete";
+
+  ///购物车商品数量修改
+  static const String CART_EDIT = "cart/edit";
+
+  ///购物车商品列表
+  static const String CART_LIST = "cart/list";
+
+  ///购物车商品结算--确认订单数据
+  static const String CART_SETTLEMENT = "cart/settlement";
+
+  ///购物车订单创建
+  static const String CART_ORDER_CREATE = "cart/order";
+
+  ///购物车选中商品总额计算
+  static const String CART_CHOSE = "cart/chose";
+//  =================购物车相关接口======END======================
 
 }

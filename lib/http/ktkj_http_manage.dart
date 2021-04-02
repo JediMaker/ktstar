@@ -8,6 +8,10 @@ import 'package:http_parser/http_parser.dart';
 import 'package:star/generated/json/address_info_entity_helper.dart';
 import 'package:star/generated/json/address_list_entity_helper.dart';
 import 'package:star/generated/json/alipay_payinfo_entity_helper.dart';
+import 'package:star/generated/json/cart_create_order_entity_helper.dart';
+import 'package:star/generated/json/cart_list_entity_helper.dart';
+import 'package:star/generated/json/cart_selected_goods_total_price_entity_helper.dart';
+import 'package:star/generated/json/cart_settlement_entity_helper.dart';
 import 'package:star/generated/json/category_bean_entity_helper.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
@@ -64,6 +68,10 @@ import 'package:star/http/ktkj_interceptors/ktkj_token_interceptor.dart';
 import 'package:star/models/address_info_entity.dart';
 import 'package:star/models/address_list_entity.dart';
 import 'package:star/models/alipay_payinfo_entity.dart';
+import 'package:star/models/cart_create_order_entity.dart';
+import 'package:star/models/cart_list_entity.dart';
+import 'package:star/models/cart_selected_goods_total_price_entity.dart';
+import 'package:star/models/cart_settlement_entity.dart';
 import 'package:star/models/category_bean_entity.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
@@ -114,7 +122,6 @@ import 'package:star/pages/ktkj_goods/ktkj_newcomers/ktkj_hot_goods_list.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_utils.dart';
 
-
 void getHttp() async {
   try {
     Response response = await HttpManage.dio.get("");
@@ -158,7 +165,7 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (!KTKJGlobalConfig.isRelease) {
+    if (KTKJGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
@@ -1700,9 +1707,16 @@ class HttpManage {
   }
 
   ///获取收货地址列表
-  static Future<AddressListEntity> getListOfAddresses() async {
+  ///
+  /// [isDefault] 是否获取默认地址 1是 2否 0全部，默认全部地址列表
+  static Future<AddressListEntity> getListOfAddresses({isDefault}) async {
+    Map paramsMap = Map<String, dynamic>();
+    if (!KTKJCommonUtils.isEmpty(isDefault)) {
+      paramsMap["is_default"] = "$isDefault";
+    }
     var response = await HttpManage.dio.get(
       APi.USER_ADDRESS,
+      queryParameters: paramsMap,
     );
     final extractData = json.decode(response.data) as Map<String, dynamic>;
 
@@ -2765,6 +2779,162 @@ class HttpManage {
       KTKJGlobalConfig.prefs
           .setString("agreementShopEntryRulesUrl", entity.data.sjrz);
     }
+    return entity;
+  }
+
+  ///加入购物车
+  ///
+  ///[goodsId] 商品id
+  ///
+  ///[goodsNum] 商品数量
+  ///
+  ///[specId] 规格id
+  ///
+  static Future<ResultBeanEntity> cartAddGoods(String goodsId, goodsNum,
+      {specId}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["goods_id"] = "$goodsId";
+    paramsMap["goods_num"] = "$goodsNum";
+    paramsMap["spec_id"] = "$specId";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_ADD,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///删除购物车商品
+  ///
+  ///[cartIds] 购物车id，多个以,分隔
+  ///
+  static Future<ResultBeanEntity> cartDeleteGoods({cartIds}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["cart_ids"] = "$cartIds";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_DELETE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///编辑购物车商品数量
+  ///
+  ///[cartId] 购物车id
+  ///
+  ///[goodsNum] 商品数量
+  ///
+  static Future<ResultBeanEntity> cartEditGoods({cartId, goodsNum}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["cart_id"] = "$cartId";
+    paramsMap["goods_num"] = "$goodsNum";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_EDIT,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///获取购物车商品列表
+  ///
+  ///
+  static Future<CartListEntity> cartGetGoodsList() async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_LIST,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = CartListEntity();
+    cartListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///购物车确认订单数据
+  ///
+  ///[cartIds] 购物车id，多个以,分隔
+  ///
+  static Future<CartSettlementEntity> cartGetSettlementData({cartIds}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["cart_ids"] = "$cartIds";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_SETTLEMENT,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = CartSettlementEntity();
+    cartSettlementEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///购物车计算选中商品总额
+  ///
+  ///[cartIds] 购物车id，多个以,分隔
+  ///
+  static Future<CartSelectedGoodsTotalPriceEntity> cartGetGoodsTotalPrice(
+      {cartIds}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["cart_ids"] = "$cartIds";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_SETTLEMENT,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = CartSelectedGoodsTotalPriceEntity();
+    cartSelectedGoodsTotalPriceEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///创建购物车订单
+  ///
+  ///[cartIds] 购物车id，多个以,分隔
+  ///
+  ///[addressId] 收货地址id
+  ///
+  ///[needDeduct] 是否使用抵扣券，1是 0否，默认0
+  ///
+  static Future<CartCreateOrderEntity> cartCreateOrder(
+      {String cartIds, addressId, needDeduct}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["cart_ids"] = "$cartIds";
+    paramsMap["addr_id"] = "$addressId";
+    paramsMap["need_deduct"] = "$needDeduct";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_ORDER_CREATE,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = CartCreateOrderEntity();
+    cartCreateOrderEntityFromJson(entity, extractData);
     return entity;
   }
 }
