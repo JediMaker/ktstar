@@ -404,6 +404,10 @@ class APi {
 
   ///购物车选中商品总额计算
   static const String CART_CHOSE = "cart/chose";
+
+  ///购物车选中商品总额计算
+  static const String CART_PAY = "cart/pay";
+
 //  =================购物车相关接口======END======================
 
 }

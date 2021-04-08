@@ -165,7 +165,7 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (KTKJGlobalConfig.isRelease) {
+    if (!KTKJGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
@@ -2937,4 +2937,77 @@ class HttpManage {
     cartCreateOrderEntityFromJson(entity, extractData);
     return entity;
   }
+
+  ///
+  ///
+  ///[orderId] 购物车订单id
+  ///
+  /// 获取购物车商品购买微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> cartPayWeChatPayInfo({orderId}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["order_attach_id"] = "$orderId";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[orderId] 购物车订单id
+  ///
+  /// 获取购物车商品购买支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> cartPayAliPayInfo({orderId}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["order_attach_id"] = "$orderId";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[orderId] 购物车订单id
+  ///
+  /// [payPassword] 余额支付密码
+  ///
+  /// 获取购物车商品购买余额支付信息
+  ///
+  static Future<AlipayPayinfoEntity> cartPayBalanceInfo(
+      {orderId, payPassword}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "3";
+    paramsMap["order_attach_id"] = "$orderId";
+    paramsMap["pay_pwd"] = "$payPassword";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.CART_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+
 }
