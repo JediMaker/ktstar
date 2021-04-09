@@ -753,26 +753,46 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          _reduceBtn(product: product),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              width: 40,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "$productQuantity",
-                                style: TextStyle(
-                                  color: Color(0xff666666),
-                                  fontSize: ScreenUtil().setSp(35),
+                      Visibility(
+                        visible: !_isEditStatus,
+                        child: Container(
+                          height: ScreenUtil().setWidth(120),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              _reduceBtn(product: product),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: ScreenUtil().setWidth(100),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "$productQuantity",
+                                    style: TextStyle(
+                                      color: Color(0xff666666),
+                                      fontSize: ScreenUtil().setSp(35),
+                                    ),
+                                  ),
                                 ),
                               ),
+                              _addBtn(product: product),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: _isEditStatus,
+                        child: Container(
+                          height: ScreenUtil().setWidth(120),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "× $productQuantity",
+                            style: TextStyle(
+                              color: Color(0xff666666),
+                              fontSize: ScreenUtil().setSp(42),
                             ),
                           ),
-                          _addBtn(product: product),
-                        ],
+                        ),
                       ),
                     ],
                   )
@@ -798,6 +818,7 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
     } catch (e) {}
     return Container(
       width: ScreenUtil().setWidth(75),
+      height: ScreenUtil().setWidth(75),
       alignment: Alignment.center,
       child: MaterialButton(
 //              color: _colorRed,
@@ -857,6 +878,7 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
 //          minTotals=   widget.product.minTotals
     return Container(
       width: ScreenUtil().setWidth(75),
+      height: ScreenUtil().setWidth(75),
       alignment: Alignment.center,
       child: MaterialButton(
 //              color: _colorRed,
