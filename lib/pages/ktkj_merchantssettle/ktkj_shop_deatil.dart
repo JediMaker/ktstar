@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -8,6 +9,7 @@ import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_payment.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -47,6 +49,7 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
   var _shopCode = '';
   var _shopLatitude = '';
   var _shopLongitude = '';
+  var _shopPhone = '';
   bool _hasPayPassword = true;
 
   @override
@@ -82,6 +85,7 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
               "${result.data.storeProvince + result.data.storeCity + result.data.storeDistrict + result.data.storeAddr}";
           _shopLatitude = result.data.storeLat;
           _shopLongitude = result.data.storeLng;
+          _shopPhone = result.data.storeTel;
           /*_contactDetails = result.data.storeTel;
             _selectTypeId = result.data.tradeId;
             for (var item in _shopTypeList) {
@@ -268,15 +272,28 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
                                           Expanded(
                                             child: Container(
                                               child: Text(
-                                                "$_location",
+                                                "$_location距您$_shopDistance km",
                                                 overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
+                                                maxLines: 3,
                                                 style: TextStyle(
                                                   color: _shopLocationTxtColor,
                                                   fontSize:
                                                       ScreenUtil().setSp(36),
                                                 ),
                                               ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                              ScreenUtil().setWidth(8),
+                                            ),
+                                            child: KTKJMyOctoImage(
+                                              image:
+                                                  "https://alipic.lanhuapp.com/xd8d557d60-d753-42a5-9955-ba264728afb7",
+                                              fit: BoxFit.fill,
+                                              width: ScreenUtil().setWidth(13),
+                                              height: ScreenUtil().setWidth(22),
+//                                color: Color(0xffce0100),
                                             ),
                                           ),
                                         ],
@@ -286,7 +303,7 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
                                 ),
                               ),
                             ),
-                            Center(
+                            /*Center(
                               child: Container(
                                 height: ScreenUtil().setWidth(53),
                                 width: ScreenUtil().setWidth(1),
@@ -295,14 +312,27 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
                                   horizontal: ScreenUtil().setWidth(48),
                                 ),
                               ),
-                            ),
-                            Container(
-                              child: Text(
-                                "$_shopDistance km",
-                                style: TextStyle(
-                                  color: Color(0xff666666),
-                                  fontSize: ScreenUtil().setSp(36),
-                                ),
+                            ),*/
+                            GestureDetector(
+                              onTap: () {
+                                launch("tel:$_shopPhone");
+                              },
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.phone_solid,
+                                    color: Color(0xff666666),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      "联系商家",
+                                      style: TextStyle(
+                                        color: Color(0xff666666),
+                                        fontSize: ScreenUtil().setSp(36),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
