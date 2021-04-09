@@ -757,8 +757,12 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
                         visible: !_isEditStatus,
                         child: Container(
                           height: ScreenUtil().setWidth(120),
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(20),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               _reduceBtn(product: product),
                               GestureDetector(
