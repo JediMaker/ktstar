@@ -1,10 +1,11 @@
-import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_backstage.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_payment.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
@@ -44,6 +45,8 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
 
   var _balance = '';
   var _shopCode = '';
+  var _shopLatitude = '';
+  var _shopLongitude = '';
   bool _hasPayPassword = true;
 
   @override
@@ -77,6 +80,8 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
           _shopDistance = result.data.storeDistance;
           _location =
               "${result.data.storeProvince + result.data.storeCity + result.data.storeDistrict + result.data.storeAddr}";
+          _shopLatitude = result.data.storeLat;
+          _shopLongitude = result.data.storeLng;
           /*_contactDetails = result.data.storeTel;
             _selectTypeId = result.data.tradeId;
             for (var item in _shopTypeList) {
@@ -203,86 +208,105 @@ class _ShopDeatilPageState extends State<KTKJShopDeatilPage> {
                           ),
                         ),
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setWidth(23),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      "$_shopName",
-                                      style: TextStyle(
-                                        color: _shopNameTxtColor,
-                                        fontSize: ScreenUtil().setSp(48),
+                      GestureDetector(
+                        onTap: () async {
+                          print(
+                              "_shopLatitude=$_shopLatitude&&_shopLongitude=$_shopLongitude");
+                          if (KTKJCommonUtils.isEmpty(_shopLatitude)) {
+                            return;
+                          }
+                          final availableMaps = await MapLauncher.installedMaps;
+                          print(
+                              availableMaps); // [AvailableMap { mapName: Google Maps, mapType: google }, ...]
+
+                          await availableMaps.first.showMarker(
+                            coords: Coords(double.parse(_shopLatitude),
+                                double.parse(_shopLongitude)),
+                            title: "$_shopName",
+                          );
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setWidth(23),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        "$_shopName",
+                                        style: TextStyle(
+                                          color: _shopNameTxtColor,
+                                          fontSize: ScreenUtil().setSp(48),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                      vertical: ScreenUtil().setWidth(16),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                            right: ScreenUtil().setWidth(8),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        vertical: ScreenUtil().setWidth(16),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: ScreenUtil().setWidth(8),
+                                            ),
+                                            child: KTKJMyOctoImage(
+                                              image: "$_shopLocationIconUrl",
+                                              width: ScreenUtil().setWidth(33),
+                                              height: ScreenUtil().setWidth(42),
+                                            ),
                                           ),
-                                          child: KTKJMyOctoImage(
-                                            image: "$_shopLocationIconUrl",
-                                            width: ScreenUtil().setWidth(33),
-                                            height: ScreenUtil().setWidth(42),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            child: Text(
-                                              "$_location",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: _shopLocationTxtColor,
-                                                fontSize:
-                                                    ScreenUtil().setSp(36),
+                                          Expanded(
+                                            child: Container(
+                                              child: Text(
+                                                "$_location",
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                  color: _shopLocationTxtColor,
+                                                  fontSize:
+                                                      ScreenUtil().setSp(36),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Center(
-                            child: Container(
-                              height: ScreenUtil().setWidth(53),
-                              width: ScreenUtil().setWidth(1),
-                              color: Color(0xff707070),
-                              margin: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setWidth(48),
+                            Center(
+                              child: Container(
+                                height: ScreenUtil().setWidth(53),
+                                width: ScreenUtil().setWidth(1),
+                                color: Color(0xff707070),
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setWidth(48),
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            child: Text(
-                              "$_shopDistance km",
-                              style: TextStyle(
-                                color: Color(0xff666666),
-                                fontSize: ScreenUtil().setSp(36),
+                            Container(
+                              child: Text(
+                                "$_shopDistance km",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(36),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

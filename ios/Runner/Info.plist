@@ -92,6 +92,16 @@
     <array>
     	<string>iosamap</string>
     	<string>amapuri</string>
+    	<string>comgooglemaps</string>
+        <string>baidumap</string>
+        <string>waze</string>
+        <string>yandexmaps</string>
+        <string>yandexnavi</string>
+        <string>citymapper</string>
+        <string>mapswithme</string>
+        <string>osmandmaps</string>
+        <string>dgis</string>
+        <string>qqmap</string>
     </array>
 </dict>
 </plist>
