@@ -546,8 +546,8 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
                     child: KTKJMyOctoImage(
                       fadeInDuration: Duration(milliseconds: 0),
                       fadeOutDuration: Duration(milliseconds: 0),
-//                      height: ScreenUtil().setWidth(523),
-//                      width: ScreenUtil().setWidth(523),
+                      height: ScreenUtil().setWidth(523),
+                      width: ScreenUtil().setWidth(523),
                       fit: BoxFit.fill,
                       image: "$goodsImg",
                     ),

@@ -1,17 +1,18 @@
-import 'package:star/global_config.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/address_list_entity.dart';
+import 'package:star/models/cart_settlement_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
 import 'package:star/pages/ktkj_adress/ktkj_my_adress.dart';
 import 'package:star/pages/ktkj_goods/ktkj_checkout_counter.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
-
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -20,7 +21,13 @@ class KTKJEnsureOrderPage extends StatefulWidget {
   List<String> cartIdList;
   String orderId;
 
-  KTKJEnsureOrderPage({@required this.orderId});
+  ///选中购物车商品id集合
+  final String cartIds;
+
+  /// 下单类型 0 立即下单； 1  购物车结算
+  int type;
+
+  KTKJEnsureOrderPage({@required this.orderId, this.type = 0, this.cartIds});
 
   @override
   _EnsureOrderPageState createState() => _EnsureOrderPageState();
@@ -40,7 +47,8 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
   var totalPrice = "";
   var payPrice = "";
 
-  List<OrderDetailDataGoodsList> goodsList;
+  List<OrderDetailDataGoodsList> goodsList = List<OrderDetailDataGoodsList>();
+  List<CartSettlemantDataList> cartGoodsList = List<CartSettlemantDataList>();
 
   var isCoupon = '2';
 
@@ -49,6 +57,7 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
   var _totalAmount = "0";
   var _coin = "";
   bool showEnvelope = false;
+  String defaultAddressId;
 
   /*OrderCheckoutEntity entity;
   OrderCheckoutDataAddress selectedAddress;*/
@@ -58,56 +67,124 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
       EasyLoading.show();
     } catch (e) {}
     try {
-      var entityResult = await HttpManage.orderDetail(widget.orderId);
+      if (widget.type == 0) {
+        var entityResult = await HttpManage.orderDetail(widget.orderId);
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
 /*
     OrderCheckoutEntity entityResult =
         await HttpManage.orderCheckout(widget.cartIdList);
 */
-      if (mounted) {
-        setState(() {
-          entity = entityResult;
-          addressDetail = entityResult.data.address;
-          iphone = entityResult.data.mobile;
-          name = entityResult.data.consignee;
-          if (!onlyChangeAddress) {
-            isCoupon = entityResult.data.isCoupon;
-            _totalAmount = entityResult.data.usableDeduct;
-            _availableAmount = entityResult.data.deductPrice;
-            goodsList = entityResult.data.goodsList;
-            totalPrice = entityResult.data.totalPrice;
-            payPrice = entityResult.data.payPrice;
-            _coin = entityResult.data.orderBonus;
-            if (double.parse(_totalAmount) > double.parse(totalPrice)) {
-              _availableAmount = double.parse(totalPrice).toStringAsFixed(2);
-            } else {
-              _availableAmount = double.parse(_totalAmount).toStringAsFixed(2);
-            }
-            _leftAmount =
-                (double.parse(_totalAmount) - double.parse(_availableAmount))
+        if (entityResult.status) {
+          if (mounted) {
+            setState(() {
+              entity = entityResult;
+              addressDetail = entityResult.data.address;
+              iphone = entityResult.data.mobile;
+              name = entityResult.data.consignee;
+              if (!onlyChangeAddress) {
+                isCoupon = entityResult.data.isCoupon;
+                _totalAmount = entityResult.data.usableDeduct;
+                _availableAmount = entityResult.data.deductPrice;
+                goodsList = entityResult.data.goodsList;
+                totalPrice = entityResult.data.totalPrice;
+                payPrice = entityResult.data.payPrice;
+                _coin = entityResult.data.orderBonus;
+                if (double.parse(_totalAmount) > double.parse(totalPrice)) {
+                  _availableAmount =
+                      double.parse(totalPrice).toStringAsFixed(2);
+                } else {
+                  _availableAmount =
+                      double.parse(_totalAmount).toStringAsFixed(2);
+                }
+                _leftAmount = (double.parse(_totalAmount) -
+                        double.parse(_availableAmount))
                     .toStringAsFixed(2);
-            payPrice =
-                (double.parse(totalPrice) - double.parse(_availableAmount))
-                    .toStringAsFixed(2);
-            if (double.parse(_availableAmount) > 0) {
-              showEnvelope = true;
-            }
+                payPrice =
+                    (double.parse(totalPrice) - double.parse(_availableAmount))
+                        .toStringAsFixed(2);
+                if (double.parse(_availableAmount) > 0) {
+                  showEnvelope = true;
+                }
+              }
+            });
           }
-        });
+        }
+      } else {
+        var entityResult =
+            await HttpManage.cartGetSettlementData(cartIds: widget.cartIds);
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+        if (entityResult.status) {
+          if (mounted) {
+            setState(() {
+              entity = entityResult;
+//              addressDetail = entityResult.data.address;
+//              iphone = entityResult.data.mobile;
+//              name = entityResult.data.consignee;
+              if (!onlyChangeAddress) {
+                isCoupon = entityResult.data.isCoupon;
+                _totalAmount = entityResult.data.usableDeduct;
+                _availableAmount = entityResult.data.deductPrice;
+                cartGoodsList = entityResult.data.xList;
+                totalPrice = entityResult.data.totalPrice;
+                payPrice = totalPrice;
+                if (double.parse(_totalAmount) > double.parse(totalPrice)) {
+                  _availableAmount =
+                      double.parse(totalPrice).toStringAsFixed(2);
+                } else {
+                  _availableAmount =
+                      double.parse(_totalAmount).toStringAsFixed(2);
+                }
+                _leftAmount = (double.parse(_totalAmount) -
+                        double.parse(_availableAmount))
+                    .toStringAsFixed(2);
+                payPrice =
+                    (double.parse(totalPrice) - double.parse(_availableAmount))
+                        .toStringAsFixed(2);
+                if (double.parse(_availableAmount) > 0) {
+                  showEnvelope = true;
+                }
+              }
+            });
+          }
+        }
       }
     } catch (e) {
       try {
         EasyLoading.dismiss();
       } catch (e) {}
     }
-    try {
-      EasyLoading.dismiss();
-    } catch (e) {}
+  }
+
+  Future _initDefaultAddressData() async {
+    //    AddressBeanEntity resultData = await HttpManage.getListOfAddresses();
+    var entityResult = await HttpManage.getListOfAddresses(isDefault: "1");
+    if (entityResult.status) {
+      if (mounted) {
+        setState(() {
+          if (!KTKJCommonUtils.isEmpty(entityResult.data)) {
+            defaultAddressId = entityResult.data[0].id;
+            addressDetail = entityResult.data[0].address;
+            iphone = entityResult.data[0].mobile;
+            name = entityResult.data[0].consignee;
+          } else {
+            addressDetail = "";
+            iphone = "";
+            name = "";
+          }
+        });
+      }
+    }
   }
 
   @override
   void initState() {
     _controller = AnimationController(vsync: this);
     _initData();
+    _initDefaultAddressData();
     super.initState();
   }
 
@@ -173,17 +250,38 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: ListTile(
                               onTap: () async {
-                                bool needRefresh = await Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                  return new KTKJAddressListPage(
-                                    type: 0,
-                                    orderId: widget.orderId,
-                                  );
-                                }));
-                                print("needRefresh=$needRefresh");
-                                if (needRefresh) {
-                                  _initData(onlyChangeAddress: true);
+                                if (widget.type == 0) {
+                                  bool needRefresh = await Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                    return new KTKJAddressListPage(
+                                      type: 0,
+                                      orderId: widget.orderId,
+                                    );
+                                  }));
+                                  print("needRefresh=$needRefresh");
+                                  if (needRefresh) {
+                                    _initData(onlyChangeAddress: true);
+                                  }
+                                } else {
+                                  AddressListData item =
+                                      await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                    return new KTKJAddressListPage(
+                                      type: 0,
+                                      orderId: widget.orderId,
+                                    );
+                                  }));
+                                  if (KTKJCommonUtils.isEmpty(item)) {
+                                    return;
+                                  }
+                                  setState(() {
+                                    defaultAddressId = item.id;
+                                    addressDetail = item.address;
+                                    iphone = item.mobile;
+                                    name = item.consignee;
+                                  });
                                 }
 //                                _initData();
                               },
@@ -257,157 +355,399 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                       ),
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      var product = goodsList[index];
+                  SliverVisibility(
+                    visible: widget.type == 0,
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        children: List.generate(goodsList.length, (index) {
+                          var product = goodsList[index];
 /*
-                            OrderCheckoutDataProduct product =
-                                entity.data.products[index];
+                                OrderCheckoutDataProduct product =
+                                    entity.data.products[index];
 */
-                      return Container(
-                        color: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6.0),
+                          return Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(6.0),
 //                        child: Image.network(
 ////                          item.imageUrl,
 //                          'http://img10.360buyimg.com/mobilecms/s270x270_jfs/t1/23943/7/13139/130737/5c9dbe4bEd77d9e09/a371d9345e1774e2.jpg',
 //                          width: ScreenUtil().L(120),
 //                          height: ScreenUtil().L(120),
 //                        )
-                              child: KTKJMyOctoImage(
-                                fadeInDuration: Duration(milliseconds: 0),
-                                fadeOutDuration: Duration(milliseconds: 0),
-                                fit: BoxFit.fill,
-                                width: 74,
-                                height: 74,
-                                image: product.goodsImg == null
-                                    ? ""
-                                    : product.goodsImg,
-                                /*   imageUrl: item.imageUrl,
-                                width: ScreenUtil().L(120),
-                                height: ScreenUtil().L(120),*/
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                                child: Container(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    product.goodsName == null
+                                  child: KTKJMyOctoImage(
+                                    fadeInDuration: Duration(milliseconds: 0),
+                                    fadeOutDuration: Duration(milliseconds: 0),
+                                    fit: BoxFit.fill,
+                                    width: 74,
+                                    height: 74,
+                                    image: product.goodsImg == null
                                         ? ""
-                                        : product.goodsName,
-//                                  item.wareName,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(42),
-                                      color: Color(0xff222222),
-                                    ),
+                                        : product.goodsImg,
+                                    /*   imageUrl: item.imageUrl,
+                                    width: ScreenUtil().L(120),
+                                    height: ScreenUtil().L(120),*/
                                   ),
-                                  Container(
-                                    child: Text(
-                                      product.specItem == null
-                                          ? ""
-                                          : product.specItem,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: Container(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        product.goodsName == null
+                                            ? ""
+                                            : product.goodsName,
 //                                  item.wareName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(38),
-                                        color: Color(0xff666666),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(42),
+                                          color: Color(0xff222222),
+                                        ),
                                       ),
-                                    ),
-                                    margin: EdgeInsets.only(
-                                        top: ScreenUtil().setHeight(18)),
-                                  ),
-                                  /* Wrap(
-                                    children: product.option.map((op) {
-                                      return Container(
+                                      Container(
                                         child: Text(
-                                          "${op.value} ",
+                                          product.specItem == null
+                                              ? ""
+                                              : product.specItem,
+//                                  item.wareName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: ScreenUtil().setSp(42),
+                                            fontSize: ScreenUtil().setSp(38),
+                                            color: Color(0xff666666),
                                           ),
                                         ),
-                                      );
-                                    }).toList(),
-                                  ),*/
-                                  Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                            child: Row(
-//                            crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-//                              Expanded(child:,),
-                                            Flexible(
-                                              child: Text(
-                                                '',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
-                                            Text(
-                                              "￥${product.salePrice == null ? "" : product.salePrice}",
-//                          '27.5',,
+                                        margin: EdgeInsets.only(
+                                            top: ScreenUtil().setHeight(18)),
+                                      ),
+                                      /* Wrap(
+                                        children: product.option.map((op) {
+                                          return Container(
+                                            child: Text(
+                                              "${op.value} ",
                                               style: TextStyle(
-                                                fontSize:
-                                                    ScreenUtil().setSp(42),
-                                                color: Color(0xFFF93736),
-                                                fontWeight: FontWeight.bold,
+                                                color: Colors.grey,
+                                                fontSize: ScreenUtil().setSp(42),
                                               ),
                                             ),
+                                          );
+                                        }).toList(),
+                                      ),*/
+                                      Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                                child: Row(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+//                              Expanded(child:,),
+                                                Flexible(
+                                                  child: Text(
+                                                    '',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
+                                                Text(
+                                                  "￥${product.salePrice == null ? "" : product.salePrice}",
+//                          '27.5',,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        ScreenUtil().setSp(42),
+                                                    color: Color(0xFFF93736),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
 //                          Icon(Icons.chevron_right,size: 18,color: Colors.grey,) ,
 //                              Expanded(
 //                              ),
-                                          ],
+                                              ],
 //                           ),
-                                        )),
-                                        Container(
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            'x${product.goodsNum}',
-                                            style: TextStyle(
-                                              color: Color(0xff222222),
-                                              fontSize: ScreenUtil().setSp(36),
+                                            )),
+                                            Container(
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                'x${product.goodsNum}',
+                                                style: TextStyle(
+                                                  color: Color(0xff222222),
+                                                  fontSize:
+                                                      ScreenUtil().setSp(36),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
 //                            Icon(
 //                              Icons.more_horiz,
 //                              size: 15,
 //                              color: Color(0xFF979896),
 //                            ),
+                                          ],
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            top: ScreenUtil().setHeight(20)),
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                  SliverVisibility(
+                    visible: widget.type == 1,
+                    sliver: SliverToBoxAdapter(
+                      child: Container(
+                        child: Column(
+                          children:
+                              List.generate(cartGoodsList.length, (index) {
+                            var product = cartGoodsList[index];
+                            var productSpec = product.specItem;
+                            var productCoin = product.goodsCoin;
+                            if (productCoin != null) {
+                              productCoin = "分红金：$productCoin";
+                            }
+
+                            return Container(
+                              color: Colors.white,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(6.0),
+//                        child: Image.network(
+////                          item.imageUrl,
+//                          'http://img10.360buyimg.com/mobilecms/s270x270_jfs/t1/23943/7/13139/130737/5c9dbe4bEd77d9e09/a371d9345e1774e2.jpg',
+//                          width: ScreenUtil().L(120),
+//                          height: ScreenUtil().L(120),
+//                        )
+                                    child: KTKJMyOctoImage(
+                                      fadeInDuration: Duration(milliseconds: 0),
+                                      fadeOutDuration:
+                                          Duration(milliseconds: 0),
+                                      fit: BoxFit.fill,
+                                      width: 74,
+                                      height: 74,
+                                      image: product.goodsImg == null
+                                          ? ""
+                                          : product.goodsImg,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          product.goodsName == null
+                                              ? ""
+                                              : product.goodsName,
+//                                  item.wareName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: ScreenUtil().setSp(42),
+                                            color: Color(0xff222222),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color: !KTKJCommonUtils
+                                                                .isEmpty(
+                                                                    productSpec)
+                                                            ? Color(0xfff6f5f5)
+                                                            : Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          ScreenUtil()
+                                                              .setWidth(10),
+                                                        ),
+                                                      ),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: ScreenUtil()
+                                                            .setWidth(22),
+                                                        vertical: ScreenUtil()
+                                                            .setWidth(16),
+                                                      ),
+                                                      child: Text(
+                                                        "$productSpec",
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style: TextStyle(
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(36),
+                                                          color:
+                                                              Color(0xffa0a0a0),
+                                                        ),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  'x${product.goodsNum}',
+                                                  style: TextStyle(
+                                                    color: Color(0xff222222),
+                                                    fontSize:
+                                                        ScreenUtil().setSp(36),
+                                                  ),
+                                                ),
+                                              ),
+//                            Icon(
+//                              Icons.more_horiz,
+//                              size: 15,
+//                              color: Color(0xFF979896),
+//                            ),
+                                            ],
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              top: ScreenUtil().setHeight(20)),
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                  child: Row(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                      top: ScreenUtil()
+                                                          .setWidth(0),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color:
+                                                            Color(0xfff32e43),
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        ScreenUtil()
+                                                            .setWidth(10),
+                                                      ),
+                                                    ),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal: ScreenUtil()
+                                                          .setWidth(22),
+                                                      vertical: ScreenUtil()
+                                                          .setWidth(10),
+                                                    ),
+                                                    child: Text(
+                                                      "$productCoin",
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                        fontSize: ScreenUtil()
+                                                            .setSp(30),
+                                                        color:
+                                                            Color(0xfff32e43),
+                                                      ),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                  Flexible(
+                                                    child: Text(
+                                                      '',
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
+
+//                          Icon(Icons.chevron_right,size: 18,color: Colors.grey,) ,
+//                              Expanded(
+//                              ),
+                                                ],
+//                           ),
+                                              )),
+                                              Container(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  "￥${product.goodsPrice == null ? "" : product.goodsPrice}",
+//                          '27.5',,
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        ScreenUtil().setSp(42),
+                                                    color: Color(0xFFF93736),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+//                            Icon(
+//                              Icons.more_horiz,
+//                              size: 15,
+//                              color: Color(0xFF979896),
+//                            ),
+                                            ],
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              top: ScreenUtil().setHeight(20)),
+                                        ),
                                       ],
                                     ),
-                                    margin: EdgeInsets.only(
-                                        top: ScreenUtil().setHeight(20)),
-                                  ),
+                                  ))
                                 ],
                               ),
-                            ))
-                          ],
+                            );
+                          }),
                         ),
-                      );
-                    }, childCount: goodsList == null ? 0 : goodsList.length),
+                      ),
+                    ),
                   ),
                   SliverToBoxAdapter(
                     child: Container(
@@ -436,7 +776,8 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                             ],
                           ),
                           Visibility(
-                            visible: !KTKJCommonUtils.isEmpty(_coin),
+                            visible: !KTKJCommonUtils.isEmpty(_coin) &&
+                                widget.type == 0,
                             child: Column(
                               children: [
                                 Center(
@@ -567,19 +908,41 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                     GestureDetector(
                       onTap: () async {
                         if (!KTKJCommonUtils.isEmpty(iphone)) {
-                          var result = await HttpManage.orderSubmit(
-                              widget.orderId, isCoupon);
-                          if (result.status) {
-                            Navigator.of(context).pop();
-                            //跳转到结算台
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return new KTKJCheckOutCounterPage(
-                                orderMoney: payPrice,
-                                orderId: widget.orderId,
-                              );
-                            }));
-                          } else {}
+                          if (widget.type == 0) {
+                            ///正常订单
+                            var result = await HttpManage.orderSubmit(
+                                widget.orderId, isCoupon);
+                            if (result.status) {
+                              Navigator.of(context).pop();
+                              //跳转到结算台
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                return new KTKJCheckOutCounterPage(
+                                  orderMoney: payPrice,
+                                  orderId: widget.orderId,
+                                );
+                              }));
+                            }
+                          } else {
+                            ///购物车订单
+                            var result = await HttpManage.cartCreateOrder(
+                                cartIds: widget.cartIds,
+                                addressId: defaultAddressId,
+                                needDeduct: isCoupon);
+//                                widget.orderId, isCoupon);
+                            if (result.status) {
+                              Navigator.of(context).pop();
+                              //跳转到结算台
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                return new KTKJCheckOutCounterPage(
+                                  orderMoney: payPrice,
+                                  orderId: result.data.orderAttachId,
+                                  type: 1,
+                                );
+                              }));
+                            }
+                          }
                         } else {
                           Fluttertoast.showToast(
                               msg: "收货地址不能为空！",

@@ -1449,7 +1449,7 @@ class _DetailWindowState extends State<DetailWindow>
       EasyLoading.show();
     } catch (e) {}
     var result =
-        await HttpManage.createOrder(goodsId, goodsNum, specId: specId);
+        await HttpManage.cartAddGoods(goodsId, goodsNum, specId: specId);
     try {
       EasyLoading.dismiss();
     } catch (e) {}

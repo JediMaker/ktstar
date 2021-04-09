@@ -78,6 +78,10 @@ class _AddressListPageState extends State<KTKJAddressListPage>
         dense: false,
         onTap: () async {
           if (widget.type == 0) {
+            if (KTKJCommonUtils.isEmpty(widget.orderId)) {
+              Navigator.of(context).pop(item);
+              return;
+            }
             var result =
                 await HttpManage.orderChangeBindAddress(widget.orderId, itemId);
             if (result.status) {
@@ -275,7 +279,11 @@ class _AddressListPageState extends State<KTKJAddressListPage>
             ),
           ),
           onPressed: () {
-            Navigator.of(context).pop(needRefresh);
+            if (!KTKJCommonUtils.isEmpty(widget.orderId)) {
+              Navigator.of(context).pop(needRefresh);
+            } else {
+              Navigator.of(context).pop(null);
+            }
           },
         ),
         centerTitle: true,

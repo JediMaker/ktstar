@@ -1,24 +1,22 @@
-import 'package:star/global_config.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:star/bus/ktkj_my_event_bus.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:star/models/order_user_info_entity.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/pages/ktkj_task/ktkj_pay_result.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/pages/ktkj_withdrawal/ktkj_pay_password_setting.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
-import 'package:star/models/order_user_info_entity.dart';
-
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -27,7 +25,10 @@ class KTKJCheckOutCounterPage extends StatefulWidget {
   String orderId;
   String orderMoney;
 
-  KTKJCheckOutCounterPage({this.orderId, this.orderMoney});
+  /// 下单类型 0 立即下单； 1  购物车结算
+  int type;
+
+  KTKJCheckOutCounterPage({this.orderId, this.orderMoney, this.type = 0});
 
   @override
   _CheckOutCounterPageState createState() => _CheckOutCounterPageState();
@@ -181,7 +182,23 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
   void initState() {
     _controller = AnimationController(vsync: this);
     _initWeChatResponseHandler();
-    _initData();
+    if (widget.type == 0) {
+      _initData();
+    } else {
+      var userInfo = KTKJGlobalConfig.getUserInfo();
+      _payPrice = widget.orderMoney;
+      _balance = userInfo.nowPrice;
+      _hasPayPassword = userInfo.payPwdStatus == '2';
+      try {
+        if (double.parse(_balance) > double.parse(_payPrice)) {
+          _canUseBalance = true;
+        } else {
+          _canUseBalance = false;
+          _payWay = 1;
+        }
+      } catch (e) {}
+    }
+
     bus.on("refreshCheckOutCounterPage", (refresh) {
       if (refresh) {
         print("refreshCheckOutCounterPage()");
@@ -305,15 +322,15 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
                               try {
                                 try {
                                   EasyLoading.show(status: "正在支付");
-                                } catch (e) {
-                                }
-                                var result =
-                                    await HttpManage.getGoodsPayBalanceInfo(
+                                } catch (e) {}
+                                var result = widget.type == 0
+                                    ? await HttpManage.getGoodsPayBalanceInfo(
+                                        orderId: orderId, payPassword: v)
+                                    : await HttpManage.cartPayBalanceInfo(
                                         orderId: orderId, payPassword: v);
                                 try {
                                   EasyLoading.dismiss();
-                                } catch (e) {
-                                }
+                                } catch (e) {}
                                 if (result.status) {
                                   _payInfo = result.data.payInfo;
                                   _payNo = result.data.payNo;
@@ -639,8 +656,9 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
       try {
         EasyLoading.show();
       } catch (e) {}
-      var result =
-          await HttpManage.getGoodsPayWeChatPayInfo(orderId: widget.orderId);
+      var result = widget.type == 0
+          ? await HttpManage.getGoodsPayWeChatPayInfo(orderId: widget.orderId)
+          : await HttpManage.cartPayWeChatPayInfo(orderId: widget.orderId);
       try {
         EasyLoading.dismiss();
       } catch (e) {}
@@ -670,8 +688,9 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
       try {
         EasyLoading.show();
       } catch (e) {}
-      var result =
-          await HttpManage.getGoodsPayAliPayInfo(orderId: widget.orderId);
+      var result = widget.type == 0
+          ? await HttpManage.getGoodsPayAliPayInfo(orderId: widget.orderId)
+          : await HttpManage.cartPayAliPayInfo(orderId: widget.orderId);
       try {
         EasyLoading.dismiss();
       } catch (e) {}

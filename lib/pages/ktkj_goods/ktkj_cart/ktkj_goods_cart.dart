@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:star/bus/ktkj_my_event_bus.dart';
-import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
+import 'package:star/global_config.dart';
+import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/cart_list_entity.dart';
+import 'package:star/pages/ktkj_goods/ktkj_ensure_order.dart';
 import 'package:star/pages/ktkj_widget/ktkj_PriceText.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
+import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
+import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:star/utils/ktkj_utils.dart';
 
 class KTKJShoppingCartPage extends StatefulWidget {
@@ -18,97 +24,88 @@ class KTKJShoppingCartPage extends StatefulWidget {
   _KTKJShoppingCartPageState createState() => _KTKJShoppingCartPageState();
 }
 
-class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage> {
+class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
+    with AutomaticKeepAliveClientMixin {
   var _colorRed = Color(0xffF32E43);
 
+  int page = 1;
+  EasyRefreshController _refreshController;
+  bool isFirstLoading = true;
+  List<CartListDataList> goodsList = List<CartListDataList>();
+
   _initData() async {
-    /*ShoppingCartBeanEntity result = await HttpManage.getCartList();
-    if (mounted) {
-      setState(() {
-        widget.products = result.data.products;
-        totalPrice = 0.0;
-        _isAllCheckedValue = false;
-        if (widget.products != null) {
-          int length = widget.products.length;
-          print("购物车商品条目数量：" + length.toString());
-          for (var product in widget.products) {
-            checkedMap.putIfAbsent(product, () => false);
+//    KTKJGlobalConfig.prefs.setString(key, value)
+    var entity = await HttpManage.cartGetGoodsList();
+    if (entity.status) {
+      if (mounted) {
+        setState(() {
+          goodsList = List<CartListDataList>();
+          goodsList = entity.data.xList;
+          _refreshController.finishLoad(noMore: true);
+          isFirstLoading = false;
+          for (var product in goodsList) {
+            if (KTKJCommonUtils.isEmpty(checkedMap[product.cartId])) {
+              checkedMap[product.cartId] = false;
+            }
           }
-        }
-      });
-    }*/
+//        KTKJGlobalConfig.prefs.setString(key, value)
+          _countTotalPrice();
+        });
+      }
+    }
   }
 
   var _isEditStatus = false;
   double totalPrice = 0.0;
   bool _isAllCheckedValue = false;
-  Map<ShoppingCartBeanDataProduct, bool> checkedMap = Map();
+  Map<String, bool> checkedMap = Map();
 
   _isAllSelected() {
     setState(() {
       _isAllCheckedValue = !_isAllCheckedValue;
-      /*if (_isAllCheckedValue) {
-        totalPrice = 0.0;
-        for (var product in widget.products) {
-          checkedMap[product] = true;
-          _countTotalPrice();
-          */ /*  if (product.price.contains("¥")) {
-            print(product.price.substring(
-                product.price.indexOf("¥") + 1, product.price.length));
-          }
-          totalPrice += int.parse(product.quantity) *
-              double.parse(product.price.substring(
-                  product.price.indexOf("¥") + 1, product.price.length));*/ /*
-        }
-      } else {
-        for (var product in widget.products) {
-          checkedMap[product] = false;
-        }
-        totalPrice = 0.0;
-      }*/
-    });
-  }
-
-  _isAllSelected2(bool _isAllCheck) {
-    print("_isAllSelected2");
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _isAllCheckedValue = !_isAllCheckedValue;
-      /*todo
       if (_isAllCheckedValue) {
         totalPrice = 0.0;
-        for (var product in widget.products) {
-          checkedMap[product] = true;
+        for (var product in goodsList) {
+          checkedMap[product.cartId] = true;
+          _countTotalPrice();
         }
-        _countTotalPrice();
       } else {
-        for (var product in widget.products) {
-          checkedMap[product] = false;
+        for (var product in goodsList) {
+          checkedMap[product.cartId] = false;
         }
         totalPrice = 0.0;
-      }*/
+      }
+      bus.emit("isAllSelectTap", _isAllCheckedValue);
     });
   }
 
-  _countTotalPrice() {
+  _countTotalPrice({CartListDataList selProduct}) {
     totalPrice = 0.0;
-    for (var product in widget.products) {
-      ///todo 价格金额计算
-      /*if (product.price.contains("¥")) {
-        product.price = product.price.replaceAll(",", "");
-        print(product.price);
+    for (var product in goodsList) {
+      if (KTKJCommonUtils.isEmpty(checkedMap[product.cartId])) {
+        checkedMap[product.cartId] = false;
       }
-      if (checkedMap[product]) {
-        totalPrice += double.parse(product.quantity) *
-            double.parse(product.price.substring(
-                product.price.indexOf("¥") + 1, product.price.length));
-      }*/
+
+      /// 价格金额计算
+      ///
+      ///
+      if (checkedMap[product.cartId]) {
+        if (selProduct != null) {
+          if (selProduct.cartId == product.cartId) {
+            product = selProduct;
+            totalPrice += double.parse(selProduct.goodsNum) *
+                double.parse(selProduct.goodsPrice);
+          } else {
+            totalPrice += double.parse(product.goodsNum) *
+                double.parse(product.goodsPrice);
+          }
+        } else {
+          totalPrice +=
+              double.parse(product.goodsNum) * double.parse(product.goodsPrice);
+        }
+      }
     }
-    print("totalPrice：=" + totalPrice.toString());
     totalPrice = KTKJUtils.formatNum(totalPrice, 2);
-    print("totalPrice2：=" + totalPrice.toString());
   }
 
   Widget _buildBottomLayout() {
@@ -233,18 +230,32 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage> {
                         ),
                       ),
                     ),
-                    onPressed: () {
-//                todo 跳转确认订单页面
-                      List<String> cartIdList = List<String>();
-                      for (var product in widget.products) {
-                        if (checkedMap[product]) {
-//                    cartIdList.add(product.cartId);
+                    onPressed: () async {
+                      var cartIds = '';
+                      for (var product in goodsList) {
+                        if (checkedMap[product.cartId]) {
+                          cartIds += product.cartId + ",";
                         }
                       }
-                      if (cartIdList.length == 0) {
+                      if (cartIds.contains(",")) {
+                        cartIds = cartIds.substring(0, cartIds.length - 1);
+                      }
+                      if (cartIds.length == 0) {
                         KTKJCommonUtils.showToast("请选择要结算的商品 ！");
                       } else {
-                        /// todo 跳转确认订单页面
+                        ///  跳转确认订单页面
+                        ///
+                        var context = KTKJGlobalConfig
+                            .navigatorKey.currentState.overlay.context;
+                        await KTKJNavigatorUtils.navigatorRouter(
+                            context,
+                            KTKJEnsureOrderPage(
+                              cartIds: cartIds,
+                              type: 1,
+                            ));
+                        _initData();
+
+                        ///
                       }
                     },
                   ),
@@ -254,79 +265,76 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage> {
     );
   }
 
-  List<ShoppingCartBeanDataProduct> selectedProducts;
+//  List<CartListDataList> selectedProducts;
 
   //调用接口删除所有选中的购物车商品
   Future<void> _delCartGoods() async {
-    selectedProducts = List<ShoppingCartBeanDataProduct>();
-    for (var product in widget.products) {
-      if (checkedMap[product]) {
-        /*var isDelSuccess = await HttpManage.cartdel(
-            product.cartId.trim(), product.quantity.trim());
-        selectedProducts.add(product);*/
-        /* Future.delayed(Duration(seconds: 1))
-              .then((value) => );*/
+    var cartIds = '';
+//    product = List<CartListDataList>();
+    for (var product in goodsList) {
+      if (checkedMap[product.cartId]) {
+        cartIds += product.cartId + ",";
+//        selectedProducts.add(product);
       }
     }
-    bus.emit("delCartAllSelected", true);
+    if (cartIds.contains(",")) {
+      cartIds = cartIds.substring(0, cartIds.length - 1);
+    }
+    if (cartIds.length == 0) {
+      KTKJCommonUtils.showToast("请选择要删除的商品 ！");
+    } else {
+      var delResult = await HttpManage.cartDeleteGoods(
+        cartIds: cartIds,
+      );
+      if (delResult.status) {
+        delCartAllSelected(cartIds);
+      } else {
+        KTKJCommonUtils.showToast("${delResult.errMsg}");
+      }
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    bus
-      ..on("allCheckedneedsChange", (arg) {
-        if (arg && mounted) {
-          setState(() {
-            if (_isAllCheckedValue) {
-              _isAllCheckedValue = !_isAllCheckedValue;
-            } else {
-              var isAllChecked = true;
-              for (var product in widget.products) {
-                if (!checkedMap[product]) {
-                  isAllChecked = false;
-                }
-              }
-              if (isAllChecked) {
-                _isAllCheckedValue = true;
-              }
+    _refreshController = EasyRefreshController();
+    _initData();
+    /*bus.on("allCheckedneedsChange", (cartId) {
+      print("cartId=$cartId");
+      print("allCheckedneedsChange");
+      print("checkedMap[cartId]=${checkedMap[cartId]}");
+      */ /*try {
+          print("checkedMap[cartId]=${checkedMap[cartId]}");
+//          checkedMap[cartId];
+        } catch (e) {
+          print(e);
+        }*/ /*
+      if (mounted) {
+        setState(() {
+          var isAllChecked = true;
+          for (var product in goodsList) {
+            if (!checkedMap[product.cartId]) {
+              isAllChecked = false;
             }
-            _countTotalPrice();
-          });
-        }
-      });
-    bus
-      ..on("countPrice", (arg) {
-        if (mounted) {
-          setState(() {
-            if (arg) {
-              _countTotalPrice();
-            }
-          });
-        }
-      });
-    bus
-      ..on("delCart", (product) {
-        if (mounted) {
-          setState(() {
-//              _initData();
+          }
+          if (isAllChecked) {
+            _isAllCheckedValue = true;
+          } else {
+            _isAllCheckedValue = false;
+          }
+          _countTotalPrice();
+        });
+      }
+    });*/
 
-            widget.products.remove(product);
-            _countTotalPrice();
-          });
-        }
-      });
-    bus
-      ..on("delCartAllSelected", (args) {
-        if (mounted) {
-          setState(() {
-            for (var product in selectedProducts) {
-              widget.products.remove(product);
-            }
-            _countTotalPrice();
-          });
-        }
-      });
+    /*bus.on("countPrice", (selProduct) {
+      if (mounted) {
+        setState(() {
+          _countTotalPrice(selProduct: selProduct);
+//              _initData();
+        });
+      }
+    });*/
     bus.on("isEditStatus", (isEditStatus) {
       if (mounted) {
         setState(() {
@@ -336,9 +344,47 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage> {
     });
   }
 
+  allCheckedNeedsChange() {
+    if (mounted) {
+      setState(() {
+        var isAllChecked = true;
+        for (var product in goodsList) {
+          if (!checkedMap[product.cartId]) {
+            isAllChecked = false;
+          }
+        }
+        if (isAllChecked) {
+          _isAllCheckedValue = true;
+        } else {
+          _isAllCheckedValue = false;
+        }
+        _countTotalPrice();
+      });
+    }
+  }
+
+  delCartAllSelected(cartIds) {
+    if (mounted) {
+      setState(() {
+        if (KTKJCommonUtils.isEmpty(goodsList)) {
+          goodsList = List<CartListDataList>();
+          return;
+        }
+//            Dart循环并删除的方法，removeWhere()。
+        List<String> cartIdList = cartIds.toString().split(",");
+        for (var cartId in cartIdList) {
+          goodsList.removeWhere((product) => cartId == product.cartId);
+        }
+        _countTotalPrice();
+//            _initData();
+      });
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
+    _refreshController.dispose();
   }
 
   @override
@@ -356,108 +402,194 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: new Stack(
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            margin: EdgeInsets.only(
-              top: ScreenUtil().setWidth(30),
-            ),
-            child: Center(
-                child: Padding(
-                    padding: EdgeInsets.only(
-                      bottom: ScreenUtil().setWidth(160),
-                      top: ScreenUtil().setWidth(74),
-                    ),
-                    child: widget.products != null
-                        ? Center(
-//                            child: CircularProgressIndicator(),
-                            )
-                        : NotificationListener(
-                            onNotification: (ScrollNotification notification) {
-                              bus.emit(
-                                  "isEditStatus", _isEditStatus); //解决item布局错乱问题
-                            },
-                            child: ListView.separated(
-                              itemBuilder: (BuildContext context, int index) {
-                                return ShoppingCartRow(
-//                                  product: widget.products[index],
-//                                  checkedMap: checkedMap,
-                                    );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return Visibility(child: Text(""));
-                              },
-                              itemCount: 10,
-//                            itemCount: widget.products.length,
-                              /*children: widget.products
-                              .map((product) => ShoppingCartRow(
-                                  product: product, checkedMap: checkedMap))
-                              .toList(),*/
-                            ),
-                          ))),
+      body: buildContent(),
+    );
+  }
+
+  Widget buildContent() {
+    return new Stack(
+      children: <Widget>[
+        Container(
+          color: Colors.white,
+          margin: EdgeInsets.only(
+            top: ScreenUtil().setWidth(30),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: _buildBottomLayout(),
-          )
-        ],
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: ScreenUtil().setWidth(160),
+                top: ScreenUtil().setWidth(74),
+              ),
+              child: buildEasyRefresh(),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: _buildBottomLayout(),
+        )
+      ],
+    );
+  }
+
+  Widget buildGoodsList() {
+    return Column(
+        children: List.generate(
+      goodsList.length,
+      (index) => buildShoppingCartRow(
+        product: goodsList[index],
+      ),
+    )
+
+        /*[
+        ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return ShoppingCartRow(
+              product: goodsList[index],
+              checkedMap: checkedMap,
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Visibility(child: Text(""));
+          },
+          itemCount: goodsList.length,
+//                            itemCount: widget.products.length,
+          */ /*children: widget.products
+                            .map((product) => ShoppingCartRow(
+                                product: product, checkedMap: checkedMap))
+                            .toList(),*/ /*
+        ),
+      ],*/
+        );
+  }
+
+  EasyRefresh buildEasyRefresh() {
+    return EasyRefresh.custom(
+      topBouncing: false,
+      bottomBouncing: false,
+      header: MaterialHeader(),
+      footer: CustomFooter(
+//          triggerDistance: ScreenUtil().setWidth(180),
+          completeDuration: Duration(seconds: 1),
+          footerBuilder: (context,
+              loadState,
+              pulledExtent,
+              loadTriggerPullDistance,
+              loadIndicatorExtent,
+              axisDirection,
+              float,
+              completeDuration,
+              enableInfiniteLoad,
+              success,
+              noMore) {
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Visibility(
+                    visible: noMore,
+                    child: Center(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(30),
+                          bottom: ScreenUtil().setWidth(30),
+                        ),
+                        child: Text(
+                          "~我是有底线的~",
+                          style: TextStyle(
+                            color: Color(0xff666666),
+                            fontSize: ScreenUtil().setSp(32),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+//                  child: Container(
+//                    width: 30.0,
+//                    height: 30.0,
+//                    /* child: SpinKitCircle(
+//                            color: KTKJGlobalConfig.colorPrimary,
+//                            size: 30.0,
+//                          ),*/
+//                  ),
+                ),
+              ],
+            );
+          }),
+      enableControlFinishLoad: true,
+      enableControlFinishRefresh: true,
+      controller: _refreshController,
+      onRefresh: () {
+        page = 1;
+        _initData();
+        _refreshController.finishLoad(noMore: false);
+      },
+      onLoad: () {
+        if (!isFirstLoading) {
+          page++;
+          _initData();
+        }
+      },
+      emptyWidget:
+          goodsList == null || goodsList.length == 0 ? KTKJNoDataPage() : null,
+      slivers: <Widget>[buildCenter()],
+    );
+  }
+
+  Widget buildCenter() {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Container(
+          width: double.maxFinite,
+//          height: double.infinity,
+          child: buildGoodsList(),
+        ),
       ),
     );
   }
-}
 
-class ShoppingCartRow extends StatefulWidget {
-  ShoppingCartBeanDataProduct product;
-  Map<ShoppingCartBeanDataProduct, bool> checkedMap;
+  Widget buildShoppingCartRow({CartListDataList product}) {
+    var cartId;
+    var productId;
+    var productName;
+    var productPrice;
+    var productImg;
+    var productSpec;
+    var productCoin;
+    var productQuantity;
 
-  ShoppingCartRow({this.product, this.checkedMap});
-
-  @override
-  _ShoppingCartRowState createState() => _ShoppingCartRowState();
-}
-
-class _ShoppingCartRowState extends State<ShoppingCartRow> {
-  var _isEditStatus = false;
-  var productId;
-  var productName = '单鞋女2019春款网红浅口粗跟奶鞋豆豆百搭中跟晚晚仙';
-  var productPrice = '￥32.80';
-  var productImg =
-      'https://alipic.lanhuapp.com/xd2f520b38-025c-48bb-9062-fce866a7f67b';
-  var productSpec = '37码；豆绿色；蝴蝶结仙女款；';
-  var productCoin = '分红金：¥1.2';
-  var productQuantity = '3';
-  var minTotals = '10';
-  var isSel = false;
-
-  @override
-  void initState() {
-    super.initState();
-    bus.on("isEditStatus", (isEditStatus) {
-      if (mounted) {
-        setState(() {
-          _isEditStatus = isEditStatus;
-        });
-      }
-    });
+//  var minTotals = '10';
+    var isSel = false;
     try {
-      isSel = widget.checkedMap[widget.product];
-    } catch (e) {
-      isSel = false;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+      cartId = product.cartId;
+      productId = product.goodsId;
+      productName = product.goodsName;
+      productPrice = product.goodsPrice;
+      productImg = product.goodsImg;
+      productSpec = product.specItem;
+      productCoin = product.goodsCoin;
+      if (productCoin != null) {
+        productCoin = "分红金：$productCoin";
+      }
+      productQuantity = product.goodsNum;
+//      minTotals = '10';
+      isSel = checkedMap[product.cartId];
+    } catch (e) {}
     return GestureDetector(
+      key: ValueKey(cartId),
       onTap: () {
-        if (widget.product != null) {
+        if (product != null) {
           /// todo 跳转商品详情
         }
       },
       child: Container(
-//        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: EdgeInsets.symmetric(
+          vertical: ScreenUtil().setWidth(20),
+        ),
         /* decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(
@@ -473,11 +605,10 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
               behavior: HitTestBehavior.opaque,
               onTap: () {
                 try {
-                  widget.checkedMap[widget.product] =
-                      !widget.checkedMap[widget.product];
+                  checkedMap[product.cartId] = !checkedMap[product.cartId];
+                  isSel = checkedMap[product.cartId];
                 } catch (e) {}
-                isSel = !isSel;
-//                bus.emit("allCheckedneedsChange", true);
+                allCheckedNeedsChange();
                 if (mounted) {
                   setState(() {});
                 }
@@ -496,7 +627,7 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
                         width: ScreenUtil().setWidth(60),
                         height: ScreenUtil().setWidth(60),
                         image:
-                            "${!isSel ? "https://alipic.lanhuapp.com/xde378dbfe-8b40-49d3-a858-3e70c8c4a71a" : "https://alipic.lanhuapp.com/xdd733d4bc-a5f5-4439-8c87-f454642467a5"}",
+                            "${isSel ? "https://alipic.lanhuapp.com/xde378dbfe-8b40-49d3-a858-3e70c8c4a71a" : "https://alipic.lanhuapp.com/xdd733d4bc-a5f5-4439-8c87-f454642467a5"}",
                       ),
                     ),
                   ),
@@ -521,10 +652,8 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
               borderRadius: BorderRadius.circular(
                 ScreenUtil().setWidth(30),
               ),
-              child: Image.network(
-//          todo    widget.product.thumb,
-
-                "$productImg",
+              child: KTKJMyOctoImage(
+                image: "$productImg",
                 fit: BoxFit.fill,
                 width: ScreenUtil().setWidth(345),
                 height: ScreenUtil().setWidth(345),
@@ -543,45 +672,52 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
 //                verticalDirection: ,
                 children: <Widget>[
                   Text(
-//            todo        "${widget.product.name}",
                     "$productName",
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      fontSize: ScreenUtil().setWidth(42),
+                      fontSize: ScreenUtil().setSp(42),
                       fontWeight: FontWeight.w600,
                       color: Color(0xff222222),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(20),
-                      bottom: ScreenUtil().setWidth(20),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xfff6f5f5),
-                      borderRadius: BorderRadius.circular(
-                        ScreenUtil().setWidth(10),
+                  Visibility(
+//                    visible: !KTKJCommonUtils.isEmpty(productSpec),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: !KTKJCommonUtils.isEmpty(productSpec)
+                            ? ScreenUtil().setWidth(20)
+                            : 0,
                       ),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(22),
-                      vertical: ScreenUtil().setWidth(10),
-                    ),
-                    child: Text(
-//            todo        "${widget.product.name}",
-                      "$productSpec",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setWidth(36),
-                        color: Color(0xffa0a0a0),
+                      decoration: BoxDecoration(
+                        color: !KTKJCommonUtils.isEmpty(productSpec)
+                            ? Color(0xfff6f5f5)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(
+                          ScreenUtil().setWidth(10),
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(22),
+                        vertical: ScreenUtil().setWidth(10),
+                      ),
+                      child: Text(
+                        "$productSpec",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(36),
+                          color: Color(0xffa0a0a0),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.only(
+                      top: ScreenUtil().setWidth(20),
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Color(0xfff32e43),
@@ -595,11 +731,10 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
                       vertical: ScreenUtil().setWidth(10),
                     ),
                     child: Text(
-//            todo        "${widget.product.name}",
                       "$productCoin",
                       textAlign: TextAlign.start,
                       style: TextStyle(
-                        fontSize: ScreenUtil().setWidth(30),
+                        fontSize: ScreenUtil().setSp(30),
                         color: Color(0xfff32e43),
                       ),
                       maxLines: 1,
@@ -610,11 +745,417 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-//                     todo       "${widget.product.price}",
                           "$productPrice",
                           style: TextStyle(
                             color: Color(0xfff93736),
-                            fontSize: ScreenUtil().setWidth(48),
+                            fontSize: ScreenUtil().setSp(48),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          _reduceBtn(product: product),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: 40,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "$productQuantity",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(35),
+                                ),
+                              ),
+                            ),
+                          ),
+                          _addBtn(product: product),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //减少按钮
+  Widget _reduceBtn({CartListDataList product}) {
+    var cartId;
+    var productQuantity;
+
+//  var minTotals = '10';
+    var isSel = false;
+    try {
+      cartId = product.cartId;
+      productQuantity = product.goodsNum;
+    } catch (e) {}
+    return Container(
+      width: ScreenUtil().setWidth(75),
+      alignment: Alignment.center,
+      child: MaterialButton(
+//              color: _colorRed,
+//              textColor: Color(0xff707070),
+        textColor: Color(0xff666666),
+        color: Color(0xfff6f5f5),
+        height: ScreenUtil().setWidth(75),
+        padding: EdgeInsets.all(0),
+        child: Center(
+          child: Text(
+            '-',
+            style: TextStyle(
+              fontSize: ScreenUtil().setWidth(48),
+            ),
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              ScreenUtil().setWidth(10),
+            ),
+          ),
+        ),
+        onPressed: () async {
+          int num = int.parse(productQuantity);
+          if (num > 1) {
+            num--;
+            productQuantity = num.toString();
+            product.goodsNum = productQuantity;
+            var result =
+                await HttpManage.cartEditGoods(cartId: cartId, goodsNum: num);
+            if (result.status) {
+              if (mounted) {
+                setState(() {
+                  _countTotalPrice(selProduct: product);
+                });
+              }
+            }
+          } else {}
+        },
+      ), //数量小于1 什么都不显示
+    );
+  }
+
+  //加号
+  Widget _addBtn({CartListDataList product}) {
+    var cartId;
+    var productQuantity;
+
+//  var minTotals = '10';
+    var isSel = false;
+    try {
+      cartId = product.cartId;
+      productQuantity = product.goodsNum;
+    } catch (e) {}
+//          quantity=   widget.product.quantity
+//          minTotals=   widget.product.minTotals
+    return Container(
+      width: ScreenUtil().setWidth(75),
+      alignment: Alignment.center,
+      child: MaterialButton(
+//              color: _colorRed,
+//              textColor: Color(0xff707070),
+        textColor: Color(0xff666666),
+        color: Color(0xfff6f5f5),
+        height: ScreenUtil().setWidth(75),
+        padding: EdgeInsets.all(0),
+        child: Center(
+          child: Text(
+            '+',
+            style: TextStyle(
+              fontSize: ScreenUtil().setWidth(48),
+            ),
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              ScreenUtil().setWidth(10),
+            ),
+          ),
+        ),
+        onPressed: () async {
+          int num = int.parse(productQuantity);
+          num++;
+          productQuantity = num.toString();
+          product.goodsNum = productQuantity;
+          var result =
+              await HttpManage.cartEditGoods(cartId: cartId, goodsNum: num);
+          if (result.status) {
+            setState(() {
+              _countTotalPrice(selProduct: product);
+            });
+          } else {}
+        },
+      ),
+    );
+  }
+
+  int _count = 1;
+
+  @override
+  bool get wantKeepAlive => true;
+}
+/*
+
+class ShoppingCartRow extends StatefulWidget {
+  CartListDataList product;
+  Map<String, bool> checkedMap;
+
+  ShoppingCartRow({this.product, this.checkedMap});
+
+  @override
+  _ShoppingCartRowState createState() => _ShoppingCartRowState();
+}
+
+class _ShoppingCartRowState extends State<ShoppingCartRow> {
+  var _isEditStatus = false;
+  var cartId;
+  var productId;
+  var productName;
+  var productPrice;
+  var productImg;
+  var productSpec;
+  var productCoin;
+  var productQuantity;
+
+//  var minTotals = '10';
+  var isSel = false;
+
+  @override
+  void initState() {
+    super.initState();
+    bus.on("isEditStatus", (isEditStatus) {
+      if (mounted) {
+        setState(() {
+          _isEditStatus = isEditStatus;
+        });
+      }
+    });
+
+    ///全选反选点击
+    bus.on("isAllSelectTap", (isAllSelected) {
+      if (mounted) {
+        setState(() {
+          isSel = isAllSelected;
+        });
+      }
+    });
+    try {
+      cartId = widget.product.cartId;
+      productId = widget.product.goodsId;
+      productName = widget.product.goodsName;
+      productPrice = widget.product.goodsPrice;
+      productImg = widget.product.goodsImg;
+      productSpec = widget.product.specItem;
+      productCoin = widget.product.goodsCoin;
+      if (productCoin != null) {
+        productCoin = "分红金：$productCoin";
+      }
+      productQuantity = widget.product.goodsNum;
+//      minTotals = '10';
+      isSel = widget.checkedMap[widget.product.cartId];
+    } catch (e) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: ValueKey(cartId),
+      onTap: () {
+        if (widget.product != null) {
+        }
+      },
+      child: Container(
+//        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        */
+/* decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+                  color:
+                      GlobalConfig.dark == true ? Colors.white12 : Colors.black12,
+                  width: 1.0)),
+        ),*/ /*
+
+        child: Row(
+//          key: ValueKey<String>(widget.product.productId),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                try {
+                  widget.checkedMap[widget.product.cartId] =
+                      !widget.checkedMap[widget.product.cartId];
+                  isSel = widget.checkedMap[widget.product.cartId];
+                } catch (e) {}
+                var cartId = widget.product.cartId;
+                bus.emit("allCheckedneedsChange", cartId);
+                print("product.cartId=${widget.product.cartId}\n"
+                    "widget.checkedMap=${widget.checkedMap[widget.product.cartId]}\n"
+                    "product.goodsId=${widget.product.goodsId}\n"
+                    "product.goodsName=${widget.product.goodsName}\n"
+                    "product.goodsNum=${widget.product.goodsNum}\n"
+                    "product.goodsPrice=${widget.product.goodsPrice}\n");
+                if (mounted) {
+                  setState(() {});
+                }
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      height: ScreenUtil().setWidth(345),
+                      margin: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(30),
+                        right: ScreenUtil().setWidth(30),
+                      ),
+                      child: KTKJMyOctoImage(
+                        width: ScreenUtil().setWidth(60),
+                        height: ScreenUtil().setWidth(60),
+                        image:
+                            "${isSel ? "https://alipic.lanhuapp.com/xde378dbfe-8b40-49d3-a858-3e70c8c4a71a" : "https://alipic.lanhuapp.com/xdd733d4bc-a5f5-4439-8c87-f454642467a5"}",
+                      ),
+                    ),
+                  ),
+                  */
+/*Checkbox(
+                    value: widget.checkedMap == null ||
+                            widget.product == null ||
+                            widget.checkedMap[widget.product] == null
+                        ? false
+                        : widget.checkedMap[widget.product],
+                    onChanged: (isSelect) {
+                      setState(() {
+                        widget.checkedMap[widget.product] =
+                            !widget.checkedMap[widget.product];
+                        bus.emit("allCheckedneedsChange", true);
+                      });
+                    },
+                  ),*/ /*
+
+                ],
+              ),
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(
+                ScreenUtil().setWidth(30),
+              ),
+              child: KTKJMyOctoImage(
+                image: "$productImg",
+                fit: BoxFit.fill,
+                width: ScreenUtil().setWidth(345),
+                height: ScreenUtil().setWidth(345),
+                alignment: Alignment.center,
+                errorBuilder: (
+                  BuildContext context,
+                  Object error,
+                  StackTrace stackTrace,
+                ) {
+                  return Container(
+                    width: ScreenUtil().setWidth(60),
+                    height: ScreenUtil().setWidth(60),
+                    color: Colors.red,
+                  );
+                },
+              ),
+            ),
+            Expanded(
+                child: Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(30),
+                right: ScreenUtil().setWidth(48),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+//                verticalDirection: ,
+                children: <Widget>[
+                  Text(
+                    "$productName",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(42),
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff222222),
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Visibility(
+//                    visible: !KTKJCommonUtils.isEmpty(productSpec),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: !KTKJCommonUtils.isEmpty(productSpec)
+                            ? ScreenUtil().setWidth(20)
+                            : 0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: !KTKJCommonUtils.isEmpty(productSpec)
+                            ? Color(0xfff6f5f5)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(
+                          ScreenUtil().setWidth(10),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(22),
+                        vertical: ScreenUtil().setWidth(10),
+                      ),
+                      child: Text(
+                        "$productSpec",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(36),
+                          color: Color(0xffa0a0a0),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: ScreenUtil().setWidth(20),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Color(0xfff32e43),
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        ScreenUtil().setWidth(10),
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(22),
+                      vertical: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "$productCoin",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(30),
+                        color: Color(0xfff32e43),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          "$productPrice",
+                          style: TextStyle(
+                            color: Color(0xfff93736),
+                            fontSize: ScreenUtil().setSp(48),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -632,7 +1173,7 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
                                 "$productQuantity",
                                 style: TextStyle(
                                   color: Color(0xff666666),
-                                  fontSize: ScreenUtil().setWidth(35),
+                                  fontSize: ScreenUtil().setSp(35),
                                 ),
                               ),
                             ),
@@ -679,18 +1220,22 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
             ),
           ),
         ),
-        onPressed: () {
-          setState(() {
-            int num = int.parse(productQuantity);
-            if (num > 1) {
-              num--;
-              productQuantity = num.toString();
-            } else {}
-//            bus.emit("countPrice", true);
-//          todo 调用接口修改购物车数量
-            /* HttpManage.cartModify(
-            widget.product.cartId.trim(), widget.product.quantity.trim());*/
-          });
+        onPressed: () async {
+          int num = int.parse(productQuantity);
+          if (num > 1) {
+            num--;
+            productQuantity = num.toString();
+            widget.product.goodsNum = productQuantity;
+            var result =
+                await HttpManage.cartEditGoods(cartId: cartId, goodsNum: num);
+            if (result.status) {
+              if (mounted) {
+                setState(() {
+                  bus.emit("countPrice", widget.product);
+                });
+              }
+            }
+          } else {}
         },
       ), //数量小于1 什么都不显示
     );
@@ -725,24 +1270,18 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
             ),
           ),
         ),
-        onPressed: () {
-          setState(() {
-            int num = int.parse(productQuantity);
-            if (num < int.parse(minTotals)) {
-              num++;
-              productQuantity = num.toString();
-//              bus.emit("countPrice", true);
-//            todo 调用接口修改购物车数量
-              /*HttpManage.cartModify(
-                widget.product.cartId.trim(), quantity.trim());*/
-            } else {
-              /*Fluttertoast.showToast(
-                msg: "只能买这么多了！",
-                gravity: ToastGravity.BOTTOM,
-                textColor: Colors.white,
-                backgroundColor: Colors.grey);*/
-            }
-          });
+        onPressed: () async {
+          int num = int.parse(productQuantity);
+          num++;
+          productQuantity = num.toString();
+          widget.product.goodsNum = productQuantity;
+          var result =
+              await HttpManage.cartEditGoods(cartId: cartId, goodsNum: num);
+          if (result.status) {
+            setState(() {
+              bus.emit("countPrice", widget.product);
+            });
+          } else {}
         },
       ),
     );
@@ -750,6 +1289,7 @@ class _ShoppingCartRowState extends State<ShoppingCartRow> {
 
   int _count = 1;
 }
+*/
 
 class ActionButton extends StatefulWidget {
   @override
@@ -787,8 +1327,130 @@ class _ActionButtonState extends State<ActionButton> {
   }
 }
 
-class ShoppingCartBeanEntity
-    with JsonConvert<ShoppingCartBeanEntity>, ChangeNotifier {
+///购物车状态管理（废弃）
+class ShoppingCartProvider with ChangeNotifier {
+  ShoppingCartProvider() {
+    _initCartGoodsList();
+  }
+
+  ///  购物车商品列表
+  List<CartListDataList> _goodsList = List<CartListDataList>();
+
+  List<CartListDataList> get goodsList => _goodsList;
+
+  ///选中商品的购物车id集合
+  String _selectedCartGoodsIds = '';
+
+  ///选中商品的合计金额
+  var totalPrice = 0.0;
+
+  ///存储购物车选中状态
+  Map<String, bool> checkedMap = Map();
+
+  ///获取购物车商品列表
+  Future<void> _initCartGoodsList() async {
+    var entity = await HttpManage.cartGetGoodsList();
+
+    if (entity.status) {
+      _goodsList = List<CartListDataList>();
+      _goodsList = entity.data.xList;
+
+      ///初始化购物车商品选中状态
+      for (var product in _goodsList) {
+        if (KTKJCommonUtils.isEmpty(checkedMap[product.cartId])) {
+          _setSelectedStatus(cartId: product.cartId);
+        }
+      }
+      _countTotalPrice();
+    }
+    notifyListeners();
+  }
+
+  ///更新购物车商品列表数据
+  ///
+  /// [cartId] 购物车id
+  ///
+  /// [goodsNum] 购物车id对应商品数量
+  ///
+  Future<void> _updateCartGoodsList() async {
+    ///初始化购物车商品选中状态
+    for (var product in _goodsList) {
+      if (checkedMap[product.cartId]) {
+        _selectedCartGoodsIds += product.cartId + ",";
+      }
+    }
+    _selectedCartGoodsIds =
+        _selectedCartGoodsIds.substring(0, _selectedCartGoodsIds.length - 1);
+    var result = await HttpManage.cartEditGoods(
+      cartId: _selectedCartGoodsIds,
+    );
+    if (result.status) {
+      _countTotalPrice();
+    } else {}
+    notifyListeners();
+  }
+
+  ///删除购物车商品列表数据
+  ///
+  /// [cartId] 购物车id
+  ///
+  /// [goodsNum] 购物车id对应商品数量
+  ///
+  Future<void> _deleteCartGoodsList({cartIds}) async {
+    var result = await HttpManage.cartDeleteGoods(cartIds: cartIds);
+    if (result.status) {
+      _countTotalPrice();
+    } else {}
+  }
+
+  ///计算购物车选中商品合计金额
+  _countTotalPrice({rowCheckedMap}) {
+    totalPrice = 0.0;
+    for (var product in _goodsList) {
+      /// 价格金额计算
+      ///
+      if (!KTKJCommonUtils.isEmpty(rowCheckedMap)) {
+        if (rowCheckedMap[product.cartId]) {
+          totalPrice +=
+              double.parse(product.goodsNum) * double.parse(product.goodsPrice);
+        }
+      } else {
+        if (checkedMap[product.cartId]) {
+          totalPrice +=
+              double.parse(product.goodsNum) * double.parse(product.goodsPrice);
+        }
+      }
+    }
+    totalPrice = KTKJUtils.formatNum(totalPrice, 2);
+    notifyListeners();
+  }
+
+  ///获取某个购物车选中状态
+  bool _getSelectedStatus({cartId}) {
+    if (KTKJCommonUtils.isEmpty(checkedMap[cartId])) {
+      checkedMap[cartId] = false;
+      return false;
+    } else {
+      return checkedMap[cartId];
+    }
+  }
+
+  ///设置某个购物车商品选中状态
+  ///
+  /// [cartId] 购物车id
+  ///
+  /// [status] 购物车id对应商品选中状态
+  ///
+  _setSelectedStatus({cartId, bool status = false}) {
+    checkedMap[cartId] = status;
+    notifyListeners();
+  }
+}
+
+///below is the use of garbage code
+///
+///
+class ShoppingCartBeanEntity with ChangeNotifier {
   bool status;
   @JSONField(name: "err_code")
   String errCode;
@@ -797,8 +1459,7 @@ class ShoppingCartBeanEntity
   ShoppingCartBeanData data;
 }
 
-class ShoppingCartBeanData
-    with JsonConvert<ShoppingCartBeanData>, ChangeNotifier {
+class ShoppingCartBeanData with ChangeNotifier {
   List<ShoppingCartBeanDataProduct> products;
   @JSONField(name: "error_warning")
   String errorWarning;
@@ -806,8 +1467,7 @@ class ShoppingCartBeanData
   ShoppingCartBeanDataTotal total;
 }
 
-class ShoppingCartBeanDataProduct
-    with JsonConvert<ShoppingCartBeanDataProduct>, ChangeNotifier {
+class ShoppingCartBeanDataProduct with ChangeNotifier {
   @JSONField(name: "cart_id")
   String cartId;
   @JSONField(name: "product_id")
@@ -836,15 +1496,13 @@ class ShoppingCartBeanDataProduct
   }
 }
 
-class ShoppingCartBeanDataProductsOption
-    with JsonConvert<ShoppingCartBeanDataProductsOption>, ChangeNotifier {
+class ShoppingCartBeanDataProductsOption with ChangeNotifier {
   String quantity;
   String name;
   String value;
 }
 
-class ShoppingCartBeanDataTotal
-    with JsonConvert<ShoppingCartBeanDataTotal>, ChangeNotifier {
+class ShoppingCartBeanDataTotal with ChangeNotifier {
   String title;
   String text;
 }
