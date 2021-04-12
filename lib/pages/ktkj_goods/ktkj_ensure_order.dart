@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/bus/ktkj_my_event_bus.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/address_list_entity.dart';
@@ -937,6 +938,7 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
 //                                widget.orderId, isCoupon);
                             if (result.status) {
                               Navigator.of(context).pop();
+                              bus.emit("changeCheckStatus");
                               //跳转到结算台
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) {

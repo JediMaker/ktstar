@@ -248,13 +248,13 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
                         var context = KTKJGlobalConfig
                             .navigatorKey.currentState.overlay.context;
                         await KTKJNavigatorUtils.navigatorRouter(
-                            context,
-                            KTKJEnsureOrderPage(
-                              cartIds: cartIds,
-                              type: 1,
-                            ));
+                          context,
+                          KTKJEnsureOrderPage(
+                            cartIds: cartIds,
+                            type: 1,
+                          ),
+                        );
                         _initData();
-                        allCheckedNeedsChange();
 
                         ///
                       }
@@ -340,6 +340,15 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
       if (mounted) {
         setState(() {
           _isEditStatus = isEditStatus;
+        });
+      }
+    });
+    bus.on("changeCheckStatus", (isEditStatus) {
+      if (mounted) {
+        setState(() {
+          if (_isAllCheckedValue) {
+            _isAllCheckedValue = !_isAllCheckedValue;
+          }
         });
       }
     });
