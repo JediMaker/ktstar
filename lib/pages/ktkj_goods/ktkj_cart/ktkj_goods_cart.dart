@@ -380,7 +380,7 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
           goodsList.removeWhere((product) => cartId == product.cartId);
         }
         allCheckedNeedsChange();
-//        _countTotalPrice();
+        _countTotalPrice();
 //            _initData();
       });
     }
