@@ -15,6 +15,7 @@ import 'package:star/generated/json/cart_settlement_entity_helper.dart';
 import 'package:star/generated/json/category_bean_entity_helper.dart';
 import 'package:star/generated/json/fans_list_entity_helper.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
+import 'package:star/generated/json/gasolin_info_entity_helper.dart';
 import 'package:star/generated/json/goods_info_entity_helper.dart';
 import 'package:star/generated/json/goods_queue_entity_helper.dart';
 import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
@@ -75,6 +76,7 @@ import 'package:star/models/cart_settlement_entity.dart';
 import 'package:star/models/category_bean_entity.dart';
 import 'package:star/models/fans_list_entity.dart';
 import 'package:star/models/fans_total_entity.dart';
+import 'package:star/models/gasolin_info_entity.dart';
 import 'package:star/models/goods_info_entity.dart';
 import 'package:star/models/goods_queue_entity.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
@@ -3009,5 +3011,113 @@ class HttpManage {
     return entity;
   }
 
+  ///
+  ///[cardNo] 充值油卡卡号
+  ///
+  ///[phone] 充值手机号码
+  ///
+  ///[name] 持卡人姓名
+  ///
+  /// 获取油卡充值微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> gasolinePayWeChatPayInfo({
+    cardNo,
+    phone,
+    name,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["cardno"] = "$cardNo";
+    paramsMap["tel"] = "$phone";
+    paramsMap["name"] = "$name";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.GASOLINE_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
 
+  ///
+  ///[cardNo] 充值油卡卡号
+  ///
+  ///[phone] 充值手机号码
+  ///
+  ///[name] 持卡人姓名
+  ///
+  /// 获取油卡充值支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> gasolinePayAliPayInfo({
+    cardNo,
+    phone,
+    name,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["cardno"] = "$cardNo";
+    paramsMap["tel"] = "$phone";
+    paramsMap["name"] = "$name";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.GASOLINE_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 获取油卡充值信息
+  ///
+  static Future<GasolinInfoEntity> gasolineGetInfo() async {
+    var response = await HttpManage.dio.get(
+      APi.GASOLINE_INFO,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = GasolinInfoEntity();
+    gasolinInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///油卡充值---重新充值
+  static Future<ResultBeanEntity> gasolineRetry(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    var response = await HttpManage.dio.post(
+      APi.GASOLINE_REPAY,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///油卡充值---申请退款
+  static Future<ResultBeanEntity> gasolineRefund(orderId) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["order_id"] = "$orderId";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    var response = await HttpManage.dio.post(
+      APi.GASOLINE_REFUND,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
 }

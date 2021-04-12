@@ -409,5 +409,18 @@ class APi {
   static const String CART_PAY = "cart/pay";
 
 //  =================购物车相关接口======END======================
+//  =================油卡充值相关接口======START======================
 
+  ///油卡充值信息
+  static const String GASOLINE_INFO = "site/gasoline";
+
+  ///油卡充值
+  static const String GASOLINE_PAY = "pay/gasoline-pay";
+
+  ///油卡重新充值
+  static const String GASOLINE_REPAY = "order/gas-repay";
+
+  ///油卡充值退款申请
+  static const String GASOLINE_REFUND = "order/gas-refund";
+//  =================油卡充值相关接口======END======================
 }

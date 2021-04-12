@@ -31,6 +31,7 @@ import 'package:star/pages/ktkj_goods/ktkj_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_home_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_newcomers/ktkj_hot_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_newcomers/ktkj_newcomers_goods_list.dart';
+import 'package:star/pages/ktkj_goods/ktkj_oil/ktkj_oil_recharge.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_home.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
@@ -2407,6 +2408,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                 KTKJNavigatorUtils.navigatorRouter(
                     context, KTKJRechargeListPage());
                 break;
+              case "oil_recharge": //油卡充值
+                KTKJNavigatorUtils.navigatorRouter(
+                    context, KTKJOilRechargePage());
+                break;
             }
             return;
           }
@@ -2654,10 +2659,10 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         //bannerList == null ? 0 : bannerList.length,
         loop: _isLoop,
         autoplay: true,
-        duration: 30,
+        duration: 100,
         fade: 1.0,
         scale: 1,
-        curve: Curves.fastLinearToSlowEaseIn,
+        curve: Curves.easeIn,
         autoplayDisableOnInteraction: true,
         autoplayDelay: 5000,
         key: ValueKey(context),
@@ -2877,7 +2882,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                 return;
               }
 
-              ///
+              ///此处代码为无效垃圾代码
               switch (bannerList[bannerIndex].uri.toString().trim()) {
                 case "upgrade":
                   KTKJNavigatorUtils.navigatorRouter(

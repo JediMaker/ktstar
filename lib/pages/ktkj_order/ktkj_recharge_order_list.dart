@@ -7,6 +7,7 @@ import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/order_list_entity.dart';
 import 'package:star/pages/ktkj_goods/ktkj_checkout_counter.dart';
 import 'package:star/pages/ktkj_goods/ktkj_free_queue_persional.dart';
+import 'package:star/pages/ktkj_goods/ktkj_oil/ktkj_oil_recharge.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_detail.dart';
 import 'package:star/pages/ktkj_order/ktkj_order_detail.dart';
 import 'package:star/pages/ktkj_order/ktkj_order_logistics_tracking.dart';
@@ -148,6 +149,7 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
     String orderStatus = "";
     String refundStatus = "0";
     String refundMsg = "";
+    String oilNo = "";
     String orderStatusText = "";
     bool showContact = false;
     bool showBtn = true;
@@ -186,14 +188,26 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
       goodsList = listItem.goodsList;
       try {
         if (!KTKJCommonUtils.isEmpty(goodsList)) {
-          goodsSign = goodsList[0].goodsSign;
-          goodsId = goodsList[0].goodsId;
-          print("goodsSign=$goodsSign&&goodsId=$goodsId");
+          if (!KTKJCommonUtils.isEmpty(goodsList[0].goodsSign)) {
+            goodsSign = goodsList[0].goodsSign;
+          }
+          if (!KTKJCommonUtils.isEmpty(goodsList[0].goodsId)) {
+            goodsId = goodsList[0].goodsId;
+          }
+          if (!KTKJCommonUtils.isEmpty(goodsList[0].cardno)) {
+            oilNo = goodsList[0].cardno;
+          }
+          if (!KTKJCommonUtils.isEmpty(goodsList[0].faceMoney)) {
+            phoneMoney = goodsList[0].faceMoney;
+          }
+
+          print("goodsSign=$goodsSign&&goodsId=$goodsId"
+              "cardno=$oilNo&&faceMoney=$phoneMoney");
         }
       } catch (e) {}
     } catch (e) {}
 //    orderSource = listItem.orderSource;
-    if (orderType == "1") {
+    if (orderType == "1" || orderType == "6") {
       //话费订单
       btnTxt = "再次充值";
       switch (orderStatus) {
@@ -205,13 +219,13 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
           if (refundStatus == "0") {
             showContact = true;
           } else if (refundStatus == "1") {
-            orderStatusText = "话费退款";
+            orderStatusText = "充值退款";
             refundMsg = '退款审核中';
           } else if (refundStatus == "2") {
-            orderStatusText = "话费退款";
+            orderStatusText = "充值退款";
             refundMsg = '退款已完成';
           } else if (refundStatus == "3") {
-            orderStatusText = "话费退款";
+            orderStatusText = "充值退款";
             var newMsgTxt = "已拒绝,$refundMsg";
             refundMsg = newMsgTxt;
           }
@@ -271,13 +285,14 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
     }
 
     ///仅展示现有的订单类型
-    ///订单来源 1-平台自营 ，2-拼多多 ，3-美团订单 ，4-话费订单 ，5-商家订单 其它-全部
+    /// 订单类型 1-话费订单，2-自营商品订单 3-拼多多订单 4美团订单 5商家订单(返回值跟美团订单一样) 6油卡订单
     switch (orderType) {
       case "1":
       case "2":
       case "3":
       case "4":
       case "5":
+      case "6":
         _showItem = true;
         break;
     }
@@ -357,14 +372,21 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                 builder: (context) {
                   switch (orderType) {
                     case "1": //话费订单
+                    case "6": //油卡订单
                       return Column(
                         children: goodsList == null
                             ? Container(
                                 child: Text(''),
                               )
                             : List.generate(goodsList.length, (index) {
-                                return buildRechargeItemRow(phoneNumber,
-                                    phoneMoney, goodsList[index], refundMsg);
+                                return buildRechargeItemRow(
+                                  phoneNumber,
+                                  phoneMoney,
+                                  goodsList[index],
+                                  refundMsg,
+                                  oilNo: oilNo,
+                                  orderStatus: orderStatus,
+                                );
                               }),
                       );
                       break;
@@ -470,7 +492,9 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        var result = await HttpManage.chargeRefund(orderId);
+                        var result = orderType == "1"
+                            ? await HttpManage.chargeRefund(orderId)
+                            : await HttpManage.gasolineRefund(orderId);
                         if (result.status) {
                           KTKJCommonUtils.showToast("申请已提交");
                           page = 1;
@@ -506,7 +530,9 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                     ),
                     GestureDetector(
                       onTap: () async {
-                        var result = await HttpManage.chargeRetry(orderId);
+                        var result = orderType == "1"
+                            ? await HttpManage.chargeRetry(orderId)
+                            : await HttpManage.gasolineRetry(orderId);
                         if (result.status) {
                           KTKJCommonUtils.showToast("申请已提交");
                           page = 1;
@@ -636,6 +662,9 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                                 orderStatusText = "已完成";
                                 break;
                             }
+                          } else if (orderType == "6") {
+                            KTKJNavigatorUtils.navigatorRouter(
+                                context, KTKJOilRechargePage());
                           }
                         },
                         child: Container(
@@ -947,7 +976,8 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
   }
 
   Widget buildRechargeItemRow(String phoneNumber, String phoneMoney,
-      OrderListDataListGoodsList goodsItem, String refundMsg) {
+      OrderListDataListGoodsList goodsItem, String refundMsg,
+      {oilNo, orderStatus}) {
     var imageUrl = '';
     var title = '';
     var saleMoney = '';
@@ -958,11 +988,23 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        KTKJMyOctoImage(
-          image: "$imageUrl",
-          width: ScreenUtil().setWidth(243),
-          height: ScreenUtil().setWidth(243),
-          fit: BoxFit.fill,
+        GestureDetector(
+          onTap: () {
+            if (_controller.isCompleted) {
+              _controller.reset();
+            }
+            _controller.forward();
+          },
+          child: RotationTransition(
+            turns: _animation,
+            alignment: Alignment.center,
+            child: KTKJMyOctoImage(
+              image: "$imageUrl",
+              width: ScreenUtil().setWidth(243),
+              height: ScreenUtil().setWidth(243),
+              fit: BoxFit.fill,
+            ),
+          ),
         ),
         SizedBox(
           width: ScreenUtil().setWidth(29),
@@ -984,14 +1026,31 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
               SizedBox(
                 height: ScreenUtil().setHeight(12),
               ),
-              Container(
-                child: Text(
-                  //状态：
-                  "充值号码：$phoneNumber",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(30),
-                    color: Color(0xFF999999),
+              Visibility(
+                visible: !KTKJCommonUtils.isEmpty(phoneNumber),
+                child: Container(
+                  child: Text(
+                    //状态：
+                    "充值号码：$phoneNumber",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(30),
+                      color: Color(0xFF999999),
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: !KTKJCommonUtils.isEmpty(oilNo),
+                child: Container(
+                  child: Text(
+                    //
+                    "卡号：$oilNo",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(30),
+                      color: Color(0xFF999999),
+                    ),
                   ),
                 ),
               ),
@@ -1010,7 +1069,8 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                 ),
               ),
               Visibility(
-                visible: !KTKJCommonUtils.isEmpty(refundMsg),
+                visible:
+                    !KTKJCommonUtils.isEmpty(refundMsg) && orderStatus == "9",
                 child: Column(
                   children: [
                     SizedBox(
