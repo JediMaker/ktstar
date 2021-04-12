@@ -757,9 +757,6 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
                         visible: !_isEditStatus,
                         child: Container(
                           height: ScreenUtil().setWidth(120),
-                          margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(20),
-                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -824,6 +821,7 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
       width: ScreenUtil().setWidth(75),
       height: ScreenUtil().setWidth(75),
       alignment: Alignment.center,
+      margin: EdgeInsets.all(0),
       child: MaterialButton(
 //              color: _colorRed,
 //              textColor: Color(0xff707070),
@@ -884,6 +882,7 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
       width: ScreenUtil().setWidth(75),
       height: ScreenUtil().setWidth(75),
       alignment: Alignment.center,
+      margin: EdgeInsets.all(0),
       child: MaterialButton(
 //              color: _colorRed,
 //              textColor: Color(0xff707070),

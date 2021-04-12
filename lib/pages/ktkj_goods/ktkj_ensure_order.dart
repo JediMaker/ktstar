@@ -91,21 +91,23 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                 totalPrice = entityResult.data.totalPrice;
                 payPrice = entityResult.data.payPrice;
                 _coin = entityResult.data.orderBonus;
-                if (double.parse(_totalAmount) > double.parse(totalPrice)) {
-                  _availableAmount =
-                      double.parse(totalPrice).toStringAsFixed(2);
-                } else {
-                  _availableAmount =
-                      double.parse(_totalAmount).toStringAsFixed(2);
-                }
-                _leftAmount = (double.parse(_totalAmount) -
-                        double.parse(_availableAmount))
-                    .toStringAsFixed(2);
-                payPrice =
-                    (double.parse(totalPrice) - double.parse(_availableAmount))
-                        .toStringAsFixed(2);
-                if (double.parse(_availableAmount) > 0) {
-                  showEnvelope = true;
+                if (isCoupon == "1") {
+                  if (double.parse(_totalAmount) > double.parse(totalPrice)) {
+                    _availableAmount =
+                        double.parse(totalPrice).toStringAsFixed(2);
+                  } else {
+                    _availableAmount =
+                        double.parse(_totalAmount).toStringAsFixed(2);
+                  }
+                  _leftAmount = (double.parse(_totalAmount) -
+                          double.parse(_availableAmount))
+                      .toStringAsFixed(2);
+                  payPrice = (double.parse(totalPrice) -
+                          double.parse(_availableAmount))
+                      .toStringAsFixed(2);
+                  if (double.parse(_availableAmount) > 0) {
+                    showEnvelope = true;
+                  }
                 }
               }
             });
@@ -131,21 +133,23 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                 cartGoodsList = entityResult.data.xList;
                 totalPrice = entityResult.data.totalPrice;
                 payPrice = totalPrice;
-                if (double.parse(_totalAmount) > double.parse(totalPrice)) {
-                  _availableAmount =
-                      double.parse(totalPrice).toStringAsFixed(2);
-                } else {
-                  _availableAmount =
-                      double.parse(_totalAmount).toStringAsFixed(2);
-                }
-                _leftAmount = (double.parse(_totalAmount) -
-                        double.parse(_availableAmount))
-                    .toStringAsFixed(2);
-                payPrice =
-                    (double.parse(totalPrice) - double.parse(_availableAmount))
-                        .toStringAsFixed(2);
-                if (double.parse(_availableAmount) > 0) {
-                  showEnvelope = true;
+                if (isCoupon == "1") {
+                  if (double.parse(_totalAmount) > double.parse(totalPrice)) {
+                    _availableAmount =
+                        double.parse(totalPrice).toStringAsFixed(2);
+                  } else {
+                    _availableAmount =
+                        double.parse(_totalAmount).toStringAsFixed(2);
+                  }
+                  _leftAmount = (double.parse(_totalAmount) -
+                          double.parse(_availableAmount))
+                      .toStringAsFixed(2);
+                  payPrice = (double.parse(totalPrice) -
+                          double.parse(_availableAmount))
+                      .toStringAsFixed(2);
+                  if (double.parse(_availableAmount) > 0) {
+                    showEnvelope = true;
+                  }
                 }
               }
             });

@@ -89,11 +89,11 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
   }
 
   _initWeChatResponseHandler() {
-    KTKJGlobalConfig.payType = 2;
+    KTKJGlobalConfig.payType = 4;
     fluwx.weChatResponseEventHandler.listen((res) async {
       if (res is fluwx.WeChatPaymentResponse) {
 //        print("_result = " + "pay :${res.isSuccessful}");
-        if (res.isSuccessful && KTKJGlobalConfig.payType == 2) {
+        if (res.isSuccessful && KTKJGlobalConfig.payType == 4) {
           _checkPayStatus();
         }
       }

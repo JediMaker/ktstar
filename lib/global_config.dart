@@ -156,6 +156,10 @@ class KTKJGlobalConfig {
   ///
   /// 3 微股东升级支付
   ///
+  /// 4 商家付款支付
+  ///
+  /// 5 油卡充值支付
+  ///
   static int payType = 0;
 
   /// 是否为首次进入app
