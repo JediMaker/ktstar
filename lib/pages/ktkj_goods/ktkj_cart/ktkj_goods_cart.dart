@@ -254,6 +254,7 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
                               type: 1,
                             ));
                         _initData();
+                        allCheckedNeedsChange();
 
                         ///
                       }
