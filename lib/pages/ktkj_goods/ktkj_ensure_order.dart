@@ -165,7 +165,7 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
 
   Future _initDefaultAddressData() async {
     //    AddressBeanEntity resultData = await HttpManage.getListOfAddresses();
-    var entityResult = await HttpManage.getListOfAddresses(isDefault: "1");
+    var entityResult = await HttpManage.getListOfAddresses(isDefault: "2");
     if (entityResult.status) {
       if (mounted) {
         setState(() {
@@ -278,6 +278,7 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                                     );
                                   }));
                                   if (KTKJCommonUtils.isEmpty(item)) {
+                                    _initDefaultAddressData();
                                     return;
                                   }
                                   setState(() {
