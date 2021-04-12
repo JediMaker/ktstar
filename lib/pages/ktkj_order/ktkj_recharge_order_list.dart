@@ -988,23 +988,11 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            if (_controller.isCompleted) {
-              _controller.reset();
-            }
-            _controller.forward();
-          },
-          child: RotationTransition(
-            turns: _animation,
-            alignment: Alignment.center,
-            child: KTKJMyOctoImage(
-              image: "$imageUrl",
-              width: ScreenUtil().setWidth(243),
-              height: ScreenUtil().setWidth(243),
-              fit: BoxFit.fill,
-            ),
-          ),
+        KTKJMyOctoImage(
+          image: "$imageUrl",
+          width: ScreenUtil().setWidth(243),
+          height: ScreenUtil().setWidth(243),
+          fit: BoxFit.fill,
         ),
         SizedBox(
           width: ScreenUtil().setWidth(29),
