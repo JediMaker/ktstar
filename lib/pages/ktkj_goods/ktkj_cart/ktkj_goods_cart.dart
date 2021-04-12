@@ -348,17 +348,21 @@ class _KTKJShoppingCartPageState extends State<KTKJShoppingCartPage>
     if (mounted) {
       setState(() {
         var isAllChecked = true;
-        for (var product in goodsList) {
-          if (!checkedMap[product.cartId]) {
-            isAllChecked = false;
+        if (!KTKJCommonUtils.isEmpty(goodsList)) {
+          for (var product in goodsList) {
+            if (!checkedMap[product.cartId]) {
+              isAllChecked = false;
+            }
           }
-        }
-        if (isAllChecked) {
-          _isAllCheckedValue = true;
+          if (isAllChecked) {
+            _isAllCheckedValue = true;
+          } else {
+            _isAllCheckedValue = false;
+          }
+          _countTotalPrice();
         } else {
           _isAllCheckedValue = false;
         }
-        _countTotalPrice();
       });
     }
   }
