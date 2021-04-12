@@ -95,6 +95,9 @@ orderListDataListFromJson(OrderListDataList data, Map<String, dynamic> json) {
   if (json['refund_msg'] != null) {
     data.refundMsg = json['refund_msg']?.toString();
   }
+  if (json['try_coin'] != null) {
+    data.tryCoin = json['try_coin']?.toString();
+  }
   if (json['mobile'] != null) {
     data.mobile = json['mobile']?.toString();
   }
@@ -103,9 +106,6 @@ orderListDataListFromJson(OrderListDataList data, Map<String, dynamic> json) {
   }
   if (json['coin'] != null) {
     data.coin = json['coin']?.toString();
-  }
-  if (json['try_coin'] != null) {
-    data.tryCoin = json['try_coin']?.toString();
   }
   return data;
 }
@@ -124,12 +124,12 @@ Map<String, dynamic> orderListDataListToJson(OrderListDataList entity) {
   }
   data['face_money'] = entity.faceMoney;
   data['order_source'] = entity.orderSource;
-  data['refund_msg'] = entity.refundMsg;
   data['refund_status'] = entity.refundStatus;
+  data['refund_msg'] = entity.refundMsg;
+  data['try_coin'] = entity.tryCoin;
   data['mobile'] = entity.mobile;
   data['phone'] = entity.phone;
   data['coin'] = entity.coin;
-  data['try_coin'] = entity.tryCoin;
   return data;
 }
 
@@ -164,6 +164,21 @@ orderListDataListGoodsListFromJson(
   if (json['goods_sign'] != null) {
     data.goodsSign = json['goods_sign']?.toString();
   }
+  if (json['face_money'] != null) {
+    data.faceMoney = json['face_money']?.toString();
+  }
+  if (json['refund_status'] != null) {
+    data.refundStatus = json['refund_status']?.toString();
+  }
+  if (json['refund_msg'] != null) {
+    data.refundMsg = json['refund_msg']?.toString();
+  }
+  if (json['mobile'] != null) {
+    data.mobile = json['mobile']?.toString();
+  }
+  if (json['cardno'] != null) {
+    data.cardno = json['cardno']?.toString();
+  }
   return data;
 }
 
@@ -179,5 +194,10 @@ Map<String, dynamic> orderListDataListGoodsListToJson(
   data['goods_source'] = entity.goodsSource;
   data['pdd_goods_id'] = entity.pddGoodsId;
   data['goods_sign'] = entity.goodsSign;
+  data['face_money'] = entity.faceMoney;
+  data['refund_status'] = entity.refundStatus;
+  data['refund_msg'] = entity.refundMsg;
+  data['mobile'] = entity.mobile;
+  data['cardno'] = entity.cardno;
   return data;
 }
