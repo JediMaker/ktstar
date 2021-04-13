@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
@@ -159,163 +160,165 @@ class _LoginPageState extends State<KTKJLoginPage> {
     ScreenUtil.init(context,
         width: 1125, height: 2436, allowFontScaling: false);
 
-    return KeyboardDismissOnTap(
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.title,
-              style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+    return FlutterEasyLoading(
+      child: KeyboardDismissOnTap(
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                widget.title,
+                style: TextStyle(fontSize: ScreenUtil().setSp(54)),
+              ),
+              centerTitle: true,
+              elevation: 0,
+              leading: IconButton(
+                icon: Container(
+                  width: ScreenUtil().setWidth(63),
+                  height: ScreenUtil().setHeight(63),
+                  child: Center(
+                    child: Image.asset(
+                      "static/images/icon_ios_back_white.png",
+                      width: ScreenUtil().setWidth(36),
+                      height: ScreenUtil().setHeight(63),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              backgroundColor: KTKJGlobalConfig.taskHeadColor,
             ),
-            centerTitle: true,
-            elevation: 0,
-            leading: IconButton(
-              icon: Container(
-                width: ScreenUtil().setWidth(63),
-                height: ScreenUtil().setHeight(63),
-                child: Center(
-                  child: Image.asset(
-                    "static/images/icon_ios_back_white.png",
-                    width: ScreenUtil().setWidth(36),
-                    height: ScreenUtil().setHeight(63),
-                    fit: BoxFit.fill,
+            body: Container(
+              width: double.maxFinite,
+              height: double.maxFinite,
+              color: Colors.white,
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          child: Column(
+                        children: <Widget>[
+                          Container(
+                            width: double.maxFinite,
+                            color: KTKJGlobalConfig.taskHeadColor,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 20),
+                            child: Text(
+                              _description,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: ScreenUtil().setSp(72),
+                                letterSpacing: 1,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          // 裁切的控件
+                          Stack(
+                            children: <Widget>[
+                              ClipPath(
+                                // 只裁切底部的方法
+                                clipper: BottomClipper(),
+                                child: Container(
+                                  color: KTKJGlobalConfig.taskHeadColor,
+                                  height: ScreenUtil().setHeight(500),
+                                ),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(minHeight: 120),
+                                width: double.maxFinite,
+                                margin: EdgeInsets.symmetric(horizontal: 16),
+                                padding: EdgeInsets.only(top: 20),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16))),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    buildPhoneContainer(),
+                                    buildCheckCodeLayout(),
+                                    buildPasswordLayout(),
+                                    buildInviteCodeLayout(),
+                                    SizedBox(
+                                      height: ScreenUtil().setHeight(156),
+                                    ),
+                                    buildBtnLayout(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    buildBtnsRow(),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      )),
+                      buildWechatLoginContainer(),
+                      Visibility(
+                        visible: pageType == 0,
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 50),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "注册即代表同意",
+                                style: TextStyle(
+                                    color: Color(0xFFAFAFAF),
+                                    fontSize: ScreenUtil().setSp(32)),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  KTKJNavigatorUtils.navigatorRouter(
+                                      context,
+                                      KTKJWebViewPage(
+                                        initialUrl: APi.AGREEMENT_SERVICES_URL,
+                                        showActions: false,
+                                        title: "服务协议",
+                                      ));
+                                },
+                                child: Text(
+                                  "《服务协议》",
+                                  style: TextStyle(
+                                      color: KTKJGlobalConfig.taskHeadColor,
+                                      fontSize: ScreenUtil().setSp(32)),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  KTKJNavigatorUtils.navigatorRouter(
+                                      context,
+                                      KTKJWebViewPage(
+                                        initialUrl: APi.AGREEMENT_PRIVACY_URL,
+                                        showActions: false,
+                                        title: "隐私政策",
+                                      ));
+                                },
+                                child: Text(
+                                  "&《隐私政策》",
+                                  style: TextStyle(
+                                      color: KTKJGlobalConfig.taskHeadColor,
+                                      fontSize: ScreenUtil().setSp(32)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            ) // This trailing comma makes auto-formatting nicer for build methods.
             ),
-            backgroundColor: KTKJGlobalConfig.taskHeadColor,
-          ),
-          body: Container(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            color: Colors.white,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: double.maxFinite,
-                          color: KTKJGlobalConfig.taskHeadColor,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 20),
-                          child: Text(
-                            _description,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: ScreenUtil().setSp(72),
-                              letterSpacing: 1,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        // 裁切的控件
-                        Stack(
-                          children: <Widget>[
-                            ClipPath(
-                              // 只裁切底部的方法
-                              clipper: BottomClipper(),
-                              child: Container(
-                                color: KTKJGlobalConfig.taskHeadColor,
-                                height: ScreenUtil().setHeight(500),
-                              ),
-                            ),
-                            Container(
-                              constraints: BoxConstraints(minHeight: 120),
-                              width: double.maxFinite,
-                              margin: EdgeInsets.symmetric(horizontal: 16),
-                              padding: EdgeInsets.only(top: 20),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(16))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  buildPhoneContainer(),
-                                  buildCheckCodeLayout(),
-                                  buildPasswordLayout(),
-                                  buildInviteCodeLayout(),
-                                  SizedBox(
-                                    height: ScreenUtil().setHeight(156),
-                                  ),
-                                  buildBtnLayout(),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  buildBtnsRow(),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    )),
-                    buildWechatLoginContainer(),
-                    Visibility(
-                      visible: pageType == 0,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 50),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "注册即代表同意",
-                              style: TextStyle(
-                                  color: Color(0xFFAFAFAF),
-                                  fontSize: ScreenUtil().setSp(32)),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                KTKJNavigatorUtils.navigatorRouter(
-                                    context,
-                                    KTKJWebViewPage(
-                                      initialUrl: APi.AGREEMENT_SERVICES_URL,
-                                      showActions: false,
-                                      title: "服务协议",
-                                    ));
-                              },
-                              child: Text(
-                                "《服务协议》",
-                                style: TextStyle(
-                                    color: KTKJGlobalConfig.taskHeadColor,
-                                    fontSize: ScreenUtil().setSp(32)),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                KTKJNavigatorUtils.navigatorRouter(
-                                    context,
-                                    KTKJWebViewPage(
-                                      initialUrl: APi.AGREEMENT_PRIVACY_URL,
-                                      showActions: false,
-                                      title: "隐私政策",
-                                    ));
-                              },
-                              child: Text(
-                                "&《隐私政策》",
-                                style: TextStyle(
-                                    color: KTKJGlobalConfig.taskHeadColor,
-                                    fontSize: ScreenUtil().setSp(32)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ) // This trailing comma makes auto-formatting nicer for build methods.
-          ),
+      ),
     );
   }
 
@@ -982,7 +985,15 @@ class _LoginPageState extends State<KTKJLoginPage> {
   }
 
   Future<void> _login() async {
+    try {
+      EasyLoading.show();
+    } catch (e) {
+    }
     LoginEntity result = await HttpManage.login(phoneNumber, password);
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {
+    }
     if (result.status) {
       KTKJCommonUtils.showToast("登陆成功");
       KTKJGlobalConfig.saveLoginStatus(true);
@@ -994,7 +1005,15 @@ class _LoginPageState extends State<KTKJLoginPage> {
   }
 
   Future<void> _fastLogin() async {
+    try {
+      EasyLoading.show();
+    } catch (e) {
+    }
     LoginEntity result = await HttpManage.quickLogin(phoneNumber, checkCode);
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {
+    }
     if (result.status) {
       KTKJCommonUtils.showToast("登陆成功");
       KTKJGlobalConfig.saveLoginStatus(true);
@@ -1006,8 +1025,16 @@ class _LoginPageState extends State<KTKJLoginPage> {
   }
 
   Future<void> _register() async {
+    try {
+      EasyLoading.show();
+    } catch (e) {
+    }
     ResultBeanEntity result =
         await HttpManage.register(phoneNumber, checkCode, password, inviteCode);
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {
+    }
     if (result.status) {
       KTKJCommonUtils.showToast("注册成功，请登陆！");
       if (mounted) {
