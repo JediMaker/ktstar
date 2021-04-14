@@ -1184,7 +1184,7 @@ class _FeaturedTabPageState extends State<KTKJFeaturedTabPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
@@ -1291,7 +1291,7 @@ class _FeaturedTabPageState extends State<KTKJFeaturedTabPage>
                               child: Visibility(
                                 child: Container(
                                   child: Text(
-                                    "预估分红金：¥$_gBonus",
+                                    "预估分红金： $_gBonus",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(28),

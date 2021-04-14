@@ -230,7 +230,7 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
                           vertical: ScreenUtil().setWidth(30),
                         ),
                         child: Text(
-                          "新人专区下单，额外赠送40%分红体验金产生的分润归您",
+                          "新人专区下单，额外赠送400%分红体验金产生的分润归您",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(30),
                             color: Colors.white,
@@ -273,7 +273,7 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     String extraCoin;
     try {
       id = item.id;
@@ -281,8 +281,8 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '预估分红金￥${(item.btPrice)}';
-      extraCoin = "￥${(item.tryCoin)}";
+      profit = '预估分红金 ${(item.btPrice)}';
+      extraCoin = " ${(item.tryCoin)}";
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {

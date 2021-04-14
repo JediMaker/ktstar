@@ -22,7 +22,6 @@ import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 /// This is a very simple class, used to
 /// demo the `SearchPage` package
 class Person {
@@ -827,14 +826,14 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '分红金￥${(item.btPrice)}';
+      profit = '分红金 ${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
@@ -1069,7 +1068,7 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
@@ -1178,7 +1177,7 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
                               child: Visibility(
                                 child: Container(
                                   child: Text(
-                                    "预估分红金：¥$_gBonus",
+                                    "预估分红金： $_gBonus",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(28),

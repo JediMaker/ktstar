@@ -297,14 +297,14 @@ class _HomePddGoodsListPageState extends State<KTKJHomePddGoodsListPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     try {
       id = item.id;
       goodsName = item.goodsName;
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '分红金￥${(item.btPrice)}';
+      profit = '分红金 ${(item.btPrice)}';
       /*  if (goodsName.length < 8) {
         topMargin = ScreenUtil().setHeight(70);
       } else {
@@ -507,7 +507,7 @@ class _HomePddGoodsListPageState extends State<KTKJHomePddGoodsListPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //
@@ -614,7 +614,7 @@ class _HomePddGoodsListPageState extends State<KTKJHomePddGoodsListPage>
                               child: Visibility(
                                 child: Container(
                                   child: Text(
-                                    "预估分红金：¥$_gBonus",
+                                    "预估分红金： $_gBonus",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(28),

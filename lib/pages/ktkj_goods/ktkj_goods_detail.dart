@@ -271,7 +271,7 @@ class _GoodsDetailPageState extends State<KTKJGoodsDetailPage>
                                               bottom:
                                                   ScreenUtil().setHeight(8)),
                                           child: Text(
-                                            "分红金：￥$_btPrice",
+                                            "分红金： $_btPrice",
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
                                             style: TextStyle(
                                               color: _txtRedColor,
@@ -1561,7 +1561,7 @@ class _DetailWindowState extends State<DetailWindow>
                           left: ScreenUtil().setHeight(20),
                         ),
                         child: Text(
-                          "分红金：￥$_btPrice",
+                          "分红金： $_btPrice",
 //                                      "${_getPrice(false) == null ? "" : _getPrice(false)}",
                           style: TextStyle(
                             color: _txtRedColor,

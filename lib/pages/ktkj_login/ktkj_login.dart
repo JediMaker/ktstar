@@ -987,13 +987,11 @@ class _LoginPageState extends State<KTKJLoginPage> {
   Future<void> _login() async {
     try {
       EasyLoading.show();
-    } catch (e) {
-    }
+    } catch (e) {}
     LoginEntity result = await HttpManage.login(phoneNumber, password);
     try {
       EasyLoading.dismiss();
-    } catch (e) {
-    }
+    } catch (e) {}
     if (result.status) {
       KTKJCommonUtils.showToast("登陆成功");
       KTKJGlobalConfig.saveLoginStatus(true);
@@ -1007,13 +1005,11 @@ class _LoginPageState extends State<KTKJLoginPage> {
   Future<void> _fastLogin() async {
     try {
       EasyLoading.show();
-    } catch (e) {
-    }
+    } catch (e) {}
     LoginEntity result = await HttpManage.quickLogin(phoneNumber, checkCode);
     try {
       EasyLoading.dismiss();
-    } catch (e) {
-    }
+    } catch (e) {}
     if (result.status) {
       KTKJCommonUtils.showToast("登陆成功");
       KTKJGlobalConfig.saveLoginStatus(true);
@@ -1027,14 +1023,12 @@ class _LoginPageState extends State<KTKJLoginPage> {
   Future<void> _register() async {
     try {
       EasyLoading.show();
-    } catch (e) {
-    }
+    } catch (e) {}
     ResultBeanEntity result =
         await HttpManage.register(phoneNumber, checkCode, password, inviteCode);
     try {
       EasyLoading.dismiss();
-    } catch (e) {
-    }
+    } catch (e) {}
     if (result.status) {
       KTKJCommonUtils.showToast("注册成功，请登陆！");
       if (mounted) {

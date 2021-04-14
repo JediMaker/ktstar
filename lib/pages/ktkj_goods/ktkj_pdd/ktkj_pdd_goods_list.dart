@@ -23,7 +23,6 @@ import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -400,7 +399,7 @@ class _PddGoodsListPageState extends State<KTKJPddGoodsListPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     String couponAmount = ''; //优惠券金额
     String goodsSign = ''; //
     String searchId = ''; //

@@ -481,7 +481,7 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
     String originalPrice = '';
     String salePrice = '';
     double topMargin = 0;
-    String profit = '分红金￥0';
+    String profit = '分红金 0';
     String extraCoin;
     try {
       id = item.id;
@@ -489,7 +489,7 @@ class _NewcomersGoodsListPageState extends State<KTKJHotGoodsListPage>
       goodsImg = item.goodsImg;
       originalPrice = item.originalPrice;
       salePrice = item.salePrice;
-      profit = '预估分红金￥${(item.btPrice)}';
+      profit = '预估分红金 ${(item.btPrice)}';
 
       ///todo 获取分红体验金的值
       extraCoin = "￥${(item.btPrice)}";

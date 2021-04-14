@@ -1300,7 +1300,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                                   left: ScreenUtil().setWidth(15),
                                 ),
                                 child: Text(
-                                  "下单立享50%分红金",
+                                  "下单立享500%分红金",
                                   style: TextStyle(
                                     fontSize: ScreenUtil().setSp(34),
                                     color: Color(0xff666666),
@@ -1364,7 +1364,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "50",
+                                "500",
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(160),
                                   color: _newcomersLayoutTextColor,
