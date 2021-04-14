@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_alipay/flutter_alipay.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:star/global_config.dart';
@@ -173,7 +175,8 @@ class _KTKJOilRechargePageState extends State<KTKJOilRechargePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return FlutterEasyLoading(
+      child: KeyboardDismissOnTap(
         child: Scaffold(
             appBar: AppBar(
               title: Text(
@@ -217,7 +220,9 @@ class _KTKJOilRechargePageState extends State<KTKJOilRechargePage> {
                 ),
               ],
             ) // ThThis trailing comma makes auto-formatting nicer for build methods.
-            ));
+            ),
+      ),
+    );
   }
 
   Widget buildMainContainer() {
@@ -738,12 +743,18 @@ class _KTKJOilRechargePageState extends State<KTKJOilRechargePage> {
                     GestureDetector(
                       onTap: () async {
                         if (_payway == 1) {
+                          try {
+                            EasyLoading.show();
+                          } catch (e) {}
                           var result =
                               await HttpManage.gasolinePayWeChatPayInfo(
                             cardNo: _oilCardNum,
                             phone: _phone,
                             name: _name,
                           );
+                          try {
+                            EasyLoading.dismiss();
+                          } catch (e) {}
                           if (result.status) {
                             _payNo = result.data.payNo;
                             callWxPay(result.data);
@@ -751,11 +762,17 @@ class _KTKJOilRechargePageState extends State<KTKJOilRechargePage> {
                             KTKJCommonUtils.showToast(result.errMsg);
                           }
                         } else if (_payway == 2) {
+                          try {
+                            EasyLoading.show();
+                          } catch (e) {}
                           var result = await HttpManage.gasolinePayAliPayInfo(
                             cardNo: _oilCardNum,
                             phone: _phone,
                             name: _name,
                           );
+                          try {
+                            EasyLoading.dismiss();
+                          } catch (e) {}
                           if (result.status) {
                             _payInfo = result.data.payInfo;
                             _payNo = result.data.payNo;
