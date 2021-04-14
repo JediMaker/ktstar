@@ -1366,7 +1366,7 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                               Text(
                                 "500",
                                 style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(160),
+                                  fontSize: ScreenUtil().setSp(140),
                                   color: _newcomersLayoutTextColor,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -1377,12 +1377,12 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                                   Container(
                                     margin: EdgeInsets.only(
 //                                      top: ScreenUtil().setWidth(60),
-                                      left: ScreenUtil().setWidth(5),
+                                      left: ScreenUtil().setWidth(0),
                                     ),
                                     child: Text(
                                       "分红金",
                                       style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(36),
+                                        fontSize: ScreenUtil().setSp(32),
                                         color: _newcomersLayoutTextColor,
                                       ),
                                     ),
