@@ -1000,7 +1000,7 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
                                     TextStyle(fontSize: ScreenUtil().setSp(32)),
                                 children: [
                                   TextSpan(
-                                    text: '￥$coin',
+                                    text: '$coin',
                                     style: TextStyle(
                                       color: Color(0xFFF93736),
                                     ),

@@ -431,6 +431,7 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
                   ),
                   PriceText(
                     text: "$coin",
+                    showMoneySymbol: false,
                     textColor: Color(0xFF999999),
                     fontSize: ScreenUtil().setSp(32),
                     fontBigSize: ScreenUtil().setSp(42),

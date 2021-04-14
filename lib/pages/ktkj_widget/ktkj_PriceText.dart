@@ -26,6 +26,7 @@ class PriceText extends StatefulWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final double fontBigSize;
+  final bool showMoneySymbol; //展示金额符号
 
   const PriceText({
     @required this.text,
@@ -33,7 +34,9 @@ class PriceText extends StatefulWidget {
     this.fontBigSize,
     this.fontWeight = FontWeight.bold,
     this.textColor,
+    this.showMoneySymbol = true,
   });
+
   //免单
   @override
   _PriceTextState createState() => _PriceTextState();
@@ -71,7 +74,8 @@ class _PriceTextState extends State<PriceText> {
         TextSpan(
           children: [
             TextSpan(
-                text: '￥', style: TextStyle(fontSize: widget.fontSize - 3)),
+                text: '${widget.showMoneySymbol ? "￥" : ""}',
+                style: TextStyle(fontSize: widget.fontSize - 3)),
             TextSpan(
                 text: intText, style: TextStyle(fontSize: widget.fontBigSize)),
             TextSpan(text: dotText),
