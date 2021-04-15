@@ -1122,7 +1122,7 @@ class _MicroShareHolderEquityPageState
                     right: ScreenUtil().setWidth(30),
                   ),
                   child: Text(
-                    "以下为每10000个分红金所得数据",
+                    "以下为每100000个分红金所得数据",
                     style: TextStyle(
                       color: Color(0xff949494),
                       fontSize: ScreenUtil().setSp(33),
