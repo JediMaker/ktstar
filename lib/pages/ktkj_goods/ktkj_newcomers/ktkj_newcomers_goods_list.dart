@@ -206,7 +206,7 @@ class _NewcomersGoodsListPageState extends State<KTKJNewcomersGoodsListPage>
             children: [
               KTKJMyOctoImage(
                 image:
-                    "https://alipic.lanhuapp.com/xd78d8bfdb-0642-4fbe-8e83-6ed3d4a3f7a3",
+                    "https://alipic.lanhuapp.com/xdad1ffbaf-bb93-482a-97e5-f73395fa058e",
                 fit: BoxFit.fill,
                 width: ScreenUtil().setWidth(1127),
                 height: ScreenUtil().setWidth(634),
