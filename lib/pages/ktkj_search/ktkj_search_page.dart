@@ -745,7 +745,7 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
         emptyWidget: KTKJCommonUtils.isEmpty(goodsList) &&
                     _selectedTabIndex == 0 &&
                     _showSearchList ||
-                KTKJCommonUtils.isEmpty(goodsList) &&
+                KTKJCommonUtils.isEmpty(pddGoodsList) &&
                     _selectedTabIndex == 1 &&
                     _showSearchList //channelType
             ? KTKJNoDataPage()
