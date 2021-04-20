@@ -73,6 +73,12 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
     ),
   ];
 
+  ///总能量值
+  var _totalEnergy = "99999";
+
+  ///单次抽奖消耗能量值
+  var _consumeEnergy = '10';
+
   List<Widget> getItemWidgets() {
     List<Widget> _itemWidgets = <Widget>[];
     for (int i = 0; i < _lotteryList.length; i++) {
@@ -153,11 +159,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
   bool _isAnimating = false;
   var _statusListener;
 
-  void _gestureTap() {
-    int rewardIndex = 4;
-    if (widget.tapClickBlock != null) {
-      widget.tapClickBlock();
-    }
+  void _gestureTap({int rewardIndex = 0}) {
     _statusListener = (AnimationStatus status) {
       print('$status');
       if (status == AnimationStatus.completed) {
@@ -181,7 +183,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
         curve: Interval(
           0.0,
           1.0,
-          curve: Curves.easeOut,
+          curve: Curves.easeInOutQuad,
         ),
       ),
     )
@@ -212,84 +214,170 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
 //      transform: Matrix4.identity()..rotateZ(tween.value),
-      width: ScreenUtil().setWidth(900),
-      height: ScreenUtil().setWidth(900),
-      alignment: Alignment.center,
-      child: Stack(
-        alignment: Alignment.center,
-        fit: StackFit.loose,
-        children: <Widget>[
-          //转盘背景
-          Container(
-            child: Image.asset(
-              "static/images/bg_lottery.png",
-              width: ScreenUtil().setWidth(900),
-              height: ScreenUtil().setWidth(900),
-              fit: BoxFit.fill,
-            ),
-          ),
-          Transform.rotate(
-            angle: tween != null ? tween.value : pi / 180.0 * 270,
-            child: Stack(
-              alignment: Alignment.center,
-              fit: StackFit.loose,
-              children: <Widget>[
-                Transform.rotate(
-                  angle: _lotteryList.length % 2 == 0
-                      ? pi * 90 / _lotteryList.length + pi / _lotteryList.length
-                      : 0,
-                  child: PieChart(
-                    PieChartData(
-                        pieTouchData:
-                            PieTouchData(touchCallback: (pieTouchResponse) {
-                          /* setState(() {
-                            final desiredTouch = pieTouchResponse.touchInput
-                                    is! PointerExitEvent &&
-                                pieTouchResponse.touchInput is! PointerUpEvent;
-                            if (desiredTouch &&
-                                pieTouchResponse.touchedSection != null) {
-                              touchedIndex =
-                                  pieTouchResponse.touchedSectionIndex;
-                            } else {
-                              touchedIndex = -1;
-                            }
-                          });*/
-                        }),
-                        startDegreeOffset: 180,
-                        borderData: FlBorderData(
-                          show: false,
-                        ),
-                        sectionsSpace: 0,
-                        centerSpaceRadius: 0,
-                        sections: showingSections()),
-                  ),
+          width: ScreenUtil().setWidth(900),
+          height: ScreenUtil().setWidth(900),
+          alignment: Alignment.center,
+          child: Stack(
+            alignment: Alignment.center,
+            fit: StackFit.loose,
+            children: <Widget>[
+              //转盘背景
+              Container(
+                width: ScreenUtil().setWidth(900),
+                height: ScreenUtil().setWidth(900),
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setWidth(20),
                 ),
-                //转盘奖励内容
-                Stack(
+                child: Image.asset(
+                  "static/images/bg_lottery.png",
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Transform.rotate(
+                angle: tween != null ? tween.value : pi / 180.0 * 270,
+                child: Stack(
                   alignment: Alignment.center,
                   fit: StackFit.loose,
-                  children: getItemWidgets(),
+                  children: <Widget>[
+                    Transform.rotate(
+                      angle: _lotteryList.length % 2 == 0
+                          ? pi * 90 / _lotteryList.length +
+                              pi / _lotteryList.length
+                          : 0,
+                      child: PieChart(
+                        PieChartData(
+                            pieTouchData:
+                                PieTouchData(touchCallback: (pieTouchResponse) {
+                              /* setState(() {
+                                final desiredTouch = pieTouchResponse.touchInput
+                                        is! PointerExitEvent &&
+                                    pieTouchResponse.touchInput is! PointerUpEvent;
+                                if (desiredTouch &&
+                                    pieTouchResponse.touchedSection != null) {
+                                  touchedIndex =
+                                      pieTouchResponse.touchedSectionIndex;
+                                } else {
+                                  touchedIndex = -1;
+                                }
+                              });*/
+                            }),
+                            startDegreeOffset: 180,
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            sectionsSpace: 0,
+                            centerSpaceRadius: 0,
+                            sections: showingSections()),
+                      ),
+                    ),
+                    //转盘奖励内容
+                    Stack(
+                      alignment: Alignment.center,
+                      fit: StackFit.loose,
+                      children: getItemWidgets(),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-
-          //转盘中间开启按钮
-          GestureDetector(
-            onTap: _isAnimating ? null : _gestureTap,
-            child: Container(
-              width: ScreenUtil().setWidth(270),
-              height: ScreenUtil().setWidth(323),
-              child: KTKJMyOctoImage(
-                image:
-                    'https://alipic.lanhuapp.com/xdebe9a4b2-97ff-4cf4-b2e9-55ec7e756eec',
               ),
-            ),
+
+              //转盘中间开启按钮
+              GestureDetector(
+                onTap: _isAnimating ? null : _gestureTap,
+                child: Container(
+                  width: ScreenUtil().setWidth(270),
+                  height: ScreenUtil().setWidth(323),
+                  child: KTKJMyOctoImage(
+                    image:
+                        'https://alipic.lanhuapp.com/xdebe9a4b2-97ff-4cf4-b2e9-55ec7e756eec',
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        Container(
+          height: ScreenUtil().setWidth(248),
+          margin: EdgeInsets.only(
+            top: ScreenUtil().setWidth(106),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  left: ScreenUtil().setWidth(30),
+                ),
+                child: Stack(
+                  children: [
+                    KTKJMyOctoImage(
+                      image:
+                          "https://alipic.lanhuapp.com/xdd234d3a3-7e0e-4f10-b3c7-eeb0867b79d8",
+                      width: ScreenUtil().setWidth(206),
+                      height: ScreenUtil().setWidth(206),
+                    ),
+                    Center(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(150),
+                        ),
+                        child: Text(
+                          "总能量$_totalEnergy",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(38),
+                            color: Color(0xff8D0002),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  ///todo 调用接口获取中奖id
+                  _gestureTap();
+
+                  ///bus
+                },
+                child: Container(
+                  width: ScreenUtil().setWidth(515),
+                  height: ScreenUtil().setWidth(248),
+                  margin: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(80),
+                  ),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: Image.network(
+                        "https://alipic.lanhuapp.com/xd723158b3-402b-481f-985c-fcb60c9473a0",
+                        width: ScreenUtil().setWidth(515),
+                        height: ScreenUtil().setWidth(248),
+                        fit: BoxFit.fill,
+                      ).image,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "消耗$_consumeEnergy能量",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(48),
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff780200),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

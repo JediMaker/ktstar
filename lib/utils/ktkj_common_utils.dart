@@ -1,19 +1,18 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:star/global_config.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:quiver/strings.dart';
+import 'package:star/pages/ktkj_widget/ktkj_notice_dialog.dart';
+import 'package:star/pages/ktkj_widget/ktkj_update_dialog.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
-import 'dart:math' as math;
-import 'package:url_launcher/url_launcher.dart';
-import 'dart:typed_data';
-import 'dart:convert';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -236,8 +235,8 @@ class KTKJCommonUtils {
     });
   }
 
-  ///版本更新
-  static Future<Null> showUpdateDialog(
+  ///版本更新(废弃)
+  /*static Future<Null> showUpdateDialog(
       BuildContext context, String contentMsg) {
     return KTKJNavigatorUtils.showGSYDialog(
         context: context,
@@ -259,7 +258,7 @@ class KTKJCommonUtils {
             ],
           );
         });
-  }
+  }*/
 
   static Widget getNoDuplicateSubmissionWidget(
       {@required Widget childWidget, Function() fun}) {
@@ -499,5 +498,43 @@ class KTKJCommonUtils {
         break;
     }
     return status;
+  }
+
+  ///展示公告弹窗
+  static Future<bool> showNoticeDialog(
+      {BuildContext context,
+      String mNoticeContent,
+      String noticeTitle,
+      bool mIsForce}) async {
+    return await showDialog(
+        barrierDismissible: false, //屏蔽物理返回键（因为强更的时候点击返回键，弹窗会消失）
+        context: context,
+        builder: (BuildContext context) {
+          return WillPopScope(
+              child: KTKJNoticeDialog(
+                  noticeContent: mNoticeContent,
+                  noticeTitle: noticeTitle,
+                  isForce: mIsForce),
+              onWillPop: _onWillPop);
+        });
+  }
+
+  ///版本升级弹窗
+  static Future<bool> showUpdateDialog(
+      BuildContext context, String mUpdateContent, bool mIsForce) async {
+    return await showDialog(
+        barrierDismissible: false, //屏蔽物理返回键（因为强更的时候点击返回键，弹窗会消失）
+
+        context: context,
+        builder: (BuildContext context) {
+          return WillPopScope(
+              child: KTKJUpdateDialog(
+                  upDateContent: mUpdateContent, isForce: mIsForce),
+              onWillPop: _onWillPop);
+        });
+  }
+
+  static Future<bool> _onWillPop() async {
+    return false;
   }
 }
