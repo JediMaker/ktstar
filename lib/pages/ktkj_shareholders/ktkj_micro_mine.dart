@@ -12,6 +12,7 @@ import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/ktkj_adress/ktkj_my_adress.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_login/ktkj_modify_password.dart';
+import 'package:star/pages/ktkj_lottery/ktkj_lottery_main.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_apply_settle.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_backstage.dart';
 import 'package:star/pages/ktkj_order/ktkj_order_list.dart';
@@ -1969,9 +1970,9 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               textColor: Colors.white,
                               gravity: ToastGravity.BOTTOM);
                           return;*/
-                          KTKJCommonUtils.showToast("敬请期待！");
-                          /*KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJOrderListPage());*/
+//                          KTKJCommonUtils.showToast("敬请期待！");
+                          KTKJNavigatorUtils.navigatorRouter(
+                              context, KTKJLotteryMainPage());
                         },
                         child: Visibility(
                           visible: _showActionCenter,
@@ -2745,12 +2746,41 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                     width: ScreenUtil().setWidth(26),
                   ),
                   Visibility(
-                    visible: false,
-                    child: Image.asset(
-                      "static/images/${_getImgName(userType)}",
-                      width: ScreenUtil().setWidth(185),
-                      height: ScreenUtil().setHeight(67),
-                      fit: BoxFit.fill,
+//                    visible: false,
+                    child: Container(
+                      width: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setWidth(48),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          ScreenUtil().setWidth(27),
+                        ),
+                        color: Colors.black.withOpacity(0.09),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          KTKJMyOctoImage(
+                            image:
+                                'https://alipic.lanhuapp.com/xd11cc2acb-a066-4952-a863-db41d4529bdd',
+                            width: ScreenUtil().setWidth(25),
+                            height: ScreenUtil().setWidth(33),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: ScreenUtil().setWidth(6),
+                            ),
+                            child: Text(
+                              "剩余13天",
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(24),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 //            Image.asset("", width:)

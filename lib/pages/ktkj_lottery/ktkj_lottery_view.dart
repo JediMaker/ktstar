@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:star/pages/ktkj_lottery/ktkj_lottery_record_list.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
+import 'package:star/utils/ktkj_navigator_utils.dart';
 
 typedef void OnTapClickBlock();
 
@@ -308,33 +310,47 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                  left: ScreenUtil().setWidth(30),
-                ),
-                child: Stack(
-                  children: [
-                    KTKJMyOctoImage(
-                      image:
-                          "https://alipic.lanhuapp.com/xdd234d3a3-7e0e-4f10-b3c7-eeb0867b79d8",
-                      width: ScreenUtil().setWidth(206),
-                      height: ScreenUtil().setWidth(206),
+              GestureDetector(
+                onTap: () {
+                  /// 跳转记录列表页
+                  KTKJNavigatorUtils.navigatorRouter(
+                    context,
+                    KTKJLotteryRecordListPage(
+                      title: "能量记录",
+                      type: 0,
                     ),
-                    Center(
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          top: ScreenUtil().setWidth(150),
-                        ),
-                        child: Text(
-                          "总能量$_totalEnergy",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(38),
-                            color: Color(0xff8D0002),
+                  );
+
+                  ///
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(30),
+                  ),
+                  child: Stack(
+                    children: [
+                      KTKJMyOctoImage(
+                        image:
+                            "https://alipic.lanhuapp.com/xdd234d3a3-7e0e-4f10-b3c7-eeb0867b79d8",
+                        width: ScreenUtil().setWidth(206),
+                        height: ScreenUtil().setWidth(206),
+                      ),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(150),
+                          ),
+                          child: Text(
+                            "总能量$_totalEnergy",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(38),
+                              color: Color(0xff8D0002),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               GestureDetector(

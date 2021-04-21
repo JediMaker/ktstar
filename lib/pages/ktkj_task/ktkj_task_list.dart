@@ -35,6 +35,7 @@ import 'package:star/pages/ktkj_goods/ktkj_oil/ktkj_oil_recharge.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_home.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
+import 'package:star/pages/ktkj_lottery/ktkj_float_lottery_entrance.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_payment.dart';
 import 'package:star/pages/ktkj_recharge/ktkj_recharge_list.dart';
 import 'package:star/pages/ktkj_search/ktkj_search_page.dart';
@@ -980,82 +981,84 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         gradient: _gradientCorlor,
         titleSpacing: 0,
       ),
-      body: Builder(
-        builder: (context) {
-          return EasyRefresh.custom(
-            enableControlFinishLoad: false,
-            topBouncing: false,
-            bottomBouncing: false,
-            controller: _refreshController,
-            header: CustomHeader(
-                completeDuration: Duration(milliseconds: 1000),
-                headerBuilder: (context,
-                    refreshState,
-                    pulledExtent,
-                    refreshTriggerPullDistance,
-                    refreshIndicatorExtent,
-                    axisDirection,
-                    float,
-                    completeDuration,
-                    enableInfiniteRefresh,
-                    success,
-                    noMore) {
-                  return Stack(
-                    children: <Widget>[
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          width: 30.0,
-                          height: 30.0,
-                          child: SpinKitCircle(
-                            color: KTKJGlobalConfig.colorPrimary,
-                            size: 30.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }),
-            footer: CustomFooter(
-//          triggerDistance: ScreenUtil().setWidth(180),
-                completeDuration: Duration(seconds: 1),
-                footerBuilder: (context,
-                    loadState,
-                    pulledExtent,
-                    loadTriggerPullDistance,
-                    loadIndicatorExtent,
-                    axisDirection,
-                    float,
-                    completeDuration,
-                    enableInfiniteLoad,
-                    success,
-                    noMore) {
-                  return Stack(
-                    children: <Widget>[
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Visibility(
-                          visible: noMore,
-                          child: Center(
+      body: Stack(
+        children: [
+          Builder(
+            builder: (context) {
+              return EasyRefresh.custom(
+                enableControlFinishLoad: false,
+                topBouncing: false,
+                bottomBouncing: false,
+                controller: _refreshController,
+                header: CustomHeader(
+                    completeDuration: Duration(milliseconds: 1000),
+                    headerBuilder: (context,
+                        refreshState,
+                        pulledExtent,
+                        refreshTriggerPullDistance,
+                        refreshIndicatorExtent,
+                        axisDirection,
+                        float,
+                        completeDuration,
+                        enableInfiniteRefresh,
+                        success,
+                        noMore) {
+                      return Stack(
+                        children: <Widget>[
+                          Positioned(
+                            bottom: 0.0,
+                            left: 0.0,
+                            right: 0.0,
                             child: Container(
-                              margin: EdgeInsets.only(
-                                top: ScreenUtil().setWidth(30),
-                                bottom: ScreenUtil().setWidth(30),
-                              ),
-                              child: Text(
-                                "~我是有底线的~",
-                                style: TextStyle(
-                                  color: Color(0xff666666),
-                                  fontSize: ScreenUtil().setSp(32),
-                                ),
+                              width: 30.0,
+                              height: 30.0,
+                              child: SpinKitCircle(
+                                color: KTKJGlobalConfig.colorPrimary,
+                                size: 30.0,
                               ),
                             ),
                           ),
-                        ),
+                        ],
+                      );
+                    }),
+                footer: CustomFooter(
+//          triggerDistance: ScreenUtil().setWidth(180),
+                    completeDuration: Duration(seconds: 1),
+                    footerBuilder: (context,
+                        loadState,
+                        pulledExtent,
+                        loadTriggerPullDistance,
+                        loadIndicatorExtent,
+                        axisDirection,
+                        float,
+                        completeDuration,
+                        enableInfiniteLoad,
+                        success,
+                        noMore) {
+                      return Stack(
+                        children: <Widget>[
+                          Positioned(
+                            bottom: 0.0,
+                            left: 0.0,
+                            right: 0.0,
+                            child: Visibility(
+                              visible: noMore,
+                              child: Center(
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    top: ScreenUtil().setWidth(30),
+                                    bottom: ScreenUtil().setWidth(30),
+                                  ),
+                                  child: Text(
+                                    "~我是有底线的~",
+                                    style: TextStyle(
+                                      color: Color(0xff666666),
+                                      fontSize: ScreenUtil().setSp(32),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
 //                  child: Container(
 //                    width: 30.0,
 //                    height: 30.0,
@@ -1064,171 +1067,174 @@ class _TaskListPageState extends State<KTKJTaskListPage>
 //                            size: 30.0,
 //                          ),*/
 //                  ),
+                          ),
+                        ],
+                      );
+                    }),
+                firstRefreshWidget: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Center(
+                      child: SizedBox(
+                    height: 200.0,
+                    width: 300.0,
+                    child: Card(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 50.0,
+                            height: 50.0,
+                            child: SpinKitFadingCube(
+                              color: KTKJGlobalConfig.colorPrimary,
+                              size: 25.0,
+                            ),
+                          ),
+                          Container(
+                            child: Text("正在加载。。。"),
+                          )
+                        ],
                       ),
-                    ],
-                  );
-                }),
-            firstRefreshWidget: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Center(
-                  child: SizedBox(
-                height: 200.0,
-                width: 300.0,
-                child: Card(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        child: SpinKitFadingCube(
-                          color: KTKJGlobalConfig.colorPrimary,
-                          size: 25.0,
-                        ),
-                      ),
-                      Container(
-                        child: Text("正在加载。。。"),
-                      )
-                    ],
-                  ),
+                    ),
+                  )),
                 ),
-              )),
-            ),
-            slivers: <Widget>[
-              SliverToBoxAdapter(
-                child: Stack(
-                  children: <Widget>[
-                    buildBannerLayout(),
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Stack(
+                      children: <Widget>[
+                        buildBannerLayout(),
 //                    _buildHotspot(),
-                  ],
-                ),
-              ),
-              desLayout(),
-              itemsLayout(),
+                      ],
+                    ),
+                  ),
+                  desLayout(),
+                  itemsLayout(),
 
-              ///测试查看loading效果
-              /* SliverToBoxAdapter(
-                  child: Column(
-                children: [
-                  Loading(
-                    indicator: BallBeatIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: BallGridPulseIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: BallPulseIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: BallScaleIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: BallScaleMultipleIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: BallSpinFadeLoaderIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: LineScaleIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: LineScalePartyIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: LineScalePulseOutIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                  Loading(
-                    indicator: PacmanIndicator(),
-                    size: 100.0,
-                    color: KTKJGlobalConfig.colorPrimary,
-                  ),
-                ],
-              )),*/
-              buildLayoutNewcomers(),
-              buildAdRowContainer(),
-              buildGoodsListSliverToBoxAdapter(context),
+                  ///测试查看loading效果
+                  /* SliverToBoxAdapter(
+                      child: Column(
+                    children: [
+                      Loading(
+                        indicator: BallBeatIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: BallGridPulseIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: BallPulseIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: BallScaleIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: BallScaleMultipleIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: BallSpinFadeLoaderIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: LineScaleIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: LineScalePartyIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: LineScalePulseOutIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                      Loading(
+                        indicator: PacmanIndicator(),
+                        size: 100.0,
+                        color: KTKJGlobalConfig.colorPrimary,
+                      ),
+                    ],
+                  )),*/
+                  buildLayoutNewcomers(),
+                  buildAdRowContainer(),
+                  buildGoodsListSliverToBoxAdapter(context),
 //              buildApplyForMicroShareholders(),
-              pddcategoryTabsView,
-              SliverToBoxAdapter(
-                child: GestureDetector(
-                  child: KTKJHomeGoodsListPage(
-                    categoryId: _categoryId,
+                  pddcategoryTabsView,
+                  SliverToBoxAdapter(
+                    child: GestureDetector(
+                      child: KTKJHomeGoodsListPage(
+                        categoryId: _categoryId,
+                      ),
+                      onHorizontalDragStart: (DragStartDetails details) {},
+                      onHorizontalDragUpdate: (DragUpdateDetails details) {
+                        _offsetValue = details.primaryDelta;
+                      },
+                      onHorizontalDragEnd: (DragEndDetails details) {
+                        setState(() {
+                          if (_offsetValue > 0) {
+                            //向左滑动
+                            if (_selectedTabIndex > 0) {
+                              _selectedTabIndex = _selectedTabIndex - 1;
+                              _tabs = buildTabs();
+                              pddcategoryTabsView = buildPddCategoryTabBar();
+                              _pddTabController.animateTo(_selectedTabIndex);
+                              bus.emit("changePddListViewData",
+                                  cats[_selectedTabIndex]);
+                            }
+                          } else {
+                            //向右滑动
+                            if (_selectedTabIndex < cats.length - 1) {
+                              _selectedTabIndex = _selectedTabIndex + 1;
+                              _tabs = buildTabs();
+                              pddcategoryTabsView = buildPddCategoryTabBar();
+                              _pddTabController.animateTo(_selectedTabIndex);
+                              bus.emit("changePddListViewData",
+                                  cats[_selectedTabIndex]);
+                            }
+                          }
+                        });
+                      },
+                    ),
                   ),
-                  onHorizontalDragStart: (DragStartDetails details) {},
-                  onHorizontalDragUpdate: (DragUpdateDetails details) {
-                    _offsetValue = details.primaryDelta;
-                  },
-                  onHorizontalDragEnd: (DragEndDetails details) {
-                    setState(() {
-                      if (_offsetValue > 0) {
-                        //向左滑动
-                        if (_selectedTabIndex > 0) {
-                          _selectedTabIndex = _selectedTabIndex - 1;
-                          _tabs = buildTabs();
-                          pddcategoryTabsView = buildPddCategoryTabBar();
-                          _pddTabController.animateTo(_selectedTabIndex);
-                          bus.emit(
-                              "changePddListViewData", cats[_selectedTabIndex]);
-                        }
-                      } else {
-                        //向右滑动
-                        if (_selectedTabIndex < cats.length - 1) {
-                          _selectedTabIndex = _selectedTabIndex + 1;
-                          _tabs = buildTabs();
-                          pddcategoryTabsView = buildPddCategoryTabBar();
-                          _pddTabController.animateTo(_selectedTabIndex);
-                          bus.emit(
-                              "changePddListViewData", cats[_selectedTabIndex]);
-                        }
-                      }
-                    });
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  child: SizedBox(
-                    height: 8,
+                  SliverToBoxAdapter(
+                    child: Container(
+                      child: SizedBox(
+                        height: 8,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              //  SliverToBoxAdapter(child: taskCard2(context)),
-              // buildTaskWall(),
-            ],
-            onRefresh: () async {
+                  //  SliverToBoxAdapter(child: taskCard2(context)),
+                  // buildTaskWall(),
+                ],
+                onRefresh: () async {
 //              _initData();
-              if (!isFirstLoading) {
-                bus.emit("refreshHomeData");
-              }
-            },
-            onLoad: () async {
+                  if (!isFirstLoading) {
+                    bus.emit("refreshHomeData");
+                  }
+                },
+                onLoad: () async {
 //              _initData();
-              if (!isFirstLoading) {
-                bus.emit("loadMoreHomeData");
-              }
+                  if (!isFirstLoading) {
+                    bus.emit("loadMoreHomeData");
+                  }
+                },
+              );
             },
-          );
-        },
+          ),
+          KTKJFloatLotteryEntrancePage(),
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

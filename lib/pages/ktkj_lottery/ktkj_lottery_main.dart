@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_flop.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_msg_list.dart';
+import 'package:star/pages/ktkj_lottery/ktkj_lottery_record_list.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_view.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
@@ -140,6 +141,47 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                 child: Container(
                                   child: Text(
                                     "消息",
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(42),
+                                      color: CupertinoColors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          /// 跳转记录列表页
+                          KTKJNavigatorUtils.navigatorRouter(
+                              context,
+                              KTKJLotteryRecordListPage(
+                                title: "抽奖记录",
+                                type: 0,
+                              ));
+
+                          ///
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(293),
+                            left: ScreenUtil().setWidth(968),
+                            right: ScreenUtil().setWidth(60),
+                          ),
+                          child: Column(
+                            children: [
+                              KTKJMyOctoImage(
+                                image:
+                                    "https://alipic.lanhuapp.com/xd6d197e09-f5b4-417d-b16a-a8edf03898d9",
+                                width: ScreenUtil().setWidth(76),
+                                height: ScreenUtil().setWidth(71),
+                              ),
+                              Center(
+                                child: Container(
+                                  child: Text(
+                                    "抽奖记录",
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(42),
                                       color: CupertinoColors.white,
