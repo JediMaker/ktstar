@@ -167,7 +167,7 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (!KTKJGlobalConfig.isRelease) {
+    if (KTKJGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
@@ -3120,4 +3120,7 @@ class HttpManage {
     resultBeanEntityFromJson(entity, extractData);
     return entity;
   }
+
+  ///TODO 能量大作战消息记录
+  static lotteryGetMsgList({cId, type, int page, int pageSize, firstId}) {}
 }
