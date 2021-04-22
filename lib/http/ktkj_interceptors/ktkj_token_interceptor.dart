@@ -18,8 +18,6 @@ import 'package:star/utils/ktkj_navigator_utils.dart';
 
 /**
  * Token拦截器
- * Created by guoshuyu
- * on 2019/3/23.
  */
 class TokenInterceptors extends InterceptorsWrapper {
   String _token;

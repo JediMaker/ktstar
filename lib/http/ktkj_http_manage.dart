@@ -24,6 +24,7 @@ import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/logistics_info_entity_helper.dart';
+import 'package:star/generated/json/lottery_info_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/generated/json/order_detail_entity_helper.dart';
@@ -85,6 +86,7 @@ import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/logistics_info_entity.dart';
+import 'package:star/models/lottery_info_entity.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
@@ -133,6 +135,7 @@ void getHttp() async {
   }
 }
 
+///网络请求统一调用管理
 class HttpManage {
 //  prefs.setString("token", tokenBean.data.accessToken);
   static Dio dio = new Dio(BaseOptions(
@@ -167,7 +170,7 @@ class HttpManage {
     dio.interceptors.add(new TokenInterceptors());
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
-    if (KTKJGlobalConfig.isRelease) {
+    if (!KTKJGlobalConfig.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
@@ -3123,4 +3126,30 @@ class HttpManage {
 
   ///TODO 能量大作战消息记录
   static lotteryGetMsgList({cId, type, int page, int pageSize, firstId}) {}
+
+  ///
+  ///
+  /// 能量大作战抽奖信息获取
+  static Future<LotteryInfoEntity> lotteryGetInfo() async {
+    var response = await HttpManage.dio.post(
+      APi.LOTTERY_INFO,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LotteryInfoEntity();
+    lotteryInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  /// 能量大作战开始抽奖
+  static Future<LotteryInfoEntity> lotteryPlay() async {
+    var response = await HttpManage.dio.post(
+      APi.LOTTERY_PLAY,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LotteryInfoEntity();
+    lotteryInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
 }

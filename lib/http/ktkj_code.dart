@@ -1,5 +1,4 @@
-
-///错误编码
+///错误编码（废弃）
 class Code {
   ///网络错误
   static const NETWORK_ERROR = -1;
@@ -13,7 +12,7 @@ class Code {
   static const SUCCESS = 200;
 
   static errorHandleFunction(code, message, noTip) {
-    if(noTip) {
+    if (noTip) {
       return message;
     }
 //    eventBus.fire(new HttpErrorEvent(code, message));

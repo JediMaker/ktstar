@@ -1,5 +1,6 @@
 import 'package:star/global_config.dart';
 
+///接口URI配置信息
 class APi {
 //  6YHgt890Mgplu7054fg8k3g3dQ2CXmh4
   static String BASE_URL = KTKJGlobalConfig.isRelease
@@ -422,5 +423,13 @@ class APi {
 
   ///油卡充值退款申请
   static const String GASOLINE_REFUND = "order/gas-refund";
+
 //  =================油卡充值相关接口======END======================
+//  =================能量大作战相关接口======START======================
+  ///能量大作战抽奖相关信息
+  static const String LOTTERY_INFO = "lottery/index";
+
+  ///能量大作战开始抽奖
+  static const String LOTTERY_PLAY = "lottery/play";
+//  =================能量大作战相关接口======END======================
 }

@@ -4,8 +4,6 @@ import 'package:star/global_config.dart';
 
 /**
  * Log 拦截器
- * Created by guoshuyu
- * on 2019/3/23.
  */
 class LogsInterceptors extends InterceptorsWrapper {
   static List<Map> sHttpResponses = new List<Map>();

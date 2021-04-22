@@ -8,8 +8,7 @@ import 'package:star/http/ktkj_interceptors/ktkj_log_interceptor.dart';
 import 'package:star/http/ktkj_interceptors/ktkj_response_interceptor.dart';
 import 'package:star/http/ktkj_result_data.dart';
 
-
-///http请求
+///http请求（废弃）
 class MyHttp {
   static const CONTENT_TYPE_JSON = "application/generated.json";
   static const CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";

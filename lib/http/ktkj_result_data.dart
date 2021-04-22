@@ -1,5 +1,5 @@
 /**
- * 网络结果数据
+ * 网络结果数据（废弃）
  */
 class ResultData {
   var data;
