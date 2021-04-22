@@ -83,8 +83,8 @@ class _KTKJFloatLotteryEntrancePageState
     return AnimatedPositioned(
       left: offset.dx,
       top: offset.dy,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
+      duration: Duration(milliseconds: 1000),
+      curve: Curves.fastLinearToSlowEaseIn,
       child: Visibility(
         visible: _showFloatBtn,
         child: GestureDetector(

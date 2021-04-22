@@ -3,17 +3,22 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/lottery_info_entity.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_record_list.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
-typedef void OnTapClickBlock();
+typedef void OnTapClickBlock(LotteryInfoData lotteryInfoData);
 
 ///抽奖转盘
 class KTKJLotteryView extends StatefulWidget {
-  KTKJLotteryView({Key key, this.tapClickBlock}) : super(key: key);
+  KTKJLotteryView({Key key, this.tapClickBlock, this.lotteryInfoData})
+      : super(key: key);
   final String title = "";
+  final LotteryInfoData lotteryInfoData;
   final OnTapClickBlock tapClickBlock;
 
   @override
@@ -22,8 +27,9 @@ class KTKJLotteryView extends StatefulWidget {
 
 class _KTKJLotteryViewState extends State<KTKJLotteryView>
     with SingleTickerProviderStateMixin {
-  final List<LotteryItemModel> _lotteryList = <LotteryItemModel>[
-    LotteryItemModel(
+  LotteryInfoData _lotteryInfoData;
+  List<LotteryItemModel> _lotteryList = <LotteryItemModel>[
+    /* LotteryItemModel(
       titleName: '能量值',
       iconName: '',
       value: '8',
@@ -72,15 +78,16 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
           'https://alipic.lanhuapp.com/xda9349a78-ac96-481e-91bd-98f95bd4448f',
       width: ScreenUtil().setWidth(74),
       height: ScreenUtil().setWidth(100),
-    ),
+    ),*/
   ];
 
   ///总能量值
-  var _totalEnergy = "99999";
+  var _totalEnergy = "0";
 
   ///单次抽奖消耗能量值
-  var _consumeEnergy = '10';
+  var _consumeEnergy = '0';
 
+  ///转盘创建
   List<Widget> getItemWidgets() {
     List<Widget> _itemWidgets = <Widget>[];
     for (int i = 0; i < _lotteryList.length; i++) {
@@ -91,6 +98,51 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
     return _itemWidgets;
   }
 
+  ///[type]奖品类型 1万能卡 2攻击卡 3保护盾 4能量值
+  ///[value]能量值对应值
+  ///转盘item创建
+  LotteryItemModel buildLotteryItem({type, value}) {
+    LotteryItemModel itemModel;
+    switch (type) {
+      case "1":
+        itemModel = LotteryItemModel(
+          titleName: '万能卡',
+          iconName:
+              'https://alipic.lanhuapp.com/xdc812a2cc-384c-4f24-b3a8-def8ad79b7a0',
+          width: ScreenUtil().setWidth(110),
+          height: ScreenUtil().setWidth(70),
+        );
+        break;
+      case "2":
+        itemModel = LotteryItemModel(
+          titleName: '攻击卡',
+          iconName:
+              'https://alipic.lanhuapp.com/xd19de56e9-427d-4ea0-9a83-b47866996868',
+          width: ScreenUtil().setWidth(88),
+          height: ScreenUtil().setWidth(87),
+        );
+        break;
+      case "3":
+        itemModel = LotteryItemModel(
+          titleName: '保护盾',
+          iconName:
+              'https://alipic.lanhuapp.com/xda9349a78-ac96-481e-91bd-98f95bd4448f',
+          width: ScreenUtil().setWidth(74),
+          height: ScreenUtil().setWidth(100),
+        );
+        break;
+      case "4":
+        itemModel = LotteryItemModel(
+          titleName: '能量值',
+          iconName: '',
+          value: '$value',
+        );
+        break;
+    }
+    return itemModel;
+  }
+
+  ///转盘扇形区域绘制
   Widget myTransitionItem(int i, LotteryItemModel itemModel) {
     return Container(
 //      color: i % 2 == 0 ? Color(0xffFAC07F) : Color(0xffFDD594),
@@ -123,7 +175,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                 visible: !KTKJCommonUtils.isEmpty(itemModel.iconName),
                 child: Container(
                   margin: EdgeInsets.only(
-                    top: ScreenUtil().setWidth(10),
+                    top: ScreenUtil().setWidth(20),
                   ),
                   width: itemModel.width,
                   height: itemModel.height,
@@ -161,13 +213,24 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
   bool _isAnimating = false;
   var _statusListener;
 
-  void _gestureTap({int rewardIndex = 0}) {
+  ///转盘动画执行
+  void _gestureTap({int rewardIndex = 0, rewardMsg}) {
     _statusListener = (AnimationStatus status) {
       print('$status');
       if (status == AnimationStatus.completed) {
         _isAnimating = false;
 
-        ///todo 提示中奖信息
+        /// 提示中奖信息
+        if (KTKJCommonUtils.isNotEmpty(rewardMsg)) {
+          KTKJCommonUtils.showToast("$rewardMsg", gravity: ToastGravity.CENTER);
+        }
+
+        ///动画完成后更新UI
+        if (widget.tapClickBlock != null) {
+          widget.tapClickBlock(_lotteryInfoData);
+        }
+
+        ///
 //        showAwardAlert(context: context, itemModel: _lotteryList[rewardIndex]);
         tween.removeStatusListener(_statusListener);
       }
@@ -198,18 +261,72 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
     _isAnimating = true;
   }
 
+  ///初始化转盘信息
+  _initData() async {
+    var result = await HttpManage.lotteryGetInfo();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          _lotteryInfoData = result.data;
+        });
+      }
+    }
+    print("_lotteryInfoData=$_lotteryInfoData ");
+    if (_lotteryList.isNotEmpty) {
+      _lotteryList.clear();
+    } else {
+      _lotteryList = List<LotteryItemModel>();
+    }
+    if (KTKJCommonUtils.isNotEmpty(_lotteryInfoData)) {
+      var lotteryList = _lotteryInfoData.prizeList;
+      if (KTKJCommonUtils.isNotEmpty(lotteryList)) {
+        for (var item in lotteryList) {
+          _lotteryList.add(
+            buildLotteryItem(type: item.type, value: item.num),
+          );
+        }
+      }
+      _totalEnergy = _lotteryInfoData.userPowerNum;
+      _consumeEnergy = _lotteryInfoData.needPowerNum;
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
+  ///获取后台中奖信息
+  _lotteryPlay() async {
+    var result = await HttpManage.lotteryPlay();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          _lotteryInfoData = result.data;
+          var rewardIndex = _lotteryInfoData.prizeId - 1;
+          var rewardMsg = _lotteryInfoData.lotteryMsg;
+
+          ///执行抽奖动画
+          _gestureTap(rewardIndex: rewardIndex, rewardMsg: rewardMsg);
+          _totalEnergy = _lotteryInfoData.userPowerNum;
+          _consumeEnergy = _lotteryInfoData.needPowerNum;
+        });
+      }
+    } else {
+      KTKJCommonUtils.showToast(result.errMsg);
+    }
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //控制类对象
     controller = new AnimationController(
         duration: const Duration(milliseconds: 5000), vsync: this);
+    _lotteryInfoData = widget.lotteryInfoData;
+    _initData();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     controller.dispose();
   }
@@ -289,7 +406,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
               //转盘中间开启按钮
               GestureDetector(
-                onTap: _isAnimating ? null : _gestureTap,
+//                onTap: _isAnimating ? null : _gestureTap,
                 child: Container(
                   width: ScreenUtil().setWidth(270),
                   height: ScreenUtil().setWidth(323),
@@ -317,7 +434,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                     context,
                     KTKJLotteryRecordListPage(
                       title: "能量记录",
-                      type: 0,
+                      type: 1,
                     ),
                   );
 
@@ -328,6 +445,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                     left: ScreenUtil().setWidth(30),
                   ),
                   child: Stack(
+                    alignment: Alignment.topCenter,
                     children: [
                       KTKJMyOctoImage(
                         image:
@@ -355,8 +473,12 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
               ),
               GestureDetector(
                 onTap: () {
-                  ///todo 调用接口获取中奖id
-                  _gestureTap();
+                  /// 调用接口获取中奖id
+
+                  ///
+                  if (!_isAnimating) {
+                    _lotteryPlay();
+                  }
 
                   ///bus
                 },
@@ -364,8 +486,9 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                   width: ScreenUtil().setWidth(515),
                   height: ScreenUtil().setWidth(248),
                   margin: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(80),
+                    left: ScreenUtil().setWidth(60),
                   ),
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: Image.network(
@@ -376,17 +499,60 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                       ).image,
                     ),
                   ),
-                  child: Center(
-                    child: Text(
-                      "消耗$_consumeEnergy能量",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(48),
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff780200),
-                      ),
+                  child: Text(
+                    "消耗$_consumeEnergy能量",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(48),
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff780200),
                     ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  /// 跳转记录列表页
+                  KTKJNavigatorUtils.navigatorRouter(
+                    context,
+                    KTKJLotteryRecordListPage(
+                      title: "抽奖记录",
+                      type: 0,
+                    ),
+                  );
+
+                  ///
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(80),
+                    right: ScreenUtil().setWidth(30),
+                  ),
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      KTKJMyOctoImage(
+                        image:
+                            "https://alipic.lanhuapp.com/xd77525998-5795-477e-b93b-1574341f0923",
+                        width: ScreenUtil().setWidth(177),
+                        height: ScreenUtil().setWidth(173),
+                      ),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(120),
+                          ),
+                          child: Text(
+                            "抽奖记录",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(38),
+                              color: Color(0xff8D0002),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

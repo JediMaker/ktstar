@@ -11,7 +11,9 @@ lotteryInfoEntityFromJson(LotteryInfoEntity data, Map<String, dynamic> json) {
     data.errMsg = json['err_msg'];
   }
   if (json['data'] != null) {
-    data.data = new LotteryInfoData().fromJson(json['data']);
+    try {
+      data.data = new LotteryInfoData().fromJson(json['data']);
+    } catch (e) {}
   }
   return data;
 }

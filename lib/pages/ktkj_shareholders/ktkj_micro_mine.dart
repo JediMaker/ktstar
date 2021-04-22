@@ -629,14 +629,14 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
               width: 0.5)),
       child: Column(
         children: <Widget>[
-          /* ListTile(
+          ListTile(
             title: Row(
               children: <Widget>[
-                */ /*  Image.asset(
+                /*Image.asset(
                   "static/images/icon_fans.png",
                   width: ScreenUtil().setWidth(44),
                   height: ScreenUtil().setWidth(71),
-                ),*/ /*
+                ),*/
                 Text(
                   "收货地址",
                   style: TextStyle(
@@ -646,16 +646,17 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
               ],
             ),
             onTap: () {
-              KTKJNavigatorUtils.navigatorRouter(context, KTKJAddressListPage(type: 1));
+              KTKJNavigatorUtils.navigatorRouter(
+                  context, KTKJAddressListPage(type: 1));
             },
             trailing: Wrap(
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                */ /*Text(
+                Text(
                   "",
                   style: TextStyle(color: Color(0xff999999)),
-                ),*/ /*
+                ),
                 Icon(
                   Icons.arrow_forward_ios,
                   size: ScreenUtil().setWidth(32),
@@ -665,13 +666,13 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
             ),
           ),
           Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: KTKJGlobalConfig.LAYOUT_MARGIN),
+            margin: EdgeInsets.symmetric(
+                horizontal: KTKJGlobalConfig.LAYOUT_MARGIN),
             child: Divider(
               height: ScreenUtil().setHeight(1),
               color: Color(0xFFefefef),
             ),
-          ),*/
+          ),
           ListTile(
             title: Row(
               children: <Widget>[
@@ -1923,6 +1924,48 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               textColor: Colors.white,
                               gravity: ToastGravity.BOTTOM);
                           return;*/
+                          KTKJNavigatorUtils.navigatorRouter(
+                              context, KTKJLotteryMainPage());
+                        },
+                        child: new Container(
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Container(
+                                margin: const EdgeInsets.only(bottom: 3.0),
+                                child: new CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundColor: Colors.transparent,
+                                  child: KTKJMyOctoImage(
+                                    image:
+                                        "https://alipic.lanhuapp.com/xdba913166-ce49-4fb5-aeeb-11918e980b9b",
+                                    width: ScreenUtil().setWidth(128),
+                                    height: ScreenUtil().setWidth(128),
+                                  ),
+                                ),
+                              ),
+                              new Container(
+                                child: new Text("能量场",
+                                    style: new TextStyle(
+                                        color: _itemsTextColor,
+                                        fontSize: ScreenUtil().setSp(38))),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                ),
+                /*new Flexible(
+                  fit: FlexFit.tight,
+                  child: Container(
+                    child: new InkWell(
+                        onTap: () {
+                          */ /* Fluttertoast.showToast(
+                              msg: "暂未开放",
+                              backgroundColor: Colors.grey,
+                              textColor: Colors.white,
+                              gravity: ToastGravity.BOTTOM);
+                          return;*/ /*
                           if (!KTKJGlobalConfig.isLogin()) {
                             KTKJNavigatorUtils.navigatorRouter(
                                 context, KTKJLoginPage());
@@ -1958,7 +2001,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                           ),
                         )),
                   ),
-                ),
+                ),*/
                 new Flexible(
                   fit: FlexFit.tight,
                   child: Container(

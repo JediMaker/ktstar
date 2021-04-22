@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/lottery_info_entity.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_flop.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_msg_list.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_record_list.dart';
@@ -23,16 +25,34 @@ class KTKJLotteryMainPage extends StatefulWidget {
 
 class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
   ///已拥有保护盾数量
-  var _cardProtectedCount = 0;
+  var _cardProtectedCount = "0";
 
   ///已拥有攻击卡数量
-  var _cardAttackCount = 0;
+  var _cardAttackCount = "0";
 
   ///已拥有万能卡数量
-  var _cardUniversalCount = 0;
+  var _cardUniversalCount = "0";
+  LotteryInfoData _lotteryInfoData;
+
+  _initData() async {
+    var result = await HttpManage.lotteryGetInfo();
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          _cardProtectedCount = result.data.userCardNum.protectNum;
+          _cardAttackCount = result.data.userCardNum.attackNum;
+          _cardUniversalCount = result.data.userCardNum.magicNum;
+          _lotteryInfoData = result.data;
+        });
+      }
+    } else {
+      KTKJCommonUtils.showToast(result.errMsg);
+    }
+  }
 
   @override
   void initState() {
+    _initData();
     super.initState();
   }
 
@@ -152,7 +172,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                           ),
                         ),
                       ),
-                      GestureDetector(
+                      /*  GestureDetector(
                         onTap: () {
                           /// 跳转记录列表页
                           KTKJNavigatorUtils.navigatorRouter(
@@ -192,7 +212,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                             ],
                           ),
                         ),
-                      ),
+                      ),*/
                       Container(
                         margin: EdgeInsets.only(
                           top: ScreenUtil().setWidth(1068),
@@ -229,7 +249,25 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 //                        right: ScreenUtil().setWidth(30),
                         ),
                         child: Center(
-                          child: KTKJLotteryView(),
+                          child: KTKJLotteryView(
+                            lotteryInfoData: _lotteryInfoData,
+                            tapClickBlock: (LotteryInfoData data) {
+                              if (mounted) {
+                                setState(() {
+                                  _cardProtectedCount =
+                                      data.userCardNum.protectNum;
+                                  _cardAttackCount = data.userCardNum.attackNum;
+                                  _cardUniversalCount =
+                                      data.userCardNum.magicNum;
+                                  print(
+                                      "_cardProtectedCount=$_cardProtectedCount");
+                                  print("_cardAttackCount=$_cardAttackCount");
+                                  print(
+                                      "_cardUniversalCount=$_cardUniversalCount");
+                                });
+                              }
+                            },
+                          ),
                         ),
                       ),
                       Container(
@@ -369,12 +407,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                       padding: EdgeInsets.all(
                                           ScreenUtil().setWidth(8)),
                                       constraints: BoxConstraints(
-                                        maxWidth: ScreenUtil().setWidth(98),
+                                        maxWidth: ScreenUtil().setWidth(78),
                                       ),
                                       alignment: Alignment.center,
                                       margin: EdgeInsets.only(
                                         top: ScreenUtil().setWidth(75),
-                                        left: ScreenUtil().setWidth(49),
+                                        left: ScreenUtil().setWidth(55),
                                       ),
                                       decoration: BoxDecoration(
                                         color: Color(0xffFC4044),
@@ -390,6 +428,37 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: ScreenUtil().setSp(21)),
+                                      ),
+                                    ),
+                                  ),
+
+//                                  https://alipic.lanhuapp.com/xdf95cba4d-e67f-4653-a7a3-880bc095c31a
+                                  ///卡片消耗记录入口
+                                  GestureDetector(
+                                    onTap: () {
+                                      KTKJNavigatorUtils.navigatorRouter(
+                                          context,
+                                          KTKJLotteryRecordListPage(
+                                            title: "使用记录",
+                                            type: 0,
+                                          ));
+                                    },
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(67),
+                                      height: ScreenUtil().setWidth(67),
+                                      alignment: Alignment.center,
+                                      margin: EdgeInsets.only(
+                                        top: ScreenUtil().setWidth(60),
+                                        left: ScreenUtil().setWidth(260),
+                                      ),
+                                      child: Container(
+                                        width: ScreenUtil().setWidth(38),
+                                        height: ScreenUtil().setWidth(38),
+                                        child: KTKJMyOctoImage(
+                                          image:
+                                              "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -490,12 +559,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                       padding: EdgeInsets.all(
                                           ScreenUtil().setWidth(8)),
                                       constraints: BoxConstraints(
-                                        maxWidth: ScreenUtil().setWidth(98),
+                                        maxWidth: ScreenUtil().setWidth(78),
                                       ),
                                       alignment: Alignment.center,
                                       margin: EdgeInsets.only(
                                         top: ScreenUtil().setWidth(75),
-                                        left: ScreenUtil().setWidth(49),
+                                        left: ScreenUtil().setWidth(55),
                                       ),
                                       decoration: BoxDecoration(
                                         color: Color(0xffFE9B2F),
@@ -511,6 +580,36 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: ScreenUtil().setSp(21)),
+                                      ),
+                                    ),
+                                  ),
+
+                                  ///卡片消耗记录入口
+                                  GestureDetector(
+                                    onTap: () {
+                                      KTKJNavigatorUtils.navigatorRouter(
+                                          context,
+                                          KTKJLotteryRecordListPage(
+                                            title: "使用记录",
+                                            type: 0,
+                                          ));
+                                    },
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(67),
+                                      height: ScreenUtil().setWidth(67),
+                                      alignment: Alignment.center,
+                                      margin: EdgeInsets.only(
+                                        top: ScreenUtil().setWidth(60),
+                                        left: ScreenUtil().setWidth(260),
+                                      ),
+                                      child: Container(
+                                        width: ScreenUtil().setWidth(38),
+                                        height: ScreenUtil().setWidth(38),
+                                        child: KTKJMyOctoImage(
+                                          image:
+                                              "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -611,12 +710,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                       padding: EdgeInsets.all(
                                           ScreenUtil().setWidth(8)),
                                       constraints: BoxConstraints(
-                                        maxWidth: ScreenUtil().setWidth(98),
+                                        maxWidth: ScreenUtil().setWidth(78),
                                       ),
                                       alignment: Alignment.center,
                                       margin: EdgeInsets.only(
                                         top: ScreenUtil().setWidth(75),
-                                        left: ScreenUtil().setWidth(49),
+                                        left: ScreenUtil().setWidth(55),
                                       ),
                                       decoration: BoxDecoration(
                                         color: Color(0xff8CC041),
@@ -637,7 +736,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                   ),
 
                                   Visibility(
-                                    visible: true,
+//                                    visible: _cardProtectedCount != '0',
                                     child: GestureDetector(
                                       onTap: () {},
                                       child: Center(
@@ -665,12 +764,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                             ),
                                           ),
                                           child: Text(
-                                            "防御中",
+                                            "${_cardProtectedCount != '0' ? "保护中" : "未保护"}",
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
                                             style: TextStyle(
                                                 color: Color(0xff8CC041),
                                                 fontSize:
-                                                    ScreenUtil().setSp(21)),
+                                                    ScreenUtil().setSp(34)),
                                           ),
                                         ),
                                       ),
@@ -727,6 +826,11 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
   ///使用攻击卡
   useAttackCards() {
 //    stopLotteryAnimation
+    if (_cardAttackCount == "0" || KTKJCommonUtils.isEmpty(_cardAttackCount)) {
+      KTKJCommonUtils.showToast("您还没有该卡片，去抽一个吧！");
+      return;
+    }
+
     /// 跳转翻牌页面
     KTKJNavigatorUtils.navigatorRouter(context, KTKJLotteryFlopPage());
 
@@ -735,6 +839,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   ///使用万能卡
   useUniversalCards() {
+    if (_cardUniversalCount == "0" ||
+        KTKJCommonUtils.isEmpty(_cardUniversalCount)) {
+      KTKJCommonUtils.showToast("您还没有该卡片，去抽一个吧！");
+      return;
+    }
+
     ///
     showConvertDialog(context: context);
   }
