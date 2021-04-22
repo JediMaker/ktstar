@@ -78,7 +78,7 @@ class KTKJCommonUtils {
     return false;
   }
 
-  static showToast(msg) {
+  static showToast(msg, {ToastGravity gravity = ToastGravity.BOTTOM}) {
     if (msg == "token已过期" || '您的账号已在其他设备上登录' == msg) {
       return;
     }
@@ -87,7 +87,7 @@ class KTKJCommonUtils {
         backgroundColor: Colors.black38,
 //        backgroundColor: Color(0XFF222222c2),
         textColor: Colors.white,
-        gravity: ToastGravity.BOTTOM);
+        gravity: gravity);
   }
 
   /// Returns true String or List or Map is not empty.
