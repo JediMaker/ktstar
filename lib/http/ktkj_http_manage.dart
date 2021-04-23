@@ -24,6 +24,8 @@ import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/logistics_info_entity_helper.dart';
+import 'package:star/generated/json/lottery_attack_result_entity_helper.dart';
+import 'package:star/generated/json/lottery_attacked_user_entity_helper.dart';
 import 'package:star/generated/json/lottery_info_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
@@ -86,6 +88,8 @@ import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/income_list_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/logistics_info_entity.dart';
+import 'package:star/models/lottery_attack_result_entity.dart';
+import 'package:star/models/lottery_attacked_user_entity.dart';
 import 'package:star/models/lottery_info_entity.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
@@ -3150,6 +3154,59 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = LotteryInfoEntity();
     lotteryInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///  能量大作战使用攻击卡
+  static Future<LotteryAttackedUserEntity> lotteryUseCardAttack() async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["c_type"] = "2";
+    var response = await HttpManage.dio.post(
+      APi.LOTTERY_USE_CARD,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LotteryAttackedUserEntity();
+    lotteryAttackedUserEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[toType]兑换卡片的类型 2攻击卡 3防护盾；当c_type=1时，此字段必填
+  ///  能量大作战使用万能卡
+  static Future<ResultBeanEntity> lotteryUseCardUniversal({
+    toType,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["c_type"] = "1";
+    paramsMap["to_type"] = "$toType";
+    var response = await HttpManage.dio.post(
+      APi.LOTTERY_USE_CARD,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ResultBeanEntity();
+    resultBeanEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[uid]被攻击用户id
+  ///  攻击卡攻击
+  static Future<LotteryAttackResultEntity> lotteryAttack({
+    uid,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["a_uid"] = "$uid";
+    var response = await HttpManage.dio.post(
+      APi.LOTTERY_ATTACK,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LotteryAttackResultEntity();
+    lotteryAttackResultEntityFromJson(entity, extractData);
     return entity;
   }
 }

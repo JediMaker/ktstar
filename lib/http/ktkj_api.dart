@@ -431,5 +431,11 @@ class APi {
 
   ///能量大作战开始抽奖
   static const String LOTTERY_PLAY = "lottery/play";
+
+  ///卡片使用
+  static const String LOTTERY_USE_CARD = "card/use";
+
+  ///攻击
+  static const String LOTTERY_ATTACK = "card/attack";
 //  =================能量大作战相关接口======END======================
 }

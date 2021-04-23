@@ -506,6 +506,13 @@ class KTKJCommonUtils {
       String mNoticeContent,
       String noticeTitle,
       bool mIsForce}) async {
+    String noticeTime = KTKJGlobalConfig.prefs.getString('noticeTime') ?? null;
+
+    /// 一天之内只提醒一次公告
+    if (noticeTime != null &&
+        DateTime.parse(noticeTime).day == DateTime.now().day) {
+      return false;
+    }
     return await showDialog(
         barrierDismissible: false, //屏蔽物理返回键（因为强更的时候点击返回键，弹窗会消失）
         context: context,

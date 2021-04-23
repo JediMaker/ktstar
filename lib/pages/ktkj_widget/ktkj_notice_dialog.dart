@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:star/global_config.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 
 ///description:公告提示弹窗
@@ -89,6 +90,8 @@ class KTKJNoticeDialog extends Dialog {
           ),
           GestureDetector(
             onTap: () {
+              KTKJGlobalConfig.prefs
+                  .setString('noticeTime', DateTime.now().toString());
               Navigator.of(context).pop();
             },
             child: Container(

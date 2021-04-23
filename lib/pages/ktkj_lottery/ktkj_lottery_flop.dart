@@ -2,8 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/lottery_attacked_user_entity.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 
@@ -52,13 +55,65 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   var _selectIndex = -1;
 
   ///剩余攻击次数
-  var _availableAttackCount = 0;
+  var _availableAttackCount = "";
 
   ///动画控制器
   AnimationController _animationController;
   Animation<double> tween;
   bool _isAnimating = false;
   var _statusListener;
+
+  ///被攻击对象id
+  var _attackedUid = '';
+
+  ///被攻击对象集合
+  List<LotteryAttackedUserDataUser> _attackedUidList;
+
+  ///攻击结果描述
+  var _attackResultDesc = '';
+
+  ///被攻击者状态描述
+  var _attackedUserAssetsDesc = '';
+
+  ///攻击结果头像
+  var _avatarUrl =
+      'https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343';
+
+  ///攻击结果标题
+  var _attackedResultTitle = "";
+
+  ///获取被攻击对象集合
+  _initData({showLoading = true}) async {
+    /// 调用接口兑换卡片
+    try {
+      if (showLoading) {
+        EasyLoading.show();
+      }
+    } catch (e) {}
+    var result = await HttpManage.lotteryUseCardAttack();
+    try {
+      if (showLoading) {
+        EasyLoading.dismiss();
+      }
+    } catch (e) {}
+    if (result.status) {
+      if (mounted) {
+        setState(() {
+          _attackedUidList = result.data.users;
+          _availableAttackCount = result.data.times;
+        });
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _availableAttackCount = "0";
+        });
+      }
+      if (showLoading) {
+        KTKJCommonUtils.showToast(result.errMsg);
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -70,7 +125,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
       if (status == AnimationStatus.completed) {
         _isAnimating = false;
 
-        ///todo 提示中奖信息
+        /// 提示中奖信息
 //        showAwardAlert(context: context, itemModel: _lotteryList[rewardIndex]);
         tween.removeStatusListener(_statusListener);
       }
@@ -95,11 +150,11 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
         setState(() {});
       })
       ..addStatusListener(_statusListener);
+    _initData();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _animationController.dispose();
   }
@@ -196,104 +251,106 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: GradientAppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(
-                color: Colors.white, fontSize: ScreenUtil().setSp(54)),
-          ),
-          leading: Visibility(
-            child: IconButton(
-              icon: Container(
-                width: ScreenUtil().setWidth(63),
-                height: ScreenUtil().setHeight(63),
-                child: Center(
-                  child: Image.asset(
-                    "static/images/icon_ios_back_white.png",
-                    width: ScreenUtil().setWidth(36),
-                    height: ScreenUtil().setHeight(63),
-                    fit: BoxFit.fill,
+    return FlutterEasyLoading(
+      child: Scaffold(
+          appBar: GradientAppBar(
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Colors.white, fontSize: ScreenUtil().setSp(54)),
+            ),
+            leading: Visibility(
+              child: IconButton(
+                icon: Container(
+                  width: ScreenUtil().setWidth(63),
+                  height: ScreenUtil().setHeight(63),
+                  child: Center(
+                    child: Image.asset(
+                      "static/images/icon_ios_back_white.png",
+                      width: ScreenUtil().setWidth(36),
+                      height: ScreenUtil().setHeight(63),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          brightness: Brightness.dark,
-          gradient: LinearGradient(colors: [
-            _mainColor,
-            _mainColor,
-          ]),
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              color: _mainColor,
-              child: Column(
-                children: [
-                  Container(
-                    width: ScreenUtil().setWidth(1043),
-                    height: ScreenUtil().setWidth(314),
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(100),
-                    ),
-                    child: KTKJMyOctoImage(
-                      image:
-                          "https://alipic.lanhuapp.com/xd28617740-00c1-4269-b28b-4edaf1d9cb43",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(160),
-                    ),
-                    child: Wrap(
-                      spacing: ScreenUtil().setWidth(20),
-                      runSpacing: ScreenUtil().setWidth(40),
-                      children: List.generate(
-                        _postureList.length,
-                        (index) {
-                          return buildPostureItem(index: index);
-                        },
-                      ),
-                    ),
-                  ),
-                  buildAttackButton(),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(30),
-                    ),
-                    child: Text(
-                      "剩余$_availableAttackCount次攻击机会",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(32),
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: ScreenUtil().setWidth(1125),
-                    height: ScreenUtil().setWidth(334),
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(100),
-                    ),
-                    child: KTKJMyOctoImage(
-                      image:
-                          "https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
             ),
+            centerTitle: true,
+            elevation: 0,
+            brightness: Brightness.dark,
+            gradient: LinearGradient(colors: [
+              _mainColor,
+              _mainColor,
+            ]),
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+          body: SingleChildScrollView(
+            child: Center(
+              child: Container(
+                color: _mainColor,
+                child: Column(
+                  children: [
+                    Container(
+                      width: ScreenUtil().setWidth(1043),
+                      height: ScreenUtil().setWidth(314),
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setWidth(100),
+                      ),
+                      child: KTKJMyOctoImage(
+                        image:
+                            "https://alipic.lanhuapp.com/xd28617740-00c1-4269-b28b-4edaf1d9cb43",
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setWidth(160),
+                      ),
+                      child: Wrap(
+                        spacing: ScreenUtil().setWidth(20),
+                        runSpacing: ScreenUtil().setWidth(40),
+                        children: List.generate(
+                          _postureList.length,
+                          (index) {
+                            return buildPostureItem(index: index);
+                          },
+                        ),
+                      ),
+                    ),
+                    buildAttackButton(),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setWidth(30),
+                      ),
+                      child: Text(
+                        "剩余$_availableAttackCount次攻击机会",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(32),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: ScreenUtil().setWidth(1125),
+                      height: ScreenUtil().setWidth(334),
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setWidth(100),
+                      ),
+                      child: KTKJMyOctoImage(
+                        image:
+                            "https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343",
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+    );
   }
 
   ///攻击
@@ -304,15 +361,49 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
           KTKJCommonUtils.showToast("选择你的攻击姿势！");
           return;
         }
+        if (_availableAttackCount == "0") {
+          KTKJCommonUtils.showToast("暂无可用攻击卡！");
+          return;
+        }
+        _attackedUid = _attackedUidList[_selectIndex].uid;
+        print("_attackedUid=$_attackedUid");
 
-        ///todo 调用接口获取攻击结果
-        await showResultDialog(context: this.context);
-        /*await KTKJNoticeDialog.showNoticeDialog(
+        /// 调用接口获取攻击结果
+        try {
+          EasyLoading.show();
+        } catch (e) {}
+        var attackResult = await HttpManage.lotteryAttack(uid: _attackedUid);
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+        if (attackResult.status) {
+          if (mounted) {
+            setState(() {
+              _avatarUrl = attackResult.data.aAvatar;
+              _attackedResultTitle = attackResult.data.aTitle;
+              _attackedUserAssetsDesc = attackResult.data.aDesc;
+              _attackResultDesc = attackResult.data.aResult;
+            });
+          }
+          _initData(showLoading: false);
+          await showResultDialog(context: this.context);
+        } else {
+          if (mounted) {
+            setState(() {
+              _availableAttackCount = "0";
+            });
+          }
+          KTKJCommonUtils.showToast(attackResult.errMsg);
+        }
+
+        ///
+
+        /* await KTKJCommonUtils.showNoticeDialog(
           context: this.context,
           noticeTitle:
-              "汽车票暂不支持网上退票和改签汽车票暂不支持网上退票和改签汽车票暂不支持网上退票和改签汽车票暂不支持网上退票和改签",
+          "汽车票暂不支持网上退票和改签汽车票暂不支持网上退票和改签汽车票暂不支持网上退票和改签汽车票暂不支持网上退票和改签",
           mNoticeContent:
-              "预订后如需退票，请在发车前到汽车站取质车票，并在窗口办理退票。退票费由各大汽车站和地方物价部门自行规定，具体请咨询汽车站。预订后如需退票，请在发车前到汽车站取质车票，退票费由各大汽车站和地方物价部门自行规定，具体请咨询汽车站。",
+          "预订后如需退票，请在发车前到汽车站取质车票，并在窗口办理退票。退票费由各大汽车站和地方物价部门自行规定，具体请咨询汽车站。预订后如需退票，请在发车前到汽车站取质车票，退票费由各大汽车站和地方物价部门自行规定，具体请咨询汽车站。",
         );*/
         if (mounted) {
           setState(() {
@@ -423,7 +514,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   Widget changePostureButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(true);
 
         ///
       },
@@ -582,9 +673,6 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
     return false;
   }
 
-  var _avatarUrl =
-      'https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343';
-
   ///创建翻牌弹窗
   Widget createDialog(BuildContext context) {
     return Center(
@@ -638,7 +726,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
                             top: ScreenUtil().setWidth(80),
                           ),
                           child: Text(
-                            "恭喜您！",
+                            "$_attackedResultTitle",
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(61),
                               color: Colors.white,
@@ -652,7 +740,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
                             top: ScreenUtil().setWidth(10),
                           ),
                           child: Text(
-                            "该股东富的流油~",
+                            "$_attackedUserAssetsDesc",
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(42),
                               color: Colors.white,
@@ -678,7 +766,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
                             top: ScreenUtil().setWidth(20),
                           ),
                           child: Text(
-                            "成功抢到2分红金", //
+                            "$_attackResultDesc", //
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(42),
                               color: Colors.white,

@@ -65,6 +65,8 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
+import 'package:star/models/lottery_attack_result_entity.dart';
+import 'package:star/generated/json/lottery_attack_result_entity_helper.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
 import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
@@ -119,6 +121,8 @@ import 'package:star/models/poster_entity.dart';
 import 'package:star/generated/json/poster_entity_helper.dart';
 import 'package:star/models/recharge_extra_entity.dart';
 import 'package:star/generated/json/recharge_extra_entity_helper.dart';
+import 'package:star/models/lottery_attacked_user_entity.dart';
+import 'package:star/generated/json/lottery_attacked_user_entity_helper.dart';
 import 'package:star/models/shop_pay_info_entity.dart';
 import 'package:star/generated/json/shop_pay_info_entity_helper.dart';
 import 'package:star/models/user_holder_profit_entity.dart';
@@ -408,6 +412,12 @@ class JsonConvert<T> {
       case RechargeDatacouponList:
         return rechargeDatacouponListFromJson(
             data as RechargeDatacouponList, json) as T;
+      case LotteryAttackResultEntity:
+        return lotteryAttackResultEntityFromJson(
+            data as LotteryAttackResultEntity, json) as T;
+      case LotteryAttackResultData:
+        return lotteryAttackResultDataFromJson(
+            data as LotteryAttackResultData, json) as T;
       case MicroShareholderEntity:
         return microShareholderEntityFromJson(
             data as MicroShareholderEntity, json) as T;
@@ -602,6 +612,15 @@ class JsonConvert<T> {
       case RechargeExtraRatio:
         return rechargeExtraRatioFromJson(data as RechargeExtraRatio, json)
             as T;
+      case LotteryAttackedUserEntity:
+        return lotteryAttackedUserEntityFromJson(
+            data as LotteryAttackedUserEntity, json) as T;
+      case LotteryAttackedUserData:
+        return lotteryAttackedUserDataFromJson(
+            data as LotteryAttackedUserData, json) as T;
+      case LotteryAttackedUserDataUser:
+        return lotteryAttackedUserDataUserFromJson(
+            data as LotteryAttackedUserDataUser, json) as T;
       case ShopPayInfoEntity:
         return shopPayInfoEntityFromJson(data as ShopPayInfoEntity, json) as T;
       case ShopPayInfoData:
@@ -894,6 +913,11 @@ class JsonConvert<T> {
         return rechargeDataRechageListToJson(data as RechargeDataRechageList);
       case RechargeDatacouponList:
         return rechargeDatacouponListToJson(data as RechargeDatacouponList);
+      case LotteryAttackResultEntity:
+        return lotteryAttackResultEntityToJson(
+            data as LotteryAttackResultEntity);
+      case LotteryAttackResultData:
+        return lotteryAttackResultDataToJson(data as LotteryAttackResultData);
       case MicroShareholderEntity:
         return microShareholderEntityToJson(data as MicroShareholderEntity);
       case MicroShareholderData:
@@ -1047,6 +1071,14 @@ class JsonConvert<T> {
             data as RechargeExtraSRechageList);
       case RechargeExtraRatio:
         return rechargeExtraRatioToJson(data as RechargeExtraRatio);
+      case LotteryAttackedUserEntity:
+        return lotteryAttackedUserEntityToJson(
+            data as LotteryAttackedUserEntity);
+      case LotteryAttackedUserData:
+        return lotteryAttackedUserDataToJson(data as LotteryAttackedUserData);
+      case LotteryAttackedUserDataUser:
+        return lotteryAttackedUserDataUserToJson(
+            data as LotteryAttackedUserDataUser);
       case ShopPayInfoEntity:
         return shopPayInfoEntityToJson(data as ShopPayInfoEntity);
       case ShopPayInfoData:
@@ -1310,6 +1342,10 @@ class JsonConvert<T> {
         return RechargeDataRechageList().fromJson(json);
       case 'RechargeDatacouponList':
         return RechargeDatacouponList().fromJson(json);
+      case 'LotteryAttackResultEntity':
+        return LotteryAttackResultEntity().fromJson(json);
+      case 'LotteryAttackResultData':
+        return LotteryAttackResultData().fromJson(json);
       case 'MicroShareholderEntity':
         return MicroShareholderEntity().fromJson(json);
       case 'MicroShareholderData':
@@ -1458,6 +1494,12 @@ class JsonConvert<T> {
         return RechargeExtraSRechageList().fromJson(json);
       case 'RechargeExtraRatio':
         return RechargeExtraRatio().fromJson(json);
+      case 'LotteryAttackedUserEntity':
+        return LotteryAttackedUserEntity().fromJson(json);
+      case 'LotteryAttackedUserData':
+        return LotteryAttackedUserData().fromJson(json);
+      case 'LotteryAttackedUserDataUser':
+        return LotteryAttackedUserDataUser().fromJson(json);
       case 'ShopPayInfoEntity':
         return ShopPayInfoEntity().fromJson(json);
       case 'ShopPayInfoData':
@@ -1715,6 +1757,10 @@ class JsonConvert<T> {
         return List<RechargeDataRechageList>();
       case 'RechargeDatacouponList':
         return List<RechargeDatacouponList>();
+      case 'LotteryAttackResultEntity':
+        return List<LotteryAttackResultEntity>();
+      case 'LotteryAttackResultData':
+        return List<LotteryAttackResultData>();
       case 'MicroShareholderEntity':
         return List<MicroShareholderEntity>();
       case 'MicroShareholderData':
@@ -1863,6 +1909,12 @@ class JsonConvert<T> {
         return List<RechargeExtraSRechageList>();
       case 'RechargeExtraRatio':
         return List<RechargeExtraRatio>();
+      case 'LotteryAttackedUserEntity':
+        return List<LotteryAttackedUserEntity>();
+      case 'LotteryAttackedUserData':
+        return List<LotteryAttackedUserData>();
+      case 'LotteryAttackedUserDataUser':
+        return List<LotteryAttackedUserDataUser>();
       case 'ShopPayInfoEntity':
         return List<ShopPayInfoEntity>();
       case 'ShopPayInfoData':

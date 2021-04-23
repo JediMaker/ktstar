@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/ktkj_http_manage.dart';
@@ -86,6 +87,10 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
   ///单次抽奖消耗能量值
   var _consumeEnergy = '0';
+
+  int _rewardIndex = 0;
+
+  String _rewardMsg;
 
   ///转盘创建
   List<Widget> getItemWidgets() {
@@ -221,13 +226,19 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
         _isAnimating = false;
 
         /// 提示中奖信息
-        if (KTKJCommonUtils.isNotEmpty(rewardMsg)) {
-          KTKJCommonUtils.showToast("$rewardMsg", gravity: ToastGravity.CENTER);
-        }
+        if (KTKJCommonUtils.isNotEmpty(_rewardMsg)) {
+          KTKJCommonUtils.showToast("$_rewardMsg",
+              gravity: ToastGravity.CENTER);
+        } else {}
 
         ///动画完成后更新UI
         if (widget.tapClickBlock != null) {
           widget.tapClickBlock(_lotteryInfoData);
+        }
+        if (mounted) {
+          setState(() {
+            _totalEnergy = _lotteryInfoData.userPowerNum;
+          });
         }
 
         ///
@@ -248,7 +259,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
         curve: Interval(
           0.0,
           1.0,
-          curve: Curves.easeInOutQuad,
+          curve: Curves.ease,
         ),
       ),
     )
@@ -296,17 +307,27 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
   ///获取后台中奖信息
   _lotteryPlay() async {
+    try {
+      EasyLoading.show();
+    } catch (e) {}
     var result = await HttpManage.lotteryPlay();
+    try {
+      EasyLoading.dismiss();
+    } catch (e) {}
+
     if (result.status) {
       if (mounted) {
         setState(() {
           _lotteryInfoData = result.data;
-          var rewardIndex = _lotteryInfoData.prizeId - 1;
-          var rewardMsg = _lotteryInfoData.lotteryMsg;
+          _rewardIndex = _lotteryInfoData.prizeId - 1;
+          _rewardMsg = _lotteryInfoData.lotteryMsg;
 
           ///执行抽奖动画
-          _gestureTap(rewardIndex: rewardIndex, rewardMsg: rewardMsg);
-          _totalEnergy = _lotteryInfoData.userPowerNum;
+          _gestureTap(rewardIndex: _rewardIndex, rewardMsg: _rewardMsg);
+          _totalEnergy =
+              (double.parse(_totalEnergy) - double.parse(_consumeEnergy))
+                  .toStringAsFixed(2);
+//          _totalEnergy = _lotteryInfoData.userPowerNum;
           _consumeEnergy = _lotteryInfoData.needPowerNum;
         });
       }
@@ -471,42 +492,44 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  /// 调用接口获取中奖id
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    /// 调用接口获取中奖id
 
-                  ///
-                  if (!_isAnimating) {
-                    _lotteryPlay();
-                  }
+                    ///
+                    if (!_isAnimating) {
+                      _lotteryPlay();
+                    }
 
-                  ///bus
-                },
-                child: Container(
-                  width: ScreenUtil().setWidth(515),
-                  height: ScreenUtil().setWidth(248),
-                  margin: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(60),
-                  ),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: Image.network(
-                        "https://alipic.lanhuapp.com/xd723158b3-402b-481f-985c-fcb60c9473a0",
-                        width: ScreenUtil().setWidth(515),
-                        height: ScreenUtil().setWidth(248),
-                        fit: BoxFit.fill,
-                      ).image,
+                    ///bus
+                  },
+                  child: Container(
+                    width: ScreenUtil().setWidth(515),
+                    height: ScreenUtil().setWidth(248),
+                    margin: EdgeInsets.only(
+//                      left: ScreenUtil().setWidth(60),
+                        ),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: Image.network(
+                          "https://alipic.lanhuapp.com/xd723158b3-402b-481f-985c-fcb60c9473a0",
+                          width: ScreenUtil().setWidth(515),
+                          height: ScreenUtil().setWidth(248),
+                          fit: BoxFit.fill,
+                        ).image,
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    "消耗$_consumeEnergy能量",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(48),
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff780200),
+                    child: Text(
+                      "消耗$_consumeEnergy能量",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(48),
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff780200),
+                      ),
                     ),
                   ),
                 ),
@@ -526,7 +549,6 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                 },
                 child: Container(
                   margin: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(80),
                     right: ScreenUtil().setWidth(30),
                   ),
                   child: Stack(
