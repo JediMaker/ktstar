@@ -26,15 +26,16 @@ class _KTKJFloatLotteryEntrancePageState
   var _showFloatBtn = true;
 
   ///https://juejin.cn/post/6844904071778795528
+  ///偏移量处理返回新的位置
   Offset _calOffset(Size size, Offset offset, Offset nextOffset) {
-    print("offset.dx=${offset.dx}\n"
+    /*print("offset.dx=${offset.dx}\n"
         "offset.dy=${offset.dy}\n"
         "nextOffset.dx=${nextOffset.dx}\n"
         "nextOffset.dy=${nextOffset.dy}\n"
         "_initOffsetDx=${_initOffsetDx}\n"
         "_initOffsetDy=${_initOffsetDy}\n"
         "screenWidth=${ScreenUtil.screenWidth}\n"
-        "screenHeight=${ScreenUtil.screenHeight}\n");
+        "screenHeight=${ScreenUtil.screenHeight}\n");*/
     double dx = 0;
     //水平方向偏移量不能小于0不能大于屏幕最大宽度
     if (offset.dx + nextOffset.dx <= 0) {
@@ -74,7 +75,6 @@ class _KTKJFloatLotteryEntrancePageState
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -92,17 +92,17 @@ class _KTKJFloatLotteryEntrancePageState
             KTKJNavigatorUtils.navigatorRouter(context, KTKJLotteryMainPage());
           },
           onPanStart: (DragStartDetails details) {
-            print("onPanStart");
+//            print("onPanStart");
 //          print("localPosition=${details.localPosition}");
 //          print("globalPosition=${details.globalPosition}");
           },
           onPanDown: (DragDownDetails details) {
-            print("onPanDown");
+//            print("onPanDown");
 //          print("localPosition=${details.localPosition}");
 //          print("globalPosition=${details.globalPosition}");
           },
           onPanEnd: (DragEndDetails details) {
-            print("onPanEnd");
+//            print("onPanEnd");
             setState(() {
               if (offset.dx >= _initOffsetDx / 2) {
                 offset = Offset(_initOffsetDx, offset.dy);
@@ -114,7 +114,7 @@ class _KTKJFloatLotteryEntrancePageState
 //          print("velocity=${details.velocity.pixelsPerSecond}");
           },
           onPanUpdate: (DragUpdateDetails details) {
-            print("onPanUpdate");
+//            print("onPanUpdate");
 //          print("localPosition=${details.localPosition}");
 //          print("globalPosition=${details.globalPosition}");
 //          print("delta=${details.delta}");
@@ -129,15 +129,18 @@ class _KTKJFloatLotteryEntrancePageState
             child: Stack(
               alignment: Alignment.topRight,
               children: [
+                ///悬浮图标
                 Container(
                   width: ScreenUtil().setWidth(185),
                   height: ScreenUtil().setWidth(200),
                   child: KTKJMyOctoImage(
                     image:
-                        "https://alipic.lanhuapp.com/xdb83b263d-0433-44b4-a33c-ee70210c8437",
+                        "https://alipic.lanhuapp.com/xd6ae1f9f4-a636-409b-a852-8484fe638390",
                     fit: BoxFit.fill,
                   ),
                 ),
+
+                ///删除图标
                 GestureDetector(
                   onTap: () {
                     if (mounted) {
@@ -147,11 +150,11 @@ class _KTKJFloatLotteryEntrancePageState
                     }
                   },
                   child: Container(
-                    width: ScreenUtil().setWidth(54),
+                    width: ScreenUtil().setWidth(63),
                     height: ScreenUtil().setWidth(63),
                     child: KTKJMyOctoImage(
                       image:
-                          "https://alipic.lanhuapp.com/xd408d44f0-73d0-40ac-918c-e5136765f0fc",
+                          "https://alipic.lanhuapp.com/xd8a35fac7-95b5-46c7-9297-5962e4996331",
                       fit: BoxFit.fill,
                     ),
                   ),
