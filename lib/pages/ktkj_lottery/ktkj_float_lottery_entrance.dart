@@ -17,8 +17,10 @@ class KTKJFloatLotteryEntrancePage extends StatefulWidget {
 
 class _KTKJFloatLotteryEntrancePageState
     extends State<KTKJFloatLotteryEntrancePage> {
+  ///水平偏移量范围
   var _initOffsetDx;
 
+  ///垂直偏移量范围
   var _initOffsetDy;
 
   Offset offset;
@@ -104,6 +106,7 @@ class _KTKJFloatLotteryEntrancePageState
           onPanEnd: (DragEndDetails details) {
 //            print("onPanEnd");
             setState(() {
+              ///移动结束设置图标靠左或者靠右悬浮
               if (offset.dx >= _initOffsetDx / 2) {
                 offset = Offset(_initOffsetDx, offset.dy);
               } else {
