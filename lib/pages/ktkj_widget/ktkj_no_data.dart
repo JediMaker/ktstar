@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 class KTKJNoDataPage extends StatelessWidget {
+  Color textColor;
+
+  KTKJNoDataPage({
+    Key key,
+    this.textColor,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,7 +31,9 @@ class KTKJNoDataPage extends StatelessWidget {
             ),
             Text(
               '暂无数据',
-              style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: textColor == null ? Colors.grey[400] : textColor),
             ),
             Expanded(
               child: SizedBox(),

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/lottery_records_list_entity.dart';
+import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 
 ///能量大作战消息页面
@@ -231,8 +232,24 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
           _initData();
         }
       },
-//      emptyWidget:
-//          msgList == null || msgList.length == 0 ? KTKJNoDataPage() : null,
+      emptyWidget: msgList == null || msgList.length == 0
+          ? Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    _mainColor,
+                    _mainColor,
+                  ],
+                ),
+              ),
+              child: KTKJNoDataPage(
+                textColor: Color(0xff222222),
+              ))
+          : null,
       slivers: <Widget>[buildCenter()],
     );
   }

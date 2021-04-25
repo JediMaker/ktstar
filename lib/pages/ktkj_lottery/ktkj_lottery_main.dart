@@ -1015,7 +1015,7 @@ class _CardConvertDialogState extends State<CardConvertDialog> {
         } catch (e) {}
         if (result.status) {
           KTKJCommonUtils.showToast(
-              _convertCardType == 0 ? "恭喜您获得一张攻击卡！" : "恭喜您获得一张防御卡！",
+              _convertCardType == 0 ? "恭喜您获得一张攻击卡！" : "恭喜您获得一张保护盾！",
               gravity: ToastGravity.CENTER);
           Navigator.of(context).pop();
         } else {

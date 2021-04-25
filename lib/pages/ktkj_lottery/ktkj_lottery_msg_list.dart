@@ -6,6 +6,7 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/lottery_msg_list_entity.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
+import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 
 ///能量大作战消息页面
@@ -228,8 +229,24 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
           _initData();
         }
       },
-//      emptyWidget:
-//          msgList == null || msgList.length == 0 ? KTKJNoDataPage() : null,
+      emptyWidget: msgList == null || msgList.length == 0
+          ? Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xffFFB20E),
+                    Color(0xffF9993D),
+                  ],
+                ),
+              ),
+              child: KTKJNoDataPage(
+                textColor: Color(0xff222222),
+              ))
+          : null,
       slivers: <Widget>[buildCenter()],
     );
   }
@@ -250,7 +267,7 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
       msg = item.aDesc;
       _avatarUrl = item.avatar;
       _timeDesc = item.createTime;
-      _timeDesc = KTKJCommonUtils.getNewsTimeStr(DateTime.parse(_timeDesc));
+//      _timeDesc = KTKJCommonUtils.getNewsTimeStr(DateTime.parse(_timeDesc));
 //      _avatarUrl = item.aDesc;
       if (item.aStatus == "2") {
         isProtected = true;
