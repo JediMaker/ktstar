@@ -70,6 +70,9 @@ lotteryMsgListDataListFromJson(
   if (json['a_desc'] != null) {
     data.aDesc = json['a_desc']?.toString();
   }
+  if (json['a_avatar'] != null) {
+    data.avatar = json['a_avatar']?.toString();
+  }
   return data;
 }
 
@@ -80,5 +83,6 @@ Map<String, dynamic> lotteryMsgListDataListToJson(
   data['a_status'] = entity.aStatus;
   data['create_time'] = entity.createTime;
   data['a_desc'] = entity.aDesc;
+  data['a_avatar'] = entity.avatar;
   return data;
 }

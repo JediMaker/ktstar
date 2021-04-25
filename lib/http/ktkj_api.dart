@@ -437,5 +437,18 @@ class APi {
 
   ///攻击
   static const String LOTTERY_ATTACK = "card/attack";
+
+  ///能量列表
+  static const String LOTTERY_POWER_RECORDS_LIST = "user/power-list";
+
+  ///抽奖记录
+  static const String LOTTERY_LOTTERY_RECORDS_LIST = "lottery/records";
+
+  ///卡片记录列表
+  static const String LOTTERY_CARD_RECORDS_LIST = "card/records";
+
+  ///消息记录列表
+  static const String LOTTERY_MSG_RECORDS_LIST = "card/attack-list";
+
 //  =================能量大作战相关接口======END======================
 }

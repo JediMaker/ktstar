@@ -26,4 +26,6 @@ class LotteryMsgListDataList with JsonConvert<LotteryMsgListDataList> {
   String createTime;
   @JSONField(name: "a_desc")
   String aDesc;
+  @JSONField(name: "a_avatar")
+  String avatar;
 }

@@ -27,6 +27,8 @@ import 'package:star/generated/json/logistics_info_entity_helper.dart';
 import 'package:star/generated/json/lottery_attack_result_entity_helper.dart';
 import 'package:star/generated/json/lottery_attacked_user_entity_helper.dart';
 import 'package:star/generated/json/lottery_info_entity_helper.dart';
+import 'package:star/generated/json/lottery_msg_list_entity_helper.dart';
+import 'package:star/generated/json/lottery_records_list_entity_helper.dart';
 import 'package:star/generated/json/message_list_entity_helper.dart';
 import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/generated/json/order_detail_entity_helper.dart';
@@ -91,6 +93,8 @@ import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/models/lottery_attack_result_entity.dart';
 import 'package:star/models/lottery_attacked_user_entity.dart';
 import 'package:star/models/lottery_info_entity.dart';
+import 'package:star/models/lottery_msg_list_entity.dart';
+import 'package:star/models/lottery_records_list_entity.dart';
 import 'package:star/models/message_list_entity.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
 import 'package:star/models/order_detail_entity.dart';
@@ -1440,7 +1444,8 @@ class HttpManage {
     paramsMap["payment"] = "2";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
-    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
+//    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
+    paramsMap["recharge_type"] = "slow";
     paramsMap["recharge_mode"] = "${showCoin ? "coin" : "rebate"}";
     paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
@@ -1471,7 +1476,8 @@ class HttpManage {
     paramsMap["payment"] = "1";
     paramsMap["tel"] = "$tel";
     paramsMap["recharge_id"] = "$rechargeId";
-    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
+//    paramsMap["recharge_type"] = "${rechargeType == 0 ? "fast" : "slow"}";
+    paramsMap["recharge_type"] = "slow";
     paramsMap["recharge_mode"] = "${showCoin ? "coin" : "rebate"}";
     paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
@@ -3128,9 +3134,6 @@ class HttpManage {
     return entity;
   }
 
-  ///TODO 能量大作战消息记录
-  static lotteryGetMsgList({cId, type, int page, int pageSize, firstId}) {}
-
   ///
   ///
   /// 能量大作战抽奖信息获取
@@ -3207,6 +3210,61 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = LotteryAttackResultEntity();
     lotteryAttackResultEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  /// 能量大作战消息列表
+  static Future<LotteryMsgListEntity> lotteryGetMsgList({
+    int page,
+    int pageSize,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    var response = await HttpManage.dio.post(
+      APi.LOTTERY_MSG_RECORDS_LIST,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LotteryMsgListEntity();
+    lotteryMsgListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// [type] 0 抽奖记录 1 能量记录  2 卡片记录
+  ///
+  /// [cardType] 卡片类型：1-万能卡，2-攻击卡，3-防护盾
+  ///
+  /// 能量大作战记录列表
+  static Future<LotteryRecordsListEntity> lotteryGetRecordList({
+    int page,
+    int pageSize,
+    int type,
+    int cardType,
+  }) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["page"] = "$page";
+    paramsMap["page_size"] = "$pageSize";
+    var path = APi.LOTTERY_LOTTERY_RECORDS_LIST;
+    switch (type) {
+      case 0:
+        break;
+      case 1:
+        path = APi.LOTTERY_POWER_RECORDS_LIST;
+        break;
+      case 2:
+        path = APi.LOTTERY_CARD_RECORDS_LIST;
+        paramsMap["c_type"] = "$cardType";
+        break;
+    }
+    var response = await HttpManage.dio.post(
+      path,
+      data: paramsMap,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LotteryRecordsListEntity();
+    lotteryRecordsListEntityFromJson(entity, extractData);
     return entity;
   }
 }
