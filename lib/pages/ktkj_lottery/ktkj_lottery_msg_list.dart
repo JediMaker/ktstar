@@ -4,6 +4,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/lottery_msg_list_entity.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 
@@ -21,7 +22,7 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  var msgList = [];
+  List<LotteryMsgListDataList> msgList = List<LotteryMsgListDataList>();
 
   _initData() async {
     var result = await HttpManage.lotteryGetMsgList(
@@ -58,7 +59,7 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
     super.initState();
     _refreshController = EasyRefreshController();
 //    _refreshController.finishLoad(noMore: true);
-//    _initData();
+    _initData();
   }
 
   @override
@@ -142,7 +143,7 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
             ),
             child: Column(
               children: List.generate(
-                8,
+                msgList.length,
                 (index) => buildItemContainer(index: index),
               ),
             ),
@@ -240,12 +241,21 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
   }
 
   Widget buildItemContainer({index}) {
-    var msg = 'ID455678偷走了你0.01个分红金';
-    var _timeDesc = "10分钟前";
-    var _avatarUrl =
-        'https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343';
-    bool isProtected = index % 2 == 0;
-
+    var msg = '';
+    var _timeDesc = "";
+    var _avatarUrl = '';
+    bool isProtected = false;
+    try {
+      var item = msgList[index];
+      msg = item.aDesc;
+      _avatarUrl = item.avatar;
+      _timeDesc = item.createTime;
+      _timeDesc = KTKJCommonUtils.getNewsTimeStr(DateTime.parse(_timeDesc));
+//      _avatarUrl = item.aDesc;
+      if (item.aStatus == "2") {
+        isProtected = true;
+      }
+    } catch (e) {}
     return Container(
       height: ScreenUtil().setWidth(351),
       margin: EdgeInsets.only(

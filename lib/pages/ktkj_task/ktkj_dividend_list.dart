@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/income_list_entity.dart';
@@ -11,6 +10,7 @@ import 'package:star/utils/ktkj_common_utils.dart';
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+///分红金列表
 class KTKJDividendListPage extends StatefulWidget {
   ///页面类型 0、1收益列表 2提现列表
   int pageType;
@@ -209,14 +209,19 @@ class _DividendListPageState extends State<KTKJDividendListPage>
       print(e);
     }
     switch (status) {
-      case "1": //已打款
+
+      ///1有效数据 2过期数据
+      case "1": //1有效数据
         prefixText = '+';
         iconName = "icon_profit_invite.png";
         break;
-      case "2": //已打款
+      case "2": //2过期数据
         prefixText = '-';
         iconName = "icon_profit_task.png";
         break;
+    }
+    if (price.contains("+") || price.contains("-")) {
+      prefixText = '';
     }
 
     return Column(

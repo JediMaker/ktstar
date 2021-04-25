@@ -4,6 +4,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/ktkj_http_manage.dart';
+import 'package:star/models/lottery_records_list_entity.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 
 ///能量大作战消息页面
@@ -12,11 +13,15 @@ class KTKJLotteryRecordListPage extends StatefulWidget {
     Key key,
     this.title = '抽奖记录',
     this.type = 0,
+    this.cardType,
   }) : super(key: key);
   final String title;
 
   ///记录类型 0 抽奖记录 1 能量记录  2 卡片记录
   final int type;
+
+  ///  卡片类型：1-万能卡，2-攻击卡，3-防护盾
+  final int cardType;
 
   @override
   _KTKJLotteryRecordListPageState createState() =>
@@ -28,12 +33,14 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
   int page = 1;
   EasyRefreshController _refreshController;
   bool isFirstLoading = true;
-  var msgList = [];
+  List<LotteryRecordsListDataList> msgList = List<LotteryRecordsListDataList>();
 
   _initData() async {
-    var result = await HttpManage.lotteryGetMsgList(
+    var result = await HttpManage.lotteryGetRecordList(
       page: page,
       pageSize: 20,
+      type: widget.type,
+      cardType: widget.cardType,
     );
     if (result.status) {
       if (mounted) {
@@ -65,7 +72,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
     super.initState();
     _refreshController = EasyRefreshController();
 //    _refreshController.finishLoad(noMore: true);
-//    _initData();
+    _initData();
   }
 
   @override
@@ -139,7 +146,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
             ),
             child: Column(
               children: List.generate(
-                8,
+                msgList.length,
                 (index) => buildItemContainer(index: index),
               ),
             ),
@@ -237,12 +244,28 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
   }
 
   Widget buildItemContainer({index}) {
-    var msg = 'ID455678偷走了你0.01个分红金ID455678偷走了你0ID455678偷走了你0';
-    var _timeDesc = "10分钟前";
-    var _avatarUrl =
-        'https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343';
-    bool isProtected = index % 2 == 0;
-
+    var msg = '';
+    var _countDesc = "";
+    var _timeDesc = "";
+    try {
+      var item = msgList[index];
+      if (widget.type == 0) {
+        msg = item.lDesc;
+        _countDesc = item.lNum;
+      }
+      if (widget.type == 1) {
+        msg = item.pDesc;
+        _countDesc = item.pNum;
+      }
+      if (widget.type == 2) {
+        msg = item.cDesc;
+        _countDesc = item.cNum;
+      }
+      _timeDesc = item.createTime;
+      if (!_countDesc.contains("-")) {
+        _countDesc = "+$_countDesc";
+      }
+    } catch (e) {}
     return Container(
       height: ScreenUtil().setWidth(230),
       margin: EdgeInsets.only(
@@ -304,7 +327,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
 //                                top: ScreenUtil().setWidth(10),
                                   ),
                               child: Text(
-                                "$_timeDesc",
+                                "$_countDesc",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -320,7 +343,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
                             top: ScreenUtil().setWidth(25),
                           ),
                           child: Text(
-                            "$msg",
+                            "$_timeDesc",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

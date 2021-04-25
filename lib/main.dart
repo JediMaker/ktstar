@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
@@ -69,6 +70,10 @@ class MyApp extends StatelessWidget {
         const Locale('zh', 'CN'),
         const Locale('en', 'US'),
       ],
+      builder: (BuildContext context, Widget child) {
+        /// make sure that loading can be displayed in front of all other widgets
+        return FlutterEasyLoading(child: child);
+      },
     );
   }
 }
