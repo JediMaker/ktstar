@@ -84,7 +84,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
     super.initState();
     _refreshController = EasyRefreshController();
 //    _refreshController.finishLoad(noMore: true);
-    _initData(showLoading: true);
+    _initData();
   }
 
   @override
