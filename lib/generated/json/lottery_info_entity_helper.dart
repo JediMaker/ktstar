@@ -42,6 +42,9 @@ lotteryInfoDataFromJson(LotteryInfoData data, Map<String, dynamic> json) {
   if (json['play_times'] != null) {
     data.playTimes = json['play_times']?.toString();
   }
+  if (json['is_protecting'] != null) {
+    data.isProtecting = json['is_protecting'];
+  }
   if (json['need_power_num'] != null) {
     data.needPowerNum = json['need_power_num']?.toString();
   }
@@ -73,6 +76,7 @@ Map<String, dynamic> lotteryInfoDataToJson(LotteryInfoData entity) {
   data['play_times'] = entity.playTimes;
   data['need_power_num'] = entity.needPowerNum;
   data['user_power_num'] = entity.userPowerNum;
+  data['is_protecting'] = entity.isProtecting;
   if (entity.userCardNum != null) {
     data['user_card_num'] = entity.userCardNum.toJson();
   }

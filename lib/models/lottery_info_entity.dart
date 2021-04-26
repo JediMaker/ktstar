@@ -19,6 +19,8 @@ class LotteryInfoData with JsonConvert<LotteryInfoData> {
   String lotteryMsg;
   @JSONField(name: "play_times")
   String playTimes;
+  @JSONField(name: "is_protecting")
+  bool isProtecting;
   @JSONField(name: "need_power_num")
   String needPowerNum;
   @JSONField(name: "user_power_num")

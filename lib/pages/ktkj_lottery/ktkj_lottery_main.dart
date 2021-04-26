@@ -38,6 +38,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   ///保护卡存储上限
   var _protectLimitNum = "0";
+  var isProtecting = false;
 
   _initData({bool showLoading = true}) async {
     try {
@@ -59,6 +60,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
           _cardUniversalCount = result.data.userCardNum.magicNum;
           _lotteryInfoData = result.data;
           _protectLimitNum = _lotteryInfoData.cardConfig.protectNum;
+          isProtecting = _lotteryInfoData.isProtecting;
         });
       }
     } else {
@@ -813,7 +815,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                             ),
                                           ),
                                           child: Text(
-                                            "${_cardProtectedCount != '0' ? "保护中" : "未保护"}",
+                                            "${isProtecting ? "保护中" : "未保护"}",
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
                                             style: TextStyle(
                                                 color: Color(0xff8CC041),
