@@ -85,7 +85,7 @@ class _KTKJFloatLotteryEntrancePageState
     return AnimatedPositioned(
       left: offset.dx,
       top: offset.dy,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 300),
       curve: Curves.fastLinearToSlowEaseIn,
       child: Visibility(
         visible: _showFloatBtn,
@@ -100,6 +100,7 @@ class _KTKJFloatLotteryEntrancePageState
           },
           onPanDown: (DragDownDetails details) {
 //            print("onPanDown");
+
 //          print("localPosition=${details.localPosition}");
 //          print("globalPosition=${details.globalPosition}");
           },

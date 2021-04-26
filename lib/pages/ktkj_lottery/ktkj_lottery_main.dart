@@ -39,13 +39,17 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
   ///保护卡存储上限
   var _protectLimitNum = "0";
 
-  _initData() async {
+  _initData({bool showLoading = true}) async {
     try {
-      EasyLoading.show();
+      if (showLoading) {
+        EasyLoading.show();
+      }
     } catch (e) {}
     var result = await HttpManage.lotteryGetInfo();
     try {
-      EasyLoading.dismiss();
+      if (showLoading) {
+        EasyLoading.dismiss();
+      }
     } catch (e) {}
     if (result.status) {
       if (mounted) {
@@ -878,7 +882,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
     /// 跳转翻牌页面
     await KTKJNavigatorUtils.navigatorRouter(context, KTKJLotteryFlopPage());
-    _initData();
+    _initData(showLoading: false);
 
     ///
   }
@@ -893,7 +897,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
     ///
     await showConvertDialog(context: context);
-    _initData();
+    _initData(showLoading: false);
   }
 
   Future<bool> showConvertDialog(

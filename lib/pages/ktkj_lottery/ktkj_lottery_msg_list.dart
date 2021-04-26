@@ -238,13 +238,14 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xffFFB20E),
+                    Color(0xffFEDD3C),
                     Color(0xffF9993D),
                   ],
                 ),
               ),
               child: KTKJNoDataPage(
-                textColor: Color(0xff222222),
+//                textColor: Color(0xffffd47a),
+                textColor: Color(0xff41555d),
               ))
           : null,
       slivers: <Widget>[buildCenter()],

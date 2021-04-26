@@ -247,7 +247,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
                 ),
               ),
               child: KTKJNoDataPage(
-                textColor: Color(0xff222222),
+                textColor: Color(0xff41555d),
               ))
           : null,
       slivers: <Widget>[buildCenter()],

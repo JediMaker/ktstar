@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
@@ -27,7 +28,13 @@ class KTKJNoDataPage extends StatelessWidget {
             SizedBox(
               width: 100.0,
               height: 100.0,
-              child: Image.asset('static/images/c_defull_null.png'),
+              child: textColor == null
+                  ? Image.asset('static/images/c_defull_null.png')
+                  : Icon(
+                      CupertinoIcons.collections,
+                      size: 76,
+                      color: textColor,
+                    ),
             ),
             Text(
               '暂无数据',
