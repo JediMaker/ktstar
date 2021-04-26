@@ -2018,7 +2018,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               context, KTKJLotteryMainPage());
                         },
                         child: Visibility(
-                          visible: _showActionCenter,
+//                          visible: _showActionCenter,
                           child: new Container(
                             child: new Column(
                               mainAxisAlignment: MainAxisAlignment.center,

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 
@@ -35,6 +36,9 @@ class ErrorInterceptors extends InterceptorsWrapper {
           return "Request Cancel";
         case DioErrorType.CONNECT_TIMEOUT:
 //              KTKJCommonUtils.showToast("网络异常，网络连接超时！");
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
 
           break;
         //        return "CONNECT TIMEOUT";
