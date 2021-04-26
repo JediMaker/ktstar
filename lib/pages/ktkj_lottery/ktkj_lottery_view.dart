@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:star/http/ktkj_http_manage.dart';
@@ -13,14 +12,23 @@ import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
 typedef void OnTapClickBlock(LotteryInfoData lotteryInfoData);
+typedef void OnLotteryRequest();
+typedef void OnLotteryResult();
 
 ///抽奖转盘
 class KTKJLotteryView extends StatefulWidget {
-  KTKJLotteryView({Key key, this.tapClickBlock, this.lotteryInfoData})
+  KTKJLotteryView(
+      {Key key,
+      this.tapClickBlock,
+      this.lotteryInfoData,
+      this.lotteryRequest,
+      this.lotteryResult})
       : super(key: key);
   final String title = "";
   final LotteryInfoData lotteryInfoData;
   final OnTapClickBlock tapClickBlock;
+  final OnLotteryRequest lotteryRequest;
+  final OnLotteryResult lotteryResult;
 
   @override
   _KTKJLotteryViewState createState() => _KTKJLotteryViewState();
@@ -307,14 +315,13 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
   ///获取后台中奖信息
   _lotteryPlay() async {
-    try {
-      EasyLoading.show();
-    } catch (e) {}
+    if (widget.lotteryRequest != null) {
+      widget.lotteryRequest();
+    }
     var result = await HttpManage.lotteryPlay();
-    try {
-      EasyLoading.dismiss();
-    } catch (e) {}
-
+    if (widget.lotteryResult != null) {
+      widget.lotteryResult();
+    }
     if (result.status) {
       if (mounted) {
         setState(() {

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -25,11 +26,21 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
   bool isFirstLoading = true;
   List<LotteryMsgListDataList> msgList = List<LotteryMsgListDataList>();
 
-  _initData() async {
+  _initData({showLoading = false}) async {
+    try {
+      if (showLoading) {
+        EasyLoading.show();
+      }
+    } catch (e) {}
     var result = await HttpManage.lotteryGetMsgList(
       page: page,
       pageSize: 20,
     );
+    try {
+      if (showLoading) {
+        EasyLoading.dismiss();
+      }
+    } catch (e) {}
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -71,42 +82,44 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(
-              color: Color(0xff222222), fontSize: ScreenUtil().setSp(54)),
-        ),
-        leading: Visibility(
-          child: IconButton(
-            icon: Container(
-              width: ScreenUtil().setWidth(63),
-              height: ScreenUtil().setHeight(63),
-              child: Center(
-                child: Image.asset(
-                  "static/images/icon_ios_back.png",
-                  width: ScreenUtil().setWidth(36),
-                  height: ScreenUtil().setHeight(63),
-                  fit: BoxFit.fill,
+    return FlutterEasyLoading(
+      child: Scaffold(
+        appBar: GradientAppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Color(0xff222222), fontSize: ScreenUtil().setSp(54)),
+          ),
+          leading: Visibility(
+            child: IconButton(
+              icon: Container(
+                width: ScreenUtil().setWidth(63),
+                height: ScreenUtil().setHeight(63),
+                child: Center(
+                  child: Image.asset(
+                    "static/images/icon_ios_back.png",
+                    width: ScreenUtil().setWidth(36),
+                    height: ScreenUtil().setHeight(63),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
+          centerTitle: true,
+          elevation: 0,
+          brightness: Brightness.light,
+          gradient: LinearGradient(colors: [
+            Color(0xffFEDD3C),
+            Color(0xffFEDD3C),
+          ]),
         ),
-        centerTitle: true,
-        elevation: 0,
-        brightness: Brightness.light,
-        gradient: LinearGradient(colors: [
-          Color(0xffFEDD3C),
-          Color(0xffFEDD3C),
-        ]),
+        body:
+            buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.
       ),
-      body:
-          buildEasyRefresh(), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
