@@ -2788,8 +2788,8 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                   SizedBox(
                     width: ScreenUtil().setWidth(26),
                   ),
-                  Visibility(
-//                    visible: false,
+                  /*Visibility(
+                    visible: false,
                     child: Container(
                       width: ScreenUtil().setWidth(164),
                       height: ScreenUtil().setWidth(48),
@@ -2825,7 +2825,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
 //            Image.asset("", width:)
                 ],
               ),
