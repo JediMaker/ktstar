@@ -277,6 +277,8 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
     var msg = '';
     var _countDesc = "";
     var _timeDesc = "";
+//    状态：1-正常，2-已失效
+    var _pStatus = "1";
     try {
       var item = msgList[index];
       if (widget.type == 0) {
@@ -286,6 +288,7 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
       if (widget.type == 1) {
         msg = item.pDesc;
         _countDesc = item.pNum;
+        _pStatus = item.pStatus;
       }
       if (widget.type == 2) {
         msg = item.cDesc;
@@ -345,7 +348,9 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(48),
-                                  color: Color(0xff222222),
+                                  color: _pStatus == "2"
+                                      ? Color(0xff999999)
+                                      : Color(0xff222222),
                                 ),
                               ),
                             ),
@@ -362,7 +367,9 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(48),
-                                  color: Color(0xff222222),
+                                  color: _pStatus == "2"
+                                      ? Color(0xff999999)
+                                      : Color(0xff222222),
                                 ),
                               ),
                             ),
@@ -378,7 +385,9 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(38),
-                              color: Color(0xff666666),
+                              color: _pStatus == "2"
+                                  ? Color(0xff999999)
+                                  : Color(0xff666666),
                             ),
                           ),
                         ),

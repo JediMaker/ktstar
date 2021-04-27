@@ -60,7 +60,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
   ConfettiController _universalAnimationController;
 
   ///卡片蒙层透明度
-  var _cardoOpacity = 0.16;
+  var _cardoOpacity = 0.2;
 
   _initData({bool showLoading = true}) async {
     try {
@@ -323,7 +323,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                           }
                                           if (_cardUniversalCount !=
                                               data.userCardNum.magicNum) {
-                                            animateConfetti();
+//                                            animateConfetti();
                                             animateUniversalShake();
                                           }
                                           _cardProtectedCount =
@@ -455,8 +455,8 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                       ///执行抖动动画的子Widget
                                       child: GestureDetector(
                                         onTap: () {
-                                          _shakeAttackCardAnimationController
-                                              .start();
+                                          /* _shakeAttackCardAnimationController
+                                              .start();*/
                                         },
                                         child: Container(
                                           width: ScreenUtil.screenWidth / 3,
@@ -475,12 +475,21 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                               ),
                                               Center(
                                                 child: Container(
-                                                  color: Color(0xff222222)
-                                                      .withOpacity(
-                                                          _cardAttackCount ==
-                                                                  "0"
-                                                              ? _cardoOpacity
-                                                              : 0),
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xff222222)
+                                                        .withOpacity(
+                                                            _cardAttackCount ==
+                                                                    "0"
+                                                                ? _cardoOpacity
+                                                                : 0),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(
+                                                        ScreenUtil()
+                                                            .setWidth(25),
+                                                      ),
+                                                    ),
+                                                  ),
                                                   width: ScreenUtil()
                                                       .setWidth(326),
                                                   height: ScreenUtil()
@@ -673,7 +682,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        animateConfetti();
+//                                        animateConfetti();
                                       },
                                       child: ShakeAnimationWidget(
                                         ///抖动控制器
@@ -711,12 +720,21 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                               ),
                                               Center(
                                                 child: Container(
-                                                  color: Color(0xff222222)
-                                                      .withOpacity(
-                                                          _cardUniversalCount ==
-                                                                  "0"
-                                                              ? _cardoOpacity
-                                                              : 0),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(
+                                                        ScreenUtil()
+                                                            .setWidth(25),
+                                                      ),
+                                                    ),
+                                                    color: Color(0xff222222)
+                                                        .withOpacity(
+                                                            _cardUniversalCount ==
+                                                                    "0"
+                                                                ? _cardoOpacity
+                                                                : 0),
+                                                  ),
                                                   width: ScreenUtil()
                                                       .setWidth(326),
                                                   height: ScreenUtil()
@@ -942,13 +960,18 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                             ),
                                             Center(
                                               child: Container(
-                                                color: Color(0xff222222)
-                                                    .withOpacity(
-                                                        _cardProtectedCount ==
-                                                                    "0" &&
-                                                                !isProtecting
-                                                            ? _cardoOpacity
-                                                            : 0),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                      ScreenUtil().setWidth(25),
+                                                    ),
+                                                  ),
+                                                  color: Color(0xff222222)
+                                                      .withOpacity(!isProtecting
+                                                          ? _cardoOpacity
+                                                          : 0),
+                                                ),
                                                 width:
                                                     ScreenUtil().setWidth(326),
                                                 height:
@@ -1006,12 +1029,9 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                 ),
                                                 decoration: BoxDecoration(
                                                   color: Color(0xff8CC041)
-                                                      .withOpacity(
-                                                          _cardProtectedCount ==
-                                                                      "0" &&
-                                                                  !isProtecting
-                                                              ? _cardoOpacity
-                                                              : 1),
+                                                      .withOpacity(!isProtecting
+                                                          ? _cardoOpacity
+                                                          : 1),
                                                   borderRadius: BorderRadius
                                                       .all(Radius.circular(
                                                           ScreenUtil()
@@ -1089,18 +1109,16 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 //                                        color: Color(0xffFC4044),
                                                       gradient: LinearGradient(
                                                         colors: [
-                                                          Color(0xffFFFFFF).withOpacity(
-                                                              _cardProtectedCount ==
-                                                                          "0" &&
-                                                                      !isProtecting
-                                                                  ? _cardoOpacity
-                                                                  : 1),
-                                                          Color(0xffD2FFC5).withOpacity(
-                                                              _cardProtectedCount ==
-                                                                          "0" &&
-                                                                      !isProtecting
-                                                                  ? _cardoOpacity
-                                                                  : 1),
+                                                          Color(0xffFFFFFF)
+                                                              .withOpacity(
+                                                                  !isProtecting
+                                                                      ? _cardoOpacity
+                                                                      : 1),
+                                                          Color(0xffD2FFC5)
+                                                              .withOpacity(
+                                                                  !isProtecting
+                                                                      ? _cardoOpacity
+                                                                      : 1),
                                                         ],
                                                         begin:
                                                             Alignment.topCenter,
@@ -1119,8 +1137,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                       "${isProtecting ? "保护中" : "未保护"}",
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
                                                       style: TextStyle(
-                                                          color:
-                                                              Color(0xff8CC041),
+                                                          color: isProtecting
+                                                              ? Color(
+                                                                  0xff8CC041)
+                                                              : Colors.white
+                                                                  .withOpacity(
+                                                                      0.5),
                                                           fontSize: ScreenUtil()
                                                               .setSp(34)),
                                                     ),
