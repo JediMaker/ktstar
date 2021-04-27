@@ -123,6 +123,10 @@ dependencies:
   map_launcher: ^1.1.1
   #  图表
   fl_chart: ^0.12.3
+  #抖动动画
+  shake_animation_widget: ^1.0.0
+  #  五彩纸屑
+  confetti: ^0.5.5
 
 
 #dependency_overrides:

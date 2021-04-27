@@ -52,7 +52,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   ];
 
   ///选中攻击姿势下标
-  var _selectIndex = -1;
+  var _selectIndex = 0;
 
   ///剩余攻击次数
   var _availableAttackCount = "";
@@ -395,6 +395,10 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
           }
           KTKJCommonUtils.showToast(attackResult.errMsg);
         }
+        if (_availableAttackCount == "0") {
+          Future.delayed(Duration(seconds: 2))
+              .then((value) => {Navigator.of(context).pop()});
+        }
 
         ///
 
@@ -407,7 +411,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
         );*/
         if (mounted) {
           setState(() {
-            _selectIndex = -1;
+            _selectIndex = 0;
           });
         }
 

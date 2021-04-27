@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:shake_animation_widget/shake_animation_widget.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/lottery_info_entity.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_flop.dart';
@@ -38,7 +40,27 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   ///保护卡存储上限
   var _protectLimitNum = "0";
+
+  ///是否防护中
   var isProtecting = false;
+
+  ///抖动动画控制器
+  ShakeAnimationController _shakeAttackCardAnimationController =
+      new ShakeAnimationController();
+
+  ///抖动动画控制器
+  ShakeAnimationController _shakeProtectAnimationController =
+      new ShakeAnimationController();
+
+  ///抖动动画控制器
+  ShakeAnimationController _shakeUniversalAnimationController =
+      new ShakeAnimationController();
+
+  ///五彩纸屑动画控制器
+  ConfettiController _universalAnimationController;
+
+  ///卡片蒙层透明度
+  var _cardoOpacity = 0.16;
 
   _initData({bool showLoading = true}) async {
     try {
@@ -70,13 +92,16 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   @override
   void initState() {
-    _initData();
     super.initState();
+    _initData();
+    _universalAnimationController =
+        ConfettiController(duration: const Duration(seconds: 2));
   }
 
   @override
   void dispose() {
     super.dispose();
+    _universalAnimationController.dispose();
   }
 
   @override
@@ -119,782 +144,1094 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
           body: SingleChildScrollView(
             child: Container(
               color: Color(0xffF9993D),
-              child: Center(
-                child: Column(
-                  children: [
-                    Container(
-                      child: Stack(
-                        fit: StackFit.loose,
-                        children: [
-                          Container(
-                            width: ScreenUtil().setWidth(1125),
-                            height: ScreenUtil().setWidth(1522),
-                            child: Image.asset(
-                              "static/images/bg_fight_page.png",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Container(
-                            width: ScreenUtil().setWidth(1125),
-                            height: ScreenUtil().setWidth(1522),
-                            child: KTKJMyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xd3dce6cee-2d43-4cf8-972f-06a40c0b780a",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: ScreenUtil().setWidth(60),
-                              ),
-                              child: KTKJMyOctoImage(
-                                image:
-                                    "https://alipic.lanhuapp.com/xdf61316e7-1937-47e2-9138-edfdff60a168",
-                                width: ScreenUtil().setWidth(794),
-                                height: ScreenUtil().setWidth(182),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              /// 跳转消息列表页
-                              KTKJNavigatorUtils.navigatorRouter(
-                                  context, KTKJLotteryMsgListPage());
-
-                              ///
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: ScreenUtil().setWidth(93),
-                                left: ScreenUtil().setWidth(968),
-                                right: ScreenUtil().setWidth(60),
-                              ),
-                              child: Column(
-                                children: [
-                                  KTKJMyOctoImage(
-                                    image:
-                                        "https://alipic.lanhuapp.com/xd6d197e09-f5b4-417d-b16a-a8edf03898d9",
-                                    width: ScreenUtil().setWidth(76),
-                                    height: ScreenUtil().setWidth(71),
-                                  ),
-                                  Center(
-                                    child: Container(
-                                      child: Text(
-                                        "消息",
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(42),
-                                          color: CupertinoColors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          /*  GestureDetector(
-                            onTap: () {
-                              /// 跳转记录列表页
-                              KTKJNavigatorUtils.navigatorRouter(
-                                  context,
-                                  KTKJLotteryRecordListPage(
-                                    title: "抽奖记录",
-                                    type: 0,
-                                  ));
-
-                              ///
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: ScreenUtil().setWidth(293),
-                                left: ScreenUtil().setWidth(968),
-                                right: ScreenUtil().setWidth(60),
-                              ),
-                              child: Column(
-                                children: [
-                                  KTKJMyOctoImage(
-                                    image:
-                                        "https://alipic.lanhuapp.com/xd6d197e09-f5b4-417d-b16a-a8edf03898d9",
-                                    width: ScreenUtil().setWidth(76),
-                                    height: ScreenUtil().setWidth(71),
-                                  ),
-                                  Center(
-                                    child: Container(
-                                      child: Text(
-                                        "抽奖记录",
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(42),
-                                          color: CupertinoColors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),*/
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(1068),
-                              left: ScreenUtil().setWidth(30),
-                              right: ScreenUtil().setWidth(30),
-//                        left: ScreenUtil().setWidth(30),
-//                        right: ScreenUtil().setWidth(30),
-                            ),
-                            child: Image.asset(
-                              "static/images/img_platform.png",
-                              width: ScreenUtil().setWidth(1179),
-                              height: ScreenUtil().setWidth(313),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: Stack(
-                              children: [
-                                KTKJMyOctoImage(
-                                  image:
-                                      "https://alipic.lanhuapp.com/xdf2f588a2-5940-4b68-8cf8-e7098073ebac",
-                                  width: ScreenUtil().setWidth(1125),
-                                  height: ScreenUtil().setWidth(177),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Container(
+                          child: Stack(
+                            fit: StackFit.loose,
+                            children: [
+                              Container(
+                                width: ScreenUtil().setWidth(1125),
+                                height: ScreenUtil().setWidth(1522),
+                                child: Image.asset(
+                                  "static/images/bg_fight_page.png",
                                   fit: BoxFit.fill,
                                 ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(279),
+                              ),
+                              Container(
+                                width: ScreenUtil().setWidth(1125),
+                                height: ScreenUtil().setWidth(1522),
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xd3dce6cee-2d43-4cf8-972f-06a40c0b780a",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Center(
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    top: ScreenUtil().setWidth(60),
+                                  ),
+                                  child: KTKJMyOctoImage(
+                                    image:
+                                        "https://alipic.lanhuapp.com/xdf61316e7-1937-47e2-9138-edfdff60a168",
+                                    width: ScreenUtil().setWidth(794),
+                                    height: ScreenUtil().setWidth(182),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  /// 跳转消息列表页
+                                  KTKJNavigatorUtils.navigatorRouter(
+                                      context, KTKJLotteryMsgListPage());
+
+                                  ///
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    top: ScreenUtil().setWidth(93),
+                                    left: ScreenUtil().setWidth(968),
+                                    right: ScreenUtil().setWidth(60),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      KTKJMyOctoImage(
+                                        image:
+                                            "https://alipic.lanhuapp.com/xd6d197e09-f5b4-417d-b16a-a8edf03898d9",
+                                        width: ScreenUtil().setWidth(76),
+                                        height: ScreenUtil().setWidth(71),
+                                      ),
+                                      Center(
+                                        child: Container(
+                                          child: Text(
+                                            "消息",
+                                            style: TextStyle(
+                                              fontSize: ScreenUtil().setSp(42),
+                                              color: CupertinoColors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              /*  GestureDetector(
+                                onTap: () {
+                                  /// 跳转记录列表页
+                                  KTKJNavigatorUtils.navigatorRouter(
+                                      context,
+                                      KTKJLotteryRecordListPage(
+                                        title: "抽奖记录",
+                                        type: 0,
+                                      ));
+
+                                  ///
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    top: ScreenUtil().setWidth(293),
+                                    left: ScreenUtil().setWidth(968),
+                                    right: ScreenUtil().setWidth(60),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      KTKJMyOctoImage(
+                                        image:
+                                            "https://alipic.lanhuapp.com/xd6d197e09-f5b4-417d-b16a-a8edf03898d9",
+                                        width: ScreenUtil().setWidth(76),
+                                        height: ScreenUtil().setWidth(71),
+                                      ),
+                                      Center(
+                                        child: Container(
+                                          child: Text(
+                                            "抽奖记录",
+                                            style: TextStyle(
+                                              fontSize: ScreenUtil().setSp(42),
+                                              color: CupertinoColors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),*/
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(1068),
+                                  left: ScreenUtil().setWidth(30),
+                                  right: ScreenUtil().setWidth(30),
 //                        left: ScreenUtil().setWidth(30),
 //                        right: ScreenUtil().setWidth(30),
-                            ),
-                            child: Center(
-                              child: KTKJLotteryView(
-                                lotteryInfoData: _lotteryInfoData,
-                                lotteryRequest: () {
-                                  try {
-                                    EasyLoading.show();
-                                  } catch (e) {}
-                                },
-                                lotteryResult: () {
-                                  try {
-                                    EasyLoading.dismiss();
-                                  } catch (e) {}
-                                },
-                                tapClickBlock: (LotteryInfoData data) {
-                                  if (mounted) {
-                                    setState(() {
-                                      _cardProtectedCount =
-                                          data.userCardNum.protectNum;
-                                      _cardAttackCount =
-                                          data.userCardNum.attackNum;
-                                      _cardUniversalCount =
-                                          data.userCardNum.magicNum;
-                                      print(
-                                          "_cardProtectedCount=$_cardProtectedCount");
-                                      print(
-                                          "_cardAttackCount=$_cardAttackCount");
-                                      print(
-                                          "_cardUniversalCount=$_cardUniversalCount");
-                                    });
-                                  }
-                                },
+                                ),
+                                child: Image.asset(
+                                  "static/images/img_platform.png",
+                                  width: ScreenUtil().setWidth(1179),
+                                  height: ScreenUtil().setWidth(313),
+                                ),
                               ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(249),
-                              left: ScreenUtil().setWidth(386),
-                            ),
-                            child: KTKJMyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xdc812a2cc-384c-4f24-b3a8-def8ad79b7a0",
-                              width: ScreenUtil().setWidth(110),
-                              height: ScreenUtil().setWidth(70),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(232),
-                              left: ScreenUtil().setWidth(543),
-                            ),
-                            child: KTKJMyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xd19de56e9-427d-4ea0-9a83-b47866996868",
-                              width: ScreenUtil().setWidth(88),
-                              height: ScreenUtil().setWidth(87),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(219),
-                              left: ScreenUtil().setWidth(724),
-                            ),
-                            child: KTKJMyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xda9349a78-ac96-481e-91bd-98f95bd4448f",
-                              width: ScreenUtil().setWidth(74),
-                              height: ScreenUtil().setWidth(100),
-                            ),
-                          ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                child: Stack(
+                                  children: [
+                                    KTKJMyOctoImage(
+                                      image:
+                                          "https://alipic.lanhuapp.com/xdf2f588a2-5940-4b68-8cf8-e7098073ebac",
+                                      width: ScreenUtil().setWidth(1125),
+                                      height: ScreenUtil().setWidth(177),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(279),
+//                        left: ScreenUtil().setWidth(30),
+//                        right: ScreenUtil().setWidth(30),
+                                ),
+                                child: Center(
+                                  child: KTKJLotteryView(
+                                    lotteryInfoData: _lotteryInfoData,
+                                    lotteryRequest: () {
+                                      try {
+                                        EasyLoading.show();
+                                      } catch (e) {}
+                                    },
+                                    lotteryResult: () {
+                                      try {
+                                        EasyLoading.dismiss();
+                                      } catch (e) {}
+                                    },
+                                    tapClickBlock: (LotteryInfoData data) {
+                                      if (mounted) {
+                                        setState(() {
+                                          if (_cardProtectedCount !=
+                                              data.userCardNum.protectNum) {
+                                            animateProtectedCardShake();
+                                          }
+                                          if (_cardAttackCount !=
+                                              data.userCardNum.attackNum) {
+                                            animateAttackCardShake();
+                                          }
+                                          if (_cardUniversalCount !=
+                                              data.userCardNum.magicNum) {
+                                            animateConfetti();
+                                            animateUniversalShake();
+                                          }
+                                          _cardProtectedCount =
+                                              data.userCardNum.protectNum;
+                                          _cardAttackCount =
+                                              data.userCardNum.attackNum;
+                                          _cardUniversalCount =
+                                              data.userCardNum.magicNum;
+                                          isProtecting =
+                                              _lotteryInfoData.isProtecting;
+                                          print(
+                                              "_cardProtectedCount=$_cardProtectedCount");
+                                          print(
+                                              "_cardAttackCount=$_cardAttackCount");
+                                          print(
+                                              "_cardUniversalCount=$_cardUniversalCount");
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(249),
+                                  left: ScreenUtil().setWidth(386),
+                                ),
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xdc812a2cc-384c-4f24-b3a8-def8ad79b7a0",
+                                  width: ScreenUtil().setWidth(110),
+                                  height: ScreenUtil().setWidth(70),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(232),
+                                  left: ScreenUtil().setWidth(543),
+                                ),
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xd19de56e9-427d-4ea0-9a83-b47866996868",
+                                  width: ScreenUtil().setWidth(88),
+                                  height: ScreenUtil().setWidth(87),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(219),
+                                  left: ScreenUtil().setWidth(724),
+                                ),
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xda9349a78-ac96-481e-91bd-98f95bd4448f",
+                                  width: ScreenUtil().setWidth(74),
+                                  height: ScreenUtil().setWidth(100),
+                                ),
+                              ),
 
-                          ///左牛图
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(908),
-                              left: ScreenUtil().setWidth(124),
-                            ),
-                            child: KTKJMyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xd25e742b3-15d3-4ece-b072-002e2a929c2d",
-                              width: ScreenUtil().setWidth(401),
-                              height: ScreenUtil().setWidth(437),
-                            ),
-                          ),
+                              ///左牛图
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(908),
+                                  left: ScreenUtil().setWidth(124),
+                                ),
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xd25e742b3-15d3-4ece-b072-002e2a929c2d",
+                                  width: ScreenUtil().setWidth(401),
+                                  height: ScreenUtil().setWidth(437),
+                                ),
+                              ),
 
-                          ///右牛图
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(908),
-                              left: ScreenUtil().setWidth(719),
-                            ),
-                            child: KTKJMyOctoImage(
-                              image:
-                                  "https://alipic.lanhuapp.com/xd5ff3ebed-ca34-4dfc-9f99-a252fe27c214",
-                              width: ScreenUtil().setWidth(392),
-                              height: ScreenUtil().setWidth(437),
-                            ),
+                              ///右牛图
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(908),
+                                  left: ScreenUtil().setWidth(719),
+                                ),
+                                child: KTKJMyOctoImage(
+                                  image:
+                                      "https://alipic.lanhuapp.com/xd5ff3ebed-ca34-4dfc-9f99-a252fe27c214",
+                                  width: ScreenUtil().setWidth(392),
+                                  height: ScreenUtil().setWidth(437),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: ScreenUtil().setWidth(656),
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xffFFC561),
-                            Colors.white,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
                         ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: ScreenUtil.screenWidth / 3,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child: KTKJMyOctoImage(
-                                          image:
-                                              "https://alipic.lanhuapp.com/xde7bc09b1-bc3e-4f3c-a912-fff1a705d22b",
-                                          width: ScreenUtil().setWidth(326),
-                                          height: ScreenUtil().setWidth(416),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
+                        Container(
+                          height: ScreenUtil().setWidth(656),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xffFFC561),
+                                Colors.white,
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    ShakeAnimationWidget(
+                                      ///抖动控制器
+                                      shakeAnimationController:
+                                          _shakeAttackCardAnimationController,
 
-                                      ///卡片名称
-                                      Visibility(
-                                        visible: true,
-                                        child: Center(
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            margin: EdgeInsets.only(
-                                              top: ScreenUtil().setWidth(10),
-                                            ),
-                                            /*decoration: BoxDecoration(
-                                              color: Color(0xffFC4044),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      ScreenUtil().setWidth(25))),
-                                            ),*/
-                                            child: Text(
-                                              "攻击卡",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-//                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      ScreenUtil().setSp(42)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      ///微旋转的抖动
+                                      shakeAnimationType:
+                                          ShakeAnimationType.LeftRightShake,
 
-                                      ///卡片数量
-                                      Visibility(
-                                        visible: true,
+                                      ///设置不开启抖动
+                                      isForward: false,
+
+                                      ///默认为 0 无限执行
+                                      shakeCount: 4,
+
+                                      ///抖动的幅度 取值范围为[0,1]
+                                      shakeRange: 0.6,
+
+                                      ///执行抖动动画的子Widget
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          _shakeAttackCardAnimationController
+                                              .start();
+                                        },
                                         child: Container(
-                                          padding: EdgeInsets.all(
-                                              ScreenUtil().setWidth(8)),
-                                          constraints: BoxConstraints(
-                                            maxWidth: ScreenUtil().setWidth(78),
-                                          ),
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                            top: ScreenUtil().setWidth(75),
-                                            left: ScreenUtil().setWidth(55),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xffFC4044),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    ScreenUtil().setWidth(25))),
-                                          ),
-                                          child: Text(
-                                            'x $_cardAttackCount',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                          width: ScreenUtil.screenWidth / 3,
+                                          child: Stack(
+                                            children: [
+                                              Center(
+                                                child: KTKJMyOctoImage(
+                                                  image:
+                                                      "https://alipic.lanhuapp.com/xde7bc09b1-bc3e-4f3c-a912-fff1a705d22b",
+                                                  width: ScreenUtil()
+                                                      .setWidth(326),
+                                                  height: ScreenUtil()
+                                                      .setWidth(416),
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  color: Color(0xff222222)
+                                                      .withOpacity(
+                                                          _cardAttackCount ==
+                                                                  "0"
+                                                              ? _cardoOpacity
+                                                              : 0),
+                                                  width: ScreenUtil()
+                                                      .setWidth(326),
+                                                  height: ScreenUtil()
+                                                      .setWidth(416),
+                                                ),
+                                              ),
+
+                                              ///卡片名称
+                                              Visibility(
+                                                visible: true,
+                                                child: Center(
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    margin: EdgeInsets.only(
+                                                      top: ScreenUtil()
+                                                          .setWidth(10),
+                                                    ),
+                                                    /*decoration: BoxDecoration(
+                                                      color: Color(0xffFC4044),
+                                                      borderRadius: BorderRadius.all(
+                                                          Radius.circular(
+                                                              ScreenUtil().setWidth(25))),
+                                                    ),*/
+                                                    child: Text(
+                                                      "攻击卡",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize:
-                                                    ScreenUtil().setSp(21)),
-                                          ),
-                                        ),
-                                      ),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(42)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              ///卡片数量
+                                              Visibility(
+                                                visible: true,
+                                                child: Container(
+                                                  padding: EdgeInsets.all(
+                                                      ScreenUtil().setWidth(8)),
+                                                  constraints: BoxConstraints(
+                                                    maxWidth: ScreenUtil()
+                                                        .setWidth(78),
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.only(
+                                                    top: ScreenUtil()
+                                                        .setWidth(75),
+                                                    left: ScreenUtil()
+                                                        .setWidth(55),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xffFC4044)
+                                                        .withOpacity(
+                                                            _cardAttackCount ==
+                                                                    "0"
+                                                                ? _cardoOpacity
+                                                                : 1),
+                                                    borderRadius: BorderRadius
+                                                        .all(Radius.circular(
+                                                            ScreenUtil()
+                                                                .setWidth(25))),
+                                                  ),
+                                                  child: Text(
+                                                    'x $_cardAttackCount',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+//                                        "${'$completeTaskNum/$totalTaskNum'}",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: ScreenUtil()
+                                                            .setSp(21)),
+                                                  ),
+                                                ),
+                                              ),
 
 //                                  https://alipic.lanhuapp.com/xdf95cba4d-e67f-4653-a7a3-880bc095c31a
-                                      ///卡片消耗记录入口
-                                      GestureDetector(
-                                        onTap: () {
-                                          KTKJNavigatorUtils.navigatorRouter(
-                                              context,
-                                              KTKJLotteryRecordListPage(
-                                                title: "攻击卡记录",
-                                                type: 2,
-                                                cardType: 2,
-                                              ));
-                                        },
-                                        child: Container(
-                                          width: ScreenUtil().setWidth(67),
-                                          height: ScreenUtil().setWidth(67),
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                            top: ScreenUtil().setWidth(60),
-                                            left: ScreenUtil().setWidth(260),
-                                          ),
-                                          child: Container(
-                                            width: ScreenUtil().setWidth(38),
-                                            height: ScreenUtil().setWidth(38),
-                                            child: KTKJMyOctoImage(
-                                              image:
-                                                  "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      ///使用攻击卡
-                                      Visibility(
-                                        visible: true,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            ///使用攻击卡
-                                            useAttackCards();
-                                          },
-                                          child: Center(
-                                            child: Container(
-                                              width: ScreenUtil().setWidth(192),
-                                              height: ScreenUtil().setWidth(67),
-                                              alignment: Alignment.center,
-                                              margin: EdgeInsets.only(
-                                                top: ScreenUtil().setWidth(296),
-                                              ),
-                                              decoration: BoxDecoration(
-//                                        color: Color(0xffFC4044),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0xffFFFFFF),
-                                                    Color(0xffFFC5C6),
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                    ScreenUtil().setWidth(34),
+                                              ///卡片消耗记录入口
+                                              GestureDetector(
+                                                onTap: () {
+                                                  KTKJNavigatorUtils
+                                                      .navigatorRouter(
+                                                          context,
+                                                          KTKJLotteryRecordListPage(
+                                                            title: "攻击卡记录",
+                                                            type: 2,
+                                                            cardType: 2,
+                                                          ));
+                                                },
+                                                child: Container(
+                                                  width:
+                                                      ScreenUtil().setWidth(67),
+                                                  height:
+                                                      ScreenUtil().setWidth(67),
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.only(
+                                                    top: ScreenUtil()
+                                                        .setWidth(60),
+                                                    left: ScreenUtil()
+                                                        .setWidth(260),
+                                                  ),
+                                                  child: Container(
+                                                    width: ScreenUtil()
+                                                        .setWidth(38),
+                                                    height: ScreenUtil()
+                                                        .setWidth(38),
+                                                    child: KTKJMyOctoImage(
+                                                      image:
+                                                          "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
+                                                      fit: BoxFit.fill,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                              child: Text(
-                                                "使用道具",
-//                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                                style: TextStyle(
-                                                    color: Color(0xffE53539),
-                                                    fontSize:
-                                                        ScreenUtil().setSp(34)),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: ScreenUtil.screenWidth / 3,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child: KTKJMyOctoImage(
-                                          image:
-                                              "https://alipic.lanhuapp.com/xd4abe7981-957d-4601-b361-de1d742d77eb",
-                                          width: ScreenUtil().setWidth(326),
-                                          height: ScreenUtil().setWidth(416),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
 
-                                      ///卡片名称
-                                      Visibility(
-                                        visible: true,
-                                        child: Center(
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            margin: EdgeInsets.only(
-                                              top: ScreenUtil().setWidth(10),
-                                            ),
-                                            /*decoration: BoxDecoration(
-                                              color: Color(0xffFC4044),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      ScreenUtil().setWidth(25))),
-                                            ),*/
-                                            child: Text(
-                                              "万能卡",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-//                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      ScreenUtil().setSp(42)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      ///卡片数量
-                                      Visibility(
-                                        visible: true,
-                                        child: Container(
-                                          padding: EdgeInsets.all(
-                                              ScreenUtil().setWidth(8)),
-                                          constraints: BoxConstraints(
-                                            maxWidth: ScreenUtil().setWidth(78),
-                                          ),
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                            top: ScreenUtil().setWidth(75),
-                                            left: ScreenUtil().setWidth(55),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xffFE9B2F),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    ScreenUtil().setWidth(25))),
-                                          ),
-                                          child: Text(
-                                            'x $_cardUniversalCount',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-//                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize:
-                                                    ScreenUtil().setSp(21)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      ///卡片消耗记录入口
-                                      GestureDetector(
-                                        onTap: () {
-                                          KTKJNavigatorUtils.navigatorRouter(
-                                              context,
-                                              KTKJLotteryRecordListPage(
-                                                title: "万能卡记录",
-                                                type: 2,
-                                                cardType: 1,
-                                              ));
-                                        },
-                                        child: Container(
-                                          width: ScreenUtil().setWidth(67),
-                                          height: ScreenUtil().setWidth(67),
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                            top: ScreenUtil().setWidth(60),
-                                            left: ScreenUtil().setWidth(260),
-                                          ),
-                                          child: Container(
-                                            width: ScreenUtil().setWidth(38),
-                                            height: ScreenUtil().setWidth(38),
-                                            child: KTKJMyOctoImage(
-                                              image:
-                                                  "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      ///使用万能卡
-                                      Visibility(
-                                        visible: true,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            ///使用万能卡
-                                            useUniversalCards();
-                                          },
-                                          child: Center(
-                                            child: Container(
-                                              width: ScreenUtil().setWidth(192),
-                                              height: ScreenUtil().setWidth(67),
-                                              alignment: Alignment.center,
-                                              margin: EdgeInsets.only(
-                                                top: ScreenUtil().setWidth(296),
-                                              ),
-                                              decoration: BoxDecoration(
+                                              ///使用攻击卡
+                                              Visibility(
+                                                visible: true,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    ///使用攻击卡
+                                                    useAttackCards();
+                                                  },
+                                                  child: Center(
+                                                    child: Container(
+                                                      width: ScreenUtil()
+                                                          .setWidth(192),
+                                                      height: ScreenUtil()
+                                                          .setWidth(67),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      margin: EdgeInsets.only(
+                                                        top: ScreenUtil()
+                                                            .setWidth(296),
+                                                      ),
+                                                      decoration: BoxDecoration(
 //                                        color: Color(0xffFC4044),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0xffFFFFFF),
-                                                    Color(0xffFFE4C5),
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                    ScreenUtil().setWidth(34),
+                                                        gradient:
+                                                            LinearGradient(
+                                                          colors: [
+                                                            Color(0xffFFFFFF)
+                                                                .withOpacity(
+                                                                    _cardAttackCount ==
+                                                                            "0"
+                                                                        ? _cardoOpacity
+                                                                        : 1),
+                                                            Color(0xffFFC5C6)
+                                                                .withOpacity(
+                                                                    _cardAttackCount ==
+                                                                            "0"
+                                                                        ? _cardoOpacity
+                                                                        : 1),
+                                                          ],
+                                                          begin: Alignment
+                                                              .topCenter,
+                                                          end: Alignment
+                                                              .bottomCenter,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(
+                                                            ScreenUtil()
+                                                                .setWidth(34),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                        "使用道具",
+//                                        "${'$completeTaskNum/$totalTaskNum'}",
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xffE53539),
+                                                            fontSize:
+                                                                ScreenUtil()
+                                                                    .setSp(34)),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                              child: Text(
-                                                "兑换道具",
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        animateConfetti();
+                                      },
+                                      child: ShakeAnimationWidget(
+                                        ///抖动控制器
+                                        shakeAnimationController:
+                                            _shakeUniversalAnimationController,
+
+                                        ///微旋转的抖动
+                                        shakeAnimationType:
+                                            ShakeAnimationType.LeftRightShake,
+
+                                        ///设置不开启抖动
+                                        isForward: false,
+
+                                        ///默认为 0 无限执行
+                                        shakeCount: 4,
+
+                                        ///抖动的幅度 取值范围为[0,1]
+                                        shakeRange: 0.6,
+
+                                        ///执行抖动动画的子Widget
+                                        child: Container(
+                                          width: ScreenUtil.screenWidth / 3,
+                                          child: Stack(
+                                            children: [
+                                              Center(
+                                                child: KTKJMyOctoImage(
+                                                  image:
+                                                      "https://alipic.lanhuapp.com/xd4abe7981-957d-4601-b361-de1d742d77eb",
+                                                  width: ScreenUtil()
+                                                      .setWidth(326),
+                                                  height: ScreenUtil()
+                                                      .setWidth(416),
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  color: Color(0xff222222)
+                                                      .withOpacity(
+                                                          _cardUniversalCount ==
+                                                                  "0"
+                                                              ? _cardoOpacity
+                                                              : 0),
+                                                  width: ScreenUtil()
+                                                      .setWidth(326),
+                                                  height: ScreenUtil()
+                                                      .setWidth(416),
+                                                ),
+                                              ),
+
+                                              ///卡片名称
+                                              Visibility(
+                                                visible: true,
+                                                child: Center(
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    margin: EdgeInsets.only(
+                                                      top: ScreenUtil()
+                                                          .setWidth(10),
+                                                    ),
+                                                    /*decoration: BoxDecoration(
+                                                      color: Color(0xffFC4044),
+                                                      borderRadius: BorderRadius.all(
+                                                          Radius.circular(
+                                                              ScreenUtil().setWidth(25))),
+                                                    ),*/
+                                                    child: Text(
+                                                      "万能卡",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                                style: TextStyle(
-                                                    color: Color(0xffFE9B2F),
-                                                    fontSize:
-                                                        ScreenUtil().setSp(34)),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(42)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              ///卡片数量
+                                              Visibility(
+                                                visible: true,
+                                                child: Container(
+                                                  padding: EdgeInsets.all(
+                                                      ScreenUtil().setWidth(8)),
+                                                  constraints: BoxConstraints(
+                                                    maxWidth: ScreenUtil()
+                                                        .setWidth(78),
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.only(
+                                                    top: ScreenUtil()
+                                                        .setWidth(75),
+                                                    left: ScreenUtil()
+                                                        .setWidth(55),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xffFE9B2F)
+                                                        .withOpacity(
+                                                            _cardUniversalCount ==
+                                                                    "0"
+                                                                ? _cardoOpacity
+                                                                : 1),
+                                                    borderRadius: BorderRadius
+                                                        .all(Radius.circular(
+                                                            ScreenUtil()
+                                                                .setWidth(25))),
+                                                  ),
+                                                  child: Text(
+                                                    'x $_cardUniversalCount',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+//                                        "${'$completeTaskNum/$totalTaskNum'}",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: ScreenUtil()
+                                                            .setSp(21)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              ///卡片消耗记录入口
+                                              GestureDetector(
+                                                onTap: () {
+                                                  KTKJNavigatorUtils
+                                                      .navigatorRouter(
+                                                          context,
+                                                          KTKJLotteryRecordListPage(
+                                                            title: "万能卡记录",
+                                                            type: 2,
+                                                            cardType: 1,
+                                                          ));
+                                                },
+                                                child: Container(
+                                                  width:
+                                                      ScreenUtil().setWidth(67),
+                                                  height:
+                                                      ScreenUtil().setWidth(67),
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.only(
+                                                    top: ScreenUtil()
+                                                        .setWidth(60),
+                                                    left: ScreenUtil()
+                                                        .setWidth(260),
+                                                  ),
+                                                  child: Container(
+                                                    width: ScreenUtil()
+                                                        .setWidth(38),
+                                                    height: ScreenUtil()
+                                                        .setWidth(38),
+                                                    child: KTKJMyOctoImage(
+                                                      image:
+                                                          "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              ///使用万能卡
+                                              Visibility(
+                                                visible: true,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    ///使用万能卡
+                                                    useUniversalCards();
+                                                  },
+                                                  child: Center(
+                                                    child: Container(
+                                                      width: ScreenUtil()
+                                                          .setWidth(192),
+                                                      height: ScreenUtil()
+                                                          .setWidth(67),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      margin: EdgeInsets.only(
+                                                        top: ScreenUtil()
+                                                            .setWidth(296),
+                                                      ),
+                                                      decoration: BoxDecoration(
+//                                        color: Color(0xffFC4044),
+                                                        gradient:
+                                                            LinearGradient(
+                                                          colors: [
+                                                            Color(0xffFFFFFF)
+                                                                .withOpacity(
+                                                                    _cardUniversalCount ==
+                                                                            "0"
+                                                                        ? _cardoOpacity
+                                                                        : 1),
+                                                            Color(0xffFFE4C5)
+                                                                .withOpacity(
+                                                                    _cardUniversalCount ==
+                                                                            "0"
+                                                                        ? _cardoOpacity
+                                                                        : 1),
+                                                          ],
+                                                          begin: Alignment
+                                                              .topCenter,
+                                                          end: Alignment
+                                                              .bottomCenter,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(
+                                                            ScreenUtil()
+                                                                .setWidth(34),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                        "兑换道具",
+//                                        "${'$completeTaskNum/$totalTaskNum'}",
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xffFE9B2F),
+                                                            fontSize:
+                                                                ScreenUtil()
+                                                                    .setSp(34)),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    ShakeAnimationWidget(
+                                      ///抖动控制器
+                                      shakeAnimationController:
+                                          _shakeProtectAnimationController,
+
+                                      ///微旋转的抖动
+                                      shakeAnimationType:
+                                          ShakeAnimationType.LeftRightShake,
+
+                                      ///设置不开启抖动
+                                      isForward: false,
+
+                                      ///默认为 0 无限执行
+                                      shakeCount: 4,
+
+                                      ///抖动的幅度 取值范围为[0,1]
+                                      shakeRange: 0.6,
+
+                                      ///执行抖动动画的子Widget
+                                      child: Container(
+                                        width: ScreenUtil.screenWidth / 3,
+                                        child: Stack(
+                                          children: [
+                                            Center(
+                                              child: KTKJMyOctoImage(
+                                                image:
+                                                    "https://alipic.lanhuapp.com/xdf5e808bc-fec6-4036-a8bc-a14603ffe0f1",
+                                                width:
+                                                    ScreenUtil().setWidth(326),
+                                                height:
+                                                    ScreenUtil().setWidth(416),
+                                                fit: BoxFit.fill,
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: ScreenUtil.screenWidth / 3,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child: KTKJMyOctoImage(
-                                          image:
-                                              "https://alipic.lanhuapp.com/xdf5e808bc-fec6-4036-a8bc-a14603ffe0f1",
-                                          width: ScreenUtil().setWidth(326),
-                                          height: ScreenUtil().setWidth(416),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-
-                                      ///卡片名称
-                                      Visibility(
-                                        visible: true,
-                                        child: Center(
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            margin: EdgeInsets.only(
-                                              top: ScreenUtil().setWidth(10),
+                                            Center(
+                                              child: Container(
+                                                color: Color(0xff222222)
+                                                    .withOpacity(
+                                                        _cardProtectedCount ==
+                                                                    "0" &&
+                                                                !isProtecting
+                                                            ? _cardoOpacity
+                                                            : 0),
+                                                width:
+                                                    ScreenUtil().setWidth(326),
+                                                height:
+                                                    ScreenUtil().setWidth(416),
+                                              ),
                                             ),
-                                            /*decoration: BoxDecoration(
-                                              color: Color(0xffFC4044),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      ScreenUtil().setWidth(25))),
-                                            ),*/
-                                            child: Text(
-                                              "保护盾",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
+
+                                            ///卡片名称
+                                            Visibility(
+                                              visible: true,
+                                              child: Center(
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.only(
+                                                    top: ScreenUtil()
+                                                        .setWidth(10),
+                                                  ),
+                                                  /*decoration: BoxDecoration(
+                                                    color: Color(0xffFC4044),
+                                                    borderRadius: BorderRadius.all(
+                                                        Radius.circular(
+                                                            ScreenUtil().setWidth(25))),
+                                                  ),*/
+                                                  child: Text(
+                                                    "保护盾",
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      ScreenUtil().setSp(42)),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: ScreenUtil()
+                                                            .setSp(42)),
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
 
-                                      ///卡片数量
-                                      Visibility(
-                                        visible: true,
-                                        child: Container(
-                                          padding: EdgeInsets.all(
-                                              ScreenUtil().setWidth(8)),
-                                          constraints: BoxConstraints(
-                                            maxWidth: ScreenUtil().setWidth(78),
-                                          ),
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                            top: ScreenUtil().setWidth(75),
-                                            left: ScreenUtil().setWidth(55),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff8CC041),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    ScreenUtil().setWidth(25))),
-                                          ),
-                                          child: Text(
-                                            '$_cardProtectedCount/$_protectLimitNum',
-                                            //
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                            ///卡片数量
+                                            Visibility(
+                                              visible: true,
+                                              child: Container(
+                                                padding: EdgeInsets.all(
+                                                    ScreenUtil().setWidth(8)),
+                                                constraints: BoxConstraints(
+                                                  maxWidth:
+                                                      ScreenUtil().setWidth(78),
+                                                ),
+                                                alignment: Alignment.center,
+                                                margin: EdgeInsets.only(
+                                                  top:
+                                                      ScreenUtil().setWidth(75),
+                                                  left:
+                                                      ScreenUtil().setWidth(55),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff8CC041)
+                                                      .withOpacity(
+                                                          _cardProtectedCount ==
+                                                                      "0" &&
+                                                                  !isProtecting
+                                                              ? _cardoOpacity
+                                                              : 1),
+                                                  borderRadius: BorderRadius
+                                                      .all(Radius.circular(
+                                                          ScreenUtil()
+                                                              .setWidth(25))),
+                                                ),
+                                                child: Text(
+                                                  //
+                                                  '$_cardProtectedCount/$_protectLimitNum',
+                                                  //
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
 //                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize:
-                                                    ScreenUtil().setSp(21)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      ///卡片消耗记录入口
-                                      GestureDetector(
-                                        onTap: () {
-                                          KTKJNavigatorUtils.navigatorRouter(
-                                              context,
-                                              KTKJLotteryRecordListPage(
-                                                title: "保护盾记录",
-                                                type: 2,
-                                                cardType: 3,
-                                              ));
-                                        },
-                                        child: Container(
-                                          width: ScreenUtil().setWidth(67),
-                                          height: ScreenUtil().setWidth(67),
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                            top: ScreenUtil().setWidth(60),
-                                            left: ScreenUtil().setWidth(260),
-                                          ),
-                                          child: Container(
-                                            width: ScreenUtil().setWidth(38),
-                                            height: ScreenUtil().setWidth(38),
-                                            child: KTKJMyOctoImage(
-                                              image:
-                                                  "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
-                                              fit: BoxFit.fill,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: ScreenUtil()
+                                                          .setSp(21)),
+                                                ),
+                                              ), //
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
+
+                                            ///卡片消耗记录入口
+                                            GestureDetector(
+                                              onTap: () {
+                                                KTKJNavigatorUtils
+                                                    .navigatorRouter(
+                                                        context,
+                                                        KTKJLotteryRecordListPage(
+                                                          title: "保护盾记录",
+                                                          type: 2,
+                                                          cardType: 3,
+                                                        ));
+                                              },
+                                              child: Container(
+                                                width:
+                                                    ScreenUtil().setWidth(67),
+                                                height:
+                                                    ScreenUtil().setWidth(67),
+                                                alignment: Alignment.center,
+                                                margin: EdgeInsets.only(
+                                                  top:
+                                                      ScreenUtil().setWidth(60),
+                                                  left: ScreenUtil()
+                                                      .setWidth(260),
+                                                ),
+                                                child: Container(
+                                                  width:
+                                                      ScreenUtil().setWidth(38),
+                                                  height:
+                                                      ScreenUtil().setWidth(38),
+                                                  child: KTKJMyOctoImage(
+                                                    image:
+                                                        "https://alipic.lanhuapp.com/xd9ca0cc8f-9b74-41c0-ab24-bdb05e963c69",
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Visibility(
 //                                    visible: _cardProtectedCount != '0',
-                                        child: GestureDetector(
-                                          onTap: () {},
-                                          child: Center(
-                                            child: Container(
-                                              width: ScreenUtil().setWidth(192),
-                                              height: ScreenUtil().setWidth(67),
-                                              alignment: Alignment.center,
-                                              margin: EdgeInsets.only(
-                                                top: ScreenUtil().setWidth(296),
-                                              ),
-                                              decoration: BoxDecoration(
+                                              child: GestureDetector(
+                                                onTap: () {},
+                                                child: Center(
+                                                  child: Container(
+                                                    width: ScreenUtil()
+                                                        .setWidth(192),
+                                                    height: ScreenUtil()
+                                                        .setWidth(67),
+                                                    alignment: Alignment.center,
+                                                    margin: EdgeInsets.only(
+                                                      top: ScreenUtil()
+                                                          .setWidth(296),
+                                                    ),
+                                                    decoration: BoxDecoration(
 //                                        color: Color(0xffFC4044),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0xffFFFFFF),
-                                                    Color(0xffD2FFC5),
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                    ScreenUtil().setWidth(34),
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          Color(0xffFFFFFF).withOpacity(
+                                                              _cardProtectedCount ==
+                                                                          "0" &&
+                                                                      !isProtecting
+                                                                  ? _cardoOpacity
+                                                                  : 1),
+                                                          Color(0xffD2FFC5).withOpacity(
+                                                              _cardProtectedCount ==
+                                                                          "0" &&
+                                                                      !isProtecting
+                                                                  ? _cardoOpacity
+                                                                  : 1),
+                                                        ],
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(
+                                                          ScreenUtil()
+                                                              .setWidth(34),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      "${isProtecting ? "保护中" : "未保护"}",
+//                                        "${'$completeTaskNum/$totalTaskNum'}",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xff8CC041),
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(34)),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                              child: Text(
-                                                "${isProtecting ? "保护中" : "未保护"}",
-//                                        "${'$completeTaskNum/$totalTaskNum'}",
-                                                style: TextStyle(
-                                                    color: Color(0xff8CC041),
-                                                    fontSize:
-                                                        ScreenUtil().setSp(34)),
-                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  width: ScreenUtil.screenWidth / 3,
-                                  child: Center(
-                                    child: KTKJMyOctoImage(
-                                      image:
-                                          "https://alipic.lanhuapp.com/xdf5e808bc-fec6-4036-a8bc-a14603ffe0f1",
-                                      width: ScreenUtil().setWidth(326),
-                                      height: ScreenUtil().setWidth(416),
-                                      fit: BoxFit.fill,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  KTKJNavigatorUtils
+                                      .navigatorRouterAndRemoveUntil(
+                                          context, KTKJTaskIndexPage());
+                                },
+                                child: Center(
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      top: ScreenUtil().setWidth(50),
+                                    ),
+                                    child: Text(
+                                      "购买商品获得更多能量>",
+                                      style: TextStyle(
+                                        fontSize: ScreenUtil().setSp(32),
+                                        color: Color(0xff222222),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
-                                  context, KTKJTaskIndexPage());
-                            },
-                            child: Center(
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  top: ScreenUtil().setWidth(50),
-                                ),
-                                child: Text(
-                                  "购买商品获得更多能量>",
-                                  style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(32),
-                                    color: Color(0xff222222),
-                                  ),
-                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ConfettiWidget(
+                      confettiController: _universalAnimationController,
+                      blastDirection: -pi / 2,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      emissionFrequency: 0.01,
+                      numberOfParticles: 20,
+                      maxBlastForce: 100,
+                      minBlastForce: 80,
+                      gravity: 0.3,
+                    ),
+                  ),
+                ],
               ),
             ),
           ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
     );
+  }
+
+  ///执行五彩纸屑飘落动画
+  void animateConfetti() {
+    if (_universalAnimationController.state ==
+        ConfettiControllerState.playing) {
+      _universalAnimationController.stop();
+    }
+    _universalAnimationController.play();
+  }
+
+  ///执行万能卡抖动动画
+  void animateUniversalShake() {
+    ///判断抖动动画是否正在执行
+    if (_shakeUniversalAnimationController.animationRunging) {
+      ///停止抖动动画
+      _shakeUniversalAnimationController.stop();
+    }
+
+    ///开启抖动动画
+    ///参数shakeCount 用来配置抖动次数
+    ///通过 controller start 方法默认为 1
+    _shakeUniversalAnimationController.start(shakeCount: 1);
+  }
+
+  ///执行攻击卡卡抖动动画
+  void animateAttackCardShake() {
+    ///判断抖动动画是否正在执行
+    if (_shakeAttackCardAnimationController.animationRunging) {
+      ///停止抖动动画
+      _shakeAttackCardAnimationController.stop();
+    }
+
+    ///开启抖动动画
+    ///参数shakeCount 用来配置抖动次数
+    ///通过 controller start 方法默认为 1
+    _shakeAttackCardAnimationController.start(shakeCount: 1);
+  }
+
+  ///执行保护卡抖动动画
+  void animateProtectedCardShake() {
+    ///判断抖动动画是否正在执行
+    if (_shakeProtectAnimationController.animationRunging) {
+      ///停止抖动动画
+      _shakeProtectAnimationController.stop();
+    }
+
+    ///开启抖动动画
+    ///参数shakeCount 用来配置抖动次数
+    ///通过 controller start 方法默认为 1
+    _shakeProtectAnimationController.start(shakeCount: 1);
   }
 
   ///使用攻击卡
@@ -914,18 +1251,22 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   ///使用万能卡
   useUniversalCards() async {
-    if (_cardUniversalCount == "0" ||
+    /*  if (_cardUniversalCount == "0" ||
         KTKJCommonUtils.isEmpty(_cardUniversalCount)) {
       KTKJCommonUtils.showToast("您还没有该卡片，去抽一个吧！");
       return;
-    }
-
+    }*/
     ///
-    await showConvertDialog(context: context);
+    int convertCardType = await showConvertDialog(context: context);
+    if (convertCardType == 0) {
+      animateAttackCardShake();
+    } else if (convertCardType == 1) {
+      animateProtectedCardShake();
+    }
     _initData(showLoading: false);
   }
 
-  Future<bool> showConvertDialog(
+  Future<int> showConvertDialog(
       {BuildContext context, String mUpdateContent, bool mIsForce}) async {
     return await showDialog(
         barrierDismissible: false, //屏蔽物理返回键（因为强更的时候点击返回键，弹窗会消失）
@@ -959,7 +1300,7 @@ class _CardConvertDialogState extends State<CardConvertDialog> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(_convertCardType);
             },
             child: Container(
               width: ScreenUtil().setWidth(95),
@@ -1046,7 +1387,7 @@ class _CardConvertDialogState extends State<CardConvertDialog> {
           KTKJCommonUtils.showToast(
               _convertCardType == 0 ? "恭喜您获得一张攻击卡！" : "恭喜您获得一张保护盾！",
               gravity: ToastGravity.CENTER);
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(_convertCardType);
         } else {
           KTKJCommonUtils.showToast(result.errMsg);
         }
