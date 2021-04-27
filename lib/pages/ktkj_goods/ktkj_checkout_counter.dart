@@ -327,7 +327,8 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
                               try {
                                 try {
                                   EasyLoading.show(status: "正在支付");
-                                  Future.delayed(Duration(seconds: 5)).then((value) {
+                                  Future.delayed(Duration(seconds: 5))
+                                      .then((value) {
                                     try {
                                       EasyLoading.dismiss();
                                     } catch (e) {}

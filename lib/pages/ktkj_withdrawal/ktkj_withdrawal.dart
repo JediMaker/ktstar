@@ -10,7 +10,6 @@ import 'package:star/pages/ktkj_withdrawal/ktkj_withdrawal_result.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
-
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -456,14 +455,12 @@ class _WithdrawalPageState extends State<KTKJWithdrawalPage> {
                     EasyLoading.dismiss();
                   } catch (e) {}
                 });
-              } catch (e) {
-              }
+              } catch (e) {}
               var result = await HttpManage.withdrawalApplication(
                   "1", _withdrawalAmount, _aliPayName, _aliPayAccount);
               try {
                 EasyLoading.dismiss();
-              } catch (e) {
-              }
+              } catch (e) {}
               if (result.status) {
                 KTKJCommonUtils.showToast("提现申请已提交");
 //                Navigator.of(context).pop();
