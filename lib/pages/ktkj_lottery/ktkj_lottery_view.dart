@@ -260,7 +260,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
     //补间动画
     tween = Tween<double>(
       begin: 0.0,
-      end: pi * 2 * 3 + rewardAngle,
+      end: pi * 4 * 3 + rewardAngle,
     ).animate(
       CurvedAnimation(
         parent: controller,
