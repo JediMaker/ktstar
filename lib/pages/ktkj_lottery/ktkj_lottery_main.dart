@@ -308,8 +308,7 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                     lotteryRequest: () {
                                       try {
                                         EasyLoading.show();
-                                        Future.delayed(Duration(seconds: 5))
-                                            .then((value) {
+                                        Future.delayed(Duration(seconds: 5)).then((value) {
                                           try {
                                             EasyLoading.dismiss();
                                           } catch (e) {}

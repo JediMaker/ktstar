@@ -26,6 +26,7 @@ import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:star/utils/ktkj_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.

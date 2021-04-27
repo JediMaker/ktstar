@@ -13,6 +13,7 @@ import 'package:star/utils/ktkj_navigator_utils.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+
 void main() {
   runApp(MaterialApp(
     home: Container(
@@ -52,7 +53,8 @@ class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
             EasyLoading.dismiss();
           } catch (e) {}
         });
-      } catch (e) {}
+      } catch (e) {
+      }
       var result = await HttpManage.getGoodsQueuePersonalList();
       if (mounted) {
         if (result.status) {
@@ -506,11 +508,13 @@ class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
                             EasyLoading.dismiss();
                           } catch (e) {}
                         });
-                      } catch (e) {}
+                      } catch (e) {
+                      }
                       var result = await HttpManage.getGoodsQueueList(goodsId);
                       try {
                         EasyLoading.dismiss();
-                      } catch (e) {}
+                      } catch (e) {
+                      }
                       if (mounted) {
                         if (result.status) {
                           setState(() {
