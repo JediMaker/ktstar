@@ -126,6 +126,9 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
 
   var _showActionCenter = true;
 
+  ///防护盾剩余保护天数
+  var _leftProtectedDay;
+
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
     if (result.status) {
@@ -164,6 +167,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
           applyStatus = result.data.storeStatus;
           _rejectMsg = result.data.storeRejectMsg;
           _shopId = result.data.storeId;
+          _leftProtectedDay = result.data.protectDays;
           if (applyStatus == '2') {
             _textAccordingToApplyStatus = "商家后台";
           } else {
@@ -1917,15 +1921,16 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                   fit: FlexFit.tight,
                   child: Container(
                     child: new InkWell(
-                        onTap: () {
+                        onTap: () async {
                           /* Fluttertoast.showToast(
                               msg: "暂未开放",
                               backgroundColor: Colors.grey,
                               textColor: Colors.white,
                               gravity: ToastGravity.BOTTOM);
                           return;*/
-                          KTKJNavigatorUtils.navigatorRouter(
+                          await KTKJNavigatorUtils.navigatorRouter(
                               context, KTKJLotteryMainPage());
+                          _initUserData();
                         },
                         child: new Container(
                           child: new Column(
@@ -2006,7 +2011,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                   fit: FlexFit.tight,
                   child: Container(
                     child: new InkWell(
-                        onTap: () {
+                        onTap: () async {
                           /* Fluttertoast.showToast(
                               msg: "暂未开放",
                               backgroundColor: Colors.grey,
@@ -2014,8 +2019,9 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               gravity: ToastGravity.BOTTOM);
                           return;*/
 //                          KTKJCommonUtils.showToast("敬请期待！");
-                          KTKJNavigatorUtils.navigatorRouter(
+                          await KTKJNavigatorUtils.navigatorRouter(
                               context, KTKJLotteryMainPage());
+                          _initUserData();
                         },
                         child: Visibility(
 //                          visible: _showActionCenter,
@@ -2788,8 +2794,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                   SizedBox(
                     width: ScreenUtil().setWidth(26),
                   ),
-                  /*Visibility(
-                    visible: false,
+                  Visibility(
                     child: Container(
                       width: ScreenUtil().setWidth(164),
                       height: ScreenUtil().setWidth(48),
@@ -2815,7 +2820,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               left: ScreenUtil().setWidth(6),
                             ),
                             child: Text(
-                              "剩余13天",
+                              "剩余$_leftProtectedDay天",
                               style: TextStyle(
                                 fontSize: ScreenUtil().setSp(24),
                                 color: Colors.white,
@@ -2825,7 +2830,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                         ],
                       ),
                     ),
-                  ),*/
+                  ),
 //            Image.asset("", width:)
                 ],
               ),

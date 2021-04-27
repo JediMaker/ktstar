@@ -1,5 +1,5 @@
-import 'package:star/models/user_info_entity.dart';
 import 'package:star/models/user_holder_profit_entity.dart';
+import 'package:star/models/user_info_entity.dart';
 
 userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
   if (json['status'] != null) {
@@ -100,6 +100,12 @@ userInfoDataFromJson(UserInfoData data, Map<String, dynamic> json) {
   if (json['store_id'] != null) {
     data.storeId = json['store_id']?.toString();
   }
+  if (json['is_protecting'] != null) {
+    data.isProtecting = json['is_protecting'] ?? false;
+  }
+  if (json['protect_days'] != null) {
+    data.protectDays = json['protect_days']?.toString();
+  }
   if (json['partner_bonus'] != null) {
     data.partnerBonus =
         new UserHolderProfitPartnerBonus().fromJson(json['partner_bonus']);
@@ -132,6 +138,8 @@ Map<String, dynamic> userInfoDataToJson(UserInfoData entity) {
   data['store_status'] = entity.storeStatus;
   data['store_reject_msg'] = entity.storeRejectMsg;
   data['store_id'] = entity.storeId;
+  data['is_protecting'] = entity.isProtecting;
+  data['protect_days'] = entity.protectDays;
   if (entity.partnerBonus != null) {
     data['partner_bonus'] = entity.partnerBonus.toJson();
   }

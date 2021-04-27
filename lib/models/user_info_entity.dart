@@ -52,6 +52,10 @@ class UserInfoData with JsonConvert<UserInfoData> {
   String storeRejectMsg;
   @JSONField(name: "store_id")
   String storeId;
+  @JSONField(name: "is_protecting")
+  bool isProtecting;
+  @JSONField(name: "protect_days")
+  String protectDays;
   @JSONField(name: "partner_bonus")
   UserHolderProfitPartnerBonus partnerBonus;
 }
