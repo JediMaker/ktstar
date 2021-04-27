@@ -434,7 +434,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
               //转盘中间开启按钮
               GestureDetector(
-//                onTap: _isAnimating ? null : _gestureTap,
+                onTap: _isAnimating ? null : _lotteryPlay(),
                 child: Container(
                   width: ScreenUtil().setWidth(270),
                   height: ScreenUtil().setWidth(323),
