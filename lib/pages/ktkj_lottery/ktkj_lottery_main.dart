@@ -66,6 +66,11 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
     try {
       if (showLoading) {
         EasyLoading.show();
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       }
     } catch (e) {}
     var result = await HttpManage.lotteryGetInfo();
@@ -303,6 +308,11 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                     lotteryRequest: () {
                                       try {
                                         EasyLoading.show();
+                                        Future.delayed(Duration(seconds: 5)).then((value) {
+                                          try {
+                                            EasyLoading.dismiss();
+                                          } catch (e) {}
+                                        });
                                       } catch (e) {}
                                     },
                                     lotteryResult: () {
@@ -1400,6 +1410,11 @@ class _CardConvertDialogState extends State<CardConvertDialog> {
         /// 调用接口兑换卡片
         try {
           EasyLoading.show();
+          Future.delayed(Duration(seconds: 5)).then((value) {
+            try {
+              EasyLoading.dismiss();
+            } catch (e) {}
+          });
         } catch (e) {}
         var result = await HttpManage.lotteryUseCardUniversal(
             toType: _convertCardType + 2);

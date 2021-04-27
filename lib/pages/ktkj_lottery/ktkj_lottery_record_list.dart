@@ -41,6 +41,11 @@ class _KTKJLotteryRecordListPageState extends State<KTKJLotteryRecordListPage> {
     try {
       if (showLoading) {
         EasyLoading.show();
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       }
     } catch (e) {}
     var result = await HttpManage.lotteryGetRecordList(

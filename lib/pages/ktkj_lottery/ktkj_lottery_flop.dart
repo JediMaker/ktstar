@@ -88,6 +88,11 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
     try {
       if (showLoading) {
         EasyLoading.show();
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       }
     } catch (e) {}
     var result = await HttpManage.lotteryUseCardAttack();
@@ -371,6 +376,11 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
         /// 调用接口获取攻击结果
         try {
           EasyLoading.show();
+          Future.delayed(Duration(seconds: 5)).then((value) {
+            try {
+              EasyLoading.dismiss();
+            } catch (e) {}
+          });
         } catch (e) {}
         var attackResult = await HttpManage.lotteryAttack(uid: _attackedUid);
         try {

@@ -155,6 +155,11 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
   Future _initData({bool onlyChangeAddress = false}) async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var entityResult = await HttpManage.orderDetail(widget.orderId);
     try {
@@ -322,6 +327,11 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
                               try {
                                 try {
                                   EasyLoading.show(status: "正在支付");
+                                  Future.delayed(Duration(seconds: 5)).then((value) {
+                                    try {
+                                      EasyLoading.dismiss();
+                                    } catch (e) {}
+                                  });
                                 } catch (e) {}
                                 var result = widget.type == 0
                                     ? await HttpManage.getGoodsPayBalanceInfo(
@@ -655,6 +665,11 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
     try {
       try {
         EasyLoading.show();
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       } catch (e) {}
       var result = widget.type == 0
           ? await HttpManage.getGoodsPayWeChatPayInfo(orderId: widget.orderId)
@@ -687,6 +702,11 @@ class _CheckOutCounterPageState extends State<KTKJCheckOutCounterPage>
     try {
       try {
         EasyLoading.show();
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       } catch (e) {}
       var result = widget.type == 0
           ? await HttpManage.getGoodsPayAliPayInfo(orderId: widget.orderId)

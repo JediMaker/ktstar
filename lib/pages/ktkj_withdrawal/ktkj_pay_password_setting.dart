@@ -274,6 +274,11 @@ class _PayPasswordSettingPageState extends State<KTKJPayPasswordSettingPage> {
   invokeSetPayPassword(BuildContext context) async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {
     }
     var result = await HttpManage.setPayPassword(_currentPassword);
@@ -299,6 +304,11 @@ class _PayPasswordSettingPageState extends State<KTKJPayPasswordSettingPage> {
   invokeCheckPayPassword(BuildContext context) async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {
     }
     var result = await HttpManage.checkPayPassword(_currentPassword);

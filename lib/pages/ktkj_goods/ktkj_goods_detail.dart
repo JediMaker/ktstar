@@ -63,6 +63,11 @@ class _GoodsDetailPageState extends State<KTKJGoodsDetailPage>
   Future _initData() async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     try {
       GoodsInfoEntity resultData =
@@ -1447,6 +1452,11 @@ class _DetailWindowState extends State<DetailWindow>
               } catch (e) {}*/
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var result =
         await HttpManage.cartAddGoods(goodsId, goodsNum, specId: specId);
@@ -1459,6 +1469,11 @@ class _DetailWindowState extends State<DetailWindow>
           "加购成功",
           duration: Duration(seconds: 3),
         );
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       } catch (e) {}
     } else {
       KTKJCommonUtils.showToast("${result.errMsg}");
@@ -1479,6 +1494,11 @@ class _DetailWindowState extends State<DetailWindow>
               } catch (e) {}*/
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var result =
         await HttpManage.createOrder(goodsId, goodsNum, specId: specId);

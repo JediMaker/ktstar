@@ -96,6 +96,11 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
   _searchData() async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var result =
         await HttpManage.getSearchedGoodsList(page, keyword: _searchWord);
@@ -134,6 +139,11 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
   _getHotWordsData() async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var result = await HttpManage.getHotSearchWords();
     try {
@@ -168,6 +178,11 @@ class _SearchGoodsPageState extends State<KTKJSearchGoodsPage>
     }
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var result2 =
         await HttpManage.getSearchedPddGoodsList(page, keyword: _searchWord);

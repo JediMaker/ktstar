@@ -562,6 +562,11 @@ class _ReturnInfoPageState extends State<KTKJReturnInfoPage> {
       _imageFile = pickedFile;
       try {
         EasyLoading.show(status: "图片上传中...");
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       } catch (e) {}
       var entity = await HttpManage.uploadImage(File(_imageFile.path));
       if (entity.status) {

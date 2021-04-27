@@ -48,6 +48,11 @@ class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
     try {
       try {
         EasyLoading.show();
+        Future.delayed(Duration(seconds: 5)).then((value) {
+          try {
+            EasyLoading.dismiss();
+          } catch (e) {}
+        });
       } catch (e) {
       }
       var result = await HttpManage.getGoodsQueuePersonalList();
@@ -498,6 +503,11 @@ class _FreeQueuePersonalPageState extends State<KTKJFreeQueuePersonalPage> {
                     try {
                       try {
                         EasyLoading.show();
+                        Future.delayed(Duration(seconds: 5)).then((value) {
+                          try {
+                            EasyLoading.dismiss();
+                          } catch (e) {}
+                        });
                       } catch (e) {
                       }
                       var result = await HttpManage.getGoodsQueueList(goodsId);

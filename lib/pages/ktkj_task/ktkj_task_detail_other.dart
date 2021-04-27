@@ -49,6 +49,11 @@ class _TaskDetailOtherPageState extends State<KTKJTaskDetailOtherPage> {
   _initData() async {
     try {
       EasyLoading.show();
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        try {
+          EasyLoading.dismiss();
+        } catch (e) {}
+      });
     } catch (e) {}
     var result = await HttpManage.getTaskDetailOther(widget.taskId);
     if (mounted) {
