@@ -745,11 +745,6 @@ class _KTKJOilRechargePageState extends State<KTKJOilRechargePage> {
                         if (_payway == 1) {
                           try {
                             EasyLoading.show();
-                            Future.delayed(Duration(seconds: 5)).then((value) {
-                              try {
-                                EasyLoading.dismiss();
-                              } catch (e) {}
-                            });
                           } catch (e) {}
                           var result =
                               await HttpManage.gasolinePayWeChatPayInfo(
@@ -769,11 +764,6 @@ class _KTKJOilRechargePageState extends State<KTKJOilRechargePage> {
                         } else if (_payway == 2) {
                           try {
                             EasyLoading.show();
-                            Future.delayed(Duration(seconds: 5)).then((value) {
-                              try {
-                                EasyLoading.dismiss();
-                              } catch (e) {}
-                            });
                           } catch (e) {}
                           var result = await HttpManage.gasolinePayAliPayInfo(
                             cardNo: _oilCardNum,

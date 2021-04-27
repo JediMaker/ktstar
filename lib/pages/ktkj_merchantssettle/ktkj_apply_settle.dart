@@ -959,11 +959,6 @@ class _ApplySettlePageState extends State<KTKJApplySettlePage> {
 
       try {
         EasyLoading.show(status: "图片上传中...");
-        Future.delayed(Duration(seconds: 5)).then((value) {
-          try {
-            EasyLoading.dismiss();
-          } catch (e) {}
-        });
       } catch (e) {}
       var entity = await HttpManage.uploadImage(
           croppedFile); //File(_imageFile.path) croppedFile
@@ -1175,11 +1170,6 @@ class _ApplySettlePageState extends State<KTKJApplySettlePage> {
           ));
       try {
         EasyLoading.show(status: "图片上传中...");
-        Future.delayed(Duration(seconds: 5)).then((value) {
-          try {
-            EasyLoading.dismiss();
-          } catch (e) {}
-        });
       } catch (e) {}
       var entity =
           await HttpManage.uploadImage(croppedFile); //File(_imageFile2.path)

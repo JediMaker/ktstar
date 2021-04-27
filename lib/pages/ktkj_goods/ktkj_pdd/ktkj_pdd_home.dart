@@ -314,11 +314,6 @@ class _PddHomeIndexPageState extends State<KTKJPddHomeIndexPage>
     }
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     PddHomeEntity result = await HttpManage.getPddHomeData();
     try {

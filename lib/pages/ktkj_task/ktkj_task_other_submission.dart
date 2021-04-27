@@ -1,15 +1,17 @@
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_gallery.dart';
 import 'package:star/pages/ktkj_task/ktkj_task_index.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
 import '../../global_config.dart';
@@ -65,11 +67,6 @@ class _TaskOtherSubmissionPageState extends State<KTKJTaskOtherSubmissionPage> {
       _imageFile = pickedFile;
       try {
         EasyLoading.show(status: "图片上传中...");
-        Future.delayed(Duration(seconds: 5)).then((value) {
-          try {
-            EasyLoading.dismiss();
-          } catch (e) {}
-        });
       } catch (e) {}
       var entity = await HttpManage.uploadImage(File(_imageFile.path));
       try {

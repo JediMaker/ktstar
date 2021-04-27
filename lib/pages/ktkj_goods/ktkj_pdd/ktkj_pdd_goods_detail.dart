@@ -83,11 +83,6 @@ class _PddGoodsDetailPageState extends State<KTKJPddGoodsDetailPage>
   Future _initData() async {
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     PddGoodsInfoEntity pddResultData = await HttpManage.getPddGoodsInfo(
         gId: widget.gId,
@@ -1616,11 +1611,6 @@ class _DetailWindowState extends State<DetailWindow>
               } catch (e) {}*/
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     var result =
         await HttpManage.createOrder(goodsId, goodsNum, specId: specId);

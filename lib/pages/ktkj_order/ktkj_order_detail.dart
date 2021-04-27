@@ -56,11 +56,6 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
   Future _initData({bool onlyChangeAddress = false}) async {
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     var entityResult = await HttpManage.orderDetail(widget.orderId);
     try {

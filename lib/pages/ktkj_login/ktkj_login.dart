@@ -987,11 +987,6 @@ class _LoginPageState extends State<KTKJLoginPage> {
   Future<void> _login() async {
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     LoginEntity result = await HttpManage.login(phoneNumber, password);
     try {
@@ -1010,11 +1005,6 @@ class _LoginPageState extends State<KTKJLoginPage> {
   Future<void> _fastLogin() async {
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     LoginEntity result = await HttpManage.quickLogin(phoneNumber, checkCode);
     try {
@@ -1033,11 +1023,6 @@ class _LoginPageState extends State<KTKJLoginPage> {
   Future<void> _register() async {
     try {
       EasyLoading.show();
-      Future.delayed(Duration(seconds: 5)).then((value) {
-        try {
-          EasyLoading.dismiss();
-        } catch (e) {}
-      });
     } catch (e) {}
     ResultBeanEntity result =
         await HttpManage.register(phoneNumber, checkCode, password, inviteCode);

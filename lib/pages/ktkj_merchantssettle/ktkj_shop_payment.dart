@@ -295,11 +295,6 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
                               try {
                                 try {
                                   EasyLoading.show(status: "正在支付");
-                                  Future.delayed(Duration(seconds: 5)).then((value) {
-                                    try {
-                                      EasyLoading.dismiss();
-                                    } catch (e) {}
-                                  });
                                 } catch (e) {}
                                 var result =
                                     await HttpManage.getShopPayBalanceInfo(
@@ -817,11 +812,6 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
     try {
       try {
         EasyLoading.show();
-        Future.delayed(Duration(seconds: 5)).then((value) {
-          try {
-            EasyLoading.dismiss();
-          } catch (e) {}
-        });
       } catch (e) {}
       var result = await HttpManage.getShopPayWeChatPayInfo(
           payMoney: _payAmount, shopCode: _shopCode);
@@ -853,11 +843,6 @@ class _ShopPaymentPageState extends State<KTKJShopPaymentPage> {
     try {
       try {
         EasyLoading.show();
-        Future.delayed(Duration(seconds: 5)).then((value) {
-          try {
-            EasyLoading.dismiss();
-          } catch (e) {}
-        });
       } catch (e) {}
       var result = await HttpManage.getShopPayAliPayInfo(
           payMoney: _payAmount, shopCode: _shopCode);
