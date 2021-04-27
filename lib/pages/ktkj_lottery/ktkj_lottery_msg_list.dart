@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -348,8 +349,9 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
                     ),
                   ),
                 ),
-                padding: EdgeInsets.all(
-                  ScreenUtil().setWidth(46),
+                padding: EdgeInsets.only(
+                  left: ScreenUtil().setWidth(46),
+                  right: ScreenUtil().setWidth(46),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -389,6 +391,7 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Visibility(
                           visible: !isProtected,
@@ -415,9 +418,12 @@ class _KTKJLotteryMsgListPageState extends State<KTKJLotteryMsgListPage> {
                           margin: EdgeInsets.only(
                             top: ScreenUtil().setWidth(10),
                           ),
+                          alignment: Alignment.center,
                           child: Text(
+//                            "2021-04-27 10:03:42",
                             "$_timeDesc",
                             maxLines: 2,
+                            textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: ScreenUtil().setSp(32),
