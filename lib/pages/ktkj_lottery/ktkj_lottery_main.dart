@@ -473,29 +473,6 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                   fit: BoxFit.fill,
                                                 ),
                                               ),
-                                              Center(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xff222222)
-                                                        .withOpacity(
-                                                            _cardAttackCount ==
-                                                                    "0"
-                                                                ? _cardoOpacity
-                                                                : 0),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(
-                                                        ScreenUtil()
-                                                            .setWidth(25),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  width: ScreenUtil()
-                                                      .setWidth(326),
-                                                  height: ScreenUtil()
-                                                      .setWidth(416),
-                                                ),
-                                              ),
 
                                               ///卡片名称
                                               Visibility(
@@ -525,6 +502,29 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                               .setSp(42)),
                                                     ),
                                                   ),
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xff222222)
+                                                        .withOpacity(
+                                                            _cardAttackCount ==
+                                                                    "0"
+                                                                ? _cardoOpacity
+                                                                : 0),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(
+                                                        ScreenUtil()
+                                                            .setWidth(25),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  width: ScreenUtil()
+                                                      .setWidth(326),
+                                                  height: ScreenUtil()
+                                                      .setWidth(416),
                                                 ),
                                               ),
 
@@ -718,29 +718,6 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                   fit: BoxFit.fill,
                                                 ),
                                               ),
-                                              Center(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(
-                                                        ScreenUtil()
-                                                            .setWidth(25),
-                                                      ),
-                                                    ),
-                                                    color: Color(0xff222222)
-                                                        .withOpacity(
-                                                            _cardUniversalCount ==
-                                                                    "0"
-                                                                ? _cardoOpacity
-                                                                : 0),
-                                                  ),
-                                                  width: ScreenUtil()
-                                                      .setWidth(326),
-                                                  height: ScreenUtil()
-                                                      .setWidth(416),
-                                                ),
-                                              ),
 
                                               ///卡片名称
                                               Visibility(
@@ -770,6 +747,29 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                               .setSp(42)),
                                                     ),
                                                   ),
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(
+                                                        ScreenUtil()
+                                                            .setWidth(25),
+                                                      ),
+                                                    ),
+                                                    color: Color(0xff222222)
+                                                        .withOpacity(
+                                                            _cardUniversalCount ==
+                                                                    "0"
+                                                                ? _cardoOpacity
+                                                                : 0),
+                                                  ),
+                                                  width: ScreenUtil()
+                                                      .setWidth(326),
+                                                  height: ScreenUtil()
+                                                      .setWidth(416),
                                                 ),
                                               ),
 
@@ -958,26 +958,6 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
-                                            Center(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(
-                                                      ScreenUtil().setWidth(25),
-                                                    ),
-                                                  ),
-                                                  color: Color(0xff222222)
-                                                      .withOpacity(!isProtecting
-                                                          ? _cardoOpacity
-                                                          : 0),
-                                                ),
-                                                width:
-                                                    ScreenUtil().setWidth(326),
-                                                height:
-                                                    ScreenUtil().setWidth(416),
-                                              ),
-                                            ),
 
                                             ///卡片名称
                                             Visibility(
@@ -1007,6 +987,26 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
                                                             .setSp(42)),
                                                   ),
                                                 ),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                      ScreenUtil().setWidth(25),
+                                                    ),
+                                                  ),
+                                                  color: Color(0xff222222)
+                                                      .withOpacity(!isProtecting
+                                                          ? _cardoOpacity
+                                                          : 0),
+                                                ),
+                                                width:
+                                                    ScreenUtil().setWidth(326),
+                                                height:
+                                                    ScreenUtil().setWidth(416),
                                               ),
                                             ),
 
