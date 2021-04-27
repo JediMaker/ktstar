@@ -1251,11 +1251,12 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   ///使用万能卡
   useUniversalCards() async {
-    /*  if (_cardUniversalCount == "0" ||
+    if (_cardUniversalCount == "0" ||
         KTKJCommonUtils.isEmpty(_cardUniversalCount)) {
       KTKJCommonUtils.showToast("您还没有该卡片，去抽一个吧！");
       return;
-    }*/
+    }
+
     ///
     int convertCardType = await showConvertDialog(context: context);
     if (convertCardType == 0) {
