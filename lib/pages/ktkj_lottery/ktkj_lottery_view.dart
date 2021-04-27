@@ -434,7 +434,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
               //转盘中间开启按钮
               GestureDetector(
-                onTap: _isAnimating ? null : _lotteryPlay(),
+                onTap: play,
                 child: Container(
                   width: ScreenUtil().setWidth(270),
                   height: ScreenUtil().setWidth(323),
@@ -505,9 +505,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
                     /// 调用接口获取中奖id
 
                     ///
-                    if (!_isAnimating) {
-                      _lotteryPlay();
-                    }
+                    play();
 
                     ///bus
                   },
@@ -590,6 +588,12 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
         ),
       ],
     );
+  }
+
+  void play() {
+    if (!_isAnimating) {
+      _lotteryPlay();
+    }
   }
 
   int touchedIndex;
