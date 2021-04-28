@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -118,6 +119,8 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   @override
   void initState() {
     super.initState();
+    _universalAnimationController =
+        ConfettiController(duration: const Duration(seconds: 3));
     _animationController =
         AnimationController(duration: Duration(seconds: 3), vsync: this);
     _statusListener = (AnimationStatus status) {
@@ -157,6 +160,7 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   void dispose() {
     super.dispose();
     _animationController.dispose();
+    _universalAnimationController.dispose();
   }
 
   Widget buildPostureItem({int index}) {
@@ -287,66 +291,83 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
             ]),
           ),
           body: SingleChildScrollView(
-            child: Center(
-              child: Container(
-                color: _mainColor,
-                child: Column(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(1043),
-                      height: ScreenUtil().setWidth(314),
-                      margin: EdgeInsets.only(
-                        top: ScreenUtil().setWidth(100),
-                      ),
-                      child: KTKJMyOctoImage(
-                        image:
-                            "https://alipic.lanhuapp.com/xd28617740-00c1-4269-b28b-4edaf1d9cb43",
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: ScreenUtil().setWidth(160),
-                      ),
-                      child: Wrap(
-                        spacing: ScreenUtil().setWidth(20),
-                        runSpacing: ScreenUtil().setWidth(40),
-                        children: List.generate(
-                          _postureList.length,
-                          (index) {
-                            return buildPostureItem(index: index);
-                          },
+            child: Stack(
+              children: [
+                Center(
+                  child: Container(
+                    color: _mainColor,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: ScreenUtil().setWidth(1043),
+                          height: ScreenUtil().setWidth(314),
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(100),
+                          ),
+                          child: KTKJMyOctoImage(
+                            image:
+                                "https://alipic.lanhuapp.com/xd28617740-00c1-4269-b28b-4edaf1d9cb43",
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-                    ),
-                    buildAttackButton(),
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: ScreenUtil().setWidth(30),
-                      ),
-                      child: Text(
-                        "剩余$_availableAttackCount次攻击机会",
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(32),
-                          color: Colors.white,
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(160),
+                          ),
+                          child: Wrap(
+                            spacing: ScreenUtil().setWidth(20),
+                            runSpacing: ScreenUtil().setWidth(40),
+                            children: List.generate(
+                              _postureList.length,
+                              (index) {
+                                return buildPostureItem(index: index);
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                        buildAttackButton(),
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(30),
+                          ),
+                          child: Text(
+                            "剩余$_availableAttackCount次攻击机会",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(32),
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: ScreenUtil().setWidth(1125),
+                          height: ScreenUtil().setWidth(334),
+                          margin: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(100),
+                          ),
+                          child: KTKJMyOctoImage(
+                            image:
+                                "https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      width: ScreenUtil().setWidth(1125),
-                      height: ScreenUtil().setWidth(334),
-                      margin: EdgeInsets.only(
-                        top: ScreenUtil().setWidth(100),
-                      ),
-                      child: KTKJMyOctoImage(
-                        image:
-                            "https://alipic.lanhuapp.com/xdac86e5c2-6da4-4369-ad9d-4f2d9922e343",
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ConfettiWidget(
+                    confettiController: _universalAnimationController,
+                    blastDirection: -pi / 2,
+                    blastDirectionality: BlastDirectionality.explosive,
+                    emissionFrequency: 0.01,
+                    numberOfParticles: 20,
+                    maxBlastForce: 100,
+                    minBlastForce: 80,
+                    gravity: 0.3,
+                  ),
+                ),
+              ],
             ),
           ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
@@ -386,6 +407,11 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
             });
           }
           _initData(showLoading: false);
+          if (_attackedUserAssetsDesc.isNotEmpty &&
+              _attackedUserAssetsDesc.contains("盾")) {
+          } else {
+            animateConfetti();
+          }
           await showResultDialog(context: this.context);
         } else {
           if (mounted) {
@@ -512,6 +538,18 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
         ),
       ),
     );
+  }
+
+  ///五彩纸屑动画控制器
+  ConfettiController _universalAnimationController;
+
+  ///执行五彩纸屑飘落动画
+  void animateConfetti() {
+    if (_universalAnimationController.state ==
+        ConfettiControllerState.playing) {
+      _universalAnimationController.stop();
+    }
+    _universalAnimationController.play();
   }
 
   //换个姿势
