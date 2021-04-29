@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:star/global_config.dart';
+import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_main.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
+import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
 
 ///能量大作战悬浮入口
@@ -91,6 +94,11 @@ class _KTKJFloatLotteryEntrancePageState
         visible: _showFloatBtn,
         child: GestureDetector(
           onTap: () {
+            if (!KTKJGlobalConfig.isLogin()) {
+              KTKJCommonUtils.showToast("尚未登陆，请登录!");
+              KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
+              return;
+            }
             KTKJNavigatorUtils.navigatorRouter(context, KTKJLotteryMainPage());
           },
           onPanStart: (DragStartDetails details) {
