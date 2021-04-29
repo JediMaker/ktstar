@@ -8,8 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
+import 'package:star/global_config.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/lottery_info_entity.dart';
+import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_flop.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_msg_list.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_record_list.dart';
@@ -92,10 +94,14 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
 
   @override
   void initState() {
-    super.initState();
-    _initData();
     _universalAnimationController =
         ConfettiController(duration: const Duration(seconds: 2));
+    super.initState();
+    if (!KTKJGlobalConfig.isLogin()) {
+      KTKJNavigatorUtils.navigatorRouter(context, KTKJLoginPage());
+      return;
+    }
+    _initData();
   }
 
   @override
