@@ -1816,24 +1816,11 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                                 child: Container(
                                   width: ScreenUtil().setWidth(128),
                                   height: ScreenUtil().setWidth(128),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        "static/images/icon_card.png",
-                                        width: ScreenUtil().setWidth(128),
-                                        height: ScreenUtil().setWidth(128),
-                                        fit: BoxFit.fill,
-                                      )
-/*
-                                      KTKJMyOctoImage(
-                                        image:
-                                            "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
-                                        width: ScreenUtil().setWidth(128),
-                                        height: ScreenUtil().setWidth(128),
-                                        fit: BoxFit.fill,
-                                      ),
-*/
-                                    ],
+                                  child: Image.asset(
+                                    "static/images/icon_card.png",
+                                    width: ScreenUtil().setWidth(128),
+                                    height: ScreenUtil().setWidth(128),
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
