@@ -1814,8 +1814,8 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
                                 child: Container(
-                                  width: ScreenUtil().setWidth(120),
-                                  height: ScreenUtil().setWidth(120),
+                                  width: ScreenUtil().setWidth(99),
+                                  height: ScreenUtil().setWidth(99),
                                   child: Image.asset(
                                     "static/images/icon_card.png",
                                     width: ScreenUtil().setWidth(120),
