@@ -224,6 +224,10 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
                                     }
                                     if (!KTKJCommonUtils.isEmpty(
                                         _selectedRechargeMoney)) {
+                                      /* KTKJNavigatorUtils
+                                          .navigatorRouterAndRemoveUntil(
+                                              context,
+                                              KTKJRechargeResultPage());*/
                                       _showSelectPayWayBottomSheet(context);
                                     }
                                   },
@@ -261,43 +265,20 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
                                   ),
                                 ),
                               ),
-                              Visibility(
-                                visible: false,
-                                child: GestureDetector(
-                                  child: Container(
-                                    //diamond
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(46 * _scale)),
-                                      gradient: LinearGradient(colors: [
-                                        Color(0xFF489FFF),
-                                        Color(0xFF489FFF),
-                                      ]),
-                                    ),
-                                    child: Text(
-                                      "iOS暂未开放",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: ScreenUtil().setSp(42)),
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
                     Container(
-                      width: double.infinity,
+                      width: double.maxFinite,
                       height: ScreenUtil().setWidth(385 * _scale),
                       margin: EdgeInsets.only(
                         top: ScreenUtil().setWidth(55 * _scale),
                         bottom: ScreenUtil().setWidth(56 * _scale),
                       ),
                       child: Container(
+                        width: double.maxFinite,
                         height: ScreenUtil().setWidth(385 * _scale),
                         child: Stack(
                           alignment: Alignment.topCenter,
@@ -477,7 +458,7 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30 * _scale)),
       ),
       child: Wrap(
-        spacing: ScreenUtil().setWidth(40 * _scale),
+        spacing: ScreenUtil().setWidth(46 * _scale),
         runSpacing: ScreenUtil().setWidth(30 * _scale),
         alignment: WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.start,
@@ -788,8 +769,10 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(46)),
                           gradient: LinearGradient(colors: [
-                            _mainColor,
-                            _mainColor,
+//                            _mainColor,
+//                            _mainColor,
+                            Color(0xFF73D9C4),
+                            Color(0xFF50C8AD),
 //                            Color(0xFF489FFF),
 //                            Color(0xFF489FFF),
                           ]),

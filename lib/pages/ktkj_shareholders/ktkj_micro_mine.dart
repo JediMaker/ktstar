@@ -16,6 +16,7 @@ import 'package:star/pages/ktkj_lottery/ktkj_lottery_main.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_apply_settle.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_backstage.dart';
 import 'package:star/pages/ktkj_order/ktkj_order_list.dart';
+import 'package:star/pages/ktkj_recharge/ktkj_recharge_shopping_card.dart';
 import 'package:star/pages/ktkj_shareholders/ktkj_micro_equity.dart';
 import 'package:star/pages/ktkj_task/ktkj_dividend_list.dart';
 import 'package:star/pages/ktkj_task/ktkj_fans_list.dart';
@@ -1801,7 +1802,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                           return;
                         }
                         KTKJNavigatorUtils.navigatorRouter(
-                            context, KTKJInvitationPosterPage());
+                            context, KTKJRechargeShoppingCardPage());
                       },
                       child: new Container(
                         child: new Column(
@@ -1812,16 +1813,33 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               child: new CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.transparent,
-                                child: KTKJMyOctoImage(
-                                  image:
-                                      "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
+                                child: Container(
                                   width: ScreenUtil().setWidth(128),
                                   height: ScreenUtil().setWidth(128),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        "static/images/icon_card.png",
+                                        width: ScreenUtil().setWidth(128),
+                                        height: ScreenUtil().setWidth(128),
+                                        fit: BoxFit.fill,
+                                      )
+/*
+                                      KTKJMyOctoImage(
+                                        image:
+                                            "https://alipic.lanhuapp.com/xdcfe85aee-2dfa-43bc-83db-bfeab39ce1dc",
+                                        width: ScreenUtil().setWidth(128),
+                                        height: ScreenUtil().setWidth(128),
+                                        fit: BoxFit.fill,
+                                      ),
+*/
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                             new Container(
-                              child: new Text("邀请好友",
+                              child: new Text("购物卡", //邀请好友
                                   style: new TextStyle(
                                       color: _itemsTextColor,
                                       fontSize: ScreenUtil().setSp(38))),
