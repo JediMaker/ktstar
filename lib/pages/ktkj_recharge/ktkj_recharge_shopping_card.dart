@@ -42,7 +42,7 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
   var _payNo;
   String _selectedRechargeMoney;
   var _shoppingCardBalance = "0.00";
-  var _scale = ScreenUtil.screenWidth / 750;
+  var _scale = 1.5;
   _initWeChatResponseHandler() {
     KTKJGlobalConfig.payType = 6;
     fluwx.weChatResponseEventHandler.listen((res) async {
