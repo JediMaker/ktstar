@@ -15,7 +15,7 @@ class KTKJEnergyRechargeDialog extends Dialog {
   final String noticeTitle;
   final bool isForce;
   var _width = 564;
-  var _scale = 1.5;
+  var _scale = ScreenUtil.screenWidth / 750;
 
   ///比例
 

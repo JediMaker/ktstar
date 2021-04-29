@@ -42,7 +42,7 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
   var _payNo;
   String _selectedRechargeMoney;
   var _shoppingCardBalance = "0.00";
-  var _scale = 1.5;
+  var _scale = ScreenUtil.screenWidth / 750;
   _initWeChatResponseHandler() {
     KTKJGlobalConfig.payType = 6;
     fluwx.weChatResponseEventHandler.listen((res) async {
@@ -860,12 +860,12 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
     } catch (e) {}
     return Container(
       margin: EdgeInsets.only(
-        top: ScreenUtil().setWidth(18),
+        top: ScreenUtil().setWidth(18 * _scale),
       ),
       child: Text(
         "$ruleText",
         style: TextStyle(
-          fontSize: ScreenUtil().setSp(28),
+          fontSize: ScreenUtil().setSp(28 * _scale),
           color: Color(0xff491F00),
         ),
       ),
