@@ -43,6 +43,7 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
   String _selectedRechargeMoney;
   var _shoppingCardBalance = "0.00";
   var _scale = 1.5;
+
   _initWeChatResponseHandler() {
     KTKJGlobalConfig.payType = 6;
     fluwx.weChatResponseEventHandler.listen((res) async {
@@ -823,10 +824,30 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
 
     _payResult = payResult;
     print("话费充值支付宝支付结果：" + _payResult.toString());
-    if (_payResult.resultStatus == "9000") {}
+    if (_payResult.resultStatus == "9000") {
+      _checkPayStatus();
+    }
     /* Fluttertoast.showToast(
           msg: _payResult == null ? "" : _payResult.toString(),
           textColor: Colors.black);*/
+  }
+
+  _checkPayStatus() async {
+    var result = await HttpManage.checkPayResult(_payNo);
+    if (result.status) {
+      var payStatus = result.data["pay_status"].toString();
+      switch (payStatus) {
+        case "1": //未成功
+          KTKJCommonUtils.showToast("支付失败");
+          break;
+        case "2": //已成功
+          KTKJNavigatorUtils.navigatorRouterAndRemoveUntil(
+              context, KTKJRechargeResultPage());
+          break;
+      }
+    } else {
+      KTKJCommonUtils.showToast(result.errMsg);
+    }
   }
 
   _changeSelectedPayWay(int i) {
