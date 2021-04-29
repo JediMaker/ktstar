@@ -1337,7 +1337,7 @@ class _CardConvertDialogState extends State<CardConvertDialog> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pop(_convertCardType);
+              Navigator.of(context).pop(-1);
             },
             child: Container(
               width: ScreenUtil().setWidth(95),
