@@ -449,6 +449,14 @@ class APi {
 
   ///消息记录列表
   static const String LOTTERY_MSG_RECORDS_LIST = "card/attack-list";
-
 //  =================能量大作战相关接口======END======================
+//  =================购物卡相关接口======START======================
+
+  ///购物卡充值金额列表
+  static const String SHOP_CARD_SHOPPING = "site/shopping";
+
+  ///购物卡充值支付
+  static const String SHOP_CARD_PAY = "pay/shop-card";
+//  =================购物卡相关接口======END======================
+
 }

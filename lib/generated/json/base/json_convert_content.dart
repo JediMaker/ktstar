@@ -67,8 +67,6 @@ import 'package:star/models/home_entity.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/models/recharge_entity.dart';
 import 'package:star/generated/json/recharge_entity_helper.dart';
-import 'package:star/models/lottery_attack_result_entity.dart';
-import 'package:star/generated/json/lottery_attack_result_entity_helper.dart';
 import 'package:star/models/micro_shareholder_entity.dart';
 import 'package:star/generated/json/micro_shareholder_entity_helper.dart';
 import 'package:star/models/goods_queue_persional_entity.dart';
@@ -97,6 +95,10 @@ import 'package:star/models/fans_total_entity.dart';
 import 'package:star/generated/json/fans_total_entity_helper.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/generated/json/user_info_entity_helper.dart';
+import 'package:star/models/shopping_card_info_entity.dart';
+import 'package:star/generated/json/shopping_card_info_entity_helper.dart';
+import 'package:star/models/lottery_msg_list_entity.dart';
+import 'package:star/generated/json/lottery_msg_list_entity_helper.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
 import 'package:star/models/task_record_list_entity.dart';
@@ -111,10 +113,10 @@ import 'package:star/models/address_info_entity.dart';
 import 'package:star/generated/json/address_info_entity_helper.dart';
 import 'package:star/models/shop_backstage_info_entity.dart';
 import 'package:star/generated/json/shop_backstage_info_entity_helper.dart';
+import 'package:star/models/lottery_attack_result_entity.dart';
+import 'package:star/generated/json/lottery_attack_result_entity_helper.dart';
 import 'package:star/models/withdrawal_list_entity.dart';
 import 'package:star/generated/json/withdrawal_list_entity_helper.dart';
-import 'package:star/models/lottery_msg_list_entity.dart';
-import 'package:star/generated/json/lottery_msg_list_entity_helper.dart';
 import 'package:star/models/wechat_payinfo_entity.dart';
 import 'package:star/generated/json/wechat_payinfo_entity_helper.dart';
 import 'package:star/models/withdrawal_info_entity.dart';
@@ -425,12 +427,6 @@ class JsonConvert<T> {
       case RechargeDatacouponList:
         return rechargeDatacouponListFromJson(
             data as RechargeDatacouponList, json) as T;
-      case LotteryAttackResultEntity:
-        return lotteryAttackResultEntityFromJson(
-            data as LotteryAttackResultEntity, json) as T;
-      case LotteryAttackResultData:
-        return lotteryAttackResultDataFromJson(
-            data as LotteryAttackResultData, json) as T;
       case MicroShareholderEntity:
         return microShareholderEntityFromJson(
             data as MicroShareholderEntity, json) as T;
@@ -526,6 +522,21 @@ class JsonConvert<T> {
         return userInfoEntityFromJson(data as UserInfoEntity, json) as T;
       case UserInfoData:
         return userInfoDataFromJson(data as UserInfoData, json) as T;
+      case ShoppingCardInfoEntity:
+        return shoppingCardInfoEntityFromJson(
+            data as ShoppingCardInfoEntity, json) as T;
+      case ShoppingCardInfoData:
+        return shoppingCardInfoDataFromJson(data as ShoppingCardInfoData, json)
+            as T;
+      case LotteryMsgListEntity:
+        return lotteryMsgListEntityFromJson(data as LotteryMsgListEntity, json)
+            as T;
+      case LotteryMsgListData:
+        return lotteryMsgListDataFromJson(data as LotteryMsgListData, json)
+            as T;
+      case LotteryMsgListDataList:
+        return lotteryMsgListDataListFromJson(
+            data as LotteryMsgListDataList, json) as T;
       case TaskOtherSubmitInfoEntity:
         return taskOtherSubmitInfoEntityFromJson(
             data as TaskOtherSubmitInfoEntity, json) as T;
@@ -577,6 +588,12 @@ class JsonConvert<T> {
       case ShopBackstageInfoData:
         return shopBackstageInfoDataFromJson(
             data as ShopBackstageInfoData, json) as T;
+      case LotteryAttackResultEntity:
+        return lotteryAttackResultEntityFromJson(
+            data as LotteryAttackResultEntity, json) as T;
+      case LotteryAttackResultData:
+        return lotteryAttackResultDataFromJson(
+            data as LotteryAttackResultData, json) as T;
       case WithdrawalListEntity:
         return withdrawalListEntityFromJson(data as WithdrawalListEntity, json)
             as T;
@@ -586,15 +603,6 @@ class JsonConvert<T> {
       case WithdrawalListDataList:
         return withdrawalListDataListFromJson(
             data as WithdrawalListDataList, json) as T;
-      case LotteryMsgListEntity:
-        return lotteryMsgListEntityFromJson(data as LotteryMsgListEntity, json)
-            as T;
-      case LotteryMsgListData:
-        return lotteryMsgListDataFromJson(data as LotteryMsgListData, json)
-            as T;
-      case LotteryMsgListDataList:
-        return lotteryMsgListDataListFromJson(
-            data as LotteryMsgListDataList, json) as T;
       case WechatPayinfoEntity:
         return wechatPayinfoEntityFromJson(data as WechatPayinfoEntity, json)
             as T;
@@ -942,11 +950,6 @@ class JsonConvert<T> {
         return rechargeDataRechageListToJson(data as RechargeDataRechageList);
       case RechargeDatacouponList:
         return rechargeDatacouponListToJson(data as RechargeDatacouponList);
-      case LotteryAttackResultEntity:
-        return lotteryAttackResultEntityToJson(
-            data as LotteryAttackResultEntity);
-      case LotteryAttackResultData:
-        return lotteryAttackResultDataToJson(data as LotteryAttackResultData);
       case MicroShareholderEntity:
         return microShareholderEntityToJson(data as MicroShareholderEntity);
       case MicroShareholderData:
@@ -1022,6 +1025,16 @@ class JsonConvert<T> {
         return userInfoEntityToJson(data as UserInfoEntity);
       case UserInfoData:
         return userInfoDataToJson(data as UserInfoData);
+      case ShoppingCardInfoEntity:
+        return shoppingCardInfoEntityToJson(data as ShoppingCardInfoEntity);
+      case ShoppingCardInfoData:
+        return shoppingCardInfoDataToJson(data as ShoppingCardInfoData);
+      case LotteryMsgListEntity:
+        return lotteryMsgListEntityToJson(data as LotteryMsgListEntity);
+      case LotteryMsgListData:
+        return lotteryMsgListDataToJson(data as LotteryMsgListData);
+      case LotteryMsgListDataList:
+        return lotteryMsgListDataListToJson(data as LotteryMsgListDataList);
       case TaskOtherSubmitInfoEntity:
         return taskOtherSubmitInfoEntityToJson(
             data as TaskOtherSubmitInfoEntity);
@@ -1064,18 +1077,17 @@ class JsonConvert<T> {
         return shopBackstageInfoEntityToJson(data as ShopBackstageInfoEntity);
       case ShopBackstageInfoData:
         return shopBackstageInfoDataToJson(data as ShopBackstageInfoData);
+      case LotteryAttackResultEntity:
+        return lotteryAttackResultEntityToJson(
+            data as LotteryAttackResultEntity);
+      case LotteryAttackResultData:
+        return lotteryAttackResultDataToJson(data as LotteryAttackResultData);
       case WithdrawalListEntity:
         return withdrawalListEntityToJson(data as WithdrawalListEntity);
       case WithdrawalListData:
         return withdrawalListDataToJson(data as WithdrawalListData);
       case WithdrawalListDataList:
         return withdrawalListDataListToJson(data as WithdrawalListDataList);
-      case LotteryMsgListEntity:
-        return lotteryMsgListEntityToJson(data as LotteryMsgListEntity);
-      case LotteryMsgListData:
-        return lotteryMsgListDataToJson(data as LotteryMsgListData);
-      case LotteryMsgListDataList:
-        return lotteryMsgListDataListToJson(data as LotteryMsgListDataList);
       case WechatPayinfoEntity:
         return wechatPayinfoEntityToJson(data as WechatPayinfoEntity);
       case WechatPayinfoData:
@@ -1383,10 +1395,6 @@ class JsonConvert<T> {
         return RechargeDataRechageList().fromJson(json);
       case 'RechargeDatacouponList':
         return RechargeDatacouponList().fromJson(json);
-      case 'LotteryAttackResultEntity':
-        return LotteryAttackResultEntity().fromJson(json);
-      case 'LotteryAttackResultData':
-        return LotteryAttackResultData().fromJson(json);
       case 'MicroShareholderEntity':
         return MicroShareholderEntity().fromJson(json);
       case 'MicroShareholderData':
@@ -1461,6 +1469,16 @@ class JsonConvert<T> {
         return UserInfoEntity().fromJson(json);
       case 'UserInfoData':
         return UserInfoData().fromJson(json);
+      case 'ShoppingCardInfoEntity':
+        return ShoppingCardInfoEntity().fromJson(json);
+      case 'ShoppingCardInfoData':
+        return ShoppingCardInfoData().fromJson(json);
+      case 'LotteryMsgListEntity':
+        return LotteryMsgListEntity().fromJson(json);
+      case 'LotteryMsgListData':
+        return LotteryMsgListData().fromJson(json);
+      case 'LotteryMsgListDataList':
+        return LotteryMsgListDataList().fromJson(json);
       case 'TaskOtherSubmitInfoEntity':
         return TaskOtherSubmitInfoEntity().fromJson(json);
       case 'TaskOtherSubmitInfoData':
@@ -1501,18 +1519,16 @@ class JsonConvert<T> {
         return ShopBackstageInfoEntity().fromJson(json);
       case 'ShopBackstageInfoData':
         return ShopBackstageInfoData().fromJson(json);
+      case 'LotteryAttackResultEntity':
+        return LotteryAttackResultEntity().fromJson(json);
+      case 'LotteryAttackResultData':
+        return LotteryAttackResultData().fromJson(json);
       case 'WithdrawalListEntity':
         return WithdrawalListEntity().fromJson(json);
       case 'WithdrawalListData':
         return WithdrawalListData().fromJson(json);
       case 'WithdrawalListDataList':
         return WithdrawalListDataList().fromJson(json);
-      case 'LotteryMsgListEntity':
-        return LotteryMsgListEntity().fromJson(json);
-      case 'LotteryMsgListData':
-        return LotteryMsgListData().fromJson(json);
-      case 'LotteryMsgListDataList':
-        return LotteryMsgListDataList().fromJson(json);
       case 'WechatPayinfoEntity':
         return WechatPayinfoEntity().fromJson(json);
       case 'WechatPayinfoData':
@@ -1810,10 +1826,6 @@ class JsonConvert<T> {
         return List<RechargeDataRechageList>();
       case 'RechargeDatacouponList':
         return List<RechargeDatacouponList>();
-      case 'LotteryAttackResultEntity':
-        return List<LotteryAttackResultEntity>();
-      case 'LotteryAttackResultData':
-        return List<LotteryAttackResultData>();
       case 'MicroShareholderEntity':
         return List<MicroShareholderEntity>();
       case 'MicroShareholderData':
@@ -1888,6 +1900,16 @@ class JsonConvert<T> {
         return List<UserInfoEntity>();
       case 'UserInfoData':
         return List<UserInfoData>();
+      case 'ShoppingCardInfoEntity':
+        return List<ShoppingCardInfoEntity>();
+      case 'ShoppingCardInfoData':
+        return List<ShoppingCardInfoData>();
+      case 'LotteryMsgListEntity':
+        return List<LotteryMsgListEntity>();
+      case 'LotteryMsgListData':
+        return List<LotteryMsgListData>();
+      case 'LotteryMsgListDataList':
+        return List<LotteryMsgListDataList>();
       case 'TaskOtherSubmitInfoEntity':
         return List<TaskOtherSubmitInfoEntity>();
       case 'TaskOtherSubmitInfoData':
@@ -1928,18 +1950,16 @@ class JsonConvert<T> {
         return List<ShopBackstageInfoEntity>();
       case 'ShopBackstageInfoData':
         return List<ShopBackstageInfoData>();
+      case 'LotteryAttackResultEntity':
+        return List<LotteryAttackResultEntity>();
+      case 'LotteryAttackResultData':
+        return List<LotteryAttackResultData>();
       case 'WithdrawalListEntity':
         return List<WithdrawalListEntity>();
       case 'WithdrawalListData':
         return List<WithdrawalListData>();
       case 'WithdrawalListDataList':
         return List<WithdrawalListDataList>();
-      case 'LotteryMsgListEntity':
-        return List<LotteryMsgListEntity>();
-      case 'LotteryMsgListData':
-        return List<LotteryMsgListData>();
-      case 'LotteryMsgListDataList':
-        return List<LotteryMsgListDataList>();
       case 'WechatPayinfoEntity':
         return List<WechatPayinfoEntity>();
       case 'WechatPayinfoData':

@@ -52,6 +52,7 @@ import 'package:star/generated/json/shop_list_entity_helper.dart';
 import 'package:star/generated/json/shop_order_list_entity_helper.dart';
 import 'package:star/generated/json/shop_pay_info_entity_helper.dart';
 import 'package:star/generated/json/shop_type_entity_helper.dart';
+import 'package:star/generated/json/shopping_card_info_entity_helper.dart';
 import 'package:star/generated/json/task_detail_entity_helper.dart';
 import 'package:star/generated/json/task_detail_other_entity_helper.dart';
 import 'package:star/generated/json/task_other_submit_info_entity_helper.dart';
@@ -118,6 +119,7 @@ import 'package:star/models/shop_list_entity.dart';
 import 'package:star/models/shop_order_list_entity.dart';
 import 'package:star/models/shop_pay_info_entity.dart';
 import 'package:star/models/shop_type_entity.dart';
+import 'package:star/models/shopping_card_info_entity.dart';
 import 'package:star/models/task_detail_entity.dart';
 import 'package:star/models/task_detail_other_entity.dart';
 import 'package:star/models/task_other_submit_info_entity.dart';
@@ -3265,6 +3267,75 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = LotteryRecordsListEntity();
     lotteryRecordsListEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///
+  ///[payMoney] 支付金额
+  ///
+  /// 获取购物卡购买微信支付信息
+  ///
+  static Future<WechatPayinfoEntity> shoppingCardGetWeChatPayInfo(
+      {payMoney}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "2";
+    paramsMap["pay_money"] = "$payMoney";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SHOP_CARD_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = WechatPayinfoEntity();
+    wechatPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[payMoney] 支付金额
+  ///
+  /// 获取购物卡购买支付宝支付信息
+  ///
+  static Future<AlipayPayinfoEntity> shoppingCardGetAliPayInfo(
+      {payMoney}) async {
+    Map paramsMap = Map<String, dynamic>();
+    paramsMap["payment"] = "1";
+    paramsMap["pay_money"] = "$payMoney";
+    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SHOP_CARD_PAY,
+      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = AlipayPayinfoEntity();
+    alipayPayinfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  ///[payMoney] 支付金额
+  ///
+  /// 获取购物卡购买支付宝支付信息
+  ///
+  static Future<ShoppingCardInfoEntity> shoppingCardGetInfo({payMoney}) async {
+    Map paramsMap = Map<String, dynamic>();
+//    paramsMap["payment"] = "1";
+//    paramsMap["pay_money"] = "$payMoney";
+//    paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
+    FormData formData = FormData.fromMap(paramsMap);
+    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+    var response = await HttpManage.dio.post(
+      APi.SHOP_CARD_SHOPPING,
+//      data: formData,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = ShoppingCardInfoEntity();
+    shoppingCardInfoEntityFromJson(entity, extractData);
     return entity;
   }
 }
