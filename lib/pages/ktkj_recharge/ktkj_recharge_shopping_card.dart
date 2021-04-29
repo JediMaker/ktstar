@@ -788,8 +788,10 @@ class _RechargeListPageState extends State<KTKJRechargeShoppingCardPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(46)),
                           gradient: LinearGradient(colors: [
-                            Color(0xFF489FFF),
-                            Color(0xFF489FFF),
+                            _mainColor,
+                            _mainColor,
+//                            Color(0xFF489FFF),
+//                            Color(0xFF489FFF),
                           ]),
                         ),
                         child: Text(
