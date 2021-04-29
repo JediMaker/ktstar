@@ -1273,10 +1273,10 @@ class _KTKJLotteryMainPageState extends State<KTKJLotteryMainPage> {
   ///使用攻击卡
   useAttackCards() async {
 //    stopLotteryAnimation
-    /* todo if (_cardAttackCount == "0" || KTKJCommonUtils.isEmpty(_cardAttackCount)) {
+    if (_cardAttackCount == "0" || KTKJCommonUtils.isEmpty(_cardAttackCount)) {
       KTKJCommonUtils.showToast("您还没有该卡片，去抽一个吧！");
       return;
-    }*/
+    }
 
     /// 跳转翻牌页面
     await KTKJNavigatorUtils.navigatorRouter(context, KTKJLotteryFlopPage());
