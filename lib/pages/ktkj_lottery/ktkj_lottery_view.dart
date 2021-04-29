@@ -260,7 +260,7 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
     //补间动画
     tween = Tween<double>(
       begin: 0.0,
-      end: pi * 4 * 3 + rewardAngle,
+      end: pi * 4 * 2 + rewardAngle,
     ).animate(
       CurvedAnimation(
         parent: controller,
@@ -315,6 +315,11 @@ class _KTKJLotteryViewState extends State<KTKJLotteryView>
 
   ///获取后台中奖信息
   _lotteryPlay() async {
+    var diff = double.parse(_totalEnergy) - double.parse(_consumeEnergy);
+    if (diff < 0) {
+      KTKJCommonUtils.showEnergyRechargeDialog(context: context);
+      return;
+    }
     if (widget.lotteryRequest != null) {
       widget.lotteryRequest();
     }

@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:star/global_config.dart';
+import 'package:star/pages/ktkj_lottery/ktkj_energy_recharge_dialog.dart';
 import 'package:star/pages/ktkj_widget/ktkj_notice_dialog.dart';
 import 'package:star/pages/ktkj_widget/ktkj_update_dialog.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
@@ -537,6 +538,24 @@ class KTKJCommonUtils {
           return WillPopScope(
               child: KTKJUpdateDialog(
                   upDateContent: mUpdateContent, isForce: mIsForce),
+              onWillPop: _onWillPop);
+        });
+  }
+
+  static Future<bool> showEnergyRechargeDialog(
+      {BuildContext context,
+      String mNoticeContent,
+      String noticeTitle,
+      bool mIsForce}) async {
+    return await showDialog(
+        barrierDismissible: false, //屏蔽物理返回键（因为强更的时候点击返回键，弹窗会消失）
+        context: context,
+        builder: (BuildContext context) {
+          return WillPopScope(
+              child: KTKJEnergyRechargeDialog(
+                  noticeContent: mNoticeContent,
+                  noticeTitle: noticeTitle,
+                  isForce: mIsForce),
               onWillPop: _onWillPop);
         });
   }

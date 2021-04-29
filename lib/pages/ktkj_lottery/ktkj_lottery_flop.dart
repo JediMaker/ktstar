@@ -354,19 +354,6 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ConfettiWidget(
-                    confettiController: _universalAnimationController,
-                    blastDirection: -pi / 2,
-                    blastDirectionality: BlastDirectionality.explosive,
-                    emissionFrequency: 0.01,
-                    numberOfParticles: 20,
-                    maxBlastForce: 100,
-                    minBlastForce: 80,
-                    gravity: 0.3,
-                  ),
-                ),
               ],
             ),
           ) // This trailing comma makes auto-formatting nicer for build methods.
@@ -378,6 +365,8 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   Widget buildAttackButton() {
     return GestureDetector(
       onTap: () async {
+        /* await showResultDialog(context: this.context, showConfetti: true);
+        return;*/
         if (_selectIndex == -1) {
           KTKJCommonUtils.showToast("选择你的攻击姿势！");
           return;
@@ -407,12 +396,13 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
             });
           }
           _initData(showLoading: false);
-          if (_attackedUserAssetsDesc.isNotEmpty &&
+          /*if (_attackedUserAssetsDesc.isNotEmpty &&
               _attackedUserAssetsDesc.contains("盾")) {
+            await showResultDialog(context: this.context, showConfetti: false);
           } else {
-            animateConfetti();
-          }
-          await showResultDialog(context: this.context);
+            await showResultDialog(context: this.context, showConfetti: true);
+          }*/
+          await showResultDialog(context: this.context, showConfetti: false);
         } else {
           if (mounted) {
             setState(() {
@@ -659,7 +649,9 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
   }
 
   Future<bool> showResultDialog(
-      {BuildContext context, String mUpdateContent, bool mIsForce}) async {
+      {BuildContext context,
+      String mUpdateContent,
+      bool showConfetti = false}) async {
     double degrees2Radians = pi / 180;
     return await showGeneralDialog(
         context: context,
@@ -682,6 +674,9 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
               child: child,
             ),
           );*/
+          if (showConfetti) {
+            animateConfetti();
+          }
           return TweenAnimationBuilder(
             duration: Duration(seconds: 2),
             curve: Curves.easeInOut,
@@ -717,117 +712,134 @@ class _KTKJLotteryFlopPageState extends State<KTKJLotteryFlopPage>
 
   ///创建翻牌弹窗
   Widget createDialog(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                width: ScreenUtil().setWidth(95),
-                height: ScreenUtil().setWidth(95),
-                margin: EdgeInsets.only(
-                  bottom: ScreenUtil().setWidth(89),
-                ),
-                child: KTKJMyOctoImage(
-                  image:
-                      "https://alipic.lanhuapp.com/xdba03542e-5276-4412-967b-ea8d02dcca7c",
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            Container(
-              width: ScreenUtil().setWidth(557),
-              height: ScreenUtil().setWidth(716),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Container(
-                    width: ScreenUtil().setWidth(557),
-                    height: ScreenUtil().setWidth(716),
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    width: ScreenUtil().setWidth(95),
+                    height: ScreenUtil().setWidth(95),
                     margin: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(0),
+                      bottom: ScreenUtil().setWidth(89),
                     ),
                     child: KTKJMyOctoImage(
                       image:
-                          "https://alipic.lanhuapp.com/xdcdb14edd-b700-4575-9914-74e415d59b26",
+                          "https://alipic.lanhuapp.com/xdba03542e-5276-4412-967b-ea8d02dcca7c",
                       fit: BoxFit.fill,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(80),
-                          ),
-                          child: Text(
-                            "$_attackedResultTitle",
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(61),
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                ),
+                Container(
+                  width: ScreenUtil().setWidth(557),
+                  height: ScreenUtil().setWidth(716),
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(557),
+                        height: ScreenUtil().setWidth(716),
+                        margin: EdgeInsets.only(
+                          top: ScreenUtil().setWidth(0),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(10),
-                          ),
-                          child: Text(
-                            "$_attackedUserAssetsDesc",
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(42),
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                            ),
-                          ),
+                        child: KTKJMyOctoImage(
+                          image:
+                              "https://alipic.lanhuapp.com/xdcdb14edd-b700-4575-9914-74e415d59b26",
+                          fit: BoxFit.fill,
                         ),
-                        Container(
-                          width: ScreenUtil().setWidth(301),
-                          height: ScreenUtil().setWidth(301),
-                          margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(10),
-                          ),
-                          child: ClipOval(
-                            child: KTKJMyOctoImage(
-                              image: "$_avatarUrl",
-                              fit: BoxFit.fill,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(80),
+                              ),
+                              child: Text(
+                                "$_attackedResultTitle",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(61),
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: ScreenUtil().setWidth(20),
-                          ),
-                          child: Text(
-                            "$_attackResultDesc", //
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(42),
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(10),
+                              ),
+                              child: Text(
+                                "$_attackedUserAssetsDesc",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(42),
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
                             ),
-                          ),
+                            Container(
+                              width: ScreenUtil().setWidth(301),
+                              height: ScreenUtil().setWidth(301),
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(10),
+                              ),
+                              child: ClipOval(
+                                child: KTKJMyOctoImage(
+                                  image: "$_avatarUrl",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: ScreenUtil().setWidth(20),
+                              ),
+                              child: Text(
+                                "$_attackResultDesc", //
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(42),
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  child: changePostureButton(context),
+                ),
+              ],
             ),
-            Container(
-              child: changePostureButton(context),
-            ),
-          ],
+          ),
         ),
-      ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: ConfettiWidget(
+            confettiController: _universalAnimationController,
+            blastDirection: pi / 2,
+            blastDirectionality: BlastDirectionality.explosive,
+            emissionFrequency: 0.01,
+            numberOfParticles: 20,
+            maxBlastForce: 100,
+            minBlastForce: 80,
+            gravity: 0.3,
+          ),
+        ),
+      ],
     );
   }
 

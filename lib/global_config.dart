@@ -160,6 +160,10 @@ class KTKJGlobalConfig {
   ///
   /// 5 油卡充值支付
   ///
+  /// 6 购物卡充值支付
+  ///
+  /// todo 其他场景支付
+  ///
   static int payType = 0;
 
   /// 是否为首次进入app
