@@ -36,6 +36,7 @@ import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_goods_list.dart';
 import 'package:star/pages/ktkj_goods/ktkj_pdd/ktkj_pdd_home.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_float_lottery_entrance.dart';
+import 'package:star/pages/ktkj_lottery/ktkj_lottery_main.dart';
 import 'package:star/pages/ktkj_merchantssettle/ktkj_shop_payment.dart';
 import 'package:star/pages/ktkj_recharge/ktkj_recharge_list.dart';
 import 'package:star/pages/ktkj_search/ktkj_search_page.dart';
@@ -2829,6 +2830,15 @@ class _TaskListPageState extends State<KTKJTaskListPage>
                   case "goods_new_list":
                     KTKJNavigatorUtils.navigatorRouter(
                         context, KTKJNewcomersGoodsListPage());
+                    break;
+                  case "power":
+                    if (!KTKJGlobalConfig.isLogin()) {
+                      KTKJNavigatorUtils.navigatorRouter(
+                          context, KTKJLoginPage());
+                      return;
+                    }
+                    await KTKJNavigatorUtils.navigatorRouter(
+                        context, KTKJLotteryMainPage());
                     break;
                   case "store_list":
                     bus.emit("changBottomBar", 3);

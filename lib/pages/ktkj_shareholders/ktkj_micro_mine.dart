@@ -1933,6 +1933,11 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               textColor: Colors.white,
                               gravity: ToastGravity.BOTTOM);
                           return;*/
+                          if (!KTKJGlobalConfig.isLogin()) {
+                            KTKJNavigatorUtils.navigatorRouter(
+                                context, KTKJLoginPage());
+                            return;
+                          }
                           await KTKJNavigatorUtils.navigatorRouter(
                               context, KTKJLotteryMainPage());
                           _initUserData();
