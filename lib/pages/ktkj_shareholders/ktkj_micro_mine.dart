@@ -128,7 +128,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
   var _showActionCenter = true;
 
   ///防护盾剩余保护天数
-  var _leftProtectedDay;
+  var _leftProtectedDay = '0';
 
   _initUserData() async {
     var result = await HttpManage.getUserInfo();
