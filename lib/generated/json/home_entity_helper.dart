@@ -69,6 +69,9 @@ homeDataFromJson(HomeData data, Map<String, dynamic> json) {
   if (json['user_level'] != null) {
     data.userLevel = json['user_level']?.toString();
   }
+  if (json['is_login'] != null) {
+    data.isLogin = json['is_login'];
+  }
   if (json['notice_msg'] != null) {
     data.noticeMsg = new NoticeNoticeMsg().fromJson(json['notice_msg']);
   }
@@ -93,6 +96,9 @@ Map<String, dynamic> homeDataToJson(HomeData entity) {
   }
   if (entity.adList != null) {
     data['ad_list'] = entity.adList.map((v) => v.toJson()).toList();
+  }
+  if (entity.isLogin != null) {
+    data['is_login'] = entity.isLogin;
   }
   data['user_level'] = entity.userLevel;
   if (entity.noticeMsg != null) {

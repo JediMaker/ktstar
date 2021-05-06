@@ -28,6 +28,8 @@ class HomeData with JsonConvert<HomeData> {
   String userLevel;
   @JSONField(name: "notice_msg")
   NoticeNoticeMsg noticeMsg;
+  @JSONField(name: "is_login")
+  bool isLogin;
 }
 
 class HomeDataBanner with JsonConvert<HomeDataBanner> {
