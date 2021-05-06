@@ -2,6 +2,7 @@ import 'package:star/generated/json/base/json_convert_content.dart';
 import 'package:star/generated/json/base/json_field.dart';
 import 'package:star/models/home_goods_list_entity.dart';
 import 'package:star/models/home_icon_list_entity.dart';
+import 'package:star/models/notice_entity.dart';
 
 class HomeEntity with JsonConvert<HomeEntity> {
   bool status;
@@ -25,6 +26,8 @@ class HomeData with JsonConvert<HomeData> {
   List<HomeIconListIconList> adList;
   @JSONField(name: "user_level")
   String userLevel;
+  @JSONField(name: "notice_msg")
+  NoticeNoticeMsg noticeMsg;
 }
 
 class HomeDataBanner with JsonConvert<HomeDataBanner> {
