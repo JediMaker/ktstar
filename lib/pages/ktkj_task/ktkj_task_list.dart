@@ -490,6 +490,20 @@ class _TaskListPageState extends State<KTKJTaskListPage>
         _isLoop = true;
         _isMarqueeLoop = true;
         initBannerListColor();
+        if (KTKJGlobalConfig.isLogin() && result.data.noticeMsg.status) {
+          KTKJCommonUtils.showNoticeDialog(
+            context: context,
+            noticeTitle: result.data.noticeMsg.title,
+            mNoticeContent: result.data.noticeMsg.content,
+          );
+        } else if (!KTKJGlobalConfig.prefs.getBool("showNotice")) {
+          KTKJCommonUtils.showNoticeDialog(
+            context: context,
+            noticeTitle: result.data.noticeMsg.title,
+            mNoticeContent: result.data.noticeMsg.content,
+          );
+          KTKJGlobalConfig.prefs.setBool("showNotice", false);
+        }
       });
     }
   }

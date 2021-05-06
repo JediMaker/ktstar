@@ -574,6 +574,11 @@ class HttpManage {
     homeEntityFromJson(entity, extractData);
     if (entity.status) {
       KTKJGlobalConfig.prefs.setString("homeData", response.data.toString());
+      if (!KTKJGlobalConfig.isLogin() &&
+          !KTKJGlobalConfig.prefs.containsKey("showNotice")) {
+        KTKJGlobalConfig.prefs
+            .setBool("showNotice", entity.data.noticeMsg.status);
+      }
     }
     return entity;
   }

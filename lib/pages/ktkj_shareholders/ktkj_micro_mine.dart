@@ -1216,6 +1216,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                             KTKJGlobalConfig.prefs.remove("hasLogin");
                             KTKJGlobalConfig.prefs.remove("token");
                             KTKJGlobalConfig.prefs.remove("loginData");
+                            KTKJGlobalConfig.prefs.remove("showNotice");
                             KTKJGlobalConfig.saveLoginStatus(false);
                             _clearWidgetData();
                             Navigator.pop(context);
