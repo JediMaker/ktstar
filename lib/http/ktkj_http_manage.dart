@@ -22,6 +22,7 @@ import 'package:star/generated/json/goods_queue_persional_entity_helper.dart';
 import 'package:star/generated/json/home_entity_helper.dart';
 import 'package:star/generated/json/home_pdd_category_entity_helper.dart';
 import 'package:star/generated/json/income_list_entity_helper.dart';
+import 'package:star/generated/json/leader_board_entity_helper.dart';
 import 'package:star/generated/json/login_entity_helper.dart';
 import 'package:star/generated/json/logistics_info_entity_helper.dart';
 import 'package:star/generated/json/lottery_attack_result_entity_helper.dart';
@@ -89,6 +90,7 @@ import 'package:star/models/goods_queue_persional_entity.dart';
 import 'package:star/models/home_entity.dart';
 import 'package:star/models/home_pdd_category_entity.dart';
 import 'package:star/models/income_list_entity.dart';
+import 'package:star/models/leader_board_entity.dart';
 import 'package:star/models/login_entity.dart';
 import 'package:star/models/logistics_info_entity.dart';
 import 'package:star/models/lottery_attack_result_entity.dart';
@@ -3341,6 +3343,32 @@ class HttpManage {
     final extractData = json.decode(response.data) as Map<String, dynamic>;
     var entity = ShoppingCardInfoEntity();
     shoppingCardInfoEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 活动话费充值排行榜
+  static Future<LeaderBoardEntity> activityGetLeaderBoard() async {
+    var path = APi.ACTIVITY_HF_RANKING;
+    var response = await HttpManage.dio.get(
+      path,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LeaderBoardEntity();
+    leaderBoardEntityFromJson(entity, extractData);
+    return entity;
+  }
+
+  ///
+  /// 活动个人粉丝话费充值列表
+  static Future<LeaderBoardEntity> activityGetFansList() async {
+    var path = APi.ACTIVITY_HF_FANS;
+    var response = await HttpManage.dio.get(
+      path,
+    );
+    final extractData = json.decode(response.data) as Map<String, dynamic>;
+    var entity = LeaderBoardEntity();
+    leaderBoardEntityFromJson(entity, extractData);
     return entity;
   }
 }

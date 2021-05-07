@@ -449,6 +449,7 @@ class APi {
 
   ///消息记录列表
   static const String LOTTERY_MSG_RECORDS_LIST = "card/attack-list";
+
 //  =================能量大作战相关接口======END======================
 //  =================购物卡相关接口======START======================
 
@@ -457,6 +458,14 @@ class APi {
 
   ///购物卡充值支付
   static const String SHOP_CARD_PAY = "pay/shop-card";
+
 //  =================购物卡相关接口======END======================
+//  =================排行榜相关接口======START======================
+  ///话费充值排行榜
+  static const String ACTIVITY_HF_RANKING = "activity/hf-ranking";
+
+  ///个人粉丝话费充值列表
+  static const String ACTIVITY_HF_FANS = "activity/hf-fans";
+//  =================排行榜相关接口======END======================
 
 }

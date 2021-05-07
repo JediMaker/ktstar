@@ -100,6 +100,9 @@ userInfoDataFromJson(UserInfoData data, Map<String, dynamic> json) {
   if (json['store_id'] != null) {
     data.storeId = json['store_id']?.toString();
   }
+  if (json['activity'] != null) {
+    data.activity = json['activity']?.toString();
+  }
   if (json['is_protecting'] != null) {
     data.isProtecting = json['is_protecting'] ?? false;
   }
@@ -138,6 +141,7 @@ Map<String, dynamic> userInfoDataToJson(UserInfoData entity) {
   data['store_status'] = entity.storeStatus;
   data['store_reject_msg'] = entity.storeRejectMsg;
   data['store_id'] = entity.storeId;
+  data['activity'] = entity.activity;
   data['is_protecting'] = entity.isProtecting;
   data['protect_days'] = entity.protectDays;
   if (entity.partnerBonus != null) {

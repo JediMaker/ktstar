@@ -10,6 +10,7 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/user_info_entity.dart';
 import 'package:star/pages/ktkj_adress/ktkj_my_adress.dart';
+import 'package:star/pages/ktkj_leaderboard/ktkj_leader_board_list.dart';
 import 'package:star/pages/ktkj_login/ktkj_login.dart';
 import 'package:star/pages/ktkj_login/ktkj_modify_password.dart';
 import 'package:star/pages/ktkj_lottery/ktkj_lottery_main.dart';
@@ -107,6 +108,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
   UserInfoData _data;
 
   var _currentDividend = '0';
+  var _activity = '';
 
   ///商家申请状态 todo 值修改
   ///0 未申请
@@ -168,6 +170,7 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
           applyStatus = result.data.storeStatus;
           _rejectMsg = result.data.storeRejectMsg;
           _shopId = result.data.storeId;
+          _activity = result.data.activity;
           _leftProtectedDay = result.data.protectDays;
           if (applyStatus == '2') {
             _textAccordingToApplyStatus = "商家后台";
@@ -2030,9 +2033,16 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                               gravity: ToastGravity.BOTTOM);
                           return;*/
 //                          KTKJCommonUtils.showToast("敬请期待！");
-                          await KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJLotteryMainPage());
-                          _initUserData();
+                          if (_activity == "hf") {
+                            if (!KTKJGlobalConfig.isLogin()) {
+                              KTKJNavigatorUtils.navigatorRouter(
+                                  context, KTKJLoginPage());
+                              return;
+                            }
+                            await KTKJNavigatorUtils.navigatorRouter(
+                                context, KTKJLeaderBoard());
+                            _initUserData();
+                          }
                         },
                         child: Visibility(
 //                          visible: _showActionCenter,
