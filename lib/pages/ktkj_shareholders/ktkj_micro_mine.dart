@@ -2042,10 +2042,12 @@ class _MicroMinePageState extends State<KTKJMicroMinePage>
                             await KTKJNavigatorUtils.navigatorRouter(
                                 context, KTKJLeaderBoard());
                             _initUserData();
+                          } else {
+                            KTKJCommonUtils.showToast("敬请期待！");
                           }
                         },
                         child: Visibility(
-//                          visible: _showActionCenter,
+                          visible: _showActionCenter,
                           child: new Container(
                             child: new Column(
                               mainAxisAlignment: MainAxisAlignment.center,
