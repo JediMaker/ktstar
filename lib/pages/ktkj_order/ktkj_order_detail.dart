@@ -45,6 +45,7 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
   var deductPrice = "";
   var coin = "";
   var orderStatusText = '';
+  var remark = '';
 
   String payTime;
   String sendTime;
@@ -86,6 +87,7 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
             orderNum = entityResult.data.orderno;
             payment = entityResult.data.payment;
             dateAdded = entityResult.data.createTime;
+            remark = entityResult.data.remark;
             payTime = entityResult.data.payTime;
             sendTime = entityResult.data.sendTime;
             confirmTime = entityResult.data.confirmTime;
@@ -1041,6 +1043,40 @@ class _OrderDetailPageState extends State<KTKJOrderDetailPage> {
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: !KTKJCommonUtils.isEmpty(remark),
+                    child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: ScreenUtil().setHeight(5),
+                      ),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "备注：",
+                            style: TextStyle(
+                              color: Color(0xFF222222),
+                              fontSize: ScreenUtil().setSp(32),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '$remark',
+                              style: TextStyle(
+                                color: Color(0xFF222222),
+                                fontSize: ScreenUtil().setSp(32),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                             ),
                           ),
                         ],

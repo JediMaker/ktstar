@@ -94,6 +94,9 @@ orderDetailDataFromJson(OrderDetailData data, Map<String, dynamic> json) {
   if (json['order_bonus'] != null) {
     data.orderBonus = json['order_bonus']?.toString();
   }
+  if (json['remark'] != null) {
+    data.remark = json['remark']?.toString();
+  }
   if (json['user_info'] != null) {
     data.userInfo = new OrderUserInfoUserInfo().fromJson(json['user_info']);
   }
@@ -124,6 +127,7 @@ Map<String, dynamic> orderDetailDataToJson(OrderDetailData entity) {
   data['is_coupon'] = entity.isCoupon;
   data['deduct_price'] = entity.deductPrice;
   data['order_bonus'] = entity.orderBonus;
+  data['remark'] = entity.remark;
   if (entity.userInfo != null) {
     data['user_info'] = entity.userInfo.toJson();
   }

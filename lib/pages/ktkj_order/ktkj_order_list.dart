@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:star/global_config.dart';
 import 'package:star/pages/ktkj_order/ktkj_recharge_order_list.dart';
 import 'package:star/pages/ktkj_widget/ktkj_round_tab_indicator.dart';
-
 
 // Copyright (c) 2021, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
@@ -136,7 +134,7 @@ class _OrderListPageState extends State<KTKJOrderListPage>
           },
         ),
         centerTitle: true,
-        backgroundColor: KTKJGlobalConfig.taskNomalHeadColor,
+        backgroundColor: Colors.white,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -144,7 +142,12 @@ class _OrderListPageState extends State<KTKJOrderListPage>
           ),
           child: Container(
             alignment: AlignmentDirectional.centerStart,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.only(
+              left: ScreenUtil().setWidth(30),
+              right: ScreenUtil().setWidth(30),
+              bottom: ScreenUtil().setWidth(20),
+            ),
+            color: Colors.white,
             child: TabBar(
               controller: _tabController,
               indicatorColor: Color(0xffF32E43),

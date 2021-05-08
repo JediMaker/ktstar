@@ -45,12 +45,15 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
   bool isFirstLoading = true;
   List<OrderListDataList> _orderList;
   String contactPhone = ""; //
-  _initData() async {
+  ///  orderStatus 订单状态 666-已付款，888-已完成，999-已失效，不传或传空字符串-全部
+  String _orderStatus = ""; //
+  _initData({keyWords}) async {
     if (widget.orderSource == '-1') {
       return;
     }
-    OrderListEntity result =
-        await HttpManage.getOrderList(page, 10, widget.orderSource);
+    OrderListEntity result = await HttpManage.getOrderList(
+        page, 10, widget.orderSource,
+        goodsName: _searchKeyWords, orderStatus: _orderStatus);
     if (result.status) {
       if (mounted) {
         setState(() {
@@ -110,9 +113,9 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
           _initData();
         }
       },
-      emptyWidget: _orderList == null || _orderList.length == 0
+      /*  emptyWidget: _orderList == null || _orderList.length == 0
           ? KTKJNoDataPage()
-          : null,
+          : null,*/
       slivers: <Widget>[buildCenter()],
     ) // This trailing comma makes auto-formatting nicer for build methods.
         );
@@ -120,16 +123,32 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
 
   Widget buildCenter() {
     return SliverToBoxAdapter(
-      child: Container(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            OrderListDataList listItem = _orderList[index];
-            return buildItemLayout(listItem: listItem);
-          },
-          itemCount: _orderList == null ? 0 : _orderList.length,
-        ),
+      child: Column(
+        children: [
+          buildSearch(),
+          buildOrderStatusTab(),
+          Container(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                OrderListDataList listItem = _orderList[index];
+                return buildItemLayout(listItem: listItem);
+              },
+              itemCount: _orderList == null ? 0 : _orderList.length,
+            ),
+          ),
+          Visibility(
+            visible: _orderList == null || _orderList.length == 0,
+            child: Container(
+              height: ScreenUtil().setWidth(1130),
+              /* constraints: BoxConstraints(
+                minHeight: ScreenUtil().setWidth(1130),
+              ),*/
+              child: KTKJNoDataPage(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1098,6 +1117,331 @@ class _RechargeOrderListPageState extends State<KTKJRechargeOrderListPage>
           ),
         ),
       ],
+    );
+  }
+
+  ///搜索框文字控制器
+  TextEditingController _searchController = TextEditingController();
+
+  ///搜索框焦点控制器
+  var _searchFocusNode = FocusNode();
+
+  ///搜索关键词
+  var _searchKeyWords = '';
+
+  ///选中订单状态页签索引
+  int _selectedOrderStatusIndex = 0;
+
+  ///订单搜索
+  Widget buildSearch() {
+    return Container(
+      height: ScreenUtil().setWidth(150),
+      color: Color(0xfffafafa),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              height: ScreenUtil().setWidth(100),
+              margin: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(30),
+              ),
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Positioned.fill(
+                    left: ScreenUtil().setWidth(0),
+                    top: ScreenUtil().setWidth(0),
+                    child: Container(
+                      height: ScreenUtil().setWidth(100),
+                      decoration: BoxDecoration(
+                        color: Color(0xffffffff),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            ScreenUtil().setWidth(50),
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: ScreenUtil().setWidth(20),
+                          top: ScreenUtil().setWidth(26),
+                          right: ScreenUtil().setWidth(170),
+                        ),
+                        child: TextField(
+                          controller: _searchController,
+                          focusNode: _searchFocusNode,
+                          maxLength: 30,
+                          textInputAction: TextInputAction.search,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(42),
+                          ),
+                          onChanged: (value) {
+                            if (KTKJCommonUtils.isEmpty(value)) {
+                              return;
+                            }
+                            if (mounted) {
+                              setState(() {
+                                _searchController.text = value;
+                                _searchKeyWords = _searchController.text.trim();
+                              });
+                            }
+                          },
+                          onEditingComplete: () {
+                            ///搜索对应订单
+                            ///
+                            if (mounted) {
+                              setState(() {
+                                _searchFocusNode.unfocus();
+                                _searchKeyWords = _searchController.text.trim();
+                                if (KTKJCommonUtils.isEmpty(_searchKeyWords)) {
+                                  return;
+                                }
+                                page = 1;
+                                _initData(keyWords: _searchKeyWords);
+                              });
+                            }
+                          },
+                          decoration: null,
+                          /* inputFormatters: <TextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(10) //限制长度
+                                    ],*/
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned.directional(
+                    textDirection: TextDirection.rtl,
+                    start: 0,
+                    bottom: 10,
+                    child: Visibility(
+                      visible: !KTKJCommonUtils.isEmpty(_searchController.text),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          /*padding: EdgeInsets.symmetric(
+                                      vertical: ScreenUtil().setWidth(20),
+                                    ),*/
+                          height: ScreenUtil().setWidth(100),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (mounted) {
+                                    setState(() {
+                                      _searchController.text = "";
+                                      _searchKeyWords =
+                                          _searchController.text.trim();
+                                      /*_shopName = _searchController.text;
+                                      if (KTKJCommonUtils.isEmpty(shopList)) {
+                                        page = 1;
+                                        _initData();
+                                      }*/
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: ScreenUtil().setWidth(63),
+                                  height: ScreenUtil().setWidth(63),
+                                  margin: EdgeInsets.only(
+                                    top: ScreenUtil().setWidth(50),
+                                  ),
+                                  child: Icon(
+                                    CupertinoIcons.clear,
+//                                    color: _shopNameTxtColor,
+                                    size: ScreenUtil().setWidth(63),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  ///搜索对应商铺列表
+                                  ///
+                                  if (mounted) {
+                                    setState(() {
+//                                      _shopName = _searchController.text.trim();
+                                      page = 1;
+                                      _initData();
+                                    });
+                                  }
+                                }, //
+                                child: Container(
+                                  width: ScreenUtil().setWidth(63),
+                                  height: ScreenUtil().setWidth(63),
+                                  padding: EdgeInsets.all(
+                                    ScreenUtil().setWidth(25),
+                                  ),
+                                  margin: EdgeInsets.only(
+                                    right: ScreenUtil().setWidth(50),
+                                    top: ScreenUtil().setWidth(25),
+                                  ),
+                                  /* child: KTKJMyOctoImage(
+                                    image:
+                                        "https://alipic.lanhuapp.com/xd2b236767-514c-4d43-99aa-48d2b74f46c9",
+                                    width: ScreenUtil().setWidth(41),
+                                    height: ScreenUtil().setWidth(41),
+                                  ),*/
+                                  child: Icon(
+                                    CupertinoIcons.search,
+//                                    color: _shopNameTxtColor,
+                                    size: ScreenUtil().setWidth(50),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: KTKJCommonUtils.isEmpty(_searchController.text),
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        _searchFocusNode.requestFocus();
+                      },
+                      child: Container(
+                        /*padding: EdgeInsets.symmetric(
+                                    vertical: ScreenUtil().setWidth(20),
+                                  ),*/
+                        height: ScreenUtil().setWidth(100),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(20),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              ScreenUtil().setWidth(50),
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            KTKJMyOctoImage(
+                              image:
+                                  "https://alipic.lanhuapp.com/xd2b236767-514c-4d43-99aa-48d2b74f46c9",
+                              width: ScreenUtil().setWidth(41),
+                              height: ScreenUtil().setWidth(41),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: ScreenUtil().setWidth(30),
+                              ),
+                              child: Text(
+                                "搜索订单",
+                                style: TextStyle(
+                                  color: Color(0xff666666),
+                                  fontSize: ScreenUtil().setSp(36),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  var _orderStatusTextList = [
+    '全部',
+    '已付款',
+    '已收货',
+    '已失效',
+  ];
+
+  ///订单状态页签
+  Widget buildOrderStatusTab() {
+    return Container(
+      color: Color(0xfffafafa),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              height: ScreenUtil().setWidth(136),
+              margin: EdgeInsets.only(
+                left: ScreenUtil().setWidth(30),
+                right: ScreenUtil().setWidth(30),
+                bottom: ScreenUtil().setWidth(10),
+              ),
+              decoration: BoxDecoration(
+                color: Color(0xffffffff),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    ScreenUtil().setWidth(30),
+                  ),
+                ),
+              ),
+              child: Row(
+                children: List.generate(_orderStatusTextList.length,
+                    (index) => buildOrderStatusExpandedItem(index: index)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildOrderStatusExpandedItem({int index}) {
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if (mounted) {
+            setState(() {
+              switch (index) {
+                case 0:
+                  _orderStatus = "";
+                  break;
+                case 1:
+                  _orderStatus = "666";
+                  break;
+                case 2:
+                  _orderStatus = "888";
+                  break;
+                case 3:
+                  _orderStatus = "999";
+                  break;
+              }
+              _selectedOrderStatusIndex = index;
+              page = 1;
+              _initData();
+            });
+          }
+        },
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(30),
+            ),
+            child: Text(
+              "${_orderStatusTextList[index]}",
+              style: TextStyle(
+                color: _selectedOrderStatusIndex == index
+                    ? Color(0xff222222)
+                    : Color(0xff666666),
+                fontWeight: _selectedOrderStatusIndex == index
+                    ? FontWeight.w600
+                    : FontWeight.normal,
+                fontSize: ScreenUtil().setSp(36),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 

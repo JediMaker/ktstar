@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -368,162 +370,184 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                       visible: widget.type == 0,
                       sliver: SliverToBoxAdapter(
                         child: Column(
-                          children: List.generate(goodsList.length, (index) {
-                            var product = goodsList[index];
+                          children: [
+                            Column(
+                              children:
+                                  List.generate(goodsList.length, (index) {
+                                var product = goodsList[index];
 /*
-                                  OrderCheckoutDataProduct product =
-                                      entity.data.products[index];
+                                      OrderCheckoutDataProduct product =
+                                          entity.data.products[index];
 */
-                            return Container(
-                              color: Colors.white,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(6.0),
+                                return Container(
+                                  color: Colors.white,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
 //                        child: Image.network(
 ////                          item.imageUrl,
 //                          'http://img10.360buyimg.com/mobilecms/s270x270_jfs/t1/23943/7/13139/130737/5c9dbe4bEd77d9e09/a371d9345e1774e2.jpg',
 //                          width: ScreenUtil().L(120),
 //                          height: ScreenUtil().L(120),
 //                        )
-                                    child: KTKJMyOctoImage(
-                                      fadeInDuration: Duration(milliseconds: 0),
-                                      fadeOutDuration:
-                                          Duration(milliseconds: 0),
-                                      fit: BoxFit.fill,
-                                      width: 74,
-                                      height: 74,
-                                      image: product.goodsImg == null
-                                          ? ""
-                                          : product.goodsImg,
-                                      /*   imageUrl: item.imageUrl,
-                                      width: ScreenUtil().L(120),
-                                      height: ScreenUtil().L(120),*/
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                      child: Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          product.goodsName == null
+                                        child: KTKJMyOctoImage(
+                                          fadeInDuration:
+                                              Duration(milliseconds: 0),
+                                          fadeOutDuration:
+                                              Duration(milliseconds: 0),
+                                          fit: BoxFit.fill,
+                                          width: 74,
+                                          height: 74,
+                                          image: product.goodsImg == null
                                               ? ""
-                                              : product.goodsName,
-//                                  item.wareName,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(42),
-                                            color: Color(0xff222222),
-                                          ),
+                                              : product.goodsImg,
+                                          /*   imageUrl: item.imageUrl,
+                                          width: ScreenUtil().L(120),
+                                          height: ScreenUtil().L(120),*/
                                         ),
-                                        Container(
-                                          child: Text(
-                                            product.specItem == null
-                                                ? ""
-                                                : product.specItem,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              product.goodsName == null
+                                                  ? ""
+                                                  : product.goodsName,
 //                                  item.wareName,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: ScreenUtil().setSp(38),
-                                              color: Color(0xff666666),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    ScreenUtil().setSp(42),
+                                                color: Color(0xff222222),
+                                              ),
                                             ),
-                                          ),
-                                          margin: EdgeInsets.only(
-                                              top: ScreenUtil().setHeight(18)),
-                                        ),
-                                        /* Wrap(
-                                          children: product.option.map((op) {
-                                            return Container(
+                                            Container(
                                               child: Text(
-                                                "${op.value} ",
+                                                product.specItem == null
+                                                    ? ""
+                                                    : product.specItem,
+//                                  item.wareName,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: ScreenUtil().setSp(42),
+                                                  fontSize:
+                                                      ScreenUtil().setSp(38),
+                                                  color: Color(0xff666666),
                                                 ),
                                               ),
-                                            );
-                                          }).toList(),
-                                        ),*/
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                  child: Row(
-//                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: <Widget>[
-//                              Expanded(child:,),
-                                                  Flexible(
-                                                    child: Text(
-                                                      '',
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
-                                                  Text(
-                                                    "￥${product.salePrice == null ? "" : product.salePrice}",
-//                          '27.5',,
+                                              margin: EdgeInsets.only(
+                                                  top: ScreenUtil()
+                                                      .setHeight(18)),
+                                            ),
+                                            /* Wrap(
+                                              children: product.option.map((op) {
+                                                return Container(
+                                                  child: Text(
+                                                    "${op.value} ",
                                                     style: TextStyle(
-                                                      fontSize: ScreenUtil()
-                                                          .setSp(42),
-                                                      color: Color(0xFFF93736),
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: Colors.grey,
+                                                      fontSize: ScreenUtil().setSp(42),
                                                     ),
                                                   ),
+                                                );
+                                              }).toList(),
+                                            ),*/
+                                            Container(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                      child: Row(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: <Widget>[
+//                              Expanded(child:,),
+                                                      Flexible(
+                                                        child: Text(
+                                                          '',
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
+                                                      Text(
+                                                        "￥${product.salePrice == null ? "" : product.salePrice}",
+//                          '27.5',,
+                                                        style: TextStyle(
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(42),
+                                                          color:
+                                                              Color(0xFFF93736),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
 //                          Icon(Icons.chevron_right,size: 18,color: Colors.grey,) ,
 //                              Expanded(
 //                              ),
-                                                ],
+                                                    ],
 //                           ),
-                                              )),
-                                              Container(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Text(
-                                                  'x${product.goodsNum}',
-                                                  style: TextStyle(
-                                                    color: Color(0xff222222),
-                                                    fontSize:
-                                                        ScreenUtil().setSp(36),
+                                                  )),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Text(
+                                                      'x${product.goodsNum}',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff222222),
+                                                        fontSize: ScreenUtil()
+                                                            .setSp(36),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
 //                            Icon(
 //                              Icons.more_horiz,
 //                              size: 15,
 //                              color: Color(0xFF979896),
 //                            ),
-                                            ],
-                                          ),
-                                          margin: EdgeInsets.only(
-                                              top: ScreenUtil().setHeight(20)),
+                                                ],
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                  top: ScreenUtil()
+                                                      .setWidth(20)),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ))
-                                ],
-                              ),
-                            );
-                          }),
+                                      ))
+                                    ],
+                                  ),
+                                );
+                              }),
+                            ),
+                            Container(
+                                color: Colors.white,
+                                padding: EdgeInsets.only(
+                                  left: 16,
+                                  right: 16,
+                                  bottom: 10,
+                                ),
+                                child: buildRemarkVisibility()),
+                          ],
                         ),
                       ),
                     ),
@@ -531,242 +555,7 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                       visible: widget.type == 1,
                       sliver: SliverToBoxAdapter(
                         child: Container(
-                          child: Column(
-                            children:
-                                List.generate(cartGoodsList.length, (index) {
-                              var product = cartGoodsList[index];
-                              var productSpec = product.specItem;
-                              var productCoin = product.goodsCoin;
-                              if (productCoin != null) {
-                                productCoin = "分红金：$productCoin";
-                              }
-
-                              return Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(6.0),
-//                        child: Image.network(
-////                          item.imageUrl,
-//                          'http://img10.360buyimg.com/mobilecms/s270x270_jfs/t1/23943/7/13139/130737/5c9dbe4bEd77d9e09/a371d9345e1774e2.jpg',
-//                          width: ScreenUtil().L(120),
-//                          height: ScreenUtil().L(120),
-//                        )
-                                      child: KTKJMyOctoImage(
-                                        fadeInDuration:
-                                            Duration(milliseconds: 0),
-                                        fadeOutDuration:
-                                            Duration(milliseconds: 0),
-                                        fit: BoxFit.fill,
-                                        width: 74,
-                                        height: 74,
-                                        image: product.goodsImg == null
-                                            ? ""
-                                            : product.goodsImg,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                        child: Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            product.goodsName == null
-                                                ? ""
-                                                : product.goodsName,
-//                                  item.wareName,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: ScreenUtil().setSp(42),
-                                              color: Color(0xff222222),
-                                            ),
-                                          ),
-                                          Container(
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Row(
-                                                    children: [
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: !KTKJCommonUtils
-                                                                  .isEmpty(
-                                                                      productSpec)
-                                                              ? Color(
-                                                                  0xfff6f5f5)
-                                                              : Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            ScreenUtil()
-                                                                .setWidth(10),
-                                                          ),
-                                                        ),
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          horizontal:
-                                                              ScreenUtil()
-                                                                  .setWidth(22),
-                                                          vertical: ScreenUtil()
-                                                              .setWidth(16),
-                                                        ),
-                                                        child: Text(
-                                                          "$productSpec",
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: TextStyle(
-                                                            fontSize:
-                                                                ScreenUtil()
-                                                                    .setSp(36),
-                                                            color: Color(
-                                                                0xffa0a0a0),
-                                                          ),
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Text(
-                                                    'x${product.goodsNum}',
-                                                    style: TextStyle(
-                                                      color: Color(0xff222222),
-                                                      fontSize: ScreenUtil()
-                                                          .setSp(36),
-                                                    ),
-                                                  ),
-                                                ),
-//                            Icon(
-//                              Icons.more_horiz,
-//                              size: 15,
-//                              color: Color(0xFF979896),
-//                            ),
-                                              ],
-                                            ),
-                                            margin: EdgeInsets.only(
-                                                top:
-                                                    ScreenUtil().setHeight(20)),
-                                          ),
-                                          Container(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                    child: Row(
-//                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                        top: ScreenUtil()
-                                                            .setWidth(0),
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color:
-                                                              Color(0xfff32e43),
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          ScreenUtil()
-                                                              .setWidth(10),
-                                                        ),
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: ScreenUtil()
-                                                            .setWidth(22),
-                                                        vertical: ScreenUtil()
-                                                            .setWidth(10),
-                                                      ),
-                                                      child: Text(
-                                                        "$productCoin",
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                          fontSize: ScreenUtil()
-                                                              .setSp(30),
-                                                          color:
-                                                              Color(0xfff32e43),
-                                                        ),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ),
-                                                    Flexible(
-                                                      child: Text(
-                                                        '',
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
-
-//                          Icon(Icons.chevron_right,size: 18,color: Colors.grey,) ,
-//                              Expanded(
-//                              ),
-                                                  ],
-//                           ),
-                                                )),
-                                                Container(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Text(
-                                                    "￥${product.goodsPrice == null ? "" : product.goodsPrice}",
-//                          '27.5',,
-                                                    style: TextStyle(
-                                                      fontSize: ScreenUtil()
-                                                          .setSp(42),
-                                                      color: Color(0xFFF93736),
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-//                            Icon(
-//                              Icons.more_horiz,
-//                              size: 15,
-//                              color: Color(0xFF979896),
-//                            ),
-                                              ],
-                                            ),
-                                            margin: EdgeInsets.only(
-                                                top:
-                                                    ScreenUtil().setHeight(20)),
-                                          ),
-                                        ],
-                                      ),
-                                    ))
-                                  ],
-                                ),
-                              );
-                            }),
-                          ),
+                          child: buildGoodsListColumn(),
                         ),
                       ),
                     ),
@@ -889,100 +678,6 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                                 ],
                               ),
                             ),
-                            Visibility(
-                              child: Column(
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      margin: EdgeInsets.symmetric(
-                                        vertical: ScreenUtil().setWidth(30),
-                                      ),
-                                      color: Color(0xffd1d1d1),
-                                      height: ScreenUtil().setWidth(1),
-                                      width: ScreenUtil().setWidth(1029),
-                                    ),
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        "备注",
-                                        style: TextStyle(
-                                          color: Color(0xff999999),
-                                          fontSize: ScreenUtil().setSp(36),
-                                        ),
-                                      ),
-                                      Expanded(child: Text("")),
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8, bottom: 8),
-                                    height: ScreenUtil().setWidth(300),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-//                                      color: Color(0xfff8f8f8),
-                                      border: Border.all(
-                                        color: Color(0xffeaeaea),
-                                        width: ScreenUtil().setWidth(2),
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                          ScreenUtil().setWidth(30),
-                                        ),
-                                      ),
-                                    ),
-                                    child: TextField(
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      textAlign: TextAlign.left,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(42),
-                                        color: Color(0xff999999),
-                                      ),
-                                      maxLength: 200,
-                                      buildCounter: (
-                                        BuildContext context, {
-                                        int currentLength,
-                                        int maxLength,
-                                        bool isFocused,
-                                      }) {
-                                        return MediaQuery(
-                                          data: MediaQueryData(
-                                            padding: EdgeInsets.zero,
-                                          ),
-                                          child: Container(
-                                            margin: EdgeInsets.all(0),
-                                            child: Visibility(
-                                              visible: currentLength != 0,
-                                              child: Text(
-                                                '$currentLength/$maxLength',
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      ScreenUtil().setSp(42),
-                                                  color: Color(0xff999999),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      decoration: InputDecoration(
-                                        hintText: '\n请输入备注 ',
-                                        hintStyle: TextStyle(
-                                            wordSpacing: 20,
-                                            fontSize: ScreenUtil().setSp(36),
-                                            color: Color(0xffd1d1d1)),
-                                        border: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 10),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -1029,7 +724,8 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                             if (widget.type == 0) {
                               ///正常订单
                               var result = await HttpManage.orderSubmit(
-                                  widget.orderId, isCoupon);
+                                  widget.orderId, isCoupon,
+                                  remark: _remark);
                               if (result.status) {
                                 Navigator.of(context).pop();
                                 //跳转到结算台
@@ -1044,9 +740,11 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
                             } else {
                               ///购物车订单
                               var result = await HttpManage.cartCreateOrder(
-                                  cartIds: widget.cartIds,
-                                  addressId: defaultAddressId,
-                                  needDeduct: isCoupon);
+                                cartIds: widget.cartIds,
+                                addressId: defaultAddressId,
+                                needDeduct: isCoupon,
+                                remarks: _remarksMap, //json.encode(),
+                              );
 //                                widget.orderId, isCoupon);
                               if (result.status) {
                                 Navigator.of(context).pop();
@@ -1089,6 +787,264 @@ class _EnsureOrderPageState extends State<KTKJEnsureOrderPage>
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildGoodsListColumn() {
+    return Column(
+      children: List.generate(cartGoodsList.length, (index) {
+        var product = cartGoodsList[index];
+        return buildGoodsItem(index, product);
+      }),
+    );
+  }
+
+  Widget buildGoodsItem(index, CartSettlemantDataList product) {
+    var productSpec = product.specItem;
+    var productCoin = product.goodsCoin;
+    if (productCoin != null) {
+      productCoin = "分红金：$productCoin";
+    }
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      margin: EdgeInsets.only(
+        top: index != 0 ? ScreenUtil().setWidth(20) : 0,
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+//                        child: Image.network(
+////                          item.imageUrl,
+//                          'http://img10.360buyimg.com/mobilecms/s270x270_jfs/t1/23943/7/13139/130737/5c9dbe4bEd77d9e09/a371d9345e1774e2.jpg',
+//                          width: ScreenUtil().L(120),
+//                          height: ScreenUtil().L(120),
+//                        )
+                child: KTKJMyOctoImage(
+                  fadeInDuration: Duration(milliseconds: 0),
+                  fadeOutDuration: Duration(milliseconds: 0),
+                  fit: BoxFit.fill,
+                  width: 74,
+                  height: 74,
+                  image: product.goodsImg == null ? "" : product.goodsImg,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      product.goodsName == null ? "" : product.goodsName,
+//                                  item.wareName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(42),
+                        color: Color(0xff222222),
+                      ),
+                    ),
+                    Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: !KTKJCommonUtils.isEmpty(productSpec)
+                                        ? Color(0xfff6f5f5)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(
+                                      ScreenUtil().setWidth(10),
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: ScreenUtil().setWidth(22),
+                                    vertical: ScreenUtil().setWidth(16),
+                                  ),
+                                  child: Text(
+                                    "$productSpec",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(36),
+                                      color: Color(0xffa0a0a0),
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'x${product.goodsNum}',
+                              style: TextStyle(
+                                color: Color(0xff222222),
+                                fontSize: ScreenUtil().setSp(36),
+                              ),
+                            ),
+                          ),
+//                            Icon(
+//                              Icons.more_horiz,
+//                              size: 15,
+//                              color: Color(0xFF979896),
+//                            ),
+                        ],
+                      ),
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                    ),
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Row(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(0),
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0xfff32e43),
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    ScreenUtil().setWidth(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setWidth(22),
+                                  vertical: ScreenUtil().setWidth(10),
+                                ),
+                                child: Text(
+                                  "$productCoin",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(30),
+                                    color: Color(0xfff32e43),
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  '',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+//                            Expanded(child: Text('进店',style: TextStyle(fontSize: 12),),),
+
+//                          Icon(Icons.chevron_right,size: 18,color: Colors.grey,) ,
+//                              Expanded(
+//                              ),
+                            ],
+//                           ),
+                          )),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "￥${product.goodsPrice == null ? "" : product.goodsPrice}",
+//                          '27.5',,
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(42),
+                                color: Color(0xFFF93736),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+//                            Icon(
+//                              Icons.more_horiz,
+//                              size: 15,
+//                              color: Color(0xFF979896),
+//                            ),
+                        ],
+                      ),
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                    ),
+                  ],
+                ),
+              ))
+            ],
+          ),
+          buildRemarkVisibility(id: product.cartId),
+        ],
+      ),
+    );
+  }
+
+  var _remark = '';
+  var _remarksMap = Map();
+
+  Widget buildRemarkVisibility({id}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(
+            top: ScreenUtil().setWidth(6),
+            right: ScreenUtil().setWidth(20),
+          ),
+          child: Text(
+            "备注",
+            style: TextStyle(
+              color: Color(0xff222222),
+              fontSize: ScreenUtil().setSp(36),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: ScreenUtil().setWidth(110),
+            child: TextField(
+              textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.right,
+              maxLines: 1,
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(36),
+                color: Color(0xff222222),
+              ),
+              onChanged: (value) {
+                if (widget.type == 0) {
+                  _remark = value;
+                }
+                if (widget.type == 1) {
+                  _remarksMap[id] = value;
+                }
+              },
+              decoration: InputDecoration(
+                hintText: '请输入备注(选填) ',
+                hintStyle: TextStyle(
+                  wordSpacing: 20,
+                  fontSize: ScreenUtil().setSp(36),
+                  color: Color(0xff999999),
+                ),
+                border: InputBorder.none,
+//                contentPadding:
+//                    EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

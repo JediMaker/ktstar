@@ -1077,18 +1077,26 @@ class HttpManage {
 
   ///
   ///[page] 	页码
+  ///
   ///[pageSize] 	单页数据量
+  ///
   ///[orderSource] 	订单来源 1自营 ,2 拼多多
+  ///
+  ///[orderStatus] 	订单状态 666-已付款，888-已完成，999-已失效，不传或传空字符串-全部
+  ///
+  ///[goodsName] 	订单商品名称
   ///
   ///
   /// 获取订单列表
   ///
-  static Future<OrderListEntity> getOrderList(
-      page, pageSize, orderSource) async {
+  static Future<OrderListEntity> getOrderList(page, pageSize, orderSource,
+      {orderStatus, goodsName}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["page"] = "$page";
     paramsMap["page_size"] = "$pageSize";
     paramsMap["order_source"] = "$orderSource";
+    paramsMap["order_status"] = "$orderStatus";
+    paramsMap["goods_name"] = "$goodsName";
     paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
@@ -1893,10 +1901,12 @@ class HttpManage {
   }
 
   ///提交订单
-  static Future<ResultBeanEntity> orderSubmit(orderId, needDeduct) async {
+  static Future<ResultBeanEntity> orderSubmit(orderId, needDeduct,
+      {remark}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["order_id"] = "$orderId";
     paramsMap["need_deduct"] = "$needDeduct";
+    paramsMap["remark"] = "$remark";
     paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
     formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
@@ -2943,15 +2953,18 @@ class HttpManage {
   ///
   ///[needDeduct] 是否使用抵扣券，1是 0否，默认0
   ///
+  ///[remarks] 订单备注数组对象，key-value按cart_id-备注内容；如{24: "30包纸", 25: "耳机黑色"}
+  ///
   static Future<CartCreateOrderEntity> cartCreateOrder(
-      {String cartIds, addressId, needDeduct}) async {
+      {String cartIds, addressId, needDeduct, remarks}) async {
     Map paramsMap = Map<String, dynamic>();
     paramsMap["cart_ids"] = "$cartIds";
     paramsMap["addr_id"] = "$addressId";
     paramsMap["need_deduct"] = "$needDeduct";
+    paramsMap["remarks"] = remarks;
     paramsMap['timestamp'] = KTKJCommonUtils.currentTimeMillis();
     FormData formData = FormData.fromMap(paramsMap);
-    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
+//    formData.fields..add(MapEntry("sign", "${KTKJUtils.getSign(paramsMap)}"));
     var response = await HttpManage.dio.post(
       APi.CART_ORDER_CREATE,
       data: formData,
