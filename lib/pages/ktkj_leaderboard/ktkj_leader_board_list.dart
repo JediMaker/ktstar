@@ -8,10 +8,10 @@ import 'package:star/http/ktkj_http_manage.dart';
 import 'package:star/models/leader_board_entity.dart';
 import 'package:star/pages/ktkj_leaderboard/ktkj_leader_board_mylist.dart';
 import 'package:star/pages/ktkj_widget/ktkj_my_octoimage.dart';
+import 'package:star/pages/ktkj_widget/ktkj_my_webview_plugin.dart';
 import 'package:star/pages/ktkj_widget/ktkj_no_data.dart';
 import 'package:star/utils/ktkj_common_utils.dart';
 import 'package:star/utils/ktkj_navigator_utils.dart';
-import 'package:star/pages/ktkj_widget/ktkj_my_webview_plugin.dart';
 
 ///活动排行榜页面
 class KTKJLeaderBoard extends StatefulWidget {
@@ -44,10 +44,10 @@ class _KTKJLeaderBoardState extends State<KTKJLeaderBoard> {
   LeaderBoardDataMyRank myRank;
 
   ///我的奖励金额
-  var _mAwardAmount = "";
+  var _mAwardAmount = "0";
 
   ///我的邀请人数
-  var _mInvitationsNum = "";
+  var _mInvitationsNum = "0";
 
   ///我的昵称
   var _mNickName = "";
@@ -56,7 +56,7 @@ class _KTKJLeaderBoardState extends State<KTKJLeaderBoard> {
   var _mAvatarUrl = "";
 
   ///我的排行
-  var _mRanking;
+  var _mRanking = "N";
 
   var rulesH5Url;
 
@@ -272,7 +272,10 @@ class _KTKJLeaderBoardState extends State<KTKJLeaderBoard> {
                       GestureDetector(
                         onTap: () {
                           KTKJNavigatorUtils.navigatorRouter(
-                              context, KTKJLeaderBoardMineList());
+                              context,
+                              KTKJLeaderBoardMineList(
+                                mInvitationsNum: _mInvitationsNum,
+                              ));
                         },
                         child: Container(
                           width: double.maxFinite,

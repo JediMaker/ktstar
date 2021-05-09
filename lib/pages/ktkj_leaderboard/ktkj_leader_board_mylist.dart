@@ -15,18 +15,11 @@ class KTKJLeaderBoardMineList extends StatefulWidget {
   KTKJLeaderBoardMineList({
     Key key,
     this.title = '排行榜',
-    this.type = 0,
-    this.cardType,
+    this.mInvitationsNum = "0",
   }) : super(key: key);
   final String title;
 
-  ///记录类型 0 抽奖记录 1 能量记录  2 卡片记录
-  ///
-  ///
-  final int type;
-
-  ///  卡片类型：1-万能卡，2-攻击卡，3-防护盾
-  final int cardType;
+  final String mInvitationsNum;
 
   @override
   _KTKJLeaderBoardMineListState createState() =>
@@ -85,6 +78,7 @@ class _KTKJLeaderBoardMineListState extends State<KTKJLeaderBoardMineList> {
     super.initState();
     _refreshController = EasyRefreshController();
 //    _refreshController.finishLoad(noMore: true);
+    _mInvitationsNum = widget.mInvitationsNum;
     _initData();
   }
 
@@ -192,7 +186,7 @@ class _KTKJLeaderBoardMineListState extends State<KTKJLeaderBoardMineList> {
 //                                  10,
                                   msgList.length,
                                   (index) => buildItemRow(
-                                    ranking: int.parse(msgList[index].ranking),
+                                    ranking: index + 1,
                                     avatarUrl: msgList[index].avatar,
                                     nickName: msgList[index].username,
                                     invitationsNum: msgList[index].count,
