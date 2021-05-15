@@ -5,7 +5,7 @@ buildscript {
         jcenter()
 //        maven { url 'https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
 
     }
@@ -22,7 +22,7 @@ allprojects {
         jcenter()
 //        maven { url 'https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
     }
 }
